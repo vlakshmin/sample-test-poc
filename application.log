@@ -1,0 +1,147 @@
+2020-05-26 00:26:24,155  INFO [TestNG-tests-1] ProfileStepDefinition:59 - Email displayed 15
+2020-05-26 00:26:24,613  INFO [TestNG-tests-1] ProfileStepDefinition:62 - RoleAdmin
+2020-05-26 00:26:24,665  INFO [TestNG-tests-1] ProfileStepDefinition:65 - Title :Change Password
+2020-05-26 00:26:24,689  INFO [TestNG-tests-1] ProfileStepDefinition:68 - Update password displayed displayed
+2020-05-26 00:27:19,152  INFO [TestNG-tests-1] ProfileStepDefinition:64 - Publisher displayed under account is true
+2020-05-26 00:27:19,185  INFO [TestNG-tests-1] ProfileStepDefinition:66 - Publisher displayed under account is true
+2020-05-26 00:27:19,220  INFO [TestNG-tests-1] ProfileStepDefinition:68 - Publisher displayed under account is true
+2020-05-26 00:27:30,536  INFO [TestNG-tests-1] ProfileStepDefinition:85 - Publisher page displayed header is : Publishers
+2020-05-26 00:27:47,639  INFO [TestNG-tests-1] ProfileStepDefinition:102 - Individual Created Successfully 
+2020-05-26 00:27:53,255  INFO [TestNG-tests-1] ProfileStepDefinition:106 - Individual Publisher name asserted Publisher Test127
+2020-05-26 00:27:53,288  INFO [TestNG-tests-1] ProfileStepDefinition:108 - Individual Email ID asserted :hfy9t81tmd@testqar.com
+2020-05-26 00:27:53,330  INFO [TestNG-tests-1] ProfileStepDefinition:110 - Individual Saled account name asserted :Sales Account Test127
+2020-05-26 00:27:53,361  INFO [TestNG-tests-1] ProfileStepDefinition:112 - Individual Address asserted :Publisher Chicago home nuumber127
+2020-05-26 00:27:53,387  INFO [TestNG-tests-1] ProfileStepDefinition:114 - Individual Country is disabled :true
+2020-05-26 00:27:53,412  INFO [TestNG-tests-1] ProfileStepDefinition:116 - Individual Currency is disabled :true
+2020-05-26 00:27:53,437  INFO [TestNG-tests-1] ProfileStepDefinition:118 - Individual Time Zone is disabled :true
+2020-05-26 00:27:53,554  INFO [TestNG-tests-1] ProfileStepDefinition:127 - Individual Publisher name asserted in the list :Publisher Test127
+2020-05-26 00:27:53,589  INFO [TestNG-tests-1] ProfileStepDefinition:129 - Individual Sales account name asserted in the list :Sales Account Test127
+2020-05-26 00:27:53,628  INFO [TestNG-tests-1] ProfileStepDefinition:131 - Individual Email asserted in the list :hfy9t81tmd@testqar.com
+2020-05-26 00:28:11,118  INFO [TestNG-tests-1] ProfileStepDefinition:149 - Corporation Created Successfully 
+2020-05-26 00:28:16,684  INFO [TestNG-tests-1] ProfileStepDefinition:153 - Corporation Publisher name asserted Publisher Test305
+2020-05-26 00:28:16,717  INFO [TestNG-tests-1] ProfileStepDefinition:155 - Corporation Email ID asserted :i1xwflkyr8@testqar.com
+2020-05-26 00:28:16,757  INFO [TestNG-tests-1] ProfileStepDefinition:157 - Corporation Saled account name asserted :Sales Account Test305
+2020-05-26 00:28:16,794  INFO [TestNG-tests-1] ProfileStepDefinition:160 - Corporation Corporation name asserted :Publisher Corporation305
+2020-05-26 00:28:16,822  INFO [TestNG-tests-1] ProfileStepDefinition:163 - Corporation Corporation web site :www.corpwebsite305.com
+2020-05-26 00:28:16,848  INFO [TestNG-tests-1] ProfileStepDefinition:167 - Corporation address asserted :Publisher Chicago home nuumber305
+2020-05-26 00:28:16,884  INFO [TestNG-tests-1] ProfileStepDefinition:170 - Corporation Country is disabled :false
+2020-05-26 00:28:16,922  INFO [TestNG-tests-1] ProfileStepDefinition:172 - Corporation Currency is disabled :false
+2020-05-26 00:28:16,957  INFO [TestNG-tests-1] ProfileStepDefinition:174 - Corporation Time Zone is disabled :false
+2020-05-26 00:28:17,069  INFO [TestNG-tests-1] ProfileStepDefinition:181 - Corporation Publisher name asserted in the list :Publisher Test305
+2020-05-26 00:28:17,102  INFO [TestNG-tests-1] ProfileStepDefinition:183 - Corporation Sales account name asserted in the list :Sales Account Test305
+2020-05-26 00:28:17,137  INFO [TestNG-tests-1] ProfileStepDefinition:185 - Corporation Email asserted in the list :i1xwflkyr8@testqar.com
+2020-05-26 00:28:41,418  INFO [TestNG-tests-1] ProfileStepDefinition:204 - Individual Created Successfully 
+2020-05-26 00:28:44,859  INFO [TestNG-tests-1] ProfileStepDefinition:208 - Individual Publisher name asserted Publisher Test237
+2020-05-26 00:28:44,894  INFO [TestNG-tests-1] ProfileStepDefinition:210 - Individual Email ID asserted :752ydbqk0f@testqar.com
+2020-05-26 00:28:44,929  INFO [TestNG-tests-1] ProfileStepDefinition:212 - Individual Saled account name asserted :Sales Account Test237
+2020-05-26 00:28:44,961  INFO [TestNG-tests-1] ProfileStepDefinition:214 - Individual Address asserted :Publisher Chicago home nuumber237
+2020-05-26 00:28:44,984  INFO [TestNG-tests-1] ProfileStepDefinition:216 - Individual Country is disabled :true
+2020-05-26 00:28:45,010  INFO [TestNG-tests-1] ProfileStepDefinition:218 - Individual Currency is disabled :true
+2020-05-26 00:28:45,035  INFO [TestNG-tests-1] ProfileStepDefinition:220 - Individual Time Zone is disabled :true
+2020-05-26 00:28:45,146  INFO [TestNG-tests-1] ProfileStepDefinition:227 - Individual Publisher name asserted in the list :Publisher Test237
+2020-05-26 00:28:45,181  INFO [TestNG-tests-1] ProfileStepDefinition:229 - Individual Sales account name asserted in the list :Sales Account Test237
+2020-05-26 00:28:45,218  INFO [TestNG-tests-1] ProfileStepDefinition:231 - Individual Email asserted in the list :752ydbqk0f@testqar.com
+2020-05-26 00:29:04,407  INFO [TestNG-tests-1] ProfileStepDefinition:253 - Corporation Publisher name asserted in the list :57
+2020-05-26 00:29:04,423  INFO [TestNG-tests-1] ProfileStepDefinition:255 - Corporation Sales account name asserted in the list :Sales Account Test237
+2020-05-26 00:29:04,438  INFO [TestNG-tests-1] ProfileStepDefinition:257 - Corporation Email asserted in the list :752ydbqk0f@testqar.com
+2020-05-26 00:29:24,111  INFO [TestNG-tests-1] ProfileStepDefinition:281 - Corporation Publisher name asserted in the list :57
+2020-05-26 00:29:24,130  INFO [TestNG-tests-1] ProfileStepDefinition:283 - Corporation Sales account name asserted in the list :Sales Account Test237
+2020-05-26 00:29:24,146  INFO [TestNG-tests-1] ProfileStepDefinition:285 - Corporation Email asserted in the list :752ydbqk0f@testqar.com
+2020-05-26 00:29:38,929  INFO [TestNG-tests-1] ProfileStepDefinition:302 - Clicked on save publisher
+2020-05-26 00:29:38,963  INFO [TestNG-tests-1] ProfileStepDefinition:304 - Mandatory field Publisher name asserted The publisher name field is required
+2020-05-26 00:29:38,998  INFO [TestNG-tests-1] ProfileStepDefinition:306 - Mandatory field Email ID asserted :The e-mail field is required
+2020-05-26 00:29:39,032  INFO [TestNG-tests-1] ProfileStepDefinition:308 - Mandatory field Saled account name asserted :The sales account name field is required
+2020-05-26 00:29:39,079  INFO [TestNG-tests-1] ProfileStepDefinition:311 - Mandatory field Corporation name asserted :The corporation name field is required
+2020-05-26 00:29:39,114  INFO [TestNG-tests-1] ProfileStepDefinition:313 - Mandatory field Corporation web site asserted :The corporation website field is required
+2020-05-26 00:29:39,146  INFO [TestNG-tests-1] ProfileStepDefinition:317 - Mandatory field Address asserted :The address field is required
+2020-05-26 00:29:39,179  INFO [TestNG-tests-1] ProfileStepDefinition:319 - Mandatory field Country is asserted :The country field is required
+2020-05-26 00:29:39,212  INFO [TestNG-tests-1] ProfileStepDefinition:321 - Mandatory field Currency is asserted :The currency field is required
+2020-05-26 00:29:39,244  INFO [TestNG-tests-1] ProfileStepDefinition:323 - Mandatory field Time Zone is asserted :The time zone field is required
+2020-05-26 00:29:51,148  INFO [TestNG-tests-1] ProfileStepDefinition:338 - Search publisher name asserted in the list :Publisher Test867
+2020-05-26 00:30:02,568  INFO [TestNG-tests-1] ProfileStepDefinition:338 - Search publisher name asserted in the list :TestR01
+2020-05-26 00:30:13,284  INFO [TestNG-tests-1] ProfileStepDefinition:47 - Clicked on Seats option under Account
+2020-05-26 00:30:15,834  INFO [TestNG-tests-1] ProfileStepDefinition:53 - Seats Page Header is asserts  and it is : Seats
+2020-05-26 00:30:26,530  INFO [TestNG-tests-1] ProfileStepDefinition:63 - Clicked on Seats option under Account
+2020-05-26 00:30:29,031  INFO [TestNG-tests-1] ProfileStepDefinition:65 - Clicked on Active tab
+2020-05-26 00:30:29,076  INFO [TestNG-tests-1] ProfileStepDefinition:67 - Seat name for search on Active tab :Buyer-4
+2020-05-26 00:30:29,247  INFO [TestNG-tests-1] ProfileStepDefinition:69 - Seat name searched on Active tab :Buyer-4
+2020-05-26 00:30:29,322  INFO [TestNG-tests-1] ProfileStepDefinition:77 - Search result of Seat name asserted  :Buyer-4
+2020-05-26 00:30:40,102  INFO [TestNG-tests-1] ProfileStepDefinition:93 - Clicked on Seats option under Account
+2020-05-26 00:30:42,666  INFO [TestNG-tests-1] ProfileStepDefinition:95 - Clicked on Inactive tab
+2020-05-26 00:30:42,733  INFO [TestNG-tests-1] ProfileStepDefinition:97 - Seat name for search on Inactive tab :Buyer Name9
+2020-05-26 00:30:42,943  INFO [TestNG-tests-1] ProfileStepDefinition:99 - Seat name searched on Inactive tab :Buyer Name9
+2020-05-26 00:30:43,018  INFO [TestNG-tests-1] ProfileStepDefinition:77 - Search result of Seat name asserted  :Buyer Name9
+2020-05-26 00:30:54,021  INFO [TestNG-tests-1] ProfileStepDefinition:109 - Clicked on Seats option under Account
+2020-05-26 00:30:56,512  INFO [TestNG-tests-1] ProfileStepDefinition:111 - Clicked on paused tab
+2020-05-26 00:32:07,661  INFO [TestNG-tests-1] ProfileStepDefinition:133 - Clicked on Seats option under Account
+2020-05-26 00:32:10,103  INFO [TestNG-tests-1] ProfileStepDefinition:135 - Clicked on Active tab
+2020-05-26 00:32:10,215  INFO [TestNG-tests-1] ProfileStepDefinition:139 - Clicked on Checkbox of the seat ID :17
+2020-05-26 00:32:10,356  INFO [TestNG-tests-1] ProfileStepDefinition:141 - Before Modify active seat assigned the particular seat row data into the array list
+2020-05-26 00:32:10,369  INFO [TestNG-tests-1] ProfileStepDefinition:143 - Before Modify active seat assigned the seat name from the array list :Buyer-4
+2020-05-26 00:32:10,379  INFO [TestNG-tests-1] ProfileStepDefinition:145 - Before Modify active seat assigned the sales account name from the array list :Network
+2020-05-26 00:32:10,389  INFO [TestNG-tests-1] ProfileStepDefinition:147 - Before Modify active seat assigned the email if from the array list :Algeria
+2020-05-26 00:32:20,458  INFO [TestNG-tests-1] ProfileStepDefinition:162 - Clicked on Deactivate button by selecting Seats from Active tab
+2020-05-26 00:32:20,556  INFO [TestNG-tests-1] ProfileStepDefinition:164 - Clicked on Inactive tab : 17
+2020-05-26 00:32:20,747  INFO [TestNG-tests-1] ProfileStepDefinition:167 - Seat name asserted in Inactive tab :Buyer-4
+2020-05-26 00:32:20,763  INFO [TestNG-tests-1] ProfileStepDefinition:169 - Seat name asserted in Inactive tab :Network
+2020-05-26 00:32:20,778  INFO [TestNG-tests-1] ProfileStepDefinition:171 - Seat name asserted in Inactive tab :Algeria
+2020-05-26 00:32:31,737  INFO [TestNG-tests-1] ProfileStepDefinition:133 - Clicked on Seats option under Account
+2020-05-26 00:32:34,267  INFO [TestNG-tests-1] ProfileStepDefinition:135 - Clicked on Active tab
+2020-05-26 00:32:34,379  INFO [TestNG-tests-1] ProfileStepDefinition:139 - Clicked on Checkbox of the seat ID :18
+2020-05-26 00:32:34,491  INFO [TestNG-tests-1] ProfileStepDefinition:141 - Before Modify active seat assigned the particular seat row data into the array list
+2020-05-26 00:32:34,502  INFO [TestNG-tests-1] ProfileStepDefinition:143 - Before Modify active seat assigned the seat name from the array list :Buyer Name test1
+2020-05-26 00:32:34,513  INFO [TestNG-tests-1] ProfileStepDefinition:145 - Before Modify active seat assigned the sales account name from the array list :Agency
+2020-05-26 00:32:34,523  INFO [TestNG-tests-1] ProfileStepDefinition:147 - Before Modify active seat assigned the email if from the array list :India
+2020-05-26 00:32:44,589  INFO [TestNG-tests-1] ProfileStepDefinition:188 - Clicked on paused seat button by selecting Seats from Active tab
+2020-05-26 00:32:44,691  INFO [TestNG-tests-1] ProfileStepDefinition:190 - Clicked on paused tab : 18
+2020-05-26 00:32:44,848  INFO [TestNG-tests-1] ProfileStepDefinition:193 - Seat name asserted in paused tab :Buyer Name test1
+2020-05-26 00:32:44,867  INFO [TestNG-tests-1] ProfileStepDefinition:195 - Seat name asserted in paused tab :Agency
+2020-05-26 00:32:44,883  INFO [TestNG-tests-1] ProfileStepDefinition:197 - Seat name asserted in paused tab :India
+2020-05-26 00:32:55,496  INFO [TestNG-tests-1] ProfileStepDefinition:212 - Clicked on Seats option under Account
+2020-05-26 00:33:00,716  INFO [TestNG-tests-1] ProfileStepDefinition:214 - Clicked on Inactive tab
+2020-05-26 00:33:00,848  INFO [TestNG-tests-1] ProfileStepDefinition:218 - Clicked on Checkbox of the seat ID :17
+2020-05-26 00:33:01,003  INFO [TestNG-tests-1] ProfileStepDefinition:220 - Before Modify Inactive seat assigned the particular seat row data into the array list
+2020-05-26 00:33:01,014  INFO [TestNG-tests-1] ProfileStepDefinition:222 - Before Modify Inactive seat assigned the seat name from the array list :Buyer-4
+2020-05-26 00:33:01,024  INFO [TestNG-tests-1] ProfileStepDefinition:224 - Before Modify Inactive seat assigned the sales account name from the array list :Network
+2020-05-26 00:33:01,033  INFO [TestNG-tests-1] ProfileStepDefinition:226 - Before Modify Inactive seat assigned the email if from the array list :Algeria
+2020-05-26 00:33:11,106  INFO [TestNG-tests-1] ProfileStepDefinition:240 - Clicked on Activate seat button by selecting Seats from Inactive tab
+2020-05-26 00:33:11,211  INFO [TestNG-tests-1] ProfileStepDefinition:242 - Clicked on Activate tab : 17
+2020-05-26 00:33:11,383  INFO [TestNG-tests-1] ProfileStepDefinition:245 - Seat name asserted in Activate tab :Buyer-4
+2020-05-26 00:33:11,399  INFO [TestNG-tests-1] ProfileStepDefinition:247 - Seat name asserted in Activate tab :Network
+2020-05-26 00:33:11,417  INFO [TestNG-tests-1] ProfileStepDefinition:249 - Seat name asserted in Activate tab :Algeria
+2020-05-26 00:33:22,378  INFO [TestNG-tests-1] ProfileStepDefinition:212 - Clicked on Seats option under Account
+2020-05-26 00:33:24,818  INFO [TestNG-tests-1] ProfileStepDefinition:214 - Clicked on Inactive tab
+2020-05-26 00:33:24,965  INFO [TestNG-tests-1] ProfileStepDefinition:218 - Clicked on Checkbox of the seat ID :19
+2020-05-26 00:33:25,107  INFO [TestNG-tests-1] ProfileStepDefinition:220 - Before Modify Inactive seat assigned the particular seat row data into the array list
+2020-05-26 00:33:25,121  INFO [TestNG-tests-1] ProfileStepDefinition:222 - Before Modify Inactive seat assigned the seat name from the array list :Buyer Name9
+2020-05-26 00:33:25,130  INFO [TestNG-tests-1] ProfileStepDefinition:224 - Before Modify Inactive seat assigned the sales account name from the array list :Network
+2020-05-26 00:33:25,140  INFO [TestNG-tests-1] ProfileStepDefinition:226 - Before Modify Inactive seat assigned the email if from the array list :India
+2020-05-26 00:33:35,214  INFO [TestNG-tests-1] ProfileStepDefinition:265 - Clicked on Paused seat button by selecting Seats from Inactive tab
+2020-05-26 00:33:35,332  INFO [TestNG-tests-1] ProfileStepDefinition:267 - Clicked on Paused tab : 19
+2020-05-26 00:33:35,475  INFO [TestNG-tests-1] ProfileStepDefinition:270 - Seat name asserted in Paused tab :Buyer Name9
+2020-05-26 00:33:35,492  INFO [TestNG-tests-1] ProfileStepDefinition:272 - Seat name asserted in Paused tab :Network
+2020-05-26 00:33:35,507  INFO [TestNG-tests-1] ProfileStepDefinition:274 - Seat name asserted in Paused tab :India
+2020-05-26 00:33:46,572  INFO [TestNG-tests-1] ProfileStepDefinition:291 - Clicked on Seats option under Account
+2020-05-26 00:33:49,075  INFO [TestNG-tests-1] ProfileStepDefinition:293 - Clicked on Paused tab
+2020-05-26 00:33:49,195  INFO [TestNG-tests-1] ProfileStepDefinition:297 - Clicked on Checkbox of the seat ID :18
+2020-05-26 00:33:49,314  INFO [TestNG-tests-1] ProfileStepDefinition:299 - Before Modify Paused seat assigned the particular seat row data into the array list
+2020-05-26 00:33:49,328  INFO [TestNG-tests-1] ProfileStepDefinition:301 - Before Modify Paused seat assigned the seat name from the array list :Buyer Name test1
+2020-05-26 00:33:49,337  INFO [TestNG-tests-1] ProfileStepDefinition:303 - Before Modify Paused seat assigned the sales account name from the array list :Agency
+2020-05-26 00:33:49,348  INFO [TestNG-tests-1] ProfileStepDefinition:305 - Before Modify Paused seat assigned the email if from the array list :India
+2020-05-26 00:33:59,428  INFO [TestNG-tests-1] ProfileStepDefinition:320 - Clicked on Activate seat button by selecting Seats from paused tab
+2020-05-26 00:33:59,537  INFO [TestNG-tests-1] ProfileStepDefinition:322 - Clicked on Active tab : 18
+2020-05-26 00:33:59,699  INFO [TestNG-tests-1] ProfileStepDefinition:325 - Seat name asserted in Active tab :Buyer Name test1
+2020-05-26 00:33:59,717  INFO [TestNG-tests-1] ProfileStepDefinition:327 - Seat name asserted in Active tab :Agency
+2020-05-26 00:33:59,732  INFO [TestNG-tests-1] ProfileStepDefinition:329 - Seat name asserted in Active tab :India
+2020-05-26 00:34:10,972  INFO [TestNG-tests-1] ProfileStepDefinition:291 - Clicked on Seats option under Account
+2020-05-26 00:34:16,082  INFO [TestNG-tests-1] ProfileStepDefinition:293 - Clicked on Paused tab
+2020-05-26 00:34:16,208  INFO [TestNG-tests-1] ProfileStepDefinition:297 - Clicked on Checkbox of the seat ID :19
+2020-05-26 00:34:16,304  INFO [TestNG-tests-1] ProfileStepDefinition:299 - Before Modify Paused seat assigned the particular seat row data into the array list
+2020-05-26 00:34:16,316  INFO [TestNG-tests-1] ProfileStepDefinition:301 - Before Modify Paused seat assigned the seat name from the array list :Buyer Name9
+2020-05-26 00:34:16,328  INFO [TestNG-tests-1] ProfileStepDefinition:303 - Before Modify Paused seat assigned the sales account name from the array list :Network
+2020-05-26 00:34:16,338  INFO [TestNG-tests-1] ProfileStepDefinition:305 - Before Modify Paused seat assigned the email if from the array list :India
+2020-05-26 00:34:26,401  INFO [TestNG-tests-1] ProfileStepDefinition:346 - Clicked on Deactivate seat button by selecting Seats from paused tab
+2020-05-26 00:34:26,550  INFO [TestNG-tests-1] ProfileStepDefinition:348 - Clicked on Inactivate tab : 19
+2020-05-26 00:34:26,728  INFO [TestNG-tests-1] ProfileStepDefinition:351 - Seat name asserted in Inactivate tab :Buyer Name9
+2020-05-26 00:34:26,753  INFO [TestNG-tests-1] ProfileStepDefinition:353 - Seat name asserted in Inactivate tab :Network
+2020-05-26 00:34:26,771  INFO [TestNG-tests-1] ProfileStepDefinition:355 - Seat name asserted in Inactivate tab :India

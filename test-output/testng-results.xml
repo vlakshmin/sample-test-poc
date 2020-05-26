@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="22479" started-at="2020-05-22T06:48:57Z" finished-at="2020-05-22T06:49:20Z">
+    <groups>
+      <group name="cucumber">
+        <method signature="TestRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:MyRunner.TestRunner@e45f292]" name="feature" class="MyRunner.TestRunner"/>
+      </group> <!-- cucumber -->
+    </groups>
+    <test name="Default test" duration-ms="22479" started-at="2020-05-22T06:48:57Z" finished-at="2020-05-22T06:49:20Z">
+      <class name="MyRunner.TestRunner">
+        <test-method status="PASS" signature="setUpClass()[pri:0, instance:MyRunner.TestRunner@e45f292]" name="setUpClass" is-config="true" duration-ms="189" started-at="2020-05-22T06:48:57Z" finished-at="2020-05-22T06:48:58Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpClass -->
+        <test-method status="PASS" signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:MyRunner.TestRunner@e45f292]" name="feature" duration-ms="22190" started-at="2020-05-22T06:48:58Z" description="Runs Cucumber Feature" data-provider="features" finished-at="2020-05-22T06:49:20Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Publisher page verification]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- feature -->
+        <test-method status="PASS" signature="tearDownClass()[pri:0, instance:MyRunner.TestRunner@e45f292]" name="tearDownClass" is-config="true" duration-ms="14" started-at="2020-05-22T06:49:20Z" finished-at="2020-05-22T06:49:20Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDownClass -->
+      </class> <!-- MyRunner.TestRunner -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
