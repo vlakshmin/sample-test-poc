@@ -26,6 +26,17 @@ public class RXSeatsPage extends RXBaseClass  {
 	RXUtile rxUTL ;
 	PublisherListPage pubPage;
 	
+	
+	//Xpath String of table row value object
+		String firstUserXpath="//table/tbody/tr[";
+		String secondUserXpath="]/td[";
+		String thirdUserXpath="]";
+
+		//Xpath of rows to get the total number of row and column displayed in the page.
+		@FindAll(@FindBy(xpath = "//table/tbody/tr")) List<WebElement> userTableRows;
+		@FindAll(@FindBy(xpath = "//table/tbody/tr[1]/td")) List<WebElement> userTableColmn;
+		
+	
 	//Seats page heading
 	@FindBy(xpath = "//h1[text()='Seats']")  WebElement seatPageHeader;
 	//Search text field
@@ -56,12 +67,17 @@ public class RXSeatsPage extends RXBaseClass  {
 	@FindBy(xpath = "//span/form/div[2]/div[10]/div[1]/div/div/div[1]/div/input")  WebElement postalCode;
 	@FindBy(xpath = "//span/form/div[2]/div[10]/div[2]/div/div/div[1]/div[1]/input[1]")  WebElement enterCountry;
 	@FindBy(xpath = "//span/form/div[2]/div[10]/div[3]/span/div/div/div[1]/div[1]/input[1]")  WebElement enterCurrency;
-	@FindBy(xpath = "//span/form/div[2]/div[11]/div/div/div/div[1]/div/input")  WebElement enterAuthorId;
+	public @FindBy(xpath = "//span/form/div[2]/div[11]/div/div/div/div[1]/div/input")  WebElement enterAuthorId;
 	@FindBy(xpath = "//span/form/div[2]/div[12]/div/div/div/div[1]/div/input")  WebElement contactEmail;
 	@FindBy(xpath = "//span/form/div[3]/button/span")  WebElement saveButton;
 	@FindBy(xpath = "//aside/header/div/button/span/i")  WebElement closeBtn;
 	
+	// Xpath of status to check whether slected or not selected
 	
+	@FindBy(xpath = "//aside/div/span/form/div[2]/div[3]/div/div/div/div[1]/div/div[1]/div/input")  WebElement statActive;
+	@FindBy(xpath = "//aside/div/span/form/div[2]/div[3]/div/div/div/div[1]/div/div[2]/div/input")  WebElement statInActive;
+	@FindBy(xpath = "//aside/div/span/form/div[2]/div[3]/div/div/div/div[1]/div/div[3]/div/input")  WebElement statDisabled;
+	@FindBy(xpath = "/html/body/div/div/div/div/main/div/div/div/div[2]/div/div[1]/table/thead/tr/th[1]/div")  WebElement checkBoxIsSelected;
 	
 	//Xpath String of Seat table row value object
 	String firstSeatXpath="//table/tbody/tr[";
@@ -81,15 +97,16 @@ public class RXSeatsPage extends RXBaseClass  {
 	Actions act = new Actions(driver);
 	
 	//Array for test data 
-	ArrayList<String> testData = new ArrayList<String>();
+	static ArrayList<String> testData = new ArrayList<String>();
 	
 	//Seat list Objects
 	@FindBy(xpath = "//table/tbody/tr[1]/td[3]/span/a")  WebElement buyerSeatName;
-	@FindBy(xpath = "//table/tbody/tr[1]/td[2]")  WebElement buyerSeatId;
-	@FindBy(xpath = "//table/tbody/tr[1]/td[1]")  WebElement buyerSeatCheckBox;
+//	@FindBy(xpath = "//table/tbody/tr[1]/td[2]")  WebElement buyerSeatId;
+////	@FindBy(xpath = "//table/tbody/tr[1]/td[1]")  WebElement buyerSeatCheckBox;
+//	@FindBy(xpath = "//table/tbody/tr[1]/td[1]/div/I")  WebElement buyerSeatCheckBox;
 	
 	//Explicit Wait
-	WebDriverWait wait = new WebDriverWait(driver, 10000);
+	WebDriverWait wait = new WebDriverWait(driver, 1000);
 	
 	//Test data for creating seat
 	String byName ="Test Seat";
@@ -108,7 +125,8 @@ public class RXSeatsPage extends RXBaseClass  {
 	String ctactEmail = "testingemail";
 			
 	//Some initialization.
-	static int sid=0;
+	static int sid;
+	static String rnNum;
 	
 	// Initialize page factory
 	public RXSeatsPage()
@@ -136,31 +154,45 @@ public class RXSeatsPage extends RXBaseClass  {
 		if(pubPage.isSeatsDisplayed())
 		{
 			pubPage.seatOption.click();
+			wait.until(ExpectedConditions.visibilityOf(seatPageHeader));
 		}else
 		{
 			pubPage.accountOption.click();
 			pubPage.seatOption.click();
+			wait.until(ExpectedConditions.visibilityOf(seatPageHeader));
 			
 		}
 
 	}
 	//Click on Tab - Active, Inactive and Paused.
-	public void clickTabActiveInactivePaused(String tabName)
+	public void clickTabActiveInactivePaused(String tabName) throws InterruptedException
 	{
 		if(tabName.equalsIgnoreCase("Active"))
 		{
+//			Thread.sleep(2000);
+			wait.until(ExpectedConditions.visibilityOf(activeTab));
 			wait.until(ExpectedConditions.visibilityOf(seatPageHeader));
-			activeTab.click();
+			WebElement checkBoxAvailable = wait.until(ExpectedConditions.elementToBeClickable(activeTab));	  
+			checkBoxAvailable.click();
+			
 		}else if(tabName.equalsIgnoreCase("Inactive"))
 			
 		{
+//			Thread.sleep(2000);
+			wait.until(ExpectedConditions.visibilityOf(inActiveTab));
 			wait.until(ExpectedConditions.visibilityOf(seatPageHeader));
-			inActiveTab.click();
+			WebElement checkBoxAvailable = wait.until(ExpectedConditions.elementToBeClickable(inActiveTab));	  
+			checkBoxAvailable.click();
+			
 		}	
 		else if(tabName.equalsIgnoreCase("Paused"))
 		{
+//			Thread.sleep(2000);
+			wait.until(ExpectedConditions.visibilityOf(pausedTab));
 			wait.until(ExpectedConditions.visibilityOf(seatPageHeader));
-			pausedTab.click();
+			WebElement checkBoxAvailable = wait.until(ExpectedConditions.elementToBeClickable(pausedTab));	  
+			checkBoxAvailable.click();
+		
 		}	
 			
 	}
@@ -213,7 +245,7 @@ public class RXSeatsPage extends RXBaseClass  {
 				
 		}
 		
-	////Get the get particular row data of a seat table.		
+	////Get the particular row data of a seat table.		
 		public ArrayList<WebElement> getParticularSeatRowData(int stId) {
 			WebElement elem = wait.until(ExpectedConditions.visibilityOf(seatPageHeader));
 			String strSrch=firstSeatXpath+seattableRows.size()+secondSeatXpath+3+thirdSeatXpath;
@@ -228,8 +260,11 @@ public class RXSeatsPage extends RXBaseClass  {
 				String strSrch="";
 				String checkBox="";
 				try {
-					strSrch=firstSeatXpath+seattableRows.size()+secondSeatXpath+2+thirdSeatXpath;
-					checkBox=firstSeatXpath+seattableRows.size()+secondSeatXpath+1+thirdSeatXpath;
+//					strSrch=firstSeatXpath+seattableRows.size()+secondSeatXpath+2+thirdSeatXpath;
+//					checkBox=firstSeatXpath+seattableRows.size()+secondSeatXpath+1+thirdSeatXpath;
+					strSrch=firstSeatXpath+1+secondSeatXpath+2+thirdSeatXpath;
+					checkBox=firstSeatXpath+1+secondSeatXpath+1+thirdSeatXpath;
+					
 					} 
 					catch (NullPointerException e) 
 					{
@@ -256,13 +291,19 @@ public class RXSeatsPage extends RXBaseClass  {
 				act.sendKeys(Keys.TAB).build().perform();
 				if(stsActInActDisabled.equalsIgnoreCase("Active"))
 				{
-					statusActive.click();
+					WebElement checkBoxAvailable = wait.until(ExpectedConditions.elementToBeClickable(statusActive));	  
+					checkBoxAvailable.click();
+//					statusActive.click();
 				}else if(stsActInActDisabled.equalsIgnoreCase("Inactive"))
 				{
-					statusInActive.click();
+					WebElement checkBoxAvailable = wait.until(ExpectedConditions.elementToBeClickable(statusInActive));	  
+					checkBoxAvailable.click();
+//					statusInActive.click();
 				}else if(stsActInActDisabled.equalsIgnoreCase("Disabled"))
 				{
-					statusDisabled.click();
+					WebElement checkBoxAvailable = wait.until(ExpectedConditions.elementToBeClickable(statusDisabled));	  
+					checkBoxAvailable.click();
+//					statusDisabled.click();
 				}
 				
 				enterDSP.sendKeys(entDSP);
@@ -295,6 +336,7 @@ public class RXSeatsPage extends RXBaseClass  {
 			public String closeCreateSeatPage() {
 				String byerName=buyerName.getAttribute("value");
 				closeBtn.click();
+				wait.until(ExpectedConditions.visibilityOf(pausedTab));
 				return byerName;
 
 			}
@@ -303,21 +345,23 @@ public class RXSeatsPage extends RXBaseClass  {
 			//Provide Test data 
 			public ArrayList<String> getTestData()
 			{
-				int rnNum=RXUtile.getRandomNumberFourDigit();
+				WebElement saveClick = wait.until(ExpectedConditions.visibilityOf(saveButton));
+				rnNum=RXUtile.getRandomNumberFourDigit();
+				testData.clear();
 				testData.add(byName + rnNum );
-				testData.add(byType + rnNum);
-				testData.add(eterDSP + rnNum );
+				testData.add(byType);
+				testData.add(eterDSP);
 				testData.add(eterToken + rnNum );
 				testData.add(corpoName + rnNum );
-				testData.add(eterWebsite + rnNum );
+				testData.add("www."+eterWebsite +rnNum +".com");
 				testData.add(eterAddressOne + rnNum );
 				testData.add(eterAddressTwo + rnNum );
 				testData.add(eterCity + rnNum );
 				testData.add(poCode + rnNum );
-				testData.add(eterCountry + rnNum );
-				testData.add(eterCurrency + rnNum );
+				testData.add(eterCountry);
+				testData.add(eterCurrency);
 				testData.add(eterAuthorId + rnNum );
-				testData.add(ctactEmail + rnNum );
+				testData.add(rxUTL.getEmailString());
 			
 				return testData;
 				
@@ -326,17 +370,139 @@ public class RXSeatsPage extends RXBaseClass  {
 			}
 			
 			//Close the create seat page and return the seat name
-			public int getTheSeatIdandClickCheckBox(String bname) {
-				
+			public int getTheSeatIdandClickCheckBox(String bname) throws InterruptedException {
+				String strSrch="";
+				String checkBox="";
+				strSrch=firstSeatXpath+1+secondSeatXpath+2+thirdSeatXpath;
+				checkBox=firstSeatXpath+1+secondSeatXpath+1+thirdSeatXpath;
+				Thread.sleep(2000);
 				Boolean elem = wait.until(ExpectedConditions.textToBePresentInElement(buyerSeatName, bname));
+				System.out.println("Element present :"+elem);
 				if(elem)
 				{
-					buyerSeatCheckBox.click();
-					sid=Integer.parseInt(buyerSeatId.getText());
-				}
+	
+				WebElement checkBoxAvailable = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(checkBox))));	
+				checkBoxAvailable.click();
+				
+				sid=Integer.parseInt(driver.findElement(By.xpath(strSrch)).getText());
+
+			}
 				return sid;
+			}
+			
+			
+			//Provide Test data 
+			public ArrayList<String> getTheValueFrmCreateSeatPage() throws InterruptedException
+			{
+				Thread.sleep(2000);
+				testData.clear();
+				WebElement saveClick = wait.until(ExpectedConditions.visibilityOf(saveButton));
+				if(saveClick.isDisplayed())
+				{
+				testData.add(buyerName.getAttribute("value"));
+				testData.add(buyerType.getAttribute("value"));
+				testData.add(enterDSP.getAttribute("value"));
+				testData.add(enterToken.getAttribute("value"));
+				testData.add(corporationName.getAttribute("value"));
+				testData.add(enterWebsite.getAttribute("value"));
+				testData.add(enterAddressOne.getAttribute("value"));
+				testData.add(enterAddressTwo.getAttribute("value"));
+				testData.add(enterCity.getAttribute("value"));
+				testData.add(postalCode.getAttribute("value"));
+				testData.add(enterCountry.getAttribute("value"));
+				testData.add(enterCurrency.getAttribute("value"));
+				testData.add(enterAuthorId.getAttribute("value"));
+				testData.add(contactEmail.getAttribute("value"));
+				}
+				return testData;
 
 			}
 			
+			//Check whether status is selected or not
+			public boolean getTheStatus(String statusSeat) throws InterruptedException
+			{
+				boolean flag=false;
+				Thread.sleep(2000);
+				WebElement saveClick = wait.until(ExpectedConditions.visibilityOf(saveButton));
+				if(saveClick.isDisplayed())
+				{
+					if(statActive.isSelected() && statusSeat.equalsIgnoreCase("Active"))
+					{
+						
+						flag=true;
+						System.out.println("Active Seat :"+ flag);
+					}else if(statInActive.isSelected() && statusSeat.equalsIgnoreCase("Inactive"))
+					{
+						
+						flag=true;
+						System.out.println("Inactive Seat :"+ flag);
+					}else if(statDisabled.isSelected() && statusSeat.equalsIgnoreCase("Disabled"))
+					{
+						
+						flag=true;
+						System.out.println("Disabled Seat :"+ flag);
+					}
+				}
+				System.out.println("Final Seat :"+ flag);
+				return flag;
+
+			}
+			
+			//Clear value of seat fields
+			
+			public void deleteFieldValues()
+			{
+				WebElement saveClick = wait.until(ExpectedConditions.visibilityOf(buyerName));
+				
+				rxUTL.clearTextBox(buyerName);
+				rxUTL.clearTextBox(buyerType);
+				rxUTL.clearTextBox(enterDSP);
+				act.sendKeys(Keys.TAB).build().perform();
+				rxUTL.clearTextBox(enterToken);
+				rxUTL.clearTextBox(corporationName);
+				rxUTL.clearTextBox(enterWebsite);
+				rxUTL.clearTextBox(enterAddressOne);
+				rxUTL.clearTextBox(enterAddressTwo);
+				rxUTL.clearTextBox(enterCity);
+				rxUTL.clearTextBox(postalCode);
+				rxUTL.clearTextBox(enterCountry);
+				act.sendKeys(Keys.TAB).build().perform();
+				rxUTL.clearTextBox(enterCurrency);
+				act.sendKeys(Keys.TAB).build().perform();
+				rxUTL.clearTextBox(enterAuthorId);
+				rxUTL.clearTextBox(contactEmail);
+				
+			}
+
+			//Select the seat and return
+			public int selectSeatAndReturnId(String tmpStr)
+			
+			{
+				
+					return rxUTL.selectParticularRowData(userTableRows.size(), userTableColmn.size(), firstUserXpath, secondUserXpath, thirdUserXpath, frwdButton,3,tmpStr);
+			
+			}
+			//Update the seat id to RX properties file
+			public void updateTheSeatIdInTestData(String activeSeatID, int newValue)
+			{
+				rxUTL.updateTestData(activeSeatID, Integer.toString(newValue));
+				
+			}
+			
+			//get the seat and return the id from properties file
+			public int getTheSeatIdInTestData(String newValue)
+			{
+				return Integer. parseInt(prop.getProperty(newValue));
+				
+			}
+			
+			//Wait for  page header display WebElement webele
+			public int selectSeatforEdit(String seatId)
+			
+			{
+				
+					return rxUTL.selectParticularRowData(userTableRows.size(), userTableColmn.size(), firstUserXpath, secondUserXpath, thirdUserXpath, frwdButton,2,seatId);
+			
+			}
 
 }

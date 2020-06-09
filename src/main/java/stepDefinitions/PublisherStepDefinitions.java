@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import RXBaseClass.RXBaseClass;
@@ -21,13 +22,14 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 	RXLoginPage logain;
 	PublisherListPage pubListPgs;
 	Logger log = Logger.getLogger(ProfileStepDefinition.class);
-	 static int rn ;
+//	 static int rn ;
+	 static String rn ;
 	 static String emailID;
 	 static String webSiteNa;
 	 static String pubNme;
 	 static String saleAcc;
 	 static int pId;
-	 static ArrayList<WebElement> publist;
+	 static ArrayList<WebElement> publist = new ArrayList<WebElement>();
 	public PublisherStepDefinitions() {
 		super();
 		
@@ -101,7 +103,10 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 		Assert.assertEquals(pubListPgs.clickSaveOrUpdate(), "UPDATED!");
 		log.info("Individual Created Successfully ");
 		pubListPgs.closeTheDynamicForm();
-		pubListPgs.clickCreateOrEditPublisherBtn("Edit");
+		pubListPgs.waitForCreatedPublisherToBeDisplayed(emailID);//Added
+		pId=pubListPgs.selectpublisherAndReturnId(emailID);//Added
+		pubListPgs.clickCreateOrEditPublisherBtn("Create");//Changed Edit to Create
+		pubListPgs.updateThePublisherIdInTestData(pId);//Added
 		Assert.assertEquals(pubListPgs.publisherName.getAttribute("value"),pubListPgs.pubName+rn);
 		log.info("Individual Publisher name asserted "+ pubListPgs.publisherName.getAttribute("value"));
 		Assert.assertEquals(pubListPgs.publisherEmail.getAttribute("value"),emailID);
@@ -123,13 +128,24 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 
 	@Then("^Individual publisher is reflects publisher list \\.$")
 	public void individual_publisher_is_reflects_publisher_list() throws Throwable {
-		Assert.assertEquals(pubListPgs.publisherInList.getText(),pubListPgs.pubName+rn);
+//		Assert.assertEquals(pubListPgs.publisherInList.getText(),pubListPgs.pubName+rn);
+//		log.info("Individual Publisher name asserted in the list :"+ pubListPgs.publisherInList.getText());
+//		Assert.assertEquals(pubListPgs.salesAccountList.getText(),pubListPgs.salesAcc+rn);
+//		log.info("Individual Sales account name asserted in the list :"+ pubListPgs.salesAccountList.getText());
+//		Assert.assertEquals(pubListPgs.emailList.getText(),emailID);
+//		log.info("Individual Email asserted in the list :"+ pubListPgs.emailList.getText());
+		
+		
+		//Below are added newly
+		publist.clear();
+		publist=pubListPgs.getParticularRowData(pId);		
+		Assert.assertEquals(publist.get(1).getText(),pubListPgs.pubName+rn);
 		log.info("Individual Publisher name asserted in the list :"+ pubListPgs.publisherInList.getText());
-		Assert.assertEquals(pubListPgs.salesAccountList.getText(),pubListPgs.salesAcc+rn);
+		Assert.assertEquals(publist.get(2).getText(),pubListPgs.salesAcc+rn);
 		log.info("Individual Sales account name asserted in the list :"+ pubListPgs.salesAccountList.getText());
-		Assert.assertEquals(pubListPgs.emailList.getText(),emailID);
+		Assert.assertEquals(publist.get(3).getText(),emailID);
 		log.info("Individual Email asserted in the list :"+ pubListPgs.emailList.getText());
-	   
+		
 	}
 	
 	
@@ -148,7 +164,9 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 		Assert.assertEquals(pubListPgs.clickSaveOrUpdate(), "UPDATED!");
 		log.info("Corporation Created Successfully ");
 		pubListPgs.closeTheDynamicForm();
-		pubListPgs.clickCreateOrEditPublisherBtn("Edit");
+		pubListPgs.waitForCreatedPublisherToBeDisplayed(emailID);//Added
+		pId=pubListPgs.selectpublisherAndReturnId(emailID);//Added
+		pubListPgs.clickCreateOrEditPublisherBtn("Create");//Changed Edit to Create
 		Assert.assertEquals(pubListPgs.publisherName.getAttribute("value"),pubListPgs.pubName+rn);
 		log.info("Corporation Publisher name asserted "+ pubListPgs.publisherName.getAttribute("value"));
 		Assert.assertEquals(pubListPgs.publisherEmail.getAttribute("value"),emailID);
@@ -173,16 +191,28 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 		Assert.assertFalse(!pubListPgs.corpTimeZone.isDisplayed());
 		log.info("Corporation Time Zone is disabled :"+ !pubListPgs.corpTimeZone.isDisplayed());
 		pubListPgs.closeTheDynamicForm();
+		pubListPgs.updateThePublisherIdInTestData(pId);//Added
 	}
 
 	@Then("^corporation publisher is reflects publisher list \\.$")
 	public void corporation_publisher_is_reflects_publisher_list() throws Throwable {
-		Assert.assertEquals(pubListPgs.publisherInList.getText(),pubListPgs.pubName+rn);
-		log.info("Corporation Publisher name asserted in the list :"+ pubListPgs.publisherInList.getText());
-		Assert.assertEquals(pubListPgs.salesAccountList.getText(),pubListPgs.salesAcc+rn);
-		log.info("Corporation Sales account name asserted in the list :"+ pubListPgs.salesAccountList.getText());
-		Assert.assertEquals(pubListPgs.emailList.getText(),emailID);
-		log.info("Corporation Email asserted in the list :"+ pubListPgs.emailList.getText());
+//		Assert.assertEquals(pubListPgs.publisherInList.getText(),pubListPgs.pubName+rn);
+//		log.info("Corporation Publisher name asserted in the list :"+ pubListPgs.publisherInList.getText());
+//		Assert.assertEquals(pubListPgs.salesAccountList.getText(),pubListPgs.salesAcc+rn);
+//		log.info("Corporation Sales account name asserted in the list :"+ pubListPgs.salesAccountList.getText());
+//		Assert.assertEquals(pubListPgs.emailList.getText(),emailID);
+//		log.info("Corporation Email asserted in the list :"+ pubListPgs.emailList.getText());
+		
+		
+		//Below are added newly
+		publist.clear();
+		publist=pubListPgs.getParticularRowData(pId);		
+		Assert.assertEquals(publist.get(1).getText(),pubListPgs.pubName+rn);
+		log.info("Individual Publisher name asserted in the list :"+ pubListPgs.publisherInList.getText());
+		Assert.assertEquals(publist.get(2).getText(),pubListPgs.salesAcc+rn);
+		log.info("Individual Sales account name asserted in the list :"+ pubListPgs.salesAccountList.getText());
+		Assert.assertEquals(publist.get(3).getText(),emailID);
+		log.info("Individual Email asserted in the list :"+ pubListPgs.emailList.getText());
 	}
 
 
@@ -192,7 +222,8 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 		public void edit_the_publisher_by_selecting_the_publisher() throws Throwable {
 			rn = RXUtile.getRandomNumberFourDigit();
 			emailID=utl.getEmailString();
-			pubListPgs.clickCreateOrEditPublisherBtn("Edit");
+			pubListPgs.selectpublisherforEdit(prop.getProperty("PublisherId"));//Added
+			pubListPgs.clickCreateOrEditPublisherBtn("Create");//Changed from Edit to Create
 			pubListPgs.deleteTextField();
 			pubListPgs.createEditIndividualPublisher("Edit", pubListPgs.pubName+rn,emailID,pubListPgs.salesAcc+rn, pubListPgs.pubAdd+rn, pubListPgs.pubCntry, pubListPgs.pubCurrency, pubListPgs.pubzone);
 			
@@ -203,6 +234,7 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 			Assert.assertEquals(pubListPgs.clickSaveOrUpdate(), "UPDATED!");
 			log.info("Individual Created Successfully ");
 			pubListPgs.closeTheDynamicForm();
+			pubListPgs.waitForCreatedPublisherToBeDisplayed(emailID);//Added
 			pubListPgs.clickCreateOrEditPublisherBtn("");
 			Assert.assertEquals(pubListPgs.publisherName.getAttribute("value"),pubListPgs.pubName+rn);
 			log.info("Individual Publisher name asserted "+ pubListPgs.publisherName.getAttribute("value"));
@@ -219,28 +251,47 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 			Assert.assertFalse(pubListPgs.enterTimeZone.isEnabled());
 			log.info("Individual Time Zone is disabled :"+ !pubListPgs.enterTimeZone.isEnabled());
 			pubListPgs.closeTheDynamicForm();
+			pubListPgs.waitForCreatedPublisherToBeDisplayed(emailID);
+			pId=pubListPgs.selectpublisherAndReturnId(emailID);//Added
 		}
 
 		@Then("^Edit details are reflecting in publisher list \\.$")
 		public void edit_details_are_reflecting_in_publisher_list() throws Throwable {
-			Assert.assertEquals(pubListPgs.publisherInList.getText(),pubListPgs.pubName+rn);
+//			Assert.assertEquals(pubListPgs.publisherInList.getText(),pubListPgs.pubName+rn);
+//			log.info("Individual Publisher name asserted in the list :"+ pubListPgs.publisherInList.getText());
+//			Assert.assertEquals(pubListPgs.salesAccountList.getText(),pubListPgs.salesAcc+rn);
+//			log.info("Individual Sales account name asserted in the list :"+ pubListPgs.salesAccountList.getText());
+//			Assert.assertEquals(pubListPgs.emailList.getText(),emailID);
+//			log.info("Individual Email asserted in the list :"+ pubListPgs.emailList.getText());
+			
+			//Below are added newly
+			publist.clear();
+			publist=pubListPgs.getParticularRowData(pId);		
+			Assert.assertEquals(publist.get(1).getText(),pubListPgs.pubName+rn);
 			log.info("Individual Publisher name asserted in the list :"+ pubListPgs.publisherInList.getText());
-			Assert.assertEquals(pubListPgs.salesAccountList.getText(),pubListPgs.salesAcc+rn);
+			Assert.assertEquals(publist.get(2).getText(),pubListPgs.salesAcc+rn);
 			log.info("Individual Sales account name asserted in the list :"+ pubListPgs.salesAccountList.getText());
-			Assert.assertEquals(pubListPgs.emailList.getText(),emailID);
+			Assert.assertEquals(publist.get(3).getText(),emailID);
 			log.info("Individual Email asserted in the list :"+ pubListPgs.emailList.getText());
 		}
 		
 	
 // Disable publisher from enabled publisher.
 
-@When("^Click in disable select publisher for disable publisher$")
-public void click_in_disable_select_publisher_for_disable_publisher() throws Throwable {
+@When("^Click on disable by selecting publisher for disable publisher$")
+public void click_on_disable_by_selecting_publisher_for_disable_publisher() throws Throwable {
 	pubListPgs.clickOnTab("Active");
-	pubNme=pubListPgs.publisherInList.getText();
-	saleAcc=pubListPgs.salesAccountList.getText();
-	emailID=pubListPgs.emailList.getText();
-	pId=Integer.parseInt(pubListPgs.publisherIdList.getText());
+	publist.clear();//Added
+	publist=pubListPgs.getParticularRowData(Integer.parseInt(prop.getProperty("PublisherId")));//Added
+	pubNme=publist.get(1).getText();//Added
+	saleAcc=publist.get(2).getText();//Added
+	emailID=publist.get(3).getText();//Added
+	pId=pubListPgs.selectpublisherforEdit(prop.getProperty("PublisherId"));//Added
+	
+//	pubNme=pubListPgs.publisherInList.getText();
+//	saleAcc=pubListPgs.salesAccountList.getText();
+//	emailID=pubListPgs.emailList.getText();
+//	pId=Integer.parseInt(pubListPgs.publisherIdList.getText());
 	System.out.println("Publisher ID Assigned :"+pId);
 	pubListPgs.clickbutton("Disabled");
 }
@@ -248,6 +299,7 @@ public void click_in_disable_select_publisher_for_disable_publisher() throws Thr
 @Then("^Disabled publisher is displayed in disabled tab \\.$")
 public void disabled_publisher_is_displayed_in_disabled_tab() throws Throwable {
 	pubListPgs.clickOnTab("Disabled");  
+	publist.clear();
 	publist=pubListPgs.getParticularRowData(pId);
 	Assert.assertEquals(publist.get(1).getText(),pubNme);
 	log.info("Corporation Publisher name asserted in the list :"+ publist.get(0).getText());
@@ -265,10 +317,18 @@ public void disabled_publisher_is_displayed_in_disabled_tab() throws Throwable {
 @When("^Click on Enable by selecting publisher from disabled$")
 public void click_on_Enable_by_selecting_publisher() throws Throwable {
 	pubListPgs.clickOnTab("Disabled");
-	pubNme=pubListPgs.publisherInList.getText();
-	saleAcc=pubListPgs.salesAccountList.getText();
-	emailID=pubListPgs.emailList.getText();
-	pId=Integer.parseInt(pubListPgs.publisherIdList.getText());
+	publist.clear();//Added
+	publist=pubListPgs.getParticularRowData(Integer.parseInt(prop.getProperty("PublisherId")));//Added
+	pubNme=publist.get(1).getText();//Added
+	saleAcc=publist.get(2).getText();//Added
+	emailID=publist.get(3).getText();//Added
+	pId=pubListPgs.selectpublisherforEdit(prop.getProperty("PublisherId"));//Added
+	
+	
+//	pubNme=pubListPgs.publisherInList.getText();
+//	saleAcc=pubListPgs.salesAccountList.getText();
+//	emailID=pubListPgs.emailList.getText();
+//	pId=Integer.parseInt(pubListPgs.publisherIdList.getText());
 	System.out.println("Publisher ID Assigned :"+pId);
 	pubListPgs.clickbutton("Enabled");;
 }
@@ -276,6 +336,7 @@ public void click_on_Enable_by_selecting_publisher() throws Throwable {
 @Then("^Enabled publisher is displayed in Active tab \\.$")
 public void enabled_publisher_is_displayed_in_Active_tab() throws Throwable {
 	pubListPgs.clickOnTab("Active"); 
+	publist.clear();
 	publist=pubListPgs.getParticularRowData(pId);
 	Assert.assertEquals(publist.get(1).getText(),pubNme);
 	log.info("Corporation Publisher name asserted in the list :"+ publist.get(0).getText());

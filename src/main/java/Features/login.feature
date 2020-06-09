@@ -2,7 +2,7 @@ Feature: RX Login page Validation
 Scenario: Verify if an admin user will be able to login with a valid username and valid password
 	Given Admin user click on Login by entering valid username and password 
 	Then login should be successful and user is displayed the publisher page with Rakuten Exchange
-#	Then Close the browser
+
 
 Scenario Outline: Verify if an admin user is not allowed to login with a invalid credential
 	Given Admin user click on Login by entering "<username>" & "<password>"
