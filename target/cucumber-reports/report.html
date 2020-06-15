@@ -38,7 +38,8 @@
 		<!-- slideout menu -->
 		<ul id='slide-out' class='side-nav fixed hide-on-med-and-down'>
 			<li class='waves-effect active'><a href='#!' view='test-view' onclick="configureView(0);chartsView('test');"><i class='material-icons'>dashboard</i></a></li>
-						<li class='waves-effect'><a href='#!' onclick="configureView(-1);chartsView('dashboard');" view='dashboard-view'><i class='material-icons'>track_changes</i></i></a></li>
+						<li class='waves-effect'><a href='#!' view='exception-view' onclick="configureView(2)"><i class='material-icons'>bug_report</i></a></li>
+			<li class='waves-effect'><a href='#!' onclick="configureView(-1);chartsView('dashboard');" view='dashboard-view'><i class='material-icons'>track_changes</i></i></a></li>
 		</ul>
 
 		<!-- report name -->
@@ -51,7 +52,7 @@
 		<ul id='nav-mobile' class='right hide-on-med-and-down nav-right'>
 			<li>
                 <a href='#!'>
-                    <span class='label suite-start-time blue darken-3'>May 26, 2020 04:44:59 PM</span>
+                    <span class='label suite-start-time blue darken-3'>Jun 9, 2020 08:51:09 AM</span>
 				</a>
 			</li>
 			<li>
@@ -77,6 +78,8 @@
 				</a>
 				<ul id='tests-toggle' class='dropdown-content'>
 											<li status='pass'><a href='#!'>Pass <i class='material-icons green-text'>check_circle</i></a></li>
+						<li status='fail'><a href='#!'>Fail <i class='material-icons red-text'>cancel</i></a></li>
+						<li status='skip'><a href='#!'>Skip <i class='material-icons cyan-text'>redo</i></a></li>
 					<li class='divider'></li>
 					<li status='clear' clear='true'><a href='#!'>Clear Filters <i class='material-icons'>clear</i></a></li>
 				</ul>
@@ -127,10 +130,10 @@
 					<canvas id='parent-analysis' width='100' height='80'></canvas>
 				</div>
 				<div class='block text-small'>
-					<span class='tooltipped' data-position='top' data-tooltip='100%'><span class='strong'>1</span> feature(s) passed</span>
+					<span class='tooltipped' data-position='top' data-tooltip='66.667%'><span class='strong'>4</span> feature(s) passed</span>
 				</div>
 				<div class='block text-small'>
-					<span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> feature(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> others
+					<span class='strong tooltipped' data-position='top' data-tooltip='33.333%'>2</span> feature(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> others
 				</div>
 			</div>
 		</div>
@@ -142,10 +145,10 @@
 					<canvas id='child-analysis' width='100' height='80'></canvas>
 				</div>
 				<div class='block text-small'>
-					<span class='tooltipped' data-position='top' data-tooltip='100%'><span class='strong'>6</span> scenario(s) passed</span>
+					<span class='tooltipped' data-position='top' data-tooltip='81.356%'><span class='strong'>48</span> scenario(s) passed</span>
 				</div>
 				<div class='block text-small'>
-					<span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> scenario(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> others
+					<span class='strong tooltipped' data-position='top' data-tooltip='18.644%'>11</span> scenario(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> others
 				</div>
 			</div>
 		</div>
@@ -157,10 +160,10 @@
 					<canvas id='grandchild-analysis' width='100' height='80'></canvas>
 				</div>
 				<div class='block text-small'>
-					<span class='tooltipped' data-position='top' data-tooltip='100%'><span class='strong'>12</span> step(s) passed</span>
+					<span class='tooltipped' data-position='top' data-tooltip='82.51%'><span class='strong'>217</span> step(s) passed</span>
 				</div>
 				<div class='block text-small'>
-					<span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> step(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> others
+					<span class='strong tooltipped' data-position='top' data-tooltip='4.183%'>11</span> step(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='13.308%'>35</span> others
 				</div>
 			</div>
 		</div>
@@ -176,19 +179,3054 @@
 				
 				<li class='test displayed active has-leaf pass' status='pass' bdd='true' test-id='1'>
 					<div class='test-heading'>
-						<span class='test-name'>RX Launch Feature</span>
-						<span class='test-time'>May 26, 2020 04:44:59 PM</span>
+						<span class='test-name'>RX Demand Partner page Validation</span>
+						<span class='test-time'>Jun 9, 2020 08:51:09 AM</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 					<div class='test-content hide'>
 <div class='scenario node' test-id='2' status='pass'>
-	<span class='duration right label'>0h 0m 17s+92ms</span>
+	<span class='duration right label'>0h 0m 21s+234ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to search Active Bidder by name  with admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='3' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='4' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Click on Demand Partner option</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='5' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then User is displayed with Demand page</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591672891033.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='6' status='pass'>
+	<span class='duration right label'>0h 0m 10s+454ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to search Active Bidder by name  with admin login</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='7' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='8' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Click on Demand Partner option</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='9' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on Active tab of demand page</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='10' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Search for the Bidder</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='11' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Assert the bidder details in user page table view</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591672902059.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='12' status='pass'>
+	<span class='duration right label'>0h 0m 7s+898ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to search Disabled Bidder by name  with admin login</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='13' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='14' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Click on Demand Partner option</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='15' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on disabled tab of demand page</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='16' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Search for the Bidder</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='17' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Assert the bidder details in user page table view</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591672910522.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active has-leaf pass' status='pass' bdd='true' test-id='18'>
+					<div class='test-heading'>
+						<span class='test-name'>Profile page Validation</span>
+						<span class='test-time'>Jun 9, 2020 08:51:50 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='scenario node' test-id='19' status='pass'>
+	<span class='duration right label'>0h 0m 6s+901ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if admin user is displayed with e-mail,Role,change password and option update password.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='20' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='21' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When navigated to profile</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='22' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then admin user displayed with his e-mail,Role,change password and option Update password</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591672917979.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='23' status='pass'>
+	<span class='duration right label'>0h 0m 12s+144ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if admin user can change password by providing valid current password</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='24' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='25' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When User is allowed to Change password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='26' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Change password should be success</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='27' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then User is able to login with new password</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591672930721.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='28' status='pass'>
+	<span class='duration right label'>0h 0m 7s+478ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if admin user can't change password by providing invalid current password.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='29' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='30' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When user is enter invalid current password to Change password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='31' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Change password should fail</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591672938727.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='32' status='pass'>
+	<span class='duration right label'>0h 0m 6s+359ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if admin user can't change password by providing miss-match of New Password and Confirmation password.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='33' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='34' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When user is enter miss-match of New Password and Confirmation password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='35' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then user is displayed with miss-match of New Password and Confirmation password</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591672945638.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active has-leaf pass' status='pass' bdd='true' test-id='36'>
+					<div class='test-heading'>
+						<span class='test-name'>Publisher page validation</span>
+						<span class='test-time'>Jun 9, 2020 08:52:25 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='scenario node' test-id='37' status='pass'>
+	<span class='duration right label'>0h 0m 5s+641ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if admin user displayed with sub menu Publisher,Seats and Users for accounts in menu.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='38' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='39' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Check for option publisher ,seats and users.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='40' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Publisher ,Seats and user options are displayed under Account.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591672951874.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='41' status='pass'>
+	<span class='duration right label'>0h 0m 8s+18ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if admin user displayed publisiher page on clicking publisher menu.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='42' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='43' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Click on publisher option under account.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='44' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Publisher page should display.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591672960506.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='45' status='pass'>
+	<span class='duration right label'>0h 0m 16s+415ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to create the Individual publisher with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='46' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='47' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Click on create publisher and enter form for individual publisher.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='48' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Individual publisher is created successfully .</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='49' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Individual publisher is reflects publisher list .</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591672977485.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='50' status='pass'>
+	<span class='duration right label'>0h 0m 16s+476ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to create the Corporation publisher with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='51' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='52' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Click on create publisher and enter form for corporation publisher.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='53' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then corporation publisher is created successfully .</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='54' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then corporation publisher is reflects publisher list .</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591672994553.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='55' status='pass'>
+	<span class='duration right label'>0h 0m 20s+972ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to edit the publisher with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='56' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='57' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Edit the publisher by selecting the existing publisher .</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='58' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then publisher is edited successfully .</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='59' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Edit details are reflecting in publisher list .</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591673016095.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='60' status='pass'>
+	<span class='duration right label'>0h 0m 14s+285ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to disable the publisher with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='61' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='62' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Click on disable by selecting publisher for disable publisher</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='63' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Disabled publisher is displayed in disabled tab .</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591673030981.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='64' status='pass'>
+	<span class='duration right label'>0h 0m 14s+573ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to enable the publisher with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='65' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='66' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Click on Enable by selecting publisher from disabled</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='67' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Enabled publisher is displayed in Active tab .</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591673046167.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='68' status='pass'>
+	<span class='duration right label'>0h 0m 9s+510ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is not able to create the publisher without entering mandatory fields with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='69' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='70' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Click on create publisher and don't fill the field values.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='71' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then use should be displayed with field in-line mandatory error message.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591673056302.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='72' status='pass'>
+	<span class='duration right label'>0h 0m 5s+706ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to search enabled publisher in the active tab with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='73' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='74' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Goto Active tab and search for the publisher.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='75' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Searched result display the publisher.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591673062591.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='76' status='pass'>
+	<span class='duration right label'>0h 0m 5s+600ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to search disabled publisher in the disabled tab with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='77' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='78' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Goto Disabled tab and search for the publisher.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='79' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Searched result display the publisher.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591673068795.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active has-leaf fail' status='fail' bdd='true' test-id='80'>
+					<div class='test-heading'>
+						<span class='test-name'>Seats page validation</span>
+						<span class='test-time'>Jun 9, 2020 08:54:28 AM</span>
+						<span class='test-status right fail'>fail</span>
+					</div>
+					<div class='test-content hide'>
+<div class='scenario node' test-id='81' status='pass'>
+	<span class='duration right label'>0h 0m 7s+335ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is displayed with seats list page on clicking seats with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='82' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='83' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on Seat option under accounts.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='84' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then user displayed with seats page.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591673076714.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='85' status='pass'>
+	<span class='duration right label'>0h 0m 8s+15ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to search the Active Seat with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='86' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='87' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on Active tab and search for Seat</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='88' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Searched result display the seat</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591673085278.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='89' status='pass'>
+	<span class='duration right label'>0h 0m 8s+645ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to search the Inactive Seat with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='90' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='91' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on Inactive tab and search for Seat</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='92' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Searched result display the seat</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591673094475.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='93' status='pass'>
+	<span class='duration right label'>0h 0m 8s+917ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to search the paused Seat with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='94' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='95' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on paused tab and search for Seat</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='96' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Searched result display the seat</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591673103942.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='97' status='fail'>
+	<span class='duration right label'>0h 18m 24s+45ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to create the Active Seat with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='98' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='99' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Click on create seat button.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='100' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Fill the Active create seat page .</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='101' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on Save and close the create seat page</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='102' class='node then fail' status='fail'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Navigate to active create seat page and validate the filled data.</span>
+				<div class='pre'><textarea>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for text ('Test Seatq16zq') to be present in element [[ChromeDriver: chrome on MAC (cd0dcb768a6a98af56d396260dcac2ed)] -> xpath: //table/tbody/tr[1]/td[3]/span/a] (tried for 1000 second(s) with 500 milliseconds interval)
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.support.events.EventFiringWebDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:56116}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: cd0dcb768a6a98af56d396260dcac2ed
+	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:81)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:271)
+	at RXPages.RXSeatsPage.getTheSeatIdandClickCheckBox(RXSeatsPage.java:379)
+	at stepDefinitions.SeatsPageStepsDefinition.navigate_to_create_seat_page_and_validate_the_filled_data(SeatsPageStepsDefinition.java:433)
+	at ✽.Then Navigate to active create seat page and validate the filled data.(RXSeats.feature:27)
+</textarea></div>
+			
+		</li>
+		<li test-id='103' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Validate the created seat data reflects in the Active tab.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591674223570.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>skipped</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='104' status='fail'>
+	<span class='duration right label'>0h 8m 18s+185ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to create the Inactive Seat with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='105' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='106' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Click on create seat button.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='107' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Fill the Inactive create seat page .</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='108' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on Save and close the create seat page</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='109' class='node then fail' status='fail'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Navigate to Inactive create seat page and validate the filled data.</span>
+				<div class='pre'><pre>org.openqa.selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=83.0.4103.97)
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:56214}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 5ad78e7be7e541d14da3e226e2612270
+*** Element info: {Using=xpath, value=//table/tbody/tr[1]/td[3]/span/a}
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
+	at jdk.internal.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.lambda$new$1(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy20.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:186)
+	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+	at com.sun.proxy.$Proxy23.getText(Unknown Source)
+	at org.openqa.selenium.support.ui.ExpectedConditions$12.apply(ExpectedConditions.java:354)
+	at org.openqa.selenium.support.ui.ExpectedConditions$12.apply(ExpectedConditions.java:350)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:248)
+	at RXPages.RXSeatsPage.getTheSeatIdandClickCheckBox(RXSeatsPage.java:379)
+	at stepDefinitions.SeatsPageStepsDefinition.navigate_to_Inactive_create_seat_page_and_validate_the_filled_data(SeatsPageStepsDefinition.java:534)
+	at ✽.Then Navigate to Inactive create seat page and validate the filled data.(RXSeats.feature:35)
+</pre></div>
+			
+		</li>
+		<li test-id='110' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Validate the created seat data reflects in the Inactive tab.</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='111' status='fail'>
+	<span class='duration right label'>0h 17m 17s+23ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to create the disabled Seat with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='112' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='113' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Click on create seat button.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='114' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Fill the disabled create seat page .</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='115' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on Save and close the create seat page</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='116' class='node then fail' status='fail'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Navigate to disabled create seat page and validate the filled data.</span>
+				<div class='pre'><textarea>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for text ('Test Seat9j5v2') to be present in element [[ChromeDriver: chrome on MAC (1d18907684dd51e19f8701c0198e8eab)] -> xpath: //table/tbody/tr[1]/td[3]/span/a] (tried for 1000 second(s) with 500 milliseconds interval)
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.support.events.EventFiringWebDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:59867}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 1d18907684dd51e19f8701c0198e8eab
+	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:81)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:271)
+	at RXPages.RXSeatsPage.getTheSeatIdandClickCheckBox(RXSeatsPage.java:379)
+	at stepDefinitions.SeatsPageStepsDefinition.navigate_to_disabled_create_seat_page_and_validate_the_filled_data(SeatsPageStepsDefinition.java:627)
+	at ✽.Then Navigate to disabled create seat page and validate the filled data.(RXSeats.feature:43)
+</textarea></div>
+			
+		</li>
+		<li test-id='117' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Validate the created seat data reflects in the disabled tab.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591675760131.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>skipped</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='118' status='fail'>
+	<span class='duration right label'>0h 1m 3s+963ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to edit the Active Seat details with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='119' class='node given fail' status='fail'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class="logo"]"}
+  (Session info: chrome=83.0.4103.97)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:60556}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: ae51e8ccf087b42be6402f36560c42cc
+*** Element info: {Using=xpath, value=//div[@class="logo"]}
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
+	at jdk.internal.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.lambda$new$1(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy20.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:186)
+	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+	at com.sun.proxy.$Proxy23.isDisplayed(Unknown Source)
+	at RXPages.PublisherListPage.logodisplayed(PublisherListPage.java:192)
+	at stepDefinitions.ProfileStepDefinition.admin_user_login_to_RX_UI_with_valid_username_and_password(ProfileStepDefinition.java:48)
+	at ✽.Given admin user login to RX UI with valid username and password(RXSeats.feature:47)
+</pre></div>
+			
+		</li>
+		<li test-id='120' class='node when skip' status='skip'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Select the existing Active seat and click on edit.</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='121' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Fill the Active create seat page .</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='122' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on Save and close the create seat page</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='123' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Navigate to Active create seat and validate the filled data.</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='124' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Validate the created seat data reflects in the Active tab.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591675825246.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>skipped</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='125' status='fail'>
+	<span class='duration right label'>0h 1m 3s+496ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to edit the Inactive Seat details with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='126' class='node given fail' status='fail'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class="logo"]"}
+  (Session info: chrome=83.0.4103.97)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:60607}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 5032bfe3daefbdceb7ef95ace03cb4ba
+*** Element info: {Using=xpath, value=//div[@class="logo"]}
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
+	at jdk.internal.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.lambda$new$1(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy20.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:186)
+	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+	at com.sun.proxy.$Proxy23.isDisplayed(Unknown Source)
+	at RXPages.PublisherListPage.logodisplayed(PublisherListPage.java:192)
+	at stepDefinitions.ProfileStepDefinition.admin_user_login_to_RX_UI_with_valid_username_and_password(ProfileStepDefinition.java:48)
+	at ✽.Given admin user login to RX UI with valid username and password(RXSeats.feature:55)
+</pre></div>
+			
+		</li>
+		<li test-id='127' class='node when skip' status='skip'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Select the existing Inactive seat and click on edit.</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='128' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Fill the Inactive create seat page .</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='129' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on Save and close the create seat page</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='130' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Navigate to Inactive create seat and validate the filled data.</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='131' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Validate the created seat data reflects in the Inactive tab.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591675889809.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>skipped</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='132' status='fail'>
+	<span class='duration right label'>0h 1m 4s+80ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to edit the disabled Seat details with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='133' class='node given fail' status='fail'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class="logo"]"}
+  (Session info: chrome=83.0.4103.97)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:60649}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 9cbf6f6ff61a42ad82fa66c7e04ecbf9
+*** Element info: {Using=xpath, value=//div[@class="logo"]}
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
+	at jdk.internal.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.lambda$new$1(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy20.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:186)
+	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+	at com.sun.proxy.$Proxy23.isDisplayed(Unknown Source)
+	at RXPages.PublisherListPage.logodisplayed(PublisherListPage.java:192)
+	at stepDefinitions.ProfileStepDefinition.admin_user_login_to_RX_UI_with_valid_username_and_password(ProfileStepDefinition.java:48)
+	at ✽.Given admin user login to RX UI with valid username and password(RXSeats.feature:63)
+</pre></div>
+			
+		</li>
+		<li test-id='134' class='node when skip' status='skip'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Select the existing disabled seat and click on edit.</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='135' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Fill the disabled create seat page .</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='136' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on Save and close the create seat page</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='137' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Navigate to disabled create seat and validate the filled data.</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='138' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Validate the created seat data reflects in the disabled tab.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591675955066.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>skipped</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='139' status='fail'>
+	<span class='duration right label'>0h 1m 3s+899ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to update the Active Seat into Inactive seat with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='140' class='node given fail' status='fail'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class="logo"]"}
+  (Session info: chrome=83.0.4103.97)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:60701}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: a7c1c04b05dce08287cd6a068a3e41fe
+*** Element info: {Using=xpath, value=//div[@class="logo"]}
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
+	at jdk.internal.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.lambda$new$1(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy20.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:186)
+	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+	at com.sun.proxy.$Proxy23.isDisplayed(Unknown Source)
+	at RXPages.PublisherListPage.logodisplayed(PublisherListPage.java:192)
+	at stepDefinitions.ProfileStepDefinition.admin_user_login_to_RX_UI_with_valid_username_and_password(ProfileStepDefinition.java:48)
+	at ✽.Given admin user login to RX UI with valid username and password(RXSeats.feature:71)
+</pre></div>
+			
+		</li>
+		<li test-id='141' class='node when skip' status='skip'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Select the active seat for modify</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='142' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then modify the selected seat to Deactivate</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591676020155.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>skipped</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='143' status='fail'>
+	<span class='duration right label'>0h 1m 3s+727ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to update the Inactive Seat into Disabled seat with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='144' class='node given fail' status='fail'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class="logo"]"}
+  (Session info: chrome=83.0.4103.97)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:60745}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: e02c0592f803ceeeda736e54f9307123
+*** Element info: {Using=xpath, value=//div[@class="logo"]}
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
+	at jdk.internal.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.lambda$new$1(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy20.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:186)
+	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+	at com.sun.proxy.$Proxy23.isDisplayed(Unknown Source)
+	at RXPages.PublisherListPage.logodisplayed(PublisherListPage.java:192)
+	at stepDefinitions.ProfileStepDefinition.admin_user_login_to_RX_UI_with_valid_username_and_password(ProfileStepDefinition.java:48)
+	at ✽.Given admin user login to RX UI with valid username and password(RXSeats.feature:76)
+</pre></div>
+			
+		</li>
+		<li test-id='145' class='node when skip' status='skip'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Select the Inactive seat for modify</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='146' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then modify the selected seat to Disabled or Paused</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591676085077.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>skipped</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='147' status='pass'>
+	<span class='duration right label'>0h 2m 2s+838ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to update the Disabled or Paused Seat into Active seat with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='148' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='149' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Select the Disabled or paused seat for modify</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='150' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then modify the selected seat to Active</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591676208716.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='151' status='pass'>
+	<span class='duration right label'>0h 0m 26s+179ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to update the Active Seat into Disabled seat with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='152' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='153' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Select the active seat for modify</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='154' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then modify the selected seat to Disabled or paused</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591676235535.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='155' status='pass'>
+	<span class='duration right label'>0h 0m 31s+87ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to update the Disabled or Paused Seat into Inactive or Deactivate seat with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='156' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='157' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Select the Disabled or paused seat for modify</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='158' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then modify the selected seat to Inactive</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591676267435.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='159' status='fail'>
+	<span class='duration right label'>0h 1m 3s+308ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to update the Inactive Seat into Active seat with admin role.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='160' class='node given fail' status='fail'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class="logo"]"}
+  (Session info: chrome=83.0.4103.97)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:60930}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: fc1c8b092df7d1aacb6c018b15d45b90
+*** Element info: {Using=xpath, value=//div[@class="logo"]}
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
+	at jdk.internal.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.lambda$new$1(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy20.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:186)
+	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+	at com.sun.proxy.$Proxy23.isDisplayed(Unknown Source)
+	at RXPages.PublisherListPage.logodisplayed(PublisherListPage.java:192)
+	at stepDefinitions.ProfileStepDefinition.admin_user_login_to_RX_UI_with_valid_username_and_password(ProfileStepDefinition.java:48)
+	at ✽.Given admin user login to RX UI with valid username and password(RXSeats.feature:99)
+</pre></div>
+			
+		</li>
+		<li test-id='161' class='node when skip' status='skip'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When Select the Inactive seat for modify</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='162' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then modify the selected seat to Activate</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591676331816.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>skipped</div>
+			
+		</li>
+	</ul>
+</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active has-leaf fail' status='fail' bdd='true' test-id='163'>
+					<div class='test-heading'>
+						<span class='test-name'>RX Login page Validation</span>
+						<span class='test-time'>Jun 9, 2020 09:48:51 AM</span>
+						<span class='test-status right fail'>fail</span>
+					</div>
+					<div class='test-content hide'>
+<div class='scenario node' test-id='164' status='pass'>
+	<span class='duration right label'>0h 0m 14s+550ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is displayed with list of user accounts for admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='165' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='166' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='167' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then user displayed with User page.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591676346986.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='168' status='pass'>
+	<span class='duration right label'>0h 0m 15s+409ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is unable to create new user account without filling the fields from  admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='169' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='170' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='171' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on create user.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='172' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Don't fill the create user page and click save</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='173' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert that the mandatory field message displayed at field in the create user page</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591676363115.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='174' status='pass'>
+	<span class='duration right label'>0h 0m 21s+70ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to create new Admin account from admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='175' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='176' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='177' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on create user.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='178' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then fill the create Admin user page</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='179' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on Save</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='180' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new Admin user for filled values are displaying in create user page</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='181' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new user details in user page table view.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591676384786.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='182' status='pass'>
+	<span class='duration right label'>0h 0m 24s+169ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to edit active Admin account from admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='183' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='184' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='185' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on active tab and select one of the admin user.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='186' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on edit button.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='187' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Edit the Admin user</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='188' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on Save edited user</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='189' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the edited Admin user for filled values are displaying in create user page</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='190' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new user details in user page table view.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591676409550.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='191' status='pass'>
+	<span class='duration right label'>0h 0m 23s+587ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to modify Active Admin account into active publisher account from admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='192' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='193' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='194' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on active tab and select one of the admin user.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='195' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on edit button.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='196' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Edit the Admin user to modify it into Publisher</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='197' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on Save modify admin user</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='198' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the edited Publisher user for filled values are displaying in create user page</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='199' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new user details in user page table view.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591676433720.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='200' status='pass'>
+	<span class='duration right label'>0h 0m 23s+15ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to modify Active Publisher account into active Admin account from admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='201' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='202' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='203' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on active tab and select one of the Publisher user.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='204' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on edit button.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='205' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Edit the Publisher user to modify it into Admin</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='206' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on Save modify Publisher user</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='207' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the edited Admin user for filled values are displaying in create user page</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='208' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new user details in user page table view.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591676457297.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='209' status='pass'>
+	<span class='duration right label'>0h 0m 24s+89ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to disable the Active Admin account with admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='210' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='211' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='212' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on active tab and select one of the admin user.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='213' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on disable user button and navigate to disabled tab</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='214' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new user details in user page table view.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591676481983.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='215' status='fail'>
+	<span class='duration right label'>0h 1m 2s+767ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to search disabled Admin account with admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='216' class='node given fail' status='fail'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class="logo"]"}
+  (Session info: chrome=83.0.4103.97)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:61205}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 77262825d39a5b683c2423ffe366ca06
+*** Element info: {Using=xpath, value=//div[@class="logo"]}
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
+	at jdk.internal.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.lambda$new$1(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy20.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:186)
+	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+	at com.sun.proxy.$Proxy23.isDisplayed(Unknown Source)
+	at RXPages.PublisherListPage.logodisplayed(PublisherListPage.java:192)
+	at stepDefinitions.ProfileStepDefinition.admin_user_login_to_RX_UI_with_valid_username_and_password(ProfileStepDefinition.java:48)
+	at ✽.Given admin user login to RX UI with valid username and password(RXUsers.feature:61)
+</pre></div>
+			
+		</li>
+		<li test-id='217' class='node when skip' status='skip'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='218' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on disabled tab and select one of the Admin user.</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='219' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then search for the user</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='220' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new user details in user page table view.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591676545809.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>skipped</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='221' status='fail'>
+	<span class='duration right label'>0h 1m 3s+370ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to edit disabled admin account from admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='222' class='node given fail' status='fail'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class="logo"]"}
+  (Session info: chrome=83.0.4103.97)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:61252}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 5ecd6d6c0f7a817874d0a6503efd6497
+*** Element info: {Using=xpath, value=//div[@class="logo"]}
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
+	at jdk.internal.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.lambda$new$1(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy20.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:186)
+	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+	at com.sun.proxy.$Proxy23.isDisplayed(Unknown Source)
+	at RXPages.PublisherListPage.logodisplayed(PublisherListPage.java:192)
+	at stepDefinitions.ProfileStepDefinition.admin_user_login_to_RX_UI_with_valid_username_and_password(ProfileStepDefinition.java:48)
+	at ✽.Given admin user login to RX UI with valid username and password(RXUsers.feature:68)
+</pre></div>
+			
+		</li>
+		<li test-id='223' class='node when skip' status='skip'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='224' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on disabled tab and select one of the Admin user.</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='225' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on edit button.</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='226' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Edit the Admin user</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='227' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on Save edited user</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='228' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the edited Admin user for filled values are displaying in create user page</span>
+				<div class='pre'>skipped</div>
+			
+		</li>
+		<li test-id='229' class='node then skip' status='skip'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new user details in user page table view.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591676610327.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>skipped</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='230' status='pass'>
+	<span class='duration right label'>0h 0m 23s+772ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to modify disabled Admin account into disabled publisher account from admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='231' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='232' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='233' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on disabled tab and select one of the Admin user.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='234' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on edit button.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='235' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Edit the Admin user to modify it into Publisher</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='236' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on Save modify admin user</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='237' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the edited Publisher user for filled values are displaying in create user page</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='238' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new user details in user page table view.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591676634646.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='239' status='pass'>
+	<span class='duration right label'>0h 0m 21s+965ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to modify disabled publisher account into disabled admin account from admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='240' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='241' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='242' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on disabled tab and select one of the Publisher user.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='243' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on edit button.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='244' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Edit the Publisher user to modify it into Admin</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='245' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on Save modify Publisher user</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='246' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the edited Admin user for filled values are displaying in create user page</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='247' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new user details in user page table view.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591676657194.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='248' status='pass'>
+	<span class='duration right label'>0h 0m 24s+757ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to Activate the disabled Admin account with admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='249' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='250' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='251' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on disabled tab and select one of the Admin user.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='252' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on Enable user button and navigate to Activate tab</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='253' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new user details in user page table view.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591676682578.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='254' status='pass'>
+	<span class='duration right label'>0h 0m 21s+308ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to create new publisher account from  admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='255' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='256' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='257' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on create user.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='258' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then fill the create Publisher user page</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='259' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on Save</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='260' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new Publisher user for filled values are displaying in create user page</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='261' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new user details in user page table view.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591676704471.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='262' status='pass'>
+	<span class='duration right label'>0h 24m 11s+51ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to edit active publisher account from admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='263' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='264' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='265' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on active tab and select one of the Publisher user.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='266' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on edit button.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='267' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Edit the publisher user</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='268' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on Save edited user</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='269' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the edited Publisher user for filled values are displaying in create user page</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='270' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new user details in user page table view.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591678156140.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='271' status='pass'>
+	<span class='duration right label'>0h 0m 26s+623ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to disable the Active Publisher account with admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='272' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='273' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='274' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on active tab and select one of the Publisher user.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='275' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on disable user button and navigate to disabled tab</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='276' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new user details in user page table view.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591678183433.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='277' status='pass'>
+	<span class='duration right label'>0h 0m 15s+369ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to search disabled publisher account with admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='278' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='279' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='280' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on disabled tab and select one of the Publisher user.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='281' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then search for the user</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='282' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new user details in user page table view.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591678199413.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='283' status='pass'>
+	<span class='duration right label'>0h 0m 27s+163ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to Edit Disabled publisher account from publisher login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='284' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='285' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='286' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on disabled tab and select one of the Publisher user.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='287' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on edit button.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='288' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Edit the publisher user</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='289' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then Click on Save edited user</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='290' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the edited Publisher user for filled values are displaying in create user page</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='291' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new user details in user page table view.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591678227172.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='292' status='pass'>
+	<span class='duration right label'>0h 0m 34s+122ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to Activate the disabled Publisher account with admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='293' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='294' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='295' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on disabled tab and select one of the Publisher user.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='296' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on Enable user button and navigate to Activate tab</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='297' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new user details in user page table view.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591678261947.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='298' status='pass'>
+	<span class='duration right label'>0h 0m 15s+66ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to search active Admin account with admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='299' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='300' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='301' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on active tab and select one of the admin user.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='302' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then search for the user</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='303' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new user details in user page table view.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591678277594.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+<div class='scenario node' test-id='304' status='pass'>
+	<span class='duration right label'>0h 0m 14s+817ms</span>
+	<div class='desc'>
+		<b>Scenario</b>
+		<span class="desc-text">Verify if user is able to search active publisher account with admin login.</span>
+	</div>
+	<ul class='steps'>
+		<li test-id='305' class='node given pass' status='pass'>
+			
+			<b>Given</b>
+			
+			<span class="bdd-step-name">Given admin user login to RX UI with valid username and password</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='306' class='node when pass' status='pass'>
+			
+			<b>When</b>
+			
+			<span class="bdd-step-name">When click on User option under accounts.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='307' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then click on active tab and select one of the Publisher user.</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='308' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then search for the user</span>
+				<div class='pre'>passed</div>
+			
+		</li>
+		<li test-id='309' class='node then pass' status='pass'>
+			
+			<b>Then</b>
+			
+			<span class="bdd-step-name">Then assert the new user details in user page table view.</span>
+			<ul class='screenshots right'>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591678293040.png"><i class='material-icons'>panorama</i></a></li>
+			</ul>
+				<div class='pre'>passed</div>
+			
+		</li>
+	</ul>
+</div>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active has-leaf pass' status='pass' bdd='true' test-id='310'>
+					<div class='test-heading'>
+						<span class='test-name'>RX Login page Validation</span>
+						<span class='test-time'>Jun 9, 2020 10:21:33 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='scenario node' test-id='311' status='pass'>
+	<span class='duration right label'>0h 0m 12s+56ms</span>
 	<div class='desc'>
 		<b>Scenario</b>
 		<span class="desc-text">Verify if an admin user will be able to login with a valid username and valid password</span>
 	</div>
 	<ul class='steps'>
-		<li test-id='3' class='node given pass' status='pass'>
+		<li test-id='312' class='node given pass' status='pass'>
 			
 			<b>Given</b>
 			
@@ -196,121 +3234,121 @@
 				<div class='pre'>passed</div>
 			
 		</li>
-		<li test-id='4' class='node then pass' status='pass'>
+		<li test-id='313' class='node then pass' status='pass'>
 			
 			<b>Then</b>
 			
 			<span class="bdd-step-name">Then login should be successful and user is displayed the publisher page with Rakuten Exchange</span>
 			<ul class='screenshots right'>
-				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITest/Screenshot/1590491717547.png"><i class='material-icons'>panorama</i></a></li>
+				<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591678305726.png"><i class='material-icons'>panorama</i></a></li>
 			</ul>
 				<div class='pre'>passed</div>
 			
 		</li>
 	</ul>
 </div>
-<div class='scenariooutline node' test-id='5' status='pass'>
-	<span class='duration right label'>0h 0m 47s+841ms</span>
+<div class='scenariooutline node' test-id='314' status='pass'>
+	<span class='duration right label'>0h 0m 47s+194ms</span>
 	<div class='desc'>
 		<b>ScenarioOutline</b>
 		<span class="desc-text">Verify if an admin user is not allowed to login with a invalid credential</span>
 	</div>
 	<ul class='steps'>
-		<li test-id='6' class='node scenario pass' status='pass'>
+		<li test-id='315' class='node scenario pass' status='pass'>
 			
 			<b>Scenario</b>
 			
 			<span class="bdd-step-name">Verify if an admin user is not allowed to login with a invalid credential</span>
 			
 				<ul class='steps'>
-					<li test-id='7' class='node given pass' status='pass'><b>Given</b>
+					<li test-id='316' class='node given pass' status='pass'><b>Given</b>
 						<span class="bdd-step-name">Given Admin user click on Login by entering "" & ""</span>
 							<div class='pre'>passed</div>
 					</li>
-					<li test-id='8' class='node then pass' status='pass'><b>Then</b>
+					<li test-id='317' class='node then pass' status='pass'><b>Then</b>
 						<span class="bdd-step-name">Then login should not be success</span>
 						<ul class='screenshots right'>
-							<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITest/Screenshot/1590491727700.png"><i class='material-icons'>panorama</i></a></li>
+							<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591678315089.png"><i class='material-icons'>panorama</i></a></li>
 						</ul>
 							<div class='pre'>passed</div>
 					</li>
 				</ul>
 		</li>
-		<li test-id='9' class='node scenario pass' status='pass'>
+		<li test-id='318' class='node scenario pass' status='pass'>
 			
 			<b>Scenario</b>
 			
 			<span class="bdd-step-name">Verify if an admin user is not allowed to login with a invalid credential</span>
 			
 				<ul class='steps'>
-					<li test-id='10' class='node given pass' status='pass'><b>Given</b>
+					<li test-id='319' class='node given pass' status='pass'><b>Given</b>
 						<span class="bdd-step-name">Given Admin user click on Login by entering "chandrashekhara.av@rakuten.com" & "Test@123"</span>
 							<div class='pre'>passed</div>
 					</li>
-					<li test-id='11' class='node then pass' status='pass'><b>Then</b>
+					<li test-id='320' class='node then pass' status='pass'><b>Then</b>
 						<span class="bdd-step-name">Then login should not be success</span>
 						<ul class='screenshots right'>
-							<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITest/Screenshot/1590491737859.png"><i class='material-icons'>panorama</i></a></li>
+							<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591678324876.png"><i class='material-icons'>panorama</i></a></li>
 						</ul>
 							<div class='pre'>passed</div>
 					</li>
 				</ul>
 		</li>
-		<li test-id='12' class='node scenario pass' status='pass'>
+		<li test-id='321' class='node scenario pass' status='pass'>
 			
 			<b>Scenario</b>
 			
 			<span class="bdd-step-name">Verify if an admin user is not allowed to login with a invalid credential</span>
 			
 				<ul class='steps'>
-					<li test-id='13' class='node given pass' status='pass'><b>Given</b>
+					<li test-id='322' class='node given pass' status='pass'><b>Given</b>
 						<span class="bdd-step-name">Given Admin user click on Login by entering "xyz@gmail.com" & "Password2"</span>
 							<div class='pre'>passed</div>
 					</li>
-					<li test-id='14' class='node then pass' status='pass'><b>Then</b>
+					<li test-id='323' class='node then pass' status='pass'><b>Then</b>
 						<span class="bdd-step-name">Then login should not be success</span>
 						<ul class='screenshots right'>
-							<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITest/Screenshot/1590491747212.png"><i class='material-icons'>panorama</i></a></li>
+							<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591678334782.png"><i class='material-icons'>panorama</i></a></li>
 						</ul>
 							<div class='pre'>passed</div>
 					</li>
 				</ul>
 		</li>
-		<li test-id='15' class='node scenario pass' status='pass'>
+		<li test-id='324' class='node scenario pass' status='pass'>
 			
 			<b>Scenario</b>
 			
 			<span class="bdd-step-name">Verify if an admin user is not allowed to login with a invalid credential</span>
 			
 				<ul class='steps'>
-					<li test-id='16' class='node given pass' status='pass'><b>Given</b>
+					<li test-id='325' class='node given pass' status='pass'><b>Given</b>
 						<span class="bdd-step-name">Given Admin user click on Login by entering "chandrashekhara.av@rakuten.com" & ""</span>
 							<div class='pre'>passed</div>
 					</li>
-					<li test-id='17' class='node then pass' status='pass'><b>Then</b>
+					<li test-id='326' class='node then pass' status='pass'><b>Then</b>
 						<span class="bdd-step-name">Then login should not be success</span>
 						<ul class='screenshots right'>
-							<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITest/Screenshot/1590491756942.png"><i class='material-icons'>panorama</i></a></li>
+							<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591678344898.png"><i class='material-icons'>panorama</i></a></li>
 						</ul>
 							<div class='pre'>passed</div>
 					</li>
 				</ul>
 		</li>
-		<li test-id='18' class='node scenario pass' status='pass'>
+		<li test-id='327' class='node scenario pass' status='pass'>
 			
 			<b>Scenario</b>
 			
 			<span class="bdd-step-name">Verify if an admin user is not allowed to login with a invalid credential</span>
 			
 				<ul class='steps'>
-					<li test-id='19' class='node given pass' status='pass'><b>Given</b>
+					<li test-id='328' class='node given pass' status='pass'><b>Given</b>
 						<span class="bdd-step-name">Given Admin user click on Login by entering "" & "Password2"</span>
 							<div class='pre'>passed</div>
 					</li>
-					<li test-id='20' class='node then pass' status='pass'><b>Then</b>
+					<li test-id='329' class='node then pass' status='pass'><b>Then</b>
 						<span class="bdd-step-name">Then login should not be success</span>
 						<ul class='screenshots right'>
-							<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITest/Screenshot/1590491766999.png"><i class='material-icons'>panorama</i></a></li>
+							<li><a data-featherlight="image" href="/Users/chandrashekhara.av/UITesttarget/Screenshot/1591678354536.png"><i class='material-icons'>panorama</i></a></li>
 						</ul>
 							<div class='pre'>passed</div>
 					</li>
@@ -346,6 +3384,498 @@
 </div>
 <!-- test view -->
 <!-- category view -->
+<div id='exception-view' class='view hide'>
+
+    <section id='controls'>
+        <div class='controls grey lighten-4'>
+            <!-- search -->
+            <div class='chip transparent' alt='Search Tests' title='Search Tests'>
+                <a href="#" class='search-div'>
+                    <i class='material-icons'>search</i> Search
+                </a>
+
+                <div class='input-field left hide'>
+                    <input id='search-tests' type='text' class='validate browser-default' placeholder='Search Tests...'>
+                </div>
+
+            </div>
+            <!-- search -->
+        </div>
+    </section>
+
+    <div class='subview-left left'>
+
+        <div class='view-summary'>
+            <h5>Exceptions</h3>
+                <ul id='exception-collection' class='exception-collection'>
+
+                        <li class='exception displayed active'>
+                            <div class='exception-heading'>
+                                <span class='exception-name'>org.openqa.selenium.TimeoutException</span>
+                                <span class='exception-count right'><span class='label red lighten-1 white-text'>2</span></span>
+                            </div>
+                            <div class='exception-content hide'>
+                                <div class='exception-tests'>
+                                    <table class='bordered table-results'>
+                                        <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                            <th>TestName</th>
+                                            <th>Status</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                                    <tr>
+                                                        <td>Jun 9, 2020 08:55:21 AM</td>
+                                                        <td class='linked' test-id='102'>Seats page validation.Verify if user is able to create the Active Seat with admin role..Then Navigate to active create seat page and validate the filled data.</td>
+                                                        <td><pre><textarea>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for text ('Test Seatq16zq') to be present in element [[ChromeDriver: chrome on MAC (cd0dcb768a6a98af56d396260dcac2ed)] -> xpath: //table/tbody/tr[1]/td[3]/span/a] (tried for 1000 second(s) with 500 milliseconds interval)
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.support.events.EventFiringWebDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:56116}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: cd0dcb768a6a98af56d396260dcac2ed
+	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:81)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:271)
+	at RXPages.RXSeatsPage.getTheSeatIdandClickCheckBox(RXSeatsPage.java:379)
+	at stepDefinitions.SeatsPageStepsDefinition.navigate_to_create_seat_page_and_validate_the_filled_data(SeatsPageStepsDefinition.java:433)
+	at ✽.Then Navigate to active create seat page and validate the filled data.(RXSeats.feature:27)
+</textarea></pre></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Jun 9, 2020 09:22:35 AM</td>
+                                                        <td class='linked' test-id='116'>Seats page validation.Verify if user is able to create the disabled Seat with admin role..Then Navigate to disabled create seat page and validate the filled data.</td>
+                                                        <td><pre><textarea>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for text ('Test Seat9j5v2') to be present in element [[ChromeDriver: chrome on MAC (1d18907684dd51e19f8701c0198e8eab)] -> xpath: //table/tbody/tr[1]/td[3]/span/a] (tried for 1000 second(s) with 500 milliseconds interval)
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.support.events.EventFiringWebDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:59867}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 1d18907684dd51e19f8701c0198e8eab
+	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:81)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:271)
+	at RXPages.RXSeatsPage.getTheSeatIdandClickCheckBox(RXSeatsPage.java:379)
+	at stepDefinitions.SeatsPageStepsDefinition.navigate_to_disabled_create_seat_page_and_validate_the_filled_data(SeatsPageStepsDefinition.java:627)
+	at ✽.Then Navigate to disabled create seat page and validate the filled data.(RXSeats.feature:43)
+</textarea></pre></td>
+                                                    </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                        <li class='exception displayed active'>
+                            <div class='exception-heading'>
+                                <span class='exception-name'>org.openqa.selenium.WebDriverException</span>
+                                <span class='exception-count right'><span class='label red lighten-1 white-text'>1</span></span>
+                            </div>
+                            <div class='exception-content hide'>
+                                <div class='exception-tests'>
+                                    <table class='bordered table-results'>
+                                        <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                            <th>TestName</th>
+                                            <th>Status</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                                    <tr>
+                                                        <td>Jun 9, 2020 09:14:04 AM</td>
+                                                        <td class='linked' test-id='109'>Seats page validation.Verify if user is able to create the Inactive Seat with admin role..Then Navigate to Inactive create seat page and validate the filled data.</td>
+                                                        <td><pre><pre>org.openqa.selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=83.0.4103.97)
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:56214}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 5ad78e7be7e541d14da3e226e2612270
+*** Element info: {Using=xpath, value=//table/tbody/tr[1]/td[3]/span/a}
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
+	at jdk.internal.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.lambda$new$1(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy20.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:186)
+	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+	at com.sun.proxy.$Proxy23.getText(Unknown Source)
+	at org.openqa.selenium.support.ui.ExpectedConditions$12.apply(ExpectedConditions.java:354)
+	at org.openqa.selenium.support.ui.ExpectedConditions$12.apply(ExpectedConditions.java:350)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:248)
+	at RXPages.RXSeatsPage.getTheSeatIdandClickCheckBox(RXSeatsPage.java:379)
+	at stepDefinitions.SeatsPageStepsDefinition.navigate_to_Inactive_create_seat_page_and_validate_the_filled_data(SeatsPageStepsDefinition.java:534)
+	at ✽.Then Navigate to Inactive create seat page and validate the filled data.(RXSeats.feature:35)
+</pre></pre></td>
+                                                    </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                        <li class='exception displayed active'>
+                            <div class='exception-heading'>
+                                <span class='exception-name'>org.openqa.selenium.NoSuchElementException</span>
+                                <span class='exception-count right'><span class='label red lighten-1 white-text'>8</span></span>
+                            </div>
+                            <div class='exception-content hide'>
+                                <div class='exception-tests'>
+                                    <table class='bordered table-results'>
+                                        <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                            <th>TestName</th>
+                                            <th>Status</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                                    <tr>
+                                                        <td>Jun 9, 2020 09:39:28 AM</td>
+                                                        <td class='linked' test-id='119'>Seats page validation.Verify if user is able to edit the Active Seat details with admin role..Given admin user login to RX UI with valid username and password</td>
+                                                        <td><pre><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class="logo"]"}
+  (Session info: chrome=83.0.4103.97)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:60556}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: ae51e8ccf087b42be6402f36560c42cc
+*** Element info: {Using=xpath, value=//div[@class="logo"]}
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
+	at jdk.internal.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.lambda$new$1(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy20.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:186)
+	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+	at com.sun.proxy.$Proxy23.isDisplayed(Unknown Source)
+	at RXPages.PublisherListPage.logodisplayed(PublisherListPage.java:192)
+	at stepDefinitions.ProfileStepDefinition.admin_user_login_to_RX_UI_with_valid_username_and_password(ProfileStepDefinition.java:48)
+	at ✽.Given admin user login to RX UI with valid username and password(RXSeats.feature:47)
+</pre></pre></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Jun 9, 2020 09:40:33 AM</td>
+                                                        <td class='linked' test-id='126'>Seats page validation.Verify if user is able to edit the Inactive Seat details with admin role..Given admin user login to RX UI with valid username and password</td>
+                                                        <td><pre><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class="logo"]"}
+  (Session info: chrome=83.0.4103.97)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:60607}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 5032bfe3daefbdceb7ef95ace03cb4ba
+*** Element info: {Using=xpath, value=//div[@class="logo"]}
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
+	at jdk.internal.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.lambda$new$1(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy20.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:186)
+	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+	at com.sun.proxy.$Proxy23.isDisplayed(Unknown Source)
+	at RXPages.PublisherListPage.logodisplayed(PublisherListPage.java:192)
+	at stepDefinitions.ProfileStepDefinition.admin_user_login_to_RX_UI_with_valid_username_and_password(ProfileStepDefinition.java:48)
+	at ✽.Given admin user login to RX UI with valid username and password(RXSeats.feature:55)
+</pre></pre></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Jun 9, 2020 09:41:38 AM</td>
+                                                        <td class='linked' test-id='133'>Seats page validation.Verify if user is able to edit the disabled Seat details with admin role..Given admin user login to RX UI with valid username and password</td>
+                                                        <td><pre><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class="logo"]"}
+  (Session info: chrome=83.0.4103.97)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:60649}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 9cbf6f6ff61a42ad82fa66c7e04ecbf9
+*** Element info: {Using=xpath, value=//div[@class="logo"]}
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
+	at jdk.internal.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.lambda$new$1(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy20.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:186)
+	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+	at com.sun.proxy.$Proxy23.isDisplayed(Unknown Source)
+	at RXPages.PublisherListPage.logodisplayed(PublisherListPage.java:192)
+	at stepDefinitions.ProfileStepDefinition.admin_user_login_to_RX_UI_with_valid_username_and_password(ProfileStepDefinition.java:48)
+	at ✽.Given admin user login to RX UI with valid username and password(RXSeats.feature:63)
+</pre></pre></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Jun 9, 2020 09:42:43 AM</td>
+                                                        <td class='linked' test-id='140'>Seats page validation.Verify if user is able to update the Active Seat into Inactive seat with admin role..Given admin user login to RX UI with valid username and password</td>
+                                                        <td><pre><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class="logo"]"}
+  (Session info: chrome=83.0.4103.97)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:60701}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: a7c1c04b05dce08287cd6a068a3e41fe
+*** Element info: {Using=xpath, value=//div[@class="logo"]}
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
+	at jdk.internal.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.lambda$new$1(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy20.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:186)
+	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+	at com.sun.proxy.$Proxy23.isDisplayed(Unknown Source)
+	at RXPages.PublisherListPage.logodisplayed(PublisherListPage.java:192)
+	at stepDefinitions.ProfileStepDefinition.admin_user_login_to_RX_UI_with_valid_username_and_password(ProfileStepDefinition.java:48)
+	at ✽.Given admin user login to RX UI with valid username and password(RXSeats.feature:71)
+</pre></pre></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Jun 9, 2020 09:43:48 AM</td>
+                                                        <td class='linked' test-id='144'>Seats page validation.Verify if user is able to update the Inactive Seat into Disabled seat with admin role..Given admin user login to RX UI with valid username and password</td>
+                                                        <td><pre><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class="logo"]"}
+  (Session info: chrome=83.0.4103.97)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:60745}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: e02c0592f803ceeeda736e54f9307123
+*** Element info: {Using=xpath, value=//div[@class="logo"]}
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
+	at jdk.internal.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.lambda$new$1(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy20.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:186)
+	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+	at com.sun.proxy.$Proxy23.isDisplayed(Unknown Source)
+	at RXPages.PublisherListPage.logodisplayed(PublisherListPage.java:192)
+	at stepDefinitions.ProfileStepDefinition.admin_user_login_to_RX_UI_with_valid_username_and_password(ProfileStepDefinition.java:48)
+	at ✽.Given admin user login to RX UI with valid username and password(RXSeats.feature:76)
+</pre></pre></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Jun 9, 2020 09:47:55 AM</td>
+                                                        <td class='linked' test-id='160'>Seats page validation.Verify if user is able to update the Inactive Seat into Active seat with admin role..Given admin user login to RX UI with valid username and password</td>
+                                                        <td><pre><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class="logo"]"}
+  (Session info: chrome=83.0.4103.97)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:60930}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: fc1c8b092df7d1aacb6c018b15d45b90
+*** Element info: {Using=xpath, value=//div[@class="logo"]}
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
+	at jdk.internal.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.lambda$new$1(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy20.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:186)
+	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+	at com.sun.proxy.$Proxy23.isDisplayed(Unknown Source)
+	at RXPages.PublisherListPage.logodisplayed(PublisherListPage.java:192)
+	at stepDefinitions.ProfileStepDefinition.admin_user_login_to_RX_UI_with_valid_username_and_password(ProfileStepDefinition.java:48)
+	at ✽.Given admin user login to RX UI with valid username and password(RXSeats.feature:99)
+</pre></pre></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Jun 9, 2020 09:51:29 AM</td>
+                                                        <td class='linked' test-id='216'>RX Login page Validation.Verify if user is able to search disabled Admin account with admin login..Given admin user login to RX UI with valid username and password</td>
+                                                        <td><pre><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class="logo"]"}
+  (Session info: chrome=83.0.4103.97)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:61205}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 77262825d39a5b683c2423ffe366ca06
+*** Element info: {Using=xpath, value=//div[@class="logo"]}
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
+	at jdk.internal.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.lambda$new$1(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy20.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:186)
+	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+	at com.sun.proxy.$Proxy23.isDisplayed(Unknown Source)
+	at RXPages.PublisherListPage.logodisplayed(PublisherListPage.java:192)
+	at stepDefinitions.ProfileStepDefinition.admin_user_login_to_RX_UI_with_valid_username_and_password(ProfileStepDefinition.java:48)
+	at ✽.Given admin user login to RX UI with valid username and password(RXUsers.feature:61)
+</pre></pre></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Jun 9, 2020 09:52:33 AM</td>
+                                                        <td class='linked' test-id='222'>RX Login page Validation.Verify if user is able to edit disabled admin account from admin login..Given admin user login to RX UI with valid username and password</td>
+                                                        <td><pre><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class="logo"]"}
+  (Session info: chrome=83.0.4103.97)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:61252}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 5ecd6d6c0f7a817874d0a6503efd6497
+*** Element info: {Using=xpath, value=//div[@class="logo"]}
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
+	at jdk.internal.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.lambda$new$1(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy20.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:186)
+	at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
+	at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+	at com.sun.proxy.$Proxy23.isDisplayed(Unknown Source)
+	at RXPages.PublisherListPage.logodisplayed(PublisherListPage.java:192)
+	at stepDefinitions.ProfileStepDefinition.admin_user_login_to_RX_UI_with_valid_username_and_password(ProfileStepDefinition.java:48)
+	at ✽.Given admin user login to RX UI with valid username and password(RXUsers.feature:68)
+</pre></pre></td>
+                                                    </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                </ul>
+        </div>
+    </div>
+
+    <div class='subview-right left'>
+        <div class='view-summary'>
+            <h5 class='exception-name'></h5>
+        </div>
+    </div>
+</div>
 <!-- exception view -->
 <div id='dashboard-view' class='view hide'>
 	<div class='card-panel transparent np-v'>
@@ -355,37 +3885,37 @@
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Features
-					<div class='panel-lead'>1</div>
-				</div>
-			</div>
-			<div class='col s2'>
-				<div class='card-panel r'>
-					Scenarios
 					<div class='panel-lead'>6</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
+					Scenarios
+					<div class='panel-lead'>59</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
 					Steps
-					<div class='panel-lead'>12</div>
+					<div class='panel-lead'>263</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Start
-					<div class='panel-lead'>May 26, 2020 04:44:59 PM</div>
+					<div class='panel-lead'>Jun 9, 2020 08:51:09 AM</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 			 		End
-			 		<div class='panel-lead'>May 26, 2020 04:46:07 PM</div>
+			 		<div class='panel-lead'>Jun 9, 2020 10:22:34 AM</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Time Taken
-					<div class='panel-lead'>0h 1m 7s+323ms</div>
+					<div class='panel-lead'>1h 31m 25s+673ms</div>
 				</div>
 			</div>
 		</div>
@@ -398,31 +3928,31 @@
 
 		<script>
 			var statusGroup = {
-				passParent: 1,
-				failParent: 0,
+				passParent: 4,
+				failParent: 2,
 				fatalParent: 0,
 				errorParent: 0,
 				warningParent: 0,
 				skipParent: 0,
-				exceptionsParent: 0,
+				exceptionsParent: 2,
 				
-				passChild: 6,
-				failChild: 0,
+				passChild: 48,
+				failChild: 11,
 				fatalChild: 0,
 				errorChild: 0,
 				warningChild: 0,
 				skipChild: 0,
 				infoChild: 0,
-				exceptionsChild: 0,
+				exceptionsChild: 11,
 				
-				passGrandChild: 12,
-				failGrandChild: 0,
+				passGrandChild: 217,
+				failGrandChild: 11,
 				fatalGrandChild: 0,
 				errorGrandChild: 0,
 				warningGrandChild: 0,
-				skipGrandChild: 0,
+				skipGrandChild: 35,
 				infoGrandChild: 0,
-				exceptionsGrandChild: 0,
+				exceptionsGrandChild: 46,
 			};
 		</script>
 		

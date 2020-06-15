@@ -1,39 +1,228 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+<testng-results ignored="0" total="6" passed="4" failed="2" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2020-05-26T11:14:59Z" name="BDD Test Suite" finished-at="2020-05-26T11:16:07Z" duration-ms="67612">
+  <suite started-at="2020-06-09T03:21:08Z" name="BDD Test Suite" finished-at="2020-06-09T04:52:34Z" duration-ms="5485959">
     <groups>
       <group name="cucumber">
-        <method signature="TestRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:MyRunner.TestRunner@692f203f]" name="feature" class="MyRunner.TestRunner"/>
+        <method signature="TestRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:MyRunner.TestRunner@7b2bbc3]" name="feature" class="MyRunner.TestRunner"/>
       </group> <!-- cucumber -->
     </groups>
-    <test started-at="2020-05-26T11:14:59Z" name="UIAutomationTest" finished-at="2020-05-26T11:16:07Z" duration-ms="67612">
+    <test started-at="2020-06-09T03:21:08Z" name="RXUI_Test_Automation" finished-at="2020-06-09T04:52:34Z" duration-ms="5485959">
       <class name="MyRunner.TestRunner">
-        <test-method is-config="true" signature="setUpClass()[pri:0, instance:MyRunner.TestRunner@692f203f]" started-at="2020-05-26T11:14:59Z" name="setUpClass" finished-at="2020-05-26T11:14:59Z" duration-ms="182" status="PASS">
+        <test-method is-config="true" signature="setUpClass()[pri:0, instance:MyRunner.TestRunner@7b2bbc3]" started-at="2020-06-09T03:21:08Z" name="setUpClass" finished-at="2020-06-09T03:21:08Z" duration-ms="171" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUpClass -->
-        <test-method signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:MyRunner.TestRunner@692f203f]" started-at="2020-05-26T11:14:59Z" name="feature" description="Runs Cucumber Feature" data-provider="features" finished-at="2020-05-26T11:16:07Z" duration-ms="67336" status="PASS">
+        <test-method signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:MyRunner.TestRunner@7b2bbc3]" started-at="2020-06-09T03:21:08Z" name="feature" description="Runs Cucumber Feature" data-provider="features" finished-at="2020-06-09T03:21:50Z" duration-ms="41658" status="PASS">
           <params>
             <param index="0">
               <value>
-                <![CDATA[RX Launch Feature]]>
+                <![CDATA[RX Demand Partner page Validation]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- feature -->
-        <test-method is-config="true" signature="extentReportGen()[pri:0, instance:MyRunner.TestRunner@692f203f]" started-at="2020-05-26T11:16:07Z" name="extentReportGen" finished-at="2020-05-26T11:16:07Z" duration-ms="22" status="PASS">
+        <test-method signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:MyRunner.TestRunner@7b2bbc3]" started-at="2020-06-09T03:21:50Z" name="feature" description="Runs Cucumber Feature" data-provider="features" finished-at="2020-06-09T03:22:25Z" duration-ms="35105" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Profile page Validation]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- feature -->
+        <test-method signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:MyRunner.TestRunner@7b2bbc3]" started-at="2020-06-09T03:22:25Z" name="feature" description="Runs Cucumber Feature" data-provider="features" finished-at="2020-06-09T03:24:28Z" duration-ms="123162" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Publisher page validation]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- feature -->
+        <test-method signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:MyRunner.TestRunner@7b2bbc3]" started-at="2020-06-09T03:24:28Z" name="feature" description="Runs Cucumber Feature" data-provider="features" finished-at="2020-06-09T04:18:51Z" duration-ms="3263034" status="FAIL">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Seats page validation]]>
+              </value>
+            </param>
+          </params>
+          <exception class="cucumber.runtime.CucumberException">
+            <message>
+              <![CDATA[org.openqa.selenium.TimeoutException: Expected condition failed: waiting for text ('Test Seatq16zq') to be present in element [[ChromeDriver: chrome on MAC (cd0dcb768a6a98af56d396260dcac2ed)] -> xpath: //table/tbody/tr[1]/td[3]/span/a] (tried for 1000 second(s) with 500 milliseconds interval)
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.support.events.EventFiringWebDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:56116}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: cd0dcb768a6a98af56d396260dcac2ed]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[cucumber.runtime.CucumberException: org.openqa.selenium.TimeoutException: Expected condition failed: waiting for text ('Test Seatq16zq') to be present in element [[ChromeDriver: chrome on MAC (cd0dcb768a6a98af56d396260dcac2ed)] -> xpath: //table/tbody/tr[1]/td[3]/span/a] (tried for 1000 second(s) with 500 milliseconds interval)
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.support.events.EventFiringWebDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:56116}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: cd0dcb768a6a98af56d396260dcac2ed
+at cucumber.api.testng.TestNGCucumberRunner.runCucumber(TestNGCucumberRunner.java:69)
+at MyRunner.TestRunner.feature(TestRunner.java:44)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+at org.testng.TestRunner.privateRun(TestRunner.java:648)
+at org.testng.TestRunner.run(TestRunner.java:505)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: org.openqa.selenium.TimeoutException: Expected condition failed: waiting for text ('Test Seatq16zq') to be present in element [[ChromeDriver: chrome on MAC (cd0dcb768a6a98af56d396260dcac2ed)] -> xpath: //table/tbody/tr[1]/td[3]/span/a] (tried for 1000 second(s) with 500 milliseconds interval)
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.support.events.EventFiringWebDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:56116}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: cd0dcb768a6a98af56d396260dcac2ed
+at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:81)
+at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:271)
+at RXPages.RXSeatsPage.getTheSeatIdandClickCheckBox(RXSeatsPage.java:379)
+at stepDefinitions.SeatsPageStepsDefinition.navigate_to_create_seat_page_and_validate_the_filled_data(SeatsPageStepsDefinition.java:433)
+at ✽.Then Navigate to active create seat page and validate the filled data.(RXSeats.feature:27)
+]]>
+            </full-stacktrace>
+          </exception> <!-- cucumber.runtime.CucumberException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- feature -->
+        <test-method signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:MyRunner.TestRunner@7b2bbc3]" started-at="2020-06-09T04:18:51Z" name="feature" description="Runs Cucumber Feature" data-provider="features" finished-at="2020-06-09T04:51:33Z" duration-ms="1961202" status="FAIL">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[RX Login page Validation]]>
+              </value>
+            </param>
+          </params>
+          <exception class="cucumber.runtime.CucumberException">
+            <message>
+              <![CDATA[org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class="logo"]"}
+  (Session info: chrome=83.0.4103.97)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:61205}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 77262825d39a5b683c2423ffe366ca06
+*** Element info: {Using=xpath, value=//div[@class="logo"]}]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[cucumber.runtime.CucumberException: org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class="logo"]"}
+  (Session info: chrome=83.0.4103.97)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:61205}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 77262825d39a5b683c2423ffe366ca06
+*** Element info: {Using=xpath, value=//div[@class="logo"]}
+at cucumber.api.testng.TestNGCucumberRunner.runCucumber(TestNGCucumberRunner.java:69)
+at MyRunner.TestRunner.feature(TestRunner.java:44)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+at org.testng.TestRunner.privateRun(TestRunner.java:648)
+at org.testng.TestRunner.run(TestRunner.java:505)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class="logo"]"}
+  (Session info: chrome=83.0.4103.97)
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
+System info: host: 'RINMAC632', ip: 'fe80:0:0:0:48d:2e77:d6ee:c314%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.14.6', java.version: '11.0.5'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.97, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/gx/88xk1g2945q...}, goog:chromeOptions: {debuggerAddress: localhost:61205}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 77262825d39a5b683c2423ffe366ca06
+*** Element info: {Using=xpath, value=//div[@class="logo"]}
+at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
+at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
+at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
+at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
+at jdk.internal.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.openqa.selenium.support.events.EventFiringWebDriver.lambda$new$1(EventFiringWebDriver.java:103)
+at com.sun.proxy.$Proxy20.findElement(Unknown Source)
+at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:186)
+at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
+at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
+at com.sun.proxy.$Proxy23.isDisplayed(Unknown Source)
+at RXPages.PublisherListPage.logodisplayed(PublisherListPage.java:192)
+at stepDefinitions.ProfileStepDefinition.admin_user_login_to_RX_UI_with_valid_username_and_password(ProfileStepDefinition.java:48)
+at ✽.Given admin user login to RX UI with valid username and password(RXUsers.feature:61)
+]]>
+            </full-stacktrace>
+          </exception> <!-- cucumber.runtime.CucumberException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- feature -->
+        <test-method signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:MyRunner.TestRunner@7b2bbc3]" started-at="2020-06-09T04:51:33Z" name="feature" description="Runs Cucumber Feature" data-provider="features" finished-at="2020-06-09T04:52:34Z" duration-ms="61485" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[RX Login page Validation]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- feature -->
+        <test-method is-config="true" signature="extentReportGen()[pri:0, instance:MyRunner.TestRunner@7b2bbc3]" started-at="2020-06-09T04:52:34Z" name="extentReportGen" finished-at="2020-06-09T04:52:34Z" duration-ms="24" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- extentReportGen -->
-        <test-method is-config="true" signature="tearDownClass()[pri:0, instance:MyRunner.TestRunner@692f203f]" started-at="2020-05-26T11:16:07Z" name="tearDownClass" finished-at="2020-05-26T11:16:07Z" duration-ms="250" status="PASS">
+        <test-method is-config="true" signature="tearDownClass()[pri:0, instance:MyRunner.TestRunner@7b2bbc3]" started-at="2020-06-09T04:52:34Z" name="tearDownClass" finished-at="2020-06-09T04:52:34Z" duration-ms="302" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDownClass -->
       </class> <!-- MyRunner.TestRunner -->
-    </test> <!-- UIAutomationTest -->
+    </test> <!-- RXUI_Test_Automation -->
   </suite> <!-- BDD Test Suite -->
 </testng-results>

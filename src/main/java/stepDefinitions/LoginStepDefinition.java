@@ -91,14 +91,7 @@ public void setup()
 
 	 
 	
-	  @Then("^Close the browser$")
-	  public void close_the_browser() throws InterruptedException
-	  { 
-		  profilePgs.clickProfile();
-		  profilePgs.clickOnLogOut();
-		  driver.close();
 	  
-	  }
 	 
 	  @After(order = 1)
 	  public void tearDown(Scenario scenario) throws Throwable {
@@ -109,8 +102,13 @@ public void setup()
 		  driver.quit();
 	  } 
 
-	  
-	  
+//	  @After(order = 0)
+//	  @Then("^Close the browser$")
+//	  public void close_the_browser() throws InterruptedException
+//	  { 
+//		  
+//	  
+//	  }
 
 //		  
 //		  @After(order = 0)

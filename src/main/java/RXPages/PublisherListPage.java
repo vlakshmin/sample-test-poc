@@ -36,9 +36,23 @@ public class PublisherListPage extends RXBaseClass {
 	WebElement sortDesc;
 	@FindBy(xpath = "//thead/tr/th[2]/i")
 	WebElement clickSort;
+	
+
+	//Xpath String of table row value object
+	String firstUserXpath="//table/tbody/tr[";
+	String secondUserXpath="]/td[";
+	String thirdUserXpath="]";
+
+	//Xpath of rows to get the total number of row and column displayed in the page.
+	@FindAll(@FindBy(xpath = "//table/tbody/tr")) List<WebElement> userTableRows;
+	@FindAll(@FindBy(xpath = "//table/tbody/tr[1]/td")) List<WebElement> userTableColmn;
+	
 
 	//Search text field:
 	@FindBy(xpath = "//header/div/div[1]/div/div/div[1]/input")  WebElement searchField;
+	
+	//Forwared button in the table
+	String frwdButton="//button[@type='button' and @aria-label='Next page']";
 
 	// Mandatory message
 	public @FindBy(xpath = "//div[1]/div[1]/span/div/div/div[2]/div/div/div")  WebElement pubNameMandMsg;
@@ -246,7 +260,8 @@ public class PublisherListPage extends RXBaseClass {
 	}
 	//Click on Save or Update button
 	public String clickSaveOrUpdate() {
-		clickSaveOrUpdate.click();
+		WebElement SaveUpdateClick = wait.until(ExpectedConditions.visibilityOf(clickSaveOrUpdate));
+		SaveUpdateClick.click();
 		WebElement SaveOrUpdateClick = wait.until(ExpectedConditions.visibilityOf(clickSaveOrUpdate));
 		return SaveOrUpdateClick.getText();
 
@@ -340,7 +355,7 @@ public class PublisherListPage extends RXBaseClass {
 		if (enableDisableImpersonate.equalsIgnoreCase("Enabled")) {
 
 			Thread.sleep(2000);
-			clickCheckbox.click();
+//			clickCheckbox.click();
 			WebElement element2 = wait.until(ExpectedConditions.visibilityOf(enableImpPub));
 			element2.click();
 			wait.until(ExpectedConditions.invisibilityOf(enableImpPub));
@@ -349,7 +364,7 @@ public class PublisherListPage extends RXBaseClass {
 		} else if (enableDisableImpersonate.equalsIgnoreCase("Disabled"))
 		{
 			Thread.sleep(2000);
-			clickCheckbox.click();
+//			clickCheckbox.click();
 			WebElement element2 = wait.until(ExpectedConditions.visibilityOf(disabledPub));
 			element2.click();
 			wait.until(ExpectedConditions.invisibilityOf(disabledPub));
@@ -421,6 +436,43 @@ public class PublisherListPage extends RXBaseClass {
 		searchField.sendKeys(srChString);
 
 	}
+	
+	//Select the publisher and return
+	public int selectpublisherAndReturnId(String tmpStr)
+	
+	{
+		
+			return rxUTL.selectParticularRowData(userTableRows.size(), userTableColmn.size(), firstUserXpath, secondUserXpath, thirdUserXpath, frwdButton,5,tmpStr);
+	
+	}
+	
+	public void updateThePublisherIdInTestData(int newValue)
+	{
+		rxUTL.updateTestData("PublisherId", Integer.toString(newValue));
+		
+	}
+	
+	//get the publisher and return the id from properties file
+	public int getThePublisherIdInTestData(String newValue)
+	{
+		return Integer. parseInt(prop.getProperty("PublisherId"));
+		
+	}
+	
+	//Wait for  page header display WebElement webele
+	public void waitForCreatedPublisherToBeDisplayed(String webValue)
+	{
+		wait.until(ExpectedConditions.textToBePresentInElement(emailList, webValue));
 
+	}
+	//Wait for  page header display WebElement webele
+	public int selectpublisherforEdit(String pubId)
+	
+	{
+		
+			return rxUTL.selectParticularRowData(userTableRows.size(), userTableColmn.size(), firstUserXpath, secondUserXpath, thirdUserXpath, frwdButton,2,pubId);
+	
+	}
+	
 
 }

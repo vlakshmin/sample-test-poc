@@ -5,9 +5,13 @@ RXBaseClass/RXBaseClass.class
 RXPages/RXLoginPage.class
 stepDefinitions/PublisherStepDefinitions.class
 stepDefinitions/ProfileStepDefinition.class
+RXPages/RXDemanPartnerAdminPage.class
 stepDefinitions/SeatsPageStepsDefinition.class
 RXUtitities/EventListener.class
+stepDefinitions/AdminUserStepDefinition.class
 RXPages/RXSeatsPage.class
+RXPages/RXUsers.class
+stepDefinitions/RXDemandPartnerPageStepsDefinition.class
 RXUtitities/Configuration.class
 RXPages/ProfilePage.class
 RXUtitities/RXUtile.class
