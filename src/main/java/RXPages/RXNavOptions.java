@@ -3,6 +3,8 @@ package RXPages;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import RXBaseClass.RXBaseClass;
 import RXUtitities.RXUtile;
@@ -154,7 +156,9 @@ public class RXNavOptions extends RXBaseClass{
 
 	public void expandRules()
 	{
-		rulesExpensionBtn.click();
+		WebDriverWait wait = new WebDriverWait(driver,30);
+		WebElement element =wait.until(ExpectedConditions.visibilityOf(rulesExpensionBtn));
+		element.click();
 
 	}
 
