@@ -3,10 +3,12 @@ MyRunner/TestRunner.class
 RXPages/PublisherListPage.class
 RXBaseClass/RXBaseClass.class
 RXPages/RXLoginPage.class
+RXPages/RXNavOptions.class
 stepDefinitions/PublisherStepDefinitions.class
 stepDefinitions/ProfileStepDefinition.class
 RXPages/RXDemanPartnerAdminPage.class
 stepDefinitions/SeatsPageStepsDefinition.class
+stepDefinitions/RXNavOptionStepDefinitions.class
 RXUtitities/EventListener.class
 stepDefinitions/AdminUserStepDefinition.class
 RXPages/RXSeatsPage.class
