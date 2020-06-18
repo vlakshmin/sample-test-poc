@@ -62,6 +62,14 @@ public void setup()
 		 pubListPgs = logain.clickLogin(prop.getProperty("username"), prop.getProperty("password"));
 	 }
 	
+   
+     
+     @Given("^Publisher user login to RX UI with valid username and password$")
+     public void publisher_user_login_to_RX_UI_with_valid_username_and_password() throws Throwable {
+    	 driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
+		 pubListPgs = logain.clickLogin(prop.getProperty("pbusername"), prop.getProperty("pbpassword"));
+	 }
+     
 	 @Then("^login should be successful and user is displayed the publisher page with Rakuten Exchange$")
 	 public void user_is_displayed_the_publisher_page_with_Rakuten_Exchange() throws InterruptedException{
 		 driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
@@ -99,7 +107,7 @@ public void setup()
 	
 	  Reporter.addScreenCaptureFromPath(RXUtile.takeScreenshotAtEndOfTest());
 		  }
-		  driver.quit();
+//		  driver.quit();
 	  } 
 
 //	  @After(order = 0)
