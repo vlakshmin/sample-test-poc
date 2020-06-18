@@ -106,7 +106,18 @@ public class PublisherListPage extends RXBaseClass {
 	public @FindBy(xpath = "//aside/div/span/form/div[2]/div[4]/div[1]/span/div/div/div[1]/div[1]/input[1]") WebElement enterCountry;
 	public @FindBy(xpath = "//aside/div/span/form/div[2]/div[4]/div[2]/span/div/div/div[1]/div[1]/input[1]") WebElement enterCurrency;
 	public @FindBy(xpath = "//aside/div/span/form/div[2]/div[4]/div[3]/span/div/div/div[1]/div[1]/input[1]") WebElement enterTimeZone;
-
+	
+//	//Create Publisher
+//	public @FindBy(xpath = "//span/div/div/div[1]/div/input") WebElement publisherName;
+//
+////	Dropdown List
+//	public @FindBy(xpath = "//span/div/div/div[1]/div[1]/div[2]/div") WebElement categorIes;
+//	public @FindBy(xpath = "/html/body/div/div/div/div[2]/div/div[2]/div[2]/div") WebElement categorIes;
+	
+	
+	
+	
+	
 	// Create or edit Corporation specific objects
 	public @FindBy(xpath = "//div[3]/div[1]/span/div/div/div[1]/div/input") WebElement corpName;
 	public @FindBy(xpath = "//div[3]/div[2]/span/div/div/div[1]/div/input") WebElement corpWebSite;
@@ -126,7 +137,7 @@ public class PublisherListPage extends RXBaseClass {
 	WebElement seatOption;
 	@FindBy(xpath = "//div[text()='Users']")
 	WebElement userOption;
-	@FindBy(xpath = "//div[text()='Accounts']")
+	@FindBy(xpath = "//div[text()='Admin']")
 	WebElement accountOption;
 
 	// Publisher page heading
@@ -236,6 +247,41 @@ public class PublisherListPage extends RXBaseClass {
 		}
 
 	}
+	
+	
+//	// Click on create or edit  publisher.
+//	public void createEditPublisher(String pName, String AdOpsPerson,String eMail,String doMain ,
+//			String currencyPb) {
+//
+//		publisherName.sendKeys(pName);
+//		act.sendKeys(Keys.TAB).build().perform();
+//		publisherName.sendKeys(AdOpsPerson);
+//		act.sendKeys(Keys.TAB).build().perform();
+//		publisherName.sendKeys(eMail);
+//		act.sendKeys(Keys.TAB).build().perform();
+//		publisherName.sendKeys(doMain);
+//		act.sendKeys(Keys.TAB).build().perform();
+//		publisherName.sendKeys(currencyPb);
+//		act.sendKeys(Keys.TAB).build().perform();
+//
+//	}
+//	// select dropdown.
+//		public void selectCategory(String pName, String AdOpsPerson,String eMail,String doMain ,
+//				String currencyPb) {
+//
+//			publisherName.sendKeys(pName);
+//			act.sendKeys(Keys.TAB).build().perform();
+//			publisherName.sendKeys(AdOpsPerson);
+//			act.sendKeys(Keys.TAB).build().perform();
+//			publisherName.sendKeys(eMail);
+//			act.sendKeys(Keys.TAB).build().perform();
+//			publisherName.sendKeys(doMain);
+//			act.sendKeys(Keys.TAB).build().perform();
+//			publisherName.sendKeys(currencyPb);
+//			act.sendKeys(Keys.TAB).build().perform();
+//
+//		}
+//	
 
 	// Click on create or edit corporation publisher.
 	public void createEditCorporationPublisher(String createEdit, String pName, String eMail, String saleAct,
