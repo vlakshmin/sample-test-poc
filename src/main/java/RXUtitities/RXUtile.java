@@ -157,7 +157,7 @@ public class RXUtile extends RXBaseClass {
 
 	public static String takeScreenshotAtEndOfTest() throws IOException {
 		final File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		String path=System.getProperty("user.dir")+"target/Screenshot/"+System.currentTimeMillis()+".png";
+		String path="target/Screenshot/"+System.currentTimeMillis()+".png";
 
 		File destination=new File(path);
 
@@ -227,7 +227,7 @@ public class RXUtile extends RXBaseClass {
 	public void updateTestData(String testDataName,String newValue)
 	{
 		try {
-		String propFile = System.getProperty("user.dir") + "/src/main/java/RXConfig/RX.properties"; 
+		String propFile = "src/main/java/RXConfig/RX.properties"; 
 		  FileOutputStream out = new FileOutputStream(propFile);
 		  prop.setProperty(testDataName,newValue);
 		  prop.store(out, null); 
