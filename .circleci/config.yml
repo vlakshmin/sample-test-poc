@@ -64,15 +64,15 @@ jobs:
       - run:
           name: Run Tests
           command:
-            mvn test
+            mvn clean test
 
       # store artifacts and results
       - store_artifacts:
-          path: target/surefire-reports
+          path: target
       - store_artifacts:
           path: test-output
       - store_test_results:
-          path: target/surefire-reports
+          path: target/cucumber-reports/report.html
 
 workflows:
   version: 2
