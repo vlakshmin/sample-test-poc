@@ -95,7 +95,7 @@ public class ProfileStepDefinition extends RXBaseClass {
 		
 //		Assert.assertEquals(proPage.getUpdatedTheChangePwdDisplayed(), "Updated!");
 		
-		  String propFile = System.getProperty("user.dir") + "/src/main/java/RXConfig/RX.properties"; 
+		  String propFile = "src/main/java/RXConfig/RX.properties"; 
 		  FileOutputStream out = new FileOutputStream(propFile);
 		  prop.setProperty("password",newPassword);
 		  prop.store(out, null); 

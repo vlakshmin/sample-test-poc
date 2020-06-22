@@ -60,6 +60,7 @@ public void setup()
 	 public void admin_user_click_on_Login_by_entering_valid_username_and_password() throws Throwable {
     	 driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
 		 pubListPgs = logain.clickLogin(prop.getProperty("username"), prop.getProperty("password"));
+		
 	 }
 	
    
@@ -105,7 +106,7 @@ public void setup()
 	  public void tearDown(Scenario scenario) throws Throwable {
 		  if (scenario.isFailed() | !scenario.isFailed()) {
 	
-	  Reporter.addScreenCaptureFromPath(RXUtile.takeScreenshotAtEndOfTest());
+	  Reporter.addScreenCaptureFromPath("/"+RXUtile.takeScreenshotAtEndOfTest());
 		  }
 //		  driver.quit();
 	  } 
