@@ -56,8 +56,8 @@ public class RXBaseClass {
 		switch(browserName)
 		{
 		case "chrome" :
-			System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"/driverFolder/chromedriver");
-//			 WebDriverManager.chromedriver().setup();
+//			System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"/driverFolder/chromedriver");
+			 WebDriverManager.chromedriver().setup();
 			 
 			 driver = new ChromeDriver();
 			 
