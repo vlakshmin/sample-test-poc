@@ -157,7 +157,7 @@ public class RXUtile extends RXBaseClass {
 
 	public static String takeScreenshotAtEndOfTest() throws IOException {
 		final File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		String path="/target/Screenshot/"+System.currentTimeMillis()+".png";
+		String path="target/Screenshot/"+System.currentTimeMillis()+".png";
 
 		File destination=new File(path);
 
