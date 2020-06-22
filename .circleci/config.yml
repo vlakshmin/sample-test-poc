@@ -72,7 +72,7 @@ jobs:
       - store_artifacts:
           path: test-output
       - store_test_results:
-          path: target/cucumber-reports/report.html
+          path: src/main/java/RXConfig/RX.properties
 
 workflows:
   version: 2
