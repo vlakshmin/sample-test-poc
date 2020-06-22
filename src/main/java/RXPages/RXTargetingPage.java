@@ -40,10 +40,7 @@ public class RXTargetingPage extends RXBaseClass  {
 	
 	
 	@FindBy(xpath = "//div[contains(@class, 'v-list-item__title') and text()='Targeting']")  WebElement targetingNav;
-	@FindBy(xpath = "//div[@class='v-data-footer__select']//div[@class='v-input__icon v-input__icon--append']")  WebElement rowsPerPageDropDown;
-	@FindBy(xpath = "//div[@class='v-data-footer__icons-after']/button")  public WebElement nextPageNavButton;
-	@FindBy(xpath = "//div[@class='v-data-footer__icons-before']/button") public WebElement previousPageNavButton;
-	@FindBy(xpath = "//div[@class='v-data-footer__pagination']")  WebElement paginationCount;
+	
 	
 	
 	
@@ -78,34 +75,11 @@ public class RXTargetingPage extends RXBaseClass  {
 			return elem.getText();
 			
 		}
-	public void clickTaretingNavigation() {
+	public void clickTaretingNavMenu() {
 		if(targetingNav.isDisplayed()) {
 			targetingNav.click();
 		}
 	}
 	
-	public void clickNextPageNavigation() {
-		if(nextPageNavButton.isDisplayed()) {
-			nextPageNavButton.click();
-		}
-	}
-	public void clickPreviousPageNavigation() {
-		if(previousPageNavButton.isDisplayed()) {
-			previousPageNavButton.click();
-		}
-	}
-	public void clickNoOfPagesDropDown() {
-		if(rowsPerPageDropDown.isDisplayed()) {
-			rowsPerPageDropDown.click();
-		}
-	}
-	
-	public String getPaginationText() {
-		String paginationText = null;
-		if(paginationCount.isDisplayed()) {
-			paginationText = paginationCount.getText();
-		}
-		return paginationText;
-	}
 	
 }

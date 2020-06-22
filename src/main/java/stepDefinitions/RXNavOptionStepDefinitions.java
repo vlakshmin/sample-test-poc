@@ -3,6 +3,11 @@ package stepDefinitions;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import RXBaseClass.RXBaseClass;
@@ -19,6 +24,7 @@ public class RXNavOptionStepDefinitions extends RXBaseClass{
 	RXNavOptions rxNavOpt;
 	PublisherListPage pubListPgs;
 	Logger log = Logger.getLogger(RXNavOptionStepDefinitions.class);
+	JavascriptExecutor js = (JavascriptExecutor) driver;
 	
 	public RXNavOptionStepDefinitions()
 	{
@@ -145,4 +151,53 @@ public class RXNavOptionStepDefinitions extends RXBaseClass{
 		Assert.assertTrue(pubListPgs.logodisplayed());
 		 rxNavOpt.expandInventory();
 	}
+	
+	@When("^Verify the pagination of the listed rows in the Page with a selection of (.*) rows per page with (.*) columns$")
+	public void verifyPagination(String noOfRowsPerPage, int noOfColumns) throws Throwable {
+		int finalRowCountPerPage;
+		int TotalRowsCount;
+		int initialCount ;
+		WebDriverWait wait = new WebDriverWait(driver,30);
+		wait.until(ExpectedConditions.visibilityOf(rxNavOpt.tableRowsCount.get(0)));
+		rxNavOpt.clickNoOfPagesDropDown();
+		Thread.sleep(5000);
+		driver.findElement(By.xpath("//div[@class='v-menu__content theme--light menuable__content__active']"
+				+ "//div[@class='v-list-item__title' and text()='"+noOfRowsPerPage+"']")).click();
+		while(true) {
+		Thread.sleep(2000);
+		String paginationTextPattern = rxNavOpt.getPaginationText();
+		String paginationText = paginationTextPattern.replaceAll("\\s", "");
+		System.out.println(paginationText);
+		TotalRowsCount = Integer.parseInt(paginationText.substring(paginationText.indexOf('f')+1, paginationText.length()));
+		finalRowCountPerPage = Integer.parseInt(paginationText.substring(paginationText.indexOf('-')+1, paginationText.indexOf('o')));
+		System.out.println(TotalRowsCount);
+		System.out.println(finalRowCountPerPage);
+		if(finalRowCountPerPage==TotalRowsCount) {
+			Assert.assertTrue((boolean) js.executeScript("return arguments[0].hasAttribute(\"disabled\");", rxNavOpt.nextPageNavButton));
+			break;
+		}
+		Assert.assertEquals(rxNavOpt.tableColumnsCount.size(),noOfColumns+1);
+		Assert.assertEquals(rxNavOpt.tableRowsCount.size(), Integer.parseInt(noOfRowsPerPage));
+		rxNavOpt.clickNextPageNav();
+		}
+		while(true) {
+			if((boolean)js.executeScript("return arguments[0].hasAttribute(\"disabled\");", rxNavOpt.nextPageNavButton)) {
+				Assert.assertEquals(rxNavOpt.tableColumnsCount.size(),noOfColumns+1);
+				rxNavOpt.clickPreviousPageNav();
+				Thread.sleep(5000);
+				
+			}else {
+			Assert.assertEquals(rxNavOpt.tableColumnsCount.size(),noOfColumns+1);
+			Assert.assertEquals(rxNavOpt.tableRowsCount.size(), Integer.parseInt(noOfRowsPerPage));
+			String paginationTextPattern = rxNavOpt.getPaginationText();
+			String paginationText = paginationTextPattern.replaceAll("\\s", "");
+			initialCount = Integer.parseInt(paginationText.substring(0,paginationText.indexOf('-')));
+			if(initialCount==1) {
+				Assert.assertTrue((boolean) js.executeScript("return arguments[0].hasAttribute(\"disabled\");", rxNavOpt.previousPageNavButton));
+				break;
+			}
+			rxNavOpt.clickPreviousPageNav();
+			}
+		}
+		}
 }
