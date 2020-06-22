@@ -1,6 +1,10 @@
 package RXPages;
 
+import java.util.List;
+
+
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -39,8 +43,19 @@ public class RXNavOptions extends RXBaseClass{
 	//subMenu of Rules main menu
 	@FindBy(xpath = "//div[text()='Filters']") WebElement filtersUndrRules;
 	@FindBy(xpath = "//div[text()='Targeting']") WebElement targetingUndrRules;
+	
+	//Pagination parameters
+	@FindBy(xpath = "//div[@class='v-data-footer__select']//div[@class='v-input__icon v-input__icon--append']")  WebElement rowsPerPageDropDown;
+	@FindBy(xpath = "//div[@class='v-data-footer__icons-after']/button")  public WebElement nextPageNavButton;
+	@FindBy(xpath = "//div[@class='v-data-footer__icons-before']/button") public WebElement previousPageNavButton;
+	@FindBy(xpath = "//div[@class='v-data-footer__pagination']")  WebElement paginationCount;
+	@FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr"))
+	public List<WebElement> tableRowsCount;
+    @FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr[1]/td")) 
+    public List<WebElement> tableColumnsCount;
+	
 
-
+  
 
 
 	public RXNavOptions() {
@@ -161,6 +176,30 @@ public class RXNavOptions extends RXBaseClass{
 		element.click();
 
 	}
+	public void clickNextPageNav() {
+		if(nextPageNavButton.isDisplayed()) {
+			nextPageNavButton.click();
+		}
+	}
+	public void clickPreviousPageNav() {
+		if(previousPageNavButton.isDisplayed()) {
+			previousPageNavButton.click();
+		}
+	}
+	public void clickNoOfPagesDropDown() {
+		if(rowsPerPageDropDown.isDisplayed()) {
+			rowsPerPageDropDown.click();
+		}
+	}
+	
+	public String getPaginationText() {
+		String paginationText = null;
+		if(paginationCount.isDisplayed()) {
+			paginationText = paginationCount.getText();
+		}
+		return paginationText;
+	}
+	
 
 
 }
