@@ -32,7 +32,7 @@ public class RXBaseClass {
 		
 		
 		try {
-			String propFile = "/src/main/java/RXConfig/RX.properties";
+			String propFile = "src/main/java/RXConfig/RX.properties";
 			FileInputStream pFile=new FileInputStream(propFile);
 			prop = new Properties();
 			prop.load(pFile);
