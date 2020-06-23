@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import RXBaseClass.RXBaseClass;
-import RXPages.RXSeatsPage;
 import RXPages.RXUsers;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;

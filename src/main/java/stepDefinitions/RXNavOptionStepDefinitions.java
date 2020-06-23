@@ -158,13 +158,12 @@ public class RXNavOptionStepDefinitions extends RXBaseClass{
 		int TotalRowsCount;
 		int initialCount ;
 		WebDriverWait wait = new WebDriverWait(driver,30);
-		wait.until(ExpectedConditions.visibilityOf(rxNavOpt.tableRowsCount.get(0)));
+		wait.until(ExpectedConditions.visibilityOf(rxNavOpt.tableFirstRowName));
 		rxNavOpt.clickNoOfPagesDropDown();
-		Thread.sleep(5000);
 		driver.findElement(By.xpath("//div[@class='v-menu__content theme--light menuable__content__active']"
 				+ "//div[@class='v-list-item__title' and text()='"+noOfRowsPerPage+"']")).click();
 		while(true) {
-		Thread.sleep(2000);
+        Thread.sleep(5000);
 		String paginationTextPattern = rxNavOpt.getPaginationText();
 		String paginationText = paginationTextPattern.replaceAll("\\s", "");
 		System.out.println(paginationText);
@@ -176,6 +175,7 @@ public class RXNavOptionStepDefinitions extends RXBaseClass{
 			Assert.assertTrue((boolean) js.executeScript("return arguments[0].hasAttribute(\"disabled\");", rxNavOpt.nextPageNavButton));
 			break;
 		}
+		
 		Assert.assertEquals(rxNavOpt.tableColumnsCount.size(),noOfColumns+1);
 		Assert.assertEquals(rxNavOpt.tableRowsCount.size(), Integer.parseInt(noOfRowsPerPage));
 		rxNavOpt.clickNextPageNav();

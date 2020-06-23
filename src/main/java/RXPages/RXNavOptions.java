@@ -48,11 +48,13 @@ public class RXNavOptions extends RXBaseClass{
 	@FindBy(xpath = "//div[@class='v-data-footer__select']//div[@class='v-input__icon v-input__icon--append']")  WebElement rowsPerPageDropDown;
 	@FindBy(xpath = "//div[@class='v-data-footer__icons-after']/button")  public WebElement nextPageNavButton;
 	@FindBy(xpath = "//div[@class='v-data-footer__icons-before']/button") public WebElement previousPageNavButton;
-	@FindBy(xpath = "//div[@class='v-data-footer__pagination']")  WebElement paginationCount;
+	@FindBy(xpath = "//div[@class='v-data-footer__pagination']")  public WebElement paginationCount;
 	@FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr"))
 	public List<WebElement> tableRowsCount;
     @FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr[1]/td")) 
     public List<WebElement> tableColumnsCount;
+    @FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[2]")) 
+    public WebElement tableFirstRowName;
 	
 
   
@@ -176,22 +178,27 @@ public class RXNavOptions extends RXBaseClass{
 		element.click();
 
 	}
+	// click on the next page navigation button
 	public void clickNextPageNav() {
 		if(nextPageNavButton.isDisplayed()) {
 			nextPageNavButton.click();
 		}
 	}
+	// click on the previous page navigation button
 	public void clickPreviousPageNav() {
 		if(previousPageNavButton.isDisplayed()) {
 			previousPageNavButton.click();
 		}
 	}
+	
+	// click on selection dropdown to select the no. of rows per page
 	public void clickNoOfPagesDropDown() {
 		if(rowsPerPageDropDown.isDisplayed()) {
 			rowsPerPageDropDown.click();
 		}
 	}
 	
+	// Get the from and to page no. shown in the current page
 	public String getPaginationText() {
 		String paginationText = null;
 		if(paginationCount.isDisplayed()) {
