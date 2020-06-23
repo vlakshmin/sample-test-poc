@@ -105,7 +105,7 @@ public void setup()
 	  @After(order = 1)
 	  public void tearDown(Scenario scenario) throws Throwable {
 		  if (scenario.isFailed() | !scenario.isFailed()) {
-	
+      System.out.println(System.getenv("CIRCLE_BUILD_URL"))  ;
 	  Reporter.addScreenCaptureFromPath(System.getProperty("user.home")+"/"+RXUtile.takeScreenshotAtEndOfTest());
 		  }
 //		  driver.quit();
