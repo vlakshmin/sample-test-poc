@@ -106,7 +106,7 @@ public void setup()
 	  public void tearDown(Scenario scenario) throws Throwable {
 		  if (scenario.isFailed() | !scenario.isFailed()) {
 	
-	  Reporter.addScreenCaptureFromPath(System.getProperty("user.dir")+"/"+RXUtile.takeScreenshotAtEndOfTest());
+	  Reporter.addScreenCaptureFromPath("/"+RXUtile.takeScreenshotAtEndOfTest());
 		  }
 //		  driver.quit();
 	  } 
