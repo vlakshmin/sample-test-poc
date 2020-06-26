@@ -58,8 +58,10 @@ public void setup()
 	 
      @Given("^Admin user click on Login by entering valid username and password$")
 	 public void admin_user_click_on_Login_by_entering_valid_username_and_password() throws Throwable {
+    	 Reporter.addStepLog("The user has logged in "+prop.getProperty("url")+" as admin");
     	 driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
 		 pubListPgs = logain.clickLogin(prop.getProperty("username"), prop.getProperty("password"));
+		 
 		
 	 }
 	
@@ -67,8 +69,10 @@ public void setup()
      
      @Given("^Publisher user login to RX UI with valid username and password$")
      public void publisher_user_login_to_RX_UI_with_valid_username_and_password() throws Throwable {
+    	 Reporter.addStepLog("The user has logged in "+prop.getProperty("url")+" as publisher");
     	 driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
 		 pubListPgs = logain.clickLogin(prop.getProperty("pbusername"), prop.getProperty("pbpassword"));
+		 
 	 }
      
 	 @Then("^login should be successful and user is displayed the publisher page with Rakuten Exchange$")

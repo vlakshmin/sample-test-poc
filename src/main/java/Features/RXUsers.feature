@@ -1,4 +1,4 @@
-Feature: RX Login page Validation
+Feature: RX users page Validation
 #Scenario:  Verify if user is displayed with list of user accounts for admin login.
 #	Given admin user login to RX UI with valid username and password 
 #	When click on User option under accounts.
