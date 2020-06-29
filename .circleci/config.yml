@@ -79,13 +79,4 @@ workflows:
   build-workflow:
     jobs:
       - build
-  hourly:
-    triggers:
-      - schedule:
-          cron: "30 * * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - build
+ 
