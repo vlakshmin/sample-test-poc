@@ -71,8 +71,16 @@ public class RXUsers extends RXBaseClass {
 	@FindBy(xpath = "//span/form/div[3]/button/span")  WebElement saveButton;
 	@FindBy(xpath = "//aside/header/div/button/span/i")  WebElement closeBtn;
 	
+	
+	//Enable and disable feature for the user
+	@FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr/td/div[@class='v-data-table__checkbox v-simple-checkbox']/i"))
+	public List<WebElement> userCheckBoxList;
+	
+	@FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr/td[6]"))
+	public List<WebElement> userActiveFieldList;
+	@FindBy(xpath = "//div[@class='portal vue-portal-target']/button[2]//span")  public WebElement enableDisableButton;
 
-
+	
 	//Array for test data 
 	static ArrayList<String> usertestData = new ArrayList<String>();
 
@@ -487,6 +495,46 @@ public class RXUsers extends RXBaseClass {
 			return rxUTL.selectParticularRowData(userTableRows.size(), userTableColmn.size(), firstUserXpath, secondUserXpath, thirdUserXpath, frwdButton,2,userId);
 	
 	}
+	
+	//Click on the checkbox for user with index number
+	public void clickUserCheckBox(int index)
+	{
+
+		wait.until(ExpectedConditions.visibilityOf(userCheckBoxList.get(index-1)));
+		userCheckBoxList.get(index-1).click();
+
+		
+	}
+	//Click on the enable or disable button
+	public void clickEnableDisableButton()
+	{
+
+		wait.until(ExpectedConditions.visibilityOf(enableDisableButton));
+		enableDisableButton.click();
+
+		
+	}
+	//Get the text of the enable or disable button
+	public String getEnableDisableBtnText()
+	{
+
+		WebElement elem = wait.until(ExpectedConditions.visibilityOf(enableDisableButton));
+		System.out.println(elem.getText());
+		String text = elem.getText().replaceAll("\\s", "").toUpperCase();
+		return text;
+
+	}
+	
+	//Get the text of the Active filed with index for user
+		public String getActiveFieldText(int index)
+		{
+
+			WebElement elem = wait.until(ExpectedConditions.visibilityOf(userActiveFieldList.get(index-1)));
+			System.out.println(elem.getText());
+			String text = elem.getText().replaceAll("\\s", "");
+			return text;
+
+		}
 	
 	
 	

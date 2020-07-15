@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import RXBaseClass.RXBaseClass;
@@ -478,6 +480,40 @@ public class AdminUserStepDefinition extends RXBaseClass {
 		@Then("^search for the user$")
 		public void search_for_the_user() throws Throwable {
 			rxUserPage.seatNameSearch(uAcName);
+		}
+		
+		@Then("^Verify the enabling and disabling feature of the user with index (.*)$")
+		public void userEnableDisable(int index) throws InterruptedException {
+			rxUserPage.clickUserCheckBox(index);
+			String status = rxUserPage.getActiveFieldText(index);
+			switch(status) {
+			  case "Active":
+				     Assert.assertEquals(rxUserPage.getEnableDisableBtnText(), "DISABLEUSER");
+				     rxUserPage.clickEnableDisableButton();
+				     Thread.sleep(5000);
+					 Assert.assertEquals(rxUserPage.getActiveFieldText(index), "Inactive");
+					 rxUserPage.clickUserCheckBox(index);
+					 Assert.assertEquals(rxUserPage.getEnableDisableBtnText(), "ENABLEUSER");
+					 rxUserPage.clickEnableDisableButton();
+					 Thread.sleep(5000);
+					 Assert.assertEquals(rxUserPage.getActiveFieldText(index), "Active");
+					break;
+			  case "Inactive":
+				     Assert.assertEquals(rxUserPage.getEnableDisableBtnText(), "ENABLEUSER");
+				     rxUserPage.clickEnableDisableButton();
+				     Thread.sleep(5000);
+					 Assert.assertEquals(rxUserPage.getActiveFieldText(index), "Active");
+					 rxUserPage.clickUserCheckBox(index);
+					 Assert.assertEquals(rxUserPage.getEnableDisableBtnText(), "DISABLEUSER");
+					 rxUserPage.clickEnableDisableButton();
+					 Thread.sleep(5000);
+					 Assert.assertEquals(rxUserPage.getActiveFieldText(index), "Inactive");
+					break;
+			   
+			  default:
+			    Assert.assertTrue(false, "The status fields supplied does not match with the input");
+			}
+			
 		}
 		
 		
