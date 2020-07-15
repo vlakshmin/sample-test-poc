@@ -28,7 +28,7 @@ public class RXNavOptions extends RXBaseClass{
 	//Option expension	
 	@FindBy(xpath = "//div[1]/div[1]/div[3]/i") WebElement adminExpensionBtn;
 	@FindBy(xpath = "//div[text()='Inventory']/parent::div/following-sibling::div") WebElement inventoryExpensionBtn;
-	@FindBy(xpath = "//div[3]/div[1]/div[3]/i") WebElement rulesExpensionBtn;
+	@FindBy(xpath = "//div[text()='Rules']/parent::div/following-sibling::div") WebElement rulesExpensionBtn;
 
 	//subMenu of Admin main menu
 	@FindBy(xpath = "//div[text()='Publishers']") WebElement publisherUndrAdmin;

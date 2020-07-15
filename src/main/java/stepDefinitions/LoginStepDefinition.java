@@ -72,6 +72,9 @@ public void setup()
     	 Reporter.addStepLog("The user has logged in "+prop.getProperty("url")+" as publisher");
     	 driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
 		 pubListPgs = logain.clickLogin(prop.getProperty("pbusername"), prop.getProperty("pbpassword"));
+		 driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
+//		 Thread.sleep(6000);
+		Assert.assertTrue(pubListPgs.logodisplayed());
 		 
 	 }
      
