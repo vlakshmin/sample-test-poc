@@ -110,6 +110,7 @@ public class RXNavOptionStepDefinitions extends RXBaseClass{
 
 	@Then("^Filters and Targeting are displayed as sub main menu under Rules main menu as navigation options\\.$")
 	public void filters_and_Targeting_are_displayed_as_sub_main_menu_under_Rules_main_menu_as_navigation_options() throws Throwable {
+		Thread.sleep(2000);
 		log.info("Filter sub menu are displaying under Rules main menu : "+ rxNavOpt.isfiltersUndrRulesDisplayed());
 		Assert.assertTrue(rxNavOpt.isfiltersUndrRulesDisplayed());
 		driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
@@ -149,7 +150,7 @@ public class RXNavOptionStepDefinitions extends RXBaseClass{
 		log.info("User logged in to check the navigation option for Sub mennu option under Publisher main menu :"+ pubListPgs.logodisplayed());
 		
 		Assert.assertTrue(pubListPgs.logodisplayed());
-		 rxNavOpt.expandInventory();
+		rxNavOpt.expandRules();
 	}
 	
 	@When("^Verify the pagination of the listed rows in the Page with a selection of (.*) rows per page with (.*) columns$")
@@ -162,6 +163,12 @@ public class RXNavOptionStepDefinitions extends RXBaseClass{
 		rxNavOpt.clickNoOfPagesDropDown();
 		driver.findElement(By.xpath("//div[@class='v-menu__content theme--light menuable__content__active']"
 				+ "//div[@class='v-list-item__title' and text()='"+noOfRowsPerPage+"']")).click();
+		Thread.sleep(4000);;
+		if(rxNavOpt.tableRowsCount.size()<Integer.parseInt(noOfRowsPerPage)) {
+			Assert.assertTrue((boolean) js.executeScript("return arguments[0].hasAttribute(\"disabled\");", rxNavOpt.nextPageNavButton));
+			Assert.assertTrue((boolean) js.executeScript("return arguments[0].hasAttribute(\"disabled\");", rxNavOpt.previousPageNavButton));
+		}else {
+		
 		while(true) {
         Thread.sleep(5000);
 		String paginationTextPattern = rxNavOpt.getPaginationText();
@@ -198,6 +205,7 @@ public class RXNavOptionStepDefinitions extends RXBaseClass{
 			}
 			rxNavOpt.clickPreviousPageNav();
 			}
+		}
 		}
 		}
 }
