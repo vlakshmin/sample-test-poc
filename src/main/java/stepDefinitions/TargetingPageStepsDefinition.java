@@ -1,6 +1,8 @@
 package stepDefinitions;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -8,6 +10,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import RXBaseClass.RXBaseClass;
 import RXPages.RXNavOptions;
@@ -21,6 +25,7 @@ public class TargetingPageStepsDefinition extends RXBaseClass    {
 	RXTargetingPage targetingPage;
 	RXNavOptions navOptions;
 	Logger log = Logger.getLogger(TargetingPageStepsDefinition.class);
+	WebDriverWait wait = new WebDriverWait(driver,30);
 	
 	public TargetingPageStepsDefinition()
 	{
@@ -51,7 +56,57 @@ public void user_displayed_with_seats_page() throws Throwable {
 //=========================================================================================================
 
 
+@When("^User click on table options button$")
+public void clickTableOptions() throws InterruptedException {
+	Thread.sleep(10000);
+	wait.until(ExpectedConditions.visibilityOf(navOptions.tableOptions));
+	navOptions.clickTableOptions();
+}
+@When("^Verify that column (.*) can be hidden and shown$")
+public void verifyHideShow(String filter) throws InterruptedException {
+	navOptions.tableOptionsLabel = filter;
+	Thread.sleep(30000);
+	navOptions.clickHideShowCheckBox();
+	Thread.sleep(2000);
+	String isChecked = navOptions.checkTableOptionsChkStatus();
+	switch(isChecked) {
+	  case "false":
+		     Assert.assertEquals(navOptions.isColumnHeaderDisplayed(filter), false);
+		     navOptions.clickHideShowCheckBox();
+		     Assert.assertEquals(navOptions.isColumnHeaderDisplayed(filter), true);
+			break;
+	  case "true":
+		     Assert.assertEquals(navOptions.isColumnHeaderDisplayed(filter), true);
+		     navOptions.clickHideShowCheckBox();
+		     Assert.assertEquals(navOptions.isColumnHeaderDisplayed(filter), false);
+			break;
+	   
+	  default:
+	    Assert.assertTrue(false, "The status fields supplied does not match with the input");
+	
+    }
+}
+@When("^Verify that column (.*) only shows relevant rows in the table$")
+public void verifyShowStats(String filter) throws InterruptedException {
+	navOptions.tableOptionsLabel = filter;
+	Thread.sleep(15000);
+	navOptions.clickHideShowCheckBox();
+	Thread.sleep(2000);
+	String isChecked = navOptions.checkTableOptionsChkStatus();
+	switch(isChecked) {
+	  case "false":
+		     List coulmnData = navOptions.getColumnDataMatchingHeader(filter);
+		     for(int i=0;i<coulmnData.size();i++) {
+		    	 Assert.assertEquals(coulmnData.get(i), filter);
+				}
+		    
+			break;
+	   
+	  default:
+	    Assert.assertTrue(false, "The status fields supplied does not match with the input");
+	
+    }
 
-
+}
 
 }

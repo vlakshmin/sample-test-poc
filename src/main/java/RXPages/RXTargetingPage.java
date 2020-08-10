@@ -26,6 +26,7 @@ public class RXTargetingPage extends RXBaseClass  {
 	RXUtile rxUTL ;
 	PublisherListPage pubPage;
 	public String targetingHeaderStr="Targeting Rules";
+
 	
 	
 	//Seats page heading
@@ -40,6 +41,8 @@ public class RXTargetingPage extends RXBaseClass  {
 	
 	
 	@FindBy(xpath = "//div[contains(@class, 'v-list-item__title') and text()='Targeting']")  WebElement targetingNav;
+	
+	
 	
 	
 	
@@ -80,6 +83,8 @@ public class RXTargetingPage extends RXBaseClass  {
 			targetingNav.click();
 		}
 	}
+	
+	
 	
 	
 }

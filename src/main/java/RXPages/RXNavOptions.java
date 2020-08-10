@@ -2,7 +2,7 @@ package RXPages;
 
 import java.util.List;
 
-
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
@@ -17,6 +17,9 @@ public class RXNavOptions extends RXBaseClass{
 
 	//RX utitlity object.
 	RXUtile rxUTL;
+	public String tableOptionsLabel;
+
+	
 
 	//User Info option
 	@FindBy(xpath = "//div[1]/div[2]/a/div[2]/div[2]") WebElement userInfo;
@@ -56,9 +59,15 @@ public class RXNavOptions extends RXBaseClass{
     @FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[2]")) 
     public WebElement tableFirstRowName;
 	
-
+    @FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//thead//th/span"))
+	public List<WebElement> tableHeadersList;
+    
   
-
+    //TableOptions
+    @FindBy(xpath = "//div[@class='table-options']//span")  public WebElement tableOptions;
+	
+	
+	
 
 	public RXNavOptions() {
 		PageFactory.initElements(driver, this);
@@ -207,6 +216,42 @@ public class RXNavOptions extends RXBaseClass{
 		return paginationText;
 	}
 	
+	
+	public void clickTableOptions() {
+		if(tableOptions.isDisplayed()) {
+			tableOptions.click();
+		}
+	}
+	public void clickHideShowCheckBox() {
+		driver.findElement(By.xpath("//div[@role='menu']//label[text()='"+tableOptionsLabel+"']/preceding-sibling::div/input")).click();
+	}
+	public String checkTableOptionsChkStatus() {
+		 String checkStatus = driver.findElement(By.xpath("//div[@role='menu']//label[text()='"+tableOptionsLabel+"']/preceding-sibling::div/input"))
+		.getAttribute("aria-checked");
+		 return checkStatus;
+	}
+	
+	public boolean isColumnHeaderDisplayed(String headerName) throws InterruptedException {
+		Thread.sleep(2000);
+		boolean isDisplayed = driver.findElements(By.xpath("//div[@class='v-data-table__wrapper']//thead//th[text()='"+headerName+"']")).size()!=0;
+		return isDisplayed;
+		
+	}
+	
+	public List getColumnDataMatchingHeader(String filter) {
+		int headerIndex=0;
+		List numberOFHeaders = tableHeadersList;
+		for(int i=0;i<numberOFHeaders.size();i++) {
+			if(numberOFHeaders.get(i)==filter) {
+				headerIndex = i+1;
+			}
+		}
+		int columnIndex = headerIndex+1;
+		List<WebElement> coulmnData = driver.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[+columnIndex+]"));
+		return coulmnData;
+		
+	}
+
 
 
 }

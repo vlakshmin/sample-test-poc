@@ -166,11 +166,11 @@ Feature: RX users page Validation
 #	Then assert the new user details in user page table view.	
 
 	
-Scenario:  Verify the pagination exists for the list in the users page for admin
-	Given admin user login to RX UI with valid username and password 
-	When click on User option under accounts.
-	Then user displayed with User page.
-	Then Verify the pagination of the listed rows in the Page with a selection of 10 rows per page with 5 columns
+#Scenario:  Verify the pagination exists for the list in the users page for admin
+#	Given admin user login to RX UI with valid username and password 
+#	When click on User option under accounts.
+#	Then user displayed with User page.
+#	Then Verify the pagination of the listed rows in the Page with a selection of 10 rows per page with 5 columns
 	
 Scenario:  Verify the enabling and disabling for user for the list in the users page for admin
 	Given admin user login to RX UI with valid username and password 
