@@ -65,7 +65,7 @@ public void clickTableOptions() throws InterruptedException {
 @When("^Verify that column (.*) can be hidden and shown$")
 public void verifyHideShow(String filter) throws InterruptedException {
 	navOptions.tableOptionsLabel = filter;
-	Thread.sleep(30000);
+	Thread.sleep(5000);
 	navOptions.clickHideShowCheckBox();
 	Thread.sleep(2000);
 	String isChecked = navOptions.checkTableOptionsChkStatus();
@@ -86,18 +86,18 @@ public void verifyHideShow(String filter) throws InterruptedException {
 	
     }
 }
-@When("^Verify that column (.*) only shows relevant rows in the table$")
-public void verifyShowStats(String filter) throws InterruptedException {
+@When("^Verify that column (.*) only shows relevant rows in the table with filter (.*)$")
+public void verifyShowStats(String column, String filter) throws InterruptedException {
 	navOptions.tableOptionsLabel = filter;
-	Thread.sleep(15000);
+	Thread.sleep(5000);
 	navOptions.clickHideShowCheckBox();
 	Thread.sleep(2000);
 	String isChecked = navOptions.checkTableOptionsChkStatus();
 	switch(isChecked) {
-	  case "false":
-		     List coulmnData = navOptions.getColumnDataMatchingHeader(filter);
+	  case "true":
+		     List<WebElement> coulmnData = navOptions.getColumnDataMatchingHeader(column);
 		     for(int i=0;i<coulmnData.size();i++) {
-		    	 Assert.assertEquals(coulmnData.get(i), filter);
+		    	 Assert.assertEquals(coulmnData.get(i).getText(), filter);
 				}
 		    
 			break;

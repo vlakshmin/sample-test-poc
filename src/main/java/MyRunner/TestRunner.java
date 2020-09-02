@@ -20,7 +20,7 @@ import cucumber.api.testng.TestNGCucumberRunner;
 
 @CucumberOptions(
 
-		features = "src/main/java/Features/Targeting_regression.feature",
+		features = "src/main/java/Features/Adspots_regression.feature",
         glue = {"stepDefinitions"},
         tags = {"~@Ignore"},
         plugin = {"com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html",
