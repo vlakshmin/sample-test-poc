@@ -484,28 +484,33 @@ public class AdminUserStepDefinition extends RXBaseClass {
 		
 		@Then("^Verify the enabling and disabling feature of the user with index (.*)$")
 		public void userEnableDisable(int index) throws InterruptedException {
+			WebDriverWait wait = new WebDriverWait(driver,30);
 			rxUserPage.clickUserCheckBox(index);
 			String status = rxUserPage.getActiveFieldText(index);
 			switch(status) {
 			  case "Active":
 				     Assert.assertEquals(rxUserPage.getEnableDisableBtnText(), "DISABLEUSER");
 				     rxUserPage.clickEnableDisableButton();
+				     wait.until(ExpectedConditions.invisibilityOf(rxUserPage.enableDisableButton));
 				     Thread.sleep(5000);
 					 Assert.assertEquals(rxUserPage.getActiveFieldText(index), "Inactive");
 					 rxUserPage.clickUserCheckBox(index);
 					 Assert.assertEquals(rxUserPage.getEnableDisableBtnText(), "ENABLEUSER");
 					 rxUserPage.clickEnableDisableButton();
+					 wait.until(ExpectedConditions.invisibilityOf(rxUserPage.enableDisableButton));
 					 Thread.sleep(5000);
 					 Assert.assertEquals(rxUserPage.getActiveFieldText(index), "Active");
 					break;
 			  case "Inactive":
 				     Assert.assertEquals(rxUserPage.getEnableDisableBtnText(), "ENABLEUSER");
 				     rxUserPage.clickEnableDisableButton();
+				     wait.until(ExpectedConditions.invisibilityOf(rxUserPage.enableDisableButton));
 				     Thread.sleep(5000);
 					 Assert.assertEquals(rxUserPage.getActiveFieldText(index), "Active");
 					 rxUserPage.clickUserCheckBox(index);
 					 Assert.assertEquals(rxUserPage.getEnableDisableBtnText(), "DISABLEUSER");
 					 rxUserPage.clickEnableDisableButton();
+					 wait.until(ExpectedConditions.invisibilityOf(rxUserPage.enableDisableButton));
 					 Thread.sleep(5000);
 					 Assert.assertEquals(rxUserPage.getActiveFieldText(index), "Inactive");
 					break;

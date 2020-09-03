@@ -2,7 +2,8 @@ package RXPages;
 
 import java.util.List;
 
-
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
@@ -17,6 +18,9 @@ public class RXNavOptions extends RXBaseClass{
 
 	//RX utitlity object.
 	RXUtile rxUTL;
+	public String tableOptionsLabel;
+
+	
 
 	//User Info option
 	@FindBy(xpath = "//div[1]/div[2]/a/div[2]/div[2]") WebElement userInfo;
@@ -38,7 +42,8 @@ public class RXNavOptions extends RXBaseClass{
 
 	//subMenu of Inventory main menu
 	@FindBy(xpath = "//div[text()='Media']") public WebElement mediaUndrInventory;
-	@FindBy(xpath = "//div[text()='Ad Spots']") WebElement adspotsUndrInventory;
+	@FindBy(xpath = "//div[text()='Ad Spots']")
+	public WebElement adspotsUndrInventory;
 
 	//subMenu of Rules main menu
 	@FindBy(xpath = "//div[text()='Filters']") WebElement filtersUndrRules;
@@ -56,9 +61,15 @@ public class RXNavOptions extends RXBaseClass{
     @FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[2]")) 
     public WebElement tableFirstRowName;
 	
-
+    @FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//thead//th/span"))
+	public List<WebElement> tableHeadersList;
+    
   
-
+    //TableOptions
+    @FindBy(xpath = "//div[@class='table-options']//span")  public WebElement tableOptions;
+	
+	
+	
 
 	public RXNavOptions() {
 		PageFactory.initElements(driver, this);
@@ -181,12 +192,16 @@ public class RXNavOptions extends RXBaseClass{
 	// click on the next page navigation button
 	public void clickNextPageNav() {
 		if(nextPageNavButton.isDisplayed()) {
+			JavascriptExecutor jse2 = (JavascriptExecutor)driver;
+			jse2.executeScript("arguments[0].scrollIntoView()", nextPageNavButton); 
 			nextPageNavButton.click();
 		}
 	}
 	// click on the previous page navigation button
 	public void clickPreviousPageNav() {
 		if(previousPageNavButton.isDisplayed()) {
+			JavascriptExecutor jse2 = (JavascriptExecutor)driver;
+			jse2.executeScript("arguments[0].scrollIntoView()", previousPageNavButton); 
 			previousPageNavButton.click();
 		}
 	}
@@ -207,6 +222,50 @@ public class RXNavOptions extends RXBaseClass{
 		return paginationText;
 	}
 	
+	
+	public void clickTableOptions() {
+		if(tableOptions.isDisplayed()) {
+			tableOptions.click();
+		}
+	}
+	public void clickHideShowCheckBox() {
+		
+		WebElement hideShowChk = driver.findElement(By.xpath("//div[@role='menu']//label[text()='"+tableOptionsLabel+"']/preceding-sibling::div"));
+		JavascriptExecutor jse2 = (JavascriptExecutor)driver;
+		jse2.executeScript("arguments[0].scrollIntoView()", hideShowChk); 
+		hideShowChk.click();
+	}
+	public String checkTableOptionsChkStatus() {
+		WebElement hideShowChk = driver.findElement(By.xpath("//div[@role='menu']//label[text()='"+tableOptionsLabel+"']/preceding-sibling::div/input"));
+		JavascriptExecutor jse2 = (JavascriptExecutor)driver;
+		jse2.executeScript("arguments[0].scrollIntoView()", hideShowChk); 
+		 String checkStatus = hideShowChk.getAttribute("aria-checked");
+		 return checkStatus;
+		 
+	}
+	
+	public boolean isColumnHeaderDisplayed(String headerName) throws InterruptedException {
+		Thread.sleep(3000);
+		boolean isDisplayed = driver.findElements(By.xpath("//div[@class='v-data-table__wrapper']//thead//th/span[text()='"+headerName+"']")).size()!=0;
+		return isDisplayed;
+		
+	}
+	
+	public List<WebElement> getColumnDataMatchingHeader(String filter) throws InterruptedException {
+		Thread.sleep(5000);
+		int headerIndex=0;
+		List<WebElement> numberOFHeaders = tableHeadersList;
+		for(int i=0;i<numberOFHeaders.size();i++) {
+			if(numberOFHeaders.get(i).getText().equals(filter)) {
+				headerIndex = i+1;
+			}
+		}
+		int columnIndex = headerIndex+1;
+		List<WebElement> coulmnData = driver.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td["+columnIndex+"]"));
+		return coulmnData;
+		
+	}
+
 
 
 }
