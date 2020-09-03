@@ -35,7 +35,14 @@ public class RXAdspotsPage extends RXBaseClass  {
 	public List<WebElement> adspotsTableRows;
     @FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr[1]/td")) 
     public List<WebElement> adspotsTableColumns;
-	
+    @FindBy(xpath = "//*[@class='v-text-field__slot']/input")  WebElement adSpotsSearchField;
+  
+  //overview buttons
+  	@FindBy(xpath = "//button/span[text()='Edit AdSpot']") public WebElement overviewEditbutton;
+  	@FindBy(xpath = "//button/span[text()='Disable AdSpot']") public WebElement overviewDisablebutton;
+  	@FindBy(xpath = "//div[@class='portal vue-portal-target']/button[2]/span") public WebElement overviewEnablebutton;
+  	
+  	
 	
 	
 	//Action object
@@ -67,6 +74,40 @@ public class RXAdspotsPage extends RXBaseClass  {
 			
 		}
 	
+	public void searchAdspots(String text)
+	{
+		WebDriverWait wait = new WebDriverWait(driver,30);
+		WebElement elem = wait.until(ExpectedConditions.visibilityOf(adSpotsSearchField));
+		boolean isNotDisplayed = driver.findElements(By.xpath("//*[@class='v-input__icon v-input__icon--clear']/button[@disabled='disabled']")).size()!=0;
+		if(!isNotDisplayed) {
+			driver.findElement(By.xpath("//*[@class='v-input__icon v-input__icon--clear']/button")).click();
+		}
+		
+		elem.sendKeys(text);
+		
+	}
+	public void clickOverViewEditbutton() {
+		WebDriverWait wait = new WebDriverWait(driver,30);
+		wait.until(ExpectedConditions.visibilityOf(overviewEditbutton));
+		if(overviewEditbutton.isDisplayed()) {
+			overviewEditbutton.click();
+		}
+	}
 	
+	public void clickOverViewEnablebutton() {
+		WebDriverWait wait = new WebDriverWait(driver,30);
+		wait.until(ExpectedConditions.visibilityOf(overviewEnablebutton));
+		String enableText = overviewEnablebutton.getText().replaceAll("\\s", "");
+		if(enableText.equals("ENABLEADSPOT")) {
+			overviewEnablebutton.click();
+		}
+	}
+	public void clickOverViewDisablebutton() {
+		WebDriverWait wait = new WebDriverWait(driver,30);
+		wait.until(ExpectedConditions.visibilityOf(overviewDisablebutton));
+		if(overviewDisablebutton.isDisplayed()) {
+			overviewDisablebutton.click();
+		}
+	}
 	
 }

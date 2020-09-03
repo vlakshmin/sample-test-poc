@@ -256,7 +256,6 @@ public class RXNavOptions extends RXBaseClass{
 		int headerIndex=0;
 		List<WebElement> numberOFHeaders = tableHeadersList;
 		for(int i=0;i<numberOFHeaders.size();i++) {
-			System.out.println(numberOFHeaders.get(i).getText());
 			if(numberOFHeaders.get(i).getText().equals(filter)) {
 				headerIndex = i+1;
 			}
