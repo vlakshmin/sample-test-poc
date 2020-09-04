@@ -128,7 +128,6 @@ public void verifyHEnableDiableAdspot() throws InterruptedException {
 public void verifySort(DataTable dt) throws InterruptedException, ParseException {
 	WebDriverWait wait = new WebDriverWait(driver,45);
 	driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//thead//th/span[text()='ID']/parent::th")).click();
-	wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]"))));
 	List dataInEachColumn;
 	List dataInEachColumnSorted = new ArrayList();
 	List<Map<String, String>> list = dt.asMaps(String.class, String.class);
@@ -136,12 +135,14 @@ public void verifySort(DataTable dt) throws InterruptedException, ParseException
 		String columnName = list.get(i).get("ColumnName");
 		String sortType = list.get(i).get("SortType");
 		driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//thead//th/span[text()='"+columnName+"']/parent::th")).click();
+		Thread.sleep(5000);
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]"))));
 		if(sortType.equalsIgnoreCase("Desc")) {
 		driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//thead//th/span[text()='"+columnName+"']/parent::th")).click();
+		Thread.sleep(5000);
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]"))));
 		}
-		Thread.sleep(5000);
+		
 		String sorting = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//thead//th/span[text()='"+columnName+"']/parent::th")).getAttribute("aria-sort");
 		switch(sorting) {
 		  case "ascending":
