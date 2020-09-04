@@ -128,7 +128,7 @@ public void verifyHEnableDiableAdspot() throws InterruptedException {
 public void verifySort(DataTable dt) throws InterruptedException, ParseException {
 	WebDriverWait wait = new WebDriverWait(driver,45);
 	driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//thead//th/span[text()='ID']/parent::th")).click();
-	WebElement elem = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]"))));
+	wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]"))));
 	List dataInEachColumn;
 	List dataInEachColumnSorted = new ArrayList();
 	List<Map<String, String>> list = dt.asMaps(String.class, String.class);
