@@ -177,7 +177,9 @@ public class RXNavOptions extends RXBaseClass{
 
 	public void expandInventory()
 	{
-		inventoryExpensionBtn.click();
+		WebDriverWait wait = new WebDriverWait(driver,30);
+		WebElement element =wait.until(ExpectedConditions.visibilityOf(inventoryExpensionBtn));
+		element.click();
 
 	}
 	// Clicking expansion of Rules

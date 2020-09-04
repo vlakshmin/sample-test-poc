@@ -38,15 +38,18 @@ Scenario:  Verify enabling and disabling of an adspot from the overview page
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
 	Then Verify enabling and disabling of an adspot from the overview page
+
 	
-#Scenario:  Verify sorting of the table columns of the adspots overview page 
-#    Given admin user login to RX UI with valid username and password 
-#    When Click on Adspots option under Inventory
-#	And User displayed with Adspots page
-#	Then Verify the sorting functionality with the following columns
-#	|ColumnName|
-#	|ID|
-#	|Publisher|
-#	|Create Date|
+Scenario:  Verify sorting of the table's columns of the adspots overview page 
+    Given admin user login to RX UI with valid username and password 
+    When Click on Adspots option under Inventory
+	And User displayed with Adspots page
+	Then Verify the sorting functionality with the following columns
+	|ColumnName|SortType|
+	|ID|asc|
+	|Publisher|desc|
+	|Create Date|desc|
+	|Related Media|asc|
+	
 	
 	

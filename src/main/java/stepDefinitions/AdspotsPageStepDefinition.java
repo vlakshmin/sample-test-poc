@@ -126,32 +126,44 @@ public void verifyHEnableDiableAdspot() throws InterruptedException {
 //Verify sorting of the table list columns
 @Then("^Verify the sorting functionality with the following columns$")
 public void verifySort(DataTable dt) throws InterruptedException, ParseException {
+	WebDriverWait wait = new WebDriverWait(driver,45);
+	driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//thead//th/span[text()='ID']/parent::th")).click();
 	List dataInEachColumn;
-	List dataInEachColumnSorted;
+	List dataInEachColumnSorted = new ArrayList();
 	List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 	for(int i=0; i<list.size(); i++) {
 		String columnName = list.get(i).get("ColumnName");
-		List<WebElement> coulmnData = navOptions.getColumnDataMatchingHeader(columnName);
-		dataInEachColumn = returnListOfColumnData(coulmnData, columnName);
+		String sortType = list.get(i).get("SortType");
 		driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//thead//th/span[text()='"+columnName+"']/parent::th")).click();
-		WebDriverWait wait = new WebDriverWait(driver,45);
-		WebElement elem = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]"))));
+		Thread.sleep(5000);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]"))));
+		if(sortType.equalsIgnoreCase("Desc")) {
+		driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//thead//th/span[text()='"+columnName+"']/parent::th")).click();
+		Thread.sleep(5000);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]"))));
+		}
+		
 		String sorting = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//thead//th/span[text()='"+columnName+"']/parent::th")).getAttribute("aria-sort");
 		switch(sorting) {
 		  case "ascending":
-			    Collections.sort(dataInEachColumn);
-			    Thread.sleep(3000);
+			    
 			    List<WebElement> coulmnData1 = navOptions.getColumnDataMatchingHeader(columnName);
 			    dataInEachColumnSorted = returnListOfColumnData(coulmnData1, columnName);
-			    Assert.assertTrue(dataInEachColumn.equals(dataInEachColumnSorted));
+			    dataInEachColumn = new ArrayList(dataInEachColumnSorted);
+			    System.out.println("Before sorting: " + dataInEachColumn);
+			    Collections.sort(dataInEachColumnSorted);
+			    System.out.println("After sorting: " + dataInEachColumnSorted);
+			    Assert.assertEquals(dataInEachColumn,dataInEachColumnSorted);
 				break;
 		  case "descending":
-			    Collections.sort(dataInEachColumn);
-			    Thread.sleep(3000);
 			    List<WebElement> coulmnData2 = navOptions.getColumnDataMatchingHeader(columnName);
 			    dataInEachColumnSorted = returnListOfColumnData(coulmnData2, columnName);
+			    dataInEachColumn = new ArrayList(dataInEachColumnSorted);
+			    System.out.println("Before sorting: " + dataInEachColumn);
+			    Collections.sort(dataInEachColumnSorted);
 			    Collections.reverse(dataInEachColumnSorted);
-			    Assert.assertTrue(dataInEachColumn.equals(dataInEachColumnSorted));
+			    System.out.println("After sorting: " + dataInEachColumnSorted);
+			    Assert.assertEquals(dataInEachColumn,dataInEachColumnSorted);
 				break;
 		   
 		  default:
@@ -166,15 +178,15 @@ public void verifySort(DataTable dt) throws InterruptedException, ParseException
 }
 
 public List returnListOfColumnData(List<WebElement> coulmnData, String columnName) throws ParseException {
-	List dataInEachColumn = null;
+	List dataInEachColumn = new ArrayList();
 	for(int j=0;j<coulmnData.size();j++) {
    	 if(columnName.contains("ID")) {
    		 dataInEachColumn.add(Integer.parseInt(coulmnData.get(j).getText()));
    	 }
-   	 else if(columnName.contains("Date")) {
-   		 DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-   		 dataInEachColumn.add(dateFormatter.parse(coulmnData.get(j).getText()));
-   	 }
+//   	 else if(columnName.contains("Date")) {
+//   		 DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+//   		 dataInEachColumn.add(dateFormatter.parse(coulmnData.get(j).getText()));
+//   	 }
    	 else {
    		 dataInEachColumn.add(coulmnData.get(j).getText()); 
    	 }
