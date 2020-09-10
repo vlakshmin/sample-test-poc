@@ -43,8 +43,27 @@ public class RXAdspotsPage extends RXBaseClass  {
   	@FindBy(xpath = "//div[@class='portal vue-portal-target']/button[2]/span") public WebElement overviewEnablebutton;
   	
   	
-	
-	
+	//Create/Edit Page labels
+  	@FindBy(xpath = "//label[text()='Publisher Name']/following-sibling::div[@class='v-select__selections']") public WebElement publisherNameDropDown;
+  	@FindBy(xpath = "//label[text()='Publisher Name']/following-sibling::div[@class='v-select__selections']/div") public WebElement publisherNameField;
+    @FindBy(xpath = "//label[text()='AdSpot Name']/following-sibling::input") public WebElement adSpotNameField;
+  	@FindBy(xpath = "//aside[@class='dialog']//div[@class='v-toolbar__title']/div") public WebElement adSpotNameHeader;
+  	@FindBy(xpath = "//label[text()='Related Media']/following-sibling::div[@class='v-select__selections']") public WebElement relatedMediaDropDown;
+  	@FindBy(xpath = "//label[text()='Related Media']/following-sibling::div[@class='v-select__selections']/div") public WebElement relatedMediaField;
+  	@FindBy(xpath = "//label[text()='Categories']/following-sibling::div[@class='v-select__selections']") public WebElement categoriesDropDown;
+  	@FindBy(xpath = "//label[text()='Categories']/following-sibling::div[@class='v-select__selections']//span[@class='v-chip__content']") public WebElement categoriesField;
+  
+  	@FindBy(xpath = "//label[text()='Filter']/following-sibling::div[@class='v-select__selections']") public WebElement filterDropDown;
+  	@FindBy(xpath = "//label[text()='Filter']/following-sibling::div[@class='v-select__selections']/div") public WebElement filterField;
+  	@FindBy(xpath = "//label[text()='Position']/following-sibling::div[@class='v-select__selections']") public WebElement positionDropDown;
+  	@FindBy(xpath = "//label[text()='Position']/following-sibling::div[@class='v-select__selections']/div") public WebElement positionField;
+  	@FindBy(xpath = "//label[text()='Default Ad Sizes']/following-sibling::div[@class='v-select__selections']") public WebElement defaultSizesDropDown;
+  	@FindAll(@FindBy(xpath = "//label[text()='Default Ad Sizes']/following-sibling::div[@class='v-select__selections']/div")) public List<WebElement> defaultSizesField;
+  	@FindBy(xpath = "//label[text()='Default Floor Price']/following-sibling::input") public WebElement defaultPriceField;
+  	@FindBy(xpath = "//div[@class='v-banner__content']//div[@class='v-banner__text']") public WebElement publisherChangeBannerTxt;
+  
+  	
+  
 	//Action object
 	Actions act = new Actions(driver);
 	

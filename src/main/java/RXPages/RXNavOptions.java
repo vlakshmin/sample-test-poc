@@ -44,6 +44,11 @@ public class RXNavOptions extends RXBaseClass{
 	@FindBy(xpath = "//div[text()='Media']") public WebElement mediaUndrInventory;
 	@FindBy(xpath = "//div[text()='Ad Spots']")
 	public WebElement adspotsUndrInventory;
+	
+	//Create/EditPage common webelements
+	@FindBy(xpath = "//button[@type='submit']")
+	public WebElement saveButton;
+	
 
 	//subMenu of Rules main menu
 	@FindBy(xpath = "//div[text()='Filters']") WebElement filtersUndrRules;
