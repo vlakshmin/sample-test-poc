@@ -61,8 +61,26 @@ public class RXAdspotsPage extends RXBaseClass  {
   	@FindAll(@FindBy(xpath = "//label[text()='Default Ad Sizes']/following-sibling::div[@class='v-select__selections']/div")) public List<WebElement> defaultSizesField;
   	@FindBy(xpath = "//label[text()='Default Floor Price']/following-sibling::input") public WebElement defaultPriceField;
   	@FindBy(xpath = "//div[@class='v-banner__content']//div[@class='v-banner__text']") public WebElement publisherChangeBannerTxt;
-  
-  	
+  	@FindAll(@FindBy(xpath = "//form/div[2]//div[@class='v-messages__wrapper']/div")) public List<WebElement> generalSizePriceMsg;
+  	@FindAll(@FindBy(xpath = "//form/div[3]//div[@class='v-messages__wrapper']/div")) public List<WebElement> bannerSizePriceMsg;
+  	@FindAll(@FindBy(xpath = "//form/div[4]//div[@class='v-messages__wrapper']/div")) public List<WebElement> nativeSizePriceMsg;
+  	@FindAll(@FindBy(xpath = "//form/div[5]//div[@class='v-messages__wrapper']/div")) public List<WebElement> inBannerVideoSizePriceMsg;
+  	@FindBy(xpath = "//form/div[3]/div/button//i") public WebElement bannerExpandButton;
+  	@FindBy(xpath = "//form/div[4]/div/button//i") public WebElement nativeExpandButton;
+  	@FindBy(xpath = "//form/div[5]/div/button//i") public WebElement inBannerVideoExpandButton;
+  	@FindBy(xpath = "//form/div[3]//label[text()='Floor Price']/following-sibling::input") public WebElement bannerPriceField;
+  	@FindBy(xpath = "//form/div[3]//label[text()='Ad Sizes']/following-sibling::div[@class='v-select__selections']") public WebElement bannerSizesDropDown;
+  	@FindAll(@FindBy(xpath = "//form/div[3]//label[text()='Ad Sizes']/following-sibling::div[@class='v-select__selections']/div")) public List<WebElement> bannerSizesField;
+  	@FindBy(xpath = "//form/div[4]//label[text()='Floor Price']/following-sibling::input") public WebElement nativePriceField;
+  	@FindBy(xpath = "//form/div[5]//label[text()='Floor Price']/following-sibling::input") public WebElement inBannerVideoPriceField;
+  	@FindBy(xpath = "//form/div[5]//label[text()='Ad Sizes']/following-sibling::div[@class='v-select__selections']") public WebElement inBannerVideoSizesDropDown;
+  	@FindAll(@FindBy(xpath = "//form/div[5]//label[text()='Ad Sizes']/following-sibling::div[@class='v-select__selections']/div")) public List<WebElement> inBannerVideoSizesField;
+  	@FindBy(xpath = "//form/div[5]//label[text()='Minimum Video Duration']/following-sibling::div[@class='v-select__selections']") public WebElement minVideoDurDropDown;
+  	@FindBy(xpath = "//form/div[5]//label[text()='Maximum Video Duration']/following-sibling::div[@class='v-select__selections']") public WebElement maxVideoDurDropDown;
+  	@FindBy(xpath = "//form/div[5]//label[text()='Minimum Video Duration']/following-sibling::div[@class='v-select__selections']/div") public WebElement minVideoDurField;
+  	@FindBy(xpath = "//form/div[5]//label[text()='Maximum Video Duration']/following-sibling::div[@class='v-select__selections']/div") public WebElement maxVideoDurField;
+  	@FindBy(xpath = "//form/div[5]//label[text()='Playback Methods']/following-sibling::div[@class='v-select__selections']") public WebElement playbackMethodsDropDown;
+  	@FindAll(@FindBy(xpath = "//form/div[5]//label[text()='Playback Methods']/following-sibling::div[@class='v-select__selections']/div")) public List<WebElement> playbackMethodsField;
   
 	//Action object
 	Actions act = new Actions(driver);

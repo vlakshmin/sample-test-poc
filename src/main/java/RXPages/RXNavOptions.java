@@ -48,6 +48,8 @@ public class RXNavOptions extends RXBaseClass{
 	//Create/EditPage common webelements
 	@FindBy(xpath = "//button[@type='submit']")
 	public WebElement saveButton;
+	@FindBy(xpath = "//button[@type='submit']/span")
+	public WebElement saveButtonTxt;
 	
 
 	//subMenu of Rules main menu

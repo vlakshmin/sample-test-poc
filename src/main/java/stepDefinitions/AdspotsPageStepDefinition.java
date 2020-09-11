@@ -36,8 +36,16 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 	String enteredCategories;
 	String enteredFilter;
 	String enteredPosition;
-	String enteredSizes = "";
+	String enteredMinVideoDuration;
+	String enteredMaxVideoDuration;
+	String enteredDefaultSizes = "";
+	String enteredBannerSizes = "";
+	String enteredInBannerVideoSizes = "";
+	String enteredInBannerPlayback = "";
 	String enteredDefaultPrice;
+	String enteredBannerPrice;
+	String enteredNativePrice;
+	String enteredInBannerVideoPrice;
 	RXAdspotsPage adspotsPage;
 	RXNavOptions navOptions;
 	PublisherListPage pubListPgs;
@@ -296,6 +304,17 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 		navOptions.saveButton.click();
 
 	}
+	
+	
+	
+	@When("^Verify the save is failed$")
+	public void verifySaveFailed() throws Throwable {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//button[@type='submit']/span[text(),'Failed!']"))));
+		String failedMessage = navOptions.saveButtonTxt.getText().replaceAll("\u3000", "");
+		Assert.assertEquals(failedMessage, "Failed!");
+
+	}
 
 	@When("^Click on save button and wait for dialog to close$")
 	public void clickSaveBtnCloseDialog() throws Throwable {
@@ -441,9 +460,9 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 					Thread.sleep(2000);
 					List<WebElement> enteredSizesLsit = adspotsPage.defaultSizesField;
 					for (int k = 0; k < enteredSizesLsit.size(); k++) {
-						enteredSizes += enteredSizesLsit.get(k).getText();
+						enteredDefaultSizes += enteredSizesLsit.get(k).getText();
 					}
-					System.out.println("Default Sizes entered as :" + enteredSizes);
+					System.out.println("Default Sizes entered as :" + enteredDefaultSizes);
 				}
 				break;
 			case "Default Floor Price":
@@ -460,6 +479,226 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 		}
 	}
 
+	@Then("^Enter the following data in the banner card of adspot$")
+	public void enterBannerCard(DataTable dt) throws InterruptedException, ParseException {
+		WebDriverWait wait = new WebDriverWait(driver, 35);
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		for (int i = 0; i < list.size(); i++) {
+			String fieldName = list.get(i).get("FieldName");
+			String value = list.get(i).get("Value");
+			String listValueIndex = list.get(i).get("ListValueIndex");
+
+			switch (fieldName) {
+			case "Floor Price":
+				adspotsPage.bannerPriceField.sendKeys(value);
+				Thread.sleep(2000);
+				enteredBannerPrice = adspotsPage.bannerPriceField.getAttribute("value");
+				System.out.println("Entered floor price for banner:" + enteredBannerPrice);
+				break;
+			case "Ad Sizes":
+				if (value.equalsIgnoreCase("ListValue")) {
+					wait.until(ExpectedConditions.visibilityOf(adspotsPage.bannerSizesDropDown));
+					adspotsPage.bannerSizesDropDown.click();
+					if (listValueIndex.contains(",")) {
+						List<String> items = Arrays.asList(listValueIndex.split("\\s*,\\s*"));
+						for (int j = 0; j < items.size(); j++) {
+							listValueIndex = items.get(j);
+							wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(
+									"//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+											+ listValueIndex + "]"))));
+							WebElement dropDownValue = driver.findElement(By.xpath(
+									"//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+											+ listValueIndex + "]"));
+							js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
+							dropDownValue.click();
+						}
+					} else {
+						wait.until(ExpectedConditions.visibilityOf(driver.findElement(By
+								.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+										+ listValueIndex + "]"))));
+						WebElement dropDownValue = driver.findElement(By
+								.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+										+ listValueIndex + "]"));
+						js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
+						dropDownValue.click();
+					}
+
+					adspotsPage.bannerPriceField.click();
+					Thread.sleep(2000);
+					List<WebElement> enteredSizesLsit = adspotsPage.bannerSizesField;
+					for (int k = 0; k < enteredSizesLsit.size(); k++) {
+						enteredBannerSizes += enteredSizesLsit.get(k).getText();
+					}
+					System.out.println("Banner Sizes entered as :" + enteredBannerSizes);
+				}
+				break;
+			
+			default:
+				Assert.assertTrue(false, "The status fields supplied does not match with the input");
+
+			}
+
+		}
+	}
+	
+	@Then("^Enter the following data in the in-banner video card of adspot$")
+	public void enterinBannerCard(DataTable dt) throws InterruptedException, ParseException {
+		WebDriverWait wait = new WebDriverWait(driver, 35);
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		for (int i = 0; i < list.size(); i++) {
+			String fieldName = list.get(i).get("FieldName");
+			String value = list.get(i).get("Value");
+			String listValueIndex = list.get(i).get("ListValueIndex");
+
+			switch (fieldName) {
+			case "Floor Price":
+				adspotsPage.inBannerVideoPriceField.sendKeys(value);
+				Thread.sleep(2000);
+				enteredInBannerVideoPrice = adspotsPage.inBannerVideoPriceField.getAttribute("value");
+				System.out.println("Entered floor price for in-banner video:" + enteredInBannerVideoPrice);
+				break;
+			case "Ad Sizes":
+				if (value.equalsIgnoreCase("ListValue")) {
+					wait.until(ExpectedConditions.visibilityOf(adspotsPage.inBannerVideoSizesDropDown));
+					adspotsPage.inBannerVideoSizesDropDown.click();
+					if (listValueIndex.contains(",")) {
+						List<String> items = Arrays.asList(listValueIndex.split("\\s*,\\s*"));
+						for (int j = 0; j < items.size(); j++) {
+							listValueIndex = items.get(j);
+							wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(
+									"//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+											+ listValueIndex + "]"))));
+							WebElement dropDownValue = driver.findElement(By.xpath(
+									"//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+											+ listValueIndex + "]"));
+							js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
+							dropDownValue.click();
+						}
+					} else {
+						wait.until(ExpectedConditions.visibilityOf(driver.findElement(By
+								.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+										+ listValueIndex + "]"))));
+						WebElement dropDownValue = driver.findElement(By
+								.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+										+ listValueIndex + "]"));
+						js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
+						dropDownValue.click();
+					}
+
+					adspotsPage.inBannerVideoPriceField.click();
+					Thread.sleep(2000);
+					List<WebElement> enteredSizesLsit = adspotsPage.inBannerVideoSizesField;
+					for (int k = 0; k < enteredSizesLsit.size(); k++) {
+						enteredInBannerVideoSizes += enteredSizesLsit.get(k).getText();
+					}
+					System.out.println("InBanner Video Sizes entered as :" + enteredInBannerVideoSizes);
+				}
+				break;
+			case "Minimum Video Duration":
+				if (value.equalsIgnoreCase("ListValue")) {
+					wait.until(ExpectedConditions.visibilityOf(adspotsPage.minVideoDurDropDown));
+					adspotsPage.minVideoDurDropDown.click();
+					wait.until(ExpectedConditions.visibilityOf(driver.findElement(
+							By.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+									+ listValueIndex + "]"))));
+					WebElement dropDownValue = driver.findElement(
+							By.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+									+ listValueIndex + "]"));
+					js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
+					dropDownValue.click();
+
+					Thread.sleep(2000);
+					enteredMinVideoDuration = adspotsPage.minVideoDurField.getText();
+					System.out.println("Miniumum Video Duration entered as :" + enteredMinVideoDuration);
+				}
+				break;
+			case "Maximum Video Duration":
+				if (value.equalsIgnoreCase("ListValue")) {
+					wait.until(ExpectedConditions.visibilityOf(adspotsPage.maxVideoDurDropDown));
+					adspotsPage.maxVideoDurDropDown.click();
+					wait.until(ExpectedConditions.visibilityOf(driver.findElement(
+							By.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+									+ listValueIndex + "]"))));
+					WebElement dropDownValue = driver.findElement(
+							By.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+									+ listValueIndex + "]"));
+					js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
+					dropDownValue.click();
+
+					Thread.sleep(2000);
+					enteredMaxVideoDuration = adspotsPage.maxVideoDurField.getText();
+					System.out.println("Maximum Video Duration entered as :" + enteredMaxVideoDuration);
+				}
+				break;
+			case "Playback Methods":
+				if (value.equalsIgnoreCase("ListValue")) {
+					wait.until(ExpectedConditions.visibilityOf(adspotsPage.playbackMethodsDropDown));
+					adspotsPage.playbackMethodsDropDown.click();
+					if (listValueIndex.contains(",")) {
+						List<String> items = Arrays.asList(listValueIndex.split("\\s*,\\s*"));
+						for (int j = 0; j < items.size(); j++) {
+							listValueIndex = items.get(j);
+							wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(
+									"//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+											+ listValueIndex + "]"))));
+							WebElement dropDownValue = driver.findElement(By.xpath(
+									"//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+											+ listValueIndex + "]"));
+							js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
+							dropDownValue.click();
+						}
+					} else {
+						wait.until(ExpectedConditions.visibilityOf(driver.findElement(By
+								.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+										+ listValueIndex + "]"))));
+						WebElement dropDownValue = driver.findElement(By
+								.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+										+ listValueIndex + "]"));
+						js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
+						dropDownValue.click();
+					}
+
+					adspotsPage.maxVideoDurField.click();
+					Thread.sleep(2000);
+					List<WebElement> enteredSizesLsit = adspotsPage.playbackMethodsField;
+					for (int k = 0; k < enteredSizesLsit.size(); k++) {
+						enteredInBannerPlayback += enteredSizesLsit.get(k).getText();
+					}
+					System.out.println("InBanner Video Playback Methods entered as :" + enteredInBannerPlayback);
+				}
+				break;
+			default:
+				Assert.assertTrue(false, "The status fields supplied does not match with the input");
+
+			}
+
+		}
+	}
+	@Then("^Enter the following data in the native card of adspot$")
+	public void enterNativeCard(DataTable dt) throws InterruptedException, ParseException {
+		WebDriverWait wait = new WebDriverWait(driver, 35);
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		for (int i = 0; i < list.size(); i++) {
+			String fieldName = list.get(i).get("FieldName");
+			String value = list.get(i).get("Value");
+			
+
+			switch (fieldName) {
+			case "Floor Price":
+				adspotsPage.nativePriceField.sendKeys(value);
+				Thread.sleep(2000);
+				enteredNativePrice = adspotsPage.nativePriceField.getAttribute("value");
+				System.out.println("Entered floor price for native:" + enteredNativePrice);
+				break;
+			
+			
+			default:
+				Assert.assertTrue(false, "The status fields supplied does not match with the input");
+
+			}
+
+		}
+	}
 	@Then("^Verify the following columns value with the entered data for the general card of adspot$")
 	public void verifyGeneralCardValues(DataTable dt) throws InterruptedException, ParseException {
 		WebDriverWait wait = new WebDriverWait(driver, 35);
@@ -494,7 +733,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				for (int k = 0; k < enteredSizesLsit.size(); k++) {
 					sizes += enteredSizesLsit.get(k).getText();
 				}
-				Assert.assertEquals(sizes, enteredSizes);
+				Assert.assertEquals(sizes, enteredDefaultSizes);
 
 				break;
 			case "Default Floor Price":
@@ -571,5 +810,96 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 		}
 
 	}
+	
+	@When("^Verify error messages for sizes and floor price for the following cards$")
+	public void verifyCardErrorMsg(DataTable dt) throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		for (int i = 0; i < list.size(); i++) {
+			String card = list.get(i).get("Card");
+			String sizeErrorMsg = list.get(i).get("SizeErrorMsg");
+			String priceErrorMsg = list.get(i).get("FloorPriceErrorMsg");
+			switch (card) {
+			case "General":
+				List<WebElement> errorMsg = adspotsPage.generalSizePriceMsg;
+				Assert.assertEquals(errorMsg.get(0).getText(), sizeErrorMsg);
+				Assert.assertEquals(errorMsg.get(1).getText(), priceErrorMsg);
 
+				break;
+			case "Banner":
+				List<WebElement> errorBannerMsg = adspotsPage.bannerSizePriceMsg;
+				Assert.assertEquals(errorBannerMsg.get(0).getText(), sizeErrorMsg);
+				Assert.assertEquals(errorBannerMsg.get(1).getText(), priceErrorMsg);
+
+				break;
+			case "Native":
+				List<WebElement> errorNativeMsg = adspotsPage.nativeSizePriceMsg;
+				Assert.assertEquals(errorNativeMsg.get(0).getText(), sizeErrorMsg);
+				Assert.assertEquals(errorNativeMsg.get(1).getText(), priceErrorMsg);
+				break;
+			case "InBannerVideo":
+				List<WebElement> errorInBannerMsg = adspotsPage.inBannerVideoSizePriceMsg;
+				Assert.assertEquals(errorInBannerMsg.get(0).getText(), sizeErrorMsg);
+				Assert.assertEquals(errorInBannerMsg.get(1).getText(), priceErrorMsg);
+				break;
+			
+			default:
+				Assert.assertTrue(false, "The status fields supplied does not match with the input");
+
+			
+
+		}
+	}
+
+	}
+	
+	
+	@When("^(.*) the banner card$")
+	public void expandCollapseBanner(String status) throws Throwable {
+		if(status.equalsIgnoreCase("Expand")) {
+			String style = driver.findElement(By.xpath("//form/div[3]/span[1]")).getAttribute("style");
+			if(style.contains("none")) {
+				adspotsPage.bannerExpandButton.click();	
+			}
+		}else if(status.equalsIgnoreCase("Collapse")) {
+			String style = driver.findElement(By.xpath("//form/div[3]/span[1]")).getAttribute("style");
+			if(!style.contains("none")) {
+				adspotsPage.bannerExpandButton.click();	
+			}
+		}
+		
+
+	}
+	@When("^(.*) the in-banner video card$")
+	public void expandCollapseInBanner(String status) throws Throwable {
+		if(status.equalsIgnoreCase("Expand")) {
+			String style = driver.findElement(By.xpath("//form/div[5]/span[1]")).getAttribute("style");
+			if(style.contains("none")) {
+				adspotsPage.inBannerVideoExpandButton.click();	
+			}
+		}else if(status.equalsIgnoreCase("Collapse")) {
+			String style = driver.findElement(By.xpath("//form/div[5]/span[1]")).getAttribute("style");
+			if(!style.contains("none")) {
+				adspotsPage.inBannerVideoExpandButton.click();	
+			}
+		}
+		
+
+	}
+	@When("^(.*) the native card$")
+	public void expandCollapseNative(String status) throws Throwable {
+		if(status.equalsIgnoreCase("Expand")) {
+			String style = driver.findElement(By.xpath("//form/div[4]/span[1]")).getAttribute("style");
+			if(style.contains("none")) {
+				adspotsPage.nativeExpandButton.click();	
+			}
+		}else if(status.equalsIgnoreCase("Collapse")) {
+			String style = driver.findElement(By.xpath("//form/div[4]/span[1]")).getAttribute("style");
+			if(!style.contains("none")) {
+				adspotsPage.nativeExpandButton.click();	
+			}
+		}
+		
+
+	}
 }

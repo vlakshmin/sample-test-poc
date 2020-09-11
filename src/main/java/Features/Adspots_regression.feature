@@ -91,6 +91,7 @@ Scenario:  Verify mandatory fields in the Create Adspot Page
 	|Position|
 	|Default Ad Sizes|
 	|Default Floor Price|
+	|Playback Methods|
 
 Scenario:  Verify Changing publisher name alert the user and then on change every fields go to default state 
     Given admin user login to RX UI with valid username and password 
@@ -135,3 +136,66 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
 	|Default Ad Sizes|
 	|Default Floor Price|
 	
+Scenario:  Verify without adding any card ,creation of adspot is unsuccessful 
+    Given admin user login to RX UI with valid username and password 
+    When Click on Adspots option under Inventory
+	And User displayed with Adspots page
+	Then Click on the following create button
+	|CreateButtonName|
+	|Create AdSpot|
+	When Select publisher name from the dropdown list item index 3
+	Then Enter the following data in the general card of adspot
+	|FieldName|Value|ListValueIndex|
+	|AdSpot Name|Auto_Test||
+	|Related Media|ListValue|2|
+	|Categories|ListValue|2|
+	|Position|ListValue|2|
+	|Filter|ListValue|2|
+	|Default Ad Sizes|ListValue|2,3|
+	|Default Floor Price|10||
+	Then Click on save button
+	Then Verify the save is failed
+	
+#Scenario:  Verify with invalid value for floor price and adsizes>2 creation is unsuccessful 
+#    Given admin user login to RX UI with valid username and password 
+#    When Click on Adspots option under Inventory
+#	And User displayed with Adspots page
+#	Then Click on the following create button
+#	|CreateButtonName|
+#	|Create AdSpot|
+#	When Select publisher name from the dropdown list item index 3
+#	Then Enter the following data in the general card of adspot
+#	|FieldName|Value|ListValueIndex|
+#	|AdSpot Name|Auto_Test||
+#	|Related Media|ListValue|2|
+#	|Categories|ListValue|2|
+#	|Position|ListValue|2|
+#	|Filter|ListValue|2|
+#	|Default Ad Sizes|ListValue|2,3,4|
+#	|Default Floor Price|-10||
+#	Then Expand the banner card
+#	Then Enter the following data in the banner card of adspot
+#	|FieldName|Value|ListValueIndex|
+#	|Ad Sizes|ListValue|2,3,4|
+#	|Floor Price|-10||
+#	Then Expand the native card
+#	Then Enter the following data in the native card of adspot
+#	|FieldName|Value|
+#	|Floor Price|-10|
+#	Then Expand the in-banner video card
+#	Then Enter the following data in the in-banner video card of adspot
+#	|FieldName|Value|ListValueIndex|
+#	|Ad Sizes|ListValue|2,3,4|
+#	|Floor Price|-10||
+#	|Minimum Video Duration|ListValue|1|
+#	|Miaximum Video Duration|ListValue|1|
+#	|Playback Methods|ListValue|1,2,3|
+#	Then Click on save button
+#	Then Verify error messages for sizes and floor price for the following cards
+#	|Card|SizeErrorMsg|FloorPriceErrorMsg|
+#	|General|Default Ad Sizes must be 2 or less|Floor price must be between 0 and 10,000.00|
+#	|Banner|Ad Sizes must be 2 or less|Floor price must be between 0 and 10,000.00|
+#	|Native|Ad Sizes must be 2 or less|Floor price must be between 0 and 10,000.00|
+#	|InBannerVideo|Ad Sizes must be 2 or less|Floor price must be between 0 and 10,000.00| 
+#	
+#	
