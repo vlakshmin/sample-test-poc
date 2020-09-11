@@ -68,6 +68,10 @@ public class RXAdspotsPage extends RXBaseClass  {
   	@FindBy(xpath = "//form/div[3]/div/button//i") public WebElement bannerExpandButton;
   	@FindBy(xpath = "//form/div[4]/div/button//i") public WebElement nativeExpandButton;
   	@FindBy(xpath = "//form/div[5]/div/button//i") public WebElement inBannerVideoExpandButton;
+  	@FindBy(xpath = "//form/div[3]/div//div[@class='v-input--selection-controls__input']") public WebElement bannerEnableButton;
+  	@FindBy(xpath = "//form/div[4]/div//div[@class='v-input--selection-controls__input']") public WebElement nativeEnableButton;
+  	@FindBy(xpath = "//form/div[5]/div//div[@class='v-input--selection-controls__input']") public WebElement inBannerVideoEnableButton;
+  
   	@FindBy(xpath = "//form/div[3]//label[text()='Floor Price']/following-sibling::input") public WebElement bannerPriceField;
   	@FindBy(xpath = "//form/div[3]//label[text()='Ad Sizes']/following-sibling::div[@class='v-select__selections']") public WebElement bannerSizesDropDown;
   	@FindAll(@FindBy(xpath = "//form/div[3]//label[text()='Ad Sizes']/following-sibling::div[@class='v-select__selections']/div")) public List<WebElement> bannerSizesField;
