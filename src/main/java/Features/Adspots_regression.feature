@@ -32,7 +32,7 @@ Scenario:  Verify hide/show columns from the table options for admin
 	When Click on Adspots option under Inventory
 	Then User displayed with Adspots page
     And User click on table options button
-    Then Verify that column AdSpot Name can be hidden and shown
+    Then Verify that column "AdSpot Name" can be hidden and shown
     
  
 Scenario:  Verify onclicking relevant status from table options shows only that particular table rows with that status 
@@ -40,8 +40,8 @@ Scenario:  Verify onclicking relevant status from table options shows only that 
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
     Then User click on table options button
-    And Verify that column Active/Inactive only shows relevant rows in the table with filter Active
-    And Verify that column Active/Inactive only shows relevant rows in the table with filter Inactive
+    And Verify that column "Active/Inactive" only shows relevant rows in the table with filter "Active"
+    And Verify that column "Active/Inactive" only shows relevant rows in the table with filter "Inactive"
     
 Scenario:  Verify searching adspots with avaiable and non available adspot name  
     Given admin user login to RX UI with valid username and password 
@@ -74,14 +74,18 @@ Scenario:  Verify mandatory fields in the Create Adspot Page
     Given admin user login to RX UI with valid username and password 
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
-	Then Click on the following create button
+	And Click on the following create button
 	|CreateButtonName|
 	|Create AdSpot|
 	Then Click on save button
 	Then Verify following fields are mandatory for create page
 	|FieldName|
 	|Publisher Name|
-	When Select publisher name from the dropdown list item index 3
+	And Enter the following data in the general card of adspot
+	|FieldName|Value|ListValueIndex|
+	|Publisher Name|ListValue|3|
+	And "Enable" the in-banner video card
+	And "Expand" the in-banner video card
 	And Click on save button
 	Then Verify following fields are mandatory for create page
 	|FieldName|
@@ -91,18 +95,19 @@ Scenario:  Verify mandatory fields in the Create Adspot Page
 	|Position|
 	|Default Ad Sizes|
 	|Default Floor Price|
+	|Playback Methods|
 	
 
 Scenario:  Verify Changing publisher name alert the user and then on change every fields go to default state 
     Given admin user login to RX UI with valid username and password 
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
-	Then Click on the following create button
+	And Click on the following create button
 	|CreateButtonName|
 	|Create AdSpot|
-	When Select publisher name from the dropdown list item index 3
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
+	|Publisher Name|ListValue|3|
 	|AdSpot Name|Auto_Test||
 	|Related Media|ListValue|2|
 	|Categories|ListValue|2|
@@ -110,12 +115,17 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
 	|Filter|ListValue|2|
 	|Default Ad Sizes|ListValue|2,3|
 	|Default Floor Price|10||
-	When Select publisher name from the dropdown list item index 2
+	And "Enable" the banner card
+	And "Enable" the native card
+	And "Enable" the in-banner video card
+	When Enter the following data in the general card of adspot
+	|FieldName|Value|ListValueIndex|
+	|Publisher Name|ListValue|2|
 	Then Verify the following message is displayed when the publisher changed
 	|Message|
 	|By changing the Publisher the form will be reset and the previous changes will not be saved.|
-	And Select Cancel on the publisher change banner
-	Then Verify the following columns value with the entered data for the general card of adspot
+	And Select "Cancel" on the publisher change banner
+	Then Verify the following columns value with the created data for the general card of adspot
 	|FieldName|
 	|AdSpot Name|
 	|Related Media|
@@ -124,8 +134,13 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
 	|Filter|
 	|Default Ad Sizes|
 	|Default Floor Price|
-	When Select publisher name from the dropdown list item index 2
-	And Select Accept on the publisher change banner
+	And Verify the banner card is "Enabled"
+	And Verify the native card is "Enabled"
+	And Verify the in-banner video card is "Enabled"
+	And Enter the following data in the general card of adspot
+	|FieldName|Value|ListValueIndex|
+	|Publisher Name|ListValue|2|
+	And Select "Accept" on the publisher change banner
 	Then Verify the following columns values for the general card of adspot is empty
 	|FieldName|
 	|AdSpot Name|
@@ -135,19 +150,23 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
 	|Filter|
 	|Default Ad Sizes|
 	|Default Floor Price|
+	Then Verify the banner card is "Disabled"
+	And Verify the native card is "Disabled"
+	And Verify the in-banner video card is "Disabled"
 	
 
 	
-Scenario:  Verify with invalid value for floor price and adsizes>2 creation is unsuccessful 
+Scenario: Verify with invalid value for floor price and adsizes>2 creation is unsuccessful 
     Given admin user login to RX UI with valid username and password 
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
 	Then Click on the following create button
 	|CreateButtonName|
 	|Create AdSpot|
-	When Select publisher name from the dropdown list item index 3
-	Then Enter the following data in the general card of adspot
+	And Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
+	|Publisher Name|ListValue|3|
+	|Active|Active||
 	|AdSpot Name|Auto_Test||
 	|Related Media|ListValue|2|
 	|Categories|ListValue|2|
@@ -155,19 +174,19 @@ Scenario:  Verify with invalid value for floor price and adsizes>2 creation is u
 	|Filter|ListValue|2|
 	|Default Ad Sizes|ListValue|2,3,4|
 	|Default Floor Price|-10||
-	Then Enable the banner card
-	Then Expand the banner card
+	And "Enable" the banner card
+	And "Expand" the banner card
 	Then Enter the following data in the banner card of adspot
 	|FieldName|Value|ListValueIndex|
 	|Ad Sizes|ListValue|2,3,4|
 	|Floor Price|-10||
-	Then Enable the native card
-	Then Expand the native card
+	And "Enable" the native card
+	And "Expand" the native card
 	Then Enter the following data in the native card of adspot
 	|FieldName|Value|
 	|Floor Price|-10|
-	Then Enable the in-banner video card
-	Then Expand the in-banner video card
+	And "Enable" the in-banner video card
+	And "Expand" the in-banner video card
 	Then Enter the following data in the in-banner video card of adspot
 	|FieldName|Value|ListValueIndex|
 	|Ad Sizes|ListValue|2,3,4|
@@ -175,7 +194,7 @@ Scenario:  Verify with invalid value for floor price and adsizes>2 creation is u
 	|Minimum Video Duration|ListValue|1|
 	|Maximum Video Duration|ListValue|1|
 	|Playback Methods|ListValue|1,2,3|
-	Then Click on save button
+	And Click on save button
 	Then Verify error messages for sizes and floor price for the following cards
 	|Card|SizeErrorMsg|FloorPriceErrorMsg|
 	|General|Default Ad Sizes must be 2 or less|Floor price must be between 0 and 10,000.00|
@@ -183,4 +202,141 @@ Scenario:  Verify with invalid value for floor price and adsizes>2 creation is u
 	|Native||Floor price must be between 0 and 10,000.00|
 	|InBannerVideo|Ad Sizes must be 2 or less|Floor price must be between 0 and 10,000.00| 
 	
+Scenario: Verify successful creation and updation of an adspot 
+    Given admin user login to RX UI with valid username and password 
+    When Click on Adspots option under Inventory
+	And User displayed with Adspots page
+	When Click on the following create button
+	|CreateButtonName|
+	|Create AdSpot|
+	Then Enter the following data in the general card of adspot
+	|FieldName|Value|ListValueIndex|
+	|Publisher Name|ListValue|3|
+	|Active|Active||
+	|AdSpot Name|Auto_Test||
+	|Related Media|ListValue|2|
+	|Categories|ListValue|2|
+	|Position|ListValue|2|
+	|Filter|ListValue|2|
+	|Default Ad Sizes|ListValue|2,3|
+	|Default Floor Price|10||
+	And "Enable" the banner card
+	And "Expand" the banner card
+	Then Enter the following data in the banner card of adspot
+	|FieldName|Value|ListValueIndex|
+	|Ad Sizes|ListValue|2,3|
+	|Floor Price|5||
+	And "Enable" the native card
+	And "Expand" the native card
+	Then Enter the following data in the native card of adspot
+	|FieldName|Value|
+	|Floor Price|5|
+	And "Enable" the in-banner video card
+	And "Expand" the in-banner video card
+	Then Enter the following data in the in-banner video card of adspot
+	|FieldName|Value|ListValueIndex|
+	|Ad Sizes|ListValue|2,3|
+	|Floor Price|5||
+	|Minimum Video Duration|ListValue|1|
+	|Maximum Video Duration|ListValue|1|
+	|Playback Methods|ListValue|1,2,3|
+	And Click on save button and wait for dialog to close
+	Then Verify the created adspot data is matching with its overview list values
+	When Click on the created adspotname in the overview page
+	And Verify following fields are disabled on create/edit adspot page
+	|FieldName|
+	|Publisher Name|
+	|Related Media|
+	Then Verify the following columns value with the created data for the general card of adspot
+	|FieldName|
+	|Publisher Name|
+	|Active|
+	|AdSpot Name|
+	|Related Media|
+	|Categories|
+	|Position|
+	|Filter|
+	|Default Ad Sizes|
+	|Default Floor Price|
+	And Verify the banner card is "Enabled"
+	And Verify the native card is "Enabled"
+	And Verify the in-banner video card is "Enabled"
+	Then "Expand" the banner card
+	And "Expand" the native card
+	And "Expand" the in-banner video card
+	Then Verify the following columns value with the created data for the banner card of adspot
+	|FieldName|
+	|Ad Sizes|
+	|Floor Price|
+	Then Verify the following columns value with the created data for the native card of adspot
+	|FieldName|
+	|Floor Price|
+	Then Verify the following columns value with the created data for the in-banner video card of adspot
+	|FieldName|
+	|Ad Sizes|
+	|Floor Price|
+	|Minimum Video Duration|
+	|Maximum Video Duration|      
+	|Playback Methods|
+	#Editing flow
 	
+	When Enter the following data in the general card of adspot
+	|FieldName|Value|ListValueIndex|
+	|Active|Inactive||
+	|AdSpot Name|Auto_Test_Edit||
+	|Categories|ListValue|2,4|
+	|Position|ListValue|1|
+	|Filter|ListValue|1|
+	|Default Ad Sizes|ListValue|2,4|
+	|Default Floor Price|8||
+	And Enter the following data in the banner card of adspot
+	|FieldName|Value|ListValueIndex|
+	|Ad Sizes|ListValue|2,4|
+	|Floor Price|6||
+	And Enter the following data in the native card of adspot
+	|FieldName|Value|
+	|Floor Price|6|
+	And Enter the following data in the in-banner video card of adspot
+	|FieldName|Value|ListValueIndex|
+	|Ad Sizes|ListValue|2,4|
+	|Floor Price|6||
+	|Minimum Video Duration|ListValue|2|
+	|Maximum Video Duration|ListValue|2|
+	|Playback Methods|ListValue|1,2,4|
+	Then Click on save button and wait for dialog to close
+	Then Verify the created adspot data is matching with its overview list values
+	And Click on the created adspotname in the overview page
+	Then Verify the following columns value with the created data for the general card of adspot
+	|FieldName|
+	|Publisher Name|
+	|Active|
+	|AdSpot Name|
+	|Related Media|
+	|Categories|
+	|Position|
+	|Filter|
+	|Default Ad Sizes|
+	|Default Floor Price|
+	Then Verify the banner card is "Enabled"
+	And Verify the native card is "Enabled"
+	And Verify the in-banner video card is "Enabled"
+	Then "Expand" the banner card
+	And "Expand" the native card
+	And "Expand" the in-banner video card
+	Then Verify the following columns value with the created data for the banner card of adspot
+	|FieldName|
+	|Ad Sizes|
+	|Floor Price|
+	Then Verify the following columns value with the created data for the native card of adspot
+	|FieldName|
+	|Floor Price|
+	Then Verify the following columns value with the created data for the in-banner video card of adspot
+	|FieldName|
+	|Ad Sizes|
+	|Floor Price|
+	|Minimum Video Duration|
+	|Maximum Video Duration|
+	|Playback Methods|
+		
+	
+

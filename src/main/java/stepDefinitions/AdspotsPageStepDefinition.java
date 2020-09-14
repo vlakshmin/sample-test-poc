@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
@@ -30,6 +31,7 @@ import cucumber.api.java.en.When;
 
 public class AdspotsPageStepDefinition extends RXBaseClass {
 
+	String isAdspotActive;
 	String enteredPublisherName;
 	String enteredAdSpotName;
 	String enteredRelatedMedia;
@@ -46,6 +48,11 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 	String enteredBannerPrice;
 	String enteredNativePrice;
 	String enteredInBannerVideoPrice;
+	String defaultPriceCurrency;
+	String bannerPriceCurrency;
+	String nativePriceCurrency;
+	String inBannerVideoPriceCurrency;
+
 	RXAdspotsPage adspotsPage;
 	RXNavOptions navOptions;
 	PublisherListPage pubListPgs;
@@ -283,7 +290,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 		}
 	}
 
-	@When("^Select (.*) on the publisher change banner$")
+	@When("^Select \"(.*)\" on the publisher change banner$")
 	public void clickBannerAcceptOrCancel(String action) throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@class='v-banner__actions']"))));
@@ -304,13 +311,12 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 		navOptions.saveButton.click();
 
 	}
-	
-	
-	
+
 	@When("^Verify the save is failed$")
 	public void verifySaveFailed() throws Throwable {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//button[@type='submit'][contains(@class,'error--text')]"))));
+		wait.until(ExpectedConditions.visibilityOf(
+				driver.findElement(By.xpath("//button[@type='submit'][contains(@class,'error--text')]"))));
 		String failedMessage = navOptions.saveButtonTxt.getText().replaceAll("\u3000", "");
 		Assert.assertEquals(failedMessage, "Failed!");
 
@@ -322,6 +328,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 		wait.until(ExpectedConditions.visibilityOf(navOptions.saveButton));
 		navOptions.saveButton.click();
 		wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
+		Thread.sleep(5000);
 
 	}
 
@@ -351,7 +358,52 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 			String listValueIndex = list.get(i).get("ListValueIndex");
 
 			switch (fieldName) {
+			case "Publisher Name":
+				if (value.equalsIgnoreCase("ListValue")) {
+					wait.until(ExpectedConditions.visibilityOf(adspotsPage.publisherNameDropDown));
+					adspotsPage.publisherNameDropDown.click();
+					wait.until(ExpectedConditions.visibilityOf(
+							driver.findElement(By.xpath("//div[@role='listbox']/div[" + listValueIndex + "]"))));
+					WebElement dropDownValue = driver
+							.findElement(By.xpath("//div[@role='listbox']/div[" + listValueIndex + "]"));
+					js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
+					dropDownValue.click();
+					Thread.sleep(5000);
+					enteredPublisherName = adspotsPage.publisherNameField.getText();
+					System.out.println("publisher entered as :" + enteredPublisherName);
+				}
+			case "Active":
+				if (value.equalsIgnoreCase("Active")) {
+					String style = driver.findElement(By.xpath("//div[text()='General']/following-sibling::span/div"))
+							.getAttribute("class");
+					if (!style.contains("active")) {
+						adspotsPage.adspotEnableButton.click();
+						Assert.assertTrue(
+								driver.findElement(By.xpath("//div[text()='General']/following-sibling::span/div"))
+										.getAttribute("class").contains("active"));
+						isAdspotActive = "Active";
+					} else {
+						isAdspotActive = "Inactive";
+					}
+				} else if (value.equalsIgnoreCase("Inactive")) {
+					String style = driver.findElement(By.xpath("//div[text()='General']/following-sibling::span/div"))
+							.getAttribute("class");
+					if (style.contains("active")) {
+						adspotsPage.adspotEnableButton.click();
+						Assert.assertTrue(
+								!driver.findElement(By.xpath("//div[text()='General']/following-sibling::span/div"))
+										.getAttribute("class").contains("active"));
+						isAdspotActive = "Inactive";
+					} else {
+						isAdspotActive = "Active";
+					}
+				}
+				break;
 			case "AdSpot Name":
+//				js.executeScript("arguments[0].setAttribute('value', '')",adspotsPage.adSpotNameField);
+				while (!adspotsPage.adSpotNameField.getAttribute("value").equals("")) {
+					adspotsPage.adSpotNameField.sendKeys(Keys.BACK_SPACE);
+				}
 				adspotsPage.adSpotNameField.sendKeys(value);
 				enteredAdSpotName = adspotsPage.adSpotNameHeader.getText();
 				System.out.println("Entered Adspot name:" + enteredAdSpotName);
@@ -376,21 +428,39 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 			case "Categories":
 				if (value.equalsIgnoreCase("ListValue")) {
 					wait.until(ExpectedConditions.visibilityOf(adspotsPage.categoriesDropDown));
-					adspotsPage.categoriesDropDown.click();
-					Thread.sleep(1000);
-					wait.until(ExpectedConditions.visibilityOf(driver.findElement(
-							By.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
-									+ listValueIndex + "]//div[@class='v-input__slot']"))));
-					WebElement dropDownValue = driver.findElement(
-							By.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
-									+ listValueIndex + "]//div[@class='v-input__slot']"));
-					js.executeScript("arguments[0].click()", dropDownValue);
+//					adspotsPage.categoriesDropDown.click();
+					js.executeScript("arguments[0].click()", adspotsPage.categoriesDropDown);
+
+					if (listValueIndex.contains(",")) {
+						List<String> items = Arrays.asList(listValueIndex.split("\\s*,\\s*"));
+						for (int j = 0; j < items.size(); j++) {
+							listValueIndex = items.get(j);
+							wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(
+									"//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+											+ listValueIndex + "]//div[@class='v-input__slot']"))));
+							WebElement dropDownValue = driver.findElement(By.xpath(
+									"//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+											+ listValueIndex + "]//div[@class='v-input__slot']"));
+							Thread.sleep(1000);
+							js.executeScript("arguments[0].click()", dropDownValue);
+						}
+					} else {
+						wait.until(ExpectedConditions.visibilityOf(driver.findElement(By
+								.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+										+ listValueIndex + "]//div[@class='v-input__slot']"))));
+						WebElement dropDownValue = driver.findElement(By
+								.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+										+ listValueIndex + "]//div[@class='v-input__slot']"));
+						Thread.sleep(1000);
+						js.executeScript("arguments[0].click()", dropDownValue);
+					}
 //				 dropDownValue.click();
 					driver.findElement(By.xpath("//label[text()='Test Mode']")).click();
 					Thread.sleep(2000);
 					enteredCategories = adspotsPage.categoriesField.getText();
 					System.out.println("Categories entered as :" + enteredCategories);
 				}
+
 				break;
 			case "Filter":
 				if (value.equalsIgnoreCase("ListValue")) {
@@ -443,6 +513,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 									"//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
 											+ listValueIndex + "]"));
 							js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
+							Thread.sleep(1000);
 							dropDownValue.click();
 						}
 					} else {
@@ -452,13 +523,15 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 						WebElement dropDownValue = driver.findElement(By
 								.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
 										+ listValueIndex + "]"));
+						Thread.sleep(1000);
 						js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
 						dropDownValue.click();
 					}
 
 					driver.findElement(By.xpath("//label[text()='Test Mode']")).click();
-					Thread.sleep(2000);
+					Thread.sleep(3000);
 					List<WebElement> enteredSizesLsit = adspotsPage.defaultSizesField;
+					enteredDefaultSizes = "";
 					for (int k = 0; k < enteredSizesLsit.size(); k++) {
 						enteredDefaultSizes += enteredSizesLsit.get(k).getText();
 					}
@@ -466,10 +539,14 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				}
 				break;
 			case "Default Floor Price":
+				while (!adspotsPage.defaultPriceField.getAttribute("value").equals("")) {
+					adspotsPage.defaultPriceField.sendKeys(Keys.BACK_SPACE);
+				}
 				adspotsPage.defaultPriceField.sendKeys(value);
 				Thread.sleep(2000);
 				enteredDefaultPrice = adspotsPage.defaultPriceField.getAttribute("value");
-				System.out.println("Entered Default floor price:" + enteredDefaultPrice);
+				defaultPriceCurrency = adspotsPage.defaultPriceCurrency.getText();
+				System.out.println("Entered Default floor price:" + defaultPriceCurrency + enteredDefaultPrice);
 				break;
 			default:
 				Assert.assertTrue(false, "The status fields supplied does not match with the input");
@@ -490,10 +567,15 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 			switch (fieldName) {
 			case "Floor Price":
+				while (!adspotsPage.bannerPriceField.getAttribute("value").equals("")) {
+					adspotsPage.bannerPriceField.sendKeys(Keys.BACK_SPACE);
+				}
 				adspotsPage.bannerPriceField.sendKeys(value);
 				Thread.sleep(2000);
 				enteredBannerPrice = adspotsPage.bannerPriceField.getAttribute("value");
-				System.out.println("Entered floor price for banner:" + enteredBannerPrice);
+				bannerPriceCurrency = adspotsPage.bannerPriceCurrency.getText();
+				System.out.println("Entered floor price for banner:" + bannerPriceCurrency + enteredBannerPrice);
+
 				break;
 			case "Ad Sizes":
 				if (value.equalsIgnoreCase("ListValue")) {
@@ -509,7 +591,9 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 							WebElement dropDownValue = driver.findElement(By.xpath(
 									"//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
 											+ listValueIndex + "]"));
+
 							js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
+							Thread.sleep(1000);
 							dropDownValue.click();
 						}
 					} else {
@@ -520,19 +604,21 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 								.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
 										+ listValueIndex + "]"));
 						js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
+						Thread.sleep(1000);
 						dropDownValue.click();
 					}
 
 					adspotsPage.bannerPriceField.click();
-					Thread.sleep(2000);
+					Thread.sleep(3000);
 					List<WebElement> enteredSizesLsit = adspotsPage.bannerSizesField;
+					enteredBannerSizes = "";
 					for (int k = 0; k < enteredSizesLsit.size(); k++) {
 						enteredBannerSizes += enteredSizesLsit.get(k).getText();
 					}
 					System.out.println("Banner Sizes entered as :" + enteredBannerSizes);
 				}
 				break;
-			
+
 			default:
 				Assert.assertTrue(false, "The status fields supplied does not match with the input");
 
@@ -540,7 +626,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 		}
 	}
-	
+
 	@Then("^Enter the following data in the in-banner video card of adspot$")
 	public void enterinBannerCard(DataTable dt) throws InterruptedException, ParseException {
 		WebDriverWait wait = new WebDriverWait(driver, 35);
@@ -552,10 +638,16 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 			switch (fieldName) {
 			case "Floor Price":
+				while (!adspotsPage.inBannerVideoPriceField.getAttribute("value").equals("")) {
+					adspotsPage.inBannerVideoPriceField.sendKeys(Keys.BACK_SPACE);
+				}
 				adspotsPage.inBannerVideoPriceField.sendKeys(value);
 				Thread.sleep(2000);
 				enteredInBannerVideoPrice = adspotsPage.inBannerVideoPriceField.getAttribute("value");
-				System.out.println("Entered floor price for in-banner video:" + enteredInBannerVideoPrice);
+				inBannerVideoPriceCurrency = adspotsPage.inBannerVideoPriceCurrency.getText();
+				System.out.println("Entered floor price for in-banner video:" + inBannerVideoPriceCurrency
+						+ enteredInBannerVideoPrice);
+
 				break;
 			case "Ad Sizes":
 				if (value.equalsIgnoreCase("ListValue")) {
@@ -572,6 +664,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 									"//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
 											+ listValueIndex + "]"));
 							js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
+							Thread.sleep(1000);
 							dropDownValue.click();
 						}
 					} else {
@@ -582,12 +675,14 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 								.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
 										+ listValueIndex + "]"));
 						js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
+						Thread.sleep(1000);
 						dropDownValue.click();
 					}
 
 					adspotsPage.inBannerVideoPriceField.click();
-					Thread.sleep(2000);
+					Thread.sleep(3000);
 					List<WebElement> enteredSizesLsit = adspotsPage.inBannerVideoSizesField;
+					enteredInBannerVideoSizes = "";
 					for (int k = 0; k < enteredSizesLsit.size(); k++) {
 						enteredInBannerVideoSizes += enteredSizesLsit.get(k).getText();
 					}
@@ -645,6 +740,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 									"//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
 											+ listValueIndex + "]"));
 							js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
+							Thread.sleep(1000);
 							dropDownValue.click();
 						}
 					} else {
@@ -655,12 +751,14 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 								.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
 										+ listValueIndex + "]"));
 						js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
+						Thread.sleep(1000);
 						dropDownValue.click();
 					}
 
 					adspotsPage.maxVideoDurField.click();
-					Thread.sleep(2000);
+					Thread.sleep(3000);
 					List<WebElement> enteredSizesLsit = adspotsPage.playbackMethodsField;
+					enteredInBannerPlayback = "";
 					for (int k = 0; k < enteredSizesLsit.size(); k++) {
 						enteredInBannerPlayback += enteredSizesLsit.get(k).getText();
 					}
@@ -674,6 +772,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 		}
 	}
+
 	@Then("^Enter the following data in the native card of adspot$")
 	public void enterNativeCard(DataTable dt) throws InterruptedException, ParseException {
 		WebDriverWait wait = new WebDriverWait(driver, 35);
@@ -681,17 +780,20 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
 			String value = list.get(i).get("Value");
-			
 
 			switch (fieldName) {
 			case "Floor Price":
+				while (!adspotsPage.nativePriceField.getAttribute("value").equals("")) {
+					adspotsPage.nativePriceField.sendKeys(Keys.BACK_SPACE);
+				}
 				adspotsPage.nativePriceField.sendKeys(value);
 				Thread.sleep(2000);
 				enteredNativePrice = adspotsPage.nativePriceField.getAttribute("value");
-				System.out.println("Entered floor price for native:" + enteredNativePrice);
+				nativePriceCurrency = adspotsPage.nativePriceCurrency.getText();
+				System.out.println("Entered floor price for native:" + nativePriceCurrency + enteredNativePrice);
+
 				break;
-			
-			
+
 			default:
 				Assert.assertTrue(false, "The status fields supplied does not match with the input");
 
@@ -699,7 +801,8 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 		}
 	}
-	@Then("^Verify the following columns value with the entered data for the general card of adspot$")
+
+	@Then("^Verify the following columns value with the created data for the general card of adspot$")
 	public void verifyGeneralCardValues(DataTable dt) throws InterruptedException, ParseException {
 		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
@@ -707,8 +810,23 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 			String fieldName = list.get(i).get("FieldName");
 
 			switch (fieldName) {
+			case "Active":
+				String style = driver.findElement(By.xpath("//div[text()='General']/following-sibling::span/div"))
+						.getAttribute("class");
+				if (style.contains("active")) {
+
+					Assert.assertEquals(isAdspotActive, "Active");
+				} else {
+					Assert.assertEquals(isAdspotActive, "Inactive");
+				}
+
+				break;
 			case "AdSpot Name":
 				Assert.assertEquals(adspotsPage.adSpotNameHeader.getText(), enteredAdSpotName);
+
+				break;
+			case "Publisher Name":
+				Assert.assertEquals(adspotsPage.publisherNameField.getText(), enteredPublisherName);
 
 				break;
 			case "Related Media":
@@ -738,6 +856,106 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				break;
 			case "Default Floor Price":
 				Assert.assertEquals(adspotsPage.defaultPriceField.getAttribute("value"), enteredDefaultPrice);
+				Assert.assertEquals(adspotsPage.defaultPriceCurrency.getText(), defaultPriceCurrency);
+
+				break;
+			default:
+				Assert.assertTrue(false, "The status fields supplied does not match with the input");
+
+			}
+		}
+	}
+
+	@Then("^Verify the following columns value with the created data for the banner card of adspot$")
+	public void verifyBannerCardValues(DataTable dt) throws InterruptedException, ParseException {
+		WebDriverWait wait = new WebDriverWait(driver, 35);
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		for (int i = 0; i < list.size(); i++) {
+			String fieldName = list.get(i).get("FieldName");
+
+			switch (fieldName) {
+			case "Ad Sizes":
+				String sizes = "";
+				List<WebElement> enteredSizesLsit = adspotsPage.bannerSizesField;
+				for (int k = 0; k < enteredSizesLsit.size(); k++) {
+					sizes += enteredSizesLsit.get(k).getText();
+				}
+				System.out.println(sizes);
+				System.out.println(enteredBannerSizes);
+				Assert.assertEquals(sizes, enteredBannerSizes);
+
+				break;
+			case "Floor Price":
+				Assert.assertEquals(adspotsPage.bannerPriceField.getAttribute("value"), enteredBannerPrice);
+				Assert.assertEquals(adspotsPage.bannerPriceCurrency.getText(), bannerPriceCurrency);
+
+				break;
+			default:
+				Assert.assertTrue(false, "The status fields supplied does not match with the input");
+
+			}
+		}
+	}
+
+	@Then("^Verify the following columns value with the created data for the native card of adspot$")
+	public void verifyNativeCardValues(DataTable dt) throws InterruptedException, ParseException {
+		WebDriverWait wait = new WebDriverWait(driver, 35);
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		for (int i = 0; i < list.size(); i++) {
+			String fieldName = list.get(i).get("FieldName");
+
+			switch (fieldName) {
+
+			case "Floor Price":
+				Assert.assertEquals(adspotsPage.nativePriceField.getAttribute("value"), enteredNativePrice);
+				Assert.assertEquals(adspotsPage.nativePriceCurrency.getText(), nativePriceCurrency);
+
+				break;
+			default:
+				Assert.assertTrue(false, "The status fields supplied does not match with the input");
+
+			}
+		}
+	}
+
+	@Then("^Verify the following columns value with the created data for the in-banner video card of adspot$")
+	public void verifyInBannerCardValues(DataTable dt) throws InterruptedException, ParseException {
+		WebDriverWait wait = new WebDriverWait(driver, 35);
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		for (int i = 0; i < list.size(); i++) {
+			String fieldName = list.get(i).get("FieldName");
+
+			switch (fieldName) {
+			case "Ad Sizes":
+				String sizes = "";
+				List<WebElement> enteredSizesLsit = adspotsPage.inBannerVideoSizesField;
+				for (int k = 0; k < enteredSizesLsit.size(); k++) {
+					sizes += enteredSizesLsit.get(k).getText();
+				}
+				Assert.assertEquals(sizes, enteredInBannerVideoSizes);
+
+				break;
+			case "Playback Methods":
+				String sizesMethods = "";
+				List<WebElement> enteredSizesList = adspotsPage.playbackMethodsField;
+				for (int k = 0; k < enteredSizesList.size(); k++) {
+					sizesMethods += enteredSizesList.get(k).getText();
+				}
+				Assert.assertEquals(sizesMethods, enteredInBannerPlayback);
+
+				break;
+			case "Floor Price":
+				Assert.assertEquals(adspotsPage.inBannerVideoPriceField.getAttribute("value"),
+						enteredInBannerVideoPrice);
+				Assert.assertEquals(adspotsPage.inBannerVideoPriceCurrency.getText(), inBannerVideoPriceCurrency);
+
+				break;
+			case "Minimum Video Duration":
+				Assert.assertEquals(adspotsPage.minVideoDurField.getText(), enteredMinVideoDuration);
+
+				break;
+			case "Maximum Video Duration":
+				Assert.assertEquals(adspotsPage.maxVideoDurField.getText(), enteredMaxVideoDuration);
 
 				break;
 			default:
@@ -810,7 +1028,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 		}
 
 	}
-	
+
 	@When("^Verify error messages for sizes and floor price for the following cards$")
 	public void verifyCardErrorMsg(DataTable dt) throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -835,168 +1053,290 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 			case "Native":
 				List<WebElement> errorNativeMsg = adspotsPage.nativeSizePriceMsg;
 				Assert.assertEquals(errorNativeMsg.get(0).getText(), priceErrorMsg);
-				
+
 				break;
 			case "InBannerVideo":
 				List<WebElement> errorInBannerMsg = adspotsPage.inBannerVideoSizePriceMsg;
 				Assert.assertEquals(errorInBannerMsg.get(0).getText(), sizeErrorMsg);
 				Assert.assertEquals(errorInBannerMsg.get(1).getText(), priceErrorMsg);
 				break;
-			
+
 			default:
 				Assert.assertTrue(false, "The status fields supplied does not match with the input");
 
-			
-
+			}
 		}
-	}
 
 	}
-	
-	
-	@When("^(.*) the banner card$")
+
+	@When("^\"(.*)\" the banner card$")
 	public void expandCollapseBanner(String status) throws Throwable {
-		if(status.equalsIgnoreCase("Expand")) {
+		if (status.equalsIgnoreCase("Expand")) {
 			String style = driver.findElement(By.xpath("//form/div[3]/span[1]")).getAttribute("style");
-			if(style.contains("none")) {
+			if (style.contains("none")) {
 				adspotsPage.bannerExpandButton.click();
-				Assert.assertTrue(driver.findElement(By.xpath("//form/div[3]/span[1]")).getAttribute("style").contains(""));
+				Assert.assertTrue(
+						driver.findElement(By.xpath("//form/div[3]/span[1]")).getAttribute("style").contains(""));
 			}
-		}else if(status.equalsIgnoreCase("Collapse")) {
+		} else if (status.equalsIgnoreCase("Collapse")) {
 			String style = driver.findElement(By.xpath("//form/div[3]/span[1]")).getAttribute("style");
-			if(!style.contains("none")) {
+			if (!style.contains("none")) {
 				adspotsPage.bannerExpandButton.click();
-				Assert.assertTrue(driver.findElement(By.xpath("//form/div[3]/span[1]")).getAttribute("style").contains("none"));
+				Assert.assertTrue(
+						driver.findElement(By.xpath("//form/div[3]/span[1]")).getAttribute("style").contains("none"));
 			}
-		}else if(status.equalsIgnoreCase("Enable")) {
-			String style = driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div")).getAttribute("class");
-			if(!style.contains("active")) {
+		} else if (status.equalsIgnoreCase("Enable")) {
+			String style = driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div"))
+					.getAttribute("class");
+			if (!style.contains("active")) {
 				adspotsPage.bannerEnableButton.click();
-				Assert.assertTrue(driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div")).getAttribute("class").contains("active"));
+				Assert.assertTrue(driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div"))
+						.getAttribute("class").contains("active"));
 			}
-		}else if(status.equalsIgnoreCase("Disable")) {
-			String style = driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div")).getAttribute("class");
-			if(style.contains("active")) {
+		} else if (status.equalsIgnoreCase("Disable")) {
+			String style = driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div"))
+					.getAttribute("class");
+			if (style.contains("active")) {
 				adspotsPage.bannerEnableButton.click();
-				Assert.assertTrue(!driver.findElement(By.xpath("//form/div[3]/span[1]")).getAttribute("class").contains("active"));
+				Assert.assertTrue(!driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div"))
+						.getAttribute("class").contains("active"));
 			}
 		}
-		
 
 	}
-	@When("^(.*) the in-banner video card$")
+
+	@When("^Verify the banner card is \"(.*)\"$")
+	public void expandCollapseBannerCheck(String status) throws Throwable {
+		if (status.equalsIgnoreCase("Enabled")) {
+			String style = driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div"))
+					.getAttribute("class");
+			if (style.contains("active")) {
+				Assert.assertTrue(true);
+			} else {
+				Assert.assertTrue(false);
+			}
+		} else if (status.equalsIgnoreCase("Disabled")) {
+			String style = driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div"))
+					.getAttribute("class");
+			if (!style.contains("active")) {
+				Assert.assertTrue(true);
+			} else {
+				Assert.assertTrue(false);
+			}
+		}
+
+	}
+
+	@When("^Verify the native card is \"(.*)\"$")
+	public void expandCollapseNativeCheck(String status) throws Throwable {
+		if (status.equalsIgnoreCase("Enabled")) {
+			String style = driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div"))
+					.getAttribute("class");
+			if (style.contains("active")) {
+				Assert.assertTrue(true);
+			} else {
+				Assert.assertTrue(false);
+			}
+		} else if (status.equalsIgnoreCase("Disabled")) {
+			String style = driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div"))
+					.getAttribute("class");
+			if (!style.contains("active")) {
+				Assert.assertTrue(true);
+			} else {
+				Assert.assertTrue(false);
+			}
+		}
+
+	}
+
+	@When("^Verify the in-banner video card is \"(.*)\"$")
+	public void expandCollapseInBannerCheck(String status) throws Throwable {
+		if (status.equalsIgnoreCase("Enabled")) {
+			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div"))
+					.getAttribute("class");
+			if (style.contains("active")) {
+				Assert.assertTrue(true);
+			} else {
+				Assert.assertTrue(false);
+			}
+		} else if (status.equalsIgnoreCase("Disabled")) {
+			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div"))
+					.getAttribute("class");
+			if (!style.contains("active")) {
+				Assert.assertTrue(true);
+			} else {
+				Assert.assertTrue(false);
+			}
+		}
+
+	}
+
+	@When("^\"(.*)\" the in-banner video card$")
 	public void expandCollapseInBanner(String status) throws Throwable {
-		if(status.equalsIgnoreCase("Expand")) {
+		if (status.equalsIgnoreCase("Expand")) {
 			String style = driver.findElement(By.xpath("//form/div[5]/span[1]")).getAttribute("style");
-			if(style.contains("none")) {
+			if (style.contains("none")) {
 				adspotsPage.inBannerVideoExpandButton.click();
-				Assert.assertTrue(driver.findElement(By.xpath("//form/div[5]/span[1]")).getAttribute("style").contains(""));
+				Assert.assertTrue(
+						driver.findElement(By.xpath("//form/div[5]/span[1]")).getAttribute("style").contains(""));
 			}
-		}else if(status.equalsIgnoreCase("Collapse")) {
+		} else if (status.equalsIgnoreCase("Collapse")) {
 			String style = driver.findElement(By.xpath("//form/div[5]/span[1]")).getAttribute("style");
-			if(!style.contains("none")) {
+			if (!style.contains("none")) {
 				adspotsPage.inBannerVideoExpandButton.click();
-				Assert.assertTrue(driver.findElement(By.xpath("//form/div[5]/span[1]")).getAttribute("style").contains("none"));
+				Assert.assertTrue(
+						driver.findElement(By.xpath("//form/div[5]/span[1]")).getAttribute("style").contains("none"));
 			}
-		}else if(status.equalsIgnoreCase("Enable")) {
-			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div")).getAttribute("class");
-			if(!style.contains("active")) {
+		} else if (status.equalsIgnoreCase("Enable")) {
+			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div"))
+					.getAttribute("class");
+			if (!style.contains("active")) {
 				adspotsPage.inBannerVideoEnableButton.click();
-				Assert.assertTrue(driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div")).getAttribute("class").contains("active"));
+				Assert.assertTrue(
+						driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div"))
+								.getAttribute("class").contains("active"));
 			}
-		}else if(status.equalsIgnoreCase("Disable")) {
-			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div")).getAttribute("class");
-			if(style.contains("active")) {
+		} else if (status.equalsIgnoreCase("Disable")) {
+			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div"))
+					.getAttribute("class");
+			if (style.contains("active")) {
 				adspotsPage.inBannerVideoEnableButton.click();
-				Assert.assertTrue(!driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div")).getAttribute("class").contains("active"));
+				Assert.assertTrue(
+						!driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div"))
+								.getAttribute("class").contains("active"));
 			}
 		}
-		
 
 	}
-	@When("^(.*) the native card$")
+
+	@When("^\"(.*)\" the native card$")
 	public void expandCollapseNative(String status) throws Throwable {
-		if(status.equalsIgnoreCase("Expand")) {
+		if (status.equalsIgnoreCase("Expand")) {
 			String style = driver.findElement(By.xpath("//form/div[4]/span[1]")).getAttribute("style");
-			if(style.contains("none")) {
-				adspotsPage.nativeExpandButton.click();	
-				Assert.assertTrue(!driver.findElement(By.xpath("//form/div[4]/span[1]")).getAttribute("style").contains("none"));
-			}
-		}else if(status.equalsIgnoreCase("Collapse")) {
-			String style = driver.findElement(By.xpath("//form/div[4]/span[1]")).getAttribute("style");
-			if(!style.contains("none")) {
+			if (style.contains("none")) {
 				adspotsPage.nativeExpandButton.click();
-				Assert.assertTrue(driver.findElement(By.xpath("//form/div[4]/span[1]")).getAttribute("style").contains("none"));
+				Assert.assertTrue(
+						!driver.findElement(By.xpath("//form/div[4]/span[1]")).getAttribute("style").contains("none"));
 			}
-		}else if(status.equalsIgnoreCase("Enable")) {
-			String style = driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div")).getAttribute("class");
-			if(!style.contains("active")) {
-				adspotsPage.nativeEnableButton.click();
-				Assert.assertTrue(driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div")).getAttribute("class").contains("active"));
+		} else if (status.equalsIgnoreCase("Collapse")) {
+			String style = driver.findElement(By.xpath("//form/div[4]/span[1]")).getAttribute("style");
+			if (!style.contains("none")) {
+				adspotsPage.nativeExpandButton.click();
+				Assert.assertTrue(
+						driver.findElement(By.xpath("//form/div[4]/span[1]")).getAttribute("style").contains("none"));
 			}
-		}else if(status.equalsIgnoreCase("Disable")) {
-			String style = driver.findElement(By.xpath("//div[text()='INative']/following-sibling::span/div")).getAttribute("class");
-			if(style.contains("active")) {
+		} else if (status.equalsIgnoreCase("Enable")) {
+			String style = driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div"))
+					.getAttribute("class");
+			if (!style.contains("active")) {
 				adspotsPage.nativeEnableButton.click();
-				Assert.assertTrue(!driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div")).getAttribute("class").contains("active"));
+				Assert.assertTrue(driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div"))
+						.getAttribute("class").contains("active"));
+			}
+		} else if (status.equalsIgnoreCase("Disable")) {
+			String style = driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div"))
+					.getAttribute("class");
+			if (style.contains("active")) {
+				adspotsPage.nativeEnableButton.click();
+				Assert.assertTrue(!driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div"))
+						.getAttribute("class").contains("active"));
 			}
 		}
-		
-		
 
 	}
-//	@When("^(.*) the banner card$")
-//	public void eenableBanner(String status) throws Throwable {
-//		if(status.equalsIgnoreCase("Enable")) {
-//			String style = driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div")).getAttribute("class");
-//			if(!style.contains("active")) {
-//				adspotsPage.bannerEnableButton.click();
-//				Assert.assertTrue(driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div")).getAttribute("class").contains("active"));
-//			}
-//		}else if(status.equalsIgnoreCase("Disable")) {
-//			String style = driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div")).getAttribute("class");
-//			if(style.contains("active")) {
-//				adspotsPage.bannerEnableButton.click();
-//				Assert.assertTrue(!driver.findElement(By.xpath("//form/div[3]/span[1]")).getAttribute("class").contains("active"));
-//			}
-//		}
-//		
-//
-//	}
-//	@When("^(.*) the in-banner video card$")
-//	public void enableInBanner(String status) throws Throwable {
-//		if(status.equalsIgnoreCase("Enable")) {
-//			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div")).getAttribute("class");
-//			if(!style.contains("active")) {
-//				adspotsPage.inBannerVideoEnableButton.click();
-//				Assert.assertTrue(driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div")).getAttribute("class").contains("active"));
-//			}
-//		}else if(status.equalsIgnoreCase("Disable")) {
-//			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div")).getAttribute("class");
-//			if(style.contains("active")) {
-//				adspotsPage.inBannerVideoEnableButton.click();
-//				Assert.assertTrue(!driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div")).getAttribute("class").contains("active"));
-//			}
-//		}
-//		
-//
-//	}
-//	@When("^(.*) the native card$")
-//	public void enableNative(String status) throws Throwable {
-//		if(status.equalsIgnoreCase("Enable")) {
-//			String style = driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div")).getAttribute("class");
-//			if(!style.contains("active")) {
-//				adspotsPage.nativeEnableButton.click();
-//				Assert.assertTrue(driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div")).getAttribute("class").contains("active"));
-//			}
-//		}else if(status.equalsIgnoreCase("Disable")) {
-//			String style = driver.findElement(By.xpath("//div[text()='INative']/following-sibling::span/div")).getAttribute("class");
-//			if(style.contains("active")) {
-//				adspotsPage.nativeEnableButton.click();
-//				Assert.assertTrue(!driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div")).getAttribute("class").contains("active"));
-//			}
-//		}
-//		
-//
-//	}
+
+	@When("^Verify the created adspot data is matching with its overview list values$")
+	public void verifyOverviewValues() throws Throwable {
+		String adSpotName = driver
+				.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[3]/span/a")).getText()
+				.replaceAll("\\s", "");
+		String entergedName = enteredAdSpotName.replaceAll("\\s", "");
+		Assert.assertEquals(adSpotName, entergedName);
+		String publisherName = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[4]"))
+				.getText();
+		Assert.assertEquals(publisherName, enteredPublisherName);
+		String mediaName = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[5]"))
+				.getText();
+		Assert.assertEquals(mediaName, enteredRelatedMedia);
+		String isActive = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[6]"))
+				.getText();
+		Assert.assertEquals(isActive, isAdspotActive);
+		String categoryName = driver
+				.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[7]//span[@role='button']"))
+				.getText().replaceAll("\\s", "");
+		String enterCatName = enteredCategories.replaceAll("\\s", "");
+		Assert.assertEquals(categoryName, enterCatName);
+		String filter = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[8]"))
+				.getText();
+		Assert.assertEquals(filter, enteredFilter);
+		String defaultSize = driver
+				.findElement(
+						By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[10]//span[@role='button']"))
+				.getText().replaceAll("\\s", "");
+		String enteredSizes = enteredDefaultSizes.replaceAll("\\s", "");
+		System.out.println(defaultSize);
+		System.out.println(enteredSizes);
+		Assert.assertEquals(defaultSize, enteredSizes);
+		String floorPrice = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[11]"))
+				.getText();
+		String price = enteredDefaultPrice + ".00";
+		String currency = defaultPriceCurrency.substring(0, defaultPriceCurrency.indexOf(":"));
+		System.out.println(price + " " + currency);
+		System.out.println(floorPrice);
+		Assert.assertEquals(floorPrice, price + " " + currency);
+
+	}
+
+	@When("^Click on the created adspotname in the overview page$")
+	public void clickNameOverview() throws Throwable {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+
+		try {
+
+			String enteredName = enteredAdSpotName.replaceAll("\\s", "");
+			List<WebElement> listOfNames = driver
+					.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[3]/span/a"));
+			for (int k = 0; k < listOfNames.size(); k++) {
+				String reqName = listOfNames.get(k).getText().replaceAll("\\s", "");
+
+				if (enteredName.equals(reqName)) {
+					listOfNames.get(k).click();
+					break;
+				}
+			}
+			wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
+			wait.until(ExpectedConditions.visibilityOf(driver.findElement(
+					By.xpath("//aside[@class='dialog']/header//div[text()='" + enteredAdSpotName + "']"))));
+			Thread.sleep(4000);
+		} catch (NullPointerException e) {
+			driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[3]/span/a")).click();
+			wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
+
+		}
+	}
+
+	@Then("^Verify following fields are disabled on create/edit adspot page$")
+	public void verifyLabelsDisabled(DataTable dt) throws InterruptedException, ParseException {
+		WebDriverWait wait = new WebDriverWait(driver, 35);
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		for (int i = 0; i < list.size(); i++) {
+			String fieldName = list.get(i).get("FieldName");
+			switch (fieldName) {
+			case "Publisher Name":
+				String isPubNameDisabled = adspotsPage.publisherNameField.getAttribute("class");
+				Assert.assertTrue(isPubNameDisabled.contains("disabled"));
+				break;
+			case "Related Media":
+				String isRelatedMediaDisabled = adspotsPage.relatedMediaField.getAttribute("class");
+				Assert.assertTrue(isRelatedMediaDisabled.contains("disabled"));
+				break;
+
+			default:
+				Assert.assertTrue(false, "The status fields supplied does not match with the input");
+
+			}
+
+		}
+	}
+
 }
