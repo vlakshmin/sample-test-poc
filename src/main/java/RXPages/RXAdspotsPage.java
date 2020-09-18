@@ -56,6 +56,9 @@ public class RXAdspotsPage extends RXBaseClass {
 	public WebElement adSpotNameField;
 	@FindBy(xpath = "//aside[@class='dialog']//div[@class='v-toolbar__title']/div")
 	public WebElement adSpotNameHeader;
+	@FindBy(xpath = "//aside[@class='dialog']//div[@class='v-toolbar__content']/button")
+	public WebElement adSpotCloseSideDialog;
+	
 	@FindBy(xpath = "//label[text()='Related Media']/following-sibling::div[@class='v-select__selections']")
 	public WebElement relatedMediaDropDown;
 	@FindBy(xpath = "//label[text()='Related Media']/following-sibling::div[@class='v-select__selections']/div")

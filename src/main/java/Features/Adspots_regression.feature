@@ -47,10 +47,11 @@ Scenario:  Verify searching adspots with avaiable and non available adspot name
     Given admin user login to RX UI with valid username and password 
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
-	Then Verify the search functionality with the following adspot names
-	|AdspotName|
-	|jay_test|
-	|jaya_testad|
+	Then Verify the search functionality with the following names
+	|Name|CoumnName|
+	|jay_test|Adspot Name|
+	|jaya_testad|Adspot Name|
+
 	
 Scenario:  Verify enabling and disabling of an adspot from the overview page  
     Given admin user login to RX UI with valid username and password 
@@ -278,8 +279,8 @@ Scenario: Verify successful creation and updation of an adspot
 	|Minimum Video Duration|
 	|Maximum Video Duration|      
 	|Playback Methods|
-	#Editing flow
 	
+	#Editing flow
 	When Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
 	|Active|Inactive||
@@ -338,5 +339,189 @@ Scenario: Verify successful creation and updation of an adspot
 	|Maximum Video Duration|
 	|Playback Methods|
 		
+Scenario: Verify adspot can be created without any cards enabled when is inactive but for 
+editing with activing the same adspot the edit is unsuccessful
+
+    Given admin user login to RX UI with valid username and password 
+    When Click on Adspots option under Inventory
+	And User displayed with Adspots page
+	And Click on the following create button
+	|CreateButtonName|
+	|Create AdSpot|
+	Then Enter the following data in the general card of adspot
+	|FieldName|Value|ListValueIndex|
+	|Publisher Name|ListValue|3|
+	|Active|Inactive||
+	|AdSpot Name|Auto_Test||
+	|Related Media|ListValue|2|
+	|Categories|ListValue|2|
+	|Position|ListValue|2|
+	|Filter|ListValue|2|
+	|Default Ad Sizes|ListValue|2,3|
+	|Default Floor Price|10||
+	And Click on save button and wait for dialog to close
+	Then Verify the created adspot data is matching with its overview list values
+	When Click on the created adspotname in the overview page
+	And Verify following fields are disabled on create/edit adspot page
+	|FieldName|
+	|Publisher Name|
+	|Related Media|
+	Then Verify the following columns value with the created data for the general card of adspot
+	|FieldName|
+	|Publisher Name|
+	|Active|
+	|AdSpot Name|
+	|Related Media|
+	|Categories|
+	|Position|
+	|Filter|
+	|Default Ad Sizes|
+	|Default Floor Price|
 	
+	#Editing flow
+	When Enter the following data in the general card of adspot
+	|FieldName|Value|ListValueIndex|
+	|Active|Active||
+	And Click on save button
+	Then Verify the save is failed
+	
+Scenario: Verify without adding any card ,creation of adspot is unsuccessful when the adspot is active
+
+    Given admin user login to RX UI with valid username and password 
+    When Click on Adspots option under Inventory
+	And User displayed with Adspots page
+	When Click on the following create button
+	|CreateButtonName|
+	|Create AdSpot|
+	Then Enter the following data in the general card of adspot
+	|FieldName|Value|ListValueIndex|
+	|Publisher Name|ListValue|3|
+	|Active|Active||
+	|AdSpot Name|Auto_Test||
+	|Related Media|ListValue|2|
+	|Categories|ListValue|2|
+	|Position|ListValue|2|
+	|Filter|ListValue|2|
+	|Default Ad Sizes|ListValue|2,3|
+	|Default Floor Price|10||
+	And Click on save button
+	Then Verify the save is failed
+	
+	
+Scenario: Verify after creation of adspot if the publisher is disabled the editing of the adspot is unsuccessful
+    Given admin user login to RX UI with valid username and password 
+    When Click on Adspots option under Inventory
+	And User displayed with Adspots page
+	When Click on the following create button
+	|CreateButtonName|
+	|Create AdSpot|
+	Then Enter the following data in the general card of adspot
+	|FieldName|Value|ListValueIndex|
+	|Publisher Name|Test Publisher 530635||
+	|Active|Inactive||
+	|AdSpot Name|Auto_Test||
+	|Related Media|ListValue|2|
+	|Categories|ListValue|2|
+	|Position|ListValue|2|
+	|Default Ad Sizes|ListValue|2,3|
+	|Default Floor Price|10||
+	And Click on save button and wait for dialog to close
+	Then Verify the created adspot data is matching with its overview list values
+	And Click on publisher option under account
+	And Publisher page should be displayed
+	Then Verify the search functionality with the following names
+	|Name|CoumnName|
+	|Test Publisher 530635|Publisher|
+	And "Disable" a publisher from the publisher overview page
+	When Click on Adspots option under Inventory
+	And User displayed with Adspots page
+	And Click on the created adspotname in the overview page
+	Then Verify following fields are disabled on create/edit adspot page
+	|FieldName|
+	|Related Media|
+	And Click on save button
+	Then Verify the save is failed
+	And User displayed with Adspots page
+	And Click on publisher option under account
+	And Publisher page should be displayed
+	Then Verify the search functionality with the following names
+	|Name|CoumnName|
+	|Test Publisher 530635|Publisher|
+	And "Enable" a publisher from the publisher overview page
+
+Scenario: Verify creation of adspot is unsuccessful if the related media is disabled
+    Given admin user login to RX UI with valid username and password 
+    When Click on Media option under Inventory
+	And User displayed with media page
+	Then Verify the search functionality with the following names
+	|Name|CoumnName|
+	|Mark Mc Desktop Site|Media Name|
+	And "Disable" a media from the media overview page
+	Then Click on Adspots sub menu
+	And User displayed with Adspots page
+	When Click on the following create button
+	|CreateButtonName|
+	|Create AdSpot|
+	Then Enter the following data in the general card of adspot
+	|FieldName|Value|ListValueIndex|
+	|Publisher Name|Mark Mceachran||
+	|Active|Inactive||
+	|AdSpot Name|Auto_Test||
+	|Related Media|Mark Mc Desktop Site||
+	|Categories|ListValue|2|
+	|Position|ListValue|2|
+	|Default Ad Sizes|ListValue|2,3|
+	|Default Floor Price|10||
+	Then Click on save button
+	And Verify the save is failed
+	And User displayed with Adspots page
+	When Click on Media sub menu
+	And User displayed with media page
+	Then Verify the search functionality with the following names
+	|Name|CoumnName|
+	|Mark Mc Desktop Site|Media Name|
+	And "Enable" a media from the media overview page
+	
+	
+#Scenario: Verify after creation of adspot if the related media is disabled the editing of the adspot is unsuccessful
+#    Given admin user login to RX UI with valid username and password 
+#    When Click on Adspots option under Inventory
+#	And User displayed with Adspots page
+#	When Click on the following create button
+#	|CreateButtonName|
+#	|Create AdSpot|
+#	Then Enter the following data in the general card of adspot
+#	|FieldName|Value|ListValueIndex|
+#	|Publisher Name|Mark Mceachran||
+#	|Active|Inactive||
+#	|AdSpot Name|Auto_Test||
+#	|Related Media|Mark Mc Desktop Site||
+#	|Categories|ListValue|2|
+#	|Position|ListValue|2|
+#	|Default Ad Sizes|ListValue|2,3|
+#	|Default Floor Price|10||
+#	Then Click on save button and wait for dialog to close
+#	Then Verify the created adspot data is matching with its overview list values
+#	Then Click on Media sub menu
+#	Then User displayed with media page
+#	Then Verify the search functionality with the following names
+#	|Name|CoumnName|
+#	|Mark Mc Desktop Site|Media Name|
+#	Then "Disable" a media from the media overview page
+#	Then Click on Adspots sub menu
+#	And User displayed with Adspots page
+#	And Click on the created adspotname in the overview page
+#	And Verify following fields are disabled on create/edit adspot page
+#	|FieldName|
+#	|publisher Name|
+#	|Related Media|
+#	Then Click on save button
+#	Then Verify the save is failed
+#	And User displayed with Adspots page
+#	Then Click on Media sub menu
+#	Then User displayed with media page
+#	Then Verify the search functionality with the following names
+#	|Name|CoumnName|
+#	|Mark Mc Desktop Site|Media Name|
+#	Then "Enable" a media from the media overview page
 

@@ -36,7 +36,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 	String enteredAdSpotName;
 	String enteredRelatedMedia;
 	String enteredCategories;
-	String enteredFilter;
+	String enteredFilter = "";
 	String enteredPosition;
 	String enteredMinVideoDuration;
 	String enteredMaxVideoDuration;
@@ -83,6 +83,14 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 	}
 
+	@When("^Click on Adspots sub menu$")
+	public void check_for_Adspot() throws Throwable {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.visibilityOf(navOptions.adspotsUndrInventory));
+		navOptions.adspotsUndrInventory.click();
+
+	}
+
 	@Then("^User displayed with Adspots page$")
 	public void user_displayed_with_seats_page() throws Throwable {
 		Assert.assertEquals(adspotsPage.getPageHeading(), adspotsPage.adspotsHeaderStr);
@@ -92,11 +100,12 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 //=========================================================================================================
 // Verify search functionality on the adspots overview page
-	@Then("^Verify the search functionality with the following adspot names$")
+	@Then("^Verify the search functionality with the following names$")
 	public void verifySearch(DataTable dt) throws InterruptedException {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
-			String adspotName = list.get(i).get("AdspotName");
+			String adspotName = list.get(i).get("Name");
+			String columnName = list.get(i).get("CoumnName");
 			adspotsPage.searchAdspots(adspotName);
 			WebDriverWait wait = new WebDriverWait(driver, 45);
 			WebElement elem = wait.until(ExpectedConditions.visibilityOf(
@@ -106,7 +115,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				Assert.assertTrue(true,
 						"The searched element is not available, but it is not matching with the shown message");
 			} else {
-				List<WebElement> coulmnData = navOptions.getColumnDataMatchingHeader("AdSpot Name");
+				List<WebElement> coulmnData = navOptions.getColumnDataMatchingHeader(columnName);
 				for (int j = 0; j < coulmnData.size(); j++) {
 					Assert.assertEquals(coulmnData.get(j).getText().trim(), adspotName);
 				}
@@ -318,7 +327,8 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 		wait.until(ExpectedConditions.visibilityOf(
 				driver.findElement(By.xpath("//button[@type='submit'][contains(@class,'error--text')]"))));
 		String failedMessage = navOptions.saveButtonTxt.getText().replaceAll("\u3000", "");
-		Assert.assertEquals(failedMessage, "Failed!");
+		Assert.assertEquals(failedMessage, "FAILED!");
+		adspotsPage.adSpotCloseSideDialog.click();
 
 	}
 
@@ -359,19 +369,28 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 			switch (fieldName) {
 			case "Publisher Name":
+				WebElement dropDownPublisher;
+				wait.until(ExpectedConditions.visibilityOf(adspotsPage.publisherNameDropDown));
+				adspotsPage.publisherNameDropDown.click();
 				if (value.equalsIgnoreCase("ListValue")) {
-					wait.until(ExpectedConditions.visibilityOf(adspotsPage.publisherNameDropDown));
-					adspotsPage.publisherNameDropDown.click();
+
 					wait.until(ExpectedConditions.visibilityOf(
 							driver.findElement(By.xpath("//div[@role='listbox']/div[" + listValueIndex + "]"))));
-					WebElement dropDownValue = driver
+					dropDownPublisher = driver
 							.findElement(By.xpath("//div[@role='listbox']/div[" + listValueIndex + "]"));
-					js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
-					dropDownValue.click();
-					Thread.sleep(5000);
-					enteredPublisherName = adspotsPage.publisherNameField.getText();
-					System.out.println("publisher entered as :" + enteredPublisherName);
+
+				} else {
+					wait.until(ExpectedConditions.visibilityOf(driver.findElement(
+							By.xpath("//div[@role='listbox']/div//div[contains(text(),'" + value + "')]"))));
+					dropDownPublisher = driver
+							.findElement(By.xpath("//div[@role='listbox']/div//div[contains(text(),'" + value + "')]"));
 				}
+				js.executeScript("arguments[0].scrollIntoView()", dropDownPublisher);
+				dropDownPublisher.click();
+				Thread.sleep(5000);
+				enteredPublisherName = adspotsPage.publisherNameField.getText();
+				System.out.println("publisher entered as :" + enteredPublisherName);
+				wait.until(ExpectedConditions.visibilityOf(adspotsPage.categoriesDropDown));
 			case "Active":
 				if (value.equalsIgnoreCase("Active")) {
 					String style = driver.findElement(By.xpath("//div[text()='General']/following-sibling::span/div"))
@@ -383,7 +402,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 										.getAttribute("class").contains("active"));
 						isAdspotActive = "Active";
 					} else {
-						isAdspotActive = "Inactive";
+						isAdspotActive = "Active";
 					}
 				} else if (value.equalsIgnoreCase("Inactive")) {
 					String style = driver.findElement(By.xpath("//div[text()='General']/following-sibling::span/div"))
@@ -395,7 +414,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 										.getAttribute("class").contains("active"));
 						isAdspotActive = "Inactive";
 					} else {
-						isAdspotActive = "Active";
+						isAdspotActive = "Inactive";
 					}
 				}
 				break;
@@ -409,21 +428,30 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				System.out.println("Entered Adspot name:" + enteredAdSpotName);
 				break;
 			case "Related Media":
+				WebElement dropDownValueMedia;
+				wait.until(ExpectedConditions.visibilityOf(adspotsPage.relatedMediaDropDown));
+				adspotsPage.relatedMediaDropDown.click();
 				if (value.equalsIgnoreCase("ListValue")) {
-					wait.until(ExpectedConditions.visibilityOf(adspotsPage.relatedMediaDropDown));
-					adspotsPage.relatedMediaDropDown.click();
 					wait.until(ExpectedConditions.visibilityOf(driver.findElement(
 							By.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
 									+ listValueIndex + "]"))));
-					WebElement dropDownValue = driver.findElement(
+					dropDownValueMedia = driver.findElement(
 							By.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
 									+ listValueIndex + "]"));
-					js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
-					dropDownValue.click();
-					Thread.sleep(2000);
-					enteredRelatedMedia = adspotsPage.relatedMediaField.getText();
-					System.out.println("Related Media entered as :" + enteredRelatedMedia);
+				} else {
+					wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(
+							"//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div//div[contains(text(),'"
+									+ value + "')]"))));
+					dropDownValueMedia = driver.findElement(By.xpath(
+							"//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div//div[contains(text(),'"
+									+ value + "')]"));
 				}
+				js.executeScript("arguments[0].scrollIntoView()", dropDownValueMedia);
+				dropDownValueMedia.click();
+				Thread.sleep(2000);
+				enteredRelatedMedia = adspotsPage.relatedMediaField.getText();
+				System.out.println("Related Media entered as :" + enteredRelatedMedia);
+
 				break;
 			case "Categories":
 				if (value.equalsIgnoreCase("ListValue")) {
@@ -1266,9 +1294,12 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				.getText().replaceAll("\\s", "");
 		String enterCatName = enteredCategories.replaceAll("\\s", "");
 		Assert.assertEquals(categoryName, enterCatName);
-		String filter = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[8]"))
-				.getText();
-		Assert.assertEquals(filter, enteredFilter);
+		if (!enteredFilter.equals("")) {
+			String filter = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[8]"))
+					.getText();
+
+			Assert.assertEquals(filter, enteredFilter);
+		}
 		String defaultSize = driver
 				.findElement(
 						By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[10]//span[@role='button']"))

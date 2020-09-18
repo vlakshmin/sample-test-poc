@@ -33,7 +33,7 @@ public class RXNavOptions extends RXBaseClass {
 	WebElement dashBoardNav;
 
 	// Option expension
-	@FindBy(xpath = "//div[1]/div[1]/div[3]/i")
+	@FindBy(xpath = "//div[text()='Admin']/parent::div/following-sibling::div")
 	WebElement adminExpensionBtn;
 	@FindBy(xpath = "//div[text()='Inventory']/parent::div/following-sibling::div")
 	WebElement inventoryExpensionBtn;
@@ -42,7 +42,7 @@ public class RXNavOptions extends RXBaseClass {
 
 	// subMenu of Admin main menu
 	@FindBy(xpath = "//div[text()='Publishers']")
-	WebElement publisherUndrAdmin;
+	public WebElement publisherUndrAdmin;
 	@FindBy(xpath = "//div[text()='Users']")
 	WebElement usersUndrAdmin;
 	@FindBy(xpath = "//div[text()='Demand Sources']")
@@ -173,8 +173,12 @@ public class RXNavOptions extends RXBaseClass {
 
 	// Clicking expansion of Admin
 
-	public void expandAdmin() {
-		adminExpensionBtn.click();
+	public void expandAdmin() throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		Thread.sleep(2000);
+		WebElement element = wait.until(ExpectedConditions.visibilityOf(adminExpensionBtn));
+		element.click();
+		
 
 	}
 
