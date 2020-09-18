@@ -1099,10 +1099,11 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 	@When("^\"(.*)\" the banner card$")
 	public void expandCollapseBanner(String status) throws Throwable {
-		Thread.sleep(1000);
+		
 		if (status.equalsIgnoreCase("Expand")) {
 			String style = driver.findElement(By.xpath("//form/div[3]/span[1]")).getAttribute("style");
 			if (style.contains("none")) {
+				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.bannerExpandButton);
 				adspotsPage.bannerExpandButton.click();
 				Assert.assertTrue(
 						driver.findElement(By.xpath("//form/div[3]/span[1]")).getAttribute("style").contains(""));
@@ -1110,6 +1111,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 		} else if (status.equalsIgnoreCase("Collapse")) {
 			String style = driver.findElement(By.xpath("//form/div[3]/span[1]")).getAttribute("style");
 			if (!style.contains("none")) {
+				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.bannerExpandButton);
 				adspotsPage.bannerExpandButton.click();
 				Assert.assertTrue(
 						driver.findElement(By.xpath("//form/div[3]/span[1]")).getAttribute("style").contains("none"));
@@ -1118,6 +1120,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 			String style = driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div"))
 					.getAttribute("class");
 			if (!style.contains("active")) {
+				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.bannerEnableButton);
 				adspotsPage.bannerEnableButton.click();
 				Assert.assertTrue(driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div"))
 						.getAttribute("class").contains("active"));
@@ -1126,6 +1129,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 			String style = driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div"))
 					.getAttribute("class");
 			if (style.contains("active")) {
+				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.bannerEnableButton);
 				adspotsPage.bannerEnableButton.click();
 				Assert.assertTrue(!driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div"))
 						.getAttribute("class").contains("active"));
@@ -1202,10 +1206,11 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 	@When("^\"(.*)\" the in-banner video card$")
 	public void expandCollapseInBanner(String status) throws Throwable {
-		Thread.sleep(1000);
+		
 		if (status.equalsIgnoreCase("Expand")) {
 			String style = driver.findElement(By.xpath("//form/div[5]/span[1]")).getAttribute("style");
 			if (style.contains("none")) {
+				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.inBannerVideoExpandButton);
 				adspotsPage.inBannerVideoExpandButton.click();
 				Assert.assertTrue(
 						driver.findElement(By.xpath("//form/div[5]/span[1]")).getAttribute("style").contains(""));
@@ -1213,6 +1218,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 		} else if (status.equalsIgnoreCase("Collapse")) {
 			String style = driver.findElement(By.xpath("//form/div[5]/span[1]")).getAttribute("style");
 			if (!style.contains("none")) {
+				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.inBannerVideoExpandButton);
 				adspotsPage.inBannerVideoExpandButton.click();
 				Assert.assertTrue(
 						driver.findElement(By.xpath("//form/div[5]/span[1]")).getAttribute("style").contains("none"));
@@ -1221,6 +1227,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div"))
 					.getAttribute("class");
 			if (!style.contains("active")) {
+				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.inBannerVideoEnableButton);
 				adspotsPage.inBannerVideoEnableButton.click();
 				Assert.assertTrue(
 						driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div"))
@@ -1230,6 +1237,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div"))
 					.getAttribute("class");
 			if (style.contains("active")) {
+				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.inBannerVideoEnableButton);
 				adspotsPage.inBannerVideoEnableButton.click();
 				Assert.assertTrue(
 						!driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div"))
@@ -1241,10 +1249,11 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 	@When("^\"(.*)\" the native card$")
 	public void expandCollapseNative(String status) throws Throwable {
-		Thread.sleep(1000);
+		
 		if (status.equalsIgnoreCase("Expand")) {
 			String style = driver.findElement(By.xpath("//form/div[4]/span[1]")).getAttribute("style");
 			if (style.contains("none")) {
+				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.nativeExpandButton);
 				adspotsPage.nativeExpandButton.click();
 				Assert.assertTrue(
 						!driver.findElement(By.xpath("//form/div[4]/span[1]")).getAttribute("style").contains("none"));
@@ -1252,6 +1261,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 		} else if (status.equalsIgnoreCase("Collapse")) {
 			String style = driver.findElement(By.xpath("//form/div[4]/span[1]")).getAttribute("style");
 			if (!style.contains("none")) {
+				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.nativeExpandButton);
 				adspotsPage.nativeExpandButton.click();
 				Assert.assertTrue(
 						driver.findElement(By.xpath("//form/div[4]/span[1]")).getAttribute("style").contains("none"));
@@ -1260,6 +1270,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 			String style = driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div"))
 					.getAttribute("class");
 			if (!style.contains("active")) {
+				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.nativeEnableButton);
 				adspotsPage.nativeEnableButton.click();
 				Assert.assertTrue(driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div"))
 						.getAttribute("class").contains("active"));
@@ -1268,6 +1279,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 			String style = driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div"))
 					.getAttribute("class");
 			if (style.contains("active")) {
+				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.nativeEnableButton);
 				adspotsPage.nativeEnableButton.click();
 				Assert.assertTrue(!driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div"))
 						.getAttribute("class").contains("active"));

@@ -95,7 +95,6 @@ Scenario:  Verify mandatory fields in the Create Adspot Page
 	|FieldName|
 	|AdSpot Name|
 	|Related Media|
-	|Categories|
 	|Position|
 	|Default Ad Sizes|
 	|Default Floor Price|
