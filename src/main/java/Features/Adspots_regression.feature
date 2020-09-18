@@ -49,8 +49,8 @@ Scenario:  Verify searching adspots with avaiable and non available adspot name
 	And User displayed with Adspots page
 	Then Verify the search functionality with the following names
 	|Name|CoumnName|
-	|jay_test|Adspot Name|
-	|jaya_testad|Adspot Name|
+	|jay_test|AdSpot Name|
+	|jaya_testad|AdSpot Name|
 
 	
 Scenario:  Verify enabling and disabling of an adspot from the overview page  
