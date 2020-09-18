@@ -1099,6 +1099,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 	@When("^\"(.*)\" the banner card$")
 	public void expandCollapseBanner(String status) throws Throwable {
+		Thread.sleep(1000);
 		if (status.equalsIgnoreCase("Expand")) {
 			String style = driver.findElement(By.xpath("//form/div[3]/span[1]")).getAttribute("style");
 			if (style.contains("none")) {
@@ -1201,6 +1202,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 	@When("^\"(.*)\" the in-banner video card$")
 	public void expandCollapseInBanner(String status) throws Throwable {
+		Thread.sleep(1000);
 		if (status.equalsIgnoreCase("Expand")) {
 			String style = driver.findElement(By.xpath("//form/div[5]/span[1]")).getAttribute("style");
 			if (style.contains("none")) {
@@ -1239,6 +1241,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 	@When("^\"(.*)\" the native card$")
 	public void expandCollapseNative(String status) throws Throwable {
+		Thread.sleep(1000);
 		if (status.equalsIgnoreCase("Expand")) {
 			String style = driver.findElement(By.xpath("//form/div[4]/span[1]")).getAttribute("style");
 			if (style.contains("none")) {
