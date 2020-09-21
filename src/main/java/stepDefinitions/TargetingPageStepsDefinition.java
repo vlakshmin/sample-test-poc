@@ -62,7 +62,7 @@ public void clickTableOptions() throws InterruptedException {
 	wait.until(ExpectedConditions.visibilityOf(navOptions.tableOptions));
 	navOptions.clickTableOptions();
 }
-@When("^Verify that column (.*) can be hidden and shown$")
+@When("^Verify that column \"(.*)\" can be hidden and shown$")
 public void verifyHideShow(String filter) throws InterruptedException {
 	navOptions.tableOptionsLabel = filter;
 	Thread.sleep(5000);
@@ -86,7 +86,7 @@ public void verifyHideShow(String filter) throws InterruptedException {
 	
     }
 }
-@When("^Verify that column (.*) only shows relevant rows in the table with filter (.*)$")
+@When("^Verify that column \"(.*)\" only shows relevant rows in the table with filter \"(.*)\"$")
 public void verifyShowStats(String column, String filter) throws InterruptedException {
 	navOptions.tableOptionsLabel = filter;
 	Thread.sleep(5000);
