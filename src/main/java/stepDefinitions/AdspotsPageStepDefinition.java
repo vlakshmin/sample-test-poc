@@ -1385,4 +1385,25 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 		}
 	}
 
+	@Then("^Verify Categories filed has subcategories$")
+	public void verifySubCategories() throws InterruptedException, ParseException {
+		WebDriverWait wait = new WebDriverWait(driver, 35);
+		wait.until(ExpectedConditions.visibilityOf(adspotsPage.categoriesDropDown));
+//		adspotsPage.categoriesDropDown.click();
+		js.executeScript("arguments[0].click()", adspotsPage.categoriesDropDown);
+		for(int i=1;i<=2;i++) {
+		WebElement firstCategoryExpand = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(
+						"//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["+i+"]//div[contains(@class, 'append-icon')]/i"))));
+		js.executeScript("arguments[0].click()", firstCategoryExpand);
+		Thread.sleep(1000);
+		boolean isSubCategoryPresent = driver.findElements(By.xpath(
+				"//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["+i+"]//div[contains(@class, 'v-list-group__items')]/div"))
+				.size() > 0;
+		Assert.assertEquals(isSubCategoryPresent, true);
+		js.executeScript("arguments[0].click()", firstCategoryExpand);
+		}
+		
+
+		driver.findElement(By.xpath("//label[text()='Test Mode']")).click();
+	}
 }

@@ -111,11 +111,14 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|ListValue|3|
+	And Verify Categories filed has subcategories
+	Then Enter the following data in the general card of adspot
+	|FieldName|Value|ListValueIndex|
 	|AdSpot Name|Auto_Test||
 	|Related Media|ListValue|2|
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
-	|Filter|ListValue|2|
+	|Filter|ListValue|1|
 	|Default Ad Sizes|ListValue|2,3|
 	|Default Floor Price|10||
 	And "Enable" the banner card
@@ -168,7 +171,7 @@ Scenario: Verify with invalid value for floor price and adsizes>2 creation is un
 	|Create AdSpot|
 	And Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|3|
+	|Publisher Name|ListValue|2|
 	|Active|Active||
 	|AdSpot Name|Auto_Test||
 	|Related Media|ListValue|2|
@@ -214,7 +217,7 @@ Scenario: Verify successful creation and updation of an adspot
 	|Create AdSpot|
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|3|
+	|Publisher Name|ListValue|2|
 	|Active|Active||
 	|AdSpot Name|Auto_Test||
 	|Related Media|ListValue|2|
@@ -352,7 +355,7 @@ editing with activing the same adspot the edit is unsuccessful
 	|Create AdSpot|
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|3|
+	|Publisher Name|ListValue|2|
 	|Active|Inactive||
 	|AdSpot Name|Auto_Test||
 	|Related Media|ListValue|2|
@@ -397,7 +400,7 @@ Scenario: Verify without adding any card ,creation of adspot is unsuccessful whe
 	|Create AdSpot|
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|3|
+	|Publisher Name|ListValue|2|
 	|Active|Active||
 	|AdSpot Name|Auto_Test||
 	|Related Media|ListValue|2|
@@ -451,7 +454,7 @@ Scenario: Verify after creation of adspot if the publisher is disabled the editi
 	|Test Publisher 530635|Publisher|
 	And "Enable" a publisher from the publisher overview page
 
-Scenario: Verify creation of adspot is unsuccessful if the related media is disabled
+Scenario: Verify creation of adspot is successful if the related media is disabled
     Given admin user login to RX UI with valid username and password 
     When Click on Media option under Inventory
 	And User displayed with media page
@@ -474,8 +477,7 @@ Scenario: Verify creation of adspot is unsuccessful if the related media is disa
 	|Position|ListValue|2|
 	|Default Ad Sizes|ListValue|2,3|
 	|Default Floor Price|10||
-	Then Click on save button
-	And Verify the save is failed
+	And Click on save button and wait for dialog to close
 	And User displayed with Adspots page
 	When Click on Media sub menu
 	And User displayed with media page
