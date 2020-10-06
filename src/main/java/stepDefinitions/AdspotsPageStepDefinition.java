@@ -273,6 +273,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 	@Then("^Verify following fields are mandatory for create page$")
 	public void verifyMandatorFields(DataTable dt) throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
+		Thread.sleep(1000);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
