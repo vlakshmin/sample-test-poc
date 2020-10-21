@@ -11,19 +11,15 @@ Scenario:  Verify the column names in the adspots overview page
 	|Publisher|
 	|Related Media|
 	|Active/Inactive|
-	|Page Category|
-	|Filter|
-	|Test Mode|
 	|Default Sizes|
 	|Default Floor Price|
-	|Create Date|
-	|Update Date|
+	
 	
 Scenario:  Verify the pagination exists for the list in the adspots page for admin
 	Given admin user login to RX UI with valid username and password 
 	When Click on Adspots option under Inventory
 	And User displayed with Adspots page
-	Then Verify the pagination of the listed rows in the Page with a selection of 50 rows per page with 12 columns
+	Then Verify the pagination of the listed rows in the Page with a selection of 50 rows per page with 7 columns
 	
     
 
@@ -71,7 +67,6 @@ Scenario:  Verify sorting of the table's columns of the adspots overview page
 	|ColumnName|SortType|
 	|ID|asc|
 	|Publisher|desc|
-	|Create Date|desc|
 	|Related Media|asc|
 	
 Scenario:  Verify mandatory fields in the Create Adspot Page 
