@@ -163,7 +163,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				Assert.assertTrue(adspotsPage.overviewEditbutton.isDisplayed());
 				Assert.assertTrue(adspotsPage.overviewEnablebutton.isDisplayed());
 				String enableText = adspotsPage.overviewEnablebutton.getText().replaceAll("\\s", "");
-				Assert.assertEquals(enableText, "ENABLEADSPOT");
+				Assert.assertEquals(enableText, "ACTIVATEADSPOT");
 				adspotsPage.clickOverViewEnablebutton();
 				Thread.sleep(3000);
 				List<WebElement> coulmnData2 = navOptions.getColumnDataMatchingHeader("Active/Inactive");
@@ -394,24 +394,24 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				wait.until(ExpectedConditions.visibilityOf(adspotsPage.categoriesDropDown));
 			case "Active":
 				if (value.equalsIgnoreCase("Active")) {
-					String style = driver.findElement(By.xpath("//div[text()='General']/following-sibling::span/div"))
+					String style = driver.findElement(By.xpath("//div[text()='General']/preceding-sibling::span/div"))
 							.getAttribute("class");
 					if (!style.contains("active")) {
 						adspotsPage.adspotEnableButton.click();
 						Assert.assertTrue(
-								driver.findElement(By.xpath("//div[text()='General']/following-sibling::span/div"))
+								driver.findElement(By.xpath("//div[text()='General']/preceding-sibling::span/div"))
 										.getAttribute("class").contains("active"));
 						isAdspotActive = "Active";
 					} else {
 						isAdspotActive = "Active";
 					}
 				} else if (value.equalsIgnoreCase("Inactive")) {
-					String style = driver.findElement(By.xpath("//div[text()='General']/following-sibling::span/div"))
+					String style = driver.findElement(By.xpath("//div[text()='General']/preceding-sibling::span/div"))
 							.getAttribute("class");
 					if (style.contains("active")) {
 						adspotsPage.adspotEnableButton.click();
 						Assert.assertTrue(
-								!driver.findElement(By.xpath("//div[text()='General']/following-sibling::span/div"))
+								!driver.findElement(By.xpath("//div[text()='General']/preceding-sibling::span/div"))
 										.getAttribute("class").contains("active"));
 						isAdspotActive = "Inactive";
 					} else {
@@ -840,7 +840,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 			switch (fieldName) {
 			case "Active":
-				String style = driver.findElement(By.xpath("//div[text()='General']/following-sibling::span/div"))
+				String style = driver.findElement(By.xpath("//div[text()='General']/preceding-sibling::span/div"))
 						.getAttribute("class");
 				if (style.contains("active")) {
 
@@ -1118,21 +1118,21 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 						driver.findElement(By.xpath("//form/div[3]/span[1]")).getAttribute("style").contains("none"));
 			}
 		} else if (status.equalsIgnoreCase("Enable")) {
-			String style = driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div"))
+			String style = driver.findElement(By.xpath("//div[text()='Banner']/preceding-sibling::span/div"))
 					.getAttribute("class");
 			if (!style.contains("active")) {
 				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.bannerEnableButton);
 				adspotsPage.bannerEnableButton.click();
-				Assert.assertTrue(driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div"))
+				Assert.assertTrue(driver.findElement(By.xpath("//div[text()='Banner']/preceding-sibling::span/div"))
 						.getAttribute("class").contains("active"));
 			}
 		} else if (status.equalsIgnoreCase("Disable")) {
-			String style = driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div"))
+			String style = driver.findElement(By.xpath("//div[text()='Banner']/preceding-sibling::span/div"))
 					.getAttribute("class");
 			if (style.contains("active")) {
 				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.bannerEnableButton);
 				adspotsPage.bannerEnableButton.click();
-				Assert.assertTrue(!driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div"))
+				Assert.assertTrue(!driver.findElement(By.xpath("//div[text()='Banner']/preceding-sibling::span/div"))
 						.getAttribute("class").contains("active"));
 			}
 		}
@@ -1142,7 +1142,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 	@When("^Verify the banner card is \"(.*)\"$")
 	public void expandCollapseBannerCheck(String status) throws Throwable {
 		if (status.equalsIgnoreCase("Enabled")) {
-			String style = driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div"))
+			String style = driver.findElement(By.xpath("//div[text()='Banner']/preceding-sibling::span/div"))
 					.getAttribute("class");
 			if (style.contains("active")) {
 				Assert.assertTrue(true);
@@ -1150,7 +1150,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				Assert.assertTrue(false);
 			}
 		} else if (status.equalsIgnoreCase("Disabled")) {
-			String style = driver.findElement(By.xpath("//div[text()='Banner']/following-sibling::span/div"))
+			String style = driver.findElement(By.xpath("//div[text()='Banner']/preceding-sibling::span/div"))
 					.getAttribute("class");
 			if (!style.contains("active")) {
 				Assert.assertTrue(true);
@@ -1164,7 +1164,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 	@When("^Verify the native card is \"(.*)\"$")
 	public void expandCollapseNativeCheck(String status) throws Throwable {
 		if (status.equalsIgnoreCase("Enabled")) {
-			String style = driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div"))
+			String style = driver.findElement(By.xpath("//div[text()='Native']/preceding-sibling::span/div"))
 					.getAttribute("class");
 			if (style.contains("active")) {
 				Assert.assertTrue(true);
@@ -1172,7 +1172,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				Assert.assertTrue(false);
 			}
 		} else if (status.equalsIgnoreCase("Disabled")) {
-			String style = driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div"))
+			String style = driver.findElement(By.xpath("//div[text()='Native']/preceding-sibling::span/div"))
 					.getAttribute("class");
 			if (!style.contains("active")) {
 				Assert.assertTrue(true);
@@ -1186,7 +1186,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 	@When("^Verify the in-banner video card is \"(.*)\"$")
 	public void expandCollapseInBannerCheck(String status) throws Throwable {
 		if (status.equalsIgnoreCase("Enabled")) {
-			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div"))
+			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/preceding-sibling::span/div"))
 					.getAttribute("class");
 			if (style.contains("active")) {
 				Assert.assertTrue(true);
@@ -1194,7 +1194,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				Assert.assertTrue(false);
 			}
 		} else if (status.equalsIgnoreCase("Disabled")) {
-			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div"))
+			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/preceding-sibling::span/div"))
 					.getAttribute("class");
 			if (!style.contains("active")) {
 				Assert.assertTrue(true);
@@ -1225,23 +1225,23 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 						driver.findElement(By.xpath("//form/div[5]/span[1]")).getAttribute("style").contains("none"));
 			}
 		} else if (status.equalsIgnoreCase("Enable")) {
-			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div"))
+			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/preceding-sibling::span/div"))
 					.getAttribute("class");
 			if (!style.contains("active")) {
 				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.inBannerVideoEnableButton);
 				adspotsPage.inBannerVideoEnableButton.click();
 				Assert.assertTrue(
-						driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div"))
+						driver.findElement(By.xpath("//div[text()='In-Banner Video']/preceding-sibling::span/div"))
 								.getAttribute("class").contains("active"));
 			}
 		} else if (status.equalsIgnoreCase("Disable")) {
-			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div"))
+			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/preceding-sibling::span/div"))
 					.getAttribute("class");
 			if (style.contains("active")) {
 				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.inBannerVideoEnableButton);
 				adspotsPage.inBannerVideoEnableButton.click();
 				Assert.assertTrue(
-						!driver.findElement(By.xpath("//div[text()='In-Banner Video']/following-sibling::span/div"))
+						!driver.findElement(By.xpath("//div[text()='In-Banner Video']/preceding-sibling::span/div"))
 								.getAttribute("class").contains("active"));
 			}
 		}
@@ -1268,21 +1268,21 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 						driver.findElement(By.xpath("//form/div[4]/span[1]")).getAttribute("style").contains("none"));
 			}
 		} else if (status.equalsIgnoreCase("Enable")) {
-			String style = driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div"))
+			String style = driver.findElement(By.xpath("//div[text()='Native']/preceding-sibling::span/div"))
 					.getAttribute("class");
 			if (!style.contains("active")) {
 				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.nativeEnableButton);
 				adspotsPage.nativeEnableButton.click();
-				Assert.assertTrue(driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div"))
+				Assert.assertTrue(driver.findElement(By.xpath("//div[text()='Native']/preceding-sibling::span/div"))
 						.getAttribute("class").contains("active"));
 			}
 		} else if (status.equalsIgnoreCase("Disable")) {
-			String style = driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div"))
+			String style = driver.findElement(By.xpath("//div[text()='Native']/preceding-sibling::span/div"))
 					.getAttribute("class");
 			if (style.contains("active")) {
 				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.nativeEnableButton);
 				adspotsPage.nativeEnableButton.click();
-				Assert.assertTrue(!driver.findElement(By.xpath("//div[text()='Native']/following-sibling::span/div"))
+				Assert.assertTrue(!driver.findElement(By.xpath("//div[text()='Native']/preceding-sibling::span/div"))
 						.getAttribute("class").contains("active"));
 			}
 		}
@@ -1305,26 +1305,26 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 		String isActive = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[6]"))
 				.getText();
 		Assert.assertEquals(isActive, isAdspotActive);
-		String categoryName = driver
-				.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[7]//span[@role='button']"))
-				.getText().replaceAll("\\s", "");
-		String enterCatName = enteredCategories.replaceAll("\\s", "");
-		Assert.assertEquals(categoryName, enterCatName);
-		if (!enteredFilter.equals("")) {
-			String filter = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[8]"))
-					.getText();
-
-			Assert.assertEquals(filter, enteredFilter);
-		}
+//		String categoryName = driver
+//				.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[7]//span[@role='button']"))
+//				.getText().replaceAll("\\s", "");
+//		String enterCatName = enteredCategories.replaceAll("\\s", "");
+//		Assert.assertEquals(categoryName, enterCatName);
+//		if (!enteredFilter.equals("")) {
+//			String filter = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[8]"))
+//					.getText();
+//
+//			Assert.assertEquals(filter, enteredFilter);
+//		}
 		String defaultSize = driver
 				.findElement(
-						By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[10]//span[@role='button']"))
+						By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[7]//span[@role='button']"))
 				.getText().replaceAll("\\s", "");
 		String enteredSizes = enteredDefaultSizes.replaceAll("\\s", "");
 		System.out.println(defaultSize);
 		System.out.println(enteredSizes);
 		Assert.assertEquals(defaultSize, enteredSizes);
-		String floorPrice = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[11]"))
+		String floorPrice = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[8]"))
 				.getText();
 		String price = enteredDefaultPrice + ".00";
 		String currency = defaultPriceCurrency.substring(0, defaultPriceCurrency.indexOf(":"));

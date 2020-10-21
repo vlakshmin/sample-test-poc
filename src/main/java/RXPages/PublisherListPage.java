@@ -57,9 +57,9 @@ public class PublisherListPage extends RXBaseClass {
 	// overview buttons
 	@FindBy(xpath = "//button/span[text()='Edit Publisher']")
 	public WebElement overviewEditbutton;
-	@FindBy(xpath = "//button/span[text()='Disable Publisher']")
+	@FindBy(xpath = "//button/span[text()='Deactivate Publisher']")
 	public WebElement overviewDisablebutton;
-	@FindBy(xpath = "//button/span[text()='Enable Publisher']")
+	@FindBy(xpath = "//button/span[text()='Activate Publisher']")
 	public WebElement overviewEnablebutton;
 
 	// Account options
