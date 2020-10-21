@@ -114,7 +114,7 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
 	|Filter|ListValue|1|
-	|Default Ad Sizes|ListValue|2,3|
+	|Default Ad Sizes|ListValue|2|
 	|Default Floor Price|10||
 	And "Enable" the banner card
 	And "Enable" the native card
@@ -157,7 +157,7 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
 	
 
 	
-Scenario: Verify with invalid value for floor price and adsizes>2 creation is unsuccessful 
+Scenario: Verify with invalid value for floor price and adsizes>1 creation is unsuccessful 
     Given admin user login to RX UI with valid username and password 
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
@@ -173,13 +173,13 @@ Scenario: Verify with invalid value for floor price and adsizes>2 creation is un
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
 	|Filter|ListValue|2|
-	|Default Ad Sizes|ListValue|2,3,4|
+	|Default Ad Sizes|ListValue|2,3|
 	|Default Floor Price|-10||
 	And "Enable" the banner card
 	And "Expand" the banner card
 	Then Enter the following data in the banner card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Ad Sizes|ListValue|2,3,4|
+	|Ad Sizes|ListValue|2,3|
 	|Floor Price|-10||
 	And "Enable" the native card
 	And "Expand" the native card
@@ -190,7 +190,7 @@ Scenario: Verify with invalid value for floor price and adsizes>2 creation is un
 	And "Expand" the in-banner video card
 	Then Enter the following data in the in-banner video card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Ad Sizes|ListValue|2,3,4|
+	|Ad Sizes|ListValue|2,3|
 	|Floor Price|-10||
 	|Minimum Video Duration|ListValue|1|
 	|Maximum Video Duration|ListValue|1|
@@ -198,10 +198,10 @@ Scenario: Verify with invalid value for floor price and adsizes>2 creation is un
 	And Click on save button
 	Then Verify error messages for sizes and floor price for the following cards
 	|Card|SizeErrorMsg|FloorPriceErrorMsg|
-	|General|Default Ad Sizes must be 2 or less|Floor price must be between 0 and 10,000.00|
-	|Banner|Ad Sizes must be 2 or less|Floor price must be between 0 and 10,000.00|
+	|General|Default Ad Sizes must be 1 or less|Floor price must be between 0 and 10,000.00|
+	|Banner|Ad Sizes must be 1 or less|Floor price must be between 0 and 10,000.00|
 	|Native||Floor price must be between 0 and 10,000.00|
-	|InBannerVideo|Ad Sizes must be 2 or less|Floor price must be between 0 and 10,000.00| 
+	|InBannerVideo|Ad Sizes must be 1 or less|Floor price must be between 0 and 10,000.00| 
 	
 Scenario: Verify successful creation and updation of an adspot 
     Given admin user login to RX UI with valid username and password 
@@ -219,13 +219,13 @@ Scenario: Verify successful creation and updation of an adspot
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
 	|Filter|ListValue|2|
-	|Default Ad Sizes|ListValue|2,3|
+	|Default Ad Sizes|ListValue|2|
 	|Default Floor Price|10||
 	And "Enable" the banner card
 	And "Expand" the banner card
 	Then Enter the following data in the banner card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Ad Sizes|ListValue|2,3|
+	|Ad Sizes|ListValue|2|
 	|Floor Price|5||
 	And "Enable" the native card
 	And "Expand" the native card
@@ -236,7 +236,7 @@ Scenario: Verify successful creation and updation of an adspot
 	And "Expand" the in-banner video card
 	Then Enter the following data in the in-banner video card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Ad Sizes|ListValue|2,3|
+	|Ad Sizes|ListValue|2|
 	|Floor Price|5||
 	|Minimum Video Duration|ListValue|1|
 	|Maximum Video Duration|ListValue|1|
@@ -254,9 +254,6 @@ Scenario: Verify successful creation and updation of an adspot
 	|Active|
 	|AdSpot Name|
 	|Related Media|
-	|Categories|
-	|Position|
-	|Filter|
 	|Default Ad Sizes|
 	|Default Floor Price|
 	And Verify the banner card is "Enabled"
@@ -313,9 +310,6 @@ Scenario: Verify successful creation and updation of an adspot
 	|Active|
 	|AdSpot Name|
 	|Related Media|
-	|Categories|
-	|Position|
-	|Filter|
 	|Default Ad Sizes|
 	|Default Floor Price|
 	Then Verify the banner card is "Enabled"
@@ -357,7 +351,7 @@ editing with activing the same adspot the edit is unsuccessful
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
 	|Filter|ListValue|2|
-	|Default Ad Sizes|ListValue|2,3|
+	|Default Ad Sizes|ListValue|2|
 	|Default Floor Price|10||
 	And Click on save button and wait for dialog to close
 	Then Verify the created adspot data is matching with its overview list values
@@ -372,9 +366,6 @@ editing with activing the same adspot the edit is unsuccessful
 	|Active|
 	|AdSpot Name|
 	|Related Media|
-	|Categories|
-	|Position|
-	|Filter|
 	|Default Ad Sizes|
 	|Default Floor Price|
 	
@@ -402,7 +393,7 @@ Scenario: Verify without adding any card ,creation of adspot is unsuccessful whe
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
 	|Filter|ListValue|2|
-	|Default Ad Sizes|ListValue|2,3|
+	|Default Ad Sizes|ListValue|2|
 	|Default Floor Price|10||
 	And Click on save button
 	Then Verify the save is failed
@@ -423,7 +414,7 @@ Scenario: Verify after creation of adspot if the publisher is disabled the editi
 	|Related Media|ListValue|2|
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
-	|Default Ad Sizes|ListValue|2,3|
+	|Default Ad Sizes|ListValue|2|
 	|Default Floor Price|10||
 	And Click on save button and wait for dialog to close
 	Then Verify the created adspot data is matching with its overview list values
@@ -470,7 +461,7 @@ Scenario: Verify creation of adspot is successful if the related media is disabl
 	|Related Media|Mark Mc Desktop Site||
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
-	|Default Ad Sizes|ListValue|2,3|
+	|Default Ad Sizes|ListValue|2|
 	|Default Floor Price|10||
 	And Click on save button and wait for dialog to close
 	And User displayed with Adspots page

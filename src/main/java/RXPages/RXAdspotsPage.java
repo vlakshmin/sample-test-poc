@@ -42,7 +42,7 @@ public class RXAdspotsPage extends RXBaseClass {
 	// overview buttons
 	@FindBy(xpath = "//button/span[text()='Edit AdSpot']")
 	public WebElement overviewEditbutton;
-	@FindBy(xpath = "//button/span[text()='Disable AdSpot']")
+	@FindBy(xpath = "//button/span[text()='Deactivate AdSpot']")
 	public WebElement overviewDisablebutton;
 	@FindBy(xpath = "//div[@class='portal vue-portal-target']/button[2]/span")
 	public WebElement overviewEnablebutton;
@@ -194,7 +194,7 @@ public class RXAdspotsPage extends RXBaseClass {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(overviewEnablebutton));
 		String enableText = overviewEnablebutton.getText().replaceAll("\\s", "");
-		if (enableText.equals("ENABLEADSPOT")) {
+		if (enableText.equals("ACTIVATEADSPOT")) {
 			overviewEnablebutton.click();
 		}
 	}

@@ -40,9 +40,9 @@ public class RXMediaPage extends RXBaseClass {
 	// overview buttons
 	@FindBy(xpath = "//button/span[text()='Edit Media']")
 	public WebElement overviewEditbutton;
-	@FindBy(xpath = "//button/span[text()='disable']")
+	@FindBy(xpath = "//button/span[text()='Deactivate Media']")
 	public WebElement overviewDisablebutton;
-	@FindBy(xpath = "//button/span[text()='enable']")
+	@FindBy(xpath = "//button/span[text()='Activate Media']")
 	public WebElement overviewEnablebutton;
 
 	// Action object
