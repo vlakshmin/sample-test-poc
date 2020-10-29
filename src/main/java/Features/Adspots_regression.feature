@@ -423,7 +423,8 @@ Scenario: Verify after creation of adspot if the publisher is disabled the editi
 	|Default Floor Price|10||
 	And Click on save button and wait for dialog to close
 	Then Verify the created adspot data is matching with its overview list values
-	And Click on publisher option under account
+#	And Click on publisher option under account
+    And Click on publisher option from left menu
 	And Publisher page should be displayed
 	Then Verify the search functionality with the following names
 	|Name|CoumnName|
@@ -438,7 +439,8 @@ Scenario: Verify after creation of adspot if the publisher is disabled the editi
 	And Click on save button
 	Then Verify the save is failed
 	And User displayed with Adspots page
-	And Click on publisher option under account
+#	And Click on publisher option under account
+    And Click on publisher option from left menu
 	And Publisher page should be displayed
 	Then Verify the search functionality with the following names
 	|Name|CoumnName|

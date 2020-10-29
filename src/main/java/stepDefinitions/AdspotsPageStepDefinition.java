@@ -249,7 +249,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 //   		 dataInEachColumn.add(dateFormatter.parse(coulmnData.get(j).getText()));
 //   	 }
 			else {
-				dataInEachColumn.add(coulmnData.get(j).getText());
+				dataInEachColumn.add(coulmnData.get(j).getText().toLowerCase());
 			}
 
 		}
