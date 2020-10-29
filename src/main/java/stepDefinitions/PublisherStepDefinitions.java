@@ -77,6 +77,14 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 		navOptions.publisherUndrAdmin.click();
 
 	}
+	@When("^Click on publisher option from left menu$")
+	public void click_on_publisher_optionMenu() throws Throwable {
+	
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.visibilityOf(navOptions.publisherUndrAdmin));
+		navOptions.publisherUndrAdmin.click();
+
+	}
 
 	@Then("^Publisher page should be displayed$")
 	public void publisher_page_should_display() throws Throwable {

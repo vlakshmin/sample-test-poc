@@ -105,7 +105,7 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
 	|Create AdSpot|
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|3|
+	|Publisher Name|ListValue|1|
 	And Verify Categories filed has subcategories
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
@@ -172,7 +172,7 @@ Scenario: Verify with invalid value for floor price and adsizes>1 creation is un
 	|Related Media|ListValue|2|
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
-	|Filter|ListValue|2|
+	|Filter|ListValue|1|
 	|Default Ad Sizes|ListValue|2,3|
 	|Default Floor Price|-10||
 	And "Enable" the banner card
@@ -190,6 +190,7 @@ Scenario: Verify with invalid value for floor price and adsizes>1 creation is un
 	And "Expand" the in-banner video card
 	Then Enter the following data in the in-banner video card of adspot
 	|FieldName|Value|ListValueIndex|
+	|Video Placement Type|ListValue|1|
 	|Ad Sizes|ListValue|2,3|
 	|Floor Price|-10||
 	|Minimum Video Duration|ListValue|1|
@@ -218,7 +219,7 @@ Scenario: Verify successful creation and updation of an adspot
 	|Related Media|ListValue|2|
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
-	|Filter|ListValue|2|
+	|Filter|ListValue|1|
 	|Default Ad Sizes|ListValue|2|
 	|Default Floor Price|10||
 	And "Enable" the banner card
@@ -236,6 +237,7 @@ Scenario: Verify successful creation and updation of an adspot
 	And "Expand" the in-banner video card
 	Then Enter the following data in the in-banner video card of adspot
 	|FieldName|Value|ListValueIndex|
+	|Video Placement Type|ListValue|1|
 	|Ad Sizes|ListValue|2|
 	|Floor Price|5||
 	|Minimum Video Duration|ListValue|1|
@@ -276,6 +278,7 @@ Scenario: Verify successful creation and updation of an adspot
 	|Minimum Video Duration|
 	|Maximum Video Duration|      
 	|Playback Methods|
+	|Video Placement Type|
 	
 	#Editing flow
 	When Enter the following data in the general card of adspot
@@ -296,6 +299,7 @@ Scenario: Verify successful creation and updation of an adspot
 	|Floor Price|6|
 	And Enter the following data in the in-banner video card of adspot
 	|FieldName|Value|ListValueIndex|
+	|Video Placement Type|ListValue|2|
 	|Ad Sizes|ListValue|2,4|
 	|Floor Price|6||
 	|Minimum Video Duration|ListValue|2|
@@ -332,6 +336,7 @@ Scenario: Verify successful creation and updation of an adspot
 	|Minimum Video Duration|
 	|Maximum Video Duration|
 	|Playback Methods|
+	|Video Placement Type|
 		
 Scenario: Verify adspot can be created without any cards enabled when is inactive but for 
 editing with activing the same adspot the edit is unsuccessful
@@ -344,13 +349,13 @@ editing with activing the same adspot the edit is unsuccessful
 	|Create AdSpot|
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|2|
+	|Publisher Name|ListValue|1|
 	|Active|Inactive||
 	|AdSpot Name|Auto_Test||
 	|Related Media|ListValue|2|
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
-	|Filter|ListValue|2|
+	|Filter|ListValue|1|
 	|Default Ad Sizes|ListValue|2|
 	|Default Floor Price|10||
 	And Click on save button and wait for dialog to close
@@ -392,7 +397,7 @@ Scenario: Verify without adding any card ,creation of adspot is unsuccessful whe
 	|Related Media|ListValue|2|
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
-	|Filter|ListValue|2|
+	|Filter|ListValue|1|
 	|Default Ad Sizes|ListValue|2|
 	|Default Floor Price|10||
 	And Click on save button
@@ -408,21 +413,22 @@ Scenario: Verify after creation of adspot if the publisher is disabled the editi
 	|Create AdSpot|
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|TestPublisher_Jay||
+	|Publisher Name|Rakuten France||
 	|Active|Inactive||
 	|AdSpot Name|Auto_Test||
 	|Related Media|ListValue|2|
 	|Categories|ListValue|2|
-	|Position|ListValue|2|
+	|Position|ListValue|1|
 	|Default Ad Sizes|ListValue|2|
 	|Default Floor Price|10||
 	And Click on save button and wait for dialog to close
 	Then Verify the created adspot data is matching with its overview list values
-	And Click on publisher option under account
+#	And Click on publisher option under account
+    And Click on publisher option from left menu
 	And Publisher page should be displayed
 	Then Verify the search functionality with the following names
 	|Name|CoumnName|
-	|TestPublisher_Jay|Publisher|
+	|Rakuten France|Publisher|
 	And "Disable" a publisher from the publisher overview page
 	When Click on Adspots option under Inventory
 	And User displayed with Adspots page
@@ -433,11 +439,12 @@ Scenario: Verify after creation of adspot if the publisher is disabled the editi
 	And Click on save button
 	Then Verify the save is failed
 	And User displayed with Adspots page
-	And Click on publisher option under account
+#	And Click on publisher option under account
+    And Click on publisher option from left menu
 	And Publisher page should be displayed
 	Then Verify the search functionality with the following names
 	|Name|CoumnName|
-	|TestPublisher_Jay|Publisher|
+	|Rakuten France|Publisher|
 	And "Enable" a publisher from the publisher overview page
 
 Scenario: Verify creation of adspot is successful if the related media is disabled
