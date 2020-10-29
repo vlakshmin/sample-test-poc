@@ -141,6 +141,10 @@ public class RXAdspotsPage extends RXBaseClass {
 	public WebElement playbackMethodsDropDown;
 	@FindAll(@FindBy(xpath = "//form/div[5]//label[text()='Playback Methods']/following-sibling::div[@class='v-select__selections']/div"))
 	public List<WebElement> playbackMethodsField;
+	@FindBy(xpath = "//form/div[5]//label[text()='Video Placement Type']/following-sibling::div[@class='v-select__selections']")
+	public WebElement videoPlacementDropDown;
+	@FindAll(@FindBy(xpath = "//form/div[5]//label[text()='Video Placement Type']/following-sibling::div[@class='v-select__selections']/div"))
+	public WebElement videoPlacementField;
 
 	// Action object
 	Actions act = new Actions(driver);

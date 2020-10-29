@@ -52,6 +52,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 	String bannerPriceCurrency;
 	String nativePriceCurrency;
 	String inBannerVideoPriceCurrency;
+	String enteredVideoPlacementType;
 
 	RXAdspotsPage adspotsPage;
 	RXNavOptions navOptions;
@@ -785,7 +786,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 						dropDownValue.click();
 					}
 
-					adspotsPage.maxVideoDurField.click();
+					adspotsPage.minVideoDurField.click();
 					Thread.sleep(3000);
 					List<WebElement> enteredSizesLsit = adspotsPage.playbackMethodsField;
 					enteredInBannerPlayback = "";
@@ -793,6 +794,42 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 						enteredInBannerPlayback += enteredSizesLsit.get(k).getText();
 					}
 					System.out.println("InBanner Video Playback Methods entered as :" + enteredInBannerPlayback);
+				}
+				break;
+			case "Video Placement Type":
+				if (value.equalsIgnoreCase("ListValue")) {
+					wait.until(ExpectedConditions.visibilityOf(adspotsPage.videoPlacementDropDown));
+					adspotsPage.videoPlacementDropDown.click();
+					if (listValueIndex.contains(",")) {
+						List<String> items = Arrays.asList(listValueIndex.split("\\s*,\\s*"));
+						for (int j = 0; j < items.size(); j++) {
+							listValueIndex = items.get(j);
+							wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(
+									"//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+											+ listValueIndex + "]"))));
+							WebElement dropDownValue = driver.findElement(By.xpath(
+									"//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+											+ listValueIndex + "]"));
+							js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
+							Thread.sleep(1000);
+							dropDownValue.click();
+						}
+					} else {
+						wait.until(ExpectedConditions.visibilityOf(driver.findElement(By
+								.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+										+ listValueIndex + "]"))));
+						WebElement dropDownValue = driver.findElement(By
+								.xpath("//div[contains(@class, 'menuable__content__active')]/div[@role='listbox']/div["
+										+ listValueIndex + "]"));
+						js.executeScript("arguments[0].scrollIntoView()", dropDownValue);
+						Thread.sleep(1000);
+						dropDownValue.click();
+					}
+
+					Thread.sleep(3000);
+					enteredVideoPlacementType = adspotsPage.videoPlacementField.getText();
+					System.out.println("Video Placement Type entered as :" + enteredVideoPlacementType);
+					
 				}
 				break;
 			default:
@@ -986,6 +1023,10 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				break;
 			case "Maximum Video Duration":
 				Assert.assertEquals(adspotsPage.maxVideoDurField.getText(), enteredMaxVideoDuration);
+
+				break;
+			case "Video Placement Type":
+				Assert.assertEquals(adspotsPage.videoPlacementField.getText(), enteredVideoPlacementType);
 
 				break;
 			default:
@@ -1187,7 +1228,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 	@When("^Verify the in-banner video card is \"(.*)\"$")
 	public void expandCollapseInBannerCheck(String status) throws Throwable {
 		if (status.equalsIgnoreCase("Enabled")) {
-			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/preceding-sibling::span/div"))
+			String style = driver.findElement(By.xpath("//div[text()='Video']/preceding-sibling::span/div"))
 					.getAttribute("class");
 			if (style.contains("active")) {
 				Assert.assertTrue(true);
@@ -1195,7 +1236,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				Assert.assertTrue(false);
 			}
 		} else if (status.equalsIgnoreCase("Disabled")) {
-			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/preceding-sibling::span/div"))
+			String style = driver.findElement(By.xpath("//div[text()='Video']/preceding-sibling::span/div"))
 					.getAttribute("class");
 			if (!style.contains("active")) {
 				Assert.assertTrue(true);
@@ -1226,23 +1267,23 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 						driver.findElement(By.xpath("//form/div[5]/span[1]")).getAttribute("style").contains("none"));
 			}
 		} else if (status.equalsIgnoreCase("Enable")) {
-			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/preceding-sibling::span/div"))
+			String style = driver.findElement(By.xpath("//div[text()='Video']/preceding-sibling::span/div"))
 					.getAttribute("class");
 			if (!style.contains("active")) {
 				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.inBannerVideoEnableButton);
 				adspotsPage.inBannerVideoEnableButton.click();
 				Assert.assertTrue(
-						driver.findElement(By.xpath("//div[text()='In-Banner Video']/preceding-sibling::span/div"))
+						driver.findElement(By.xpath("//div[text()='Video']/preceding-sibling::span/div"))
 								.getAttribute("class").contains("active"));
 			}
 		} else if (status.equalsIgnoreCase("Disable")) {
-			String style = driver.findElement(By.xpath("//div[text()='In-Banner Video']/preceding-sibling::span/div"))
+			String style = driver.findElement(By.xpath("//div[text()='Video']/preceding-sibling::span/div"))
 					.getAttribute("class");
 			if (style.contains("active")) {
 				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.inBannerVideoEnableButton);
 				adspotsPage.inBannerVideoEnableButton.click();
 				Assert.assertTrue(
-						!driver.findElement(By.xpath("//div[text()='In-Banner Video']/preceding-sibling::span/div"))
+						!driver.findElement(By.xpath("//div[text()='Video']/preceding-sibling::span/div"))
 								.getAttribute("class").contains("active"));
 			}
 		}
