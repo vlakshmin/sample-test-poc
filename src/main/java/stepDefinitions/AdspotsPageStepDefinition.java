@@ -337,7 +337,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 	@When("^Click on save button and wait for dialog to close$")
 	public void clickSaveBtnCloseDialog() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, 45);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.saveButton));
 		navOptions.saveButton.click();
 		wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
