@@ -61,7 +61,9 @@ public class PublisherListPage extends RXBaseClass {
 	public WebElement overviewDisablebutton;
 	@FindBy(xpath = "//button/span[text()='Activate Publisher']")
 	public WebElement overviewEnablebutton;
-
+	@FindBy(xpath = "//div[contains(@class, 'toast-item')]//button[2]/span")
+	public WebElement closeToastButton;
+	
 	// Account options
 	@FindBy(xpath = "//div[text()='Publishers']")
 	WebElement publisherOption;
@@ -202,6 +204,13 @@ public class PublisherListPage extends RXBaseClass {
 		wait.until(ExpectedConditions.visibilityOf(overviewDisablebutton));
 		if (overviewDisablebutton.isDisplayed()) {
 			overviewDisablebutton.click();
+		}
+	}
+	public void clickCloseToastMessageButton() {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.visibilityOf(closeToastButton));
+		if (closeToastButton.isDisplayed()) {
+			closeToastButton.click();
 		}
 	}
 

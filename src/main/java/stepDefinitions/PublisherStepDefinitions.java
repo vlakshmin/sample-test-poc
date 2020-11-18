@@ -156,6 +156,12 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 			}
 		}
 	
+	@When("^Close toast message$")
+	public void closeToastMessage() throws InterruptedException {
+		
+			pubListPgs.clickCloseToastMessageButton();
+				
+		}
 
 }
 
