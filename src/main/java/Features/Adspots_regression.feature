@@ -438,6 +438,7 @@ Scenario: Verify after creation of adspot if the publisher is disabled the editi
 	|Related Media|
 	And Click on save button
 	Then Verify the save is failed
+	And Close toast message
 	And User displayed with Adspots page
 #	And Click on publisher option under account
     And Click on publisher option from left menu
