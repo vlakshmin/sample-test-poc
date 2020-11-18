@@ -331,7 +331,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				driver.findElement(By.xpath("//button[@type='submit'][contains(@class,'error--text')]"))));
 		String failedMessage = navOptions.saveButtonTxt.getText().replaceAll("\u3000", "");
 		Assert.assertEquals(failedMessage, "FAILED!");
-		adspotsPage.adSpotCloseSideDialog.click();
+		
 
 	}
 

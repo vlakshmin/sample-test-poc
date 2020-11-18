@@ -13,8 +13,10 @@ import org.testng.Assert;
 import RXBaseClass.RXBaseClass;
 import RXPages.ProfilePage;
 import RXPages.PublisherListPage;
+import RXPages.RXAdspotsPage;
 import RXPages.RXLoginPage;
 import RXPages.RXNavOptions;
+import RXPages.RXAdspotsPage;
 import RXUtitities.RXUtile;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -26,6 +28,7 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 	RXLoginPage logain;
 	PublisherListPage pubListPgs;
 	RXNavOptions navOptions;
+	RXAdspotsPage adspotsPage;
 	Logger log = Logger.getLogger(ProfileStepDefinition.class);
 //	 static int rn ;
 	 static String rn ;
@@ -44,6 +47,7 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 		// driverInitialize();
 		pubListPgs = new PublisherListPage();
 		navOptions = new RXNavOptions();
+		adspotsPage = new RXAdspotsPage();
 		
 	}
 	
@@ -160,6 +164,7 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 	public void closeToastMessage() throws InterruptedException {
 		
 			pubListPgs.clickCloseToastMessageButton();
+			adspotsPage.adSpotCloseSideDialog.click();
 				
 		}
 
