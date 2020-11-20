@@ -166,7 +166,7 @@ Scenario: Verify with invalid value for floor price and adsizes>1 creation is un
 	|Create AdSpot|
 	And Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|2|
+	|Publisher Name|ListValue|1|
 	|Active|Active||
 	|AdSpot Name|Auto_Test||
 	|Related Media|ListValue|2|
@@ -213,7 +213,7 @@ Scenario: Verify successful creation and updation of an adspot
 	|Create AdSpot|
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|2|
+	|Publisher Name|ListValue|1|
 	|Active|Active||
 	|AdSpot Name|Auto_Test||
 	|Related Media|ListValue|2|
@@ -391,7 +391,7 @@ Scenario: Verify without adding any card ,creation of adspot is unsuccessful whe
 	|Create AdSpot|
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|2|
+	|Publisher Name|ListValue|1|
 	|Active|Active||
 	|AdSpot Name|Auto_Test||
 	|Related Media|ListValue|2|
@@ -481,7 +481,7 @@ Scenario: Verify creation of adspot is successful if the related media is disabl
 	And "Enable" a media from the media overview page
 	
 	
-#Scenario: Verify after creation of adspot if the related media is disabled the editing of the adspot is unsuccessful
+#Scenario: Verify after creation of adspot if the related media is disabled the editing of the adspot is successful
 #    Given admin user login to RX UI with valid username and password 
 #    When Click on Adspots option under Inventory
 #	And User displayed with Adspots page
@@ -513,8 +513,7 @@ Scenario: Verify creation of adspot is successful if the related media is disabl
 #	|FieldName|
 #	|publisher Name|
 #	|Related Media|
-#	Then Click on save button
-#	Then Verify the save is failed
+#	And Click on save button and wait for dialog to close
 #	And User displayed with Adspots page
 #	Then Click on Media sub menu
 #	Then User displayed with media page
