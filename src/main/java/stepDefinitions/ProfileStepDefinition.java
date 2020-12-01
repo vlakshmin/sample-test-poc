@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -136,6 +137,13 @@ public class ProfileStepDefinition extends RXBaseClass {
 		WebDriverWait wait = new WebDriverWait(driver,10);
 		WebElement element =wait.until(ExpectedConditions.visibilityOf(proPage.updatedTheChangePwd));
 		Assert.assertEquals(element.getText(), "FAILED!");
+		
+	}
+	
+	@Then("^Verify that user cannot vavigate to old UI$")
+	public void veriyOldUIToggleNA() throws Throwable {
+		Assert.assertTrue(driver.findElements(By.xpath("//img/following-sibling::div//div[@class='v-input--selection-controls__input']")).size()==0);
+		
 		
 	}
 	
