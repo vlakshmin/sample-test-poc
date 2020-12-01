@@ -480,6 +480,9 @@ Scenario: Verify creation of adspot is successful if the related media is disabl
 	|Mark Mc Desktop Site|Media Name|
 	And "Enable" a media from the media overview page
 	
+ Scenario:  Verify the toggle option is unavailable for old UI
+	Then Verify that user cannot vavigate to old UI 
+	
 	
 #Scenario: Verify after creation of adspot if the related media is disabled the editing of the adspot is successful
 #    Given admin user login to RX UI with valid username and password 

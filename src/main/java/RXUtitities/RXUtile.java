@@ -27,7 +27,7 @@ import RXBaseClass.RXBaseClass;
 public class RXUtile extends RXBaseClass {
 
 	public static long PAGELOAD_TIME = 200;
-	public static long IMPLI_WAIT = 50;
+	public static long IMPLI_WAIT = 30;
 	/*
 	 * protected Configuration config=new Configuration(); ResultSet rs; Statement
 	 * stmt;
