@@ -1,8 +1,0 @@
-target/
-.DS_Store
-.gitignore
-.idea/
-RXUI_Automation.iml
-application.log.1
-application.log.2
-application.log.3
