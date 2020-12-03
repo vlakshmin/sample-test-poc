@@ -31,17 +31,17 @@ public class RXBaseClass {
 	
 	public RXBaseClass()
 	{
-		
-		
+
+
 		try {
 			String propFile = "src/main/java/RXConfig/RX.properties";
 			FileInputStream pFile=new FileInputStream(propFile);
 			prop = new Properties();
 			prop.load(pFile);
 			pFile.close();
-			
-			} 
-			catch (FileNotFoundException e) 
+
+			}
+			catch (FileNotFoundException e)
 			{
 				e.printStackTrace();
 			}
@@ -113,4 +113,7 @@ public class RXBaseClass {
 	  return wait.until(jQueryLoad) && wait.until(jsLoad);
 	}
 
+	public static WebDriverWait driverWait() {
+		return new WebDriverWait(driver, 30);
+	}
 }
