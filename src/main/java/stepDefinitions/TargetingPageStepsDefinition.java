@@ -90,9 +90,9 @@ public void verifyHideShow(String filter) throws InterruptedException {
 public void verifyShowStats(String column, String filter) throws InterruptedException {
 	navOptions.tableOptionsLabel = filter;
 	Thread.sleep(5000);
-	navOptions.clickHideShowCheckBox();
+	navOptions.clickHideShowRadioBox();
 	Thread.sleep(2000);
-	String isChecked = navOptions.checkTableOptionsChkStatus();
+	String isChecked = navOptions.checkTableOptionsRadioChkStatus();
 	switch(isChecked) {
 	  case "true":
 		     List<WebElement> coulmnData = navOptions.getColumnDataMatchingHeader(column);
