@@ -23,6 +23,7 @@ public class DashboardStepDefinition extends RXBaseClass {
     PublisherListPage pubListPgs;
     RXNavOptions navOptions;
     RXLoginPage loginPage;
+    RXUtile rxUtile;
     Logger log = Logger.getLogger(MediaPageStepsDefinition.class);
 
     public DashboardStepDefinition() {
@@ -31,6 +32,7 @@ public class DashboardStepDefinition extends RXBaseClass {
         pubListPgs = new PublisherListPage();
         navOptions = new RXNavOptions();
         loginPage = new RXLoginPage();
+        rxUtile = new RXUtile();
     }
 
     @Given("^Admin user login by entering valid username and password$")
@@ -60,7 +62,7 @@ public class DashboardStepDefinition extends RXBaseClass {
     public void check_date_input_value() {
         log.info("Date range label is displayed and value is correct");
         dashboardPage.dateLabel.isDisplayed();
-        Assert.assertEquals(dashboardPage.dateInput.getAttribute("value"), "2020-11-03 ~ 2020-12-03");
+        Assert.assertEquals(dashboardPage.dateInput.getAttribute("value"), rxUtile.getThirtyDaysRangeBackwards());
     }
 
     @Then("^Graph are displayed properly$")
@@ -82,8 +84,16 @@ public class DashboardStepDefinition extends RXBaseClass {
         dashboardPage.publisherLabel.isDisplayed();
         dashboardPage.publisherInput.click();
         dashboardPage.publisherInput.sendKeys(Keys.BACK_SPACE);
-        dashboardPage.publisherInput.sendKeys("Viki");
+        dashboardPage.publisherInput.sendKeys(prop.getProperty("changedPublisherName"));
         dashboardPage.vikiPublisher.click();
+    }
+
+    @Then("^Change date range for previous month$")
+    public void change_date_in_calendar() {
+        log.info("Select different date range in past period");
+        driverWait().until(ExpectedConditions.visibilityOf(dashboardPage.dateInput));
+        dashboardPage.selectFifteenDaysRangeInPreviousMonth();
+        Assert.assertEquals(dashboardPage.dateInput.getAttribute("value"), rxUtile.getPreviousMonth() + "-01 ~ " + rxUtile.getPreviousMonth() + "-15");
     }
 
 }

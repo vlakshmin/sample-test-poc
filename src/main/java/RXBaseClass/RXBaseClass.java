@@ -114,6 +114,6 @@ public class RXBaseClass {
 	}
 
 	public static WebDriverWait driverWait() {
-		return new WebDriverWait(driver, 30);
+		return new WebDriverWait(driver, 60);
 	}
 }
