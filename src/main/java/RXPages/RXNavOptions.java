@@ -37,6 +37,8 @@ public class RXNavOptions extends RXBaseClass {
 	WebElement adminExpensionBtn;
 	@FindBy(xpath = "//div[text()='Inventory']/parent::div/following-sibling::div")
 	WebElement inventoryExpensionBtn;
+	@FindBy(xpath = "//div[text()='Sales']/parent::div/following-sibling::div")
+	WebElement salesExpensionBtn;
 	@FindBy(xpath = "//div[text()='Rules']/parent::div/following-sibling::div")
 	WebElement rulesExpensionBtn;
 
@@ -55,6 +57,10 @@ public class RXNavOptions extends RXBaseClass {
 	public WebElement mediaUndrInventory;
 	@FindBy(xpath = "//div[text()='Ad Spots']")
 	public WebElement adspotsUndrInventory;
+	@FindBy(xpath = "//a[@href='/sales/private-auctions']")
+	public WebElement privateAuctionLabel;
+	@FindBy(xpath = "//a[@href='/sales/deals']")
+	public WebElement dealsLabel;
 
 	// Create/EditPage common webelements
 	@FindBy(xpath = "//button[@type='submit']")
@@ -190,6 +196,15 @@ public class RXNavOptions extends RXBaseClass {
 		element.click();
 
 	}
+	
+	// Clicking expansion of Sales
+
+		public void expandSales() {
+			WebDriverWait wait = new WebDriverWait(driver, 30);
+			WebElement element = wait.until(ExpectedConditions.visibilityOf(salesExpensionBtn));
+			element.click();
+
+		}
 	// Clicking expansion of Rules
 
 	public void expandRules() {
@@ -251,6 +266,24 @@ public class RXNavOptions extends RXBaseClass {
 	public String checkTableOptionsChkStatus() {
 		WebElement hideShowChk = driver.findElement(By
 				.xpath("//div[@role='menu']//label[text()='" + tableOptionsLabel + "']/preceding-sibling::div/input"));
+		JavascriptExecutor jse2 = (JavascriptExecutor) driver;
+		jse2.executeScript("arguments[0].scrollIntoView()", hideShowChk);
+		String checkStatus = hideShowChk.getAttribute("aria-checked");
+		return checkStatus;
+
+	}
+	public void clickHideShowRadioBox() {
+
+		WebElement hideShowChk = driver.findElement(
+				By.xpath("//div[contains(@class,'radio')]//label[text()='" + tableOptionsLabel + "']/preceding-sibling::div"));
+		JavascriptExecutor jse2 = (JavascriptExecutor) driver;
+		jse2.executeScript("arguments[0].scrollIntoView()", hideShowChk);
+		hideShowChk.click();
+	}
+
+	public String checkTableOptionsRadioChkStatus() {
+		WebElement hideShowChk = driver.findElement(By
+				.xpath("//div[contains(@class,'radio')]//label[text()='" + tableOptionsLabel + "']/preceding-sibling::div/input"));
 		JavascriptExecutor jse2 = (JavascriptExecutor) driver;
 		jse2.executeScript("arguments[0].scrollIntoView()", hideShowChk);
 		String checkStatus = hideShowChk.getAttribute("aria-checked");

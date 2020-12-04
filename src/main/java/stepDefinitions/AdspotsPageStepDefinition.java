@@ -208,7 +208,18 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 					.getAttribute("aria-sort");
 			switch (sorting) {
 			case "ascending":
-
+				if(columnName.contains("Active")) {
+					List<WebElement> coulmnData2 = navOptions.getColumnDataMatchingHeader(columnName);
+					dataInEachColumnSorted = returnListOfColumnData(coulmnData2, columnName);
+					dataInEachColumn = new ArrayList(dataInEachColumnSorted);
+					System.out.println("Before sorting: " + dataInEachColumn);
+					Collections.sort(dataInEachColumnSorted);
+					Collections.reverse(dataInEachColumnSorted);
+					System.out.println("After sorting: " + dataInEachColumnSorted);
+					Assert.assertEquals(dataInEachColumn, dataInEachColumnSorted);
+					
+				}
+				else {
 				List<WebElement> coulmnData1 = navOptions.getColumnDataMatchingHeader(columnName);
 				dataInEachColumnSorted = returnListOfColumnData(coulmnData1, columnName);
 				dataInEachColumn = new ArrayList(dataInEachColumnSorted);
@@ -216,8 +227,19 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				Collections.sort(dataInEachColumnSorted);
 				System.out.println("After sorting: " + dataInEachColumnSorted);
 				Assert.assertEquals(dataInEachColumn, dataInEachColumnSorted);
+				}
 				break;
 			case "descending":
+				if(columnName.contains("Active")) {
+					List<WebElement> coulmnData1 = navOptions.getColumnDataMatchingHeader(columnName);
+					dataInEachColumnSorted = returnListOfColumnData(coulmnData1, columnName);
+					dataInEachColumn = new ArrayList(dataInEachColumnSorted);
+					System.out.println("Before sorting: " + dataInEachColumn);
+					Collections.sort(dataInEachColumnSorted);
+					System.out.println("After sorting: " + dataInEachColumnSorted);
+					Assert.assertEquals(dataInEachColumn, dataInEachColumnSorted);
+					
+				}else {
 				List<WebElement> coulmnData2 = navOptions.getColumnDataMatchingHeader(columnName);
 				dataInEachColumnSorted = returnListOfColumnData(coulmnData2, columnName);
 				dataInEachColumn = new ArrayList(dataInEachColumnSorted);
@@ -226,6 +248,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				Collections.reverse(dataInEachColumnSorted);
 				System.out.println("After sorting: " + dataInEachColumnSorted);
 				Assert.assertEquals(dataInEachColumn, dataInEachColumnSorted);
+				}
 				break;
 
 			default:
