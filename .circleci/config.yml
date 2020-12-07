@@ -25,7 +25,7 @@ jobs:
       - add_ssh_keys
       - run:
          name: KeyGen Github 
-         command: ssh-keyscan -H github.rakops.com >> ~/.ssh/known_hosts
+         command: ssh-keyscan -H github.rakops.com > ~/.ssh/known_hosts
       - checkout
       
 
