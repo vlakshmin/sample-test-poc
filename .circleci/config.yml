@@ -23,8 +23,8 @@ jobs:
     steps:
       - add_ssh_keys
       - run:
-         name: Keyscan Github (HACK)
-         command: ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+         name: KeyGen Github 
+         command: ssh-keygen -f "/home/circleci/.ssh/known_hosts" -R "github.rakops.com"
       - checkout
       
 
