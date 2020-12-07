@@ -21,7 +21,13 @@ jobs:
       MAVEN_OPTS: -Xmx3200m
 
     steps:
+      - add_ssh_keys
+      - run:
+         name: Keyscan Github (HACK)
+         command: ssh-keyscan -H github.com >> ~/.ssh/known_hosts
       - checkout
+      
+
 
       # Download and cache dependencies
       - restore_cache:
