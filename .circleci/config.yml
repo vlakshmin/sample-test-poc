@@ -21,11 +21,12 @@ jobs:
       MAVEN_OPTS: -Xmx3200m
 
     steps:
+      - checkout
       - add_ssh_keys
       - run:
          name: KeyGen Github 
          command: ssh-keygen -f "/home/circleci/.ssh/known_hosts" -R "github.rakops.com"
-      - checkout
+      
       
 
 
