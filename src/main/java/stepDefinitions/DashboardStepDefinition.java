@@ -34,7 +34,8 @@ public class DashboardStepDefinition extends RXBaseClass {
         loginPage = new RXLoginPage();
         rxUtile = new RXUtile();
     }
-
+//step to enter username and password into the app
+    
     @Given("^Admin user login by entering valid username and password$")
     public void admin_login_by_entering_valid_username_and_password() {
         log.info("The user has logged in "+prop.getProperty("url")+" as admin");
