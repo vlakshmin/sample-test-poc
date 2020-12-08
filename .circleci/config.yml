@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  deploy-job:
+  build:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:8-jdk-browsers
@@ -22,9 +22,7 @@ jobs:
 
     steps:
       
-      - add_ssh_keys
-        fingerprints:
-           - "0d:c3:ee:7c:52:cb:c9:6f:bb:c5:71:18:ff:a4:d3:b0"
+      
      
       - checkout
       
@@ -85,7 +83,7 @@ workflows:
   version: 2
   build-workflow:
     jobs:
-      - deploy-job
+      - build
   nightly:
     triggers:
       - schedule:
@@ -95,5 +93,5 @@ workflows:
               only:
                 - master
     jobs:
-      - deploy-job
+      - build
  
