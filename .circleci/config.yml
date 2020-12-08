@@ -23,9 +23,11 @@ jobs:
     steps:
       
       - add_ssh_keys
+     
+
       - run:
-         name: KeyGen Github 
-         command: ssh-keyscan -H github.rakops.com > ~/.ssh/known_hosts
+          name: Avoid hosts unknown for github
+          command: echo -e "Host github.rakops.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
       - checkout
       
 
