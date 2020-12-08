@@ -23,11 +23,9 @@ jobs:
     steps:
       
       - add_ssh_keys
+        fingerprints:
+           - "0d:c3:ee:7c:52:cb:c9:6f:bb:c5:71:18:ff:a4:d3:b0"
      
-
-      - run:
-          name: Avoid hosts unknown for github
-          command: echo -e "Host github.rakops.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
       - checkout
       
 
