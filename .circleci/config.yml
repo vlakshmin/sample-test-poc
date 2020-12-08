@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  deploy-job:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:8-jdk-browsers
@@ -85,7 +85,7 @@ workflows:
   version: 2
   build-workflow:
     jobs:
-      - build
+      - deploy-job
   nightly:
     triggers:
       - schedule:
@@ -95,5 +95,5 @@ workflows:
               only:
                 - master
     jobs:
-      - build
+      - deploy-job
  
