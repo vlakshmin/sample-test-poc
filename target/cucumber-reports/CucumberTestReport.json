@@ -1,0 +1,80 @@
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "before": [
+          {
+            "result": {
+              "duration": 3858291046,
+              "status": "passed"
+            },
+            "match": {
+              "location": "LoginStepDefinition.setup()"
+            }
+          }
+        ],
+        "line": 33,
+        "name": "Verify today date or further can\u0027t be selected",
+        "description": "",
+        "id": "rx-dashboard-page-validation;verify-today-date-or-further-can\u0027t-be-selected",
+        "after": [
+          {
+            "result": {
+              "duration": 737390653,
+              "status": "passed"
+            },
+            "match": {
+              "location": "LoginStepDefinition.tearDown(Scenario)"
+            }
+          }
+        ],
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 726519867,
+              "status": "passed"
+            },
+            "line": 34,
+            "name": "Admin user login by entering valid username and password",
+            "match": {
+              "location": "DashboardStepDefinition.admin_login_by_entering_valid_username_and_password()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 1477499218,
+              "status": "passed"
+            },
+            "line": 35,
+            "name": "Click on Dashboard option in Menu",
+            "match": {
+              "location": "DashboardStepDefinition.check_for_Dashboard_navigation_option_in_main_menu()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 1401940455,
+              "status": "passed"
+            },
+            "line": 36,
+            "name": "Change Publisher selection to unexisting publisher",
+            "match": {
+              "location": "DashboardStepDefinition.check_change_publisher_to_unexisting()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "RX Dashboard page Validation",
+    "description": "",
+    "id": "rx-dashboard-page-validation",
+    "keyword": "Feature",
+    "uri": "src/main/java/Features/RXDashboard.feature"
+  }
+]
