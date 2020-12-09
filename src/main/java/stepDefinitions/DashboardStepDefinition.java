@@ -57,6 +57,12 @@ public class DashboardStepDefinition extends RXBaseClass {
         navOptions.clickDashBoardNav();
     }
 
+    @When("^Click on Dashboard option in Menu not admin$")
+    public void check_for_Dashboard_navigation_option_in_main_menu_not_admin() {
+        log.info("User click Dashboard navigation option in main menu");
+        navOptions.clickDashBoardNav();
+    }
+
     @Then("^Viber is selected as Publisher$")
     public void check_publisher_selected() {
         log.info("Publisher label is displayed and Viber is selected as value");

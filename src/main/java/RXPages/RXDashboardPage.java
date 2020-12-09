@@ -41,7 +41,7 @@ public class RXDashboardPage extends RXBaseClass {
             "//*[contains(@class, 'highcharts-yaxis-grid')]/*[@class = 'highcharts-grid-line']")
     public WebElement topTenGraph;
 
-    @FindBy(xpath = "//*[text() = 'Revenue by Ad Format']/ancestor::div[@class='highcharts-container ']" +
+    @FindBy(xpath = "//*[text() = 'Revenue by Ad Spot']/ancestor::div[@class='highcharts-container ']" +
             "//*[contains(@class, 'highcharts-yaxis-grid')]/*[@class = 'highcharts-grid-line']")
     public WebElement revenueByAdGraph;
 

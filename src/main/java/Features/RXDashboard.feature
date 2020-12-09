@@ -22,7 +22,7 @@ Feature: RX Dashboard page Validation
 
   Scenario: Verify Single Publisher user can't change
     Given Single Publisher user login by entering valid username and password
-    When Click on Dashboard option in Menu
+    When Click on Dashboard option in Menu not admin
     Then Try to change Publisher
 
   Scenario: Verify today date or further can't be selected
