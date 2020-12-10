@@ -1,6 +1,6 @@
 Feature: Adspots page regression
 
-Scenario:  Verify the column names in the adspots overview page
+Scenario:  Verify the default column names in the adspots overview page
 	Given admin user login to RX UI with valid username and password 
 	When Click on Adspots option under Inventory
 	And User displayed with Adspots page
@@ -57,6 +57,16 @@ Scenario:  Verify enabling and disabling of an adspot from the overview page
 	|Name|CoumnName|
 	|jay_test|AdSpot Name|
 	Then Verify enabling and disabling of an adspot from the overview page
+	
+Scenario:  Verify enabling and disabling of multiple adspots from the overview page  
+    Given admin user login to RX UI with valid username and password 
+    When Click on Adspots option under Inventory
+	And User displayed with Adspots page
+    Then Verify the search functionality with the following names
+	|Name|CoumnName|
+	|Auto_Test_Edit|AdSpot Name|
+	Then Verify Enable of multiple adspots from the overview page
+	Then Verify Disable of multiple adspots from the overview page
 
 	
 Scenario:  Verify sorting of the table's columns of the adspots overview page 
@@ -481,47 +491,47 @@ Scenario: Verify creation of adspot is successful if the related media is disabl
 	And "Enable" a media from the media overview page
 	
  Scenario:  Verify the toggle option is unavailable for old UI
-	Then Verify that user cannot vavigate to old UI 
+	Then Verify that user cannot navigate to old UI 
 	
 	
-#Scenario: Verify after creation of adspot if the related media is disabled the editing of the adspot is successful
-#    Given admin user login to RX UI with valid username and password 
-#    When Click on Adspots option under Inventory
-#	And User displayed with Adspots page
-#	When Click on the following create button
-#	|CreateButtonName|
-#	|Create AdSpot|
-#	Then Enter the following data in the general card of adspot
-#	|FieldName|Value|ListValueIndex|
-#	|Publisher Name|Mark Mceachran||
-#	|Active|Inactive||
-#	|AdSpot Name|Auto_Test||
-#	|Related Media|Mark Mc Desktop Site||
-#	|Categories|ListValue|2|
-#	|Position|ListValue|2|
-#	|Default Ad Sizes|ListValue|2,3|
-#	|Default Floor Price|10||
-#	Then Click on save button and wait for dialog to close
-#	Then Verify the created adspot data is matching with its overview list values
-#	Then Click on Media sub menu
-#	Then User displayed with media page
-#	Then Verify the search functionality with the following names
-#	|Name|CoumnName|
-#	|Mark Mc Desktop Site|Media Name|
-#	Then "Disable" a media from the media overview page
-#	Then Click on Adspots sub menu
-#	And User displayed with Adspots page
-#	And Click on the created adspotname in the overview page
-#	And Verify following fields are disabled on create/edit adspot page
-#	|FieldName|
-#	|publisher Name|
-#	|Related Media|
-#	And Click on save button and wait for dialog to close
-#	And User displayed with Adspots page
-#	Then Click on Media sub menu
-#	Then User displayed with media page
-#	Then Verify the search functionality with the following names
-#	|Name|CoumnName|
-#	|Mark Mc Desktop Site|Media Name|
-#	Then "Enable" a media from the media overview page
-
+Scenario: Verify after creation of adspot if the related media is disabled the editing of the adspot is successful
+    Given admin user login to RX UI with valid username and password 
+    When Click on Adspots option under Inventory
+	And User displayed with Adspots page
+	When Click on the following create button
+	|CreateButtonName|
+	|Create AdSpot|
+	Then Enter the following data in the general card of adspot
+	|FieldName|Value|ListValueIndex|
+	|Publisher Name|Mark Mceachran||
+	|Active|Inactive||
+	|AdSpot Name|Auto_Test||
+	|Related Media|Mark Mc Desktop Site||
+	|Categories|ListValue|2|
+	|Position|ListValue|2|
+	|Default Ad Sizes|ListValue|2|
+	|Default Floor Price|10||
+	Then Click on save button and wait for dialog to close
+	Then Verify the created adspot data is matching with its overview list values
+	Then Click on Media sub menu
+	Then User displayed with media page
+	Then Verify the search functionality with the following names
+	|Name|CoumnName|
+	|Mark Mc Desktop Site|Media Name|
+	Then "Disable" a media from the media overview page
+	Then Click on Adspots sub menu
+	And User displayed with Adspots page
+	And Click on the created adspotname in the overview page
+	And Verify following fields are disabled on create/edit adspot page
+	|FieldName|
+	|Publisher Name|
+	|Related Media|
+	And Click on save button and wait for dialog to close
+	And User displayed with Adspots page
+	Then Click on Media sub menu
+	Then User displayed with media page
+	Then Verify the search functionality with the following names
+	|Name|CoumnName|
+	|Mark Mc Desktop Site|Media Name|
+	Then "Enable" a media from the media overview page
+# few tests need to be added to this suite.
