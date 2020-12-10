@@ -317,4 +317,10 @@ public class RXNavOptions extends RXBaseClass {
 
 	}
 
+	public void clickDashBoardNav() {
+		if (dashBoardNav.isDisplayed()) {
+			dashBoardNav.click();
+		}
+	}
+
 }

@@ -10,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Random;
@@ -241,7 +243,17 @@ public class RXUtile extends RXBaseClass {
 		e.printStackTrace();
 	}
 	}
-	
 
+	public String getThirtyDaysRangeBackwards() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDateTime now = LocalDateTime.now();
+		return dtf.format(now.minusDays(30)) + " ~ " + dtf.format(now);
+	}
+
+	public String getPreviousMonth() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM");
+		LocalDateTime now = LocalDateTime.now();
+		return dtf.format(now.minusMonths(1));
+	}
 	
 }
