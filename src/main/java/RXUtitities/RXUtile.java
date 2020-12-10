@@ -255,5 +255,14 @@ public class RXUtile extends RXBaseClass {
 		LocalDateTime now = LocalDateTime.now();
 		return dtf.format(now.minusMonths(1));
 	}
+
+	public String getTodayDay() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd");
+		LocalDateTime now = LocalDateTime.now();
+		if (dtf.format(now).startsWith("0")) {
+			return dtf.format(now).substring(1);
+		}
+		return dtf.format(now);
+	}
 	
 }

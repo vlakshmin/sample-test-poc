@@ -29,7 +29,8 @@ public class RXNavOptions extends RXBaseClass {
 	WebElement inventoryNav;
 	@FindBy(xpath = "//div[text()='Rules']")
 	WebElement ruleNav;
-	@FindBy(xpath = "//div[text()='Dashboard']")
+	@FindBy(xpath = "//div[text()='Dashboard\n" +
+			"            ']")
 	WebElement dashBoardNav;
 
 	// Option expension
