@@ -534,4 +534,4 @@ Scenario: Verify after creation of adspot if the related media is disabled the e
 	|Name|CoumnName|
 	|Mark Mc Desktop Site|Media Name|
 	Then "Enable" a media from the media overview page
-
+# few tests need to be added to this suite.
