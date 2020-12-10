@@ -176,6 +176,49 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 			}
 		}
 	}
+	
+	@When("^Verify (.*) of multiple adspots from the overview page$")
+	public void verifyHEnableDiableMultipleAdspots(String isEnable) throws InterruptedException {
+			List<WebElement> coulmnData = navOptions.getColumnDataMatchingHeader("Active/Inactive");
+			String status1 = coulmnData.get(0).getText();
+			String status2 = coulmnData.get(1).getText();
+			if(status1.equals("Active")&&status2.equals("Active")) {
+				driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]/div//i")).click();
+				Assert.assertTrue(adspotsPage.overviewEditbutton.isDisplayed());
+				Assert.assertTrue(adspotsPage.overviewDisablebutton.isDisplayed());
+				adspotsPage.clickOverViewDisablebutton();
+				Thread.sleep(3000);
+				List<WebElement> coulmnData1 = navOptions.getColumnDataMatchingHeader("Active/Inactive");
+				Assert.assertEquals(coulmnData1.get(0).getText(), "Inactive");
+			}else if(status1.equals("Inactive")&&status2.equals("Inactive")) {
+				driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]/div//i")).click();
+				Assert.assertTrue(adspotsPage.overviewEditbutton.isDisplayed());
+				Assert.assertTrue(adspotsPage.overviewEnablebutton.isDisplayed());
+				String enableText = adspotsPage.overviewEnablebutton.getText().replaceAll("\\s", "");
+				Assert.assertEquals(enableText, "ACTIVATEADSPOT");
+				adspotsPage.clickOverViewEnablebutton();
+				Thread.sleep(3000);
+				List<WebElement> coulmnData2 = navOptions.getColumnDataMatchingHeader("Active/Inactive");
+				Assert.assertEquals(coulmnData2.get(0).getText(), "Active");
+			}
+			driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]/div//i")).click();
+			driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[2]/td[1]/div//i")).click();
+			if(isEnable.equalsIgnoreCase("Enable")) {
+				adspotsPage.clickOverViewMultipleEnablebuttons();
+				Thread.sleep(3000);
+				List<WebElement> coulmnData2 = navOptions.getColumnDataMatchingHeader("Active/Inactive");
+				Assert.assertEquals(coulmnData2.get(0).getText(), "Active");
+				Assert.assertEquals(coulmnData2.get(1).getText(), "Active");
+			}else if(isEnable.equalsIgnoreCase("Disable")) {
+				adspotsPage.clickOverViewMultipleDisablebuttons();
+				Thread.sleep(3000);
+				List<WebElement> coulmnData2 = navOptions.getColumnDataMatchingHeader("Active/Inactive");
+				Assert.assertEquals(coulmnData2.get(0).getText(), "Inactive");
+				Assert.assertEquals(coulmnData2.get(1).getText(), "Inactive");
+			}
+			
+		
+	}
 
 //Verify sorting of the table list columns
 	@Then("^Verify the sorting functionality with the following columns$")

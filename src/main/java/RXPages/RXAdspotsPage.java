@@ -46,7 +46,10 @@ public class RXAdspotsPage extends RXBaseClass {
 	public WebElement overviewDisablebutton;
 	@FindBy(xpath = "//div[@class='portal vue-portal-target']/button[2]/span")
 	public WebElement overviewEnablebutton;
-
+	@FindBy(xpath = "//button/span[text()='Activate AdSpots']")
+	public WebElement overviewMultipleEnablebutton;
+	@FindBy(xpath = "//button/span[text()='Deactivate AdSpots']")
+	public WebElement overviewMultipleDisablebutton;
 	// Create/Edit Page labels
 	@FindBy(xpath = "//label[text()='Publisher Name']/following-sibling::div[@class='v-select__selections']")
 	public WebElement publisherNameDropDown;
@@ -208,6 +211,23 @@ public class RXAdspotsPage extends RXBaseClass {
 		wait.until(ExpectedConditions.visibilityOf(overviewDisablebutton));
 		if (overviewDisablebutton.isDisplayed()) {
 			overviewDisablebutton.click();
+		}
+	}
+	
+	
+	public void clickOverViewMultipleEnablebuttons() {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.visibilityOf(overviewMultipleEnablebutton));
+		if (overviewMultipleEnablebutton.isDisplayed()) {
+			overviewMultipleEnablebutton.click();
+		}
+	}
+
+	public void clickOverViewMultipleDisablebuttons() {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.visibilityOf(overviewMultipleDisablebutton));
+		if (overviewMultipleDisablebutton.isDisplayed()) {
+			overviewMultipleDisablebutton.click();
 		}
 	}
 
