@@ -64,7 +64,7 @@ Scenario:  Verify enabling and disabling of multiple adspots from the overview p
 	And User displayed with Adspots page
     Then Verify the search functionality with the following names
 	|Name|CoumnName|
-	|Auto_Test_Edit|Adsopt Name|
+	|Auto_Test_Edit|AdSpot Name|
 	Then Verify Enable of multiple adspots from the overview page
 	Then Verify Disable of multiple adspots from the overview page
 
