@@ -1,35 +1,16 @@
 package stepDefinitions;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotVisibleException;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import RXBaseClass.RXBaseClass;
 import RXPages.PublisherListPage;
-import RXPages.RXAdspotsPage;
-import RXPages.RXDealsPage;
-import RXPages.RXNavOptions;
-import RXPages.RXPrivateAuctionsPage;
-import RXUtitities.RXUtile;
+import RXPages.*;
 import cucumber.api.DataTable;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import cucumber.api.java.en.*;
+import org.apache.log4j.Logger;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.*;
+import org.testng.Assert;
+
+import java.util.*;
 
 public class DealsPageStepDefinition extends RXBaseClass {
 
@@ -136,5 +117,24 @@ public class DealsPageStepDefinition extends RXBaseClass {
 			
 		}
 
+	@When("^Click create a new deal$")
+	public void clickCreateDealButton() {
+		dealsPage.clickCreateDealButton();
+	}
+
+	@Then("^Create deal menu is opened$")
+	public void isCreateDealMenuOpened() {
+		Assert.assertTrue(dealsPage.isCreateDealMenuOpened());
+	}
+
+	@When("^Click on publisher input$")
+	public void clickOnPublisherInput() {
+		dealsPage.expandPublisherNameList();
+	}
+
+	@And("^Select publisher by name: \"(.*)\"$")
+	public void selectPublisherByName(String name) {
+		dealsPage.selectPublisherByName(name);
+	}
 
 }			
