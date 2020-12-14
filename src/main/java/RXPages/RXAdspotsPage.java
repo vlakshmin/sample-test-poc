@@ -175,7 +175,7 @@ public class RXAdspotsPage extends RXBaseClass {
 
 	}
 
-	public void searchAdspots(String text) {
+	public void searchAdspots(String text) throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		WebElement elem = wait.until(ExpectedConditions.visibilityOf(adSpotsSearchField));
 		boolean isNotDisplayed = driver
@@ -184,7 +184,7 @@ public class RXAdspotsPage extends RXBaseClass {
 		if (!isNotDisplayed) {
 			driver.findElement(By.xpath("//*[@class='v-input__icon v-input__icon--clear']/button")).click();
 		}
-
+        Thread.sleep(8000);
 		elem.sendKeys(text);
 
 	}

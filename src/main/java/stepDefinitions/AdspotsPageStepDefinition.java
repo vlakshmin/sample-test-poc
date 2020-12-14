@@ -108,7 +108,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 			String adspotName = list.get(i).get("Name");
 			String columnName = list.get(i).get("CoumnName");
 			adspotsPage.searchAdspots(adspotName);
-			Thread.sleep(12000);
+			Thread.sleep(5000);
 			WebElement elem = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]"));
 			if (elem.getText().equals("No data available")) {
 				log.info("The searched adspot named as " + adspotName + "is not available");
@@ -383,6 +383,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 	@When("^Click on save button$")
 	public void clickSaveBtn() throws Throwable {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
+		Thread.sleep(5000);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.saveButton));
 		navOptions.saveButton.click();
 
@@ -625,12 +626,14 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 					driver.findElement(By.xpath("//label[text()='Test Mode']")).click();
 					Thread.sleep(3000);
+					if(!listValueIndex.equals("1")) {
 					List<WebElement> enteredSizesLsit = adspotsPage.defaultSizesField;
 					enteredDefaultSizes = "";
 					for (int k = 0; k < enteredSizesLsit.size(); k++) {
 						enteredDefaultSizes += enteredSizesLsit.get(k).getText();
 					}
 					System.out.println("Default Sizes entered as :" + enteredDefaultSizes);
+					}
 				}
 				break;
 			case "Default Floor Price":
@@ -662,6 +665,11 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 			switch (fieldName) {
 			case "Floor Price":
+				if (value.equalsIgnoreCase("Default")) {
+					bannerPriceCurrency = adspotsPage.bannerPriceCurrency.getText();
+					enteredBannerPrice = "Same as default";
+				}
+				else {
 				while (!adspotsPage.bannerPriceField.getAttribute("value").equals("")) {
 					adspotsPage.bannerPriceField.sendKeys(Keys.BACK_SPACE);
 				}
@@ -670,7 +678,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				enteredBannerPrice = adspotsPage.bannerPriceField.getAttribute("value");
 				bannerPriceCurrency = adspotsPage.bannerPriceCurrency.getText();
 				System.out.println("Entered floor price for banner:" + bannerPriceCurrency + enteredBannerPrice);
-
+				}
 				break;
 			case "Ad Sizes":
 				if (value.equalsIgnoreCase("ListValue")) {
@@ -711,6 +719,8 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 						enteredBannerSizes += enteredSizesLsit.get(k).getText();
 					}
 					System.out.println("Banner Sizes entered as :" + enteredBannerSizes);
+				}else if (value.equalsIgnoreCase("Default")) {
+					enteredBannerSizes = "Same as default";
 				}
 				break;
 
@@ -733,6 +743,11 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 			switch (fieldName) {
 			case "Floor Price":
+				if (value.equalsIgnoreCase("Default")) {
+					enteredInBannerVideoPrice = "Same as default";
+					inBannerVideoPriceCurrency = adspotsPage.inBannerVideoPriceCurrency.getText();
+				}
+				else {
 				while (!adspotsPage.inBannerVideoPriceField.getAttribute("value").equals("")) {
 					adspotsPage.inBannerVideoPriceField.sendKeys(Keys.BACK_SPACE);
 				}
@@ -742,7 +757,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				inBannerVideoPriceCurrency = adspotsPage.inBannerVideoPriceCurrency.getText();
 				System.out.println("Entered floor price for in-banner video:" + inBannerVideoPriceCurrency
 						+ enteredInBannerVideoPrice);
-
+				}
 				break;
 			case "Ad Sizes":
 				if (value.equalsIgnoreCase("ListValue")) {
@@ -782,6 +797,8 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 						enteredInBannerVideoSizes += enteredSizesLsit.get(k).getText();
 					}
 					System.out.println("InBanner Video Sizes entered as :" + enteredInBannerVideoSizes);
+				}else if (value.equalsIgnoreCase("Default")) {
+					enteredInBannerVideoSizes = "Same as default";
 				}
 				break;
 			case "Minimum Video Duration":
@@ -914,6 +931,10 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 			switch (fieldName) {
 			case "Floor Price":
+				if (value.equalsIgnoreCase("Default")) {
+					enteredNativePrice = "Same as default";
+					nativePriceCurrency = adspotsPage.nativePriceCurrency.getText();
+				}else {
 				while (!adspotsPage.nativePriceField.getAttribute("value").equals("")) {
 					adspotsPage.nativePriceField.sendKeys(Keys.BACK_SPACE);
 				}
@@ -922,7 +943,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				enteredNativePrice = adspotsPage.nativePriceField.getAttribute("value");
 				nativePriceCurrency = adspotsPage.nativePriceCurrency.getText();
 				System.out.println("Entered floor price for native:" + nativePriceCurrency + enteredNativePrice);
-
+				}
 				break;
 
 			default:
@@ -1006,6 +1027,14 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 			switch (fieldName) {
 			case "Ad Sizes":
+				if(driver
+				.findElements(By.xpath(
+						"//form/div[3]//label[text()='Ad Sizes']/following-sibling::div[@class='v-select__selections']/div"))
+				.size() == 0) {
+				String sizes = driver.findElement(By.xpath("//form/div[3]//label[text()='Ad Sizes']"
+							+ "/following-sibling::div[@class='v-select__selections']/input")).getAttribute("placeholder");
+					Assert.assertEquals(sizes, enteredBannerSizes);	
+				}else {
 				String sizes = "";
 				List<WebElement> enteredSizesLsit = adspotsPage.bannerSizesField;
 				for (int k = 0; k < enteredSizesLsit.size(); k++) {
@@ -1014,10 +1043,14 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 				System.out.println(sizes);
 				System.out.println(enteredBannerSizes);
 				Assert.assertEquals(sizes, enteredBannerSizes);
-
+				}
 				break;
 			case "Floor Price":
+				if(adspotsPage.bannerPriceField.getAttribute("value").isEmpty()) {
+					Assert.assertEquals(adspotsPage.bannerPriceField.getAttribute("placeholder"), enteredBannerPrice);
+				}else {
 				Assert.assertEquals(adspotsPage.bannerPriceField.getAttribute("value"), enteredBannerPrice);
+				}
 				Assert.assertEquals(adspotsPage.bannerPriceCurrency.getText(), bannerPriceCurrency);
 
 				break;
@@ -1038,7 +1071,12 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 			switch (fieldName) {
 
 			case "Floor Price":
-				Assert.assertEquals(adspotsPage.nativePriceField.getAttribute("value"), enteredNativePrice);
+				if(adspotsPage.nativePriceField.getAttribute("value").isEmpty()) {
+					Assert.assertEquals(adspotsPage.nativePriceField.getAttribute("placeholder"), enteredNativePrice);
+				}else {
+					Assert.assertEquals(adspotsPage.nativePriceField.getAttribute("value"), enteredNativePrice);
+				}
+				
 				Assert.assertEquals(adspotsPage.nativePriceCurrency.getText(), nativePriceCurrency);
 
 				break;
@@ -1058,13 +1096,21 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 			switch (fieldName) {
 			case "Ad Sizes":
+				if(driver
+						.findElements(By.xpath(
+								"//form/div[5]//label[text()='Ad Sizes']/following-sibling::div[@class='v-select__selections']/div"))
+						.size() == 0) {
+						String sizes = driver.findElement(By.xpath("//form/div[5]//label[text()='Ad Sizes']"
+									+ "/following-sibling::div[@class='v-select__selections']/input")).getAttribute("placeholder");
+							Assert.assertEquals(sizes, enteredInBannerVideoSizes);	
+						}else {
 				String sizes = "";
 				List<WebElement> enteredSizesLsit = adspotsPage.inBannerVideoSizesField;
 				for (int k = 0; k < enteredSizesLsit.size(); k++) {
 					sizes += enteredSizesLsit.get(k).getText();
 				}
 				Assert.assertEquals(sizes, enteredInBannerVideoSizes);
-
+						}
 				break;
 			case "Playback Methods":
 				String sizesMethods = "";
@@ -1076,8 +1122,13 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 				break;
 			case "Floor Price":
+				if(adspotsPage.inBannerVideoPriceField.getAttribute("value").isEmpty()) {
+					Assert.assertEquals(adspotsPage.inBannerVideoPriceField.getAttribute("placeholder"),
+							enteredInBannerVideoPrice);
+				}else {
 				Assert.assertEquals(adspotsPage.inBannerVideoPriceField.getAttribute("value"),
 						enteredInBannerVideoPrice);
+				}
 				Assert.assertEquals(adspotsPage.inBannerVideoPriceCurrency.getText(), inBannerVideoPriceCurrency);
 
 				break;
