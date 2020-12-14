@@ -164,7 +164,13 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 	public void closeToastMessage() throws InterruptedException {
 		
 			pubListPgs.clickCloseToastMessageButton();
-			adspotsPage.adSpotCloseSideDialog.click();
+			
+				
+		}
+	@When("^Close Adspot entity page$")
+	public void closeEntityPage() throws InterruptedException {
+		
+		adspotsPage.adSpotCloseSideDialog.click();
 				
 		}
 

@@ -177,4 +177,7 @@ Scenario:  Verify the enabling and disabling for user for the list in the users 
 	When click on User option under accounts.
 	Then user displayed with User page.
 	Then Verify the enabling and disabling feature of the user with index 1
+	
+Scenario:  Verify the toggle option is unavailable for old UI
+	Then Verify that user cannot navigate to old UI 
 		

@@ -140,7 +140,7 @@ public class ProfileStepDefinition extends RXBaseClass {
 		
 	}
 	
-	@Then("^Verify that user cannot vavigate to old UI$")
+	@Then("^Verify that user cannot navigate to old UI$")
 	public void veriyOldUIToggleNA() throws Throwable {
 		Assert.assertTrue(driver.findElements(By.xpath("//img/following-sibling::div//div[@class='v-input--selection-controls__input']")).size()==0);
 		
