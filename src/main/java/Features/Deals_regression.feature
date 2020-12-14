@@ -81,7 +81,7 @@ Scenario: Verify if create deal menu is opened
     Given admin user login to RX UI with valid username and password
     When Click on Deals option under Sales
 	And User displayed with Deals page
-    When Click create a new deal
+    And Click create a new deal
     Then Create deal menu is opened
-    When Click on publisher input
-    When Select publisher by name: "Viber"
+    And Click on publisher input
+    And Select publisher by name: "Viber"
