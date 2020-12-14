@@ -38,6 +38,17 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
 		public WebElement overviewDisablebutton;
 		@FindBy(xpath = "//div[@class='portal vue-portal-target']/button[2]/span")
 		public WebElement overviewEnablebutton;
+		@FindBy(xpath = "//label[text() = 'Publisher Name']/ancestor::div[@role = 'button']//div[@class = 'v-select__selections']")
+		public WebElement privateAuctionNameField;
+		@FindBy(xpath = "//label[text() = 'Publisher Name']/ancestor::div[@role = 'button']//input[@type = 'text']")
+		public WebElement privateAuctionNameInput;
+
+	public WebElement publisherNameSearchListItem(String publisherName){
+		return driver.findElement(By.xpath("//div[@class = 'v-list-item__title' and text() = '" + publisherName + "']"));
+	}
+
+
+	//div[@class = 'v-list-item__title' and text() = 'Viki']
 	// Action object
 	Actions act = new Actions(driver);
 
@@ -89,5 +100,12 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
 		}
 	}
 
+	public void selectPublisher(String publisherName) {
+		wait.until(ExpectedConditions.visibilityOf(privateAuctionNameField));
+		privateAuctionNameField.click();
+		privateAuctionNameInput.sendKeys(publisherName);
+		wait.until(ExpectedConditions.visibilityOf(publisherNameSearchListItem(publisherName)));
+		publisherNameSearchListItem(publisherName).click();
+	}
 	
 }
