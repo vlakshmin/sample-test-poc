@@ -132,7 +132,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		dealsPage.expandPublisherNameList();
 	}
 
-	@And("^Select publisher by name: \"([^\"]*)\"$")
+	@And("^Select publisher by name: \"(.*)\"$")
 	public void selectPublisherByName(String name) {
 		dealsPage.selectPublisherByName(name);
 	}
