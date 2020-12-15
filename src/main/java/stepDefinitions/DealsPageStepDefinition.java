@@ -137,13 +137,13 @@ public class DealsPageStepDefinition extends RXBaseClass {
         dealsPage.selectPublisherByName(name);
     }
 
-    @Then("^Verify currency is correct$")
+    @Then("^Verify the currency is correct$")
     public void verifyCurrencyIsValid() {
         dealsPage.isCurrencyNameValid(dealsPage.getCurrencyText());
     }
 
     @Then("^Verify required fields$")
-    public void verifyRequiredFields(WebElement... elements) {
+    public void verifyRequiredFields() {
         dealsPage.clickSaveDealButton();
         Assert.assertTrue(dealsPage.verifyRequiredFields());
     }

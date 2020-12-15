@@ -7,8 +7,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.*;
 import org.openqa.selenium.support.ui.*;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
@@ -81,10 +79,6 @@ public class RXDealsPage extends RXBaseClass {
 
 	}
 
-	private String getFieldXpath(String fieldName) {
-		return String.format("//div[./label[contains(@class,'v-label') and contains(.,'')]];", fieldName);
-	}
-
 	public void clickOverViewEditbutton() {
 		wait.until(ExpectedConditions.visibilityOf(overviewEditbutton));
 		if (overviewEditbutton.isDisplayed()) {
@@ -150,8 +144,6 @@ public class RXDealsPage extends RXBaseClass {
 	}
 
 	public boolean isCurrencyNameValid (String currency) {
-		clickSaveDealButton();
-		verifyRequiredFields();
 		return Arrays.asList(
 				 "USD - Dollars"
 				,"EUR - Euro"
@@ -167,7 +159,8 @@ public class RXDealsPage extends RXBaseClass {
 	public boolean verifyErrorMessageForElements(WebElement... elements) {
 		By errorMessageXpath = By.xpath("./ancestor::div[2]//div[contains(@class,'v-messages__message')]");
 
-		// True if all required fields have an error message, false if not
+		// True if all required fields have an error message, false if not.
+		// Date field has a specific text for the required message, and it is formatted accordingly
 		return Arrays.stream(elements)
 				.allMatch(i ->
 					i.findElement(errorMessageXpath)
@@ -177,6 +170,7 @@ public class RXDealsPage extends RXBaseClass {
 	}
 
 	public boolean verifyRequiredFields() {
+		clickSaveDealButton();
 		return verifyErrorMessageForElements(privateAuctionList, nameInput,
 				selectDateButton, valueInput,dspList);
 	}

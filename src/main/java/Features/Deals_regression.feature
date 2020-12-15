@@ -85,4 +85,5 @@ Scenario: Verify if create deal menu is opened
     Then Create deal menu is opened
     And Click on publisher input
     And Select publisher by name: "Viber"
-	Then Verify currency is correct
+	Then Verify the currency is correct
+	And Verify required fields
