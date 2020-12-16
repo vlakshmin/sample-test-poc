@@ -142,7 +142,11 @@ application-prod.yml
 *.mp4
 *.png
 *.txt
-*.log
+.log
 .allure
 docker/docker-compose.yml
 target
+appliation.log
+appliation.log.1
+appliation.log.2
+appliation.log.3
