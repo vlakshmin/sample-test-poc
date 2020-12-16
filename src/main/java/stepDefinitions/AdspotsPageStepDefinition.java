@@ -132,11 +132,13 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 		for (int i = 0; i < list.size(); i++) {
 			String adspotName = list.get(i).get("ColumnName");
 			columnsNamePassed.add(adspotName);
+			Collections.sort(columnsNamePassed);
 
 		}
 		List<WebElement> numberOFHeaders = navOptions.tableHeadersList;
 		for (int i = 0; i < numberOFHeaders.size(); i++) {
 			columnsNamePresent.add(numberOFHeaders.get(i).getText());
+			Collections.sort(columnsNamePresent);
 		}
 		Assert.assertEquals(columnsNamePresent, columnsNamePassed);
 
