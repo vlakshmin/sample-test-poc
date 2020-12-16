@@ -1,25 +1,21 @@
 package RXPages;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Properties;
-
+import RXBaseClass.RXBaseClass;
+import RXUtitities.RXUtile;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
-import RXBaseClass.RXBaseClass;
-import RXUtitities.RXUtile;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class RXPrivateAuctionsPage extends RXBaseClass {
 	// Utility object
@@ -27,28 +23,70 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
 	PublisherListPage pubPage;
 	public String auctionHeaderStr = "Private Auctions";
 
-	// Seats page heading
-	@FindBy(xpath = "//h1[text()='Private Auctions']")
-	WebElement auctionPageHeader;
-	
-	// overview buttons
-		@FindBy(xpath = "//button/span[text()='Edit Private Auction']")
-		public WebElement overviewEditbutton;
-		@FindBy(xpath = "//button/span[text()='Deactivate Private Auction']")
-		public WebElement overviewDisablebutton;
-		@FindBy(xpath = "//div[@class='portal vue-portal-target']/button[2]/span")
-		public WebElement overviewEnablebutton;
-		@FindBy(xpath = "//label[text() = 'Publisher Name']/ancestor::div[@role = 'button']//div[@class = 'v-select__selections']")
-		public WebElement privateAuctionNameField;
-		@FindBy(xpath = "//label[text() = 'Publisher Name']/ancestor::div[@role = 'button']//input[@type = 'text']")
-		public WebElement privateAuctionNameInput;
+    // Seats page heading
+    @FindBy(xpath = "//h1[text()='Private Auctions']")
+    WebElement auctionPageHeader;
 
-	public WebElement publisherNameSearchListItem(String publisherName){
-		return driver.findElement(By.xpath("//div[@class = 'v-list-item__title' and text() = '" + publisherName + "']"));
+    // overview buttons
+    @FindBy(xpath = "//button/span[text()='Edit Private Auction']")
+    public WebElement overviewEditbutton;
+    @FindBy(xpath = "//button/span[text()='Deactivate Private Auction']")
+    public WebElement overviewDisablebutton;
+    @FindBy(xpath = "//div[@class='portal vue-portal-target']/button[2]/span")
+    public WebElement overviewEnablebutton;
+    @FindBy(xpath = "//label[text() = 'Publisher Name']/ancestor::div[@role = 'button']" +
+            "//div[@class = 'v-select__selections']")
+    public WebElement privateAuctionNameField;
+    @FindBy(xpath = "//label[text() = 'Publisher Name']/ancestor::div[@role = 'button']//input[@type = 'text']")
+    public WebElement privateAuctionNameInput;
+    @FindBy(xpath = "//span[text() = 'Create Private Auction']/ancestor::button")
+    public WebElement createPrivateAuctionButton;
+
+    public WebElement publisherNameSearchListItem(String publisherName) {
+        return driver.findElement(By.xpath("//div[@class = 'v-list-item__title' and text() = '" + publisherName + "']"));
+    }
+
+    public WebElement targetingExpandPanel(String targetingName) {
+        return driver.findElement(By.xpath("//h3[text() = '" + targetingName +
+                "']/ancestor::button[contains(@class, 'v-expansion-panel-header flex')]"));
+    }
+
+    public WebElement targetingPanelBlock(String targetingName) {
+		return	driver.findElement(By.xpath("//h3[text() = '" + targetingName +
+				"']/ancestor::button[contains(@class, 'v-expansion-panel-header flex')]/ancestor::" +
+				"div[contains(@class, 'v-expansion-panel--active')]"));
+    }
+
+    public WebElement targetingBlockButton(String targetingName, String targetingBlockButton) {
+        return targetingPanelBlock(targetingName).findElement(By.xpath("//span[contains(text(), '" +
+                targetingBlockButton + "')]"));
+    }
+
+    public WebElement includedCounter(String targetingItem) {
+    	return targetingPanelBlock(targetingItem).findElement(By.xpath("//div[@class = 'included-banner']"));
 	}
 
+    public WebElement targetingBlockSearchInput(String targetingName) {
+        return targetingPanelBlock(targetingName).findElement(By.xpath("//input"));
+    }
 
-	//div[@class = 'v-list-item__title' and text() = 'Viki']
+    public WebElement targetingBlockSearchInputClear(String targetingName) {
+        return targetingPanelBlock(targetingName).findElement(By.xpath("//button[@aria-label = 'clear icon']"));
+    }
+
+    public WebElement targetingBlockListItem(String itemName) {
+    	return driver.findElement(By.xpath("//td[@class = 'first' and contains(text() , '" + itemName + "')]/ancestor::tbody"));
+	}
+
+	public WebElement targetingBlockIncludedListItem(String itemName) {
+    	return driver.findElement(By.xpath("//table[@class = 'included-table']//td[contains(text() , '" + itemName + "')]"));
+	}
+
+	public WebElement targetingBlockIncludedListItemClear(String itemName) {
+		return driver.findElement(By.xpath("//table[@class = 'included-table']//td[contains(text() , '" + itemName +
+				"')]/ancestor::table//button"));
+	}
+
 	// Action object
 	Actions act = new Actions(driver);
 
@@ -100,12 +138,95 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
 		}
 	}
 
-	public void selectPublisher(String publisherName) {
-		wait.until(ExpectedConditions.visibilityOf(privateAuctionNameField));
-		privateAuctionNameField.click();
-		privateAuctionNameInput.sendKeys(publisherName);
-		wait.until(ExpectedConditions.visibilityOf(publisherNameSearchListItem(publisherName)));
-		publisherNameSearchListItem(publisherName).click();
+    public void selectPublisher(String publisherName) {
+		driverWait().until(ExpectedConditions.visibilityOf(privateAuctionNameField));
+        privateAuctionNameField.click();
+        privateAuctionNameInput.sendKeys(publisherName);
+        wait.until(ExpectedConditions.visibilityOf(publisherNameSearchListItem(publisherName)));
+        publisherNameSearchListItem(publisherName).click();
+    }
+
+    public void clickCreateNewPrivateAuctionButton() {
+		driverWait().until(ExpectedConditions.visibilityOf(createPrivateAuctionButton));
+		createPrivateAuctionButton.click();
 	}
-	
+
+	public void selectTargetingBlockListItem(String itemName) {
+		targetingBlockListItem(itemName).click();
+	}
+
+	public void clickTargetingBlockIncludedListItemClear(String itemName) {
+		targetingBlockIncludedListItemClear(itemName).click();
+	}
+
+	public void checkSelectUnselectForBlock(String targetingName, String itemName) {
+		targetingExpandPanel(targetingName).click();
+		driverWait().until(ExpectedConditions.visibilityOf(targetingBlockListItem(itemName)));
+		selectTargetingBlockListItem(itemName);
+		driverWait().until(ExpectedConditions.visibilityOf(targetingBlockIncludedListItem(itemName)));
+		Assert.assertTrue(targetingBlockIncludedListItem(itemName).isDisplayed());
+		selectTargetingBlockListItem(itemName);
+		Assert.assertFalse(isTargetingBlockIncludedListItem(itemName));
+		driverWait().until(ExpectedConditions.visibilityOf(targetingBlockListItem(itemName)));
+		selectTargetingBlockListItem(itemName);
+		driverWait().until(ExpectedConditions.visibilityOf(targetingBlockIncludedListItem(itemName)));
+		Assert.assertTrue(targetingBlockIncludedListItem(itemName).isDisplayed());
+		clickTargetingBlockIncludedListItemClear(itemName);
+		Assert.assertFalse(isTargetingBlockIncludedListItem(itemName));
+		targetingExpandPanel(targetingName).click();
+		Assert.assertFalse(isTargetingBlockOpen(targetingName));
+	}
+
+	public boolean isTargetingBlockIncludedListItem(String itemName) {
+		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+		boolean result = driver.findElements(By.xpath("//table[@class = 'included-table']//td[contains(text() , '" +
+				itemName + "')]")).size() != 0;
+		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+		return result;
+	}
+
+	public boolean isTargetingBlockOpen(String targetingName) {
+		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+		boolean result = driver.findElements(By.xpath("//h3[text() = '" + targetingName +
+				"']/ancestor::button[contains(@class, 'v-expansion-panel-header flex')]/ancestor::" +
+				"div[contains(@class, 'v-expansion-panel--active')]")).size() != 0;
+		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+		return result;
+	}
+
+	public void checkSelectUnselectAllForBlock(String targetingName) {
+		targetingExpandPanel(targetingName).click();
+		driverWait().until(ExpectedConditions.visibilityOf(targetingBlockButton(targetingName,
+				"Include All")));
+		targetingBlockButton(targetingName, "Include All").click();
+		isAllItemAdded(targetingName);
+		targetingBlockButton(targetingName, "Clear All").click();
+		Assert.assertFalse(isItemAdded(targetingName));
+		targetingExpandPanel(targetingName).click();
+		Assert.assertFalse(isTargetingBlockOpen(targetingName));
+	}
+
+	public boolean isItemAdded(String targetingName) {
+		try {
+			return (NumberFormat.getInstance().parse(includedCounter(targetingName).getText())).intValue() > 0;
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public void isAllItemAdded(String targetingName) {
+		for(int i = 0; i < targetingBlockItemsList(targetingName).size(); i++) {
+			Assert.assertEquals(targetingBlockItemsList(targetingName).get(i).getText(), targetingBlockIncludedItemsList(targetingName).get(i).getText());
+		}
+	}
+
+	public List<WebElement> targetingBlockItemsList(String targetingName) {
+		return targetingPanelBlock(targetingName).findElements(By.xpath("//td[@class = 'first']/ancestor::tbody"));
+	}
+
+	public List<WebElement> targetingBlockIncludedItemsList(String targetingName) {
+		return targetingPanelBlock(targetingName).findElements(By.xpath("//table[@class = 'included-table']//td[text()]"));
+	}
+
 }
