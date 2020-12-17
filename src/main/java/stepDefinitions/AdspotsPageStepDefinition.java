@@ -347,7 +347,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
 			if(fieldName.contains("Date")) {
-				 expectedNotification = "Start date is required";	
+				 expectedNotification = "Start date is required.";	
 			}else {
 			 expectedNotification = "The" + " " + fieldName + " " + "field is required";
 			}
