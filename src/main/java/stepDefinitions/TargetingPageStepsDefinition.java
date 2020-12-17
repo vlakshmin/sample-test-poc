@@ -2,6 +2,7 @@ package stepDefinitions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -17,6 +18,7 @@ import RXBaseClass.RXBaseClass;
 import RXPages.RXNavOptions;
 import RXPages.RXTargetingPage;
 import RXUtitities.RXUtile;
+import cucumber.api.DataTable;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
@@ -85,6 +87,19 @@ public void verifyHideShow(String filter) throws InterruptedException {
 	    Assert.assertTrue(false, "The status fields supplied does not match with the input");
 	
     }
+}
+
+
+@When("^Verify non default columns in list page$")
+public void verifyNonDefault(DataTable dt) throws InterruptedException {
+	List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+	for (int i = 0; i < list.size(); i++) {
+		String filter = list.get(i).get("ColumnName");
+	navOptions.tableOptionsLabel = filter;
+	Thread.sleep(5000);
+	String isChecked = navOptions.checkTableOptionsChkStatus();
+	Assert.assertEquals(isChecked, "false");
+	}
 }
 @When("^Verify that column \"(.*)\" only shows relevant rows in the table with filter \"(.*)\"$")
 public void verifyShowStats(String column, String filter) throws InterruptedException {

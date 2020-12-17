@@ -9,12 +9,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import RXBaseClass.RXBaseClass;
+import RXPages.PublisherListPage;
+import RXPages.RXNavOptions;
 import RXPages.RXUsers;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class AdminUserStepDefinition extends RXBaseClass {
 	RXUsers rxUserPage;
+	RXNavOptions navOptions;
+	PublisherListPage pubListPgs;
 	Logger log = Logger.getLogger(AdminUserStepDefinition.class);
 	
 	//Variables
@@ -34,6 +38,8 @@ public class AdminUserStepDefinition extends RXBaseClass {
 	{
 		super();
 		rxUserPage = new RXUsers();
+		navOptions = new RXNavOptions();
+		pubListPgs = new PublisherListPage();
 		
 	}
 	
@@ -42,14 +48,19 @@ public class AdminUserStepDefinition extends RXBaseClass {
 	
 	@When("^click on User option under accounts\\.$")
 	public void click_on_User_option_under_accounts() throws Throwable {
-		log.info("Clicked on Users option under Account");
-		rxUserPage.clickOnUserOptionUnAcc();
+		log.info("User logged in to check the navigation option for Sub menu option under Inventory main menu :"
+				+ pubListPgs.logodisplayed());
+		Assert.assertTrue(pubListPgs.logodisplayed());
+		navOptions.expandAdmin();;
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.visibilityOf(navOptions.usersUndrAdmin));
+		navOptions.usersUndrAdmin.click();
 	}
 
 	@Then("^user displayed with User page\\.$")
 	public void user_displayed_with_User_page() throws Throwable {
 		log.info("Seats Page Header is asserts  and it is : "+ rxUserPage.getUserPageHeading() );
-		Assert.assertEquals(rxUserPage.getUserPageHeading(), "User Accounts");
+		Assert.assertEquals(rxUserPage.getUserPageHeading(), "Users");
 		
 	}
 
