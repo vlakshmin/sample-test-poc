@@ -332,7 +332,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 			driver.findElement(By.xpath("//button/span[text()='" + columnName + "']")).click();
 			wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
 			wait.until(ExpectedConditions.visibilityOf(
-					driver.findElement(By.xpath("//aside[@class='dialog']/header//div[text()='" + columnName + "']"))));
+					driver.findElement(By.xpath("//aside[@class='dialog']/header//div[contains(text(),'" + columnName + "')]"))));
 
 		}
 
@@ -340,12 +340,17 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 	@Then("^Verify following fields are mandatory for create page$")
 	public void verifyMandatorFields(DataTable dt) throws InterruptedException {
+		String expectedNotification;
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		Thread.sleep(1000);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
-			String expectedNotification = "The" + " " + fieldName + " " + "field is required";
+			if(fieldName.contains("Date")) {
+				 expectedNotification = "Start date is required";	
+			}else {
+			 expectedNotification = "The" + " " + fieldName + " " + "field is required";
+			}
 			WebElement notificationMsg = driver.findElement(
 					By.xpath("//div[@class='v-messages__wrapper']/div[text()='" + expectedNotification + "']"));
 			Assert.assertTrue(notificationMsg.isDisplayed());
@@ -353,6 +358,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 		}
 
 	}
+	
 
 	@When("^Verify the following message is displayed when the publisher changed$")
 	public void verifyMessageOnPublisherChange(DataTable dt) throws InterruptedException {
@@ -361,7 +367,7 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 		for (int i = 0; i < list.size(); i++) {
 			String expectedMessage = list.get(i).get("Message");
 			wait.until(
-					ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@class='v-banner__content']"))));
+					ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']//div[@class='v-banner__content']"))));
 			String actualMessage = adspotsPage.publisherChangeBannerTxt.getText().replaceAll("\u3000", "");
 			Assert.assertEquals(actualMessage, expectedMessage);
 
@@ -1543,6 +1549,17 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 			}
 
 		}
+	}
+	
+	@Then("^Verify publisher field is disabled on create/edit page$")
+	public void verifyPubLabelDisabled() throws InterruptedException, ParseException {
+		WebDriverWait wait = new WebDriverWait(driver, 35);
+		String isPubNameDisabled = adspotsPage.publisherNameField.getAttribute("class");
+	    String value = adspotsPage.publisherNameField.getText();
+		Assert.assertTrue(isPubNameDisabled.contains("disabled"));
+		Assert.assertFalse(value.isEmpty());
+				
+
 	}
 
 	@Then("^Verify Categories filed has subcategories$")

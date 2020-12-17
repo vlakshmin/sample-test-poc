@@ -173,6 +173,8 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 		adspotsPage.adSpotCloseSideDialog.click();
 				
 		}
+	
+	
 
 }
 

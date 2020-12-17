@@ -87,7 +87,7 @@ public class RXAdspotsPage extends RXBaseClass {
 	public WebElement defaultPriceField;
 	@FindBy(xpath = "//label[text()='Default Floor Price']/following-sibling::div[1]")
 	public WebElement defaultPriceCurrency;
-	@FindBy(xpath = "//div[@class='v-banner__content']//div[@class='v-banner__text']")
+	@FindBy(xpath = "//aside[@class='dialog']//div[@class='v-banner__content']//div[@class='v-banner__text']")
 	public WebElement publisherChangeBannerTxt;
 	@FindAll(@FindBy(xpath = "//form/div[2]//div[@class='v-messages__wrapper']/div"))
 	public List<WebElement> generalSizePriceMsg;
