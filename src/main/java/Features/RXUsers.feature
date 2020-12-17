@@ -172,12 +172,41 @@ Feature: RX users page Validation
 #	Then user displayed with User page.
 #	Then Verify the pagination of the listed rows in the Page with a selection of 10 rows per page with 5 columns
 	
-Scenario:  Verify the enabling and disabling for user for the list in the users page for admin
+#Scenario:  Verify the enabling and disabling for user for the list in the users page for admin
+#	Given admin user login to RX UI with valid username and password 
+#	When click on User option under accounts.
+#	Then user displayed with User page.
+#	Then Verify the enabling and disabling feature of the user with index 1
+#	
+Scenario:  Verify the toggle option is unavailable for old UI
+	Then Verify that user cannot navigate to old UI 
+	
+Scenario:  Verify the default column names in the users overview page
 	Given admin user login to RX UI with valid username and password 
 	When click on User option under accounts.
 	Then user displayed with User page.
-	Then Verify the enabling and disabling feature of the user with index 1
+	Then Verify the overview page contains following columns
+	|ColumnName|
+	|ID|
+	|Name|
+	|Publisher|
+	|Email|
+	|Active/Inactive|
+	|Role|
+Scenario:  Verify hide/show columns from the table options for admin
+    Given admin user login to RX UI with valid username and password 
+	When click on User option under accounts.
+	Then user displayed with User page.
+    And User click on table options button
+    Then Verify that column "Create Date" can be hidden and shown
+    
+Scenario:  Verify non default column names in the users overview page
+	Given admin user login to RX UI with valid username and password 
+	When click on User option under accounts.
+	Then user displayed with User page.
+	And User click on table options button
+	Then Verify non default columns in list page
+	|ColumnName|
+	|Create Date|
+	|Update Date|
 	
-Scenario:  Verify the toggle option is unavailable for old UI
-	Then Verify that user cannot navigate to old UI 
-		

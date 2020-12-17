@@ -25,6 +25,7 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
 	// Utility object
 	RXUtile rxUTL;
 	PublisherListPage pubPage;
+	RXDashboardPage dashboardPage;
 	public String auctionHeaderStr = "Private Auctions";
 
 	// Seats page heading
@@ -38,6 +39,19 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
 		public WebElement overviewDisablebutton;
 		@FindBy(xpath = "//div[@class='portal vue-portal-target']/button[2]/span")
 		public WebElement overviewEnablebutton;
+		@FindBy(xpath = "//label[text()='Name']/following-sibling::input")
+		public WebElement auctionNameField;
+		@FindBy(xpath = "//label[text()='Related Packages']/following-sibling::input")
+		public WebElement auctionPackages;
+		@FindBy(xpath = "//button[@type='submit'][1]")
+		public WebElement saveandcloseButton;
+		@FindBy(xpath = "//button[@type='submit'][2]")
+		public WebElement saveandcreatedealButton;
+		@FindBy(xpath = "//label[contains(text(), 'Date Range')]/ancestor::div[@class = 'v-input__slot']")
+	    public WebElement dateRangeContainer;
+		@FindBy(xpath = "//label[contains(text(), 'Date Range')]/following-sibling::input")
+	    public WebElement dateInput;
+		
 	// Action object
 	Actions act = new Actions(driver);
 
@@ -52,6 +66,7 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
 		PageFactory.initElements(driver, this);
 		rxUTL = new RXUtile();
 		pubPage = new PublisherListPage();
+		dashboardPage = new RXDashboardPage();
 
 	}
 
@@ -88,6 +103,23 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
 			overviewDisablebutton.click();
 		}
 	}
-
 	
+	public void selectFifteenDaysRangeInNextMonth() throws InterruptedException {
+        openDatePicker();
+        selectNextMonth();
+        dashboardPage.selectSpecificDateRange("1", "15");
+        dateRangeContainer.click();
+    }
+
+	 public void selectNextMonth() throws InterruptedException {
+	        driverWait().until(ExpectedConditions.visibilityOf(dashboardPage.nextMonthBtn));
+	        dashboardPage.nextMonthBtn.click();
+	        Thread.sleep(3000);
+	        
+	    }
+	 public void openDatePicker() {
+	        driverWait().until(ExpectedConditions.visibilityOf(dateInput));
+	        dateRangeContainer.click();
+	        driverWait().until(ExpectedConditions.visibilityOf(dashboardPage.previousMonthBtn));
+	    }
 }
