@@ -9,7 +9,6 @@ import org.openqa.selenium.support.ui.*;
 import org.testng.Assert;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
@@ -31,20 +30,39 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement overviewDisablebutton;
 	@FindBy(xpath = "//div[@class='portal vue-portal-target']/button[2]/span")
 	public WebElement overviewEnablebutton;
+
 	@FindBy(xpath = "//i[contains(@class,'newspaper')]/parent::span")
 	private WebElement createDealButton;
 	@FindBy(xpath = "//div[contains(@class,'hidden') and contains(.,'Create')]")
 	private WebElement createDealMenuHeader;
+	@FindBy(xpath = "//div[contains(@class,'v-text-field')][.//label[contains(@for,'input') and contains(.,'Publisher')]]")
+	public WebElement publisherNameInput;
+	@FindBy(xpath="//div[./label[contains(@class,'v-label') and .='Name']]")
+	private WebElement nameInput;
+	@FindAll({@FindBy(xpath = "//div[contains(@role,'listbox') and contains(@class,'v-list')]/div")})
+	public List<WebElement> publisherNames;
+	@FindBy(xpath="//div[contains(@class,'v-input__control') and contains(.,'Currency')]//div[contains(@class,'v-select__selection--comma')]")
+	private WebElement 	currencyOption;
+	@FindBy(xpath="//div[./label[contains(@class,'v-label') and contains(.,'Date')]]")
+	private WebElement selectDateButton;
+	@FindBy(xpath="//button//span[contains(.,'Save Deal')]")
+	private WebElement saveDealButton;
+	@FindBy(xpath="//div[./label[contains(@class,'v-label') and contains(.,'Private Auction')]]")
+	private WebElement privateAuctionList;
+	@FindBy(xpath="//div[./label[contains(@class,'v-label') and contains(.,'Value')]]")
+	private WebElement valueInput;
+	@FindBy(xpath="//div[./label[contains(@class,'v-label') and contains(.,'DSP')]]")
+	private WebElement dspList;
+	@FindAll({@FindBy(xpath="//div[contains(@class,'v-messages__message')]")})
+	public List<WebElement> requiredFieldsMessages;
+
 	@FindBy(xpath = "//div[@role='listbox']")
 	private WebElement list;
 	@FindBy(xpath = "//aside[@class='dialog']//div[@class='v-toolbar__content']/button" ) 
 	public WebElement closeCreatedealpage;
 	
 	//Deals General details
-	@FindBy(xpath = "//div[contains(@class,'v-text-field')][.//label[contains(@for,'input') and contains(.,'Publisher')]]")
-	public WebElement publisherNameInput;
-	@FindAll({@FindBy(xpath = "//div[contains(@role,'listbox') and contains(@class,'v-list')]/div")})
-	public List<WebElement> publisherNames;
+
 	@FindBy(xpath = "//label[text()='Publisher Name']/following-sibling::div[@class='v-select__selections']/div")
 	public WebElement publisherNamesEntered;
 	@FindBy(xpath = "//label[text()='Private Auction']/following-sibling::div[@class='v-select__selections']") 
@@ -149,8 +167,8 @@ public class RXDealsPage extends RXBaseClass {
 	public String enteredDSPDomainAdvertiserPassthroughString;
 	public String enteredRelatedProposal ;
 	
-	
-	
+
+
 	// Action object
 	Actions act = new Actions(driver);
 
@@ -237,12 +255,47 @@ public class RXDealsPage extends RXBaseClass {
 		publisherName.click();
 		
 	}
+	public String getCurrencyText () {
+		return currencyOption.getText();
+	}
+
+	public boolean isCurrencyNameValid (String currency) {
+		return Arrays.asList(
+				 "USD - Dollars"
+				,"EUR - Euro"
+				,"JPY - Yen",
+				"RUB - Rubles").contains(currency);
+	
+	}
+
+	public void clickSaveDealButton() {
+		saveDealButton.click();
+	}
+
+	public boolean verifyErrorMessageForElements(WebElement... elements) {
+		By errorMessageXpath = By.xpath("./ancestor::div[2]//div[contains(@class,'v-messages__message')]");
+
+		// True if all required fields have an error message, false if not.
+		// Date field has a specific text for the required message, and it is formatted accordingly
+		return Arrays.stream(elements)
+				.allMatch(i ->
+					i.findElement(errorMessageXpath)
+						.getText().replaceAll("\\.", "")
+						.equalsIgnoreCase(("the " + i.getText() + " field is required")
+								.replaceAll("(?i).{9}range.{7}(?=is)","Start date ")));
+	}
+
+	public boolean verifyRequiredFields() {
+		clickSaveDealButton();
+		return verifyErrorMessageForElements(privateAuctionList, nameInput,
+				selectDateButton, valueInput,dspList);
+	}
+
 
 	public void selectPrivateAuctionByName(String name) {
 		privateActionDropDown.click();
 		int attempt = 0;
 		
-
 		// Check if list contains publisher name, scroll down if not
 		do {
 			js.executeScript("arguments[0].scrollIntoView(false)", publisherNames.get(publisherNames.size() - 1));
@@ -267,7 +320,6 @@ public class RXDealsPage extends RXBaseClass {
 	public void selectDSPByName(String name) {
 		dspDropDown.click();
 		int attempt = 0;
-		
 
 		// Check if list contains publisher name, scroll down if not
 		do {
@@ -443,4 +495,6 @@ public class RXDealsPage extends RXBaseClass {
 		
 	}
 	
+
+
 }

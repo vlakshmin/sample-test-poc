@@ -36,13 +36,21 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 	RXPrivateAuctionsPage auctionPage;
 	RXNavOptions navOptions;
 	PublisherListPage pubListPgs;
+	RXAdspotsPage adspotsPage;
 	Logger log = Logger.getLogger(PrivateAuctionPageStepDefinition.class);
+	String enteredPublisherName;
+	String enteredAuctionName;
+	String enteredAuctionPackages;
+	String enteredAuctionDates;
+	
+	
 
 	public PrivateAuctionPageStepDefinition() {
 		super();
 		auctionPage = new RXPrivateAuctionsPage();
 		navOptions = new RXNavOptions();
 		pubListPgs = new PublisherListPage();
+		adspotsPage = new RXAdspotsPage();
 
 	}
 
@@ -111,6 +119,211 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 
 				}
 			}
+		}
+		
+		@Then("^Enter the following data in the general card of private auction$")
+		public void enterGenaralCardAuction(DataTable dt) throws InterruptedException, ParseException {
+			WebDriverWait wait = new WebDriverWait(driver, 35);
+			List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+			for (int i = 0; i < list.size(); i++) {
+				String fieldName = list.get(i).get("FieldName");
+				String value = list.get(i).get("Value");
+				String listValueIndex = list.get(i).get("ListValueIndex");
+
+				switch (fieldName) {
+				case "Publisher Name":
+					WebElement dropDownPublisher;
+					wait.until(ExpectedConditions.visibilityOf(adspotsPage.publisherNameDropDown));
+					adspotsPage.publisherNameDropDown.click();
+					if (value.equalsIgnoreCase("ListValue")) {
+
+						wait.until(ExpectedConditions.visibilityOf(
+								driver.findElement(By.xpath("//div[@role='listbox']/div[" + listValueIndex + "]"))));
+						dropDownPublisher = driver
+								.findElement(By.xpath("//div[@role='listbox']/div[" + listValueIndex + "]"));
+
+					} else {
+						wait.until(ExpectedConditions.visibilityOf(driver.findElement(
+								By.xpath("//div[@role='listbox']/div//div[contains(text(),'" + value + "')]"))));
+						dropDownPublisher = driver
+								.findElement(By.xpath("//div[@role='listbox']/div//div[contains(text(),'" + value + "')]"));
+					}
+					js.executeScript("arguments[0].scrollIntoView()", dropDownPublisher);
+					dropDownPublisher.click();
+					Thread.sleep(5000);
+					enteredPublisherName = adspotsPage.publisherNameField.getText();
+					System.out.println("publisher entered as :" + enteredPublisherName);
+					wait.until(ExpectedConditions.visibilityOf(auctionPage.auctionNameField));
+					break;
+				
+				case "Name":
+//					js.executeScript("arguments[0].setAttribute('value', '')",adspotsPage.adSpotNameField);
+					while (!auctionPage.auctionNameField.getAttribute("value").equals("")) {
+						auctionPage.auctionNameField.sendKeys(Keys.BACK_SPACE);
+					}
+					auctionPage.auctionNameField.sendKeys(value);
+					enteredAuctionName = adspotsPage.adSpotNameHeader.getText();
+					System.out.println("Entered Auction name:" + enteredAuctionName);
+					break;
+				case "Related Packages":
+					while (!auctionPage.auctionPackages.getAttribute("value").equals("")) {
+						auctionPage.auctionPackages.sendKeys(Keys.BACK_SPACE);
+					}
+					auctionPage.auctionPackages.sendKeys(value);
+					enteredAuctionPackages = auctionPage.auctionPackages.getText();
+					System.out.println("Entered Auction packages:" + enteredAuctionPackages);
+					break;
+
+				case "Date Range":
+					auctionPage.selectFifteenDaysRangeInNextMonth();
+					enteredAuctionDates = auctionPage.dateInput.getAttribute("value");
+					System.out.println("Entered Auction dates:" + enteredAuctionDates);
+					break;
+					
+				
+				default:
+					Assert.assertTrue(false, "The status fields supplied does not match with the input");
+
+				}
+
+			}
+		}
+		@When("^Click on Save Private Auction & Close button$")
+		public void clickSaveBtn() throws Throwable {
+			WebDriverWait wait = new WebDriverWait(driver, 30);
+			Thread.sleep(5000);
+			wait.until(ExpectedConditions.visibilityOf(auctionPage.saveandcloseButton));
+			auctionPage.saveandcloseButton.click();
+
+		}
+		
+		@When("^Click on Save Private Auction & Create Deal button$")
+		public void clickSaveBtnCreateDeal() throws Throwable {
+			WebDriverWait wait = new WebDriverWait(driver, 30);
+			Thread.sleep(5000);
+			wait.until(ExpectedConditions.visibilityOf(auctionPage.saveandcreatedealButton));
+			auctionPage.saveandcreatedealButton.click();
+
+		}
+		
+		@Then("^Verify following fields are not enabled for create page$")
+		public void verifyMandatorFields(DataTable dt) throws InterruptedException {
+			WebDriverWait wait = new WebDriverWait(driver, 30);
+			Thread.sleep(1000);
+			List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+			for (int i = 0; i < list.size(); i++) {
+				String fieldName = list.get(i).get("FieldName");
+				String isDisabled = driver.findElement(
+						By.xpath("//aside[@class='dialog']//label[text()='"+fieldName+"']")).getAttribute("class");
+				Assert.assertTrue(isDisabled.contains("disabled"));
+
+			}
+
+		}
+		@Then("^Verify input values for following toggle fields in create page$")
+		public void verifyDefaultValues(DataTable dt) throws InterruptedException {
+			WebDriverWait wait = new WebDriverWait(driver, 30);
+			Thread.sleep(1000);
+			List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+			for (int i = 0; i < list.size(); i++) {
+				String fieldName = list.get(i).get("FieldName");
+				String active = list.get(i).get("Active");
+				String isEnabled = driver.findElement(
+						By.xpath("//aside[@class='dialog']//label[text()='"+fieldName+"']/parent::div//input")).getAttribute("aria-checked");
+				if(active.equalsIgnoreCase("Yes")) {
+				Assert.assertEquals(isEnabled,"true");
+				
+				}else {
+					Assert.assertEquals(isEnabled,"false");
+				}
+
+			}
+
+		}
+		
+		@Then("^\"(.*)\" following toggle fields in create page$")
+		public void changeToggleFields(String enable,DataTable dt) throws InterruptedException {
+			WebDriverWait wait = new WebDriverWait(driver, 30);
+			Thread.sleep(1000);
+			List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+			for (int i = 0; i < list.size(); i++) {
+				String fieldName = list.get(i).get("FieldName");
+				String isEnabled = driver.findElement(By.xpath("//aside[@class='dialog']//label[text()='"+fieldName+"']/parent::div//input")).getAttribute("aria-checked");
+				if(enable.equalsIgnoreCase("Enable")&&isEnabled.equals("false")) {
+							driver.findElement(
+									By.xpath("//aside[@class='dialog']//label[text()='"+fieldName+"']/parent::div/div")).click();
+				}else if(enable.equalsIgnoreCase("Disable")&& isEnabled.equals("true"))
+				{
+					driver.findElement(By.xpath("//aside[@class='dialog']//label[text()='"+fieldName+"']/parent::div/div")).click();
+				}
+
+			}
+}
+
+		
+		
+		@Then("^Verify the following columns value with the created data for the general card of private auction$")
+		public void verifyGeneralCardValues(DataTable dt) throws InterruptedException, ParseException {
+			WebDriverWait wait = new WebDriverWait(driver, 35);
+			List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+			for (int i = 0; i < list.size(); i++) {
+				String fieldName = list.get(i).get("FieldName");
+
+				switch (fieldName) {
+				case "Name":
+					Assert.assertEquals(adspotsPage.adSpotNameHeader.getText(), enteredAuctionName);
+
+					break;
+				case "Publisher Name":
+					Assert.assertEquals(adspotsPage.publisherNameField.getText(), enteredPublisherName);
+
+					break;
+				case "Related Packages":
+					Assert.assertEquals(auctionPage.auctionPackages.getText(), enteredAuctionPackages);
+
+					break;
+				case "Date Range":
+					System.out.println("Date range entered" + auctionPage.dateInput.getAttribute("value"));
+					Assert.assertEquals(auctionPage.dateInput.getAttribute("value"), enteredAuctionDates);
+
+					break;
+				
+				default:
+					Assert.assertTrue(false, "The status fields supplied does not match with the input");
+
+				}
+			}
+		}
+		
+		@Then("^Verify the following columns values for the general card of private auction is empty$")
+		public void verifyGeneralCardValuesEmpty(DataTable dt) throws InterruptedException, ParseException {
+
+			boolean isPresent;
+			WebDriverWait wait = new WebDriverWait(driver, 35);
+			List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+			for (int i = 0; i < list.size(); i++) {
+				String fieldName = list.get(i).get("FieldName");
+
+				switch (fieldName) {
+				case "Name":
+					Assert.assertEquals(adspotsPage.adSpotNameHeader.getText(), "Create Private Auction");
+
+					break;
+				case "Related Packages":
+					Assert.assertEquals(auctionPage.auctionPackages.getAttribute("value"), "");
+
+					break;
+				case "Date Range":
+					Assert.assertEquals(auctionPage.dateInput.getAttribute("value").trim(), "GMT");
+
+					break;
+				
+				default:
+					Assert.assertTrue(false, "The status fields supplied does not match with the input");
+
+				}
+			}
+
 		}
 
 

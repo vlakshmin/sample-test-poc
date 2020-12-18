@@ -84,6 +84,8 @@ Scenario: Verify if create deal menu is opened
     Then Create deal menu is opened
     And Click on publisher input
     And Select publisher by name: "Viber"
+		Then Verify the currency is correct
+		And Verify required fields
 
 Scenario: Verify that the Alert message displayed for changing the publisher for deal,on cancel retain the filled value and accept removed the filled values.
     Given admin user login to RX UI with valid username and password
@@ -262,4 +264,6 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
     And Click create a new deal
     Then Create deal menu is opened
     And Verify Publisher field is not editable and preselected with "Viber"
+
+
 

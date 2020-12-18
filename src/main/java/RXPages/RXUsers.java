@@ -27,7 +27,7 @@ public class RXUsers extends RXBaseClass {
 	@FindBy(xpath = "//div[text()='Users']")  WebElement userOptionUnderAccounts;
 
 	//Header of user page 
-	@FindBy(xpath = "//h1[text()='User Accounts']")  WebElement userPageHeader;
+	@FindBy(xpath = "//h1[text()='Users']")  WebElement userPageHeader;
 
 	//Search text field
 	@FindBy(xpath = "//input[@autocomplete='nope']")  WebElement searchFieldInUserPage;

@@ -17,6 +17,7 @@ import java.util.*;
 
 public class DealsPageStepDefinition extends RXBaseClass {
 
+
 	RXUtile rxUTL;
 	RXDealsPage dealsPage;
 	RXNavOptions navOptions;
@@ -144,10 +145,19 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		
 	}
 
+    @Then("^Verify the currency is correct$")
+    public void verifyCurrencyIsValid() {
+        dealsPage.isCurrencyNameValid(dealsPage.getCurrencyText());
+    }
+
+    @Then("^Verify required fields$")
+    public void verifyRequiredFields() {
+        dealsPage.clickSaveDealButton();
+        Assert.assertTrue(dealsPage.verifyRequiredFields());
+    }
 	
 	@Then("^Select privateAuction by name: \"([^\"]*)\"$")
 	public void select_privateAuction_by_name(String name) throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
 		dealsPage.selectPrivateAuctionByName(name);
 	}
 	
