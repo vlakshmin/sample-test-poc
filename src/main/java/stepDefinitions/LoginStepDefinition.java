@@ -78,6 +78,17 @@ public void setup()
 		 
 	 }
      
+     @Given("^Single Publisher user login to RX UI with valid username and password$")
+     public void Single_publisher_user_login_to_RX_UI_with_valid_username_and_password() throws Throwable {
+    	 Reporter.addStepLog("The user has logged in "+prop.getProperty("url")+" as publisher");
+    	 driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
+		 pubListPgs = logain.clickLogin(prop.getProperty("singleUser"), prop.getProperty("pbpassword"));
+		 driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
+//		 Thread.sleep(6000);
+		Assert.assertTrue(pubListPgs.logodisplayed());
+		 
+	 }
+     
 	 @Then("^login should be successful and user is displayed the publisher page with Rakuten Exchange$")
 	 public void user_is_displayed_the_publisher_page_with_Rakuten_Exchange() throws InterruptedException{
 		 driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
