@@ -71,16 +71,22 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
     }
 
     public WebElement targetingBlockButton(String targetingName, String targetingBlockButton) {
-        return targetingPanelBlock(targetingName).findElement(By.xpath("//span[contains(text(), '" +
+        return driver.findElement(By.xpath("//h3[text() = '" + targetingName +
+                "']/ancestor::button[contains(@class, 'v-expansion-panel-header flex')]/ancestor::" +
+                "div[contains(@class, 'v-expansion-panel--active')]//span[contains(text(), '" +
                 targetingBlockButton + "')]"));
     }
 
-    public WebElement includedCounter(String targetingItem) {
-        return targetingPanelBlock(targetingItem).findElement(By.xpath("//div[@class = 'included-banner']"));
+    public WebElement includedCounter(String targetingName) {
+        return driver.findElement(By.xpath("//h3[text() = '" + targetingName +
+                "']/ancestor::button[contains(@class, 'v-expansion-panel-header flex')]/ancestor::" +
+                "div[contains(@class, 'v-expansion-panel--active')]//div[@class = 'included-banner']"));
     }
 
     public WebElement targetingBlockSearchInput(String targetingName) {
-        return targetingPanelBlock(targetingName).findElement(By.xpath("//input"));
+        return driver.findElement(By.xpath("//h3[text() = '" + targetingName +
+                "']/ancestor::button[contains(@class, 'v-expansion-panel-header flex')]/ancestor::" +
+                "div[contains(@class, 'v-expansion-panel--active')]//input"));
     }
 
     public WebElement targetingBlockSearchInputClear(String targetingName) {
@@ -98,6 +104,18 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
     public WebElement targetingBlockIncludedListItemClear(String itemName) {
         return driver.findElement(By.xpath("//table[@class = 'included-table']//td[contains(text() , '" + itemName +
                 "')]/ancestor::table//button"));
+    }
+
+    public List<WebElement> targetingBlockItemsList(String targetingName) {
+        return driver.findElements(By.xpath("//h3[text() = '" + targetingName +
+                "']/ancestor::button[contains(@class, 'v-expansion-panel-header flex')]/ancestor::" +
+                "div[contains(@class, 'v-expansion-panel--active')]//td[@class = 'first']/ancestor::tbody"));
+    }
+
+    public List<WebElement> targetingBlockIncludedItemsList(String targetingName) {
+        return driver.findElements(By.xpath("//h3[text() = '" + targetingName +
+                "']/ancestor::button[contains(@class, 'v-expansion-panel-header flex')]/ancestor::" +
+                "div[contains(@class, 'v-expansion-panel--active')]//table[@class = 'included-table']//td[text()]"));
     }
 
     // Action object
@@ -227,6 +245,23 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
         Assert.assertFalse(isTargetingBlockOpen(targetingName));
     }
 
+    public void checkSearchForBlock(String targetingName, String itemName) {
+        targetingExpandPanel(targetingName).click();
+        driverWait().until(ExpectedConditions.visibilityOf(targetingBlockSearchInput(targetingName)));
+        targetingBlockSearchInput(targetingName).click();
+        driverWait().until(ExpectedConditions.visibilityOf(targetingBlockSearchInput(targetingName)));
+        targetingBlockSearchInput(targetingName).sendKeys(itemName);
+        driverWait().until(ExpectedConditions.textToBePresentInElement(targetingBlockButton(targetingName,
+                "Include All"), "1"));
+        targetingBlockButton(targetingName, "Include All").click();
+        driverWait().until(ExpectedConditions.textToBePresentInElement(includedCounter(targetingName), "1"));
+        Assert.assertTrue(isItemAdded(targetingName));
+        Assert.assertEquals(targetingBlockIncludedListItem(itemName).getText(), itemName);
+        targetingExpandPanel(targetingName).click();
+        Assert.assertFalse(isTargetingBlockOpen(targetingName));
+
+    }
+
     public boolean isItemAdded(String targetingName) {
         try {
             return (NumberFormat.getInstance().parse(includedCounter(targetingName).getText())).intValue() > 0;
@@ -240,14 +275,6 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
         for (int i = 0; i < targetingBlockItemsList(targetingName).size(); i++) {
             Assert.assertEquals(targetingBlockItemsList(targetingName).get(i).getText(), targetingBlockIncludedItemsList(targetingName).get(i).getText());
         }
-    }
-
-    public List<WebElement> targetingBlockItemsList(String targetingName) {
-        return targetingPanelBlock(targetingName).findElements(By.xpath("//td[@class = 'first']/ancestor::tbody"));
-    }
-
-    public List<WebElement> targetingBlockIncludedItemsList(String targetingName) {
-        return targetingPanelBlock(targetingName).findElements(By.xpath("//table[@class = 'included-table']//td[text()]"));
     }
 
     public void selectNextMonth() throws InterruptedException {

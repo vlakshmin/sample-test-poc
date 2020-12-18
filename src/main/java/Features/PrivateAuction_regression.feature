@@ -60,41 +60,41 @@ Feature: Private Auctions page regression
   Scenario:  Verify sorting of the list's columns of the private auctions overview page
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
-	And User displayed with Private Auctions page
-	Then Verify the sorting functionality with the following columns
-	|ColumnName|SortType|
-	|ID|asc|
-	|Publisher|desc|
-	|Active|asc|
+    And User displayed with Private Auctions page
+    Then Verify the sorting functionality with the following columns
+      | ColumnName | SortType |
+      | ID         | asc      |
+      | Publisher  | desc     |
+      | Active     | asc      |
 
-Scenario:  Verify mandatory fields in the Create private auction Page
+  Scenario:  Verify mandatory fields in the Create private auction Page
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-	And Click on the following create button
-	|CreateButtonName|
-	|Create Private Auction|
-	Then Click on Save Private Auction & Close button
-	Then Verify following fields are mandatory for create page
-	|FieldName|
-	|Publisher Name|
-	And Enter the following data in the general card of private auction
-	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|2|
-	Then Click on Save Private Auction & Close button
-	Then Verify following fields are mandatory for create page
-	|FieldName|
-	|Name|
-	|Date Range|
+    And Click on the following create button
+      | CreateButtonName       |
+      | Create Private Auction |
+    Then Click on Save Private Auction & Close button
+    Then Verify following fields are mandatory for create page
+      | FieldName      |
+      | Publisher Name |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue | 2              |
+    Then Click on Save Private Auction & Close button
+    Then Verify following fields are mandatory for create page
+      | FieldName  |
+      | Name       |
+      | Date Range |
 
-Scenario:  Verify on publisher user login, publisher field is disabled in the Create private auction Page
+  Scenario:  Verify on publisher user login, publisher field is disabled in the Create private auction Page
     Given Publisher user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-	And Click on the following create button
-	|CreateButtonName|
-	|Create Private Auction|
- 	Then Verify publisher field is disabled on create/edit page
+    And Click on the following create button
+      | CreateButtonName       |
+      | Create Private Auction |
+    Then Verify publisher field is disabled on create/edit page
 
   Scenario: Verify select/unselect for targeting options
     Given Admin user login by entering valid username and password
@@ -108,90 +108,103 @@ Scenario:  Verify on publisher user login, publisher field is disabled in the Cr
       | Ad Format        | Audio       |
       | Ad Size          | 120x60      |
 
-#  Scenario: Verify select/unselect all for targeting options
-#    Given Admin user login by entering valid username and password
-#    When Click on Private Auctions option under Sales
-#    And Open create New Private Auction page
-#    And Select publisher for Private Auction
-#    Then Verify select/unselect all targeting options items
-#      | Device           |
-#      | Operating System |
-#      | Geo              |
+  Scenario: Verify select/unselect all for targeting options
+    Given Admin user login by entering valid username and password
+    When Click on Private Auctions option under Sales
+    And Open create New Private Auction page
+    And Select publisher for Private Auction
+    Then Verify select/unselect all targeting options items
+      | Device           |
+      | Operating System |
+      | Geo              |
 #      | Ad Format        |
-#      | Ad Size          |
-Scenario:  Verify without selecting publisher the card is not enabled to fill in the Create private auction Page
-    Given admin user login to RX UI with valid username and password
+      | Ad Size          |
+    
+  Scenario: Verify Search for targeting options
+    Given Admin user login by entering valid username and password
     When Click on Private Auctions option under Sales
-    And User displayed with Private Auctions page
-	And Click on the following create button
-	|CreateButtonName|
-	|Create Private Auction|
-	Then Verify following fields are not enabled for create page
-	|FieldName|
-	|Name|
-	|Date Range|
-	|Related Packages|
-	|Active|
-	|Always on|
-	|Optimize|
+    And Open create New Private Auction page
+    And Select publisher for Private Auction
+    Then Verify search targeting options items
+      | Device           | Phone       |
+      | Operating System | Android     |
+      | Geo              | Afghanistan |
+      | Ad Format        | Audio       |
+      | Ad Size          | 120x60      |
 
-Scenario:  Verify default values for toggle fields in the Create private auction Page
+  Scenario:  Verify without selecting publisher the card is not enabled to fill in the Create private auction Page
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-	And Click on the following create button
-	|CreateButtonName|
-	|Create Private Auction|
-	And Enter the following data in the general card of private auction
-	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|2|
-	Then Verify input values for following toggle fields in create page
-	|FieldName|Active|
-	|Active|Yes|
-	|Always on|No|
-	|Optimize|Yes|
+    And Click on the following create button
+      | CreateButtonName       |
+      | Create Private Auction |
+    Then Verify following fields are not enabled for create page
+      | FieldName        |
+      | Name             |
+      | Date Range       |
+      | Related Packages |
+      | Active           |
+      | Always on        |
+      | Optimize         |
 
-Scenario:  Verify Changing publisher name alert the user and then on change every fields go to default state
+  Scenario:  Verify default values for toggle fields in the Create private auction Page
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-	And Click on the following create button
-	|CreateButtonName|
-	|Create Private Auction|
-	And Enter the following data in the general card of private auction
-	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|1|
-	|Name|Test||
-	|Related Packages|testing||
-	|Date Range|Future||
-	And "Disable" following toggle fields in create page
-	|FieldName|
-	|Active|
-	|Always on|
-	|Optimize|
-	And Enter the following data in the general card of private auction
-	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|2|
-	Then Verify the following message is displayed when the publisher changed
-	|Message|
-	|By changing the Publisher the form will be reset and the previous changes will not be saved.|
-	And Select "Cancel" on the publisher change banner
-	Then Verify the following columns value with the created data for the general card of private auction
-	|FieldName|
-	|Name|
-	|Related Packages|
-	|Date Range|
-	And Enter the following data in the general card of private auction
-	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|2|
-	And Select "Accept" on the publisher change banner
-	Then Verify input values for following toggle fields in create page
-	|FieldName|Active|
-	|Active|Yes|
-	|Always on|No|
-	|Optimize|Yes|
-	Then Verify the following columns values for the general card of private auction is empty
-	|FieldName|
-	|Name|
-	|Related Packages|
-	|Date Range|
+    And Click on the following create button
+      | CreateButtonName       |
+      | Create Private Auction |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue | 2              |
+    Then Verify input values for following toggle fields in create page
+      | FieldName | Active |
+      | Active    | Yes    |
+      | Always on | No     |
+      | Optimize  | Yes    |
+
+  Scenario:  Verify Changing publisher name alert the user and then on change every fields go to default state
+    Given admin user login to RX UI with valid username and password
+    When Click on Private Auctions option under Sales
+    And User displayed with Private Auctions page
+    And Click on the following create button
+      | CreateButtonName       |
+      | Create Private Auction |
+    And Enter the following data in the general card of private auction
+      | FieldName        | Value     | ListValueIndex |
+      | Publisher Name   | ListValue | 1              |
+      | Name             | Test      |                |
+      | Related Packages | testing   |                |
+      | Date Range       | Future    |                |
+    And "Disable" following toggle fields in create page
+      | FieldName |
+      | Active    |
+      | Always on |
+      | Optimize  |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue | 2              |
+    Then Verify the following message is displayed when the publisher changed
+      | Message                                                                                      |
+      | By changing the Publisher the form will be reset and the previous changes will not be saved. |
+    And Select "Cancel" on the publisher change banner
+    Then Verify the following columns value with the created data for the general card of private auction
+      | FieldName        |
+      | Name             |
+      | Related Packages |
+      | Date Range       |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue | 2              |
+    And Select "Accept" on the publisher change banner
+    Then Verify input values for following toggle fields in create page
+      | FieldName | Active |
+      | Active    | Yes    |
+      | Always on | No     |
+      | Optimize  | Yes    |
+    Then Verify the following columns values for the general card of private auction is empty
+      | FieldName        |
+      | Name             |
+      | Related Packages |
+      | Date Range       |

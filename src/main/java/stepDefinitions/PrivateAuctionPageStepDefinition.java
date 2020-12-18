@@ -349,4 +349,10 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
         List<List<String>> data = dt.asLists(String.class);
         data.forEach(e -> auctionPage.checkSelectUnselectAllForBlock(e.get(0)));
     }
+
+	@Then("^Verify search targeting options items$")
+	public void verifySearchItems(DataTable dt) {
+		List<List<String>> data = dt.asLists(String.class);
+		data.forEach(e -> auctionPage.checkSearchForBlock(e.get(0), e.get(1)));
+	}
 }
