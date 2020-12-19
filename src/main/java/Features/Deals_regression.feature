@@ -250,11 +250,11 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	And enter the following DSP buyer details.
 	|dSPSeatID|dSPSeatName|AdvertiserId|advertiserName|dSPSeatPassthroughString|dSPDomainAdvertiserPassthroughString|relatedProposal|
 	|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|TestAutorelatedProposal|
- 	When click on Save deal 
-	And copy the deal ID
-	And search the deal ID 
- 	And Select the deal and click on edit
-	Then Verify Publisher,Private Auction and DSP are non-editable
+# 	When click on Save deal 
+#	And copy the deal ID
+#	And search the deal ID 
+# 	And Select the deal and click on edit
+#	Then Verify Publisher,Private Auction and DSP are non-editable
 	
 	
 	Scenario: Verify that the publisher field is not editable and preselected for single publisher

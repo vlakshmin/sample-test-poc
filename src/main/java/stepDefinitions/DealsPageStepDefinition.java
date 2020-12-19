@@ -356,10 +356,10 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 	}
 	@Then("^Verify the following general values are reset to default values$")
 	public void verify_the_following_general_values_are_reset_to_default_values(DataTable dt) throws Throwable {
-		
+		Thread.sleep(5000);
 		js.executeScript("arguments[0].scrollIntoView();",dealsPage.dealName);
 		wait.until(ExpectedConditions.visibilityOf(dealsPage.dealName));
-		dealsPage.dealName.click();
+//		dealsPage.dealName.click();
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
