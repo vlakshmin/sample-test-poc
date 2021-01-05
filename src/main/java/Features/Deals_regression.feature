@@ -267,3 +267,14 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 
 
 
+	Scenario: Verify Floor Prices field
+	Given admin user login to RX UI with valid username and password
+	When Click on Deals option under Sales
+	And User displayed with Deals page
+	And Click create a new deal
+	Then Create deal menu is opened
+	And Click on publisher input
+	And Select publisher by name: "Viber"
+	When Enter correct floor prices values: "1,9999,9,700"
+	And Enter incorrect floor prices values: "-2,0,10001,99999"
+	Then Verify Floor Prices

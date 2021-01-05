@@ -36,6 +36,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	JavascriptExecutor js = (JavascriptExecutor) driver;
 	public String enteredPublisher;
 	public String enteredDSP;
+	private Map<String,List<Boolean>> floorPriceValues = new HashMap<>();
 //=========================================================================================================	
 	// Verify if user is displayed with media list page on clicking media navigation
 	// link
@@ -566,5 +567,22 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 	public void Verify_Publisher_field_is_not_editable_and_preselected_with(String pubName) throws Throwable {
 		Assert.assertFalse(driver.findElement(By.xpath("//label[text()='Publisher Name']/following-sibling::div[@class='v-select__selections']/input")).isEnabled());
 		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Publisher Name']/following-sibling::div[@class='v-select__selections']/div")).getText(),"Viber" );
+	}
+
+	@When("^Enter correct floor prices values: \"(.*)\"$")
+	public void enterCorrectFloorPrices(List<Integer> prices) {
+		floorPriceValues.put("Positive", dealsPage.enterFloorPrices(prices));
+	}
+
+	@When("^Enter incorrect floor prices values: \"(.*)\"$")
+	public void enterIncorrectFloorPrices(List<Integer> prices) {
+		floorPriceValues.put("Negative", dealsPage.enterFloorPrices(prices));
+	}
+	
+	@Then("^Verify Floor Prices$")
+	public void verifyFloorPrices() {
+		Assert.assertFalse(floorPriceValues.get("Positive").contains(true)
+			&& floorPriceValues.get("Negative").contains(false),
+			"Error while verifying floor prices");
 	}
 }	
