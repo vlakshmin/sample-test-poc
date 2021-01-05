@@ -49,7 +49,7 @@ public class RXDealsPage extends RXBaseClass {
 	private WebElement saveDealButton;
 	@FindBy(xpath="//div[./label[contains(@class,'v-label') and contains(.,'Private Auction')]]")
 	private WebElement privateAuctionList;
-	@FindBy(xpath="//div[./label[contains(@class,'v-label') and contains(.,'Value')]]")
+	@FindBy(xpath="//div[./label[contains(@class,'v-label') and contains(.,'Floor Price')]]")
 	private WebElement valueInput;
 	@FindBy(xpath="//div[./label[contains(@class,'v-label') and contains(.,'DSP')]]")
 	private WebElement dspList;
@@ -75,7 +75,7 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement activeToggle;
 	@FindBy(xpath = "//div[@class='row']/span[2]//div[@class='v-input--selection-controls__input']") 
 	public WebElement alwaysOn;
-	@FindBy(xpath = "//label[text()='Value']/following-sibling::input" ) 
+	@FindBy(xpath = "//label[text()='Floor Price']/following-sibling::input" )
 	public WebElement value;
 	@FindBy(xpath = "//label[text()='Date Range']/following-sibling::input" ) 
 	public WebElement dateRange;
@@ -282,7 +282,8 @@ public class RXDealsPage extends RXBaseClass {
 					i.findElement(errorMessageXpath)
 						.getText().replaceAll("\\.", "")
 						.equalsIgnoreCase(("the " + i.getText() + " field is required")
-								.replaceAll("(?i).{9}range.{7}(?=is)","Start date ")));
+								.replaceAll("(?i).{9}range.{7}(?=is)","Start date ")
+								.replaceAll("Floor Price","Value")));
 	}
 
 	public boolean verifyRequiredFields() {
