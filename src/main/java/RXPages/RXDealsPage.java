@@ -1,14 +1,13 @@
 package RXPages;
 
+import java.util.*;
+
 import RXBaseClass.RXBaseClass;
 import RXUtitities.RXUtile;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.*;
 import org.openqa.selenium.support.ui.*;
-import org.testng.Assert;
-
-import java.util.*;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
@@ -49,8 +48,8 @@ public class RXDealsPage extends RXBaseClass {
 	private WebElement saveDealButton;
 	@FindBy(xpath="//div[./label[contains(@class,'v-label') and contains(.,'Private Auction')]]")
 	private WebElement privateAuctionList;
-	@FindBy(xpath="//div[./label[contains(@class,'v-label') and contains(.,'Value')]]")
-	private WebElement valueInput;
+	@FindBy(xpath="//div[./label[contains(@class,'v-label') and contains(.,'Floor Price')]]")
+	private WebElement floorPriceField;
 	@FindBy(xpath="//div[./label[contains(@class,'v-label') and contains(.,'DSP')]]")
 	private WebElement dspList;
 	@FindAll({@FindBy(xpath="//div[contains(@class,'v-messages__message')]")})
@@ -75,7 +74,7 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement activeToggle;
 	@FindBy(xpath = "//div[@class='row']/span[2]//div[@class='v-input--selection-controls__input']") 
 	public WebElement alwaysOn;
-	@FindBy(xpath = "//label[text()='Value']/following-sibling::input" ) 
+	@FindBy(xpath = "//label[text()='Floor Price']/following-sibling::input" )
 	public WebElement value;
 	@FindBy(xpath = "//label[text()='Date Range']/following-sibling::input" ) 
 	public WebElement dateRange;
@@ -141,8 +140,8 @@ public class RXDealsPage extends RXBaseClass {
 	//Search deal id
 	@FindBy(xpath = "//label[text()='Search']//following-sibling::input")
 	public WebElement searchDealId;
-	
-	
+
+
 	@FindBy(xpath = "//table/tbody/tr[1]/td[3]/span/a")
 	public WebElement dealNameInListview;
 	
@@ -222,6 +221,32 @@ public class RXDealsPage extends RXBaseClass {
 		createDealButton.click();
 		wait.until(visibilityOf(createDealMenuHeader));
 	}
+	public void enterFloorPrice(int amount) {
+		floorPriceField.findElement(By.xpath(".//input")).sendKeys(String.valueOf(amount));
+		System.out.println(getErrorMessageTextByField(floorPriceField));
+	}
+
+	/**
+	 * Enter floor prices and check if error message is displayed.
+	 * @param prices
+	 * Price values that will be entered to the floor price input field.
+	 * @return
+	 * Returns List of boolean values, which indicate if error message is displayed.
+	 */
+	public List<Boolean> enterFloorPrices(List<Integer> prices) {
+		List<Boolean> result = new ArrayList<>();
+		WebElement priceInput = floorPriceField.findElement(By.xpath(".//input"));
+		String error = "Floor price must be between 0 and 10,000.00";
+		for (int price : prices) {
+			wait.until(ExpectedConditions.elementToBeClickable(priceInput));
+			priceInput.sendKeys(String.valueOf(price));
+			result.add(floorPriceField.getAttribute("class").contains(error));
+			while (priceInput.getAttribute("value").length() > 0)
+			priceInput.sendKeys(Keys.BACK_SPACE);
+			priceInput.sendKeys(Keys.BACK_SPACE);
+		}
+		return result;
+	}
 
 	public boolean isCreateDealMenuOpened() {
 		return createDealMenuHeader.isDisplayed();
@@ -279,16 +304,18 @@ public class RXDealsPage extends RXBaseClass {
 		// Date field has a specific text for the required message, and it is formatted accordingly
 		return Arrays.stream(elements)
 				.allMatch(i ->
-					i.findElement(errorMessageXpath)
-						.getText().replaceAll("\\.", "")
+				getErrorMessageTextByField(i).replaceAll("\\.", "")
 						.equalsIgnoreCase(("the " + i.getText() + " field is required")
-								.replaceAll("(?i).{9}range.{7}(?=is)","Start date ")));
+								.replaceAll("(?i).{9}range.{7}(?=is)","Start date ")
+								.replaceAll("Floor Price","Value")));
 	}
-
+	public String getErrorMessageTextByField(WebElement element) {
+		return element.findElement(By.xpath("./ancestor::div[2]//div[contains(@class,'v-messages__message')]")).getText();
+	}
 	public boolean verifyRequiredFields() {
 		clickSaveDealButton();
 		return verifyErrorMessageForElements(privateAuctionList, nameInput,
-				selectDateButton, valueInput,dspList);
+				selectDateButton, floorPriceField, dspList);
 	}
 
 
