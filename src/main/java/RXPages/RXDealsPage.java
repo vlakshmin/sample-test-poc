@@ -74,8 +74,10 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement activeToggle;
 	@FindBy(xpath = "//div[@class='row']/span[2]//div[@class='v-input--selection-controls__input']") 
 	public WebElement alwaysOn;
-	@FindBy(xpath = "//label[text()='Floor Price']/following-sibling::input" )
-	public WebElement value;
+	/*
+	 * @FindBy(xpath = "//label[text()='Value']/following-sibling::input" ) public
+	 * WebElement value;
+	 */
 	@FindBy(xpath = "//label[text()='Date Range']/following-sibling::input" ) 
 	public WebElement dateRange;
 	@FindBy(xpath = "//aside[@class='dialog']//div[@class='v-toolbar__title']/div" ) 
@@ -84,8 +86,14 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement currencyValue;
 	@FindBy(xpath = "//label[text()='DSP']/following-sibling::div[@class='v-select__selections']" ) 
 	public WebElement dspDropDown;
-	@FindBy(xpath = "//label[text()='DSP']/following-sibling::div[1]/div" )
+	/*
+	 * @FindBy(xpath = "//label[text()='DSP']/following-sibling::div[1]/div" )
+	 * public WebElement dspValue;
+	 */
+	@FindBy(xpath = "//label[text()='DSP']/following-sibling::div[1]/input" )
 	public WebElement dspValue;
+	@FindBy(xpath = "//label[text()='Floor Price']/following-sibling::input" ) 
+	public WebElement value;
 	
 	//Deals buyers details
 	@FindBy(xpath = "//span[@class='v-btn__content' and text()='Add More Seats']" )

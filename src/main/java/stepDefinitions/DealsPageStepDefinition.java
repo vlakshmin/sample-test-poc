@@ -152,8 +152,10 @@ public class DealsPageStepDefinition extends RXBaseClass {
     }
 
     @Then("^Verify required fields$")
-    public void verifyRequiredFields() {
+    public void verifyRequiredFields() throws InterruptedException {
         dealsPage.clickSaveDealButton();
+        js.executeScript("arguments[0].scrollIntoView();",dealsPage.publisherNameInput );
+        Thread.sleep(5000);
         Assert.assertTrue(dealsPage.verifyRequiredFields());
     }
 	
