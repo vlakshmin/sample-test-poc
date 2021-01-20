@@ -23,6 +23,7 @@ import org.testng.Assert;
 import RXBaseClass.RXBaseClass;
 import RXPages.PublisherListPage;
 import RXPages.RXAdspotsPage;
+import RXPages.RXDealsPage;
 import RXPages.RXNavOptions;
 import RXPages.RXPrivateAuctionsPage;
 import RXUtitities.RXUtile;
@@ -37,6 +38,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 	RXNavOptions navOptions;
 	PublisherListPage pubListPgs;
 	RXAdspotsPage adspotsPage;
+	RXDealsPage dealsPage;
 	Logger log = Logger.getLogger(PrivateAuctionPageStepDefinition.class);
 	String enteredPublisherName;
 	String enteredAuctionName;
@@ -51,6 +53,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 		navOptions = new RXNavOptions();
 		pubListPgs = new PublisherListPage();
 		adspotsPage = new RXAdspotsPage();
+		dealsPage = new RXDealsPage();
 
 	}
 
@@ -162,7 +165,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 						auctionPage.auctionNameField.sendKeys(Keys.BACK_SPACE);
 					}
 					auctionPage.auctionNameField.sendKeys(value);
-					enteredAuctionName = adspotsPage.adSpotNameHeader.getText();
+					enteredAuctionName = auctionPage.auctionNameField.getAttribute("value");
 					System.out.println("Entered Auction name:" + enteredAuctionName);
 					break;
 				case "Related Packages":
@@ -194,15 +197,32 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 			Thread.sleep(5000);
 			wait.until(ExpectedConditions.visibilityOf(auctionPage.saveandcloseButton));
 			auctionPage.saveandcloseButton.click();
+			
 
 		}
 		
-		@When("^Click on Save Private Auction & Create Deal button$")
+		@When("^Click on Save and wait for dialog to close$")
+		public void clickSaveBtnDialogClose() throws Throwable {
+			WebDriverWait wait = new WebDriverWait(driver, 30);
+			Thread.sleep(5000);
+			wait.until(ExpectedConditions.visibilityOf(auctionPage.saveandcloseButton));
+			auctionPage.saveandcloseButton.click();
+			wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
+			Thread.sleep(5000);
+
+		}
+		
+		@When("^Click on Save Private Auction & Create Deal button and verify create deal page is opened$")
 		public void clickSaveBtnCreateDeal() throws Throwable {
 			WebDriverWait wait = new WebDriverWait(driver, 30);
 			Thread.sleep(5000);
 			wait.until(ExpectedConditions.visibilityOf(auctionPage.saveandcreatedealButton));
 			auctionPage.saveandcreatedealButton.click();
+			wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
+			wait.until(ExpectedConditions.visibilityOf(
+					driver.findElement(By.xpath("//aside[@class='dialog']/header//div[contains(text(),'Create Deal')]"))));
+			Assert.assertEquals(dealsPage.publisherNamesEntered.getText(),enteredPublisherName);
+			Assert.assertEquals(dealsPage.privateActionFieldValue.getText(), enteredAuctionName);
 
 		}
 		
@@ -271,7 +291,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 
 				switch (fieldName) {
 				case "Name":
-					Assert.assertEquals(adspotsPage.adSpotNameHeader.getText(), enteredAuctionName);
+					Assert.assertEquals(auctionPage.auctionNameField.getAttribute("value"), enteredAuctionName);
 
 					break;
 				case "Publisher Name":
@@ -323,8 +343,64 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 
 				}
 			}
+			
+			
 
 		}
+		@When("^Click on the created auction name in the overview page$")
+		public void clickNameOverview() throws Throwable {
+			WebDriverWait wait = new WebDriverWait(driver, 30);
 
+			try {
+
+				String enteredName = enteredAuctionName.replaceAll("\\s", "");
+				List<WebElement> listOfNames = driver
+						.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[3]/span/a"));
+				for (int k = 0; k < listOfNames.size(); k++) {
+					String reqName = listOfNames.get(k).getText().replaceAll("\\s", "");
+
+					if (enteredName.equals(reqName)) {
+						listOfNames.get(k).click();
+						break;
+					}
+				}
+				wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
+				wait.until(ExpectedConditions.visibilityOf(driver.findElement(
+						By.xpath("//aside[@class='dialog']/header//div[contains(text(),'" + enteredAuctionName + "')]"))));
+				Thread.sleep(4000);
+			} catch (NullPointerException e) {
+				driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[3]/span/a")).click();
+				wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
+
+			}
+		}
+		
+		@When("^Verify the created private auction data is matching with its overview list values$")
+		public void verifyOverviewValues() throws Throwable {
+			String adSpotName = driver
+					.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[3]/span/a")).getText()
+					.replaceAll("\\s", "");
+			String entergedName = enteredAuctionName.replaceAll("\\s", "");
+			Assert.assertEquals(adSpotName, entergedName);
+			String publisherName = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[4]"))
+					.getText();
+			Assert.assertEquals(publisherName, enteredPublisherName);
+		}
+		
+		@When("^Verify clicking on Create a deal banner opens create deal entity page")
+		public void verifyCreateDealBanner() {
+			WebDriverWait wait = new WebDriverWait(driver, 30);
+			wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@class='v-banner__content']//div[@class='v-banner__text']"))));
+			String bannerText = driver.findElement(By.xpath("//div[@class='v-banner__content']//div[@class='v-banner__text']")).getText();
+			Assert.assertTrue(bannerText.contains("Click the button to create a new deal"));
+			driver.findElement(By.xpath("//div[@class='v-banner__content']//button")).click();
+			wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
+			wait.until(ExpectedConditions.visibilityOf(
+					driver.findElement(By.xpath("//aside[@class='dialog']/header//div[contains(text(),'Create Deal')]"))));
+			Assert.assertEquals(dealsPage.publisherNamesEntered.getText(),enteredPublisherName);
+			Assert.assertEquals(dealsPage.privateActionFieldValue.getText(), enteredAuctionName);
+		}
+		
+		
 
 }			
