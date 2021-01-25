@@ -355,7 +355,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 
 				String enteredName = enteredAuctionName.replaceAll("\\s", "");
 				List<WebElement> listOfNames = driver
-						.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[3]/span/a"));
+						.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[3]/a"));
 				for (int k = 0; k < listOfNames.size(); k++) {
 					String reqName = listOfNames.get(k).getText().replaceAll("\\s", "");
 
@@ -369,7 +369,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 						By.xpath("//aside[@class='dialog']/header//div[contains(text(),'" + enteredAuctionName + "')]"))));
 				Thread.sleep(4000);
 			} catch (NullPointerException e) {
-				driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[3]/span/a")).click();
+				driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[3]/a")).click();
 				wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
 
 			}
@@ -378,7 +378,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 		@When("^Verify the created private auction data is matching with its overview list values$")
 		public void verifyOverviewValues() throws Throwable {
 			String adSpotName = driver
-					.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[3]/span/a")).getText()
+					.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[3]/a")).getText()
 					.replaceAll("\\s", "");
 			String entergedName = enteredAuctionName.replaceAll("\\s", "");
 			Assert.assertEquals(adSpotName, entergedName);
