@@ -73,14 +73,27 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
     public WebElement targetingBlockButton(String targetingName, String targetingBlockButton) {
         return driver.findElement(By.xpath("//h3[text() = '" + targetingName +
                 "']/ancestor::button[contains(@class, 'v-expansion-panel-header flex')]/ancestor::" +
+                "div[contains(@class, 'v-expansion-panel--active')]//div[contains(text(), '" +
+                targetingBlockButton + "')]"));
+    }
+
+    public WebElement targetingIncludedBlockButton(String targetingName, String targetingBlockButton) {
+        return driver.findElement(By.xpath("//h3[text() = '" + targetingName +
+                "']/ancestor::button[contains(@class, 'v-expansion-panel-header flex')]/ancestor::" +
                 "div[contains(@class, 'v-expansion-panel--active')]//span[contains(text(), '" +
                 targetingBlockButton + "')]"));
+    }
+
+    public WebElement listCounter(String targetingName) {
+        return driver.findElement(By.xpath("//h3[text() = '" + targetingName +
+                "']/ancestor::button[contains(@class, 'v-expansion-panel-header flex')]/ancestor::" +
+                "div[contains(@class, 'v-expansion-panel--active')]//div[@class = 'item-count']"));
     }
 
     public WebElement includedCounter(String targetingName) {
         return driver.findElement(By.xpath("//h3[text() = '" + targetingName +
                 "']/ancestor::button[contains(@class, 'v-expansion-panel-header flex')]/ancestor::" +
-                "div[contains(@class, 'v-expansion-panel--active')]//div[@class = 'included-banner']"));
+                "div[contains(@class, 'v-expansion-panel--active')]//div[@class = 'selectionInfo']"));
     }
 
     public WebElement targetingBlockSearchInput(String targetingName) {
@@ -94,15 +107,15 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
     }
 
     public WebElement targetingBlockListItem(String itemName) {
-        return driver.findElement(By.xpath("//td[@class = 'first' and contains(text() , '" + itemName + "')]/ancestor::tbody"));
+        return driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody"));
     }
 
     public WebElement targetingBlockIncludedListItem(String itemName) {
-        return driver.findElement(By.xpath("//table[@class = 'included-table']//td[contains(text() , '" + itemName + "')]"));
+        return driver.findElement(By.xpath("//div[contains(@class , 'pane results')]//div[contains(text() , '" + itemName + "')]"));
     }
 
     public WebElement targetingBlockIncludedListItemClear(String itemName) {
-        return driver.findElement(By.xpath("//table[@class = 'included-table']//td[contains(text() , '" + itemName +
+        return driver.findElement(By.xpath("//div[contains(@class , 'pane results')]//div[contains(text() , '" + itemName +
                 "')]/ancestor::table//button"));
     }
 
@@ -115,7 +128,7 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
     public List<WebElement> targetingBlockIncludedItemsList(String targetingName) {
         return driver.findElements(By.xpath("//h3[text() = '" + targetingName +
                 "']/ancestor::button[contains(@class, 'v-expansion-panel-header flex')]/ancestor::" +
-                "div[contains(@class, 'v-expansion-panel--active')]//table[@class = 'included-table']//td[text()]"));
+                "div[contains(@class, 'v-expansion-panel--active')]//table[@class = 'included-table fixed']//td[text()]"));
     }
 
     // Action object
@@ -239,7 +252,7 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
                 "Include All")));
         targetingBlockButton(targetingName, "Include All").click();
         isAllItemAdded(targetingName);
-        targetingBlockButton(targetingName, "Clear All").click();
+        targetingIncludedBlockButton(targetingName, "Clear All").click();
         Assert.assertFalse(isItemAdded(targetingName));
         targetingExpandPanel(targetingName).click();
         Assert.assertFalse(isTargetingBlockOpen(targetingName));
@@ -251,8 +264,7 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
         targetingBlockSearchInput(targetingName).click();
         driverWait().until(ExpectedConditions.visibilityOf(targetingBlockSearchInput(targetingName)));
         targetingBlockSearchInput(targetingName).sendKeys(itemName);
-        driverWait().until(ExpectedConditions.textToBePresentInElement(targetingBlockButton(targetingName,
-                "Include All"), "1"));
+        driverWait().until(ExpectedConditions.textToBePresentInElement(listCounter(targetingName), "1"));
         targetingBlockButton(targetingName, "Include All").click();
         driverWait().until(ExpectedConditions.textToBePresentInElement(includedCounter(targetingName), "1"));
         Assert.assertTrue(isItemAdded(targetingName));
