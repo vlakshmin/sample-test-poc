@@ -23,6 +23,7 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
     PublisherListPage pubPage;
     RXDashboardPage dashboardPage;
     public String auctionHeaderStr = "Private Auctions";
+    List<List<WebElement>> listOfLists = new ArrayList<>();
 
     // Seats page heading
     @FindBy(xpath = "//h1[text()='Private Auctions']")
@@ -287,6 +288,10 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
         for (int i = 0; i < targetingBlockItemsList(targetingName).size(); i++) {
             Assert.assertEquals(targetingBlockItemsList(targetingName).get(i).getText(), targetingBlockIncludedItemsList(targetingName).get(i).getText());
         }
+    }
+
+    public void collectIncludedItems(String targetingName) {
+        listOfLists.add(targetingBlockIncludedItemsList(targetingName));
     }
 
     public void selectNextMonth() throws InterruptedException {
