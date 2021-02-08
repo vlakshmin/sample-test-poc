@@ -96,7 +96,7 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement value;
 	
 	//Deals buyers details
-	@FindBy(xpath = "//span[@class='v-btn__content' and text()='Add More Seats']" )
+	@FindBy(xpath = "//span[@class='v-btn__content' and text()='Add More Seats']//parent::button" )
 	public WebElement addMoreSeats;
 	@FindBy(xpath = "//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']" ) 
 	public WebElement dsPbuyerEnabled; 
@@ -112,17 +112,22 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement dSPSeatPassthroughString;
 	@FindBy(xpath = "//label[text()='DSP Domain Advertiser Passthrough String']/following-sibling::input" ) 
 	public WebElement dSPDomainAdvertiserPassthroughString;
-	@FindBy(xpath = "//label[text()='Related Proposal']/following-sibling::input" ) 
-	public WebElement relatedProposal;
+	/*
+	 * @FindBy(xpath = "//label[text()='Related Proposal']/following-sibling::input"
+	 * ) public WebElement relatedProposal;
+	 */
 	@FindBy(xpath = "//div[@class='buyers-card-grid'][2]/button/span" ) 
 	public WebElement deleteDSPbuyer;
+	@FindBy(xpath = "//button[@disabled=\"disabled\"]//span[text()='Add More Seats']" )
+	public WebElement addMoreSeatsDisabled;
 	
 	//Change Publisher Banner.
 	@FindBy(xpath = "//div[contains(@class,'v-banner__text') and contains(text(),'changing the Publisher')]" ) 
 	public WebElement changePublisherBannerMsg;
 	@FindBy(xpath = "//div[contains(text(),'changing the Publisher')]/ancestor::div[@class='v-banner__wrapper']//span[contains(text(),'CANCEL')]" ) 
 	public WebElement cancelPubChangeBanner;
-	@FindBy(xpath = "//div[contains(text(),'changing the Publisher')]/ancestor::div[@class='v-banner__wrapper']//span[text()='ACCEPT']" ) 
+//	@FindBy(xpath = "//div[contains(text(),'changing the Publisher')]/ancestor::div[@class='v-banner__wrapper']//span[text()='ACCEPT']" ) 
+	@FindBy(xpath = "//div[contains(text(),'changing the Publisher')]/ancestor::div[@class='v-banner__wrapper']//span[contains(text(),'ACCEPT')]" ) 
 	public WebElement acceptPubChangeBanner;
 	
 	//Change DSP Banner.
@@ -150,10 +155,11 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement searchDealId;
 
 
-	@FindBy(xpath = "//table/tbody/tr[1]/td[3]/span/a")
+	@FindBy(xpath = "//table/tbody/tr[1]/td[3]/a")
 	public WebElement dealNameInListview;
 	
-	String dealNameInListOne="//table/tbody/tr[1]/td[3]/span/a[contains(text(),";
+//	String dealNameInListOne="//table/tbody/tr[1]/td[3]/span/a[contains(text(),";
+	String dealNameInListOne="//table/tbody/tr[1]/td[3]/a[contains(text(),";
 	
 	
 	
@@ -172,10 +178,14 @@ public class RXDealsPage extends RXBaseClass {
 	public String enteredAdvertiserName;
 	public String enteredDSPSeatPassthroughString ;
 	public String enteredDSPDomainAdvertiserPassthroughString;
-	public String enteredRelatedProposal ;
+//	public String enteredRelatedProposal ;
 	
-
-
+	//Buyer Panel
+	public String buyerDSPPanel="(//ancestor::div[2]//div[contains(@class,'cardPadding')])";
+	public String buyerEnableDisable="(//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input'])";
+	public String buyerDelete="(//button[contains(@class,'elementPadding alignRight')]/span)";
+	public String dSPEnable="(//ancestor::div[2]//div[contains(@class,'cardPadding')]//div[contains(@class,'v-input--is-label-active')]//input)";
+	public String dSPDisable="(//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']//input[@aria-checked='false'])";
 	// Action object
 	Actions act = new Actions(driver);
 
@@ -183,7 +193,7 @@ public class RXDealsPage extends RXBaseClass {
 	static ArrayList<String> testData = new ArrayList<String>();
 
 	// Explicit Wait
-	WebDriverWait wait = new WebDriverWait(driver, 30);
+	WebDriverWait wait = new WebDriverWait(driver, 50);
 
 	// Initialize page factory
 	public RXDealsPage() {
@@ -195,7 +205,7 @@ public class RXDealsPage extends RXBaseClass {
 
 	// Get the text of the media page
 	public String getPageHeading() {
-		WebDriverWait wait = new WebDriverWait(driver, 1000);
+		WebDriverWait wait = new WebDriverWait(driver, 50);
 		WebElement elem = wait.until(ExpectedConditions.visibilityOf(dealsPageHeader));
 		System.out.println(elem.getText());
 		return elem.getText();
@@ -284,7 +294,7 @@ public class RXDealsPage extends RXBaseClass {
 				.findFirst()
 				.orElseThrow(() -> new org.openqa.selenium.NoSuchElementException(String.format("Publisher by the name %s wasn't found.", name)));
 		js.executeScript("arguments[0].scrollIntoView({block: \"center\"})", publisherName);
-		wait.until(elementToBeClickable(publisherName));
+		wait.until(ExpectedConditions.elementToBeClickable(publisherName));
 		publisherName.click();
 		
 	}
@@ -431,7 +441,8 @@ public class RXDealsPage extends RXBaseClass {
 		return endis;
 	}
 	
-	public void enterDSPValues(String seatID,String seatName,String advId,String advName,String seatPassThrString,String advPassThrString,String relatProposal)
+//	public void enterDSPValues(String seatID,String seatName,String advId,String advName,String seatPassThrString,String advPassThrString,String relatProposal)
+	public void enterDSPValues(String seatID,String seatName,String advId,String advName,String seatPassThrString,String advPassThrString)
 	{
 		
 		dSPSeatID.sendKeys(seatID + rxUTL.getRandomNumberFourDigit());
@@ -440,7 +451,7 @@ public class RXDealsPage extends RXBaseClass {
 		advertiserName.sendKeys(advName + rxUTL.getRandomNumberFourDigit());
 		dSPSeatPassthroughString.sendKeys(seatPassThrString + rxUTL.getRandomNumberFourDigit());
 		dSPDomainAdvertiserPassthroughString.sendKeys(advPassThrString + rxUTL.getRandomNumberFourDigit());
-		relatedProposal.sendKeys(relatProposal + rxUTL.getRandomNumberFourDigit());
+//		relatedProposal.sendKeys(relatProposal + rxUTL.getRandomNumberFourDigit());
 		
 		enteredDSPSeatID = dSPSeatID.getAttribute("value");
 		enteredDSPSeatName = dSPSeatName.getAttribute("value");
@@ -448,7 +459,7 @@ public class RXDealsPage extends RXBaseClass {
 		enteredAdvertiserName  = advertiserName.getAttribute("value");
 		enteredDSPSeatPassthroughString  = dSPSeatPassthroughString.getAttribute("value");
 		enteredDSPDomainAdvertiserPassthroughString  = dSPDomainAdvertiserPassthroughString.getAttribute("value");
-		enteredRelatedProposal  = relatedProposal.getAttribute("value");
+//		enteredRelatedProposal  = relatedProposal.getAttribute("value");
 	}
 	
 	public String getChangePublisherBannerMsg()
@@ -532,6 +543,40 @@ public class RXDealsPage extends RXBaseClass {
 		
 	}
 	
+	public WebElement addedDSPPanel(int n) 
+	{
+		js.executeScript("arguments[0].scrollIntoView();",driver.findElement(By.xpath(buyerDSPPanel+"["+n+"]")));
+		return driver.findElement(By.xpath(buyerDSPPanel+"["+n+"]"));
+		
+	}
+	
+	public void clickAddMoreSeats() 
+	{
+			
+			wait.until(ExpectedConditions.elementToBeClickable(addMoreSeats));
+			System.out.println("Inner Side Count time" + 1);
+			addMoreSeats.click();
+	}
 
-
+	public WebElement enableDSPdisable(int n) 
+	{
+		js.executeScript("arguments[0].scrollIntoView();",driver.findElement(By.xpath(buyerEnableDisable+"["+n+"]")));
+		return driver.findElement(By.xpath(buyerEnableDisable+"["+n+"]"));
+	}
+	
+	public WebElement buyerDelete(int n) 
+	{
+		js.executeScript("arguments[0].scrollIntoView();",driver.findElement(By.xpath(buyerDelete+"["+n+"]")));
+		return driver.findElement(By.xpath(buyerDelete+"["+n+"]"));
+	}
+	public WebElement dSPEnable(int n) 
+	{
+		js.executeScript("arguments[0].scrollIntoView();",driver.findElement(By.xpath(dSPEnable+"["+n+"]")));
+		return driver.findElement(By.xpath(dSPEnable+"["+n+"]"));
+	}
+	public WebElement dSPDisable(int n) 
+	{
+		js.executeScript("arguments[0].scrollIntoView();",driver.findElement(By.xpath(dSPDisable+"["+n+"]")));
+		return driver.findElement(By.xpath(dSPDisable+"["+n+"]"));
+	}
 }

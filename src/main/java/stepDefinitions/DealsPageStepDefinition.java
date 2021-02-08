@@ -8,12 +8,15 @@ import cucumber.api.DataTable;
 import cucumber.api.java.en.*;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.*;
 import org.testng.Assert;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.testng.Assert.assertTrue;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class DealsPageStepDefinition extends RXBaseClass {
 
@@ -32,7 +35,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		rxUTL =new RXUtile();
 
 	}
-	WebDriverWait wait = new WebDriverWait(driver, 1000);
+	WebDriverWait wait = new WebDriverWait(driver, 50);
 	JavascriptExecutor js = (JavascriptExecutor) driver;
 	public String enteredPublisher;
 	public String enteredDSP;
@@ -155,7 +158,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
     public void verifyRequiredFields() throws InterruptedException {
         dealsPage.clickSaveDealButton();
         js.executeScript("arguments[0].scrollIntoView();",dealsPage.publisherNameInput );
-        Thread.sleep(5000);
+//        Thread.sleep(5000);
         Assert.assertTrue(dealsPage.verifyRequiredFields());
     }
 	
@@ -207,8 +210,9 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 			String advertiserName = list.get(i).get("advertiserName");
 			String dSPSeatPassthroughString = list.get(i).get("dSPSeatPassthroughString");
 			String dSPDomainAdvertiserPassthroughString = list.get(i).get("dSPDomainAdvertiserPassthroughString");
-			String relatedProposal = list.get(i).get("relatedProposal");
-			dealsPage.enterDSPValues(dSPSeatID,dSPSeatName,AdvertiserId,advertiserName,dSPSeatPassthroughString,dSPDomainAdvertiserPassthroughString,relatedProposal);		
+//			String relatedProposal = list.get(i).get("relatedProposal");
+//			dealsPage.enterDSPValues(dSPSeatID,dSPSeatName,AdvertiserId,advertiserName,dSPSeatPassthroughString,dSPDomainAdvertiserPassthroughString,relatedProposal);
+			dealsPage.enterDSPValues(dSPSeatID,dSPSeatName,AdvertiserId,advertiserName,dSPSeatPassthroughString,dSPDomainAdvertiserPassthroughString);
 
 		}
 	}
@@ -298,8 +302,8 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 	
 	@Then("^Verify the following buyers details with the created data of deal$")
 	public void verify_the_following_buyers_details_with_the_created_data_of_deal(DataTable dt) throws Throwable {
-		js.executeScript("arguments[0].scrollIntoView();",dealsPage.relatedProposal);
-	
+//		js.executeScript("arguments[0].scrollIntoView();",dealsPage.relatedProposal);
+		js.executeScript("arguments[0].scrollIntoView();",dealsPage.dSPDomainAdvertiserPassthroughString);
 			List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 			for (int i = 0; i < list.size(); i++) {
 				String fieldName = list.get(i).get("FieldName");
@@ -335,11 +339,15 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 					Assert.assertEquals(dealsPage.dSPDomainAdvertiserPassthroughString.getAttribute("value"), dealsPage.enteredDSPDomainAdvertiserPassthroughString);
 
 					break;
-				case "Related Proposal":
-					System.out.println("Entered enteredRelatedProposal :"+ dealsPage.enteredRelatedProposal );
-					Assert.assertEquals(dealsPage.relatedProposal.getAttribute("value"), dealsPage.enteredRelatedProposal );
-
-					break;
+			/*
+			 * case "Related Proposal":
+			 * System.out.println("Entered enteredRelatedProposal :"+
+			 * dealsPage.enteredRelatedProposal );
+			 * Assert.assertEquals(dealsPage.relatedProposal.getAttribute("value"),
+			 * dealsPage.enteredRelatedProposal );
+			 * 
+			 * break;
+			 */
 				
 				default:
 					Assert.assertTrue(false, "The status fields supplied does not match with the input");
@@ -406,7 +414,8 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 	}
 	@Then("^Verify the following buyers details are reset to default values$")
 	public void verify_the_following_buyers_details_are_reset_to_default_values(DataTable dt) throws Throwable {
-		js.executeScript("arguments[0].scrollIntoView();",dealsPage.relatedProposal);		
+//		js.executeScript("arguments[0].scrollIntoView();",dealsPage.relatedProposal);
+		js.executeScript("arguments[0].scrollIntoView();",dealsPage.dSPDomainAdvertiserPassthroughString);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -429,9 +438,11 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 			case "DSP Domain Advertiser Passthrough String":
 				Assert.assertEquals(dealsPage.dSPDomainAdvertiserPassthroughString.getAttribute("value"), "");
 				break;
-			case "Related Proposal":
-				Assert.assertEquals(dealsPage.relatedProposal.getAttribute("value"), "");
-				break;			
+				/*
+				 * case "Related Proposal":
+				 * Assert.assertEquals(dealsPage.relatedProposal.getAttribute("value"), "");
+				 * break; 
+				 */
 			default:
 				Assert.assertTrue(false, "The status fields supplied does not match with the input");
 
@@ -472,7 +483,8 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 	}
 	@Then("^Verify the following buyer details of deal are not fillable$")
 	public void verify_the_following_buyer_details_of_deeal_are_not_fillable(DataTable dt) throws Throwable {
-		js.executeScript("arguments[0].scrollIntoView();",dealsPage.relatedProposal);		
+//		js.executeScript("arguments[0].scrollIntoView();",dealsPage.relatedProposal);
+		js.executeScript("arguments[0].scrollIntoView();",dealsPage.dSPDomainAdvertiserPassthroughString);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -495,9 +507,10 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 			case "DSP Domain Advertiser Passthrough String":
 				Assert.assertFalse(dealsPage.dSPDomainAdvertiserPassthroughString.isEnabled());
 				break;
-			case "Related Proposal":
-				Assert.assertFalse(dealsPage.relatedProposal.isEnabled());
-				break;			
+			/*
+			 * case "Related Proposal":
+			 * Assert.assertFalse(dealsPage.relatedProposal.isEnabled()); break;
+			 */			
 			default:
 				Assert.assertTrue(false, "The status fields supplied does not match with the input");
 
@@ -587,4 +600,90 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 			&& floorPriceValues.get("Negative").contains(false),
 			"Error while verifying floor prices");
 	}
+	
+	  @Then("^Click on Add more seats ten times$") 
+	  public void click_on_Add_more_seats_time() throws Throwable 
+	  {
+		  for(int i=1;i<=9;i++)
+			{
+			  	dealsPage.clickAddMoreSeats(); 
+			  	System.out.println("Count time"+i);
+			}
+	  }
+	  
+	
+	  @Then("^Verify that the Add more seats is disabled and ten DSP panels are added$") 
+	  public void verify_that_the_Add_more_seats_is_disabled_and_ten_DSP_panels_are_added() throws Throwable
+	  {
+		
+		  js.executeScript("arguments[0].scrollIntoView();",dealsPage.addMoreSeatsDisabled);
+		  Assert.assertTrue(dealsPage.addMoreSeatsDisabled.isEnabled());
+		 
+		  for(int i=1;i<=10;i++) 
+		  {
+		  wait.until(ExpectedConditions.visibilityOf(dealsPage.addedDSPPanel(i)));
+		  js.executeScript("arguments[0].scrollIntoView();",dealsPage.addedDSPPanel(i));
+		  Assert.assertTrue(dealsPage.addedDSPPanel(i).isDisplayed()); 
+		  }
+	
+	  }
+	  
+	  @Then("^Enabled added seats$")
+	  public void click_on_Enabled_added_seats() throws Throwable {
+		  for(int i=1;i<=10;i++) 
+		  {
+		  wait.until(ExpectedConditions.elementToBeClickable(dealsPage.enableDSPdisable(i)));
+		  js.executeScript("arguments[0].scrollIntoView();",dealsPage.enableDSPdisable(i));
+		  dealsPage.enableDSPdisable(i).click();
+		  }
+	  }
+
+	  @Then("^Verify that the added seat is enabled$")
+	  public void verify_that_the_added_seat_is_enabled() throws Throwable {
+		  for(int i=1;i<=10;i++) 
+		  {
+		  js.executeScript("arguments[0].scrollIntoView();",dealsPage.dSPEnable(i));
+		  Assert.assertTrue(dealsPage.dSPEnable(i).isEnabled()); 
+		  }
+	  }
+	  @Then("^Disabled added seats$")
+	  public void click_on_disabled_added_seats() throws Throwable {
+		  for(int i=1;i<=10;i++) 
+		  {
+		  js.executeScript("arguments[0].scrollIntoView();",dealsPage.enableDSPdisable(i));
+		  dealsPage.enableDSPdisable(i).click();
+		  }
+	  }
+
+	  @Then("^Verify that the added seat is disabled$")
+	  public void verify_that_the_added_seat_is_disabled() throws Throwable {
+		  for(int i=1;i<=10;i++) 
+		  {
+		  js.executeScript("arguments[0].scrollIntoView();",dealsPage.dSPDisable(i));
+		  Assert.assertTrue(dealsPage.dSPDisable(i).isEnabled()); 
+		  }
+	  }
+	  
+	  @Then("^Delete the added seats$")
+	  public void click_on_delete_the_added_seats() throws Throwable {
+		  for(int i=1;i<=10;i++) 
+		  {
+			            js.executeScript("arguments[0].scrollIntoView();",dealsPage.buyerDelete(1));
+			  		    dealsPage.buyerDelete(1).click();
+		  }
+	  }
+
+	  @Then("^Verify that the added seat is deleted$")
+	  public void verify_that_the_added_seat_is_deleted() throws Throwable {
+		  boolean flag= false;
+		  try {
+			  dealsPage.addedDSPPanel(1).isEnabled();
+			  flag=false;
+		  }catch(NoSuchElementException e)
+		  {
+			  flag=true;
+		  }
+		  Assert.assertTrue(flag); 
+	  }
+
 }	

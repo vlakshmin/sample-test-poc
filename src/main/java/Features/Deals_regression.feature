@@ -33,59 +33,115 @@ Scenario:  Verify hide/show columns from the table options for admin
 	And User displayed with Deals page
     And User click on table options button
     Then Verify that column "Name" can be hidden and shown
-#
-#
-#Scenario:  Verify onclicking relevant status from table options shows only that particular table rows with that status
-#    Given admin user login to RX UI with valid username and password
-#    When Click on Deals option under Sales
-#	And User displayed with Deals page
-#    Then User click on table options button
-#    And Verify that column "Active" only shows relevant rows in the table with filter "Active"
-#    And Verify that column "Active" only shows relevant rows in the table with filter "Inactive"
-#
-#Scenario:  Verify searching deal with available and non available deal name
-#    Given admin user login to RX UI with valid username and password
-#    When Click on Deals option under Sales
-#	And User displayed with Deals page
-#	Then Verify the search functionality with the following names
-#	|Name|CoumnName|
-#	|testings|Name|
-#	|testingss|Name|
-#
-#
-#Scenario:  Verify enabling and disabling of a deal from the overview page
-#    Given admin user login to RX UI with valid username and password
-#    When Click on Deals option under Sales
-#	And User displayed with Deals page
-#    Then Verify the search functionality with the following names
-#	|Name|CoumnName|
-#	|testings|Name|
-#	Then Verify enabling and disabling of a deal from the overview page
-#
-#
-#Scenario:  Verify sorting of the list's columns of the deals overview page
-#    Given admin user login to RX UI with valid username and password
-#   When Click on Deals option under Sales
-#	And User displayed with Deals page
-#	Then Verify the sorting functionality with the following columns
-#	|ColumnName|SortType|
-#	|ID|asc|
-#	|Publisher|desc|
-#	|Active|asc|
-#	|DSP|desc|
-#	|Start Date|desc|
-#	|End Date|desc|
-#	
-#Scenario: Verify if create deal menu is opened
-#    Given admin user login to RX UI with valid username and password
-#    When Click on Deals option under Sales
-#	And User displayed with Deals page
-#    And Click create a new deal
-#    Then Create deal menu is opened
-#    And Click on publisher input
-#    And Select publisher by name: "Viber"
-#		Then Verify the currency is correct
-#		And Verify required fields
+
+
+
+Scenario:  Verify onclicking relevant status from table options shows only that particular table rows with that status
+    Given admin user login to RX UI with valid username and password
+    When Click on Deals option under Sales
+	And User displayed with Deals page
+    Then User click on table options button
+    And Verify that column "Active" only shows relevant rows in the table with filter "Active"
+    And Verify that column "Active" only shows relevant rows in the table with filter "Inactive"
+
+Scenario:  Verify searching deal with available and non available deal name
+    Given admin user login to RX UI with valid username and password
+    When Click on Deals option under Sales
+	And User displayed with Deals page
+	Then Verify the search functionality with the following names
+	|Name|CoumnName|
+	|testings|Name|
+	|testingss|Name|
+
+
+Scenario:  Verify enabling and disabling of a deal from the overview page
+    Given admin user login to RX UI with valid username and password
+    When Click on Deals option under Sales
+	And User displayed with Deals page
+    Then Verify the search functionality with the following names
+	|Name|CoumnName|
+	|testings|Name|
+	Then Verify enabling and disabling of a deal from the overview page
+
+
+Scenario:  Verify sorting of the list's columns of the deals overview page
+    Given admin user login to RX UI with valid username and password
+   When Click on Deals option under Sales
+	And User displayed with Deals page
+	Then Verify the sorting functionality with the following columns
+	|ColumnName|SortType|
+	|ID|asc|
+	|Publisher|desc|
+	|Active|asc|
+	|DSP|desc|
+	|Start Date|desc|
+	|End Date|desc|
+	
+Scenario: Verify if create deal menu is opened
+    Given admin user login to RX UI with valid username and password
+    When Click on Deals option under Sales
+	And User displayed with Deals page
+    And Click create a new deal
+    Then Create deal menu is opened
+    And Click on publisher input
+    And Select publisher by name: "Viber"
+		Then Verify the currency is correct
+		And Verify required fields
+
+
+
+Scenario:  Verify onclicking relevant status from table options shows only that particular table rows with that status
+    Given admin user login to RX UI with valid username and password
+    When Click on Deals option under Sales
+	And User displayed with Deals page
+    Then User click on table options button
+    And Verify that column "Active" only shows relevant rows in the table with filter "Active"
+    And Verify that column "Active" only shows relevant rows in the table with filter "Inactive"
+
+Scenario:  Verify searching deal with available and non available deal name
+    Given admin user login to RX UI with valid username and password
+    When Click on Deals option under Sales
+	And User displayed with Deals page
+	Then Verify the search functionality with the following names
+	|Name|CoumnName|
+	|testings|Name|
+	|testingss|Name|
+
+
+Scenario:  Verify enabling and disabling of a deal from the overview page
+    Given admin user login to RX UI with valid username and password
+    When Click on Deals option under Sales
+	And User displayed with Deals page
+    Then Verify the search functionality with the following names
+	|Name|CoumnName|
+	|testings|Name|
+	Then Verify enabling and disabling of a deal from the overview page
+
+
+Scenario:  Verify sorting of the list's columns of the deals overview page
+    Given admin user login to RX UI with valid username and password
+   When Click on Deals option under Sales
+	And User displayed with Deals page
+	Then Verify the sorting functionality with the following columns
+	|ColumnName|SortType|
+	|ID|asc|
+	|Publisher|desc|
+	|Active|asc|
+	|DSP|desc|
+	|Start Date|desc|
+	|End Date|desc|
+	
+Scenario: Verify if create deal menu is opened
+    Given admin user login to RX UI with valid username and password
+    When Click on Deals option under Sales
+	And User displayed with Deals page
+    And Click create a new deal
+    Then Create deal menu is opened
+    And Click on publisher input
+    And Select publisher by name: "Viber"
+		Then Verify the currency is correct
+		And Verify required fields
+
 
 Scenario: Verify that the Alert message displayed for changing the publisher for deal,on cancel retain the filled value and accept removed the filled values.
     Given admin user login to RX UI with valid username and password
@@ -122,7 +178,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|Advertiser Name|
 	|DSP Seat Passthrough String|
 	|DSP Domain Advertiser Passthrough String|
-	|Related Proposal|
+#	|Related Proposal|
 	And Verify the buyer is "Enabled"
 	When change the publisher name to "Demand Integration"
 	Then Verify the following message is displayed when the publisher changed for deal
@@ -145,7 +201,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|Advertiser Name|
 	|DSP Seat Passthrough String|
 	|DSP Domain Advertiser Passthrough String|
-	|Related Proposal|
+#	|Related Proposal|
 	And Verify the buyer is "Disabled"
     
     
@@ -170,7 +226,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|Advertiser Name|
 	|DSP Seat Passthrough String|
 	|DSP Domain Advertiser Passthrough String|
-	|Related Proposal|
+#	|Related Proposal|
 	And Verify the buyer is "Disabled"
     
     
@@ -210,7 +266,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|Advertiser Name|
 	|DSP Seat Passthrough String|
 	|DSP Domain Advertiser Passthrough String|
-	|Related Proposal|
+#	|Related Proposal|
 	And Verify the buyer is "Enabled"
 	When change the DSP name to "Criteo"
 	Then Verify the following message is displayed when the DSP changed for deal
@@ -233,7 +289,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|Advertiser Name|
 	|DSP Seat Passthrough String|
 	|DSP Domain Advertiser Passthrough String|
-	|Related Proposal|
+#	|Related Proposal|
 	And Verify the buyer is "Disabled"
 	
 	Scenario: Verify Publisher,Private Auction and DSP are non-editable in deal
@@ -250,11 +306,11 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	And enter the following DSP buyer details.
 	|dSPSeatID|dSPSeatName|AdvertiserId|advertiserName|dSPSeatPassthroughString|dSPDomainAdvertiserPassthroughString|relatedProposal|
 	|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|TestAutorelatedProposal|
-# 	When click on Save deal 
-#	And copy the deal ID
-#	And search the deal ID 
-# 	And Select the deal and click on edit
-#	Then Verify Publisher,Private Auction and DSP are non-editable
+ 	When click on Save deal 
+	And copy the deal ID
+	And search the deal ID 
+ 	And Select the deal and click on edit
+	Then Verify Publisher,Private Auction and DSP are non-editable
 	
 	
 	Scenario: Verify that the publisher field is not editable and preselected for single publisher
@@ -278,3 +334,31 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	When Enter correct floor prices values: "1,9999,9,700"
 	And Enter incorrect floor prices values: "-2,0,10001,99999"
 	Then Verify Floor Prices
+
+	Scenario: Verify that the user can add max 10 seats in create deal page.
+   	Given admin user login to RX UI with valid username and password
+    When Click on Deals option under Sales
+	And User displayed with Deals page
+    And Click create a new deal
+    Then Create deal menu is opened
+    And Click on publisher input
+    And Select publisher by name: "Viber"
+    And Click on Add more seats ten times
+    Then Verify that the Add more seats is disabled and ten DSP panels are added
+
+	Scenario: Verify that the user can enable,disable and delete DSP Buyer
+   	Given admin user login to RX UI with valid username and password
+    When Click on Deals option under Sales
+	And User displayed with Deals page
+    And Click create a new deal
+    Then Create deal menu is opened
+    And Click on publisher input
+    And Select publisher by name: "Viber"
+    And Click on Add more seats ten times
+    And Enabled added seats
+    Then Verify that the added seat is enabled
+    And Disabled added seats
+    Then Verify that the added seat is disabled
+    And Delete the added seats
+    Then Verify that the added seat is deleted
+   
