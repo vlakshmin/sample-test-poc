@@ -221,7 +221,6 @@ Scenario:  Verify successful editing of private auction
 	|FieldName|
 	|Name|
 	|Publisher Name|
-	|Related Packages|
 	And Enter the following data in the general card of private auction
 	|FieldName|Value|ListValueIndex|
 	|Name|TestUpdated||
