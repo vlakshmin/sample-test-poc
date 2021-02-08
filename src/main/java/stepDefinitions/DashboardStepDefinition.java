@@ -1,10 +1,7 @@
 package stepDefinitions;
 
 import RXBaseClass.RXBaseClass;
-import RXPages.PublisherListPage;
-import RXPages.RXDashboardPage;
-import RXPages.RXLoginPage;
-import RXPages.RXNavOptions;
+import RXPages.*;
 import RXUtitities.RXUtile;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
