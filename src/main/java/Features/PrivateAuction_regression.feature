@@ -145,7 +145,6 @@ Scenario:  Verify on publisher user login, publisher field is disabled in the Cr
 	|FieldName|
 	|Name|
 	|Date Range|
-	|Related Packages|
 	|Active|
 	|Always on|
 	|Optimize|
@@ -177,7 +176,6 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|ListValue|1|
 	|Name|Test||
-	|Related Packages|testing||
 	|Date Range|Future||
 	And "Disable" following toggle fields in create page
 	|FieldName|
@@ -194,7 +192,6 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
 	Then Verify the following columns value with the created data for the general card of private auction
 	|FieldName|
 	|Name|
-	|Related Packages|
 	|Date Range|
 	And Enter the following data in the general card of private auction
 	|FieldName|Value|ListValueIndex|
@@ -208,7 +205,6 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
 	Then Verify the following columns values for the general card of private auction is empty
 	|FieldName|
 	|Name|
-	|Related Packages|
 	|Date Range|
 
 Scenario:  Verify successful creation of private auction on clicking \Save and close\
@@ -222,7 +218,6 @@ Scenario:  Verify successful creation of private auction on clicking \Save and c
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|ListValue|1|
 	|Name|Test||
-	|Related Packages|testing||
 	|Date Range|Future||
 	Then Click on Save and wait for dialog to close
 	Then Verify the created private auction data is matching with its overview list values
@@ -239,7 +234,6 @@ Scenario:  Verify creation of private auction and navigating to create deal page
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|ListValue|1|
 	|Name|Test||
-	|Related Packages|testing||
 	|Date Range|Future||
 	Then Click on Save Private Auction & Create Deal button and verify create deal page is opened
 
@@ -254,7 +248,6 @@ Scenario:  Verify successful editing of private auction
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|ListValue|1|
 	|Name|Test||
-	|Related Packages|testing||
 	|Date Range|Future||
 	Then Click on Save and wait for dialog to close
 	Then Verify the created private auction data is matching with its overview list values
@@ -264,11 +257,9 @@ Scenario:  Verify successful editing of private auction
 	|FieldName|
 	|Name|
 	|Publisher Name|
-	|Related Packages|
 	And Enter the following data in the general card of private auction
 	|FieldName|Value|ListValueIndex|
 	|Name|TestUpdated||
-	|Related Packages|testingupdated||
 	Then Click on Save and wait for dialog to close
 	Then Verify the created private auction data is matching with its overview list values
 	Then Click on the created auction name in the overview page
@@ -276,4 +267,3 @@ Scenario:  Verify successful editing of private auction
 	|FieldName|
 	|Name|
 	|Publisher Name|
-	|Related Packages|
