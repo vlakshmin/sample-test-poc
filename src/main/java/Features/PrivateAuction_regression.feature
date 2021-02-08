@@ -55,7 +55,7 @@ Scenario:  Verify enabling and disabling of a private auction from the overview 
 	And User displayed with Private Auctions page
     Then Verify the search functionality with the following names
 	|Name|CoumnName|
-	|reg_test|Name|
+	|TestUpdated|Name|
 	Then Verify enabling and disabling of an auction from the overview page
 
 	
@@ -109,7 +109,6 @@ Scenario:  Verify without selecting publisher the card is not enabled to fill in
 	|FieldName|
 	|Name|
 	|Date Range|
-	|Related Packages|
 	|Active|
 	|Always on|
 	|Optimize|
@@ -141,7 +140,6 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|ListValue|1|
 	|Name|Test||
-	|Related Packages|testing||
 	|Date Range|Future||
 	And "Disable" following toggle fields in create page
 	|FieldName|
@@ -158,7 +156,6 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
 	Then Verify the following columns value with the created data for the general card of private auction
 	|FieldName|
 	|Name|
-	|Related Packages|
 	|Date Range|
 	And Enter the following data in the general card of private auction
 	|FieldName|Value|ListValueIndex|
@@ -172,6 +169,66 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
 	Then Verify the following columns values for the general card of private auction is empty
 	|FieldName|
 	|Name|
-	|Related Packages|
 	|Date Range|
+	
+Scenario:  Verify successful creation of private auction on clicking \Save and close\
+    Given admin user login to RX UI with valid username and password 
+    When Click on Private Auctions option under Sales
+    And User displayed with Private Auctions page
+	And Click on the following create button
+	|CreateButtonName|
+	|Create Private Auction|
+	And Enter the following data in the general card of private auction
+	|FieldName|Value|ListValueIndex|
+	|Publisher Name|ListValue|1|
+	|Name|Test||
+	|Date Range|Future||
+	Then Click on Save and wait for dialog to close
+	Then Verify the created private auction data is matching with its overview list values
+	Then Verify clicking on Create a deal banner opens create deal entity page
+	
+Scenario:  Verify creation of private auction and navigating to create deal page on clicking \Save and create deal\
+    Given admin user login to RX UI with valid username and password 
+    When Click on Private Auctions option under Sales
+    And User displayed with Private Auctions page
+	And Click on the following create button
+	|CreateButtonName|
+	|Create Private Auction|
+	And Enter the following data in the general card of private auction
+	|FieldName|Value|ListValueIndex|
+	|Publisher Name|ListValue|1|
+	|Name|Test||
+	|Date Range|Future||
+	Then Click on Save Private Auction & Create Deal button and verify create deal page is opened
+	
+Scenario:  Verify successful editing of private auction
+    Given admin user login to RX UI with valid username and password 
+    When Click on Private Auctions option under Sales
+    And User displayed with Private Auctions page
+	And Click on the following create button
+	|CreateButtonName|
+	|Create Private Auction|
+	And Enter the following data in the general card of private auction
+	|FieldName|Value|ListValueIndex|
+	|Publisher Name|ListValue|1|
+	|Name|Test||
+	|Date Range|Future||
+	Then Click on Save and wait for dialog to close
+	Then Verify the created private auction data is matching with its overview list values
+	Then Click on the created auction name in the overview page
+	Then Verify publisher field is disabled on create/edit page
+	Then Verify the following columns value with the created data for the general card of private auction
+	|FieldName|
+	|Name|
+	|Publisher Name|
+	And Enter the following data in the general card of private auction
+	|FieldName|Value|ListValueIndex|
+	|Name|TestUpdated||
+	Then Click on Save and wait for dialog to close
+	Then Verify the created private auction data is matching with its overview list values
+	Then Click on the created auction name in the overview page
+	Then Verify the following columns value with the created data for the general card of private auction
+	|FieldName|
+	|Name|
+	|Publisher Name|
 	

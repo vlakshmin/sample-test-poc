@@ -310,7 +310,9 @@ public class RXDealsPage extends RXBaseClass {
 
 		// True if all required fields have an error message, false if not.
 		// Date field has a specific text for the required message, and it is formatted accordingly
+		Arrays.stream(elements).forEach(e -> wait.until(elementToBeClickable(e)));
 		return Arrays.stream(elements)
+				.peek(e -> System.out.println(e.getText()))
 				.allMatch(i ->
 				getErrorMessageTextByField(i).replaceAll("\\.", "")
 						.equalsIgnoreCase(("the " + i.getText() + " field is required")
