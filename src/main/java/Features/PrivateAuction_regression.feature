@@ -231,4 +231,3 @@ Scenario:  Verify successful editing of private auction
 	|FieldName|
 	|Name|
 	|Publisher Name|
-	

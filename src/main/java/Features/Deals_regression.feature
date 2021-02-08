@@ -1,38 +1,38 @@
 Feature: Deals page regression
 
-#Scenario:  Verify the default column names in the deals overview page
-#	Given admin user login to RX UI with valid username and password 
-#	When Click on Deals option under Sales
-#	And User displayed with Deals page
-#	Then Verify the deal overview page contains following columns
-#	|ColumnName|
-#	|ID|
-#	|Name|
-#	|Publisher|
-#	|Private Auction|
-#	|Active|
-#	|DSP|
-#	|Related Proposal|
-#	|Start Date|
-#	|End Date|
-#	|Value|
-#	|Currency|
-#	
-#
-#Scenario:  Verify the pagination exists for the list in the deals page for admin
-#	Given admin user login to RX UI with valid username and password
-#	When Click on Deals option under Sales
-#	And User displayed with Deals page
-#	Then Verify the pagination of the listed rows in the Page with a selection of 50 rows per page with 11 columns
-#
-#
-#
-#Scenario:  Verify hide/show columns from the table options for admin
-#    Given admin user login to RX UI with valid username and password
-#	When Click on Deals option under Sales
-#	And User displayed with Deals page
-#    And User click on table options button
-#    Then Verify that column "Name" can be hidden and shown
+Scenario:  Verify the default column names in the deals overview page
+	Given admin user login to RX UI with valid username and password 
+	When Click on Deals option under Sales
+	And User displayed with Deals page
+	Then Verify the deal overview page contains following columns
+	|ColumnName|
+	|ID|
+	|Name|
+	|Publisher|
+	|Private Auction|
+	|Active|
+	|DSP|
+	|Related Proposal|
+	|Start Date|
+	|End Date|
+	|Value|
+	|Currency|
+	
+
+Scenario:  Verify the pagination exists for the list in the deals page for admin
+	Given admin user login to RX UI with valid username and password
+	When Click on Deals option under Sales
+	And User displayed with Deals page
+	Then Verify the pagination of the listed rows in the Page with a selection of 50 rows per page with 11 columns
+
+
+
+Scenario:  Verify hide/show columns from the table options for admin
+    Given admin user login to RX UI with valid username and password
+	When Click on Deals option under Sales
+	And User displayed with Deals page
+    And User click on table options button
+    Then Verify that column "Name" can be hidden and shown
 #
 #
 #Scenario:  Verify onclicking relevant status from table options shows only that particular table rows with that status
