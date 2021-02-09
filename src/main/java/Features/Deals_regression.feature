@@ -66,7 +66,7 @@ Scenario:  Verify enabling and disabling of a deal from the overview page
 
 Scenario:  Verify sorting of the list's columns of the deals overview page
     Given admin user login to RX UI with valid username and password
-   When Click on Deals option under Sales
+    When Click on Deals option under Sales
 	And User displayed with Deals page
 	Then Verify the sorting functionality with the following columns
 	|ColumnName|SortType|
@@ -90,57 +90,57 @@ Scenario: Verify if create deal menu is opened
 
 
 
-Scenario:  Verify onclicking relevant status from table options shows only that particular table rows with that status
-    Given admin user login to RX UI with valid username and password
-    When Click on Deals option under Sales
-	And User displayed with Deals page
-    Then User click on table options button
-    And Verify that column "Active" only shows relevant rows in the table with filter "Active"
-    And Verify that column "Active" only shows relevant rows in the table with filter "Inactive"
+#Scenario:  Verify onclicking relevant status from table options shows only that particular table rows with that status
+#    Given admin user login to RX UI with valid username and password
+#    When Click on Deals option under Sales
+#	And User displayed with Deals page
+#    Then User click on table options button
+#    And Verify that column "Active" only shows relevant rows in the table with filter "Active"
+#    And Verify that column "Active" only shows relevant rows in the table with filter "Inactive"
 
-Scenario:  Verify searching deal with available and non available deal name
-    Given admin user login to RX UI with valid username and password
-    When Click on Deals option under Sales
-	And User displayed with Deals page
-	Then Verify the search functionality with the following names
-	|Name|CoumnName|
-	|testings|Name|
-	|testingss|Name|
-
-
-Scenario:  Verify enabling and disabling of a deal from the overview page
-    Given admin user login to RX UI with valid username and password
-    When Click on Deals option under Sales
-	And User displayed with Deals page
-    Then Verify the search functionality with the following names
-	|Name|CoumnName|
-	|testings|Name|
-	Then Verify enabling and disabling of a deal from the overview page
+#Scenario:  Verify searching deal with available and non available deal name
+#    Given admin user login to RX UI with valid username and password
+#    When Click on Deals option under Sales
+#	And User displayed with Deals page
+#	Then Verify the search functionality with the following names
+#	|Name|CoumnName|
+#	|testings|Name|
+#	|testingss|Name|
 
 
-Scenario:  Verify sorting of the list's columns of the deals overview page
-    Given admin user login to RX UI with valid username and password
-   When Click on Deals option under Sales
-	And User displayed with Deals page
-	Then Verify the sorting functionality with the following columns
-	|ColumnName|SortType|
-	|ID|asc|
-	|Publisher|desc|
-	|Active|asc|
-	|DSP|desc|
-	|Start Date|desc|
-	|End Date|desc|
+#Scenario:  Verify enabling and disabling of a deal from the overview page
+#    Given admin user login to RX UI with valid username and password
+#    When Click on Deals option under Sales
+#	And User displayed with Deals page
+#    Then Verify the search functionality with the following names
+#	|Name|CoumnName|
+#	|testings|Name|
+#	Then Verify enabling and disabling of a deal from the overview page
+
+
+#Scenario:  Verify sorting of the list's columns of the deals overview page
+#   Given admin user login to RX UI with valid username and password
+#   When Click on Deals option under Sales
+#	And User displayed with Deals page
+#	Then Verify the sorting functionality with the following columns
+#	|ColumnName|SortType|
+#	|ID|asc|
+#	|Publisher|desc|
+#	|Active|asc|
+#	|DSP|desc|
+#	|Start Date|desc|
+#	|End Date|desc|
 	
-Scenario: Verify if create deal menu is opened
-    Given admin user login to RX UI with valid username and password
-    When Click on Deals option under Sales
-	And User displayed with Deals page
-    And Click create a new deal
-    Then Create deal menu is opened
-    And Click on publisher input
-    And Select publisher by name: "Viber"
-		Then Verify the currency is correct
-		And Verify required fields
+#Scenario: Verify if create deal menu is opened
+#    Given admin user login to RX UI with valid username and password
+#    When Click on Deals option under Sales
+#	And User displayed with Deals page
+#    And Click create a new deal
+#    Then Create deal menu is opened
+#    And Click on publisher input
+#    And Select publisher by name: "Viber"
+#		Then Verify the currency is correct
+#		And Verify required fields
 
 
 Scenario: Verify that the Alert message displayed for changing the publisher for deal,on cancel retain the filled value and accept removed the filled values.
@@ -152,7 +152,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
     And Click on publisher input
   	And enter the following values
   	|publisher|PrivateAuction|DSPValue|EntDealName|Values|
-	|Viber|rmp|TheTradeDesk|TestAutoDeal|2|	
+	|Viber|Test_Spe|TheTradeDesk|TestAutoDeal|2|	
 	And "Enable" the DSP buyer
 	And enter the following DSP buyer details.
 	|dSPSeatID|dSPSeatName|AdvertiserId|advertiserName|dSPSeatPassthroughString|dSPDomainAdvertiserPassthroughString|relatedProposal|
@@ -240,7 +240,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
     And Click on publisher input
   	And enter the following values
   	|publisher|PrivateAuction|DSPValue|EntDealName|Values|
-	|Viber|rmp|TheTradeDesk|TestAutoDeal|2|	
+	|Viber|Test_Spe|TheTradeDesk|TestAutoDeal|2|	
 	And "Enable" the DSP buyer
 	And enter the following DSP buyer details.
 	|dSPSeatID|dSPSeatName|AdvertiserId|advertiserName|dSPSeatPassthroughString|dSPDomainAdvertiserPassthroughString|relatedProposal|
@@ -301,7 +301,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
     And Click on publisher input
   	And enter the following values
   	|publisher|PrivateAuction|DSPValue|EntDealName|Values|
-	|Demand Integration|Test_Spe|TheTradeDesk|TestAutoDeal|2|	
+	|Viber|Test_Spe|TheTradeDesk|TestAutoDeal|2|	
 	And "Enable" the DSP buyer
 	And enter the following DSP buyer details.
 	|dSPSeatID|dSPSeatName|AdvertiserId|advertiserName|dSPSeatPassthroughString|dSPDomainAdvertiserPassthroughString|relatedProposal|
