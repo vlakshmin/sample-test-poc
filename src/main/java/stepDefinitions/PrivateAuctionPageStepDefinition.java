@@ -1,35 +1,27 @@
 package stepDefinitions;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotVisibleException;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import RXBaseClass.RXBaseClass;
 import RXPages.PublisherListPage;
 import RXPages.RXAdspotsPage;
 import RXPages.RXDealsPage;
 import RXPages.RXNavOptions;
 import RXPages.RXPrivateAuctionsPage;
-import RXUtitities.RXUtile;
 import cucumber.api.DataTable;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+
+import java.text.ParseException;
+import java.util.List;
+import java.util.Map;
 
 public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 
@@ -44,8 +36,6 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 	String enteredAuctionName;
 	String enteredAuctionPackages;
 	String enteredAuctionDates;
-	
-	
 
 	public PrivateAuctionPageStepDefinition() {
 		super();
@@ -55,75 +45,76 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 		adspotsPage = new RXAdspotsPage();
 		dealsPage = new RXDealsPage();
 
-	}
 
-	JavascriptExecutor js = (JavascriptExecutor) driver;
+    }
+
+    JavascriptExecutor js = (JavascriptExecutor) driver;
 //=========================================================================================================	
-	// Verify if user is displayed with media list page on clicking media navigation
-	// link
+    // Verify if user is displayed with media list page on clicking media navigation
+    // link
 
-	@When("^Click on Private Auctions option under Sales$")
-	public void check_for_Sub_mennu_option_under_Inventory_main_menu() throws Throwable {
-		log.info("User logged in to check the navigation option for Sub menu option under Inventory main menu :"
-				+ pubListPgs.logodisplayed());
-		Assert.assertTrue(pubListPgs.logodisplayed());
-		navOptions.expandSales();
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.visibilityOf(navOptions.privateAuctionLabel));
-		navOptions.privateAuctionLabel.click();
+    @When("^Click on Private Auctions option under Sales$")
+    public void check_for_Sub_mennu_option_under_Inventory_main_menu() throws Throwable {
+        log.info("User logged in to check the navigation option for Sub menu option under Inventory main menu :"
+                + pubListPgs.logodisplayed());
+        Assert.assertTrue(pubListPgs.logodisplayed());
+        navOptions.expandSales();
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOf(navOptions.privateAuctionLabel));
+        navOptions.privateAuctionLabel.click();
 
-	}
+    }
 
-	@When("^Click on Private Auctions sub menu$")
-	public void check_for_Adspot() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.visibilityOf(navOptions.privateAuctionLabel));
-		navOptions.privateAuctionLabel.click();
+    @When("^Click on Private Auctions sub menu$")
+    public void check_for_Adspot() throws Throwable {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOf(navOptions.privateAuctionLabel));
+        navOptions.privateAuctionLabel.click();
 
-	}
+    }
 
-	@Then("^User displayed with Private Auctions page$")
-	public void user_displayed_with_seats_page() throws Throwable {
-		Assert.assertEquals(auctionPage.getPageHeading(), auctionPage.auctionHeaderStr);
-		log.info("Auction Page Header is asserted  and it is : " + auctionPage.getPageHeading());
+    @Then("^User displayed with Private Auctions page$")
+    public void user_displayed_with_seats_page() throws Throwable {
+        Assert.assertEquals(auctionPage.getPageHeading(), auctionPage.auctionHeaderStr);
+        log.info("Auction Page Header is asserted  and it is : " + auctionPage.getPageHeading());
 
-	}
-	
-	//Verify enabling abd disabling of an adspot from the overview page
+    }
 
-		@When("^Verify enabling and disabling of an auction from the overview page$")
-		public void verifyHEnableDiableAdspot() throws InterruptedException {
-			for (int i = 0; i <= 1; i++) {
-				driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]/div//i")).click();
-				List<WebElement> coulmnData = navOptions.getColumnDataMatchingHeader("Active");
-				String status = coulmnData.get(0).getText();
-				switch (status) {
-				case "Active":
-					Assert.assertTrue(auctionPage.overviewEditbutton.isDisplayed());
-					Assert.assertTrue(auctionPage.overviewDisablebutton.isDisplayed());
-					auctionPage.clickOverViewDisablebutton();
-					Thread.sleep(3000);
-					List<WebElement> coulmnData1 = navOptions.getColumnDataMatchingHeader("Active");
-					Assert.assertEquals(coulmnData1.get(0).getText(), "Inactive");
-					break;
-				case "Inactive":
-					Assert.assertTrue(auctionPage.overviewEditbutton.isDisplayed());
-					Assert.assertTrue(auctionPage.overviewEnablebutton.isDisplayed());
-					String enableText = auctionPage.overviewEnablebutton.getText().replaceAll("\\s", "");
-					Assert.assertEquals(enableText, "ACTIVATEPRIVATEAUCTION");
-					auctionPage.clickOverViewEnablebutton();
-					Thread.sleep(3000);
-					List<WebElement> coulmnData2 = navOptions.getColumnDataMatchingHeader("Active");
-					Assert.assertEquals(coulmnData2.get(0).getText(), "Active");
-					break;
+    //Verify enabling abd disabling of an adspot from the overview page
 
-				default:
-					Assert.assertTrue(false, "The status fields supplied does not match with the input");
+    @When("^Verify enabling and disabling of an auction from the overview page$")
+    public void verifyHEnableDiableAdspot() throws InterruptedException {
+        for (int i = 0; i <= 1; i++) {
+            driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]/div//i")).click();
+            List<WebElement> coulmnData = navOptions.getColumnDataMatchingHeader("Active");
+            String status = coulmnData.get(0).getText();
+            switch (status) {
+                case "Active":
+                    Assert.assertTrue(auctionPage.overviewEditbutton.isDisplayed());
+                    Assert.assertTrue(auctionPage.overviewDisablebutton.isDisplayed());
+                    auctionPage.clickOverViewDisablebutton();
+                    Thread.sleep(3000);
+                    List<WebElement> coulmnData1 = navOptions.getColumnDataMatchingHeader("Active");
+                    Assert.assertEquals(coulmnData1.get(0).getText(), "Inactive");
+                    break;
+                case "Inactive":
+                    Assert.assertTrue(auctionPage.overviewEditbutton.isDisplayed());
+                    Assert.assertTrue(auctionPage.overviewEnablebutton.isDisplayed());
+                    String enableText = auctionPage.overviewEnablebutton.getText().replaceAll("\\s", "");
+                    Assert.assertEquals(enableText, "ACTIVATEPRIVATEAUCTION");
+                    auctionPage.clickOverViewEnablebutton();
+                    Thread.sleep(3000);
+                    List<WebElement> coulmnData2 = navOptions.getColumnDataMatchingHeader("Active");
+                    Assert.assertEquals(coulmnData2.get(0).getText(), "Active");
+                    break;
+
+                default:
+                    Assert.assertTrue(false, "The status fields supplied does not match with the input");
 
 				}
 			}
 		}
-		
+
 		@Then("^Enter the following data in the general card of private auction$")
 		public void enterGenaralCardAuction(DataTable dt) throws InterruptedException, ParseException {
 			WebDriverWait wait = new WebDriverWait(driver, 35);
@@ -158,7 +149,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 					System.out.println("publisher entered as :" + enteredPublisherName);
 					wait.until(ExpectedConditions.visibilityOf(auctionPage.auctionNameField));
 					break;
-				
+
 				case "Name":
 //					js.executeScript("arguments[0].setAttribute('value', '')",adspotsPage.adSpotNameField);
 					while (!auctionPage.auctionNameField.getAttribute("value").equals("")) {
@@ -182,8 +173,8 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 					enteredAuctionDates = auctionPage.dateInput.getAttribute("value");
 					System.out.println("Entered Auction dates:" + enteredAuctionDates);
 					break;
-					
-				
+
+
 				default:
 					Assert.assertTrue(false, "The status fields supplied does not match with the input");
 
@@ -197,10 +188,10 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 			Thread.sleep(5000);
 			wait.until(ExpectedConditions.visibilityOf(auctionPage.saveandcloseButton));
 			auctionPage.saveandcloseButton.click();
-			
+
 
 		}
-		
+
 		@When("^Click on Save and wait for dialog to close$")
 		public void clickSaveBtnDialogClose() throws Throwable {
 			WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -225,7 +216,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 			Assert.assertEquals(dealsPage.privateActionFieldValue.getText(), enteredAuctionName);
 
 		}
-		
+
 		@Then("^Verify following fields are not enabled for create page$")
 		public void verifyMandatorFields(DataTable dt) throws InterruptedException {
 			WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -252,7 +243,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 						By.xpath("//aside[@class='dialog']//label[text()='"+fieldName+"']/parent::div//input")).getAttribute("aria-checked");
 				if(active.equalsIgnoreCase("Yes")) {
 				Assert.assertEquals(isEnabled,"true");
-				
+
 				}else {
 					Assert.assertEquals(isEnabled,"false");
 				}
@@ -260,7 +251,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 			}
 
 		}
-		
+
 		@Then("^\"(.*)\" following toggle fields in create page$")
 		public void changeToggleFields(String enable,DataTable dt) throws InterruptedException {
 			WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -280,8 +271,8 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 			}
 }
 
-		
-		
+
+
 		@Then("^Verify the following columns value with the created data for the general card of private auction$")
 		public void verifyGeneralCardValues(DataTable dt) throws InterruptedException, ParseException {
 			WebDriverWait wait = new WebDriverWait(driver, 35);
@@ -307,14 +298,14 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 					Assert.assertEquals(auctionPage.dateInput.getAttribute("value"), enteredAuctionDates);
 
 					break;
-				
+
 				default:
 					Assert.assertTrue(false, "The status fields supplied does not match with the input");
 
 				}
 			}
 		}
-		
+
 		@Then("^Verify the following columns values for the general card of private auction is empty$")
 		public void verifyGeneralCardValuesEmpty(DataTable dt) throws InterruptedException, ParseException {
 
@@ -337,14 +328,14 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 					Assert.assertEquals(auctionPage.dateInput.getAttribute("value").trim(), "GMT");
 
 					break;
-				
+
 				default:
 					Assert.assertTrue(false, "The status fields supplied does not match with the input");
 
 				}
 			}
-			
-			
+
+
 
 		}
 		@When("^Click on the created auction name in the overview page$")
@@ -374,7 +365,34 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 
 			}
 		}
-		
+
+    @And("^Open create New Private Auction page$")
+    public void openCreateNewPrivateAuctionPage() {
+        auctionPage.clickCreateNewPrivateAuctionButton();
+    }
+
+    @And("^Select publisher for Private Auction$")
+    public void selectPublisherForPrivateAuction() {
+        auctionPage.selectPublisher("Viber");
+    }
+
+    @Then("^Verify all targeting options are displayed$")
+    public void verifyTargetingOptionsDisplayed() {
+        driverWait().until(ExpectedConditions.visibilityOf(auctionPage.privateAuctionNameField));
+        auctionPage.targetingExpandPanel("Inventory").isDisplayed();
+        auctionPage.targetingExpandPanel("Device").isDisplayed();
+        auctionPage.targetingExpandPanel("Operating System").isDisplayed();
+        auctionPage.targetingExpandPanel("Geo").isDisplayed();
+        auctionPage.targetingExpandPanel("Ad Format").isDisplayed();
+        auctionPage.targetingExpandPanel("Ad Size").isDisplayed();
+    }
+
+    @Then("^Verify select/unselect targeting options items$")
+    public void verifySelectUnselectItems(DataTable dt) {
+        List<List<String>> data = dt.asLists(String.class);
+        data.forEach(e -> auctionPage.checkSelectUnselectForBlock(e.get(0), e.get(1)));
+    }
+
 		@When("^Verify the created private auction data is matching with its overview list values$")
 		public void verifyOverviewValues() throws Throwable {
 			String adSpotName = driver
@@ -386,7 +404,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 					.getText();
 			Assert.assertEquals(publisherName, enteredPublisherName);
 		}
-		
+
 		@When("^Verify clicking on Create a deal banner opens create deal entity page")
 		public void verifyCreateDealBanner() {
 			WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -400,7 +418,18 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 			Assert.assertEquals(dealsPage.publisherNamesEntered.getText(),enteredPublisherName);
 			Assert.assertEquals(dealsPage.privateActionFieldValue.getText(), enteredAuctionName);
 		}
-		
-		
 
-}			
+
+
+    @Then("^Verify select/unselect all targeting options items$")
+    public void verifySelectUnselectAllItems(DataTable dt) {
+        List<List<String>> data = dt.asLists(String.class);
+        data.forEach(e -> auctionPage.checkSelectUnselectAllForBlock(e.get(0)));
+    }
+
+	@Then("^Verify search targeting options items$")
+	public void verifySearchItems(DataTable dt) {
+		List<List<String>> data = dt.asLists(String.class);
+		data.forEach(e -> auctionPage.checkSearchForBlock(e.get(0), e.get(1)));
+	}
+}
