@@ -98,8 +98,44 @@ Scenario:  Verify on publisher user login, publisher field is disabled in the Cr
 	|Create Private Auction|
  	Then Verify publisher field is disabled on create/edit page
 
-Scenario:  Verify without selecting publisher the card is not enabled to fill in the Create private auction Page 
-    Given admin user login to RX UI with valid username and password 
+  Scenario: Verify select/unselect for targeting options
+    Given Admin user login by entering valid username and password
+    When Click on Private Auctions option under Sales
+    And Open create New Private Auction page
+    And Select publisher for Private Auction
+    Then Verify select/unselect targeting options items
+      | Device           | Phone       |
+      | Operating System | Android     |
+      | Geo              | Afghanistan |
+      | Ad Format        | Audio       |
+      | Ad Size          | 120x60      |
+
+  Scenario: Verify select/unselect all for targeting options
+    Given Admin user login by entering valid username and password
+    When Click on Private Auctions option under Sales
+    And Open create New Private Auction page
+    And Select publisher for Private Auction
+    Then Verify select/unselect all targeting options items
+      | Device           |
+      | Operating System |
+      | Geo              |
+#      | Ad Format        |
+      | Ad Size          |
+
+  Scenario: Verify Search for targeting options
+    Given Admin user login by entering valid username and password
+    When Click on Private Auctions option under Sales
+    And Open create New Private Auction page
+    And Select publisher for Private Auction
+    Then Verify search targeting options items
+      | Device           | Phone       |
+      | Operating System | Android     |
+      | Geo              | Afghanistan |
+      | Ad Format        | Audio       |
+      | Ad Size          | 120x60      |
+
+  Scenario:  Verify without selecting publisher the card is not enabled to fill in the Create private auction Page
+    Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
 	And Click on the following create button
@@ -170,9 +206,9 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
 	|FieldName|
 	|Name|
 	|Date Range|
-	
+
 Scenario:  Verify successful creation of private auction on clicking \Save and close\
-    Given admin user login to RX UI with valid username and password 
+    Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
 	And Click on the following create button
@@ -186,9 +222,9 @@ Scenario:  Verify successful creation of private auction on clicking \Save and c
 	Then Click on Save and wait for dialog to close
 	Then Verify the created private auction data is matching with its overview list values
 	Then Verify clicking on Create a deal banner opens create deal entity page
-	
+
 Scenario:  Verify creation of private auction and navigating to create deal page on clicking \Save and create deal\
-    Given admin user login to RX UI with valid username and password 
+    Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
 	And Click on the following create button
@@ -200,9 +236,9 @@ Scenario:  Verify creation of private auction and navigating to create deal page
 	|Name|Test||
 	|Date Range|Future||
 	Then Click on Save Private Auction & Create Deal button and verify create deal page is opened
-	
+
 Scenario:  Verify successful editing of private auction
-    Given admin user login to RX UI with valid username and password 
+    Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
 	And Click on the following create button
