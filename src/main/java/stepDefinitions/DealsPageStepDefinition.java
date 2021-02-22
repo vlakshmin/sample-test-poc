@@ -538,9 +538,9 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 	
 	@When("^click on Save deal$")
 	public void click_on_Save_deal() throws Throwable {
-//		System.out.println("Deal ID :"+ dealsPage.saveDeal());
-		Assert.assertEquals(dealsPage.saveDeal(), "UPDATED!");
-		
+		dealsPage.saveDeal();
+		System.out.println(dealsPage.getBannerMessage());
+		Assert.assertTrue(dealsPage.getBannerMessage().toLowerCase().contains("copy deal id"));
 	}
 	@When("^copy the deal ID$")
 	public void copy_the_deal_ID() throws Throwable {
