@@ -9,14 +9,15 @@ Scenario:  Verify the default column names in the deals overview page
 	|ID|
 	|Name|
 	|Publisher|
+	|Details  |
 	|Private Auction|
 	|Active|
 	|DSP|
 	|Related Proposal|
 	|Start Date|
 	|End Date|
-	|Value|
-	|Currency|
+	|Price \| Value|
+	|Price \| Currency|
 	
 
 Scenario:  Verify the pagination exists for the list in the deals page for admin
