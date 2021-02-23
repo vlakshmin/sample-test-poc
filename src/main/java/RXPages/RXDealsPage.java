@@ -120,7 +120,9 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement deleteDSPbuyer;
 	@FindBy(xpath = "//button[@disabled=\"disabled\"]//span[text()='Add More Seats']" )
 	public WebElement addMoreSeatsDisabled;
-	
+	// Banner Element
+	@FindBy(xpath="//div[@class='v-banner__text']")
+	public WebElement banner;
 	//Change Publisher Banner.
 	@FindBy(xpath = "//div[contains(@class,'v-banner__text') and contains(text(),'changing the Publisher')]" ) 
 	public WebElement changePublisherBannerMsg;
@@ -137,6 +139,7 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement cancelDSPChangeBanner;
 	@FindBy(xpath = "//div[contains(text(),'changing the DSP')]/ancestor::div[@class='v-banner__wrapper']//span[contains(text(),'ACCEPT')]" ) 
 	public WebElement acceptDSPChangeBanner;
+
 	
 	//Save deal
 	@FindBy(xpath = "//button[@type='submit']")
@@ -485,7 +488,10 @@ public class RXDealsPage extends RXBaseClass {
 		}	
 		return pubChangeStatus;
 	}
-	
+	public String getBannerMessage () {
+		wait.until(ExpectedConditions.visibilityOf(banner));
+		return banner.getText();
+	}
 	public String getChangeDSPBannerMsg()
 	{
 		WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -510,15 +516,9 @@ public class RXDealsPage extends RXBaseClass {
 		return pubChangeStatus;
 	}
 	
-	public String saveDeal()
+	public void saveDeal()
 	{
 		saveButton.click();
-		
-		  wait.until(ExpectedConditions.visibilityOf(saveButtonTxt)); 
-		  String str=saveButtonTxt.getText(); 
-		  return str;
-		 
-
 	}
 		
 	

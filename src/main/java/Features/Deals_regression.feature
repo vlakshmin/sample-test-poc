@@ -9,21 +9,22 @@ Scenario:  Verify the default column names in the deals overview page
 	|ID|
 	|Name|
 	|Publisher|
+	|Details  |
 	|Private Auction|
 	|Active|
 	|DSP|
 	|Related Proposal|
 	|Start Date|
 	|End Date|
-	|Value|
-	|Currency|
+	|Price \| Value|
+	|Price \| Currency|
 	
 
 Scenario:  Verify the pagination exists for the list in the deals page for admin
 	Given admin user login to RX UI with valid username and password
 	When Click on Deals option under Sales
 	And User displayed with Deals page
-	Then Verify the pagination of the listed rows in the Page with a selection of 50 rows per page with 11 columns
+	Then Verify the pagination of the listed rows in the Page with a selection of 50 rows per page with 12 columns
 
 
 

@@ -17,6 +17,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 public class DealsPageStepDefinition extends RXBaseClass {
 
@@ -107,25 +108,15 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		}
 		@Then("^Verify the deal overview page contains following columns$")
 		public void verifyColumnsNameInList(DataTable dt) throws InterruptedException {
-			List<String> columnsNamePresent = new ArrayList<String>();
-			List<WebElement> numberOFHeaders = navOptions.tableHeadersList;
-			for (int i = 0; i < numberOFHeaders.size(); i++) {
-				columnsNamePresent.add(numberOFHeaders.get(i).getText());
-			}
-			columnsNamePresent.set(6, "Value");
-			columnsNamePresent.set(7, "Currency");
+			List<String> columnsNamePresent = new ArrayList<>();
+			List<WebElement> numberOfHeaders = navOptions.tableHeadersList;
+			numberOfHeaders.forEach(e -> columnsNamePresent.add(e.getText()));
 			List<Map<String, String>> list = dt.asMaps(String.class, String.class);
-			for (int i = 0; i < list.size(); i++) {
-				String adspotName = list.get(i).get("ColumnName");
-				System.out.println(columnsNamePresent);
-				System.out.println(adspotName);
-				Assert.assertTrue(columnsNamePresent.contains(adspotName));
-
-
+			for (Map<String,String> map: list) {
+				String columnName = map.get("ColumnName");
+				System.out.println(columnName);
+				Assert.assertTrue(columnsNamePresent.contains(columnName));
 			}
-			
-			
-			
 		}
 
 	@When("^Click create a new deal$")
@@ -547,9 +538,9 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 	
 	@When("^click on Save deal$")
 	public void click_on_Save_deal() throws Throwable {
-//		System.out.println("Deal ID :"+ dealsPage.saveDeal());
-		Assert.assertEquals(dealsPage.saveDeal(), "UPDATED!");
-		
+		dealsPage.saveDeal();
+		System.out.println(dealsPage.getBannerMessage());
+		Assert.assertTrue(dealsPage.getBannerMessage().toLowerCase().contains("copy deal id"));
 	}
 	@When("^copy the deal ID$")
 	public void copy_the_deal_ID() throws Throwable {
