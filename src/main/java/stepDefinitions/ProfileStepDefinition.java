@@ -43,7 +43,7 @@ public class ProfileStepDefinition extends RXBaseClass {
 
 	@Given("^admin user login to RX UI with valid username and password$")
 	public void admin_user_login_to_RX_UI_with_valid_username_and_password() throws Throwable {
-//		Reporter.addStepLog("The user has logged in "+prop.getProperty("url")+" as admin");
+		Reporter.addStepLog("The user has logged in "+prop.getProperty("url")+" as admin");
 		driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
 		pubListPgs = logain.clickLogin(prop.getProperty("username"), prop.getProperty("password"));
 		driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
