@@ -266,7 +266,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|DSP Seat Passthrough String|
 	|DSP Domain Advertiser Passthrough String|
 #	|Related Proposal|
-	And Verify the buyer is "Enabled"
+	And Verify the buyer is "Disabled"
 	When change the DSP name to "Criteo"
 	Then Verify the following message is displayed when the DSP changed for deal
 	|Message|
@@ -289,7 +289,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|DSP Seat Passthrough String|
 	|DSP Domain Advertiser Passthrough String|
 #	|Related Proposal|
-	And Verify the buyer is "Disabled"
+	And Verify the buyer is "Enabled"
 	
 	Scenario: Verify Publisher,Private Auction and DSP are non-editable in deal
    	Given admin user login to RX UI with valid username and password

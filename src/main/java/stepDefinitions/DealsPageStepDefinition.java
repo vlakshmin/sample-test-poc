@@ -16,8 +16,6 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClick
 import static org.testng.Assert.assertTrue;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Stream;
 
 public class DealsPageStepDefinition extends RXBaseClass {
 
@@ -348,12 +346,15 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		}
 	@Then("^Verify the buyer is \"([^\"]*)\"$")
 	public void verify_the_buyer_is(String status) throws Throwable {
-		if(status.equalsIgnoreCase("Enabled"))
-		{
-		Assert.assertTrue(dealsPage.dSPbuyerEnabledOrDisabled());
-		}else if(status.equalsIgnoreCase("Disabled"))
-		{
-			Assert.assertFalse(dealsPage.dSPbuyerEnabledOrDisabled());
+		switch (status.toUpperCase()) {
+			case "ENABLED":
+				Assert.assertTrue(dealsPage.isBuyerEnabled());
+				break;
+			case "DISABLED":
+				Assert.assertFalse(dealsPage.isBuyerEnabled());
+				break;
+			default:
+				throw new RuntimeException("Wrong Argument");
 		}
 	}
 	@Then("^Verify the following general values are reset to default values$")

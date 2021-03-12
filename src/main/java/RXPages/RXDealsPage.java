@@ -427,21 +427,9 @@ public class RXDealsPage extends RXBaseClass {
 		return endis;
 	}
 	
-	public boolean dSPbuyerEnabledOrDisabled()
+	public boolean isBuyerEnabled()
 	{
-		boolean endis=false;
-		
-			String enabDisab=driver.findElement(By.xpath("//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']/input")).getAttribute("aria-checked");
-			if(enabDisab.equalsIgnoreCase("false"))
-			{
-			endis=false;
-			}else
-			{
-
-				endis=true;
-			}	
-				
-		return endis;
+		return driver.findElement(By.xpath("//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']/input")).getAttribute("aria-checked").equalsIgnoreCase("true");
 	}
 	
 //	public void enterDSPValues(String seatID,String seatName,String advId,String advName,String seatPassThrString,String advPassThrString,String relatProposal)
