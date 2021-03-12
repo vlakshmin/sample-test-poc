@@ -178,7 +178,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|DSP Seat Passthrough String|
 	|DSP Domain Advertiser Passthrough String|
 #	|Related Proposal|
-	And Verify the buyer is "Enabled"
+	And Verify the buyer is "Disabled"
 	When change the publisher name to "Demand Integration"
 	Then Verify the following message is displayed when the publisher changed for deal
 	|Message|
@@ -201,7 +201,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|DSP Seat Passthrough String|
 	|DSP Domain Advertiser Passthrough String|
 #	|Related Proposal|
-	And Verify the buyer is "Disabled"
+	And Verify the buyer is "Enabled"
     
     
     Scenario: Verify that the user is not allowed to fill other fields without selecting the publisher.
