@@ -186,7 +186,7 @@ public class RXDealsPage extends RXBaseClass {
 	//Buyer Panel
 	public String buyerDSPPanel="(//ancestor::div[2]//div[contains(@class,'cardPadding')])";
 	public String buyerEnableDisable="(//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input'])";
-	public String buyerDelete="(//button[contains(@class,'elementPadding alignRight')]/span)";
+	public String buyerDelete="(//button[contains(@class,'alignRight')]/span)";
 	public String dSPEnable="(//ancestor::div[2]//div[contains(@class,'cardPadding')]//div[contains(@class,'v-input--is-label-active')]//input)";
 	public String dSPDisable="(//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']//input[@aria-checked='false'])";
 	// Action object

@@ -354,10 +354,11 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
     And Click on publisher input
     And Select publisher by name: "Viber"
     And Click on Add more seats ten times
-    And Enabled added seats
     Then Verify that the added seat is enabled
     And Disabled added seats
     Then Verify that the added seat is disabled
+	And Enabled added seats
+	Then Verify that the added seat is enabled
     And Delete the added seats
     Then Verify that the added seat is deleted
    
