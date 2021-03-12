@@ -226,7 +226,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|DSP Seat Passthrough String|
 	|DSP Domain Advertiser Passthrough String|
 #	|Related Proposal|
-	And Verify the buyer is "Disabled"
+	And Verify the buyer is "Enabled"
     
     
     
