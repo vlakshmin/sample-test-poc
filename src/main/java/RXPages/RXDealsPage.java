@@ -96,7 +96,7 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement value;
 	
 	//Deals buyers details
-	@FindBy(xpath = "//span[@class='v-btn__content' and text()='Add More Seats']//parent::button" )
+	@FindBy(xpath = "//span[@class='v-btn__content' and contains(.,'Add More Seats')]/parent::button" )
 	public WebElement addMoreSeats;
 	@FindBy(xpath = "//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']" ) 
 	public WebElement dsPbuyerEnabled; 
@@ -118,7 +118,7 @@ public class RXDealsPage extends RXBaseClass {
 	 */
 	@FindBy(xpath = "//div[@class='buyers-card-grid'][2]/button/span" ) 
 	public WebElement deleteDSPbuyer;
-	@FindBy(xpath = "//button[@disabled=\"disabled\"]//span[text()='Add More Seats']" )
+	@FindBy(xpath = "//button[@disabled=disabled']//span[text()='Add More Seats']" )
 	public WebElement addMoreSeatsDisabled;
 	// Banner Element
 	@FindBy(xpath="//div[@class='v-banner__text']")
@@ -186,7 +186,7 @@ public class RXDealsPage extends RXBaseClass {
 	//Buyer Panel
 	public String buyerDSPPanel="(//ancestor::div[2]//div[contains(@class,'cardPadding')])";
 	public String buyerEnableDisable="(//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input'])";
-	public String buyerDelete="(//button[contains(@class,'elementPadding alignRight')]/span)";
+	public String buyerDelete="(//button[contains(@class,'alignRight')]/span)";
 	public String dSPEnable="(//ancestor::div[2]//div[contains(@class,'cardPadding')]//div[contains(@class,'v-input--is-label-active')]//input)";
 	public String dSPDisable="(//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']//input[@aria-checked='false'])";
 	// Action object
@@ -427,21 +427,9 @@ public class RXDealsPage extends RXBaseClass {
 		return endis;
 	}
 	
-	public boolean dSPbuyerEnabledOrDisabled()
+	public boolean isBuyerEnabled()
 	{
-		boolean endis=false;
-		
-			String enabDisab=driver.findElement(By.xpath("//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']/input")).getAttribute("aria-checked");
-			if(enabDisab.equalsIgnoreCase("false"))
-			{
-			endis=false;
-			}else
-			{
-
-				endis=true;
-			}	
-				
-		return endis;
+		return driver.findElement(By.xpath("//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']/input")).getAttribute("aria-checked").equalsIgnoreCase("true");
 	}
 	
 //	public void enterDSPValues(String seatID,String seatName,String advId,String advName,String seatPassThrString,String advPassThrString,String relatProposal)
@@ -552,10 +540,9 @@ public class RXDealsPage extends RXBaseClass {
 	
 	public void clickAddMoreSeats() 
 	{
-			
-			wait.until(ExpectedConditions.elementToBeClickable(addMoreSeats));
-			System.out.println("Inner Side Count time" + 1);
-			addMoreSeats.click();
+		wait.until(ExpectedConditions.elementToBeClickable(addMoreSeats));
+		System.out.println("Inner Side Count time" + 1);
+		addMoreSeats.click();
 	}
 
 	public WebElement enableDSPdisable(int n) 
