@@ -22,7 +22,7 @@ Scenario:  Verify the pagination exists for the list in the deals page for admin
 	Given admin user login to RX UI with valid username and password
 	When Click on Deals option under Sales
 	And User displayed with Deals page
-	Then Verify the pagination of the listed rows in the Page with a selection of 20 rows per page with 10 columns
+	Then Verify the pagination of the listed rows in the Page with a selection of 20 rows per page with 11 columns
 
 
 
@@ -178,7 +178,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|DSP Seat Passthrough String|
 	|DSP Domain Advertiser Passthrough String|
 #	|Related Proposal|
-	And Verify the buyer is "Enabled"
+	And Verify the buyer is "Disabled"
 	When change the publisher name to "Demand Integration"
 	Then Verify the following message is displayed when the publisher changed for deal
 	|Message|
@@ -201,7 +201,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|DSP Seat Passthrough String|
 	|DSP Domain Advertiser Passthrough String|
 #	|Related Proposal|
-	And Verify the buyer is "Disabled"
+	And Verify the buyer is "Enabled"
     
     
     Scenario: Verify that the user is not allowed to fill other fields without selecting the publisher.
@@ -266,7 +266,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|DSP Seat Passthrough String|
 	|DSP Domain Advertiser Passthrough String|
 #	|Related Proposal|
-	And Verify the buyer is "Enabled"
+	And Verify the buyer is "Disabled"
 	When change the DSP name to "Criteo"
 	Then Verify the following message is displayed when the DSP changed for deal
 	|Message|
@@ -289,7 +289,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|DSP Seat Passthrough String|
 	|DSP Domain Advertiser Passthrough String|
 #	|Related Proposal|
-	And Verify the buyer is "Disabled"
+	And Verify the buyer is "Enabled"
 	
 	Scenario: Verify Publisher,Private Auction and DSP are non-editable in deal
    	Given admin user login to RX UI with valid username and password
@@ -354,10 +354,11 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
     And Click on publisher input
     And Select publisher by name: "Viber"
     And Click on Add more seats ten times
-    And Enabled added seats
     Then Verify that the added seat is enabled
     And Disabled added seats
     Then Verify that the added seat is disabled
+	And Enabled added seats
+	Then Verify that the added seat is enabled
     And Delete the added seats
     Then Verify that the added seat is deleted
    

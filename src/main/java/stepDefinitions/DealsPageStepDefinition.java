@@ -16,8 +16,6 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClick
 import static org.testng.Assert.assertTrue;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Stream;
 
 public class DealsPageStepDefinition extends RXBaseClass {
 
@@ -348,12 +346,15 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		}
 	@Then("^Verify the buyer is \"([^\"]*)\"$")
 	public void verify_the_buyer_is(String status) throws Throwable {
-		if(status.equalsIgnoreCase("Enabled"))
-		{
-		Assert.assertTrue(dealsPage.dSPbuyerEnabledOrDisabled());
-		}else if(status.equalsIgnoreCase("Disabled"))
-		{
-			Assert.assertFalse(dealsPage.dSPbuyerEnabledOrDisabled());
+		switch (status.toUpperCase()) {
+			case "ENABLED":
+				Assert.assertTrue(dealsPage.isBuyerEnabled());
+				break;
+			case "DISABLED":
+				Assert.assertFalse(dealsPage.isBuyerEnabled());
+				break;
+			default:
+				throw new RuntimeException("Wrong Argument");
 		}
 	}
 	@Then("^Verify the following general values are reset to default values$")
@@ -606,17 +607,15 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 	  @Then("^Verify that the Add more seats is disabled and ten DSP panels are added$") 
 	  public void verify_that_the_Add_more_seats_is_disabled_and_ten_DSP_panels_are_added() throws Throwable
 	  {
-		
-		  js.executeScript("arguments[0].scrollIntoView();",dealsPage.addMoreSeatsDisabled);
-		  Assert.assertTrue(dealsPage.addMoreSeatsDisabled.isEnabled());
-		 
+		  js.executeScript("arguments[0].scrollIntoView();",dealsPage.addMoreSeats);
+		  Assert.assertTrue(dealsPage.addMoreSeats.getAttribute("disabled").equalsIgnoreCase("true"));
+
 		  for(int i=1;i<=10;i++) 
 		  {
 		  wait.until(ExpectedConditions.visibilityOf(dealsPage.addedDSPPanel(i)));
 		  js.executeScript("arguments[0].scrollIntoView();",dealsPage.addedDSPPanel(i));
 		  Assert.assertTrue(dealsPage.addedDSPPanel(i).isDisplayed()); 
 		  }
-	
 	  }
 	  
 	  @Then("^Enabled added seats$")
