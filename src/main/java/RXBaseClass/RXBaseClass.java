@@ -26,7 +26,7 @@ public class RXBaseClass {
 	public static WebDriver driver;
 	public static Properties prop;
 	public  static EventFiringWebDriver e_driver;
-	public static EventListener eventListener;
+	//public static EventListener eventListener;
 
 	
 	public RXBaseClass()
@@ -70,8 +70,8 @@ public class RXBaseClass {
 		
 		e_driver = new EventFiringWebDriver(driver);
 		// Now create object of EventListerHandler to register it with EventFiringWebDriver
-		eventListener = new EventListener();
-		e_driver.register(eventListener);
+//		eventListener = new EventListener();
+//		e_driver.register(eventListener);
 		driver = e_driver;
 		
 		driver.manage().window().maximize();
