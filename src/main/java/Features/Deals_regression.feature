@@ -301,7 +301,6 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
   	And enter the following values
   	|publisher|PrivateAuction|DSPValue|EntDealName|Values|
 	|Viber|Test_Spe|TheTradeDesk|TestAutoDeal|2|	
-	And "Enable" the DSP buyer
 	And enter the following DSP buyer details.
 	|dSPSeatID|dSPSeatName|AdvertiserId|advertiserName|dSPSeatPassthroughString|dSPDomainAdvertiserPassthroughString|relatedProposal|
 	|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|TestAutorelatedProposal|
