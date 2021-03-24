@@ -452,7 +452,43 @@ public class RXDealsPage extends RXBaseClass {
 		enteredDSPDomainAdvertiserPassthroughString  = dSPDomainAdvertiserPassthroughString.getAttribute("value");
 //		enteredRelatedProposal  = relatedProposal.getAttribute("value");
 	}
-	
+	public void enterDSPValues(Map<String,String> map)
+	{
+		for (Map.Entry<String,String> entry: map.entrySet()) {
+			switch (entry.getKey().toLowerCase()) {
+				case "dspseatid":
+					dSPSeatID.sendKeys(entry.getValue() + rxUTL.getRandomNumberFourDigit());
+					enteredDSPSeatID = dSPSeatID.getAttribute("value");
+					break;
+				case "dspseatname":
+					dSPSeatName.sendKeys(entry.getValue() + rxUTL.getRandomNumberFourDigit());
+					enteredDSPSeatName = dSPSeatName.getAttribute("value");
+					break;
+				case "advertiserid":
+					AdvertiserId.sendKeys(entry.getValue() + rxUTL.getRandomNumberFourDigit());
+					enteredAdvertiserId  = AdvertiserId.getAttribute("value");
+					break;
+				case "advertisername":
+					advertiserName.sendKeys(entry.getValue() + rxUTL.getRandomNumberFourDigit());
+					enteredAdvertiserName  = advertiserName.getAttribute("value");
+					break;
+				case "dspseatpassthroughstring":
+					dSPSeatPassthroughString.sendKeys(entry.getValue() + rxUTL.getRandomNumberFourDigit());
+					enteredDSPSeatPassthroughString  = dSPSeatPassthroughString.getAttribute("value");
+					break;
+				case "dspdomainadvertiserpassthroughstring":
+					dSPDomainAdvertiserPassthroughString.sendKeys(entry.getValue() + rxUTL.getRandomNumberFourDigit());
+					enteredDSPDomainAdvertiserPassthroughString  = dSPDomainAdvertiserPassthroughString.getAttribute("value");
+					break;
+				case "relatedproposal":
+//					dSPDomainAdvertiserPassthroughString.sendKeys(entry.getValue() + rxUTL.getRandomNumberFourDigit());
+//					enteredDSPDomainAdvertiserPassthroughString  = dSPDomainAdvertiserPassthroughString.getAttribute("value");
+					break;
+				default:
+					throw new java.util.NoSuchElementException("Wrong element to enter in the dsp buyer: " + entry);
+			}
+		}
+	}
 	public String getChangePublisherBannerMsg()
 	{
 		WebDriverWait wait = new WebDriverWait(driver, 30);

@@ -360,4 +360,3 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	Then Verify that the added seat is enabled
     And Delete the added seats
     Then Verify that the added seat is deleted
-   

@@ -190,20 +190,7 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 	@Then("^enter the following DSP buyer details\\.$")
 	public void enter_the_following_DSP_buyer_details(DataTable dt) throws Throwable {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
-		
-		for (int i = 0; i < list.size(); i++) 
-		{
-			String dSPSeatID = list.get(i).get("dSPSeatID");
-			String dSPSeatName = list.get(i).get("dSPSeatName");
-			String AdvertiserId = list.get(i).get("AdvertiserId");
-			String advertiserName = list.get(i).get("advertiserName");
-			String dSPSeatPassthroughString = list.get(i).get("dSPSeatPassthroughString");
-			String dSPDomainAdvertiserPassthroughString = list.get(i).get("dSPDomainAdvertiserPassthroughString");
-//			String relatedProposal = list.get(i).get("relatedProposal");
-//			dealsPage.enterDSPValues(dSPSeatID,dSPSeatName,AdvertiserId,advertiserName,dSPSeatPassthroughString,dSPDomainAdvertiserPassthroughString,relatedProposal);
-			dealsPage.enterDSPValues(dSPSeatID,dSPSeatName,AdvertiserId,advertiserName,dSPSeatPassthroughString,dSPDomainAdvertiserPassthroughString);
-
-		}
+		dealsPage.enterDSPValues(list.get(0));
 	}
 	@When("^change the publisher name to \"([^\"]*)\"$")
 	public void change_the_publisher_name_to(String publName) throws Throwable {
@@ -280,7 +267,7 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 				Assert.assertEquals(dealsPage.dspValue.getText(), enteredDSP);
 
 				break;
-			
+
 			default:
 				Assert.assertTrue(false, "The status fields supplied does not match with the input");
 
@@ -441,7 +428,7 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 			}
 		}
 	}
-	
+
 	@Then("^Verify the following general deal details are not fillable$")
 	public void Verify_the_following_general_deal_details_are_not_fillable(DataTable dt) throws Throwable {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
