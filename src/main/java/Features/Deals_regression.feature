@@ -1,7 +1,7 @@
 Feature: Deals page regression
 
 Scenario:  Verify the default column names in the deals overview page
-	Given admin user login to RX UI with valid username and password 
+	Given admin user login to RX UI with valid username and password
 	When Click on Deals option under Sales
 	And User displayed with Deals page
 	Then Verify the deal overview page contains following columns
@@ -16,7 +16,7 @@ Scenario:  Verify the default column names in the deals overview page
 	|Price \| Currency|
 	|Start Date|
 	|End Date|
-	
+
 
 Scenario:  Verify the pagination exists for the list in the deals page for admin
 	Given admin user login to RX UI with valid username and password
@@ -75,7 +75,7 @@ Scenario:  Verify sorting of the list's columns of the deals overview page
 	|DSP|desc|
 	|Start Date|desc|
 	|End Date|desc|
-	
+
 Scenario: Verify if create deal menu is opened
     Given admin user login to RX UI with valid username and password
     When Click on Deals option under Sales
@@ -129,7 +129,7 @@ Scenario: Verify if create deal menu is opened
 #	|DSP|desc|
 #	|Start Date|desc|
 #	|End Date|desc|
-	
+
 #Scenario: Verify if create deal menu is opened
 #    Given admin user login to RX UI with valid username and password
 #    When Click on Deals option under Sales
@@ -151,11 +151,11 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
     And Click on publisher input
   	And enter the following values
   	|publisher|PrivateAuction|DSPValue|EntDealName|Values|
-	|Viber|Test_Spe|TheTradeDesk|TestAutoDeal|2|	
+	|Viber|Test_Spe|TheTradeDesk|TestAutoDeal|2|
 	And "Enable" the DSP buyer
 	And enter the following DSP buyer details.
-	|dSPSeatID|dSPSeatName|AdvertiserId|advertiserName|dSPSeatPassthroughString|dSPDomainAdvertiserPassthroughString|relatedProposal|
-	|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|TestAutorelatedProposal|
+		|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
+		|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|
  	When change the publisher name to "Demand Integration"
   	Then Verify the following message is displayed when the publisher changed for deal
 	|Message|
@@ -202,15 +202,15 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|DSP Domain Advertiser Passthrough String|
 #	|Related Proposal|
 	And Verify the buyer is "Enabled"
-    
-    
+
+
     Scenario: Verify that the user is not allowed to fill other fields without selecting the publisher.
     Given admin user login to RX UI with valid username and password
     When Click on Deals option under Sales
 	And User displayed with Deals page
     And Click create a new deal
     Then Create deal menu is opened
-    And Verify the following general deal details are not fillable 
+    And Verify the following general deal details are not fillable
     |FieldName|
 	|Deal Name|
 	|Private Auction|
@@ -218,7 +218,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|Value|
 	|Currency|
 	|DSP|
-	And Verify the following buyer details of deal are not fillable 
+	And Verify the following buyer details of deal are not fillable
 	|FieldName|
 	|DSP Seat Name|
 	|Advertiser ID|
@@ -227,9 +227,9 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|DSP Domain Advertiser Passthrough String|
 #	|Related Proposal|
 	And Verify the buyer is "Enabled"
-    
-    
-    
+
+
+
     Scenario: Verify Changing DSP alert the user and then on accept the new DSP and on cancel old earlier DSP ratained.
    	Given admin user login to RX UI with valid username and password
     When Click on Deals option under Sales
@@ -239,11 +239,11 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
     And Click on publisher input
   	And enter the following values
   	|publisher|PrivateAuction|DSPValue|EntDealName|Values|
-	|Viber|Test_Spe|TheTradeDesk|TestAutoDeal|2|	
+	|Viber|Test_Spe|TheTradeDesk|TestAutoDeal|2|
 	And "Enable" the DSP buyer
 	And enter the following DSP buyer details.
-	|dSPSeatID|dSPSeatName|AdvertiserId|advertiserName|dSPSeatPassthroughString|dSPDomainAdvertiserPassthroughString|relatedProposal|
-	|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|TestAutorelatedProposal|
+		|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
+		|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|
  	When change the DSP name to "Criteo"
   	Then Verify the following message is displayed when the DSP changed for deal
 	|Message|
@@ -290,7 +290,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|DSP Domain Advertiser Passthrough String|
 #	|Related Proposal|
 	And Verify the buyer is "Enabled"
-	
+
 	Scenario: Verify Publisher,Private Auction and DSP are non-editable in deal
    	Given admin user login to RX UI with valid username and password
     When Click on Deals option under Sales
@@ -300,17 +300,17 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
     And Click on publisher input
   	And enter the following values
   	|publisher|PrivateAuction|DSPValue|EntDealName|Values|
-	|Viber|Test_Spe|TheTradeDesk|TestAutoDeal|2|	
+	|Viber|Test_Spe|TheTradeDesk|TestAutoDeal|2|
 	And enter the following DSP buyer details.
-	|dSPSeatID|dSPSeatName|AdvertiserId|advertiserName|dSPSeatPassthroughString|dSPDomainAdvertiserPassthroughString|relatedProposal|
-	|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|TestAutorelatedProposal|
- 	When click on Save deal 
+		|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
+		|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|
+ 	When click on Save deal
 	And copy the deal ID
-	And search the deal ID 
+	And search the deal ID
  	And Select the deal and click on edit
 	Then Verify Publisher,Private Auction and DSP are non-editable
-	
-	
+
+
 	Scenario: Verify that the publisher field is not editable and preselected for single publisher
    	Given Single Publisher user login to RX UI with valid username and password
     When Click on Deals option under Sales
@@ -360,3 +360,38 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	Then Verify that the added seat is enabled
     And Delete the added seats
     Then Verify that the added seat is deleted
+
+	Scenario: Verify that autofill works properly for the same Publisher
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		And Click on publisher input
+		And enter the following values
+			|publisher|PrivateAuction|DSPValue|EntDealName|Values|
+			|Viber|Test_Spe|TheTradeDesk|TestAutoDeal|2|
+		And enter the following DSP buyer details.
+			|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
+			|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|
+		When click on Save deal
+		And Click create a new deal
+		Then Create deal menu is opened
+		And Click on publisher input
+		And enter the following values
+			|publisher|PrivateAuction|DSPValue|EntDealName|Values|
+			|Viber|Test_Spe|TheTradeDesk|TestAutoDeal|2|
+		And enter previously used DSP buyer details using autofill.
+		When click on Save deal
+		And copy the deal ID
+		And search the deal ID
+		And Select the deal and click on edit
+		And Verify the following buyers details with the created data of deal
+			|FieldName|
+			|DSP Seat ID|
+			|DSP Seat Name|
+			|Advertiser ID|
+			|Advertiser Name|
+			|DSP Seat Passthrough String|
+			|DSP Domain Advertiser Passthrough String|
+
