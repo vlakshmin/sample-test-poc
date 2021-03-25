@@ -39,7 +39,7 @@ public class RXDealsPage extends RXBaseClass {
 	@FindBy(xpath="//div[./label[contains(@class,'v-label') and .='Name']]")
 	private WebElement nameInput;
 	@FindAll({@FindBy(xpath = "//div[contains(@role,'listbox') and contains(@class,'v-list')]/div")})
-	public List<WebElement> publisherNames;
+	public List<WebElement> dropdownValues;
 	@FindBy(xpath="//div[contains(@class,'v-input__control') and contains(.,'Currency')]//div[contains(@class,'v-select__selection--comma')]")
 	private WebElement 	currencyOption;
 	@FindBy(xpath="//div[./label[contains(@class,'v-label') and contains(.,'Date')]]")
@@ -65,7 +65,7 @@ public class RXDealsPage extends RXBaseClass {
 	@FindBy(xpath = "//label[text()='Publisher Name']/following-sibling::div[@class='v-select__selections']/div")
 	public WebElement publisherNamesEntered;
 	@FindBy(xpath = "//label[text()='Private Auction']/following-sibling::div[@class='v-select__selections']") 
-	public WebElement privateActionDropDown;
+	public WebElement privateAuctionDropDown;
 	@FindBy(xpath = "//label[text()='Private Auction']/following-sibling::div[@class='v-select__selections']/div") 
 	public WebElement privateActionFieldValue;
 	@FindBy(xpath = "//label[text()='Name']/following-sibling::input") 
@@ -163,11 +163,8 @@ public class RXDealsPage extends RXBaseClass {
 	
 //	String dealNameInListOne="//table/tbody/tr[1]/td[3]/span/a[contains(text(),";
 	String dealNameInListOne="//table/tbody/tr[1]/td[3]/a[contains(text(),";
-	
-	
-	
+
 	//Variables
-	
 	public String enteredPrivateAuct;
 	public String enteredDateRange;
 	public String currencyFiledValue;
@@ -181,6 +178,8 @@ public class RXDealsPage extends RXBaseClass {
 	public String enteredAdvertiserName;
 	public String enteredDSPSeatPassthroughString ;
 	public String enteredDSPDomainAdvertiserPassthroughString;
+	private static Map<String,String> dspBuyersEnteredValues = new HashMap<String,String>();
+
 //	public String enteredRelatedProposal ;
 	
 	//Buyer Panel
@@ -205,7 +204,9 @@ public class RXDealsPage extends RXBaseClass {
 		pubPage = new PublisherListPage();
 
 	}
-
+	public static Map<String,String> getBuyersEnteredValues() {
+		return dspBuyersEnteredValues;
+	}
 	// Get the text of the media page
 	public String getPageHeading() {
 		WebDriverWait wait = new WebDriverWait(driver, 50);
@@ -213,6 +214,10 @@ public class RXDealsPage extends RXBaseClass {
 		System.out.println(elem.getText());
 		return elem.getText();
 
+	}
+
+	public static WebElement getDSPBuyerFieldElement(String name) {
+		return 	driver.findElement(By.xpath(String.format("//label[text()='%s']/following-sibling::input", name)));
 	}
 
 	public void clickOverViewEditbutton() {
@@ -275,32 +280,14 @@ public class RXDealsPage extends RXBaseClass {
 
 	public void expandPublisherNameList() {
 		publisherNameInput.click();
-		System.out.println("Publisher name attribute is: " + attributeContains(publisherNameInput, "class", "is-menu-active"));
-		wait.until(attributeContains(publisherNameInput, "class", "is-menu-active"));
+		//System.out.println("Publisher name attribute is: " + attributeContains(publisherNameInput, "class", "is-menu-active"));
+		//wait.until(attributeContains(publisherNameInput, "class", "is-menu-active"));
 	}
 
 	public void selectPublisherByName(String name) throws Throwable {
-		int attempt = 0;
-		wait.until(attributeContains(publisherNameInput, "class", "is-menu-active"));
-
-		// Check if list contains publisher name, scroll down if not
-		do {
-			js.executeScript("arguments[0].scrollIntoView(false)", publisherNames.get(publisherNames.size() - 1));
-		}
-		while (!publisherNames.stream()
-				  .map(WebElement::getText)
-				  .anyMatch(text -> name.equals(text)) && attempt++ < 20);
-
-		// Get publisher web element by name from the method parameter
-		WebElement publisherName = publisherNames.stream()
-				.filter(i -> i.getText().equalsIgnoreCase(name))
-				.findFirst()
-				.orElseThrow(() -> new org.openqa.selenium.NoSuchElementException(String.format("Publisher by the name %s wasn't found.", name)));
-		js.executeScript("arguments[0].scrollIntoView({block: \"center\"})", publisherName);
-		wait.until(ExpectedConditions.elementToBeClickable(publisherName));
-		publisherName.click();
-		
+		selectValueFromDropdown(name);
 	}
+
 	public String getCurrencyText () {
 		return currencyOption.getText();
 	}
@@ -341,27 +328,29 @@ public class RXDealsPage extends RXBaseClass {
 				selectDateButton, floorPriceField, dspList);
 	}
 
-
-	public void selectPrivateAuctionByName(String name) {
-		privateActionDropDown.click();
+	public void selectValueFromDropdown(String name) {
 		int attempt = 0;
-		
-		// Check if list contains publisher name, scroll down if not
-		do {
-			js.executeScript("arguments[0].scrollIntoView(false)", publisherNames.get(publisherNames.size() - 1));
-		}
-		while (!publisherNames.stream()
-				  .map(WebElement::getText)
-				  .anyMatch(text -> name.equals(text)) && attempt++ < 20);
 
-		// Get publisher web element by name from the method parameter
-		WebElement privateAuctionName = publisherNames.stream()
+		// Check if list contains parameter name, scroll down if not
+		do {
+			js.executeScript("arguments[0].scrollIntoView(false)", dropdownValues.get(dropdownValues.size() - 1));
+		}
+		while (!dropdownValues.stream()
+				.map(WebElement::getText)
+				.anyMatch(text -> name.equals(text)) && attempt++ < 20);
+
+		// Get web element by name from the method parameter
+		WebElement dropDownElementByName = dropdownValues.stream()
 				.filter(i -> i.getText().equalsIgnoreCase(name))
 				.findFirst()
 				.orElseThrow(() -> new org.openqa.selenium.NoSuchElementException(String.format("Private Auction by the name %s wasn't found.", name)));
-		js.executeScript("arguments[0].scrollIntoView({block: \"center\"})", privateAuctionName);
-		wait.until(elementToBeClickable(privateAuctionName));
-		privateAuctionName.click();
+		js.executeScript("arguments[0].scrollIntoView({block: \"center\"})", dropDownElementByName);
+		wait.until(elementToBeClickable(dropDownElementByName));
+		dropDownElementByName.click();
+	}
+	public void selectPrivateAuctionByName(String name) {
+		privateAuctionDropDown.click();
+		selectValueFromDropdown(name);
 		enteredDateRange=dateRange.getAttribute("value");
 		currencyFiledValue=currencyValue.getText();
 		enteredPrivateAuct= privateActionFieldValue.getText();
@@ -369,24 +358,7 @@ public class RXDealsPage extends RXBaseClass {
 	
 	public void selectDSPByName(String name) {
 		dspDropDown.click();
-		int attempt = 0;
-
-		// Check if list contains publisher name, scroll down if not
-		do {
-			js.executeScript("arguments[0].scrollIntoView(false)", publisherNames.get(publisherNames.size() - 1));
-		}
-		while (!publisherNames.stream()
-				  .map(WebElement::getText)
-				  .anyMatch(text -> name.equals(text)) && attempt++ < 20);
-
-		// Get publisher web element by name from the method parameter
-		WebElement dSPName = publisherNames.stream()
-				.filter(i -> i.getText().equalsIgnoreCase(name))
-				.findFirst()
-				.orElseThrow(() -> new org.openqa.selenium.NoSuchElementException(String.format("Private Auction by the name %s wasn't found.", name)));
-		js.executeScript("arguments[0].scrollIntoView({block: \"center\"})", dSPName);
-		wait.until(elementToBeClickable(dSPName));
-		dSPName.click();
+		selectValueFromDropdown(name);
 		enteredDSPValue= dspValue.getText();
 	}
 	
@@ -452,7 +424,64 @@ public class RXDealsPage extends RXBaseClass {
 		enteredDSPDomainAdvertiserPassthroughString  = dSPDomainAdvertiserPassthroughString.getAttribute("value");
 //		enteredRelatedProposal  = relatedProposal.getAttribute("value");
 	}
-	
+
+	/**
+	 * Enters values to DSP buyer fields. Supports optional parameters.
+	 * <br> find more: {@link #enterDSPValues(Map, boolean, boolean)}.
+	 * @param valuesToEnter
+	 * <br>Map, where the key is name of the field and value is the text to be entered.
+	 */
+	public void enterDSPValues(Map<String,String> valuesToEnter)
+	{
+		enterDSPValues(valuesToEnter, false, false);
+	}
+
+	/**
+	 * Enters values to DSP buyer fields. Supports optional parameters.
+	 * <br> find more: {@link #enterDSPValues(Map, boolean, boolean)}.
+	 * @param valuesToEnter
+	 * <br>Map, where the key is name of the field and value is the text to be entered.
+	 * @param isFromCache
+	 * <br>When <b>true</b>, values will be taken from previously created entity, using the map with saved values.
+	 * <br>When <b>false</b>, it will generate random values and save them to a map.
+	 */
+	public void enterDSPValues(Map<String,String> valuesToEnter, boolean isFromCache)
+	{
+		enterDSPValues(valuesToEnter, isFromCache, false);
+	}
+
+	/**
+	 * Enters values to DSP buyer fields.
+	 * @param valuesToEnter
+	 * <br>Map, where the key is name of the field and value is the text to be entered.
+	 * @param isFromCache
+	 * <br>When <b>true</b>, values will be taken from previously created entity, using the map with saved values.
+	 * <br>When <b>false</b>, it will generate random values and save them to a map.
+	 * @param isAutofill
+	 * Sends a text to the input field, then selects this text from dropdown.
+	 */
+	public void enterDSPValues(Map<String,String> valuesToEnter, boolean isFromCache, boolean isAutofill)
+	{
+		for (Map.Entry<String,String> entry: valuesToEnter.entrySet()) {
+			String key = entry.getKey(), value = entry.getValue(), text;
+			text = isFromCache ? value : value + rxUTL.getRandomNumberFourDigit();
+			if (!isFromCache) {
+				dspBuyersEnteredValues.put(key, text);
+			}
+			if (isAutofill) {
+				enterTextToDspFieldUsingDropdown(key, text);
+				break;
+			}
+			else {
+				getDSPBuyerFieldElement(key).sendKeys(text);
+			}
+		}
+	}
+	public void enterTextToDspFieldUsingDropdown(String key ,String text) {
+		getDSPBuyerFieldElement(key).sendKeys(text.substring(0,text.length() - 2));
+		selectValueFromDropdown(text);
+	}
+
 	public String getChangePublisherBannerMsg()
 	{
 		WebDriverWait wait = new WebDriverWait(driver, 30);

@@ -163,7 +163,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	
 	@Then("^enter the following values$")
 	public void enter_the_following_values(DataTable dt) throws Throwable {
-List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		
 		for (int i = 0; i < list.size(); i++) 
 		{
@@ -188,22 +188,12 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 	}
 
 	@Then("^enter the following DSP buyer details\\.$")
-	public void enter_the_following_DSP_buyer_details(DataTable dt) throws Throwable {
-		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
-		
-		for (int i = 0; i < list.size(); i++) 
-		{
-			String dSPSeatID = list.get(i).get("dSPSeatID");
-			String dSPSeatName = list.get(i).get("dSPSeatName");
-			String AdvertiserId = list.get(i).get("AdvertiserId");
-			String advertiserName = list.get(i).get("advertiserName");
-			String dSPSeatPassthroughString = list.get(i).get("dSPSeatPassthroughString");
-			String dSPDomainAdvertiserPassthroughString = list.get(i).get("dSPDomainAdvertiserPassthroughString");
-//			String relatedProposal = list.get(i).get("relatedProposal");
-//			dealsPage.enterDSPValues(dSPSeatID,dSPSeatName,AdvertiserId,advertiserName,dSPSeatPassthroughString,dSPDomainAdvertiserPassthroughString,relatedProposal);
-			dealsPage.enterDSPValues(dSPSeatID,dSPSeatName,AdvertiserId,advertiserName,dSPSeatPassthroughString,dSPDomainAdvertiserPassthroughString);
-
-		}
+	public void enter_the_following_DSP_buyer_details(DataTable dt) {
+		dealsPage.enterDSPValues(dt.asMaps(String.class, String.class).get(0));
+	}
+	@Then("^enter previously used DSP buyer details using autofill\\.$")
+	public void enter_previously_used_DSP_buyer_details() {
+		dealsPage.enterDSPValues(RXDealsPage.getBuyersEnteredValues(), true, true);
 	}
 	@When("^change the publisher name to \"([^\"]*)\"$")
 	public void change_the_publisher_name_to(String publName) throws Throwable {
@@ -280,7 +270,7 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 				Assert.assertEquals(dealsPage.dspValue.getText(), enteredDSP);
 
 				break;
-			
+
 			default:
 				Assert.assertTrue(false, "The status fields supplied does not match with the input");
 
@@ -291,59 +281,20 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 	
 	@Then("^Verify the following buyers details with the created data of deal$")
 	public void verify_the_following_buyers_details_with_the_created_data_of_deal(DataTable dt) throws Throwable {
-//		js.executeScript("arguments[0].scrollIntoView();",dealsPage.relatedProposal);
 		js.executeScript("arguments[0].scrollIntoView();",dealsPage.dSPDomainAdvertiserPassthroughString);
-			List<Map<String, String>> list = dt.asMaps(String.class, String.class);
-			for (int i = 0; i < list.size(); i++) {
-				String fieldName = list.get(i).get("FieldName");
-
-				switch (fieldName) {
-				
-				case "DSP Seat ID":
-					System.out.println("Entered enteredDSPSeatID :"+ dealsPage.enteredDSPSeatID);
-					Assert.assertEquals(dealsPage.dSPSeatID.getAttribute("value"),dealsPage.enteredDSPSeatID);
-					break;
-				case "DSP Seat Name":
-					System.out.println("Entered enteredDSPSeatName :"+ dealsPage.enteredDSPSeatName);
-					Assert.assertEquals(dealsPage.dSPSeatName.getAttribute("value"), dealsPage.enteredDSPSeatName);
-
-					break;
-				case "Advertiser ID":
-					System.out.println("Entered enteredAdvertiserId :"+ dealsPage.enteredAdvertiserId);
-					Assert.assertEquals(dealsPage.AdvertiserId.getAttribute("value"), dealsPage.enteredAdvertiserId);
-
-					break;
-				case "Advertiser Name":
-					System.out.println("Entered enteredDateRange :"+ dealsPage.enteredAdvertiserName);
-					Assert.assertEquals(dealsPage.advertiserName.getAttribute("value"), dealsPage.enteredAdvertiserName);
-
-					break;
-				case "DSP Seat Passthrough String":
-					System.out.println("Entered enteredDSPSeatPassthroughString :"+ dealsPage.enteredDSPSeatPassthroughString);
-					Assert.assertEquals(dealsPage.dSPSeatPassthroughString.getAttribute("value"), dealsPage.enteredDSPSeatPassthroughString);
-
-					break;
-				case "DSP Domain Advertiser Passthrough String":
-					System.out.println("Entered currencyFiledValue :"+ dealsPage.enteredDSPDomainAdvertiserPassthroughString);
-					Assert.assertEquals(dealsPage.dSPDomainAdvertiserPassthroughString.getAttribute("value"), dealsPage.enteredDSPDomainAdvertiserPassthroughString);
-
-					break;
-			/*
-			 * case "Related Proposal":
-			 * System.out.println("Entered enteredRelatedProposal :"+
-			 * dealsPage.enteredRelatedProposal );
-			 * Assert.assertEquals(dealsPage.relatedProposal.getAttribute("value"),
-			 * dealsPage.enteredRelatedProposal );
-			 * 
-			 * break;
-			 */
-				
-				default:
-					Assert.assertTrue(false, "The status fields supplied does not match with the input");
-
-				}
-			}
+			dt.asMaps(String.class, String.class).get(0).entrySet().stream()
+					.forEach(e -> Assert.assertEquals(RXDealsPage.getDSPBuyerFieldElement(
+							e.getValue()).getAttribute("value"),
+							dealsPage.getBuyersEnteredValues().get(e.getValue())));
 		}
+	@Then("^Verify the following buyers details with the created data of deal using autofill$")
+	public void verify_the_following_buyers_details_with_the_created_data_of_deal_using_autofill(DataTable dt) throws Throwable {
+		js.executeScript("arguments[0].scrollIntoView();",dealsPage.dSPDomainAdvertiserPassthroughString);
+		dt.asMaps(String.class, String.class).get(0).entrySet().stream()
+				.forEach(e -> Assert.assertTrue(RXDealsPage.getDSPBuyerFieldElement(
+						e.getValue()).getAttribute("value")
+						.startsWith(dealsPage.getBuyersEnteredValues().get(e.getValue()))));;
+	}
 	@Then("^Verify the buyer is \"([^\"]*)\"$")
 	public void verify_the_buyer_is(String status) throws Throwable {
 		switch (status.toUpperCase()) {
@@ -441,7 +392,7 @@ List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 			}
 		}
 	}
-	
+
 	@Then("^Verify the following general deal details are not fillable$")
 	public void Verify_the_following_general_deal_details_are_not_fillable(DataTable dt) throws Throwable {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
