@@ -69,7 +69,7 @@ Scenario:  Verify sorting of the list's columns of the deals overview page
 	And User displayed with Deals page
 	Then Verify the sorting functionality with the following columns
 	|ColumnName|SortType|
-	|ID|asc|
+	|ID|desc|
 	|Publisher|desc|
 	|Active|asc|
 	|DSP|desc|
@@ -244,7 +244,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	And enter the following DSP buyer details.
 		|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
 		|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|
- 	When change the DSP name to "Criteo"
+ 	When change the DSP name to "RBidder"
   	Then Verify the following message is displayed when the DSP changed for deal
 	|Message|
 	|By changing the DSP, the Buyers section will be reset and will not be saved.|
@@ -267,7 +267,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|DSP Domain Advertiser Passthrough String|
 #	|Related Proposal|
 	And Verify the buyer is "Disabled"
-	When change the DSP name to "Criteo"
+	When change the DSP name to "RBidder"
 	Then Verify the following message is displayed when the DSP changed for deal
 	|Message|
 	|By changing the DSP, the Buyers section will be reset and will not be saved.|
