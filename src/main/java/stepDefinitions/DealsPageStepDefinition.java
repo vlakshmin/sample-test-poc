@@ -282,16 +282,17 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	@Then("^Verify the following buyers details with the created data of deal$")
 	public void verify_the_following_buyers_details_with_the_created_data_of_deal(DataTable dt) throws Throwable {
 		js.executeScript("arguments[0].scrollIntoView();",dealsPage.dSPDomainAdvertiserPassthroughString);
-			dt.asMaps(String.class, String.class).get(0).entrySet().stream()
-					.forEach(e -> Assert.assertEquals(RXDealsPage.getDSPBuyerFieldElement(
+		// Get element value from the Buyer form and compare to values from Data Table
+		getDataFromTable(dt).forEach(e -> {
+						Assert.assertEquals(RXDealsPage.getDSPBuyerFieldElement(
 							e.getValue()).getAttribute("value"),
-							dealsPage.getBuyersEnteredValues().get(e.getValue())));
+							dealsPage.getBuyersEnteredValues().get(e.getValue()));});
 		}
 	@Then("^Verify the following buyers details with the created data of deal using autofill$")
 	public void verify_the_following_buyers_details_with_the_created_data_of_deal_using_autofill(DataTable dt) throws Throwable {
 		js.executeScript("arguments[0].scrollIntoView();",dealsPage.dSPDomainAdvertiserPassthroughString);
-		dt.asMaps(String.class, String.class).get(0).entrySet().stream()
-				.forEach(e -> Assert.assertTrue(RXDealsPage.getDSPBuyerFieldElement(
+		// Get element value from the Buyer form and compare to values from Data Table
+		getDataFromTable(dt).forEach(e -> Assert.assertTrue(RXDealsPage.getDSPBuyerFieldElement(
 						e.getValue()).getAttribute("value")
 						.startsWith(dealsPage.getBuyersEnteredValues().get(e.getValue()))));;
 	}

@@ -312,7 +312,6 @@ public class RXDealsPage extends RXBaseClass {
 		// Date field has a specific text for the required message, and it is formatted accordingly
 		Arrays.stream(elements).forEach(e -> wait.until(elementToBeClickable(e)));
 		return Arrays.stream(elements)
-				.peek(e -> System.out.println(e.getText()))
 				.allMatch(i ->
 				getErrorMessageTextByField(i).replaceAll("\\.", "")
 						.equalsIgnoreCase(("the " + i.getText() + " field is required")
@@ -462,6 +461,7 @@ public class RXDealsPage extends RXBaseClass {
 	 */
 	public void enterDSPValues(Map<String,String> valuesToEnter, boolean isFromCache, boolean isAutofill)
 	{
+		clearBuyersEnteredValues(valuesToEnter);
 		for (Map.Entry<String,String> entry: valuesToEnter.entrySet()) {
 			String key = entry.getKey(), value = entry.getValue(), text;
 			text = isFromCache ? value : value + rxUTL.getRandomNumberFourDigit();
@@ -477,9 +477,21 @@ public class RXDealsPage extends RXBaseClass {
 			}
 		}
 	}
+	public void clearBuyersEnteredValues(Map<String,String> valuesToEnter) {
+		valuesToEnter.entrySet()
+				.stream()
+				.forEach(e-> {
+					getDSPBuyerFieldElement(e.getKey()).clear();
+				});
+		dspBuyersEnteredValues.clear();
+	}
+
 	public void enterTextToDspFieldUsingDropdown(String key ,String text) {
 		getDSPBuyerFieldElement(key).sendKeys(text.substring(0,text.length() - 2));
 		selectValueFromDropdown(text);
+	}
+	public void clearTextFromFields(String key) {
+		getDSPBuyerFieldElement(key).clear();
 	}
 
 	public String getChangePublisherBannerMsg()
