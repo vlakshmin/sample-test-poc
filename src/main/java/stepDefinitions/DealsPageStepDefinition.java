@@ -73,7 +73,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	//Verify enabling abd disabling of an adspot from the overview page
 
 		@When("^Verify enabling and disabling of a deal from the overview page$")
-		public void verifyHEnableDiableAdspot() throws InterruptedException {
+		public void verifyEnableDisableDeal() throws InterruptedException {
 			for (int i = 0; i <= 1; i++) {
 				driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]/div//i")).click();
 				List<WebElement> coulmnData = navOptions.getColumnDataMatchingHeader("Active");
@@ -83,17 +83,17 @@ public class DealsPageStepDefinition extends RXBaseClass {
 					Assert.assertTrue(dealsPage.overviewEditbutton.isDisplayed());
 					Assert.assertTrue(dealsPage.overviewDisablebutton.isDisplayed());
 					dealsPage.clickOverViewDisablebutton();
-					Thread.sleep(3000);
+					driverWait().until(ExpectedConditions.visibilityOf(dealsPage.createDealButton));
 					List<WebElement> coulmnData1 = navOptions.getColumnDataMatchingHeader("Active");
 					Assert.assertEquals(coulmnData1.get(0).getText(), "Inactive");
 					break;
 				case "Inactive":
 					Assert.assertTrue(dealsPage.overviewEditbutton.isDisplayed());
 					Assert.assertTrue(dealsPage.overviewEnablebutton.isDisplayed());
-					String enableText = dealsPage.overviewEnablebutton.getText().replaceAll("\\s", "");
-					Assert.assertEquals(enableText, "ACTIVATEDEAL");
+					String enableText = dealsPage.overviewButtons.getText().replaceAll("\\s", "");
+					Assert.assertEquals(enableText, "EDITDEALDEACTIVATEDEALACTIVATEDEAL");
 					dealsPage.clickOverViewEnablebutton();
-					Thread.sleep(3000);
+					driverWait().until(ExpectedConditions.visibilityOf(dealsPage.createDealButton));
 					List<WebElement> coulmnData2 = navOptions.getColumnDataMatchingHeader("Active");
 					Assert.assertEquals(coulmnData2.get(0).getText(), "Active");
 					break;
