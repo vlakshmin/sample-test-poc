@@ -3,9 +3,11 @@ package RXBaseClass;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import cucumber.api.DataTable;
@@ -113,6 +115,18 @@ public class RXBaseClass {
 	public static Stream<Map.Entry<String, String>> getDataFromTable (DataTable dt) {
 		return dt.asMaps(String.class, String.class).stream()
 				.flatMap(m -> m.entrySet().stream());
+	}
+	public static Map<String,String> createCopyOfCucumberMap(Map<String,String> map) {
+		LinkedHashMap<String,String> copy = map.entrySet().stream()
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+		return copy;
+	}
+	public static Map<String,String> modifyMapByBase(Map<String,String> map, String base, int length) {
+		// Create a copy of map from Cucumber data table
+		LinkedHashMap<String,String> copy = (LinkedHashMap<String,String>) createCopyOfCucumberMap(map);
+		// Replace values with random characters generated from base input
+		copy.replaceAll((k, v) -> RXUtile.getRandomValue(base,length));
+		return copy;
 	}
 	public static WebDriverWait driverWait() {
 		return new WebDriverWait(driver, 60);
