@@ -3,21 +3,21 @@ package RXBaseClass;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import cucumber.api.DataTable;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import RXUtitities.Configuration;
-import RXUtitities.EventListener;
 import RXUtitities.RXUtile;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -112,7 +112,21 @@ public class RXBaseClass {
 
 	  return wait.until(jQueryLoad) && wait.until(jsLoad);
 	}
-
+	public static Stream<Map.Entry<String, String>> getDataFromTable (DataTable dt) {
+		return dt.asMaps(String.class, String.class).stream()
+				.flatMap(m -> m.entrySet().stream());
+	}
+	public static Map<String,String> createCopyOfCucumberMap(Map<String,String> map) {
+		return map.entrySet().stream()
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+	}
+	public static Map<String,String> modifyMapByBase(Map<String,String> map, String base, int length) {
+		// Create a copy of map from Cucumber data table
+		LinkedHashMap<String,String> copy = (LinkedHashMap<String,String>) createCopyOfCucumberMap(map);
+		// Replace values with random characters generated from base input
+		copy.replaceAll((k, v) -> RXUtile.getRandomValue(base,length));
+		return copy;
+	}
 	public static WebDriverWait driverWait() {
 		return new WebDriverWait(driver, 60);
 	}

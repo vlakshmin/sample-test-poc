@@ -127,6 +127,11 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		Assert.assertTrue(dealsPage.isCreateDealMenuOpened());
 	}
 
+	@Then("^Edit deal menu is opened$")
+	public void isEditDealMenuOpened() {
+		Assert.assertTrue(dealsPage.isEditDealMenuOpened());
+	}
+
 	@When("^Click on publisher input$")
 	public void clickOnPublisherInput() {
 		dealsPage.expandPublisherNameList();
@@ -191,9 +196,34 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	public void enter_the_following_DSP_buyer_details(DataTable dt) {
 		dealsPage.enterDSPValues(dt.asMaps(String.class, String.class).get(0));
 	}
+	@Then("^enter the original DSP buyer details\\.$")
+	public void enter_the_original_DSP_buyer_details(DataTable dt) {
+		dealsPage.enterDSPValues(dt.asMaps(String.class, String.class).get(0), true);
+	}
+	@Then("^enter the 255 character as DSP buyer details$")
+	public void enter_the_255_char_as_DSP_buyer_details(DataTable dt) {
+		dealsPage.enterDSPValues(modifyMapByBase(dt.asMaps(String.class, String.class).get(0),"abcdefghijklmnopqrstuvwxyz1234567890", 255), true);
+	}
+	@Then("^enter the random int as DSP buyer details$")
+	public void enter_the_random_int_as_DSP_buyer_details(DataTable dt) {
+		dealsPage.enterDSPValues(modifyMapByBase(dt.asMaps(String.class, String.class).get(0),"1234567890", 255), true);
+	}
+	@Then("^enter the following DSP buyer details with clear\\.$")
+	public void enter_the_following_DSP_buyer_details_clear(DataTable dt) {
+		dealsPage.enterDSPValues(dt.asMaps(String.class, String.class).get(0), false, false, true);
+	}
 	@Then("^enter previously used DSP buyer details using autofill\\.$")
-	public void enter_previously_used_DSP_buyer_details() {
+	public void enter_previously_used_DSP_buyer_details_using_autofill() {
 		dealsPage.enterDSPValues(RXDealsPage.getBuyersEnteredValues(), true, true);
+	}
+
+	@Then("^enter text DSP buyer details\\.$")
+	public void enter_text_DSP_buyer_details() {
+		dealsPage.enterDSPValues(RXDealsPage.getBuyersEnteredValues(), true);
+	}
+	@Then("^enter previously used DSP buyer details using autofill and clear\\.$")
+	public void enter_previously_used_DSP_buyer_details_clear() {
+		dealsPage.enterDSPValues(RXDealsPage.getBuyersEnteredValues(), true, true, true);
 	}
 	@When("^change the publisher name to \"([^\"]*)\"$")
 	public void change_the_publisher_name_to(String publName) throws Throwable {
@@ -282,16 +312,17 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	@Then("^Verify the following buyers details with the created data of deal$")
 	public void verify_the_following_buyers_details_with_the_created_data_of_deal(DataTable dt) throws Throwable {
 		js.executeScript("arguments[0].scrollIntoView();",dealsPage.dSPDomainAdvertiserPassthroughString);
-			dt.asMaps(String.class, String.class).get(0).entrySet().stream()
-					.forEach(e -> Assert.assertEquals(RXDealsPage.getDSPBuyerFieldElement(
+		// Get element value from the Buyer form and compare to values from Data Table
+		getDataFromTable(dt).forEach(e ->
+						Assert.assertEquals(RXDealsPage.getDSPBuyerFieldElement(
 							e.getValue()).getAttribute("value"),
-							dealsPage.getBuyersEnteredValues().get(e.getValue())));
+							dealsPage.getBuyersEnteredValues().getOrDefault(e.getValue(), "")));
 		}
 	@Then("^Verify the following buyers details with the created data of deal using autofill$")
 	public void verify_the_following_buyers_details_with_the_created_data_of_deal_using_autofill(DataTable dt) throws Throwable {
 		js.executeScript("arguments[0].scrollIntoView();",dealsPage.dSPDomainAdvertiserPassthroughString);
-		dt.asMaps(String.class, String.class).get(0).entrySet().stream()
-				.forEach(e -> Assert.assertTrue(RXDealsPage.getDSPBuyerFieldElement(
+		// Get element value from the Buyer form and compare to values from Data Table
+		getDataFromTable(dt).forEach(e -> Assert.assertTrue(RXDealsPage.getDSPBuyerFieldElement(
 						e.getValue()).getAttribute("value")
 						.startsWith(dealsPage.getBuyersEnteredValues().get(e.getValue()))));;
 	}

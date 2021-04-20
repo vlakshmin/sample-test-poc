@@ -1,6 +1,7 @@
 package RXPages;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import RXBaseClass.RXBaseClass;
 import RXUtitities.RXUtile;
@@ -34,6 +35,8 @@ public class RXDealsPage extends RXBaseClass {
 
 	@FindBy(xpath = "//i[contains(@class,'newspaper')]/parent::span")
 	public WebElement createDealButton;
+	@FindBy(xpath = "//div[contains(@class,'hidden') and contains(.,'Edit')]")
+	private WebElement editDealMenuHeader;
 	@FindBy(xpath = "//div[contains(@class,'hidden') and contains(.,'Create')]")
 	private WebElement createDealMenuHeader;
 	@FindBy(xpath = "//div[contains(@class,'v-text-field')][.//label[contains(@for,'input') and contains(.,'Publisher')]]")
@@ -153,7 +156,9 @@ public class RXDealsPage extends RXBaseClass {
 	@FindBy(xpath = "//div[contains(text(),'saved successfully!')]")
 	public WebElement bannerMsgClipboard;
 	@FindBy(xpath = "//div[contains(text(),'saved successfully!')]/button")
-	public WebElement copyDealIDFrmclipboard;
+	private WebElement copyDealIDFromClipboard;
+	@FindBy(xpath = "//div[contains(@class,'toast-item') and contains(.,'copied')]//a")
+	private WebElement closeClipboardToastButton;
 	
 	//Search deal id
 	@FindBy(xpath = "//label[text()='Search']//following-sibling::input")
@@ -209,6 +214,7 @@ public class RXDealsPage extends RXBaseClass {
 	public static Map<String,String> getBuyersEnteredValues() {
 		return dspBuyersEnteredValues;
 	}
+
 	// Get the text of the media page
 	public String getPageHeading() {
 		WebDriverWait wait = new WebDriverWait(driver, 50);
@@ -219,7 +225,9 @@ public class RXDealsPage extends RXBaseClass {
 	}
 
 	public static WebElement getDSPBuyerFieldElement(String name) {
-		return 	driver.findElement(By.xpath(String.format("//label[text()='%s']/following-sibling::input", name)));
+		WebElement field = driver.findElement(By.xpath(String.format("//label[text()='%s']/following-sibling::input[@type='text']", name)));
+		driverWait().until(ExpectedConditions.elementToBeClickable(field));
+		return 	field;
 	}
 
 	public void clickOverViewEditbutton() {
@@ -280,6 +288,9 @@ public class RXDealsPage extends RXBaseClass {
 		return createDealMenuHeader.isDisplayed();
 	}
 
+	public boolean isEditDealMenuOpened() {
+		return editDealMenuHeader.isDisplayed();
+	}
 	public void expandPublisherNameList() {
 		publisherNameInput.click();
 		//System.out.println("Publisher name attribute is: " + attributeContains(publisherNameInput, "class", "is-menu-active"));
@@ -314,7 +325,6 @@ public class RXDealsPage extends RXBaseClass {
 		// Date field has a specific text for the required message, and it is formatted accordingly
 		Arrays.stream(elements).forEach(e -> wait.until(elementToBeClickable(e)));
 		return Arrays.stream(elements)
-				.peek(e -> System.out.println(e.getText()))
 				.allMatch(i ->
 				getErrorMessageTextByField(i).replaceAll("\\.", "")
 						.equalsIgnoreCase(("the " + i.getText() + " field is required")
@@ -329,7 +339,7 @@ public class RXDealsPage extends RXBaseClass {
 		return verifyErrorMessageForElements(privateAuctionList, nameInput,
 				selectDateButton, floorPriceField, dspList);
 	}
-
+	// TO DO: Check if this method works in other menus.
 	public void selectValueFromDropdown(String name) {
 		int attempt = 0;
 
@@ -428,60 +438,81 @@ public class RXDealsPage extends RXBaseClass {
 	}
 
 	/**
-	 * Enters values to DSP buyer fields. Supports optional parameters.
-	 * <br> find more: {@link #enterDSPValues(Map, boolean, boolean)}.
+	 * <br>Overload of {@link #enterDSPValues(Map, boolean, boolean, boolean)}.
 	 * @param valuesToEnter
-	 * <br>Map, where the key is name of the field and value is the text to be entered.
 	 */
 	public void enterDSPValues(Map<String,String> valuesToEnter)
 	{
-		enterDSPValues(valuesToEnter, false, false);
+		enterDSPValues(valuesToEnter, false, false, false);
 	}
 
 	/**
-	 * Enters values to DSP buyer fields. Supports optional parameters.
-	 * <br> find more: {@link #enterDSPValues(Map, boolean, boolean)}.
+	 * <br> Overload of: {@link #enterDSPValues(Map, boolean, boolean, boolean)}.
 	 * @param valuesToEnter
-	 * <br>Map, where the key is name of the field and value is the text to be entered.
-	 * @param isFromCache
-	 * <br>When <b>true</b>, values will be taken from previously created entity, using the map with saved values.
-	 * <br>When <b>false</b>, it will generate random values and save them to a map.
+	 * @param isOriginalValue
 	 */
-	public void enterDSPValues(Map<String,String> valuesToEnter, boolean isFromCache)
+	public void enterDSPValues(Map<String,String> valuesToEnter, boolean isOriginalValue)
 	{
-		enterDSPValues(valuesToEnter, isFromCache, false);
+		enterDSPValues(valuesToEnter, isOriginalValue, false, false);
 	}
-
+	/**
+	 * <br> Overload of: {@link #enterDSPValues(Map, boolean, boolean, boolean)}.
+	 * @param valuesToEnter
+	 * @param isOriginalValue
+	 * @param isAutofill
+	 */
+	public void enterDSPValues(Map<String,String> valuesToEnter, boolean isOriginalValue, boolean isAutofill)
+	{
+		enterDSPValues(valuesToEnter, isOriginalValue, false, false);
+	}
 	/**
 	 * Enters values to DSP buyer fields.
 	 * @param valuesToEnter
 	 * <br>Map, where the key is name of the field and value is the text to be entered.
-	 * @param isFromCache
-	 * <br>When <b>true</b>, values will be taken from previously created entity, using the map with saved values.
+	 * @param isOriginalValue
+	 * <br>When <b>true</b>, values will be taken from Map that is passed to the method.
 	 * <br>When <b>false</b>, it will generate random values and save them to a map.
 	 * @param isAutofill
 	 * Sends a text to the input field, then selects this text from dropdown.
+	 * @param isClear
+	 * <br>When <b>true</b>, field will be cleared before entering text and it's value in cache map will be empty.
 	 */
-	public void enterDSPValues(Map<String,String> valuesToEnter, boolean isFromCache, boolean isAutofill)
+	public void enterDSPValues(Map<String,String> valuesToEnter, boolean isOriginalValue, boolean isAutofill, boolean isClear)
 	{
+		if (isClear) clearBuyersEnteredValues(valuesToEnter);
 		for (Map.Entry<String,String> entry: valuesToEnter.entrySet()) {
 			String key = entry.getKey(), value = entry.getValue(), text;
-			text = isFromCache ? value : value + rxUTL.getRandomNumberFourDigit();
-			if (!isFromCache) {
-				dspBuyersEnteredValues.put(key, text);
-			}
+			text = isOriginalValue ? value : value + rxUTL.getRandomNumberFourDigit();
+			dspBuyersEnteredValues.put(key, text);
 			if (isAutofill) {
 				enterTextToDspFieldUsingDropdown(key, text);
-				break;
+				continue;
 			}
 			else {
 				getDSPBuyerFieldElement(key).sendKeys(text);
 			}
 		}
 	}
+	public void clearBuyersEnteredValues(Map<String,String> valuesToEnter) {
+		valuesToEnter.entrySet()
+				.stream()
+				.forEach(e-> {
+					int attempts = 0;
+					WebElement field = getDSPBuyerFieldElement(e.getKey());
+					field.clear();
+					while(!field.getAttribute("value").equals("") && attempts++ < 300){
+						field.sendKeys(Keys.BACK_SPACE);
+					}
+					dspBuyersEnteredValues.put(e.getKey(), "");
+				});
+	}
+
 	public void enterTextToDspFieldUsingDropdown(String key ,String text) {
 		getDSPBuyerFieldElement(key).sendKeys(text.substring(0,text.length() - 2));
 		selectValueFromDropdown(text);
+	}
+	public void clearTextFromFields(String key) {
+		getDSPBuyerFieldElement(key).clear();
 	}
 
 	public String getChangePublisherBannerMsg()
@@ -544,7 +575,9 @@ public class RXDealsPage extends RXBaseClass {
 	
 	public void copyDealIDToClipBoard()
 	{
-		copyDealIDFrmclipboard.click();
+		copyDealIDFromClipboard.click();
+		wait.until(ExpectedConditions.visibilityOf(closeClipboardToastButton));
+		closeClipboardToastButton.click();
 	}
 	
 	public void pasteDealIdToSearch()
