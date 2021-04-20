@@ -610,3 +610,29 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 			|Advertiser Name|
 			|DSP Seat Passthrough String|
 			|DSP Domain Advertiser Passthrough String|
+
+	Scenario: Verify that ID fields can be saved as int
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		And Click on publisher input
+		And enter the following values
+			|publisher|PrivateAuction|DSPValue|EntDealName|Values|
+			|Viber|Test_Spe|TheTradeDesk|TestAutoDeal|2|
+		And enter the random int as DSP buyer details
+			|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
+			|||||||
+		When click on Save deal
+		And copy the deal ID
+		And search the deal ID
+		And Select the deal and click on edit
+		And Verify the following buyers details with the created data of deal
+			|FieldName|
+			|DSP Seat ID|
+			|DSP Seat Name|
+			|Advertiser ID|
+			|Advertiser Name|
+			|DSP Seat Passthrough String|
+			|DSP Domain Advertiser Passthrough String|

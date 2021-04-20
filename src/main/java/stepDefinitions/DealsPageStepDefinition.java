@@ -204,6 +204,10 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	public void enter_the_255_char_as_DSP_buyer_details(DataTable dt) {
 		dealsPage.enterDSPValues(modifyMapByBase(dt.asMaps(String.class, String.class).get(0),"abcdefghijklmnopqrstuvwxyz1234567890", 255), true);
 	}
+	@Then("^enter the random int as DSP buyer details$")
+	public void enter_the_random_int_as_DSP_buyer_details(DataTable dt) {
+		dealsPage.enterDSPValues(modifyMapByBase(dt.asMaps(String.class, String.class).get(0),"1234567890", 255), true);
+	}
 	@Then("^enter the following DSP buyer details with clear\\.$")
 	public void enter_the_following_DSP_buyer_details_clear(DataTable dt) {
 		dealsPage.enterDSPValues(dt.asMaps(String.class, String.class).get(0), false, false, true);
@@ -212,7 +216,6 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	public void enter_previously_used_DSP_buyer_details_using_autofill() {
 		dealsPage.enterDSPValues(RXDealsPage.getBuyersEnteredValues(), true, true);
 	}
-
 
 	@Then("^enter text DSP buyer details\\.$")
 	public void enter_text_DSP_buyer_details() {
