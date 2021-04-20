@@ -50,7 +50,7 @@ Scenario:  Verify searching deal with available and non available deal name
 	Then Verify the search functionality with the following names
 	|Name|CoumnName|
 	|testings|Name|
-	|testingss|Name|
+	|RTBHouse Deals|Name|
 
 
 Scenario:  Verify enabling and disabling of a deal from the overview page
@@ -59,7 +59,7 @@ Scenario:  Verify enabling and disabling of a deal from the overview page
 	And User displayed with Deals page
     Then Verify the search functionality with the following names
 	|Name|CoumnName|
-	|testings|Name|
+	|RTBHouse Deal|Name|
 	Then Verify enabling and disabling of a deal from the overview page
 
 
@@ -69,7 +69,7 @@ Scenario:  Verify sorting of the list's columns of the deals overview page
 	And User displayed with Deals page
 	Then Verify the sorting functionality with the following columns
 	|ColumnName|SortType|
-	|ID|asc|
+	|ID|desc|
 	|Publisher|desc|
 	|Active|asc|
 	|DSP|desc|
@@ -156,7 +156,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	And enter the following DSP buyer details.
 		|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
 		|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|
- 	When change the publisher name to "Demand Integration"
+ 	When change the publisher name to "Viki"
   	Then Verify the following message is displayed when the publisher changed for deal
 	|Message|
 	|By changing the Publisher the form will be reset and the previous changes will not be saved.|
@@ -179,7 +179,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|DSP Domain Advertiser Passthrough String|
 #	|Related Proposal|
 	And Verify the buyer is "Disabled"
-	When change the publisher name to "Demand Integration"
+	When change the publisher name to "Viki"
 	Then Verify the following message is displayed when the publisher changed for deal
 	|Message|
 	|By changing the Publisher the form will be reset and the previous changes will not be saved.|
@@ -244,7 +244,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	And enter the following DSP buyer details.
 		|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
 		|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|
- 	When change the DSP name to "Criteo"
+ 	When change the DSP name to "RBidder"
   	Then Verify the following message is displayed when the DSP changed for deal
 	|Message|
 	|By changing the DSP, the Buyers section will be reset and will not be saved.|
@@ -267,7 +267,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 	|DSP Domain Advertiser Passthrough String|
 #	|Related Proposal|
 	And Verify the buyer is "Disabled"
-	When change the DSP name to "Criteo"
+	When change the DSP name to "RBidder"
 	Then Verify the following message is displayed when the DSP changed for deal
 	|Message|
 	|By changing the DSP, the Buyers section will be reset and will not be saved.|
@@ -478,7 +478,7 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 		And copy the deal ID
 		And search the deal ID
 		And Select the deal and click on edit
-		And enter the following DSP buyer details.
+		And enter the following DSP buyer details with clear.
 			|DSP Seat ID|
 			|TestAutoSeatID|
 		When click on Save deal

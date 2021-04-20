@@ -28,11 +28,13 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement overviewEditbutton;
 	@FindBy(xpath = "//button/span[text()='Deactivate Deal']")
 	public WebElement overviewDisablebutton;
-	@FindBy(xpath = "//div[@class='portal vue-portal-target']/button[2]/span")
+	@FindBy(xpath = "//button/span[text()='Activate Deal']")
 	public WebElement overviewEnablebutton;
+	@FindBy(xpath = "//div[@class='portal vue-portal-target']")
+	public WebElement overviewButtons;
 
 	@FindBy(xpath = "//i[contains(@class,'newspaper')]/parent::span")
-	private WebElement createDealButton;
+	public WebElement createDealButton;
 	@FindBy(xpath = "//div[contains(@class,'hidden') and contains(.,'Edit')]")
 	private WebElement editDealMenuHeader;
 	@FindBy(xpath = "//div[contains(@class,'hidden') and contains(.,'Create')]")

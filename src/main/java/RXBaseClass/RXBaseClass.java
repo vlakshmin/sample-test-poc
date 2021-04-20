@@ -117,9 +117,8 @@ public class RXBaseClass {
 				.flatMap(m -> m.entrySet().stream());
 	}
 	public static Map<String,String> createCopyOfCucumberMap(Map<String,String> map) {
-		LinkedHashMap<String,String> copy = map.entrySet().stream()
+		return map.entrySet().stream()
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
-		return copy;
 	}
 	public static Map<String,String> modifyMapByBase(Map<String,String> map, String base, int length) {
 		// Create a copy of map from Cucumber data table
