@@ -343,7 +343,7 @@ public class RXDealsPage extends RXBaseClass {
 				.allMatch(i ->
 				getErrorMessageTextByField(i).replaceAll("\\.", "")
 						.equalsIgnoreCase(("the " + i.getText() + " field is required")
-								.replaceAll("(?i).{9}range.{7}(?=is)","Start date ")
+								//.replaceAll("(?i).{9}range.{7}(?=is)","Start date ")
 								.replaceAll("Floor Price","Value")));
 	}
 	public String getErrorMessageTextByField(WebElement element) {

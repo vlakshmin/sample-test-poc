@@ -386,7 +386,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 			  break; 
 			case "Date Range":
 			  
-			  	Assert.assertEquals(dealsPage.dateRange.getAttribute("value"), " GMT");
+			  	Assert.assertEquals(dealsPage.dateRange.getAttribute("value"), "");
 			    break; 
 			case "Value":
 				Assert.assertEquals(dealsPage.value.getAttribute("value"),""); 
