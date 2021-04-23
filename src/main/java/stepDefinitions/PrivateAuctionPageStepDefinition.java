@@ -1,11 +1,6 @@
 package stepDefinitions;
 
-import RXBaseClass.RXBaseClass;
-import RXPages.PublisherListPage;
-import RXPages.RXAdspotsPage;
-import RXPages.RXDealsPage;
-import RXPages.RXNavOptions;
-import RXPages.RXPrivateAuctionsPage;
+import RXPages.*;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
@@ -23,7 +18,7 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
-public class PrivateAuctionPageStepDefinition extends RXBaseClass {
+public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 
 
 	RXPrivateAuctionsPage auctionPage;
@@ -79,6 +74,11 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
         log.info("Auction Page Header is asserted  and it is : " + auctionPage.getPageHeading());
 
     }
+
+	@When("^Click on the Pricate Auction create button$")
+	public void createPrivateAuctionButtonClick() throws InterruptedException {
+		createButtonClick("Create Private Auction");
+	}
 
     //Verify enabling abd disabling of an adspot from the overview page
 

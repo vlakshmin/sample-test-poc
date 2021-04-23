@@ -1,8 +1,6 @@
 package stepDefinitions;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,25 +9,20 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import RXBaseClass.RXBaseClass;
 import RXPages.PublisherListPage;
 import RXPages.RXAdspotsPage;
 import RXPages.RXNavOptions;
-import RXUtitities.RXUtile;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-public class AdspotsPageStepDefinition extends RXBaseClass {
+public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	String isAdspotActive;
 	String enteredPublisherName;
@@ -154,17 +147,17 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 			String status = coulmnData.get(0).getText();
 			switch (status) {
 			case "Active":
-				Assert.assertTrue(adspotsPage.overviewEditbutton.isDisplayed());
-				Assert.assertTrue(adspotsPage.overviewDisablebutton.isDisplayed());
+				Assert.assertTrue(adspotsPage.overviewEditButton.isDisplayed());
+				Assert.assertTrue(adspotsPage.overviewDisableButton.isDisplayed());
 				adspotsPage.clickOverViewDisablebutton();
 				Thread.sleep(3000);
 				List<WebElement> coulmnData1 = navOptions.getColumnDataMatchingHeader("Active/Inactive");
 				Assert.assertEquals(coulmnData1.get(0).getText(), "Inactive");
 				break;
 			case "Inactive":
-				Assert.assertTrue(adspotsPage.overviewEditbutton.isDisplayed());
-				Assert.assertTrue(adspotsPage.overviewEnablebutton.isDisplayed());
-				String enableText = adspotsPage.overviewEnablebutton.getText().replaceAll("\\s", "");
+				Assert.assertTrue(adspotsPage.overviewEditButton.isDisplayed());
+				Assert.assertTrue(adspotsPage.overviewEnableButton.isDisplayed());
+				String enableText = adspotsPage.overviewEnableButton.getText().replaceAll("\\s", "");
 				Assert.assertEquals(enableText, "ACTIVATEADSPOT");
 				adspotsPage.clickOverViewEnablebutton();
 				Thread.sleep(3000);
@@ -186,17 +179,17 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 			String status2 = coulmnData.get(1).getText();
 			if(status1.equals("Active")&&status2.equals("Active")) {
 				driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]/div//i")).click();
-				Assert.assertTrue(adspotsPage.overviewEditbutton.isDisplayed());
-				Assert.assertTrue(adspotsPage.overviewDisablebutton.isDisplayed());
+				Assert.assertTrue(adspotsPage.overviewEditButton.isDisplayed());
+				Assert.assertTrue(adspotsPage.overviewDisableButton.isDisplayed());
 				adspotsPage.clickOverViewDisablebutton();
 				Thread.sleep(3000);
 				List<WebElement> coulmnData1 = navOptions.getColumnDataMatchingHeader("Active/Inactive");
 				Assert.assertEquals(coulmnData1.get(0).getText(), "Inactive");
 			}else if(status1.equals("Inactive")&&status2.equals("Inactive")) {
 				driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]/div//i")).click();
-				Assert.assertTrue(adspotsPage.overviewEditbutton.isDisplayed());
-				Assert.assertTrue(adspotsPage.overviewEnablebutton.isDisplayed());
-				String enableText = adspotsPage.overviewEnablebutton.getText().replaceAll("\\s", "");
+				Assert.assertTrue(adspotsPage.overviewEditButton.isDisplayed());
+				Assert.assertTrue(adspotsPage.overviewEnableButton.isDisplayed());
+				String enableText = adspotsPage.overviewEnableButton.getText().replaceAll("\\s", "");
 				Assert.assertEquals(enableText, "ACTIVATEADSPOT");
 				adspotsPage.clickOverViewEnablebutton();
 				Thread.sleep(3000);
@@ -323,19 +316,9 @@ public class AdspotsPageStepDefinition extends RXBaseClass {
 
 	}
 
-	@When("^Click on the following create button$")
-	public void createButtonClick(DataTable dt) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
-		for (int i = 0; i < list.size(); i++) {
-			String columnName = list.get(i).get("CreateButtonName");
-			driver.findElement(By.xpath("//button/span[text()='" + columnName + "']")).click();
-			wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
-			wait.until(ExpectedConditions.visibilityOf(
-					driver.findElement(By.xpath("//aside[@class='dialog']/header//div[contains(text(),'" + columnName + "')]"))));
-
-		}
-
+	@When("^Click on the Adspot create button$")
+	public void createAdspotButtonClick() throws InterruptedException {
+		createButtonClick("Create AdSpot", "Create Adspot");
 	}
 
 	@Then("^Verify following fields are mandatory for create page$")

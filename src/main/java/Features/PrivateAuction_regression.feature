@@ -73,9 +73,7 @@ Scenario:  Verify mandatory fields in the Create private auction Page
     Given admin user login to RX UI with valid username and password 
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-	And Click on the following create button
-	|CreateButtonName|
-	|Create Private Auction|
+	And Click on the Pricate Auction create button
 	Then Click on Save Private Auction & Close button
 	Then Verify following fields are mandatory for create page
 	|FieldName|
@@ -93,9 +91,7 @@ Scenario:  Verify on publisher user login, publisher field is disabled in the Cr
     Given Publisher user login to RX UI with valid username and password 
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-	And Click on the following create button
-	|CreateButtonName|
-	|Create Private Auction|
+	And Click on the Pricate Auction create button
  	Then Verify publisher field is disabled on create/edit page
 
   Scenario: Verify select/unselect for targeting options
@@ -138,9 +134,7 @@ Scenario:  Verify on publisher user login, publisher field is disabled in the Cr
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-	And Click on the following create button
-	|CreateButtonName|
-	|Create Private Auction|
+	And Click on the Pricate Auction create button
 	Then Verify following fields are not enabled for create page
 	|FieldName|
 	|Name|
@@ -153,9 +147,7 @@ Scenario:  Verify default values for toggle fields in the Create private auction
     Given admin user login to RX UI with valid username and password 
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-	And Click on the following create button
-	|CreateButtonName|
-	|Create Private Auction|
+	And Click on the Pricate Auction create button
 	And Enter the following data in the general card of private auction
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|ListValue|2|
@@ -169,9 +161,7 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
     Given admin user login to RX UI with valid username and password 
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-	And Click on the following create button
-	|CreateButtonName|
-	|Create Private Auction|
+	And Click on the Pricate Auction create button
 	And Enter the following data in the general card of private auction
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|ListValue|1|
@@ -211,9 +201,7 @@ Scenario:  Verify successful creation of private auction on clicking \Save and c
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-	And Click on the following create button
-	|CreateButtonName|
-	|Create Private Auction|
+	And Click on the Pricate Auction create button
 	And Enter the following data in the general card of private auction
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|ListValue|1|
@@ -227,9 +215,7 @@ Scenario:  Verify creation of private auction and navigating to create deal page
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-	And Click on the following create button
-	|CreateButtonName|
-	|Create Private Auction|
+	And Click on the Pricate Auction create button
 	And Enter the following data in the general card of private auction
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|ListValue|1|
@@ -241,9 +227,7 @@ Scenario:  Verify successful editing of private auction
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-	And Click on the following create button
-	|CreateButtonName|
-	|Create Private Auction|
+	And Click on the Pricate Auction create button
 	And Enter the following data in the general card of private auction
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|ListValue|1|

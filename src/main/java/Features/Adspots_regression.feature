@@ -1,7 +1,7 @@
 Feature: Adspots page regression
 
 Scenario:  Verify the default column names in the adspots overview page
-	Given admin user login to RX UI with valid username and password 
+	Given admin user login to RX UI with valid username and password
 	When Click on Adspots option under Inventory
 	And User displayed with Adspots page
 	Then Verify the overview page contains following columns
@@ -9,38 +9,39 @@ Scenario:  Verify the default column names in the adspots overview page
 	|ID|
 	|AdSpot Name|
 	|Publisher|
+	|Details|
 	|Related Media|
 	|Active/Inactive|
 	|Default Sizes|
 	|Default Floor Price|
-	
-	
+
+
 Scenario:  Verify the pagination exists for the list in the adspots page for admin
-	Given admin user login to RX UI with valid username and password 
+	Given admin user login to RX UI with valid username and password
 	When Click on Adspots option under Inventory
 	And User displayed with Adspots page
-	Then Verify the pagination of the listed rows in the Page with a selection of 50 rows per page with 7 columns
-	
-    
+	Then Verify the pagination of the listed rows in the Page with a selection of 50 rows per page with 8 columns
+
+
 
 Scenario:  Verify hide/show columns from the table options for admin
-    Given admin user login to RX UI with valid username and password 
+    Given admin user login to RX UI with valid username and password
 	When Click on Adspots option under Inventory
 	Then User displayed with Adspots page
     And User click on table options button
     Then Verify that column "AdSpot Name" can be hidden and shown
-    
- 
-Scenario:  Verify onclicking relevant status from table options shows only that particular table rows with that status 
-    Given admin user login to RX UI with valid username and password 
+
+
+Scenario:  Verify onclicking relevant status from table options shows only that particular table rows with that status
+    Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
     Then User click on table options button
     And Verify that column "Active/Inactive" only shows relevant rows in the table with filter "Active"
     And Verify that column "Active/Inactive" only shows relevant rows in the table with filter "Inactive"
-    
-Scenario:  Verify searching adspots with avaiable and non available adspot name  
-    Given admin user login to RX UI with valid username and password 
+
+Scenario:  Verify searching adspots with avaiable and non available adspot name
+    Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
 	Then Verify the search functionality with the following names
@@ -48,18 +49,18 @@ Scenario:  Verify searching adspots with avaiable and non available adspot name
 	|jay_test|AdSpot Name|
 	|jaya_testad|AdSpot Name|
 
-	
-Scenario:  Verify enabling and disabling of an adspot from the overview page  
-    Given admin user login to RX UI with valid username and password 
+
+Scenario:  Verify enabling and disabling of an adspot from the overview page
+    Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
     Then Verify the search functionality with the following names
 	|Name|CoumnName|
 	|jay_test|AdSpot Name|
 	Then Verify enabling and disabling of an adspot from the overview page
-	
-Scenario:  Verify enabling and disabling of multiple adspots from the overview page  
-    Given admin user login to RX UI with valid username and password 
+
+Scenario:  Verify enabling and disabling of multiple adspots from the overview page
+    Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
     Then Verify the search functionality with the following names
@@ -68,9 +69,9 @@ Scenario:  Verify enabling and disabling of multiple adspots from the overview p
 	Then Verify Enable of multiple adspots from the overview page
 	Then Verify Disable of multiple adspots from the overview page
 
-	
-Scenario:  Verify sorting of the table's columns of the adspots overview page 
-    Given admin user login to RX UI with valid username and password 
+
+Scenario:  Verify sorting of the table's columns of the adspots overview page
+    Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
 	Then Verify the sorting functionality with the following columns
@@ -78,14 +79,12 @@ Scenario:  Verify sorting of the table's columns of the adspots overview page
 	|ID|asc|
 	|Publisher|desc|
 	|Related Media|asc|
-	
-Scenario:  Verify mandatory fields in the Create Adspot Page 
-    Given admin user login to RX UI with valid username and password 
+
+Scenario:  Verify mandatory fields in the Create Adspot Page
+    Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
-	And Click on the following create button
-	|CreateButtonName|
-	|Create AdSpot|
+	And Click on the Adspot create button
 	Then Click on save button
 	Then Verify following fields are mandatory for create page
 	|FieldName|
@@ -93,7 +92,7 @@ Scenario:  Verify mandatory fields in the Create Adspot Page
 	And Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|ListValue|2|
-	And "Enable" the in-banner video card
+	And "Enable" the in-banner video cxard
 	And "Expand" the in-banner video card
 	And Click on save button
 	Then Verify following fields are mandatory for create page
@@ -103,16 +102,15 @@ Scenario:  Verify mandatory fields in the Create Adspot Page
 	|Position|
 	|Default Ad Sizes|
 	|Default Floor Price|
-	|Playback Methods|
-	
+	|Video Placement Type|
+	|Video Playback Methods|
 
-Scenario:  Verify Changing publisher name alert the user and then on change every fields go to default state 
-    Given admin user login to RX UI with valid username and password 
+
+Scenario:  Verify Changing publisher name alert the user and then on change every fields go to default state
+    Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
-	And Click on the following create button
-	|CreateButtonName|
-	|Create AdSpot|
+	And Click on the Adspot create button
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|ListValue|1|
@@ -164,16 +162,14 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
 	Then Verify the banner card is "Disabled"
 	And Verify the native card is "Disabled"
 	And Verify the in-banner video card is "Disabled"
-	
 
-	
-Scenario: Verify with invalid value for floor price and adsizes>1 creation is unsuccessful 
-    Given admin user login to RX UI with valid username and password 
+
+
+Scenario: Verify with invalid value for floor price and adsizes>1 creation is unsuccessful
+    Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
-	Then Click on the following create button
-	|CreateButtonName|
-	|Create AdSpot|
+	Then Click on the Adspot create button
 	And Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|ListValue|1|
@@ -212,15 +208,13 @@ Scenario: Verify with invalid value for floor price and adsizes>1 creation is un
 	|General|Default Ad Sizes must be 1 or less|Floor price must be between 0 and 10,000.00|
 	|Banner|Ad Sizes must be 1 or less|Floor price must be between 0 and 10,000.00|
 	|Native||Floor price must be between 0 and 10,000.00|
-	|InBannerVideo|Ad Sizes must be 1 or less|Floor price must be between 0 and 10,000.00| 
-	
-Scenario: Verify successful creation and updation of an adspot 
-    Given admin user login to RX UI with valid username and password 
+	|InBannerVideo|Ad Sizes must be 1 or less|Floor price must be between 0 and 10,000.00|
+
+Scenario: Verify successful creation and updation of an adspot
+    Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
-	When Click on the following create button
-	|CreateButtonName|
-	|Create AdSpot|
+	When Click on the Adspot create button
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|ListValue|1|
@@ -286,7 +280,7 @@ Scenario: Verify successful creation and updation of an adspot
 	|Ad Sizes|
 	|Floor Price|
 	|Minimum Video Duration|
-	|Maximum Video Duration|      
+	|Maximum Video Duration|
 	|Playback Methods|
 	|Video Placement Type|
 	
@@ -347,16 +341,14 @@ Scenario: Verify successful creation and updation of an adspot
 	|Maximum Video Duration|
 	|Playback Methods|
 	|Video Placement Type|
-		
-Scenario: Verify adspot can be created without any cards enabled when is inactive but for 
+
+Scenario: Verify adspot can be created without any cards enabled when is inactive but for
 editing with activing the same adspot the edit is unsuccessful
 
-    Given admin user login to RX UI with valid username and password 
+    Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
-	And Click on the following create button
-	|CreateButtonName|
-	|Create AdSpot|
+	And Click on the Adspot create button
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|ListValue|1|
@@ -390,15 +382,13 @@ editing with activing the same adspot the edit is unsuccessful
 	|Active|Active||
 	And Click on save button
 	Then Verify the save is failed
-	
+
 Scenario: Verify without adding any card ,creation of adspot is unsuccessful when the adspot is active
 
-    Given admin user login to RX UI with valid username and password 
+    Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
-	When Click on the following create button
-	|CreateButtonName|
-	|Create AdSpot|
+	When Click on the Adspot create button
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|ListValue|1|
@@ -412,15 +402,13 @@ Scenario: Verify without adding any card ,creation of adspot is unsuccessful whe
 	|Default Floor Price|10||
 	And Click on save button
 	Then Verify the save is failed
-	
-	
+
+
 Scenario: Verify after creation of adspot if the publisher is disabled the editing of the adspot is unsuccessful
-    Given admin user login to RX UI with valid username and password 
+    Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
-	When Click on the following create button
-	|CreateButtonName|
-	|Create AdSpot|
+	When Click on the Adspot create button
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|Rakuten France||
@@ -460,7 +448,7 @@ Scenario: Verify after creation of adspot if the publisher is disabled the editi
 	And "Enable" a publisher from the publisher overview page
 
 Scenario: Verify creation of adspot is successful if the related media is disabled
-    Given admin user login to RX UI with valid username and password 
+    Given admin user login to RX UI with valid username and password
     When Click on Media option under Inventory
 	And User displayed with media page
 	Then Verify the search functionality with the following names
@@ -469,9 +457,7 @@ Scenario: Verify creation of adspot is successful if the related media is disabl
 	And "Disable" a media from the media overview page
 	Then Click on Adspots sub menu
 	And User displayed with Adspots page
-	When Click on the following create button
-	|CreateButtonName|
-	|Create AdSpot|
+	When Click on the Adspot create button
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|Mark Mceachran||
@@ -491,14 +477,12 @@ Scenario: Verify creation of adspot is successful if the related media is disabl
 	|Mark Mc Desktop Site|Media Name|
 	And "Enable" a media from the media overview page
 
-	
+
 Scenario: Verify after creation of adspot if the related media is disabled the editing of the adspot is successful
-    Given admin user login to RX UI with valid username and password 
+    Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
-	When Click on the following create button
-	|CreateButtonName|
-	|Create AdSpot|
+	When Click on the Adspot create button
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|Mark Mceachran||
@@ -535,12 +519,10 @@ Scenario: Verify after creation of adspot if the related media is disabled the e
 
 
 Scenario: Verify adspot cannot be created with defalut sizeless adsize and banner as same as default
-    Given admin user login to RX UI with valid username and password 
+    Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
-	When Click on the following create button
-	|CreateButtonName|
-	|Create AdSpot|
+	When Click on the Adspot create button
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|Mark Mceachran||
@@ -563,14 +545,12 @@ Scenario: Verify adspot cannot be created with defalut sizeless adsize and banne
 	And "Disable" the banner card
 	And Click on save button
 	Then Verify the save is failed
-	
+
 Scenario: Verify adspot cannot be created with defalut sizeless adsize and video as same as default
-    Given admin user login to RX UI with valid username and password 
+    Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
-	When Click on the following create button
-	|CreateButtonName|
-	|Create AdSpot|
+	When Click on the Adspot create button
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|Mark Mceachran||
@@ -597,17 +577,15 @@ Scenario: Verify adspot cannot be created with defalut sizeless adsize and video
 	And "Disable" the in-banner video card
 	And Click on save button
 	Then Verify the save is failed
-	
+
 Scenario: Verify successful creation and updation of an adspot for a default size of 1*1 with native as same as default
-    Given admin user login to RX UI with valid username and password 
+    Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
-	When Click on the following create button
-	|CreateButtonName|
-	|Create AdSpot|
+	When Click on the Adspot create button
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|1|    
+	|Publisher Name|ListValue|1|
 	|Active|Active||
 	|AdSpot Name|Auto_Test||
 	|Related Media|ListValue|2|
@@ -631,7 +609,7 @@ Scenario: Verify successful creation and updation of an adspot for a default siz
 	|Floor Price|
 	
 	#Editing flow
-	
+
 	And "Enable" the banner card
 	And "Expand" the banner card
 	And Enter the following data in the banner card of adspot
@@ -682,18 +660,16 @@ Scenario: Verify successful creation and updation of an adspot for a default siz
 	|Maximum Video Duration|
 	|Playback Methods|
 	|Video Placement Type|
-	
-	
+
+
 Scenario: Verify successful creation and updation of an adspot for a default size along with 1*1 and in editing check with default size as 1*1 alone and a size alone
-    Given admin user login to RX UI with valid username and password 
+    Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
-	When Click on the following create button
-	|CreateButtonName|
-	|Create AdSpot|
+	When Click on the Adspot create button
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|1|    
+	|Publisher Name|ListValue|1|
 	|Active|Active||
 	|AdSpot Name|Auto_Test||
 	|Related Media|ListValue|2|
@@ -789,3 +765,77 @@ Scenario: Verify successful creation and updation of an adspot for a default siz
 	|Maximum Video Duration|
 	|Playback Methods|
 	|Video Placement Type|
+
+Scenario: Verify successful creation and updation of an adspot
+	Given admin user login to RX UI with valid username and password
+	When Click on Adspots option under Inventory
+	And User displayed with Adspots page
+	When Click on the Adspot create button
+	Then Enter the following data in the general card of adspot
+		|FieldName|Value|ListValueIndex|
+		|Publisher Name|ListValue|1|
+		|Active|Active||
+		|AdSpot Name|Auto_Test||
+		|Related Media|ListValue|2|
+		|Categories|ListValue|2|
+		|Position|ListValue|2|
+		|Filter|ListValue|1|
+		|Default Ad Sizes|ListValue|2|
+		|Default Floor Price|10||
+	And "Enable" the banner card
+	And "Expand" the banner card
+	Then Enter the following data in the banner card of adspot
+		|FieldName|Value|ListValueIndex|
+		|Ad Sizes|ListValue|2|
+		|Floor Price|5||
+	And "Enable" the native card
+	And "Expand" the native card
+	Then Enter the following data in the native card of adspot
+		|FieldName|Value|
+		|Floor Price|5|
+	And "Enable" the in-banner video card
+	And "Expand" the in-banner video card
+	Then Enter the following data in the in-banner video card of adspot
+		|FieldName|Value|ListValueIndex|
+		|Video Placement Type|ListValue|1|
+		|Ad Sizes|ListValue|2|
+		|Floor Price|5||
+		|Minimum Video Duration|ListValue|1|
+		|Maximum Video Duration|ListValue|1|
+		|Playback Methods|ListValue|1,2,3|
+	And Click on save button and wait for dialog to close
+	Then Verify the created adspot data is matching with its overview list values
+	When Click on the created adspotname in the overview page
+	And Verify following fields are disabled on create/edit adspot page
+		|FieldName|
+		|Publisher Name|
+		|Related Media|
+	Then Verify the following columns value with the created data for the general card of adspot
+		|FieldName|
+		|Publisher Name|
+		|Active|
+		|AdSpot Name|
+		|Related Media|
+		|Default Ad Sizes|
+		|Default Floor Price|
+	And Verify the banner card is "Enabled"
+	And Verify the native card is "Enabled"
+	And Verify the in-banner video card is "Enabled"
+	Then "Expand" the banner card
+	And "Expand" the native card
+	And "Expand" the in-banner video card
+	Then Verify the following columns value with the created data for the banner card of adspot
+		|FieldName|
+		|Ad Sizes|
+		|Floor Price|
+	Then Verify the following columns value with the created data for the native card of adspot
+		|FieldName|
+		|Floor Price|
+	Then Verify the following columns value with the created data for the in-banner video card of adspot
+		|FieldName|
+		|Ad Sizes|
+		|Floor Price|
+		|Minimum Video Duration|
+		|Maximum Video Duration|
+		|Playback Methods|
+		|Video Placement Type|

@@ -90,6 +90,8 @@ public class RXNavOptions extends RXBaseClass {
 	public List<WebElement> tableColumnsCount;
 	@FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[2]"))
 	public WebElement tableFirstRowName;
+	@FindAll(@FindBy(xpath = "//div[@class='v-progress-linear__buffer']"))
+	public WebElement tableLoaderBar;
 
 	@FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//thead//th/span"))
 	public List<WebElement> tableHeadersList;
