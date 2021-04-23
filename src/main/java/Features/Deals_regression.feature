@@ -636,3 +636,107 @@ Scenario: Verify that the Alert message displayed for changing the publisher for
 			|Advertiser Name|
 			|DSP Seat Passthrough String|
 			|DSP Domain Advertiser Passthrough String|
+
+
+	Scenario: Verify that Details icon displays information properly
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		And Click on publisher input
+		And enter the following values
+			|publisher|PrivateAuction|DSPValue|EntDealName|Values|
+			|Viber|Test_Spe|TheTradeDesk|TestAutoDeal|2|
+		And enter the following DSP buyer details.
+			|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
+			|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|
+		When click on Save deal
+		And copy the deal ID
+		And search the deal ID
+		And Hover over deal details button
+		And Get deal details data
+		Then Verify deal details data is correct
+
+	Scenario: Verify that Details icon displays information properly after editing all values
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		And Click on publisher input
+		And enter the following values
+			|publisher|PrivateAuction|DSPValue|EntDealName|Values|
+			|Viber|Test_Spe|TheTradeDesk|TestAutoDeal|2|
+		And enter the following DSP buyer details.
+			|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
+			|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|
+		When click on Save deal
+		And copy the deal ID
+		And search the deal ID
+		And Select the deal and click on edit
+		And enter the following DSP buyer details with clear.
+			|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
+			|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|
+		When click on Save deal
+		And copy the deal ID
+		And search the deal ID
+		And Hover over deal details button
+		And Get deal details data
+		Then Verify deal details data is correct
+
+
+	Scenario: Verify that Details icon displays information properly after editing one value
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		And Click on publisher input
+		And enter the following values
+			|publisher|PrivateAuction|DSPValue|EntDealName|Values|
+			|Viber|Test_Spe|TheTradeDesk|TestAutoDeal|2|
+		And enter the following DSP buyer details.
+			|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
+			|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|
+		When click on Save deal
+		And copy the deal ID
+		And search the deal ID
+		And Select the deal and click on edit
+		And enter the following DSP buyer details with clear.
+			|DSP Seat ID|
+			|TestAutoSeatID|
+		When click on Save deal
+		And copy the deal ID
+		And search the deal ID
+		And Hover over deal details button
+		And Get deal details data
+		Then Verify deal details data is correct
+
+
+	Scenario: Verify that Details icon displays information properly after removing value
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		And Click on publisher input
+		And enter the following values
+			|publisher|PrivateAuction|DSPValue|EntDealName|Values|
+			|Viber|Test_Spe|TheTradeDesk|TestAutoDeal|2|
+		And enter the following DSP buyer details.
+			|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
+			|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|
+		When click on Save deal
+		And copy the deal ID
+		And search the deal ID
+		And Select the deal and click on edit
+		And enter the original DSP buyer details with clear.
+			|DSP Seat ID|
+			||
+		When click on Save deal
+		And copy the deal ID
+		And search the deal ID
+		And Hover over deal details button
+		And Get deal details data
+		Then Verify deal details data is correct

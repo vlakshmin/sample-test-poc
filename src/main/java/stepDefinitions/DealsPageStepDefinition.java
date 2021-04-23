@@ -39,6 +39,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	public String enteredPublisher;
 	public String enteredDSP;
 	private Map<String,List<Boolean>> floorPriceValues = new HashMap<>();
+	private LinkedHashMap<String,String> detailsData = new LinkedHashMap<>();
 //=========================================================================================================	
 	// Verify if user is displayed with media list page on clicking media navigation
 	// link
@@ -122,6 +123,21 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		dealsPage.clickCreateDealButton();
 	}
 
+	@When("^Hover over deal details button$")
+	public void hoverOverDealButton() {
+		dealsPage.hoverOverDetailsButton();
+		detailsData = dealsPage.getDetailsData();
+	}
+	@When("^Get deal details data$")
+	public void getDealDetailsData() {
+		detailsData = dealsPage.getDetailsData();
+	}
+	@Then("^Verify deal details data is correct$")
+	public void verifyDetailsData() {
+		System.out.println(detailsData);
+		System.out.println(RXDealsPage.getBuyersEnteredValues());
+		Assert.assertTrue(RXDealsPage.getBuyersEnteredValues().equals(detailsData));
+	}
 	@Then("^Create deal menu is opened$")
 	public void isCreateDealMenuOpened() {
 		Assert.assertTrue(dealsPage.isCreateDealMenuOpened());
@@ -200,13 +216,17 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	public void enter_the_original_DSP_buyer_details(DataTable dt) {
 		dealsPage.enterDSPValues(dt.asMaps(String.class, String.class).get(0), true);
 	}
+	@Then("^enter the original DSP buyer details with clear\\.$")
+	public void enter_the_original_DSP_buyer_details_with_clear(DataTable dt) {
+		dealsPage.enterDSPValues(dt.asMaps(String.class, String.class).get(0), true,false,true);
+	}
 	@Then("^enter the 255 character as DSP buyer details$")
 	public void enter_the_255_char_as_DSP_buyer_details(DataTable dt) {
 		dealsPage.enterDSPValues(modifyMapByBase(dt.asMaps(String.class, String.class).get(0),"abcdefghijklmnopqrstuvwxyz1234567890", 255), true);
 	}
 	@Then("^enter the random int as DSP buyer details$")
 	public void enter_the_random_int_as_DSP_buyer_details(DataTable dt) {
-		dealsPage.enterDSPValues(modifyMapByBase(dt.asMaps(String.class, String.class).get(0),"1234567890", 255), true);
+		dealsPage.enterDSPValues(modifyMapByBase(dt.asMaps(String.class, String.class).get(0),"1234567890", 30), true);
 	}
 	@Then("^enter the following DSP buyer details with clear\\.$")
 	public void enter_the_following_DSP_buyer_details_clear(DataTable dt) {

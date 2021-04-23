@@ -101,6 +101,10 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement value;
 	
 	//Deals buyers details
+	@FindBy(xpath = "//tr//td//button[contains(@class,'v-btn--round')]")
+	private WebElement detailsButton;
+	@FindBy(xpath = "//div[contains(@class,'v-list-item__content')]//span[contains(@class,'mb-4')]//following-sibling::span")
+	private WebElement detailsCard;
 	@FindBy(xpath = "//span[@class='v-btn__content' and contains(.,'Add More Seats')]/parent::button" )
 	public WebElement addMoreSeats;
 	@FindBy(xpath = "//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']" ) 
@@ -185,7 +189,7 @@ public class RXDealsPage extends RXBaseClass {
 	public String enteredAdvertiserName;
 	public String enteredDSPSeatPassthroughString ;
 	public String enteredDSPDomainAdvertiserPassthroughString;
-	private static Map<String,String> dspBuyersEnteredValues = new HashMap<String,String>();
+	private static Map<String,String> dspBuyersEnteredValues = new HashMap<>();
 
 //	public String enteredRelatedProposal ;
 	
@@ -228,6 +232,17 @@ public class RXDealsPage extends RXBaseClass {
 		WebElement field = driver.findElement(By.xpath(String.format("//label[text()='%s']/following-sibling::input[@type='text']", name)));
 		driverWait().until(ExpectedConditions.elementToBeClickable(field));
 		return 	field;
+	}
+
+	public void hoverOverDetailsButton() {
+		wait.until(ExpectedConditions.visibilityOf(detailsButton));
+		new Actions(driver).moveToElement(detailsButton).build().perform();
+		wait.until(ExpectedConditions.attributeToBe(detailsButton, "aria-expanded","true"));
+	}
+
+	public LinkedHashMap<String,String> getDetailsData() {
+		return detailsCard.findElements(By.xpath("//span[@class='bigger-label']")).stream()
+					.collect(Collectors.toMap(WebElement::getText, e -> e.findElement(By.xpath("./../p")).getText(), (e1, e2) -> e1, LinkedHashMap::new));
 	}
 
 	public void clickOverViewEditbutton() {
@@ -583,6 +598,7 @@ public class RXDealsPage extends RXBaseClass {
 	public void pasteDealIdToSearch()
 	{
 		wait.until(ExpectedConditions.visibilityOf(searchDealId));
+		searchDealId.clear();
 		searchDealId.sendKeys(EntereddealName);
 		
 	}
