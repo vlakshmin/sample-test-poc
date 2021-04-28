@@ -134,8 +134,6 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	}
 	@Then("^Verify deal details data is correct$")
 	public void verifyDetailsData() {
-		System.out.println(detailsData);
-		System.out.println(RXDealsPage.getBuyersEnteredValues());
 		Assert.assertTrue(RXDealsPage.getBuyersEnteredValues().equals(detailsData));
 	}
 	@Then("^Create deal menu is opened$")
@@ -220,9 +218,9 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	public void enter_the_original_DSP_buyer_details_with_clear(DataTable dt) {
 		dealsPage.enterDSPValues(dt.asMaps(String.class, String.class).get(0), true,false,true);
 	}
-	@Then("^enter the 255 character as DSP buyer details$")
-	public void enter_the_255_char_as_DSP_buyer_details(DataTable dt) {
-		dealsPage.enterDSPValues(modifyMapByBase(dt.asMaps(String.class, String.class).get(0),"abcdefghijklmnopqrstuvwxyz1234567890", 255), true);
+	@Then("^enter the (.*) character as DSP buyer details$")
+	public void enter_the_char_as_DSP_buyer_details(int length, DataTable dt) {
+		dealsPage.enterDSPValues(modifyMapByBase(dt.asMaps(String.class, String.class).get(0),"abcdefghijklmnopqrstuvwxyz1234567890", length), true);
 	}
 	@Then("^enter the random int as DSP buyer details$")
 	public void enter_the_random_int_as_DSP_buyer_details(DataTable dt) {
@@ -254,7 +252,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	
 	@Then("^\"([^\"]*)\" the DSP buyer$")
 	public void the_DSP_buyer(String enableDisable) throws Throwable {
-		dealsPage.dSPbuyerEnableDisable(enableDisable);
+		dealsPage.clickBuyerActivationToggle(enableDisable);
 	}
 	
 	@Then("^Verify the following message is displayed when the publisher changed for deal$")
@@ -338,6 +336,16 @@ public class DealsPageStepDefinition extends RXBaseClass {
 							e.getValue()).getAttribute("value"),
 							dealsPage.getBuyersEnteredValues().getOrDefault(e.getValue(), "")));
 		}
+
+	@Then("^Verify the following buyers details with the created long data of deal are truncated$")
+	public void verify_the_following_buyers_long_details_are_truncated(DataTable dt) throws Throwable {
+		js.executeScript("arguments[0].scrollIntoView();",dealsPage.dSPDomainAdvertiserPassthroughString);
+		// Get element value from the Buyer form and compare to values from Data Table
+		getDataFromTable(dt).forEach(e ->
+				Assert.assertTrue(RXDealsPage.getDSPBuyerFieldElement(
+						e.getValue()).getAttribute("value").length() == 255));
+	}
+
 	@Then("^Verify the following buyers details with the created data of deal using autofill$")
 	public void verify_the_following_buyers_details_with_the_created_data_of_deal_using_autofill(DataTable dt) throws Throwable {
 		js.executeScript("arguments[0].scrollIntoView();",dealsPage.dSPDomainAdvertiserPassthroughString);
@@ -347,17 +355,9 @@ public class DealsPageStepDefinition extends RXBaseClass {
 						.startsWith(dealsPage.getBuyersEnteredValues().get(e.getValue()))));;
 	}
 	@Then("^Verify the buyer is \"([^\"]*)\"$")
-	public void verify_the_buyer_is(String status) throws Throwable {
-		switch (status.toUpperCase()) {
-			case "ENABLED":
-				Assert.assertTrue(dealsPage.isBuyerEnabled());
-				break;
-			case "DISABLED":
-				Assert.assertFalse(dealsPage.isBuyerEnabled());
-				break;
-			default:
-				throw new RuntimeException("Wrong Argument");
-		}
+	public void verify_the_buyer_is(String status) {
+		// XOR operator is used, if both conditions return different values, assertion will fail
+		Assert.assertFalse(status.equalsIgnoreCase("enabled") ^ dealsPage.isBuyerEnabled());
 	}
 	@Then("^Verify the following general values are reset to default values$")
 	public void verify_the_following_general_values_are_reset_to_default_values(DataTable dt) throws Throwable {
@@ -542,8 +542,15 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	@When("^click on Save deal$")
 	public void click_on_Save_deal() throws Throwable {
 		dealsPage.saveDeal();
+	}
+	@Then("^Verify deal contains copy deal id message$")
+	public void verify_deal_id_has_copy_message() throws Throwable {
 		System.out.println(dealsPage.getBannerMessage());
 		Assert.assertTrue(dealsPage.getBannerMessage().toLowerCase().contains("copy deal id"));
+	}
+	@When("^Verify banner message about inactive buyers$")
+	public void verify_banner_message_with_inactive_buyers() throws Throwable {
+		Assert.assertTrue(dealsPage.getAlertMessage().toLowerCase().contains("an active deal requires at least one enabled buyer"));
 	}
 	@When("^copy the deal ID$")
 	public void copy_the_deal_ID() throws Throwable {

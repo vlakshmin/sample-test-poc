@@ -108,7 +108,7 @@ public class RXDealsPage extends RXBaseClass {
 	@FindBy(xpath = "//span[@class='v-btn__content' and contains(.,'Add More Seats')]/parent::button" )
 	public WebElement addMoreSeats;
 	@FindBy(xpath = "//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']" ) 
-	public WebElement dsPbuyerEnabled; 
+	public WebElement buyerActivationToggle;
 	@FindBy(xpath = "//label[text()='DSP Seat ID']/following-sibling::input" ) 
 	public WebElement dSPSeatID;
 	@FindBy(xpath = "//label[text()='DSP Seat Name']/following-sibling::input" ) 
@@ -132,6 +132,8 @@ public class RXDealsPage extends RXBaseClass {
 	// Banner Element
 	@FindBy(xpath="//div[@class='v-banner__text']")
 	public WebElement banner;
+	@FindBy(xpath="//div[contains(@class,'v-alert__content')]")
+	public WebElement alertMessage;
 	//Change Publisher Banner.
 	@FindBy(xpath = "//div[contains(@class,'v-banner__text') and contains(text(),'changing the Publisher')]" ) 
 	public WebElement changePublisherBannerMsg;
@@ -402,30 +404,13 @@ public class RXDealsPage extends RXBaseClass {
 		enteredValue=value.getAttribute("value");
 			
 	}
-	public void activeTaggle()
+	public void clickBuyerActivationToggle(String action)
 	{
-		activeToggle.click();
+			// XOR operator is used, if both conditions return different boolean values, button is clicked
+			if (isBuyerEnabled() ^ action.equalsIgnoreCase("Enable"))
+				buyerActivationToggle.click();
 	}
-	public boolean dSPbuyerEnableDisable(String enableDisable)
-	{
-		boolean endis=false;
-		if(enableDisable.equalsIgnoreCase("Enable"))
-		{
-			String enabDisab=driver.findElement(By.xpath("//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']/input")).getAttribute("aria-checked");
-			if(enabDisab.equalsIgnoreCase("false"))
-			{
-			dsPbuyerEnabled.click();
-			endis=true;
-			}else
-			{
-				dsPbuyerEnabled.click();
-				endis=false;
-			}	
-			
-		}
-		return endis;
-	}
-	
+
 	public boolean isBuyerEnabled()
 	{
 		return driver.findElement(By.xpath("//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']/input")).getAttribute("aria-checked").equalsIgnoreCase("true");
@@ -556,6 +541,10 @@ public class RXDealsPage extends RXBaseClass {
 	public String getBannerMessage () {
 		wait.until(ExpectedConditions.visibilityOf(banner));
 		return banner.getText();
+	}
+	public String getAlertMessage () {
+		wait.until(ExpectedConditions.visibilityOf(alertMessage));
+		return alertMessage.getText();
 	}
 	public String getChangeDSPBannerMsg()
 	{
