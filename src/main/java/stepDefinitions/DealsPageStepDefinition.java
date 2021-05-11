@@ -126,7 +126,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	@When("^Hover over deal details button$")
 	public void hoverOverDealButton() {
 		dealsPage.hoverOverDetailsButton();
-		driverWait().until(ExpectedConditions.visibilityOf(dealsPage.detailsPopup));
+		driverWait().until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(@class, 'menuable__content__active')]")));
 		detailsData = dealsPage.getDetailsData();
 	}
 	@When("^Get deal details data$")
