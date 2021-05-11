@@ -121,6 +121,8 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement dSPSeatPassthroughString;
 	@FindBy(xpath = "//label[text()='DSP Domain Advertiser Passthrough String']/following-sibling::input" ) 
 	public WebElement dSPDomainAdvertiserPassthroughString;
+	@FindBy(xpath = "//div[contains(@class, 'menuable__content__active')]")
+	public WebElement detailsPopup;
 	/*
 	 * @FindBy(xpath = "//label[text()='Related Proposal']/following-sibling::input"
 	 * ) public WebElement relatedProposal;
