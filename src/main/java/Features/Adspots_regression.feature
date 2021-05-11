@@ -19,7 +19,7 @@ Scenario:  Verify the pagination exists for the list in the adspots page for adm
 	Given admin user login to RX UI with valid username and password 
 	When Click on Adspots option under Inventory
 	And User displayed with Adspots page
-	Then Verify the pagination of the listed rows in the Page with a selection of 50 rows per page with 7 columns
+	Then Verify the pagination of the listed rows in the Page with a selection of 50 rows per page with 8 columns
 	
     
 
