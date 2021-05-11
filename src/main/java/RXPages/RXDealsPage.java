@@ -641,19 +641,4 @@ public class RXDealsPage extends RXBaseClass {
 		js.executeScript("arguments[0].scrollIntoView();",driver.findElement(By.xpath(dSPDisable+"["+n+"]")));
 		return driver.findElement(By.xpath(dSPDisable+"["+n+"]"));
 	}
-
-	public boolean tryElement(By by) {
-		boolean result = false;
-		int attempts = 0;
-		while(attempts < 2) {
-			try {
-				driver.findElement(by);
-				result = true;
-				break;
-			} catch(StaleElementReferenceException e) {
-			}
-			attempts++;
-		}
-		return result;
-	}
 }

@@ -20,8 +20,9 @@ import cucumber.api.testng.TestNGCucumberRunner;
 @CucumberOptions(
 
 
-		features = "src/main/java/Features/Deals_regression.feature:623",
+		features = "src/main/java/Features/Deals_regression.feature",
         glue = {"stepDefinitions"},
+        tags = {"~@Ignore"},
         plugin = {"com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html",
         		"json:target/cucumber-reports/CucumberTestReport.json",
                 "pretty",
