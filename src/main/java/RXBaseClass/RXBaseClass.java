@@ -14,6 +14,7 @@ import cucumber.api.DataTable;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -60,9 +61,10 @@ public class RXBaseClass {
 		case "chrome" :
 //			System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"/driverFolder/chromedriver");
 			 WebDriverManager.chromedriver().setup();
-			 
-			 driver = new ChromeDriver();
-			 
+			ChromeOptions options = new ChromeOptions();
+			//options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200","--ignore-certificate-errors","--disable-extensions","--no-sandbox","--disable-dev-shm-usage");
+			 driver = new ChromeDriver(options);
+
 			 break;
 		
 		}
@@ -128,6 +130,6 @@ public class RXBaseClass {
 		return copy;
 	}
 	public static WebDriverWait driverWait() {
-		return new WebDriverWait(driver, 60);
+		return new WebDriverWait(driver, 10);
 	}
 }

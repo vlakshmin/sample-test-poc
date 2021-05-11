@@ -101,10 +101,14 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement value;
 	
 	//Deals buyers details
+	@FindBy(xpath = "//tr//td//button[contains(@class,'v-btn--round')]")
+	private WebElement detailsButton;
+	@FindBy(xpath = "//div[contains(@class,'v-list-item__content')]//span[contains(@class,'mb-4')]//following-sibling::span")
+	private WebElement detailsCard;
 	@FindBy(xpath = "//span[@class='v-btn__content' and contains(.,'Add More Seats')]/parent::button" )
 	public WebElement addMoreSeats;
 	@FindBy(xpath = "//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']" ) 
-	public WebElement dsPbuyerEnabled; 
+	public WebElement buyerActivationToggle;
 	@FindBy(xpath = "//label[text()='DSP Seat ID']/following-sibling::input" ) 
 	public WebElement dSPSeatID;
 	@FindBy(xpath = "//label[text()='DSP Seat Name']/following-sibling::input" ) 
@@ -117,6 +121,8 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement dSPSeatPassthroughString;
 	@FindBy(xpath = "//label[text()='DSP Domain Advertiser Passthrough String']/following-sibling::input" ) 
 	public WebElement dSPDomainAdvertiserPassthroughString;
+	@FindBy(xpath = "//div[contains(@class, 'menuable__content__active')]")
+	public WebElement detailsPopup;
 	/*
 	 * @FindBy(xpath = "//label[text()='Related Proposal']/following-sibling::input"
 	 * ) public WebElement relatedProposal;
@@ -128,6 +134,8 @@ public class RXDealsPage extends RXBaseClass {
 	// Banner Element
 	@FindBy(xpath="//div[@class='v-banner__text']")
 	public WebElement banner;
+	@FindBy(xpath="//div[contains(@class,'v-alert__content')]")
+	public WebElement alertMessage;
 	//Change Publisher Banner.
 	@FindBy(xpath = "//div[contains(@class,'v-banner__text') and contains(text(),'changing the Publisher')]" ) 
 	public WebElement changePublisherBannerMsg;
@@ -185,7 +193,7 @@ public class RXDealsPage extends RXBaseClass {
 	public String enteredAdvertiserName;
 	public String enteredDSPSeatPassthroughString ;
 	public String enteredDSPDomainAdvertiserPassthroughString;
-	private static Map<String,String> dspBuyersEnteredValues = new HashMap<String,String>();
+	private static Map<String,String> dspBuyersEnteredValues = new HashMap<>();
 
 //	public String enteredRelatedProposal ;
 	
@@ -228,6 +236,21 @@ public class RXDealsPage extends RXBaseClass {
 		WebElement field = driver.findElement(By.xpath(String.format("//label[text()='%s']/following-sibling::input[@type='text']", name)));
 		driverWait().until(ExpectedConditions.elementToBeClickable(field));
 		return 	field;
+	}
+
+	public void hoverOverDetailsButton() {
+		wait.until(ExpectedConditions.visibilityOf(detailsButton));
+		new Actions(driver).moveToElement(detailsButton).build().perform();
+		wait.until(ExpectedConditions.attributeToBe(detailsButton, "aria-expanded","true"));
+	}
+
+	public LinkedHashMap<String,String> getDetailsData() {
+		return detailsCard.findElements(By.xpath("//span[@class='bigger-label']")).stream()
+					.collect(Collectors.toMap(WebElement::getText, e -> {
+						WebElement element = e.findElement(By.xpath("./../p"));
+						driverWait().until(ExpectedConditions.elementToBeClickable(element));
+						return e.findElement(By.xpath("./../p")).getText();
+					}, (e1, e2) -> e1, LinkedHashMap::new));
 	}
 
 	public void clickOverViewEditbutton() {
@@ -328,7 +351,7 @@ public class RXDealsPage extends RXBaseClass {
 				.allMatch(i ->
 				getErrorMessageTextByField(i).replaceAll("\\.", "")
 						.equalsIgnoreCase(("the " + i.getText() + " field is required")
-								.replaceAll("(?i).{9}range.{7}(?=is)","Start date ")
+								//.replaceAll("(?i).{9}range.{7}(?=is)","Start date ")
 								.replaceAll("Floor Price","Value")));
 	}
 	public String getErrorMessageTextByField(WebElement element) {
@@ -387,30 +410,13 @@ public class RXDealsPage extends RXBaseClass {
 		enteredValue=value.getAttribute("value");
 			
 	}
-	public void activeTaggle()
+	public void clickBuyerActivationToggle(String action)
 	{
-		activeToggle.click();
+			// XOR operator is used, if both conditions return different boolean values, button is clicked
+			if (isBuyerEnabled() ^ action.equalsIgnoreCase("Enable"))
+				buyerActivationToggle.click();
 	}
-	public boolean dSPbuyerEnableDisable(String enableDisable)
-	{
-		boolean endis=false;
-		if(enableDisable.equalsIgnoreCase("Enable"))
-		{
-			String enabDisab=driver.findElement(By.xpath("//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']/input")).getAttribute("aria-checked");
-			if(enabDisab.equalsIgnoreCase("false"))
-			{
-			dsPbuyerEnabled.click();
-			endis=true;
-			}else
-			{
-				dsPbuyerEnabled.click();
-				endis=false;
-			}	
-			
-		}
-		return endis;
-	}
-	
+
 	public boolean isBuyerEnabled()
 	{
 		return driver.findElement(By.xpath("//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']/input")).getAttribute("aria-checked").equalsIgnoreCase("true");
@@ -542,6 +548,10 @@ public class RXDealsPage extends RXBaseClass {
 		wait.until(ExpectedConditions.visibilityOf(banner));
 		return banner.getText();
 	}
+	public String getAlertMessage () {
+		wait.until(ExpectedConditions.visibilityOf(alertMessage));
+		return alertMessage.getText();
+	}
 	public String getChangeDSPBannerMsg()
 	{
 		WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -583,6 +593,7 @@ public class RXDealsPage extends RXBaseClass {
 	public void pasteDealIdToSearch()
 	{
 		wait.until(ExpectedConditions.visibilityOf(searchDealId));
+		searchDealId.clear();
 		searchDealId.sendKeys(EntereddealName);
 		
 	}
