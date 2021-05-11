@@ -244,7 +244,11 @@ public class RXDealsPage extends RXBaseClass {
 
 	public LinkedHashMap<String,String> getDetailsData() {
 		return detailsCard.findElements(By.xpath("//span[@class='bigger-label']")).stream()
-					.collect(Collectors.toMap(WebElement::getText, e -> e.findElement(By.xpath("./../p")).getText(), (e1, e2) -> e1, LinkedHashMap::new));
+					.collect(Collectors.toMap(WebElement::getText, e -> {
+						WebElement element = e.findElement(By.xpath("./../p"));
+						driverWait().until(ExpectedConditions.elementToBeClickable(element));
+						return e.findElement(By.xpath("./../p")).getText();
+					}, (e1, e2) -> e1, LinkedHashMap::new));
 	}
 
 	public void clickOverViewEditbutton() {
