@@ -59,38 +59,28 @@ public class RXUtile extends RXBaseClass {
 		return(rand.nextInt(50));
 	}
 
-//	public static int getRandomNumberFourDigit()
-//	{
-//		Random rand = new Random();
-//		return(rand.nextInt(1000));
-//	}
+
 
 	public static String getRandomNumberFourDigit()
 	{
-		String emailChacter = "abcdefghijklmnopqrstuvwxyz1234567890";
-		StringBuilder eStr = new StringBuilder();
-		Random rnd = new Random();
-		while (eStr.length() < 5) { // length of the random string.
-			int index = (int) (rnd.nextFloat() * emailChacter.length());
-			eStr.append(emailChacter.charAt(index));
-		}
-		String emailStr = eStr.toString();
-		return emailStr;
+		return getRandomValue("abcdefghijklmnopqrstuvwxyz1234567890",5);
 	}
 
+	public static String getRandomValue(String base, int length)
+	{
+		StringBuilder sb = new StringBuilder();
+		while (sb.length() < length) { // length of the random string.
+			int index = (int) (new Random().nextFloat() * base.length());
+			sb.append(base.charAt(index));
+		}
+		return sb.toString();
+	}
 	public String getEmailString() {
-		String emailChacter = "abcdefghijklmnopqrstuvwxyz1234567890";
-		StringBuilder eStr = new StringBuilder();
-		Random rnd = new Random();
-		while (eStr.length() < 10) { // length of the random string.
-			int index = (int) (rnd.nextFloat() * emailChacter.length());
-			eStr.append(emailChacter.charAt(index));
-		}
-		String emailStr = eStr.toString()+"@testqar.com";
-		return emailStr;
-
+		return getRandomValue("abcdefghijklmnopqrstuvwxyz1234567890",10);
 	}
-
+	public static String getRandomString(int length) {
+		return getRandomValue("abcdefghijklmnopqrstuvwxyz",length);
+	}
 	public int getTotalRowCount(WebElement elem) {
 		String str = elem.getText();
 		String[] srt = str.split(" ");
