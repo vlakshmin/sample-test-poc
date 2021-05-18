@@ -123,6 +123,9 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement dSPDomainAdvertiserPassthroughString;
 	@FindBy(xpath = "//div[contains(@class, 'menuable__content__active')]")
 	public WebElement detailsPopup;
+	@FindBy(css = "div.buyers-card-label > h3")
+	public WebElement buyerCardLabel;
+
 	/*
 	 * @FindBy(xpath = "//label[text()='Related Proposal']/following-sibling::input"
 	 * ) public WebElement relatedProposal;
@@ -173,11 +176,13 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement searchDealId;
 
 
-	@FindBy(xpath = "//table/tbody/tr[1]/td[3]/a")
+//	@FindBy(xpath = "//table/tbody/tr[1]/td[3]/a")  //comment out by Shine Tech team
+	@FindBy(xpath = "//table/tbody/tr[1]/td[4]/a")
 	public WebElement dealNameInListview;
 	
 //	String dealNameInListOne="//table/tbody/tr[1]/td[3]/span/a[contains(text(),";
-	String dealNameInListOne="//table/tbody/tr[1]/td[3]/a[contains(text(),";
+//	String dealNameInListOne="//table/tbody/tr[1]/td[3]/a[contains(text(),"; //comment out by Shine Tech Team
+	String dealNameInListOne="//table/tbody/tr[1]/td[4]/a[contains(text(),";
 
 	//Variables
 	public String enteredPrivateAuct;
@@ -640,5 +645,9 @@ public class RXDealsPage extends RXBaseClass {
 	{
 		js.executeScript("arguments[0].scrollIntoView();",driver.findElement(By.xpath(dSPDisable+"["+n+"]")));
 		return driver.findElement(By.xpath(dSPDisable+"["+n+"]"));
+	}
+
+	public int getBuyersCardPaddingElemts(){
+		return driver.findElements(By.cssSelector("div.buyers-cards > div.cardPadding")).size();
 	}
 }

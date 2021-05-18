@@ -14,6 +14,7 @@ import org.testng.Assert;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 import java.util.*;
 
@@ -612,7 +613,13 @@ public class DealsPageStepDefinition extends RXBaseClass {
 			  	System.out.println("Count time"+i);
 			}
 	  }
-	  
+
+	@Then("^Click on Add more seats button$")
+	public void click_on_Add_more_seats_button() throws Throwable
+	{
+		dealsPage.clickAddMoreSeats();
+	}
+
 	
 	  @Then("^Verify that the Add more seats is disabled and ten DSP panels are added$") 
 	  public void verify_that_the_Add_more_seats_is_disabled_and_ten_DSP_panels_are_added() throws Throwable
@@ -686,4 +693,17 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		  Assert.assertTrue(flag); 
 	  }
 
-}	
+	@Then("^verify no buyers entities were saved$")
+	public void verify_no_buyers_entities_were_saved() {
+		int buyersCount = dealsPage.getBuyersCardPaddingElemts();
+		String buyerCardLabel = dealsPage.buyerCardLabel.getText().trim();
+		System.out.println("Buyer count >>> " + buyersCount);
+		System.out.println("Buyer Card Label >>> " + buyerCardLabel);
+		if(buyersCount != 1){
+			fail("More than one buyers entities are displayed.");
+		}
+		if(!buyerCardLabel.equals("")){
+			fail("Buyer values are displayed.");
+		}
+	}
+}
