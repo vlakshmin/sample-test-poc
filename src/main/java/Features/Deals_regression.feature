@@ -755,7 +755,6 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		When click on Save deal
 		Then Verify banner message about inactive buyers
 
-	@debug
 	Scenario: Verify that several active Buyers without any details are not saved empty for the deal
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
