@@ -755,6 +755,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		When click on Save deal
 		Then Verify banner message about inactive buyers
 
+	#Automated by Shine Tech QA
 	Scenario: Verify that several active Buyers without any details are not saved empty for the deal
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
@@ -767,9 +768,83 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 			|Viber|RTBHouse Auction|RBidder|TestAutoDeal|2|
 		And Click on Add more seats button
 		And Click on Add more seats button
+		Then verify "3" seat panels are displayed
 		When click on Save deal
 		Then Verify deal contains copy deal id message
 		And copy the deal ID
 		And search the deal ID
 		And Select the deal and click on edit
 		Then verify no buyers entities were saved
+
+	#Automated by Shine Tech QA
+	Scenario: Verify that several inactive Buyers without any details are not saved empty for the deal
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		And Click on publisher input
+		And enter the following values
+			|publisher|PrivateAuction|DSPValue|EntDealName|Values|
+			|Viber|RTBHouse Auction|RBidder|TestAutoDeal|2|
+		And Click on Add more seats button
+		And Click on Add more seats button
+		And Click on Add more seats button
+		Then verify "4" seat panels are displayed
+		When disabled "3" added seats
+		Then verify "3" added seats are disabled
+		When click on Save deal
+		Then Verify deal contains copy deal id message
+		And copy the deal ID
+		And search the deal ID
+		And Select the deal and click on edit
+		Then verify no buyers entities were saved
+
+	#Automated by Shine Tech QA
+	Scenario: Verify that Deal can be saved when use autofill to set Buyers card fields
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		And Click on publisher input
+		And enter the following values
+			|publisher|PrivateAuction|DSPValue|EntDealName|Values|
+			|Viber|RTBHouse Auction|RBidder|TestAutoDeal|2|
+		When fill Buyer card using autofill for each field
+		When click on Save deal
+		Then Verify deal contains copy deal id message
+
+	#Automated by Shine Tech QA
+	Scenario: Verify create Deal page is disabled Publishser while warning banner is present with data in inputs for Admin
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		And Click on publisher input
+		And enter the following values
+			|publisher|PrivateAuction|DSPValue|EntDealName|Values|
+			|Viber|RTBHouse Auction|RBidder|TestAutoDeal|2|
+		When change the publisher name to "Viki"
+		Then Verify the following message is displayed when the publisher changed for deal
+			|Message|
+			|By changing the Publisher the form will be reset and the previous changes will not be saved.|
+		Then verify entity page is disabled
+
+	#Automated by Shine Tech QA
+	Scenario: Verify create Deal page is disabled Publishser while warning banner is present with data in inputs for Admin
+		Given Publisher user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		And Click on publisher input
+		And enter the following values
+			|publisher|PrivateAuction|DSPValue|EntDealName|Values|
+			|Viber|RTBHouse Auction|RBidder|TestAutoDeal|2|
+		When change the publisher name to "Viki"
+		Then Verify the following message is displayed when the publisher changed for deal
+			|Message|
+			|By changing the Publisher the form will be reset and the previous changes will not be saved.|
+		Then verify entity page is disabled

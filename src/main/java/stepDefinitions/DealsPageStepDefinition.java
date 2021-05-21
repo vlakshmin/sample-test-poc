@@ -247,7 +247,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	}
 	@When("^change the publisher name to \"([^\"]*)\"$")
 	public void change_the_publisher_name_to(String publName) throws Throwable {
-		js.executeScript("arguments[0].scrollIntoView();",dealsPage.publisherNameInput );	
+		js.executeScript("arguments[0].scrollIntoView();",dealsPage.publisherNameInput );
 		dealsPage.expandPublisherNameList();
 		dealsPage.selectPublisherByName(publName);
 	}
@@ -693,6 +693,17 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		  Assert.assertTrue(flag); 
 	  }
 
+
+	@Then("^verify \"([^\"]*)\" seat panels are displayed$")
+	public void verify_seat_panels_are_displayed(String arg0) throws Throwable {
+		Thread.sleep(2000);
+		int buyersCount = dealsPage.getBuyersCardPaddingElemts();
+		System.out.println("Buyer count >>> " + buyersCount);
+		if(buyersCount != Integer.parseInt(arg0)){
+			fail(buyersCount + " seat panels are displayed, not " + arg0);
+		}
+	}
+
 	@Then("^verify no buyers entities were saved$")
 	public void verify_no_buyers_entities_were_saved() {
 		int buyersCount = dealsPage.getBuyersCardPaddingElemts();
@@ -705,5 +716,123 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		if(!buyerCardLabel.equals("")){
 			fail("Buyer values are displayed.");
 		}
+	}
+
+	@When("^disabled \"([^\"]*)\" added seats$")
+	public void disabled_added_seats(String arg0) throws Throwable {
+		for(int i=1;i<=Integer.parseInt(arg0);i++) {
+			js.executeScript("arguments[0].scrollIntoView();",dealsPage.enableDSPdisable(i));
+			dealsPage.enableDSPdisable(i).click();
+		}
+	}
+
+	@Then("^verify \"([^\"]*)\" added seats are disabled$")
+	public void verify_added_seats_are_disabled(String arg0) throws Throwable {
+		for(int i=1;i<=Integer.parseInt(arg0);i++) {
+			js.executeScript("arguments[0].scrollIntoView();",dealsPage.dSPDisable(i));
+			Assert.assertTrue(dealsPage.dSPDisable(i).isEnabled());
+		}
+	}
+
+	@When("^fill Buyer card using autofill for each field$")
+	public void fill_buyer_card_using_autofill_for_each_field() throws Throwable{
+		boolean autofillFlag = dealsPage.autofill_seat_name();
+		if(!autofillFlag){
+			fail("Autofill DSP Buyer fields failed!");
+		}
+	}
+
+	@Then("^verify entity page is disabled$")
+	public void verify_entity_page_is_disabled() {
+		//Publisher name
+		System.out.println("Publisher Name field's class attribute >>> " + dealsPage.publisherNamesEntered.getAttribute("class"));
+		if( !dealsPage.publisherNamesEntered.getAttribute("class").contains("disabled")){
+			fail("Publisher Name in Create Deal is not disabled.");
+		}
+
+		//Deal Name
+		System.out.println("Deal Name field's enabled >>> " + dealsPage.dealName.isEnabled());
+		if( dealsPage.dealName.isEnabled()){
+			fail("Deal Name in Create Deal is not disabled.");
+		}
+
+		//Floor Price
+		System.out.println("Floor Price field's enabled >>> " + dealsPage.value.isEnabled());
+		if( dealsPage.value.isEnabled()){
+			fail("Floor Price in Create Deal is not disabled.");
+		}
+
+		//Currency
+		System.out.println("Currency field's class attribute >>> " + dealsPage.currencyValue.getAttribute("class"));
+		if( !dealsPage.currencyValue.getAttribute("class").contains("disabled")){
+			fail("Currency in Create Deal is not disabled.");
+		}
+
+		//DSP
+		System.out.println("DSP field's enabled >>> " + dealsPage.dspValue.isEnabled());
+		if( dealsPage.dspValue.isEnabled()){
+			fail("DSP in Create Deal is not disabled.");
+		}
+
+		//Add more seats button
+		System.out.println("Add more seats button's enabled >>> " + dealsPage.addMoreSeats.isEnabled());
+		if( dealsPage.addMoreSeats.isEnabled()){
+			fail("Add more seats button in Create Deal is not disabled.");
+		}
+
+		//Enable button
+		System.out.println("Enable button's enabled >>> " + dealsPage.enableBtnInBuyerPanel.isEnabled());
+		if( dealsPage.enableBtnInBuyerPanel.isEnabled()){
+			fail("Enable button in Create Deal is not disabled.");
+		}
+
+		//DSP Seat ID
+		System.out.println("DSP Seat ID's enabled >>> " + dealsPage.dSPSeatID.isEnabled());
+		if( dealsPage.dSPSeatID.isEnabled()){
+			fail("DSP Seat ID in Create Deal is not disabled.");
+		}
+
+		//DSP Seat Name
+		System.out.println("DSP Seat Name's enabled >>> " + dealsPage.dSPSeatName.isEnabled());
+		if( dealsPage.dSPSeatName.isEnabled()){
+			fail("DSP Seat Name in Create Deal is not disabled.");
+		}
+
+		//Advertiser ID
+		System.out.println("Advertiser ID's enabled >>> " + dealsPage.AdvertiserId.isEnabled());
+		if( dealsPage.AdvertiserId.isEnabled()){
+			fail("Advertiser ID in Create Deal is not disabled.");
+		}
+
+		//Advertiser Name
+		System.out.println("Advertiser Name's enabled >>> " + dealsPage.advertiserName.isEnabled());
+		if( dealsPage.advertiserName.isEnabled()){
+			fail("Advertiser Name in Create Deal is not disabled.");
+		}
+
+		//DSP Seat Passthrough String
+		System.out.println("DSP Seat Passthrough String's enabled >>> " + dealsPage.dSPSeatPassthroughString.isEnabled());
+		if( dealsPage.dSPSeatPassthroughString.isEnabled()){
+			fail("DSP Seat Passthrough String in Create Deal is not disabled.");
+		}
+
+		//DSP Domain Advertiser Passthrough String
+		System.out.println("DSP Domain Advertiser Passthrough String's enabled >>> " + dealsPage.dSPDomainAdvertiserPassthroughString.isEnabled());
+		if( dealsPage.dSPDomainAdvertiserPassthroughString.isEnabled()){
+			fail("DSP Domain Advertiser Passthrough String in Create Deal is not disabled.");
+		}
+
+		//Delete button
+		System.out.println("Delete button's enabled >>> " + dealsPage.deleteBtnInBuyerPanel.isEnabled());
+		if( dealsPage.deleteBtnInBuyerPanel.isEnabled()){
+			fail("Delete button in Create Deal is not disabled.");
+		}
+
+		//Save Deal button
+		System.out.println("Save Deal button's enabled >>> " + dealsPage.saveButton.isEnabled());
+		if( dealsPage.saveButton.isEnabled()){
+			fail("Save Deal button in Create Deal is not disabled.");
+		}
+
 	}
 }

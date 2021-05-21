@@ -125,6 +125,10 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement detailsPopup;
 	@FindBy(css = "div.buyers-card-label > h3")
 	public WebElement buyerCardLabel;
+	@FindBy(xpath = "//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']/input")
+	public WebElement enableBtnInBuyerPanel;
+	@FindBy(xpath = "//div[@class='buyers-card-grid'][2]/button")
+	public WebElement deleteBtnInBuyerPanel;
 
 	/*
 	 * @FindBy(xpath = "//label[text()='Related Proposal']/following-sibling::input"
@@ -630,7 +634,7 @@ public class RXDealsPage extends RXBaseClass {
 		js.executeScript("arguments[0].scrollIntoView();",driver.findElement(By.xpath(buyerEnableDisable+"["+n+"]")));
 		return driver.findElement(By.xpath(buyerEnableDisable+"["+n+"]"));
 	}
-	
+
 	public WebElement buyerDelete(int n) 
 	{
 		js.executeScript("arguments[0].scrollIntoView();",driver.findElement(By.xpath(buyerDelete+"["+n+"]")));
@@ -650,4 +654,19 @@ public class RXDealsPage extends RXBaseClass {
 	public int getBuyersCardPaddingElemts(){
 		return driver.findElements(By.cssSelector("div.buyers-cards > div.cardPadding")).size();
 	}
+
+	public boolean autofill_seat_name() throws InterruptedException {
+		boolean flag;
+		this.dSPSeatName.click();
+		Thread.sleep(2000);
+		String dSPSeatNameAutofill = driver.findElement(By.cssSelector("div.v-select-list > div.v-list-item:nth-child(1) > div > span:nth-child(1)")).getText().trim();
+		System.out.println("autofill DSP Seat Name is >>> " + dSPSeatNameAutofill);
+		driver.findElement(By.cssSelector("div.v-select-list > div.v-list-item:nth-child(1)")).click();
+		Thread.sleep(2000);
+		String buyerCardLabel = this.buyerCardLabel.getText().trim();
+		System.out.println("Buyer Card Label >>> " + buyerCardLabel);
+		flag = buyerCardLabel.contains(dSPSeatNameAutofill);
+		return flag;
+	}
+
 }
