@@ -15,6 +15,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class RXPrivateAuctionsPage extends RXBaseClass {
@@ -205,7 +206,7 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
     }
 
     public void selectTargetingBlockListItem(String itemName) {
-        targetingBlockListItem(itemName).click();
+    	driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[3]")).click();
     }
 
     public void clickTargetingBlockIncludedListItemClear(String itemName) {
@@ -306,4 +307,47 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
         dateRangeContainer.click();
         driverWait().until(ExpectedConditions.visibilityOf(dashboardPage.previousMonthBtn));
     }
+    
+    public void selectForBlock(String targetingName, String itemName) {
+    	//Check if panel is expanded,expand it if not
+    	if(!targetingExpandPanel(targetingName.replace(" Child", "")).getAttribute("class").contains("active")) {
+    		targetingExpandPanel(targetingName.replace(" Child", "")).click();
+    	}
+        
+        if(targetingName.equals("Inventory")) {
+        	 driverWait().until(ExpectedConditions.visibilityOf(targetingBlockListItem(itemName)));
+        	selectTargetingInventoryItem(itemName);
+        	driverWait().until(ExpectedConditions.visibilityOf(targetingBlockIncludedListItem(itemName)));
+            Assert.assertTrue(targetingBlockIncludedListItem(itemName).isDisplayed());
+        }else if(targetingName.equals("Inventory Child")){
+        	 driverWait().until(ExpectedConditions.visibilityOf(targetingBlockListItem(itemName.split(">")[0].trim())));
+        	selectTargetingInventoryChildItem(itemName);
+        	driverWait().until(ExpectedConditions.visibilityOf(targetingBlockIncludedListItem(itemName.split(">")[1].trim())));
+            Assert.assertTrue(targetingBlockIncludedListItem(itemName.split(">")[1].trim()).isDisplayed());
+        }else {
+        	 driverWait().until(ExpectedConditions.visibilityOf(targetingBlockListItem(itemName)));
+        	selectTargetingBlockListItem(itemName);
+        	driverWait().until(ExpectedConditions.visibilityOf(targetingBlockIncludedListItem(itemName)));
+            Assert.assertTrue(targetingBlockIncludedListItem(itemName).isDisplayed());
+        }
+		
+    }
+
+public void selectTargetingInventoryChildItem(String itemName) {
+	targetingBlockListItem(itemName.split(">")[0].trim()).click();
+	 driverWait().until(ExpectedConditions.visibilityOf(inventary_child_items_displayed(itemName.split(">")[1].trim())));
+	 inventary_child_items_displayed(itemName.split(">")[1].trim()).click();
+	}
+
+	public void selectTargetingInventoryItem(String itemName) {
+			driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[4]")).click();
+	}
+
+	public WebElement inventary_child_items_displayed(String child_itemName) {
+		return driver.findElement(By.xpath("//div[contains(text() , '" + child_itemName + "')]/ancestor::tbody/tr[2]/td[4]"));
+	}
+
+	public void verify_that_Details_matched(WebElement e, Map<String, String> targeting) {
+		Assert.assertEquals(e.findElement(By.cssSelector("div.v-list")).getText(),targeting.get(e.findElement(By.cssSelector("div.header")).getText()).replace(",", "\n"));
+	}
 }
