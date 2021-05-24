@@ -1,5 +1,6 @@
 Feature: Deals page regression
 
+@Ignore
 Scenario:  Verify the default column names in the deals overview page
 	Given admin user login to RX UI with valid username and password
 	When Click on Deals option under Sales
@@ -17,15 +18,14 @@ Scenario:  Verify the default column names in the deals overview page
 	|Start Date|
 	|End Date|
 
-
+@Ignore
 Scenario:  Verify the pagination exists for the list in the deals page for admin
 	Given admin user login to RX UI with valid username and password
 	When Click on Deals option under Sales
 	And User displayed with Deals page
 	Then Verify the pagination of the listed rows in the Page with a selection of 20 rows per page with 12 columns
 
-
-
+@Ignore
 Scenario:  Verify hide/show columns from the table options for admin
     Given admin user login to RX UI with valid username and password
 	When Click on Deals option under Sales
@@ -34,7 +34,7 @@ Scenario:  Verify hide/show columns from the table options for admin
     Then Verify that column "Name" can be hidden and shown
 
 
-
+	@Ignore
 Scenario:  Verify onclicking relevant status from table options shows only that particular table rows with that status
     Given admin user login to RX UI with valid username and password
     When Click on Deals option under Sales
@@ -43,6 +43,7 @@ Scenario:  Verify onclicking relevant status from table options shows only that 
     And Verify that column "Active" only shows relevant rows in the table with filter "Active"
     And Verify that column "Active" only shows relevant rows in the table with filter "Inactive"
 
+	@Ignore
 Scenario:  Verify searching deal with available and non available deal name
     Given admin user login to RX UI with valid username and password
     When Click on Deals option under Sales
@@ -52,7 +53,7 @@ Scenario:  Verify searching deal with available and non available deal name
 	|testings|Name|
 	|RTBHouse Deals|Name|
 
-
+	@Ignore
 Scenario:  Verify enabling and disabling of a deal from the overview page
     Given admin user login to RX UI with valid username and password
     When Click on Deals option under Sales
@@ -62,7 +63,7 @@ Scenario:  Verify enabling and disabling of a deal from the overview page
 	|RTBHouse Deal|Name|
 	Then Verify enabling and disabling of a deal from the overview page
 
-
+	@Ignore
 Scenario:  Verify sorting of the list's columns of the deals overview page
     Given admin user login to RX UI with valid username and password
     When Click on Deals option under Sales
@@ -76,6 +77,7 @@ Scenario:  Verify sorting of the list's columns of the deals overview page
 	|Start Date|desc|
 	|End Date|desc|
 
+	@Ignore
 Scenario: Verify if create deal menu is opened
     Given admin user login to RX UI with valid username and password
     When Click on Deals option under Sales
@@ -87,7 +89,7 @@ Scenario: Verify if create deal menu is opened
 		Then Verify the currency is correct
 		And Verify required fields
 
-
+	@Ignore
 Scenario: failing to GS-1963 Verify that the Alert message displayed for changing the publisher for deal,on cancel retain the filled value and accept removed the filled values.
     Given admin user login to RX UI with valid username and password
     When Click on Deals option under Sales
@@ -150,6 +152,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 	And Verify the buyer is "Enabled"
 
 
+	@Ignore
     Scenario: Verify that the user is not allowed to fill other fields without selecting the publisher.
     Given admin user login to RX UI with valid username and password
     When Click on Deals option under Sales
@@ -175,7 +178,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 	And Verify the buyer is "Enabled"
 
 
-
+	@Ignore
     Scenario: Verify Changing DSP alert the user and then on accept the new DSP and on cancel old earlier DSP ratained.
    	Given admin user login to RX UI with valid username and password
     When Click on Deals option under Sales
@@ -237,6 +240,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 #	|Related Proposal|
 	And Verify the buyer is "Enabled"
 
+	@Ignore
 	Scenario: Verify Publisher,Private Auction and DSP are non-editable in deal
    	Given admin user login to RX UI with valid username and password
     When Click on Deals option under Sales
@@ -257,7 +261,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
  	And Select the deal and click on edit
 	Then Verify Publisher,Private Auction and DSP are non-editable
 
-
+	@Ignore
 	Scenario: Verify that the publisher field is not editable and preselected for single publisher
    	Given Single Publisher user login to RX UI with valid username and password
     When Click on Deals option under Sales
@@ -267,7 +271,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
     And Verify Publisher field is not editable and preselected with "Viber"
 
 
-
+	@Ignore
 	Scenario: Verify Floor Prices field
 	Given admin user login to RX UI with valid username and password
 	When Click on Deals option under Sales
@@ -280,6 +284,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 	And Enter incorrect floor prices values: "-2,0,10001,99999"
 	Then Verify Floor Prices
 
+	@Ignore
 	Scenario: Verify that the user can add max 10 seats in create deal page.
    	Given admin user login to RX UI with valid username and password
     When Click on Deals option under Sales
@@ -291,6 +296,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
     And Click on Add more seats ten times
     Then Verify that the Add more seats is disabled and ten DSP panels are added
 
+	@Ignore
 	Scenario: Verify that the user can enable,disable and delete DSP Buyer
    	Given admin user login to RX UI with valid username and password
     When Click on Deals option under Sales
@@ -308,6 +314,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
     And Delete the added seats
     Then Verify that the added seat is deleted
 
+	@Ignore
 	Scenario: Verify that autofill works properly for the same Publisher
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
@@ -344,6 +351,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 			|DSP Seat Passthrough String|
 			|DSP Domain Advertiser Passthrough String|
 
+	@Ignore
 	Scenario: Verify that any Required field can be saved and autofilled
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
@@ -375,6 +383,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 			|FieldName|
 			|DSP Seat Name|
 
+	@Ignore
 	Scenario: Verify autofill values can be modified
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
@@ -414,6 +423,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 			|DSP Seat Passthrough String|
 			|DSP Domain Advertiser Passthrough String|
 
+	@Ignore
 	Scenario: Verify that autofill values can be populated after changing DSP
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
@@ -449,6 +459,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 			|DSP Seat Passthrough String|
 			|DSP Domain Advertiser Passthrough String|
 
+	@Ignore
 	Scenario: Verify that any amount of values can be changed after autofill
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
@@ -488,6 +499,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 			|DSP Seat Passthrough String|
 			|DSP Domain Advertiser Passthrough String|
 
+	@Ignore
 	Scenario: Verify that ID fields can be saved as String
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
@@ -515,7 +527,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 			|DSP Seat Passthrough String|
 			|DSP Domain Advertiser Passthrough String|
 
-
+	@Ignore
 	Scenario: Verify that ID fields can be saved as String
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
@@ -543,7 +555,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 			|DSP Seat Passthrough String|
 			|DSP Domain Advertiser Passthrough String|
 
-
+	@Ignore
 	Scenario: Verify autofill works with long values
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
@@ -571,6 +583,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 			|DSP Seat Passthrough String|
 			|DSP Domain Advertiser Passthrough String|
 
+	@Ignore
 	Scenario: Verify that ID fields can be saved as int
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
@@ -598,7 +611,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 			|DSP Seat Passthrough String|
 			|DSP Domain Advertiser Passthrough String|
 
-
+	@Ignore
 	Scenario: Verify that Details icon displays information properly
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
@@ -620,6 +633,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		And Get deal details data
 		Then Verify deal details data is correct
 
+	@Ignore
 	Scenario: Verify that Details icon displays information properly after editing all values
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
@@ -649,7 +663,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		And Get deal details data
 		Then Verify deal details data is correct
 
-
+	@Ignore
 	Scenario: Verify that Details icon displays information properly after editing one value
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
@@ -679,7 +693,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		And Get deal details data
 		Then Verify deal details data is correct
 
-
+	@Ignore
 	Scenario: Verify that Details icon displays information properly after removing value
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
@@ -709,6 +723,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		And Get deal details data
 		Then Verify deal details data is correct
 
+	@Ignore
 	Scenario: Verify that long values in Buyers card autofill are truncated
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
@@ -736,7 +751,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 			|DSP Seat Passthrough String|
 			|DSP Domain Advertiser Passthrough String|
 
-
+	@Ignore
 	Scenario: Verify warning banner is displayed when inactive buyer is present
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
@@ -816,7 +831,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		Then Verify deal contains copy deal id message
 
 	#Automated by Shine Tech QA
-	Scenario: Verify create Deal page is disabled Publishser while warning banner is present with data in inputs for Admin
+	Scenario: Verify create Deal page is disabled Publisher while warning banner is present with data in inputs for Admin
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
 		And User displayed with Deals page
@@ -833,7 +848,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		Then verify entity page is disabled
 
 	#Automated by Shine Tech QA
-	Scenario: Verify create Deal page is disabled Publishser while warning banner is present with data in inputs for Admin
+	Scenario: Verify create Deal page is disabled Publisher while warning banner is present with data in inputs for Admin
 		Given Publisher user login to RX UI with valid username and password
 		When Click on Deals option under Sales
 		And User displayed with Deals page
@@ -847,4 +862,66 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		Then Verify the following message is displayed when the publisher changed for deal
 			|Message|
 			|By changing the Publisher the form will be reset and the previous changes will not be saved.|
+		Then verify entity page is disabled
+
+  #Automated by Shine Tech QA
+	Scenario: Verify create Deal page is disabled while DSP warning banner is present with data in inputs for Admin
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		And Click on publisher input
+		And enter the following values
+			|publisher|PrivateAuction|DSPValue|EntDealName|Values|
+			|Viber|RTBHouse Auction|RBidder|TestAutoDeal|2.00|
+		And "Enable" the DSP buyer
+		And enter the following DSP buyer details.
+			|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
+			|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|
+		When change the DSP name to "TheTradeDesk"
+		Then Verify the following message is displayed when the DSP changed for deal
+			|Message|
+			|By changing the DSP, the Buyers section will be reset and will not be saved.|
+		Then verify entity page is disabled
+
+	#Automated by Shine Tech QA
+	Scenario: Verify create Deal page is disabled while DSP warning banner is present with data in inputs for Cross Publisher
+		Given Publisher user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		And Click on publisher input
+		And enter the following values
+			|publisher|PrivateAuction|DSPValue|EntDealName|Values|
+			|Viber|RTBHouse Auction|RBidder|TestAutoDeal|2.00|
+		And "Enable" the DSP buyer
+		And enter the following DSP buyer details.
+			|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
+			|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|
+		When change the DSP name to "TheTradeDesk"
+		Then Verify the following message is displayed when the DSP changed for deal
+			|Message|
+			|By changing the DSP, the Buyers section will be reset and will not be saved.|
+		Then verify entity page is disabled
+
+	#Automated by Shine Tech QA
+	Scenario: Verify create Deal page is disabled while DSP warning banner is present with data in inputs for Single Publisher
+		Given Single Publisher user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		And enter the following values for Single Publisher user
+			|PrivateAuction|DSPValue|EntDealName|Values|
+			|RTBHouse Auction|RBidder|TestAutoDeal|2.00|
+		And "Enable" the DSP buyer
+		And enter the following DSP buyer details.
+			|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
+			|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|
+		When change the DSP name to "TheTradeDesk"
+		Then Verify the following message is displayed when the DSP changed for deal
+			|Message|
+			|By changing the DSP, the Buyers section will be reset and will not be saved.|
 		Then verify entity page is disabled

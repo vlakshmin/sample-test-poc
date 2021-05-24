@@ -835,4 +835,24 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		}
 
 	}
+
+	@And("^enter the following values for Single Publisher user$")
+	public void enter_the_following_value_for_Single_Publisher_user(DataTable dt) {
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+
+		for (int i = 0; i < list.size(); i++)
+		{
+			String privAucName = list.get(i).get("PrivateAuction");
+			String dSPvalue = list.get(i).get("DSPValue");
+			String dealName = list.get(i).get("EntDealName")+ rxUTL.getRandomNumberFourDigit();
+			String dealValue = list.get(i).get("Values");
+//			enteredPublisher=dealsPage.publisherNamesEntered.getText();
+			wait.until(ExpectedConditions.elementToBeClickable(dealsPage.dealName));
+			dealsPage.selectPrivateAuctionByName(privAucName);
+			dealsPage.selectDSPByName(dSPvalue);
+			enteredDSP=dealsPage.dspValue.getText();
+			dealsPage.enterDealName(dealName);
+			dealsPage.enterValue(dealValue);
+		}
+	}
 }
