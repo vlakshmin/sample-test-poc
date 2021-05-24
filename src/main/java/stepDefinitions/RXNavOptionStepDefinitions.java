@@ -1,24 +1,22 @@
 package stepDefinitions;
 
-import java.util.concurrent.TimeUnit;
-
-import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
-
-import RXBaseClass.RXBaseClass;
 import RXPages.PublisherListPage;
+import RXPages.RXBasePage;
 import RXPages.RXNavOptions;
 import RXPages.RXUsers;
 import RXUtitities.RXUtile;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
-public class RXNavOptionStepDefinitions extends RXBaseClass{
+import java.util.concurrent.TimeUnit;
+
+public class RXNavOptionStepDefinitions extends RXBasePage {
 	
 	RXUsers rxUserPage;
 	RXNavOptions rxNavOpt;
@@ -164,7 +162,7 @@ public class RXNavOptionStepDefinitions extends RXBaseClass{
 		driver.findElement(By.xpath("//div[@class='v-menu__content theme--light menuable__content__active']"
 				+ "//div[@class='v-list-item__title' and text()='"+noOfRowsPerPage+"']")).click();
 		//Thread.sleep(5000);
-		driverWait().until(ExpectedConditions.numberOfElementsToBe(By.className("v-progress-linear__buffer"), 0));
+		waitForPageLoaderToDisappear();
 		if(rxNavOpt.tableRowsCount.size()<Integer.parseInt(noOfRowsPerPage)) {
 			js.executeScript("arguments[0].scrollIntoView()", rxNavOpt.nextPageNavButton);
 			Assert.assertTrue((boolean) js.executeScript("return arguments[0].hasAttribute(\"disabled\");", rxNavOpt.nextPageNavButton));

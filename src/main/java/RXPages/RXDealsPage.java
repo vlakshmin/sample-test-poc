@@ -12,12 +12,11 @@ import org.openqa.selenium.support.ui.*;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
-public class RXDealsPage extends RXBaseClass {
+public class RXDealsPage extends RXBasePage {
 	// Utility object
 	RXUtile rxUTL;
 	PublisherListPage pubPage;
 	public String dealHeaderStr = "Deals";
-	JavascriptExecutor js = (JavascriptExecutor) driver;
 
 	// deals page heading
 	@FindBy(xpath = "//h1[text()='Deals']")
@@ -43,8 +42,7 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement publisherNameInput;
 	@FindBy(xpath="//div[./label[contains(@class,'v-label') and .='Name']]")
 	private WebElement nameInput;
-	@FindAll({@FindBy(xpath = "//div[contains(@role,'listbox') and contains(@class,'v-list')]/div")})
-	public List<WebElement> dropdownValues;
+
 	@FindBy(xpath="//div[contains(@class,'v-input__control') and contains(.,'Currency')]//div[contains(@class,'v-select__selection--comma')]")
 	private WebElement 	currencyOption;
 	@FindBy(xpath="//div[./label[contains(@class,'v-label') and contains(.,'Date')]]")
@@ -340,26 +338,7 @@ public class RXDealsPage extends RXBaseClass {
 				selectDateButton, floorPriceField, dspList);
 	}
 	// TO DO: Check if this method works in other menus.
-	public void selectValueFromDropdown(String name) {
-		int attempt = 0;
 
-		// Check if list contains parameter name, scroll down if not
-		do {
-			js.executeScript("arguments[0].scrollIntoView(false)", dropdownValues.get(dropdownValues.size() - 1));
-		}
-		while (!dropdownValues.stream()
-				.map(WebElement::getText)
-				.anyMatch(text -> name.equals(text)) && attempt++ < 20);
-
-		// Get web element by name from the method parameter
-		WebElement dropDownElementByName = dropdownValues.stream()
-				.filter(i -> i.getText().equalsIgnoreCase(name))
-				.findFirst()
-				.orElseThrow(() -> new org.openqa.selenium.NoSuchElementException(String.format("Private Auction by the name %s wasn't found.", name)));
-		js.executeScript("arguments[0].scrollIntoView({block: \"center\"})", dropDownElementByName);
-		wait.until(elementToBeClickable(dropDownElementByName));
-		dropDownElementByName.click();
-	}
 	public void selectPrivateAuctionByName(String name) {
 		privateAuctionDropDown.click();
 		selectValueFromDropdown(name);

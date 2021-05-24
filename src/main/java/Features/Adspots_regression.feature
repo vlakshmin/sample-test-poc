@@ -7,7 +7,7 @@ Scenario:  Verify the default column names in the adspots overview page
 	Then Verify the overview page contains following columns
 	|ColumnName|
 	|ID|
-	|AdSpot Name|
+	|Ad Spot Name|
 	|Publisher|
 	|Details|
 	|Related Media|
@@ -46,7 +46,7 @@ Scenario:  Verify searching adspots with avaiable and non available adspot name
 	And User displayed with Adspots page
 	Then Verify the search functionality with the following names
 	|Name|CoumnName|
-	|jay_test|AdSpot Name|
+	|Top Banner|AdSpot Name|
 	|jaya_testad|AdSpot Name|
 
 
@@ -55,8 +55,8 @@ Scenario:  Verify enabling and disabling of an adspot from the overview page
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
     Then Verify the search functionality with the following names
-	|Name|CoumnName|
-	|jay_test|AdSpot Name|
+	|Name|ColumnName|
+	|Top Banner|AdSpot Name|
 	Then Verify enabling and disabling of an adspot from the overview page
 
 Scenario:  Verify enabling and disabling of multiple adspots from the overview page
@@ -64,8 +64,11 @@ Scenario:  Verify enabling and disabling of multiple adspots from the overview p
     When Click on Adspots option under Inventory
 	And User displayed with Adspots page
     Then Verify the search functionality with the following names
-	|Name|CoumnName|
-	|Auto_Test_Edit|AdSpot Name|
+	|Name|ColumnName|
+	|Top Banner|AdSpot Name|
+	And Search for adspot
+	|Name|
+	|Dynamic|
 	Then Verify Enable of multiple adspots from the overview page
 	Then Verify Disable of multiple adspots from the overview page
 
@@ -92,7 +95,7 @@ Scenario:  Verify mandatory fields in the Create Adspot Page
 	And Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|ListValue|2|
-	And "Enable" the in-banner video cxard
+	And "Enable" the in-banner video card
 	And "Expand" the in-banner video card
 	And Click on save button
 	Then Verify following fields are mandatory for create page
@@ -113,12 +116,12 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
 	And Click on the Adspot create button
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|1|
+	|Publisher Name|Viber||
 	And Verify Categories filed has subcategories
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|AdSpot Name|Auto_Test||
-	|Related Media|ListValue|2|
+	|Ad Spot Name|Auto_Test||
+	|Related Media|ListValue|1|
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
 	|Filter|ListValue|1|
@@ -129,14 +132,14 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
 	And "Enable" the in-banner video card
 	When Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|2|
+	|Publisher Name|Viki||
 	Then Verify the following message is displayed when the publisher changed
 	|Message|
 	|By changing the Publisher the form will be reset and the previous changes will not be saved.|
 	And Select "Cancel" on the publisher change banner
 	Then Verify the following columns value with the created data for the general card of adspot
 	|FieldName|
-	|AdSpot Name|
+	|Ad Spot Name|
 	|Related Media|
 	|Categories|
 	|Position|
@@ -148,11 +151,11 @@ Scenario:  Verify Changing publisher name alert the user and then on change ever
 	And Verify the in-banner video card is "Enabled"
 	And Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|2|
+	|Publisher Name|Viki||
 	And Select "Accept" on the publisher change banner
 	Then Verify the following columns values for the general card of adspot is empty
 	|FieldName|
-	|AdSpot Name|
+	|Ad Spot Name|
 	|Related Media|
 	|Categories|
 	|Position|
@@ -172,10 +175,9 @@ Scenario: Verify with invalid value for floor price and adsizes>1 creation is un
 	Then Click on the Adspot create button
 	And Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|1|
-	|Active|Active||
-	|AdSpot Name|Auto_Test||
-	|Related Media|ListValue|2|
+	|Publisher Name|Viber||
+	|Ad Spot Name|Auto_Test2||
+	|Related Media|ListValue|1|
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
 	|Filter|ListValue|1|
@@ -206,9 +208,9 @@ Scenario: Verify with invalid value for floor price and adsizes>1 creation is un
 	Then Verify error messages for sizes and floor price for the following cards
 	|Card|SizeErrorMsg|FloorPriceErrorMsg|
 	|General|Default Ad Sizes must be 1 or less|Floor price must be between 0 and 10,000.00|
-	|Banner|Ad Sizes must be 1 or less|Floor price must be between 0 and 10,000.00|
+	|Banner|Banner Ad Sizes must be 1 or less|Floor price must be between 0 and 10,000.00|
 	|Native||Floor price must be between 0 and 10,000.00|
-	|InBannerVideo|Ad Sizes must be 1 or less|Floor price must be between 0 and 10,000.00|
+	|InBannerVideo|Video Ad Sizes must be 1 or less|Floor price must be between 0 and 10,000.00|
 
 Scenario: Verify successful creation and updation of an adspot
     Given admin user login to RX UI with valid username and password
@@ -217,10 +219,10 @@ Scenario: Verify successful creation and updation of an adspot
 	When Click on the Adspot create button
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|1|
+	|Publisher Name|Viber||
 	|Active|Active||
-	|AdSpot Name|Auto_Test||
-	|Related Media|ListValue|2|
+	|Ad Spot Name|Auto_Test||
+	|Related Media|ListValue|1|
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
 	|Filter|ListValue|1|
@@ -258,7 +260,7 @@ Scenario: Verify successful creation and updation of an adspot
 	|FieldName|
 	|Publisher Name|
 	|Active|
-	|AdSpot Name|
+	|Ad Spot Name|
 	|Related Media|
 	|Default Ad Sizes|
 	|Default Floor Price|
@@ -288,7 +290,7 @@ Scenario: Verify successful creation and updation of an adspot
 	When Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
 	|Active|Inactive||
-	|AdSpot Name|Auto_Test_Edit||
+	|Ad Spot Name|Auto_Test_Edit||
 	|Categories|ListValue|2,4|
 	|Position|ListValue|1|
 	|Filter|ListValue|1|
@@ -316,7 +318,7 @@ Scenario: Verify successful creation and updation of an adspot
 	|FieldName|
 	|Publisher Name|
 	|Active|
-	|AdSpot Name|
+	|Ad Spot Name|
 	|Related Media|
 	|Default Ad Sizes|
 	|Default Floor Price|
@@ -351,10 +353,10 @@ editing with activing the same adspot the edit is unsuccessful
 	And Click on the Adspot create button
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|1|
+	|Publisher Name|Viber||
 	|Active|Inactive||
-	|AdSpot Name|Auto_Test||
-	|Related Media|ListValue|2|
+	|Ad Spot Name|Auto_Test||
+	|Related Media|ListValue|1|
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
 	|Filter|ListValue|1|
@@ -371,7 +373,7 @@ editing with activing the same adspot the edit is unsuccessful
 	|FieldName|
 	|Publisher Name|
 	|Active|
-	|AdSpot Name|
+	|Ad Spot Name|
 	|Related Media|
 	|Default Ad Sizes|
 	|Default Floor Price|
@@ -391,10 +393,10 @@ Scenario: Verify without adding any card ,creation of adspot is unsuccessful whe
 	When Click on the Adspot create button
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|1|
+	|Publisher Name|Viber||
 	|Active|Active||
-	|AdSpot Name|Auto_Test||
-	|Related Media|ListValue|2|
+	|Ad Spot Name|Auto_Test||
+	|Related Media|ListValue|1|
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
 	|Filter|ListValue|1|
@@ -411,10 +413,10 @@ Scenario: Verify after creation of adspot if the publisher is disabled the editi
 	When Click on the Adspot create button
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|Rakuten France||
+	|Publisher Name|Rakuten Rewards||
 	|Active|Inactive||
-	|AdSpot Name|Auto_Test||
-	|Related Media|ListValue|2|
+	|Ad Spot Name|Auto_Test||
+	|Related Media|ListValue|1|
 	|Categories|ListValue|2|
 	|Position|ListValue|1|
 	|Default Ad Sizes|ListValue|2|
@@ -425,8 +427,8 @@ Scenario: Verify after creation of adspot if the publisher is disabled the editi
 #    And Click on publisher option from left menu
 	And Publisher page should be displayed
 	Then Verify the search functionality with the following names
-	|Name|CoumnName|
-	|Rakuten France|Publisher|
+	|Name|ColumnName|
+	|Rakuten Rewards|Publisher|
 	And "Disable" a publisher from the publisher overview page
 	When Click on Adspots option under Inventory
 	And User displayed with Adspots page
@@ -443,8 +445,8 @@ Scenario: Verify after creation of adspot if the publisher is disabled the editi
 #    And Click on publisher option from left menu
 	And Publisher page should be displayed
 	Then Verify the search functionality with the following names
-	|Name|CoumnName|
-	|Rakuten France|Publisher|
+	|Name|ColumnName|
+	|Rakuten Rewards|Publisher|
 	And "Enable" a publisher from the publisher overview page
 
 Scenario: Verify creation of adspot is successful if the related media is disabled
@@ -452,7 +454,7 @@ Scenario: Verify creation of adspot is successful if the related media is disabl
     When Click on Media option under Inventory
 	And User displayed with media page
 	Then Verify the search functionality with the following names
-	|Name|CoumnName|
+	|Name|ColumnName|
 	|Mark Mc Desktop Site|Media Name|
 	And "Disable" a media from the media overview page
 	Then Click on Adspots sub menu
@@ -462,7 +464,7 @@ Scenario: Verify creation of adspot is successful if the related media is disabl
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|Mark Mceachran||
 	|Active|Inactive||
-	|AdSpot Name|Auto_Test||
+	|Ad Spot Name|Auto_Test||
 	|Related Media|Mark Mc Desktop Site||
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
@@ -473,7 +475,7 @@ Scenario: Verify creation of adspot is successful if the related media is disabl
 	When Click on Media sub menu
 	And User displayed with media page
 	Then Verify the search functionality with the following names
-	|Name|CoumnName|
+	|Name|ColumnName|
 	|Mark Mc Desktop Site|Media Name|
 	And "Enable" a media from the media overview page
 
@@ -487,7 +489,7 @@ Scenario: Verify after creation of adspot if the related media is disabled the e
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|Mark Mceachran||
 	|Active|Inactive||
-	|AdSpot Name|Auto_Test||
+	|Ad Spot Name|Auto_Test||
 	|Related Media|Mark Mc Desktop Site||
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
@@ -498,7 +500,7 @@ Scenario: Verify after creation of adspot if the related media is disabled the e
 	Then Click on Media sub menu
 	Then User displayed with media page
 	Then Verify the search functionality with the following names
-	|Name|CoumnName|
+	|Name|ColumnName|
 	|Mark Mc Desktop Site|Media Name|
 	Then "Disable" a media from the media overview page
 	Then Click on Adspots sub menu
@@ -513,7 +515,7 @@ Scenario: Verify after creation of adspot if the related media is disabled the e
 	Then Click on Media sub menu
 	Then User displayed with media page
 	Then Verify the search functionality with the following names
-	|Name|CoumnName|
+	|Name|ColumnName|
 	|Mark Mc Desktop Site|Media Name|
 	Then "Enable" a media from the media overview page
 
@@ -527,7 +529,7 @@ Scenario: Verify adspot cannot be created with defalut sizeless adsize and banne
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|Mark Mceachran||
 	|Active|Inactive||
-	|AdSpot Name|Auto_Test||
+	|Ad Spot Name|Auto_Test||
 	|Related Media|Mark Mc Desktop Site||
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
@@ -555,7 +557,7 @@ Scenario: Verify adspot cannot be created with defalut sizeless adsize and video
 	|FieldName|Value|ListValueIndex|
 	|Publisher Name|Mark Mceachran||
 	|Active|Inactive||
-	|AdSpot Name|Auto_Test||
+	|Ad Spot Name|Auto_Test||
 	|Related Media|Mark Mc Desktop Site||
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
@@ -585,10 +587,10 @@ Scenario: Verify successful creation and updation of an adspot for a default siz
 	When Click on the Adspot create button
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
-	|Publisher Name|ListValue|1|
+	|Publisher Name|Viber||
 	|Active|Active||
-	|AdSpot Name|Auto_Test||
-	|Related Media|ListValue|2|
+	|Ad Spot Name|Auto_Test||
+	|Related Media|ListValue|1|
 	|Categories|ListValue|2|
 	|Position|ListValue|2|
 	|Filter|ListValue|1|
@@ -705,8 +707,7 @@ Scenario: Verify successful creation and updation of an adspot for a default siz
 	Then Verify the following columns value with the created data for the general card of adspot
 	|FieldName|
 	|Default Ad Sizes|
-	
-	
+
 	#Editing flow
 	Then Enter the following data in the general card of adspot
 	|FieldName|Value|ListValueIndex|
@@ -765,8 +766,8 @@ Scenario: Verify successful creation and updation of an adspot for a default siz
 	|Maximum Video Duration|
 	|Playback Methods|
 	|Video Placement Type|
-
-Scenario: Verify successful creation and updation of an adspot
+@Ignore
+Scenario: Verify successful creation and updation of an adspot22
 	Given admin user login to RX UI with valid username and password
 	When Click on Adspots option under Inventory
 	And User displayed with Adspots page

@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import cucumber.api.java.en.And;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -99,9 +100,9 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String adspotName = list.get(i).get("Name");
-			String columnName = list.get(i).get("CoumnName");
+			String columnName = list.get(i).get("ColumnName");
 			adspotsPage.searchAdspots(adspotName);
-			Thread.sleep(5000);
+			waitForPageLoaderToDisappear();
 			WebElement elem = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]"));
 			if (elem.getText().equals("No data available")) {
 				log.info("The searched adspot named as " + adspotName + "is not available");
@@ -114,6 +115,16 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				}
 			}
 
+		}
+	}
+
+	@And("^Search for adspot")
+	public void searchForAdSpot(DataTable dt) throws InterruptedException {
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		for (int i = 0; i < list.size(); i++) {
+			String adspotName = list.get(i).get("Name");
+			adspotsPage.searchAdspots(adspotName);
+			waitForPageLoaderToDisappear();
 		}
 	}
 
@@ -140,29 +151,25 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 //Verify enabling abd disabling of an adspot from the overview page
 
 	@When("^Verify enabling and disabling of an adspot from the overview page$")
-	public void verifyHEnableDiableAdspot() throws InterruptedException {
+	public void verifyHEnableDisableAdspot() throws InterruptedException {
 		for (int i = 0; i <= 1; i++) {
 			driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]/div//i")).click();
-			List<WebElement> coulmnData = navOptions.getColumnDataMatchingHeader("Active/Inactive");
-			String status = coulmnData.get(0).getText();
+			List<WebElement> columnData = navOptions.getColumnDataMatchingHeader("Active/Inactive");
+			String status = columnData.get(0).getText();
+			String enableText = adspotsPage.overviewButtonsBlock.getText().replaceAll("\\s", "");
+			Assert.assertEquals(enableText, "EDITADSPOTDEACTIVATEADSPOTACTIVATEADSPOT");
 			switch (status) {
 			case "Active":
-				Assert.assertTrue(adspotsPage.overviewEditButton.isDisplayed());
-				Assert.assertTrue(adspotsPage.overviewDisableButton.isDisplayed());
 				adspotsPage.clickOverViewDisablebutton();
 				Thread.sleep(3000);
-				List<WebElement> coulmnData1 = navOptions.getColumnDataMatchingHeader("Active/Inactive");
-				Assert.assertEquals(coulmnData1.get(0).getText(), "Inactive");
+				List<WebElement> columnData1 = navOptions.getColumnDataMatchingHeader("Active/Inactive");
+				Assert.assertEquals(columnData1.get(0).getText(), "Inactive");
 				break;
 			case "Inactive":
-				Assert.assertTrue(adspotsPage.overviewEditButton.isDisplayed());
-				Assert.assertTrue(adspotsPage.overviewEnableButton.isDisplayed());
-				String enableText = adspotsPage.overviewEnableButton.getText().replaceAll("\\s", "");
-				Assert.assertEquals(enableText, "ACTIVATEADSPOT");
 				adspotsPage.clickOverViewEnablebutton();
 				Thread.sleep(3000);
-				List<WebElement> coulmnData2 = navOptions.getColumnDataMatchingHeader("Active/Inactive");
-				Assert.assertEquals(coulmnData2.get(0).getText(), "Active");
+				List<WebElement> columnData2 = navOptions.getColumnDataMatchingHeader("Active/Inactive");
+				Assert.assertEquals(columnData2.get(0).getText(), "Active");
 				break;
 
 			default:
@@ -188,9 +195,9 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 			}else if(status1.equals("Inactive")&&status2.equals("Inactive")) {
 				driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]/div//i")).click();
 				Assert.assertTrue(adspotsPage.overviewEditButton.isDisplayed());
-				Assert.assertTrue(adspotsPage.overviewEnableButton.isDisplayed());
-				String enableText = adspotsPage.overviewEnableButton.getText().replaceAll("\\s", "");
-				Assert.assertEquals(enableText, "ACTIVATEADSPOT");
+				Assert.assertTrue(adspotsPage.overviewSecondButton.isDisplayed());
+				String enableText = adspotsPage.overviewSecondButton.getText().replaceAll("\\s", "");
+				Assert.assertEquals(enableText, "DEACTIVATEADSPOT");
 				adspotsPage.clickOverViewEnablebutton();
 				Thread.sleep(3000);
 				List<WebElement> coulmnData2 = navOptions.getColumnDataMatchingHeader("Active/Inactive");
@@ -318,7 +325,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@When("^Click on the Adspot create button$")
 	public void createAdspotButtonClick() throws InterruptedException {
-		createButtonClick("Create AdSpot", "Create Adspot");
+		createButtonClick("Create Ad Spot", "Create Ad Spot");
 	}
 
 	@Then("^Verify following fields are mandatory for create page$")
@@ -421,6 +428,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 	public void enterGenaralCard(DataTable dt) throws InterruptedException, ParseException {
 		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		waitForCreatePageHeaderToBeVisible();
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
 			String value = list.get(i).get("Value");
@@ -439,17 +447,12 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 							.findElement(By.xpath("//div[@role='listbox']/div[" + listValueIndex + "]"));
 
 				} else {
-					wait.until(ExpectedConditions.visibilityOf(driver.findElement(
-							By.xpath("//div[@role='listbox']/div//div[contains(text(),'" + value + "')]"))));
-					dropDownPublisher = driver
-							.findElement(By.xpath("//div[@role='listbox']/div//div[contains(text(),'" + value + "')]"));
+					selectValueFromDropdown(value);
 				}
-				js.executeScript("arguments[0].scrollIntoView()", dropDownPublisher);
-				dropDownPublisher.click();
-				Thread.sleep(5000);
 				enteredPublisherName = adspotsPage.publisherNameField.getText();
 				System.out.println("publisher entered as :" + enteredPublisherName);
 				wait.until(ExpectedConditions.visibilityOf(adspotsPage.categoriesDropDown));
+				break;
 			case "Active":
 				if (value.equalsIgnoreCase("Active")) {
 					String style = driver.findElement(By.xpath("//div[text()='General']/preceding-sibling::span/div"))
@@ -477,13 +480,12 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					}
 				}
 				break;
-			case "AdSpot Name":
-//				js.executeScript("arguments[0].setAttribute('value', '')",adspotsPage.adSpotNameField);
+			case "Ad Spot Name":
 				while (!adspotsPage.adSpotNameField.getAttribute("value").equals("")) {
 					adspotsPage.adSpotNameField.sendKeys(Keys.BACK_SPACE);
 				}
 				adspotsPage.adSpotNameField.sendKeys(value);
-				enteredAdSpotName = adspotsPage.adSpotNameHeader.getText();
+				enteredAdSpotName = value;
 				System.out.println("Entered Adspot name:" + enteredAdSpotName);
 				break;
 			case "Related Media":
@@ -510,7 +512,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				Thread.sleep(2000);
 				enteredRelatedMedia = adspotsPage.relatedMediaField.getText();
 				System.out.println("Related Media entered as :" + enteredRelatedMedia);
-
 				break;
 			case "Categories":
 				if (value.equalsIgnoreCase("ListValue")) {
@@ -964,8 +965,8 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				}
 
 				break;
-			case "AdSpot Name":
-				Assert.assertEquals(adspotsPage.adSpotNameHeader.getText(), enteredAdSpotName);
+			case "Ad Spot Name":
+				Assert.assertEquals(adspotsPage.adSpotNameHeader.getText(), "Edit Ad Spot: " + enteredAdSpotName);
 
 				break;
 			case "Publisher Name":
@@ -998,7 +999,8 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 				break;
 			case "Default Floor Price":
-				Assert.assertEquals(adspotsPage.defaultPriceField.getAttribute("value"), enteredDefaultPrice);
+				String price = enteredDefaultPrice;
+				Assert.assertEquals(adspotsPage.defaultPriceField.getAttribute("value"), price);
 				Assert.assertEquals(adspotsPage.defaultPriceCurrency.getText(), defaultPriceCurrency);
 
 				break;
@@ -1063,6 +1065,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 			case "Floor Price":
 				if(adspotsPage.nativePriceField.getAttribute("value").isEmpty()) {
+					adspotsPage.nativePriceField.click();
 					Assert.assertEquals(adspotsPage.nativePriceField.getAttribute("placeholder"), enteredNativePrice);
 				}else {
 					Assert.assertEquals(adspotsPage.nativePriceField.getAttribute("value"), enteredNativePrice);
@@ -1152,8 +1155,8 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 			String fieldName = list.get(i).get("FieldName");
 
 			switch (fieldName) {
-			case "AdSpot Name":
-				Assert.assertEquals(adspotsPage.adSpotNameHeader.getText(), "Create AdSpot");
+			case "Ad Spot Name":
+				Assert.assertEquals(adspotsPage.adSpotNameHeader.getText(), "Create Ad Spot");
 
 				break;
 			case "Related Media":
@@ -1440,17 +1443,17 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 	@When("^Verify the created adspot data is matching with its overview list values$")
 	public void verifyOverviewValues() throws Throwable {
 		String adSpotName = driver
-				.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[3]/span/a")).getText()
+				.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[4]/a")).getText()
 				.replaceAll("\\s", "");
 		String entergedName = enteredAdSpotName.replaceAll("\\s", "");
 		Assert.assertEquals(adSpotName, entergedName);
-		String publisherName = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[4]"))
+		String publisherName = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[5]"))
 				.getText();
 		Assert.assertEquals(publisherName, enteredPublisherName);
-		String mediaName = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[5]"))
+		String mediaName = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[6]"))
 				.getText();
 		Assert.assertEquals(mediaName, enteredRelatedMedia);
-		String isActive = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[6]"))
+		String isActive = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[7]"))
 				.getText();
 		Assert.assertEquals(isActive, isAdspotActive);
 //		String categoryName = driver
@@ -1466,13 +1469,13 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 //		}
 		String defaultSize = driver
 				.findElement(
-						By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[7]//span[@role='button']"))
+						By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[8]//div"))
 				.getText().replaceAll("\\s", "");
 		String enteredSizes = enteredDefaultSizes.replaceAll("\\s", "");
 		System.out.println(defaultSize);
 		System.out.println(enteredSizes);
 		Assert.assertEquals(defaultSize, enteredSizes);
-		String floorPrice = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[8]"))
+		String floorPrice = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[9]"))
 				.getText();
 		String price = enteredDefaultPrice + ".00";
 		String currency = defaultPriceCurrency.substring(0, defaultPriceCurrency.indexOf(":"));
@@ -1490,7 +1493,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 			String enteredName = enteredAdSpotName.replaceAll("\\s", "");
 			List<WebElement> listOfNames = driver
-					.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[3]/span/a"));
+					.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[4]/a"));
 			for (int k = 0; k < listOfNames.size(); k++) {
 				String reqName = listOfNames.get(k).getText().replaceAll("\\s", "");
 
@@ -1501,10 +1504,10 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 			}
 			wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
 			wait.until(ExpectedConditions.visibilityOf(driver.findElement(
-					By.xpath("//aside[@class='dialog']/header//div[text()='" + enteredAdSpotName + "']"))));
-			Thread.sleep(4000);
+					By.xpath("//aside[@class='dialog']/header//div[text()='Edit Ad Spot: " + enteredAdSpotName + "']"))));
+//			Thread.sleep(4000);
 		} catch (NullPointerException e) {
-			driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[3]/span/a")).click();
+			driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[4]/span/a")).click();
 			wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
 
 		}
@@ -1549,7 +1552,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 	public void verifySubCategories() throws InterruptedException, ParseException {
 		WebDriverWait wait = new WebDriverWait(driver, 35);
 		wait.until(ExpectedConditions.visibilityOf(adspotsPage.categoriesDropDown));
-//		adspotsPage.categoriesDropDown.click();
+		adspotsPage.categoriesDropDown.click();
 		js.executeScript("arguments[0].click()", adspotsPage.categoriesDropDown);
 		for(int i=1;i<=2;i++) {
 		WebElement firstCategoryExpand = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(

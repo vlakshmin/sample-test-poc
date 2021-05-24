@@ -15,10 +15,10 @@ public class RXAdspotsPage extends RXBasePage {
 	// Utility object
 	RXUtile rxUTL;
 	PublisherListPage pubPage;
-	public String adspotsHeaderStr = "AdSpots";
+	public String adspotsHeaderStr = "Ad Spots";
 
 	// Seats page heading
-	@FindBy(xpath = "//h1[text()='AdSpots']")
+	@FindBy(xpath = "//h1[text()='Ad Spots']")
 	WebElement adspotsPageHeader;
 	// Xpath of rows to get the total number of row and column displayed in the
 	// page.
@@ -37,7 +37,11 @@ public class RXAdspotsPage extends RXBasePage {
 	@FindBy(xpath = "//button/span[text()='Deactivate AdSpot']")
 	public WebElement overviewDisableButton;
 	@FindBy(xpath = "//div[@class='portal vue-portal-target']/button[2]/span")
-	public WebElement overviewEnableButton;
+	public WebElement overviewSecondButton;
+	@FindBy(xpath = "//div[@class='portal vue-portal-target']/button[3]/span")
+	public WebElement overviewThirdButton;
+	@FindBy(xpath = "//div[@class='portal vue-portal-target']")
+	public WebElement overviewButtonsBlock;
 	@FindBy(xpath = "//button/span[text()='Activate AdSpots']")
 	public WebElement overviewMultipleEnableButton;
 	@FindBy(xpath = "//button/span[text()='Deactivate AdSpots']")
@@ -45,11 +49,13 @@ public class RXAdspotsPage extends RXBasePage {
 	@FindBy(xpath = "//*[@class='v-input__icon v-input__icon--clear']/button")
 	public WebElement clearSearchButton;
 	// Create/Edit Page labels
+	@FindBy(xpath = "//div[@class='hidden-xs-only vue-portal-target']")
+	public WebElement createPageHeader;
 	@FindBy(xpath = "//label[text()='Publisher Name']/following-sibling::div[@class='v-select__selections']")
 	public WebElement publisherNameDropDown;
 	@FindBy(xpath = "//label[text()='Publisher Name']/following-sibling::div[@class='v-select__selections']/div")
 	public WebElement publisherNameField;
-	@FindBy(xpath = "//label[text()='AdSpot Name']/following-sibling::input")
+	@FindBy(xpath = "//label[text()='Ad Spot Name']/following-sibling::input")
 	public WebElement adSpotNameField;
 	@FindBy(xpath = "//aside[@class='dialog']//div[@class='v-toolbar__title']/div")
 	public WebElement adSpotNameHeader;
@@ -134,7 +140,7 @@ public class RXAdspotsPage extends RXBasePage {
 	public WebElement minVideoDurField;
 	@FindBy(xpath = "//form/div[5]//label[text()='Maximum Video Duration']/following-sibling::div[@class='v-select__selections']/div")
 	public WebElement maxVideoDurField;
-	@FindBy(xpath = "//form/div[5]//label[text()='Playback Methods']/following-sibling::div[@class='v-select__selections']")
+	@FindBy(xpath = "//form/div[5]//label[text()='Video Playback Methods']/following-sibling::div[@class='v-select__selections']")
 	public WebElement playbackMethodsDropDown;
 	@FindAll(@FindBy(xpath = "//form/div[5]//label[text()='Playback Methods']/following-sibling::div[@class='v-select__selections']/div"))
 	public List<WebElement> playbackMethodsField;
@@ -179,17 +185,18 @@ public class RXAdspotsPage extends RXBasePage {
 	}
 
 	public void clickOverViewEnablebutton() {
-		driverWait().until(ExpectedConditions.visibilityOf(overviewEnableButton));
-		String enableText = overviewEnableButton.getText().replaceAll("\\s", "");
+		driverWait().until(ExpectedConditions.visibilityOf(overviewSecondButton));
+		String enableText = overviewThirdButton.getText().replaceAll("\\s", "");
 		if (enableText.equals("ACTIVATEADSPOT")) {
-			overviewEnableButton.click();
+			overviewThirdButton.click();
 		}
 	}
 
 	public void clickOverViewDisablebutton() {
 		driverWait().until(ExpectedConditions.visibilityOf(overviewDisableButton));
-		if (overviewDisableButton.isDisplayed()) {
-			overviewDisableButton.click();
+		String enableText = overviewSecondButton.getText().replaceAll("\\s", "");
+		if (enableText.equals("DEACTIVATEADSPOT")) {
+			overviewSecondButton.click();
 		}
 	}
 	
@@ -206,6 +213,10 @@ public class RXAdspotsPage extends RXBasePage {
 		if (overviewMultipleDisableButton.isDisplayed()) {
 			overviewMultipleDisableButton.click();
 		}
+	}
+
+	public void waitForCreatePageHeaderToBeVisible() {
+		driverWait().until(ExpectedConditions.visibilityOf(createPageHeader));
 	}
 
 }
