@@ -696,7 +696,6 @@ public class DealsPageStepDefinition extends RXBaseClass {
 
 	@Then("^verify \"([^\"]*)\" seat panels are displayed$")
 	public void verify_seat_panels_are_displayed(String arg0) throws Throwable {
-		Thread.sleep(2000);
 		int buyersCount = dealsPage.getBuyersCardPaddingElemts();
 		System.out.println("Buyer count >>> " + buyersCount);
 		if(buyersCount != Integer.parseInt(arg0)){
@@ -731,14 +730,6 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		for(int i=1;i<=Integer.parseInt(arg0);i++) {
 			js.executeScript("arguments[0].scrollIntoView();",dealsPage.dSPDisable(i));
 			Assert.assertTrue(dealsPage.dSPDisable(i).isEnabled());
-		}
-	}
-
-	@When("^fill Buyer card using autofill for each field$")
-	public void fill_buyer_card_using_autofill_for_each_field() throws Throwable{
-		boolean autofillFlag = dealsPage.autofill_seat_name();
-		if(!autofillFlag){
-			fail("Autofill DSP Buyer fields failed!");
 		}
 	}
 

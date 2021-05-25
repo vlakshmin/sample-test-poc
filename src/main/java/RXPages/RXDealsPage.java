@@ -127,8 +127,10 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement buyerCardLabel;
 	@FindBy(xpath = "//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']/input")
 	public WebElement enableBtnInBuyerPanel;
-	@FindBy(xpath = "//div[@class='buyers-card-grid'][2]/button")
+	@FindBy(xpath = "//div[@class='buyers-card-grid']/button")
 	public WebElement deleteBtnInBuyerPanel;
+	@FindAll(@FindBy(css = "div.buyers-cards > div.cardPadding"))
+	List<WebElement> buyerPanelList;
 
 	/*
 	 * @FindBy(xpath = "//label[text()='Related Proposal']/following-sibling::input"
@@ -180,12 +182,10 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement searchDealId;
 
 
-//	@FindBy(xpath = "//table/tbody/tr[1]/td[3]/a")  //comment out by Shine Tech team
 	@FindBy(xpath = "//table/tbody/tr[1]/td[4]/a")
 	public WebElement dealNameInListview;
 	
 //	String dealNameInListOne="//table/tbody/tr[1]/td[3]/span/a[contains(text(),";
-//	String dealNameInListOne="//table/tbody/tr[1]/td[3]/a[contains(text(),"; //comment out by Shine Tech Team
 	String dealNameInListOne="//table/tbody/tr[1]/td[4]/a[contains(text(),";
 
 	//Variables
@@ -652,21 +652,6 @@ public class RXDealsPage extends RXBaseClass {
 	}
 
 	public int getBuyersCardPaddingElemts(){
-		return driver.findElements(By.cssSelector("div.buyers-cards > div.cardPadding")).size();
+		return buyerPanelList.size();
 	}
-
-	public boolean autofill_seat_name() throws InterruptedException {
-		boolean flag;
-		this.dSPSeatName.click();
-		Thread.sleep(2000);
-		String dSPSeatNameAutofill = driver.findElement(By.cssSelector("div.v-select-list > div.v-list-item:nth-child(1) > div > span:nth-child(1)")).getText().trim();
-		System.out.println("autofill DSP Seat Name is >>> " + dSPSeatNameAutofill);
-		driver.findElement(By.cssSelector("div.v-select-list > div.v-list-item:nth-child(1)")).click();
-		Thread.sleep(2000);
-		String buyerCardLabel = this.buyerCardLabel.getText().trim();
-		System.out.println("Buyer Card Label >>> " + buyerCardLabel);
-		flag = buyerCardLabel.contains(dSPSeatNameAutofill);
-		return flag;
-	}
-
 }
