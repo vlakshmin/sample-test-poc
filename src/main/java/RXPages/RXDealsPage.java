@@ -163,11 +163,11 @@ public class RXDealsPage extends RXBasePage {
 	public WebElement searchDealId;
 
 
-	@FindBy(xpath = "//table/tbody/tr[1]/td[3]/a")
+	@FindBy(xpath = "//table/tbody/tr[1]/td[4]/a")
 	public WebElement dealNameInListview;
 	
 //	String dealNameInListOne="//table/tbody/tr[1]/td[3]/span/a[contains(text(),";
-	String dealNameInListOne="//table/tbody/tr[1]/td[3]/a[contains(text(),";
+	String dealNameInListOne="//table/tbody/tr[1]/td[4]/a[contains(text(),";
 
 	//Variables
 	public String enteredPrivateAuct;
@@ -326,11 +326,13 @@ public class RXDealsPage extends RXBasePage {
 				.allMatch(i ->
 				getErrorMessageTextByField(i).replaceAll("\\.", "")
 						.equalsIgnoreCase(("the " + i.getText() + " field is required")
-								.replaceAll("(?i).{9}range.{7}(?=is)","Start date ")
+//								.replaceAll("(?i).{9}range.{7}(?=is)","Start date ")
 								.replaceAll("Floor Price","Value")));
 	}
 	public String getErrorMessageTextByField(WebElement element) {
-		return element.findElement(By.xpath("./ancestor::div[2]//div[contains(@class,'v-messages__message')]")).getText();
+		String text = element.findElement(By.xpath("./ancestor::div[@class = 'v-input__control']//div[contains(@class,'v-messages__message')]")).getText();
+		System.out.println(text);
+		return text;
 	}
 	public boolean verifyRequiredFields() {
 		clickSaveDealButton();
@@ -363,7 +365,7 @@ public class RXDealsPage extends RXBasePage {
 	public void enterValue(String dealValue)
 	{
 		value.sendKeys(dealValue);
-		enteredValue=value.getAttribute("value");
+		enteredValue=value.getAttribute("value") + ".00";
 			
 	}
 	public void activeTaggle()

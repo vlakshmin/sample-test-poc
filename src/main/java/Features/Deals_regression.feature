@@ -58,7 +58,7 @@ Scenario:  Verify enabling and disabling of a deal from the overview page
     When Click on Deals option under Sales
 	And User displayed with Deals page
     Then Verify the search functionality with the following names
-	|Name|CoumnName|
+	|Name|ColumnName|
 	|RTBHouse Deal|Name|
 	Then Verify enabling and disabling of a deal from the overview page
 
@@ -142,7 +142,7 @@ Scenario: Verify if create deal menu is opened
 #		And Verify required fields
 
 
-Scenario: Verify that the Alert message displayed for changing the publisher for deal,on cancel retain the filled value and accept removed the filled values.
+Scenario: failing to GS-1963 Verify that the Alert message displayed for changing the publisher for deal,on cancel retain the filled value and accept removed the filled values.
     Given admin user login to RX UI with valid username and password
     When Click on Deals option under Sales
 	And User displayed with Deals page

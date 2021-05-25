@@ -44,9 +44,9 @@ Feature: Adspots page regression
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
     Then Verify the search functionality with the following names
-      | Name        | CoumnName   |
-      | Top Banner  | AdSpot Name |
-      | jaya_testad | AdSpot Name |
+      | Name        | ColumnName   |
+      | Top Banner  | Ad Spot Name |
+      | jaya_testad | Ad Spot Name |
 
 
   Scenario:  Verify enabling and disabling of an adspot from the overview page
@@ -55,7 +55,7 @@ Feature: Adspots page regression
     And User displayed with Adspots page
     Then Verify the search functionality with the following names
       | Name       | ColumnName  |
-      | Top Banner | AdSpot Name |
+      | Top Banner | Ad Spot Name |
     Then Verify enabling and disabling of an adspot from the overview page
 
   Scenario:  Verify enabling and disabling of multiple adspots from the overview page
@@ -64,7 +64,7 @@ Feature: Adspots page regression
     And User displayed with Adspots page
     Then Verify the search functionality with the following names
       | Name       | ColumnName  |
-      | Top Banner | AdSpot Name |
+      | Top Banner | Ad Spot Name |
     And Search for adspot
       | Name    |
       | Dynamic |
