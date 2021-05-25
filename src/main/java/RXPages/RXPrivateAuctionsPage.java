@@ -5,6 +5,7 @@ import RXUtitities.RXUtile;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -56,6 +57,15 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
     public WebElement privateAuctionNameInput;
     @FindBy(xpath = "//span[text() = 'Create Private Auction']/ancestor::button")
     public WebElement createPrivateAuctionButton;
+    
+    @FindBy(xpath = "//aside[@class='dialog']//div[@class='v-banner banner v-sheet theme--light rounded-0 v-banner--has-icon']")
+    public WebElement warningBannerUnderPublishername;
+    
+    @FindAll(@FindBy(css = "#app > div.menuable__content__active > span"))
+    public List<WebElement> details;
+    
+    @FindBy(css = "#app > div.menuable__content__active > span")
+    public WebElement detailsForInventory;
 
     public WebElement publisherNameSearchListItem(String publisherName) {
         return driver.findElement(By.xpath("//div[@class = 'v-list-item__title' and text() = '" + publisherName + "']"));
@@ -131,6 +141,31 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
         return driver.findElements(By.xpath("//h3[text() = '" + targetingName +
                 "']/ancestor::button[contains(@class, 'v-expansion-panel-header flex')]/ancestor::" +
                 "div[contains(@class, 'v-expansion-panel--active')]//table[@class = 'included-table fixed']//td[text()]"));
+    }
+    
+    public String mandatorFieldIsDisabledForCreatePage(String fieldName) {
+    	return driver
+				.findElement(By.xpath("//aside[@class='dialog']//label[text()='" + fieldName + "']"))
+				.getAttribute("class");
+    }
+    
+    public String toggleFieldIsEnabledForCreatePage(String fieldName) {
+    	return driver
+				.findElement(
+						By.xpath("//aside[@class='dialog']//label[text()='" + fieldName + "']/parent::div//input"))
+				.getAttribute("aria-checked");
+    }
+    
+    public String targetingFieldIsDisabledForCreatePage(String fieldName) {
+    	return driver
+				.findElement(
+						By.xpath("//h3[text() = '" + fieldName +"']/parent::button/parent::div//table/parent::div"))
+				.getAttribute("class");
+    }
+    
+    public WebElement toggleField(String fieldName) {
+    	return driver.findElement(
+				By.xpath("//aside[@class='dialog']//label[text()='" + fieldName + "']/parent::div/div"));
     }
 
     // Action object

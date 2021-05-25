@@ -219,9 +219,9 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
-			String isDisabled = driver
-					.findElement(By.xpath("//aside[@class='dialog']//label[text()='" + fieldName + "']"))
-					.getAttribute("class");
+			String isDisabled = auctionPage.mandatorFieldIsDisabledForCreatePage(fieldName);
+					
+					
 			Assert.assertTrue(isDisabled.contains("disabled"));
 
 		}
@@ -236,10 +236,10 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
 			String active = list.get(i).get("Active");
-			String isEnabled = driver
-					.findElement(
-							By.xpath("//aside[@class='dialog']//label[text()='" + fieldName + "']/parent::div//input"))
-					.getAttribute("aria-checked");
+			String isEnabled = auctionPage.toggleFieldIsEnabledForCreatePage(fieldName);
+					
+							
+					
 			if (active.equalsIgnoreCase("Yes")) {
 				Assert.assertEquals(isEnabled, "true");
 
@@ -258,17 +258,17 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
-			String isEnabled = driver
-					.findElement(
-							By.xpath("//aside[@class='dialog']//label[text()='" + fieldName + "']/parent::div//input"))
-					.getAttribute("aria-checked");
+			String isEnabled = auctionPage.toggleFieldIsEnabledForCreatePage(fieldName);
+					
+							
+					
 			if (enable.equalsIgnoreCase("Enable") && isEnabled.equals("false")) {
-				driver.findElement(
-						By.xpath("//aside[@class='dialog']//label[text()='" + fieldName + "']/parent::div/div"))
+				
+				auctionPage.toggleField(fieldName)
 						.click();
 			} else if (enable.equalsIgnoreCase("Disable") && isEnabled.equals("true")) {
-				driver.findElement(
-						By.xpath("//aside[@class='dialog']//label[text()='" + fieldName + "']/parent::div/div"))
+				
+						auctionPage.toggleField(fieldName)
 						.click();
 			}
 
@@ -445,9 +445,9 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions
-				.visibilityOf(driver.findElement(By.cssSelector("#app > div.menuable__content__active"))));
-		driver.findElements(By.cssSelector("#app > div.menuable__content__active > span"))
-				.forEach(e -> auctionPage.verify_that_Details_matched(e, list.get(0)));
+				.visibilityOf(auctionPage.detailsForInventory));
+		
+		auctionPage.details.forEach(e -> auctionPage.verify_that_Details_matched(e, list.get(0)));
 	}
 
 	@And("^Select targeting options items$")
@@ -460,7 +460,35 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 	public void verify_that_warning_banner_is_under_Publisher_name(){
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(
-				ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']//div[@class='v-banner banner v-sheet theme--light rounded-0 v-banner--has-icon']"))));
-		Assert.assertTrue(driver.findElement(By.xpath("//aside[@class='dialog']//div[@class='v-banner banner v-sheet theme--light rounded-0 v-banner--has-icon']")).isDisplayed());
+				ExpectedConditions.visibilityOf(auctionPage.warningBannerUnderPublishername));
+		Assert.assertTrue(auctionPage.warningBannerUnderPublishername.isDisplayed());
+	}
+
+	@Then("^Verify following Targeting in create Private Auction page is disabled$")
+	public void verify_following_Targeting_in_create_Private_Auction_page_is_disabled(DataTable dt) {
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		for (int i = 0; i < list.size(); i++) {
+			String fieldName = list.get(i).get("FieldName");
+			System.out.println(fieldName);
+			auctionPage.targetingExpandPanel(fieldName).click();
+			String isDisabled = auctionPage.targetingFieldIsDisabledForCreatePage(fieldName);
+				Assert.assertEquals(isDisabled, "scrollable disabled");
+		}
+	}
+	
+	@Then("^Verify \"([^\"]*)\" button in create Private Auction page is disabled$")
+	public void verify_button_in_create_Private_Auction_page_is_disabled(String arg1) {
+		String isDisabled = "";
+	   switch(arg1) {
+	   case "Save Private Auction & Close":
+		   isDisabled = auctionPage.saveandcloseButton.getAttribute("disabled");
+		   break;
+	   case "Save Private Auction & Create Deal":
+		   isDisabled = auctionPage.saveandcreatedealButton.getAttribute("disabled");
+		   break;
+	   default:
+		   Assert.fail("can not find the button "+ arg1);
+	   }
+	   Assert.assertEquals(isDisabled, "true");
 	}
 }
