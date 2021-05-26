@@ -242,8 +242,8 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
 
     public void selectTargetingBlockListItem(String itemName) {
     	driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[3]")).click();
+    	System.out.println(itemName+ " class: "+driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[3]")).getAttribute("class"));
     }
-
     public void clickTargetingBlockIncludedListItemClear(String itemName) {
         targetingBlockIncludedListItemClear(itemName).click();
     }
@@ -346,9 +346,9 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
     public void selectForBlock(String targetingName, String itemName) {
     	//Check if panel is expanded,expand it if not
     	if(!targetingExpandPanel(targetingName.replace(" Child", "")).getAttribute("class").contains("active")) {
+    		System.out.println("Expand " +targetingName);
     		targetingExpandPanel(targetingName.replace(" Child", "")).click();
     	}
-        
         if(targetingName.equals("Inventory")) {
         	 driverWait().until(ExpectedConditions.visibilityOf(targetingBlockListItem(itemName)));
         	selectTargetingInventoryItem(itemName);
