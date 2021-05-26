@@ -243,7 +243,7 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
     public void selectTargetingBlockListItem(String itemName) {
     	driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[@class= 'options selectable']")).click();
     	try {
-			Thread.sleep(1000);
+			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
