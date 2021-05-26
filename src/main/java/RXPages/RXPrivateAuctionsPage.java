@@ -3,6 +3,7 @@ package RXPages;
 import RXBaseClass.RXBaseClass;
 import RXUtitities.RXUtile;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
@@ -241,13 +242,9 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
     }
 
     public void selectTargetingBlockListItem(String itemName) {
-    	driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[@class= 'options selectable']")).click();
-    	try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	JavascriptExecutor js = (JavascriptExecutor) driver;
+    	js.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[@class= 'options selectable']")));
+    	wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[@class= 'options selectable included']"))));
     	System.out.println(itemName+ " class: "+driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[3]")).getAttribute("class"));
     }
     public void clickTargetingBlockIncludedListItemClear(String itemName) {
