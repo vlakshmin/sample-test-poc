@@ -260,7 +260,7 @@ Feature: Private Auctions page regression
       | FieldName      |
       | Name           |
       | Publisher Name |
-@Ignore
+
   Scenario: Verify Details if all targeting are empty
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
@@ -299,7 +299,7 @@ Feature: Private Auctions page regression
     Then Verify that Details display the following data for each targeting
       | Inventory                    | Devices | Operating Systems | Geos        | Ad Format | Ad Sizes           |
       | supply-chains and Sons Media | Phone   | Android           | Afghanistan | Banner    | Financial (120x60) |
- @Ignore
+
   Scenario: Verify Details display properly Inventory parent items
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
@@ -317,7 +317,7 @@ Feature: Private Auctions page regression
     Then Verify that Details display the following data for each targeting
       | Inventory                    | Devices                  | Operating Systems                  | Geos                  | Ad Format                  | Ad Sizes                  |
       | supply-chains and Sons Media | All Devices are included | All Operating Systems are included | All Geos are included | All Ad Format are included | All Ad Sizes are included |
-@Ignore
+
   Scenario: Verify Details display properly Inventory child items
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
@@ -335,7 +335,7 @@ Feature: Private Auctions page regression
     Then Verify that Details display the following data for each targeting
       | Inventory  | Devices                  | Operating Systems                  | Geos                  | Ad Format                  | Ad Sizes                  |
       | TCP orchid | All Devices are included | All Operating Systems are included | All Geos are included | All Ad Format are included | All Ad Sizes are included |
-@Ignore
+
       Scenario: Verify Details display properly Inventory parent and child items
       Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
@@ -354,7 +354,7 @@ Feature: Private Auctions page regression
     Then Verify that Details display the following data for each targeting
       | Inventory  | Devices                  | Operating Systems                  | Geos                  | Ad Format                  | Ad Sizes                  |
       | Mark Mc Mobile Site,160x600 | All Devices are included | All Operating Systems are included | All Geos are included | All Ad Format are included | All Ad Sizes are included |
-  @Ignore  
+   
       Scenario: Verify that warning banner is displayed under Publisher name
       Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
@@ -371,7 +371,7 @@ Feature: Private Auctions page regression
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue |              2 |
       Then Verify that warning banner is under Publisher name
-   @Ignore
+   
     Scenario: Veridy create Private Auction page is disabled while warning banner is present with empty inputs for Admin
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
@@ -406,7 +406,7 @@ Feature: Private Auctions page regression
       | Ad Size          | 
       Then Verify "Save Private Auction & Close" button in create Private Auction page is disabled
       Then Verify "Save Private Auction & Create Deal" button in create Private Auction page is disabled
-     @Ignore 
+      
       Scenario: Veridy create Private Auction page is disabled while warning banner is present with empty inputs for Cross Publisher
       Given Publisher user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales

@@ -244,9 +244,9 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
     public void selectTargetingBlockListItem(String itemName) {
     	JavascriptExecutor js = (JavascriptExecutor) driver;
     	js.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[@class= 'options selectable']")));
-    	wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[@class= 'options selectable included']"))));
-    	System.out.println(itemName+ " class: "+driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[3]")).getAttribute("class"));
+    	wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[@class= 'options selectable included']"))));    	
     }
+    
     public void clickTargetingBlockIncludedListItemClear(String itemName) {
         targetingBlockIncludedListItemClear(itemName).click();
     }
@@ -349,9 +349,9 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
     public void selectForBlock(String targetingName, String itemName) {
     	//Check if panel is expanded,expand it if not
     	if(!targetingExpandPanel(targetingName.replace(" Child", "")).getAttribute("class").contains("active")) {
-    		System.out.println("Expand " +targetingName);
     		targetingExpandPanel(targetingName.replace(" Child", "")).click();
     	}
+    	
         if(targetingName.equals("Inventory")) {
         	 driverWait().until(ExpectedConditions.visibilityOf(targetingBlockListItem(itemName)));
         	selectTargetingInventoryItem(itemName);
