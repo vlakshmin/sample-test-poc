@@ -30,11 +30,11 @@ public class RXAdspotsPage extends RXBasePage {
 	WebElement adSpotsSearchField;
 
 	// overview buttons
-	@FindBy(xpath = "//button/span[text()='Create AdSpot']")
+	@FindBy(xpath = "//button/span[text()='Create Ad Spot']")
 	public WebElement overviewCreateButton;
-	@FindBy(xpath = "//button/span[text()='Edit AdSpot']")
+	@FindBy(xpath = "//button/span[text()='Edit Ad Spot']")
 	public WebElement overviewEditButton;
-	@FindBy(xpath = "//button/span[text()='Deactivate AdSpot']")
+	@FindBy(xpath = "//button/span[text()='Deactivate Ad Spot']")
 	public WebElement overviewDisableButton;
 	@FindBy(xpath = "//div[@class='portal vue-portal-target']/button[2]/span")
 	public WebElement overviewSecondButton;
@@ -42,9 +42,9 @@ public class RXAdspotsPage extends RXBasePage {
 	public WebElement overviewThirdButton;
 	@FindBy(xpath = "//div[@class='portal vue-portal-target']")
 	public WebElement overviewButtonsBlock;
-	@FindBy(xpath = "//button/span[text()='Activate AdSpots']")
+	@FindBy(xpath = "//button/span[text()='Activate Ad Spots']")
 	public WebElement overviewMultipleEnableButton;
-	@FindBy(xpath = "//button/span[text()='Deactivate AdSpots']")
+	@FindBy(xpath = "//button/span[text()='Deactivate Ad Spots']")
 	public WebElement overviewMultipleDisableButton;
 	@FindBy(xpath = "//*[@class='v-input__icon v-input__icon--clear']/button")
 	public WebElement clearSearchButton;
@@ -61,6 +61,8 @@ public class RXAdspotsPage extends RXBasePage {
 	public WebElement adSpotNameHeader;
 	@FindBy(xpath = "//aside[@class='dialog']//div[@class='v-toolbar__content']/button")
 	public WebElement adSpotCloseSideDialog;
+	@FindBy(xpath = "//form/div[5]//label[text()='Ad Sizes']/following-sibling::div[@class='v-select__selections']/input")
+	public WebElement adSizeInput;
 	
 	@FindBy(xpath = "//label[text()='Related Media']/following-sibling::div[@class='v-select__selections']")
 	public WebElement relatedMediaDropDown;

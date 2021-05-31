@@ -1,5 +1,7 @@
 package stepDefinitions;
 
+import static org.testng.Assert.fail;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -389,13 +391,10 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@When("^Verify the save is failed$")
 	public void verifySaveFailed() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.visibilityOf(
-				driver.findElement(By.xpath("//button[@type='submit'][contains(@class,'error--text')]"))));
-		String failedMessage = navOptions.saveButtonTxt.getText().replaceAll("\u3000", "");
-		Assert.assertEquals(failedMessage, "FAILED!");
-		
-
+		driverWait().until(ExpectedConditions.visibilityOf(navOptions.errorPopup));
+		if(!navOptions.errorPopup.isDisplayed()){
+			fail("Error is not displayed.");
+		}
 	}
 
 	@When("^Click on save button and wait for dialog to close$")
@@ -634,7 +633,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				}
 				adspotsPage.defaultPriceField.sendKeys(value);
 				Thread.sleep(2000);
-				enteredDefaultPrice = adspotsPage.defaultPriceField.getAttribute("value");
+				enteredDefaultPrice = adspotsPage.defaultPriceField.getAttribute("value") + ".00";
 				defaultPriceCurrency = adspotsPage.defaultPriceCurrency.getText();
 				System.out.println("Entered Default floor price:" + defaultPriceCurrency + enteredDefaultPrice);
 				break;
@@ -966,7 +965,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 				break;
 			case "Ad Spot Name":
-				Assert.assertEquals(adspotsPage.adSpotNameHeader.getText(), "Edit Ad Spot: " + enteredAdSpotName);
+				Assert.assertEquals(adspotsPage.adSpotNameField.getAttribute("value"), enteredAdSpotName);
 
 				break;
 			case "Publisher Name":
@@ -1000,6 +999,8 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				break;
 			case "Default Floor Price":
 				String price = enteredDefaultPrice;
+				adspotsPage.defaultPriceField.click();
+				adspotsPage.positionField.click();
 				Assert.assertEquals(adspotsPage.defaultPriceField.getAttribute("value"), price);
 				Assert.assertEquals(adspotsPage.defaultPriceCurrency.getText(), defaultPriceCurrency);
 
@@ -1040,7 +1041,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				break;
 			case "Floor Price":
 				if(adspotsPage.bannerPriceField.getAttribute("value").isEmpty()) {
-					Assert.assertEquals(adspotsPage.bannerPriceField.getAttribute("placeholder"), enteredBannerPrice);
+					Assert.assertEquals(adspotsPage.bannerPriceField.getAttribute("placeholder"), "");
 				}else {
 				Assert.assertEquals(adspotsPage.bannerPriceField.getAttribute("value"), enteredBannerPrice);
 				}
@@ -1094,9 +1095,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 						.findElements(By.xpath(
 								"//form/div[5]//label[text()='Ad Sizes']/following-sibling::div[@class='v-select__selections']/div"))
 						.size() == 0) {
-						String sizes = driver.findElement(By.xpath("//form/div[5]//label[text()='Ad Sizes']"
-									+ "/following-sibling::div[@class='v-select__selections']/input")).getAttribute("placeholder");
-							Assert.assertEquals(sizes, enteredInBannerVideoSizes);	
+							Assert.assertEquals(adspotsPage.adSizeInput.getAttribute("placeholder"), "");
 						}else {
 				String sizes = "";
 				List<WebElement> enteredSizesLsit = adspotsPage.inBannerVideoSizesField;
@@ -1118,7 +1117,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 			case "Floor Price":
 				if(adspotsPage.inBannerVideoPriceField.getAttribute("value").isEmpty()) {
 					Assert.assertEquals(adspotsPage.inBannerVideoPriceField.getAttribute("placeholder"),
-							enteredInBannerVideoPrice);
+							"");
 				}else {
 				Assert.assertEquals(adspotsPage.inBannerVideoPriceField.getAttribute("value"),
 						enteredInBannerVideoPrice);
@@ -1380,6 +1379,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					.getAttribute("class");
 			if (!style.contains("active")) {
 				js.executeScript("arguments[0].scrollIntoView()", adspotsPage.inBannerVideoEnableButton);
+				driverWait().until(ExpectedConditions.elementToBeClickable(adspotsPage.inBannerVideoEnableButton));
 				adspotsPage.inBannerVideoEnableButton.click();
 				Assert.assertTrue(
 						driver.findElement(By.xpath("//div[text()='Video']/preceding-sibling::span/div"))
@@ -1477,7 +1477,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 		Assert.assertEquals(defaultSize, enteredSizes);
 		String floorPrice = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[9]"))
 				.getText();
-		String price = enteredDefaultPrice + ".00";
+		String price = enteredDefaultPrice;
 		String currency = defaultPriceCurrency.substring(0, defaultPriceCurrency.indexOf(":"));
 		System.out.println(price + " " + currency);
 		System.out.println(floorPrice);

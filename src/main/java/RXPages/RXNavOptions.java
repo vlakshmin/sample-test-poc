@@ -68,6 +68,8 @@ public class RXNavOptions extends RXBaseClass {
 	public WebElement saveButton;
 	@FindBy(xpath = "//button[@type='submit']/span")
 	public WebElement saveButtonTxt;
+	@FindBy(xpath = "//div[@class = 'v-snack__content']")
+	public WebElement errorPopup;
 
 	// subMenu of Rules main menu
 	@FindBy(xpath = "//div[text()='Filters']")

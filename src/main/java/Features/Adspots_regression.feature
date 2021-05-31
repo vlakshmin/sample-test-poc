@@ -28,7 +28,7 @@ Feature: Adspots page regression
     When Click on Adspots option under Inventory
     Then User displayed with Adspots page
     And User click on table options button
-    Then Verify that column "AdSpot Name" can be hidden and shown
+    Then Verify that column "Ad Spot Name" can be hidden and shown
 
 
   Scenario:  Verify onclicking relevant status from table options shows only that particular table rows with that status
@@ -54,7 +54,7 @@ Feature: Adspots page regression
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
     Then Verify the search functionality with the following names
-      | Name       | ColumnName  |
+      | Name       | ColumnName   |
       | Top Banner | Ad Spot Name |
     Then Verify enabling and disabling of an adspot from the overview page
 
@@ -63,7 +63,7 @@ Feature: Adspots page regression
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
     Then Verify the search functionality with the following names
-      | Name       | ColumnName  |
+      | Name       | ColumnName   |
       | Top Banner | Ad Spot Name |
     And Search for adspot
       | Name    |
@@ -92,14 +92,14 @@ Feature: Adspots page regression
       | FieldName      |
       | Publisher Name |
     And Enter the following data in the general card of adspot
-      | FieldName      | Value     | ListValueIndex |
-      | Publisher Name | ListValue | 2              |
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
     And "Enable" the in-banner video card
     And "Expand" the in-banner video card
     And Click on save button
     Then Verify following fields are mandatory for create page
       | FieldName              |
-      | AdSpot Name            |
+      | Ad Spot Name           |
       | Related Media          |
       | Position               |
       | Default Ad Sizes       |
@@ -636,7 +636,7 @@ Feature: Adspots page regression
       | FieldName           |
       | Publisher Name      |
       | Active              |
-      | AdSpot Name         |
+      | Ad Spot Name        |
       | Related Media       |
       | Default Floor Price |
     Then Verify the banner card is "Enabled"
@@ -669,10 +669,10 @@ Feature: Adspots page regression
     When Click on the Adspot create button
     Then Enter the following data in the general card of adspot
       | FieldName           | Value     | ListValueIndex |
-      | Publisher Name      | ListValue | 1              |
+      | Publisher Name      | Viber     |                |
       | Active              | Active    |                |
-      | AdSpot Name         | Auto_Test |                |
-      | Related Media       | ListValue | 2              |
+      | Ad Spot Name        | Auto_Test |                |
+      | Related Media       | ListValue | 1              |
       | Categories          | ListValue | 2              |
       | Position            | ListValue | 2              |
       | Filter              | ListValue | 1              |
@@ -740,7 +740,7 @@ Feature: Adspots page regression
       | FieldName           |
       | Publisher Name      |
       | Active              |
-      | AdSpot Name         |
+      | Ad Spot Name        |
       | Related Media       |
       | Default Floor Price |
     Then Verify the banner card is "Enabled"
@@ -765,77 +765,40 @@ Feature: Adspots page regression
       | Playback Methods       |
       | Video Placement Type   |
 
-  @Ignore
-  Scenario: Verify successful creation and updation of an adspot22
+
+  Scenario: Verify pop-up Banner/Native/Video enabled/disabled
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
     When Click on the Adspot create button
     Then Enter the following data in the general card of adspot
       | FieldName           | Value     | ListValueIndex |
-      | Publisher Name      | ListValue | 1              |
-      | Active              | Active    |                |
-      | AdSpot Name         | Auto_Test |                |
-      | Related Media       | ListValue | 2              |
+      | Publisher Name      | Viber     |                |
+      | Ad Spot Name        | Auto_Test |                |
+      | Related Media       | ListValue | 1              |
       | Categories          | ListValue | 2              |
       | Position            | ListValue | 2              |
       | Filter              | ListValue | 1              |
       | Default Ad Sizes    | ListValue | 2              |
       | Default Floor Price | 10        |                |
     And "Enable" the banner card
-    And "Expand" the banner card
-    Then Enter the following data in the banner card of adspot
-      | FieldName   | Value     | ListValueIndex |
-      | Ad Sizes    | ListValue | 2              |
-      | Floor Price | 5         |                |
     And "Enable" the native card
-    And "Expand" the native card
-    Then Enter the following data in the native card of adspot
-      | FieldName   | Value |
-      | Floor Price | 5     |
     And "Enable" the in-banner video card
     And "Expand" the in-banner video card
     Then Enter the following data in the in-banner video card of adspot
       | FieldName              | Value     | ListValueIndex |
       | Video Placement Type   | ListValue | 1              |
       | Ad Sizes               | ListValue | 2              |
-      | Floor Price            | 5         |                |
       | Minimum Video Duration | ListValue | 1              |
       | Maximum Video Duration | ListValue | 1              |
-      | Playback Methods       | ListValue | 1,2,3          |
+      | Playback Methods       | ListValue | 1              |
     And Click on save button and wait for dialog to close
-    Then Verify the created adspot data is matching with its overview list values
+
     When Click on the created adspotname in the overview page
-    And Verify following fields are disabled on create/edit adspot page
-      | FieldName      |
-      | Publisher Name |
-      | Related Media  |
-    Then Verify the following columns value with the created data for the general card of adspot
-      | FieldName           |
-      | Publisher Name      |
-      | Active              |
-      | AdSpot Name         |
-      | Related Media       |
-      | Default Ad Sizes    |
-      | Default Floor Price |
     And Verify the banner card is "Enabled"
     And Verify the native card is "Enabled"
     And Verify the in-banner video card is "Enabled"
-    Then "Expand" the banner card
-    And "Expand" the native card
-    And "Expand" the in-banner video card
-    Then Verify the following columns value with the created data for the banner card of adspot
-      | FieldName   |
-      | Ad Sizes    |
-      | Floor Price |
-    Then Verify the following columns value with the created data for the native card of adspot
-      | FieldName   |
-      | Floor Price |
-    Then Verify the following columns value with the created data for the in-banner video card of adspot
-      | FieldName              |
-      | Ad Sizes               |
-      | Floor Price            |
-      | Minimum Video Duration |
-      | Maximum Video Duration |
-      | Playback Methods       |
-      | Video Placement Type   |
+    Then "Disable" the banner card
+    And "Disable" the native card
+    And "Disable" the in-banner video card
+    And Click on save button and wait for dialog to close
