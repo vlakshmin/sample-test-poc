@@ -177,7 +177,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
     And Click on publisher input
   	And enter the following values
   	|publisher|PrivateAuction|DSPValue|EntDealName|Values|
-	|Viber|RTBHouse Auction|RBidder|TestAutoDeal|1.1145|
+	|Viber|RTBHouse Auction|RBidder|TestAutoDeal|2|
 	And "Enable" the DSP buyer
 	And enter the following DSP buyer details.
 		|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|

@@ -911,8 +911,10 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	@Then("^Verify only one error message displays below Date Range input$")
 	public void verify_only_one_error_message_displays_below_Date_Range_input(DataTable dt) {
 		js.executeScript("arguments[0].scrollIntoView();",dealsPage.dateRange);
+		String msg = dealsPage.dateRangeErrorMsg.getText().trim();
+		System.out.println("dealsPage.dateRangeErrorMsg.getText().trim() >>> " + msg);
 		getDataFromTable(dt).forEach(e ->
-				Assert.assertEquals(dealsPage.dateRangeErrorMsg.getText().trim(),e.getValue()));
+				Assert.assertEquals(msg,e.getValue()));
 	}
 
 	@Then("^Verify the change Publisher banner message is not displayed$")
