@@ -456,4 +456,10 @@ public void selectTargetingInventoryChildItem(String itemName) {
 		return driver
 				.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+k+"]/td[7]"));
 	}
+
+	public WebElement targetingExpandPanelContent(String fieldName) {
+		return driver
+				.findElement(
+						By.xpath("//h3[text() = '" + fieldName +"']/parent::button/parent::div/div[@class='v-expansion-panel-content']"));
+	}
 }

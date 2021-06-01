@@ -473,6 +473,9 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 			String fieldName = list.get(i).get("FieldName");
 			System.out.println(fieldName);
 			auctionPage.targetingExpandPanel(fieldName).click();
+			WebDriverWait wait = new WebDriverWait(driver, 30);
+			wait.until(
+					ExpectedConditions.visibilityOf(auctionPage.targetingExpandPanelContent(fieldName)));
 			String isDisabled = auctionPage.targetingFieldIsDisabledForCreatePage(fieldName);
 				Assert.assertEquals(isDisabled, "scrollable disabled");
 		}

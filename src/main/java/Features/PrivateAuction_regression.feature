@@ -18,14 +18,14 @@ Feature: Private Auctions page regression
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
     Then Verify the pagination of the listed rows in the Page with a selection of 50 rows per page with 6 columns
-@Ignore
+
   Scenario: Verify hide/show columns from the table options for admin
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
     And User click on table options button
     Then Verify that column "Name" can be hidden and shown
-@Ignore
+
   Scenario: Verify onclicking relevant status from table options shows only that particular table rows with that status
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
@@ -33,7 +33,7 @@ Feature: Private Auctions page regression
     Then User click on table options button
     And Verify that column "Active" only shows relevant rows in the table with filter "Active"
     And Verify that column "Active" only shows relevant rows in the table with filter "Inactive"
-@Ignore
+
   Scenario: Verify searching private auction with available and non available private auction name
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
@@ -51,7 +51,7 @@ Feature: Private Auctions page regression
       | Name        | CoumnName |
       | TestUpdated | Name      |
     Then Verify enabling and disabling of an auction from the overview page
-@Ignore
+
   Scenario: Verify sorting of the list's columns of the private auctions overview page
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
@@ -260,8 +260,8 @@ Feature: Private Auctions page regression
       | FieldName      |
       | Name           |
       | Publisher Name |
-
-  Scenario: Verify Details if all targeting are empty
+  
+  Scenario: 40.Verify Details if all targeting are empty
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And Open create New Private Auction page
@@ -277,7 +277,7 @@ Feature: Private Auctions page regression
       | Inventory                  | Devices                  | Operating Systems                  | Geos                  | Ad Format                  | Ad Sizes                  |
       | All Inventory are included | All Devices are included | All Operating Systems are included | All Geos are included | All Ad Format are included | All Ad Sizes are included |
 
-  Scenario: Verify Details if all targeting have every item included
+  Scenario: 41.Verify Details if all targeting have every item included
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And Open create New Private Auction page
@@ -300,7 +300,7 @@ Feature: Private Auctions page regression
       | Inventory                    | Devices | Operating Systems | Geos        | Ad Format | Ad Sizes           |
       | supply-chains and Sons Media | Phone   | Android           | Afghanistan | Banner    | Financial (120x60) |
 
-  Scenario: Verify Details display properly Inventory parent items
+  Scenario: 42.Verify Details display properly Inventory parent items
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And Open create New Private Auction page
@@ -318,7 +318,7 @@ Feature: Private Auctions page regression
       | Inventory                    | Devices                  | Operating Systems                  | Geos                  | Ad Format                  | Ad Sizes                  |
       | supply-chains and Sons Media | All Devices are included | All Operating Systems are included | All Geos are included | All Ad Format are included | All Ad Sizes are included |
 
-  Scenario: Verify Details display properly Inventory child items
+  Scenario: 43.Verify Details display properly Inventory child items
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And Open create New Private Auction page
@@ -336,7 +336,7 @@ Feature: Private Auctions page regression
       | Inventory  | Devices                  | Operating Systems                  | Geos                  | Ad Format                  | Ad Sizes                  |
       | TCP orchid | All Devices are included | All Operating Systems are included | All Geos are included | All Ad Format are included | All Ad Sizes are included |
 
-      Scenario: Verify Details display properly Inventory parent and child items
+      Scenario: 44.Verify Details display properly Inventory parent and child items
       Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And Open create New Private Auction page
@@ -355,7 +355,7 @@ Feature: Private Auctions page regression
       | Inventory  | Devices                  | Operating Systems                  | Geos                  | Ad Format                  | Ad Sizes                  |
       | Mark Mc Mobile Site,160x600 | All Devices are included | All Operating Systems are included | All Geos are included | All Ad Format are included | All Ad Sizes are included |
    
-      Scenario: Verify that warning banner is displayed under Publisher name
+      Scenario: 67.Verify that warning banner is displayed under Publisher name
       Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
@@ -372,7 +372,7 @@ Feature: Private Auctions page regression
       | Publisher Name | ListValue |              2 |
       Then Verify that warning banner is under Publisher name
    
-    Scenario: Veridy create Private Auction page is disabled while warning banner is present with empty inputs for Admin
+    Scenario: 68.Veridy create Private Auction page is disabled while warning banner is present with empty inputs for Admin
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
@@ -407,7 +407,7 @@ Feature: Private Auctions page regression
       Then Verify "Save Private Auction & Close" button in create Private Auction page is disabled
       Then Verify "Save Private Auction & Create Deal" button in create Private Auction page is disabled
       
-      Scenario: Veridy create Private Auction page is disabled while warning banner is present with empty inputs for Cross Publisher
+      Scenario: 69.Veridy create Private Auction page is disabled while warning banner is present with empty inputs for Cross Publisher
       Given Publisher user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
@@ -442,7 +442,7 @@ Feature: Private Auctions page regression
       Then Verify "Save Private Auction & Close" button in create Private Auction page is disabled
       Then Verify "Save Private Auction & Create Deal" button in create Private Auction page is disabled    
   
-  Scenario: Verify that errors are displayed near save button on Create/update date for Private Auction
+  Scenario: 87.Verify that errors are displayed near save button on Create/update date for Private Auction
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
@@ -470,7 +470,7 @@ Feature: Private Auctions page regression
     Then Verify that error disapear according to fields filled
     |The Date Range field is required|
      
-  Scenario: Verify that only one error is displayed for Date picker
+  Scenario: 116.Verify that only one error is displayed for Date picker
   Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
@@ -484,7 +484,7 @@ Feature: Private Auctions page regression
       | Publisher Name | ListValue |              2 |
      Then Check only one error "The Date Range field is required" is present for date
      
-  Scenario: Verify that Activate Deactivate buttons are displayed at same time for Private Auction list page
+  Scenario: 121.Verify that Activate Deactivate buttons are displayed at same time for Private Auction list page
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page 
@@ -547,7 +547,7 @@ Feature: Private Auctions page regression
     When Click "Activate Private Auction" button in Private Auctions list page
     Then "Active" is displayed for the created private auctions
      
-  Scenario: Verify that Publisher warning banned apears only if any forms were modified on Private Auctions page
+  Scenario: 135.Verify that Publisher warning banned apears only if any forms were modified on Private Auctions page
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
@@ -667,7 +667,7 @@ Feature: Private Auctions page regression
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
      
-     Scenario: Verify that changing "Optimize" checkbox triggers dirty flag for Private Auctions
+     Scenario: 143.Verify that changing "Optimize" checkbox triggers dirty flag for Private Auctions
      Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
