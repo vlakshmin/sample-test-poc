@@ -441,4 +441,246 @@ Feature: Private Auctions page regression
       | Ad Size          | 
       Then Verify "Save Private Auction & Close" button in create Private Auction page is disabled
       Then Verify "Save Private Auction & Create Deal" button in create Private Auction page is disabled    
-       
+  
+  Scenario: Verify that errors are displayed near save button on Create/update date for Private Auction
+    Given admin user login to RX UI with valid username and password
+    When Click on Private Auctions option under Sales
+    And User displayed with Private Auctions page
+    And Click on the following create button
+      | CreateButtonName       |
+      | Create Private Auction |
+    And Click on Save Private Auction & Close button
+    Then Verify following errors are displayed near save button
+    |The Publisher Name field is required|
+    |The Name field is required|
+    |The Date Range field is required|
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue |              2 |
+    Then Verify that error disapear according to fields filled
+    |The Publisher Name field is required|
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Name           | Test      |                |
+    Then Verify that error disapear according to fields filled
+    |The Name field is required|
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Date Range     | Future    |                |
+    Then Verify that error disapear according to fields filled
+    |The Date Range field is required|
+     
+  Scenario: Verify that only one error is displayed for Date picker
+  Given admin user login to RX UI with valid username and password
+    When Click on Private Auctions option under Sales
+    And User displayed with Private Auctions page
+    And Click on the following create button
+      | CreateButtonName       |
+      | Create Private Auction |
+    And Click on Save Private Auction & Close button
+    Then Check only one error "The Date Range field is required" is present for date
+     And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue |              2 |
+     Then Check only one error "The Date Range field is required" is present for date
+     
+  Scenario: Verify that Activate Deactivate buttons are displayed at same time for Private Auction list page
+    Given admin user login to RX UI with valid username and password
+    When Click on Private Auctions option under Sales
+    And User displayed with Private Auctions page 
+    And Select one "Active" Private Auctions item
+    Then Verify that following buttons are present in Private Auctions list page
+    |Edit Private Auction|
+    |Deactivate Private Auction|
+    |Activate Private Auction|
+    When Click "Edit Private Auction" button in Private Auctions list page
+    Then Edit Private Auction pop up is present
+    And Enter the following data in the general card of private auction
+      | FieldName | Value       | ListValueIndex |
+      | Name      | TestUpdated |                |
+    Then Click on Save and wait for dialog to close
+    Then Verify the edited private auction data is matching with its overview list values
+    When Click "Activate Private Auction" button in Private Auctions list page
+    Then "Active" is displayed for the created private auctions
+    And Select one "Active" Private Auctions item
+    When Click "Deactivate Private Auction" button in Private Auctions list page
+    Then "Inactive" is displayed for the created private auctions
+    And Select 1 "Inactive" and 1 "Active" Private Auctions items
+    Then Verify that following buttons are present in Private Auctions list page
+    |Deactivate Private Auction|
+    |Activate Private Auction|
+    When Click "Deactivate Private Auction" button in Private Auctions list page
+    Then "Inactive" is displayed for the created private auctions
+     And Select 2 "Inactive" and 2 "Active" Private Auctions items
+    Then Verify that following buttons are present in Private Auctions list page
+    |Deactivate Private Auction|
+    |Activate Private Auction|
+    When Click "Deactivate Private Auction" button in Private Auctions list page
+    Then "Inactive" is displayed for the created private auctions
+    And Select 1 "Inactive" and 1 "Active" Private Auctions items
+    Then Verify that following buttons are present in Private Auctions list page
+    |Deactivate Private Auction|
+    |Activate Private Auction|
+    When Click "Activate Private Auction" button in Private Auctions list page
+    Then "Active" is displayed for the created private auctions
+    And Select one "Inactive" Private Auctions item
+    Then Verify that following buttons are present in Private Auctions list page
+    |Edit Private Auction|
+    |Deactivate Private Auction|
+    |Activate Private Auction|
+    When Click "Edit Private Auction" button in Private Auctions list page
+    Then Edit Private Auction pop up is present
+    And Enter the following data in the general card of private auction
+      | FieldName | Value       | ListValueIndex |
+      | Name      | TestUpdated |                |
+    Then Click on Save and wait for dialog to close
+    Then Verify the edited private auction data is matching with its overview list values
+    When Click "Deactivate Private Auction" button in Private Auctions list page
+    Then "Inactive" is displayed for the created private auctions
+    And Select one "Inactive" Private Auctions item
+     When Click "Activate Private Auction" button in Private Auctions list page
+    Then "Active" is displayed for the created private auctions
+    And Select 2 "Inactive" and 2 "Active" Private Auctions items
+    Then Verify that following buttons are present in Private Auctions list page
+    |Deactivate Private Auction|
+    |Activate Private Auction|
+    When Click "Activate Private Auction" button in Private Auctions list page
+    Then "Active" is displayed for the created private auctions
+     
+  Scenario: Verify that Publisher warning banned apears only if any forms were modified on Private Auctions page
+    Given admin user login to RX UI with valid username and password
+    When Click on Private Auctions option under Sales
+    And User displayed with Private Auctions page
+    And Click on the following create button
+      | CreateButtonName       |
+      | Create Private Auction |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue |              1 |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue |              2 |
+    Then Verify that warning banner is not under Publisher name
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Name           | Test      |                |
+      | Date Range     | Future    |                |
+    And "Disable" following toggle fields in create page
+      | FieldName |
+      | Active    |
+      | Optimize  |
+    And "Enable" following toggle fields in create page
+      | FieldName |
+      | Always on |
+    And Select targeting options items
+      | Inventory        | supply-chains and Sons Media |
+      | Device           | Phone                        |
+      | Operating System | Android                      |
+      | Geo              | Afghanistan                  |
+      | Ad Format        | Banner                       |
+      | Ad Size          | 120x60                       |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue |              1 |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+     And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Name           | Test      |                |
+       And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue |              2 |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Date Range     | Future    |                |
+     And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue |              3 |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+     And "Disable" following toggle fields in create page
+      | FieldName |
+      | Active    |
+      And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue |              4 |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+    And "Disable" following toggle fields in create page
+      | FieldName |
+      | Optimize  |
+     And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue |              5 |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+    And "Enable" following toggle fields in create page
+      | FieldName |
+      | Always on |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue |              2 |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+    And Select targeting options items
+      | Inventory        | supply-chains and Sons Media |
+     And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue |              3 |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+    And Select targeting options items
+      | Device           | Phone                        |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue |              4 |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+    And Select targeting options items
+      | Operating System | Android                      |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue |              5 |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+    And Select targeting options items
+      | Geo              | Afghanistan                  |
+      And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue |              3 |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+    And Select targeting options items
+      | Ad Format        | Banner                       |
+     And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue |              2 |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+    And Select targeting options items
+      | Ad Size          | 120x60                       |
+      And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue |              1 |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+     
+     Scenario: Verify that changing "Optimize" checkbox triggers dirty flag for Private Auctions
+     Given admin user login to RX UI with valid username and password
+    When Click on Private Auctions option under Sales
+    And User displayed with Private Auctions page
+    And Click on the following create button
+      | CreateButtonName       |
+      | Create Private Auction |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue |              1 |
+    And "Disable" following toggle fields in create page
+      | FieldName |
+      | Optimize  |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue |              2 |
+      Then Verify that warning banner is under Publisher name

@@ -4,6 +4,7 @@ import RXBaseClass.RXBaseClass;
 import RXUtitities.RXUtile;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
@@ -67,6 +68,9 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
     
     @FindBy(css = "#app > div.menuable__content__active > span")
     public WebElement detailsForInventory;
+    
+    @FindBy(xpath = "//label[contains(text(), 'Date Range')]/ancestor::div[@class = 'v-input__slot']/following-sibling::div//div[@class='v-messages__message']")
+    public WebElement dateMessage;
 
     public WebElement publisherNameSearchListItem(String publisherName) {
         return driver.findElement(By.xpath("//div[@class = 'v-list-item__title' and text() = '" + publisherName + "']"));
@@ -387,5 +391,69 @@ public void selectTargetingInventoryChildItem(String itemName) {
 
 	public void verify_that_Details_matched(WebElement e, Map<String, String> targeting) {
 		Assert.assertEquals(e.findElement(By.cssSelector("div.v-list")).getText(),targeting.get(e.findElement(By.cssSelector("div.header")).getText()).replace(",", "\n"));
+	}
+	
+	public WebElement errorNearSaveButton(String error) {
+		return driver.findElement(By.xpath("//div[@class='v-alert__wrapper']//li[contains(text() , '" + error + "')]"));
+	}
+
+	public void error_are_displayed_near_save_button(String error) {
+		Assert.assertTrue(errorNearSaveButton(error).isDisplayed(), error +" is not displayed near save button");
+	}
+
+	public void error_disapear_according_to_fields_filled(String error) {
+		Assert.assertFalse(IsElementPresent("//div[@class='v-alert__wrapper']//li[contains(text() , '" + error + "')]"), error +" is displayed near save button");
+	}
+	
+	private boolean IsElementPresent(String xpathString)
+    {
+        try
+        {
+        	driver.findElement(By.xpath(xpathString));
+            return true;
+        }
+        catch (NoSuchElementException e)
+        {
+            return false;
+        }
+    }
+	
+	public boolean IsElementPresent(WebElement element)
+    {
+        try
+        {
+        	element.isDisplayed();
+        	System.out.println(element.isDisplayed());
+            return true;
+        }
+        catch (NoSuchElementException e)
+        {
+            return false;
+        }
+    }
+
+	public WebElement privateAuctionsCheckBox(int k) {
+		return driver
+				.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+k+"]/td[1]"));
+	}
+
+	public WebElement toolbarButton(String e) {
+		return driver
+				.findElement(By.xpath("//span[contains(text() , '" + e + "')]/parent::button"));
+	}
+
+	public String adSpotName(int k) {
+		return driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+k+"]/td[4]/a"))
+				.getText();
+	}
+	
+	public String publisherName(int k) {
+		return driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+k+"]/td[5]"))
+				.getText();
+	}
+	
+	public WebElement privateAuctionsActive(int k) {
+		return driver
+				.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+k+"]/td[7]"));
 	}
 }

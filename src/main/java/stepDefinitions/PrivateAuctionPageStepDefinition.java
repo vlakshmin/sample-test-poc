@@ -21,6 +21,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 	String enteredAuctionName;
 	String enteredAuctionPackages;
 	String enteredAuctionDates;
+	List<String> enteredAuctionNameList = new ArrayList<String>();;
 
 	public PrivateAuctionPageStepDefinition() {
 		super();
@@ -260,8 +262,8 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 			String fieldName = list.get(i).get("FieldName");
 			String isEnabled = auctionPage.toggleFieldIsEnabledForCreatePage(fieldName);
 					
-							
-					
+				
+			
 			if (enable.equalsIgnoreCase("Enable") && isEnabled.equals("false")) {
 				
 				auctionPage.toggleField(fieldName)
@@ -271,7 +273,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 						auctionPage.toggleField(fieldName)
 						.click();
 			}
-
+			
 		}
 	}
 
@@ -347,7 +349,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 
 			String enteredName = enteredAuctionName.replaceAll("\\s", "");
 			List<WebElement> listOfNames = driver
-					.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[3]/a"));
+					.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[4]/a"));
 			for (int k = 0; k < listOfNames.size(); k++) {
 				String reqName = listOfNames.get(k).getText().replaceAll("\\s", "");
 
@@ -491,4 +493,121 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 	   }
 	   Assert.assertEquals(isDisabled, "true");
 	}
+	
+	@Then("^Verify following errors are displayed near save button$")
+	public void verify_following_errors_are_displayed_near_save_button(DataTable dt) {
+		List<String> data = dt.asList(String.class);
+		data.forEach(e -> auctionPage.error_are_displayed_near_save_button(e));
+	}
+
+	@Then("^Verify that error disapear according to fields filled$")
+	public void verify_that_error_disapear_according_to_fields_filled(DataTable dt) {
+		List<String> data = dt.asList(String.class);
+		data.forEach(e -> auctionPage.error_disapear_according_to_fields_filled(e));
+	}
+	
+	@Then("^Check only one error \"([^\"]*)\" is present for date$")
+	public void check_only_one_error_is_present_for_date(String error) {
+		Assert.assertEquals(auctionPage.dateMessage.getText(),error);
+	}
+	
+	@Then("^Verify that warning banner is not under Publisher name$")
+	public void verify_that_warning_banner_is_not_under_Publisher_name()  {
+		Assert.assertFalse(auctionPage.warningBannerUnderPublishername.isDisplayed());
+	}
+
+	@Then("^Select one \"([^\"]*)\" Private Auctions item$")
+	public void select_one_Private_Auctions_item(String active) {
+		enteredAuctionNameList.clear();
+		List<WebElement> listActives = driver.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[7]"));
+		for (int k = 0; k < listActives.size(); k++) {
+				String reqActive = listActives.get(k).getText().replaceAll("\\s", "");
+				if (active.equals(reqActive)) {
+					auctionPage.privateAuctionsCheckBox(k+1).click();
+					enteredAuctionNameList.add(auctionPage.adSpotName(k+1));
+					break;
+				}
+		}
+	}
+	
+	@Then("^Verify the edited private auction data is matching with its overview list values$")
+	public void verify_the_edited_private_auction_data_is_matching_with_its_overview_list_values() throws Throwable {
+		String adSpotName = "";
+		String entergedName = enteredAuctionName.replaceAll("\\s", "");
+		List<WebElement> listActives = driver
+				.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[4]/a"));
+		for (int k = 0; k < listActives.size(); k++) {
+			adSpotName = listActives.get(k).getText().replaceAll("\\s", "");
+			if (entergedName.equals(adSpotName)) {
+				break;
+			}
+		}
+		Assert.assertEquals(adSpotName, entergedName);
+		
+	}
+
+	@Then("^Verify that following buttons are present in Private Auctions list page$")
+	public void verify_that_following_buttons_are_present_in_Private_Auctions_list_page(DataTable dt) {
+		List<String> buttons = dt.asList(String.class);
+		buttons.forEach(e -> Assert.assertTrue(auctionPage.toolbarButton(e).isDisplayed(), e + " is not present."));
+	}
+
+	@When("^Click \"([^\"]*)\" button in Private Auctions list page$")
+	public void click_button_in_Private_Auctions_list_page(String buttonName) {
+		auctionPage.toolbarButton(buttonName).click();
+		if(!buttonName.equals("Edit Private Auction")) {
+			WebDriverWait wait = new WebDriverWait(driver, 30);
+			wait.until(ExpectedConditions.invisibilityOf(auctionPage.toolbarButton(buttonName)));
+		}
+	}
+
+	@Then("^Edit Private Auction pop up is present$")
+	public void edit_Private_Auction_pop_up_is_present() {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(
+				By.xpath("//aside[@class='dialog']/header//div[contains(text(),'" + enteredAuctionNameList.get(0) + "')]"))));
+	}
+	
+	@Then("^\"([^\"]*)\" is displayed for the created private auctions$")
+	public void is_displayed_for_the_created_private_auction(String arg1) {
+		List<WebElement> listOfNames = driver
+				.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[4]/a"));
+		for(int i=0;i<enteredAuctionNameList.size();i++) {
+			for (int k = 0; k < listOfNames.size(); k++) {
+				String reqName = listOfNames.get(k).getText().replaceAll("\\s", "");
+				if (enteredAuctionNameList.get(i).equals(reqName)) {
+					Assert.assertEquals(auctionPage.privateAuctionsActive(k+1).getText(), arg1, auctionPage.privateAuctionsActive(k+1).getText() +" is displayed for the created private auction");;
+					break;
+				}
+			}
+		}
+		
+	}
+	
+	@Then("^Select (\\d+) \"([^\"]*)\" and (\\d+) \"([^\"]*)\" Private Auctions items$")
+	public void select_and_Private_Auctions_items(int num1, String inactive, int num3, String active) throws Throwable {
+		enteredAuctionNameList.clear();
+		List<WebElement> listActives = driver.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[7]"));
+		for (int k = 0; k < listActives.size(); k++) {
+				String reqActive = listActives.get(k).getText().replaceAll("\\s", "");
+				if (active.equals(reqActive) && num3 > 0) {
+					auctionPage.privateAuctionsCheckBox(k+1).click();
+					enteredAuctionNameList.add(auctionPage.adSpotName(k+1));
+					num3--;
+				}
+				if(inactive.equals(reqActive) && num1 > 0) {
+					auctionPage.privateAuctionsCheckBox(k+1).click();
+					System.out.println(auctionPage.adSpotName(k+1));
+					enteredAuctionNameList.add(auctionPage.adSpotName(k+1));
+					num1--;
+				}
+				if(num1 == 0 && num3 == 0) {
+					break;
+				}
+		}
+		Assert.assertEquals(num1,0,num1 +" Inactive Private Auctions is not selected.");
+		Assert.assertEquals(num3,0,num3 +" Active Private Auctions is not selected.");
+	}
+
 }
