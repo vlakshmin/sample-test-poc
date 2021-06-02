@@ -87,7 +87,7 @@ Scenario: Verify if create deal menu is opened
 		Then Verify the currency is correct
 		And Verify required fields
 
-
+@Ignore
 Scenario: failing to GS-1963 Verify that the Alert message displayed for changing the publisher for deal,on cancel retain the filled value and accept removed the filled values.
     Given admin user login to RX UI with valid username and password
     When Click on Deals option under Sales

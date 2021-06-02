@@ -822,9 +822,10 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					Thread.sleep(2000);
 					enteredMinVideoDuration = adspotsPage.minVideoDurField.getText();
 					if(!enteredMinVideoDuration.toLowerCase().equals("no limit")){
-						enteredMinVideoDuration += " seconds";
-					}
+						adSpotTypeEnteredValues.put("Video Min Duration", enteredMinVideoDuration + " seconds");
+					} else {
 					adSpotTypeEnteredValues.put("Video Min Duration", enteredMinVideoDuration);
+					}
 					System.out.println("Miniumum Video Duration entered as :" + enteredMinVideoDuration);
 				}
 				break;
@@ -844,9 +845,10 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					Thread.sleep(2000);
 					enteredMaxVideoDuration = adspotsPage.maxVideoDurField.getText();
 					if(!enteredMaxVideoDuration.toLowerCase().equals("no limit")){
-						enteredMaxVideoDuration += " seconds";
+						adSpotTypeEnteredValues.put("Video Max Duration", enteredMaxVideoDuration + " seconds");
+					} else {
+						adSpotTypeEnteredValues.put("Video Max Duration", enteredMaxVideoDuration);
 					}
-					adSpotTypeEnteredValues.put("Video Max Duration", enteredMaxVideoDuration);
 					System.out.println("Maximum Video Duration entered as :" + enteredMaxVideoDuration);
 				}
 				break;
@@ -1072,6 +1074,8 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				if(adspotsPage.bannerPriceField.getAttribute("value").isEmpty()) {
 					Assert.assertEquals(adspotsPage.bannerPriceField.getAttribute("placeholder"), "");
 				}else {
+					adspotsPage.bannerPriceField.click();
+					adspotsPage.adSpotNameHeader.click();
 				Assert.assertEquals(adspotsPage.bannerPriceField.getAttribute("value"), enteredBannerPrice);
 				}
 				Assert.assertEquals(adspotsPage.bannerPriceCurrency.getText(), bannerPriceCurrency);
@@ -1098,6 +1102,8 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					adspotsPage.nativePriceField.click();
 					Assert.assertEquals(adspotsPage.nativePriceField.getAttribute("placeholder"), enteredNativePrice);
 				}else {
+					adspotsPage.nativePriceField.click();
+					adspotsPage.adSpotNameHeader.click();
 					Assert.assertEquals(adspotsPage.nativePriceField.getAttribute("value"), enteredNativePrice);
 				}
 
@@ -1148,7 +1154,9 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					Assert.assertEquals(adspotsPage.inBannerVideoPriceField.getAttribute("placeholder"),
 							"");
 				}else {
-				Assert.assertEquals(adspotsPage.inBannerVideoPriceField.getAttribute("value"),
+					adspotsPage.inBannerVideoPriceField.click();
+					adspotsPage.adSpotNameHeader.click();
+					Assert.assertEquals(adspotsPage.inBannerVideoPriceField.getAttribute("value"),
 						enteredInBannerVideoPrice);
 				}
 				Assert.assertEquals(adspotsPage.inBannerVideoPriceCurrency.getText(), inBannerVideoPriceCurrency);
