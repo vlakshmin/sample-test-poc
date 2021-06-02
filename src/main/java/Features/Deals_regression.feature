@@ -706,7 +706,6 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		And copy the deal ID
 		And search the deal ID
 		And Hover over deal details button
-		And Get deal details data
 		Then Verify deal details data is correct
 
 	Scenario: Verify that long values in Buyers card autofill are truncated

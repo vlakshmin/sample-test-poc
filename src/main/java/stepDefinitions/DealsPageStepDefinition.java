@@ -127,11 +127,11 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	public void hoverOverDealButton() {
 		driver.navigate().refresh();
 		dealsPage.hoverOverDetailsButton();
-		detailsData = dealsPage.getDetailsData();
+		detailsData = dealsPage.getDealsDetailsData();
 	}
 	@When("^Get deal details data$")
 	public void getDealDetailsData() {
-		detailsData = dealsPage.getDetailsData();
+		detailsData = dealsPage.getDealsDetailsData();
 	}
 	@Then("^Verify deal details data is correct$")
 	public void verifyDetailsData() {

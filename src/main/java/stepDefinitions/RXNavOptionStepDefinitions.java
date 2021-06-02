@@ -163,8 +163,6 @@ public class RXNavOptionStepDefinitions extends RXBasePage {
 				+ "//div[@class='v-list-item__title' and text()='"+noOfRowsPerPage+"']")).click();
 		//Thread.sleep(5000);
 		waitForPageLoaderToDisappear();
-		// move this to upper class later
-		driverWait().until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@class='v-progress-linear__buffer']")));
 		if(rxNavOpt.tableRowsCount.size()<Integer.parseInt(noOfRowsPerPage)) {
 			js.executeScript("arguments[0].scrollIntoView()", rxNavOpt.nextPageNavButton);
 			Assert.assertTrue((boolean) js.executeScript("return arguments[0].hasAttribute(\"disabled\");", rxNavOpt.nextPageNavButton));

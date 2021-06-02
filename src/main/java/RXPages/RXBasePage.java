@@ -2,9 +2,13 @@ package RXPages;
 
 import RXBaseClass.RXBaseClass;
 import cucumber.api.DataTable;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -21,6 +25,10 @@ public class RXBasePage extends RXBaseClass {
     public WebElement tableLoaderBar;
     @FindAll({@FindBy(xpath = "//div[contains(@role,'listbox') and contains(@class,'v-list')]/div")})
     public List<WebElement> dropdownValues;
+    @FindBy(xpath = "//tr//td//button[contains(@class,'v-btn--round')]")
+    private WebElement detailsButton;
+    @FindBy(xpath = "//div[contains(@class,'detailsList')]/ancestor::div[contains(@class, 'menu-wrapper')]")
+    private WebElement detailsCard;
 
     public void createButtonClick(String buttonName, String headerName) throws InterruptedException {
         driver.findElement(By.xpath("//button/span[text()='" + buttonName + "']")).click();
@@ -55,6 +63,33 @@ public class RXBasePage extends RXBaseClass {
     }
 
     public void waitForPageLoaderToDisappear() {
-        driverWait().until(ExpectedConditions.numberOfElementsToBe(By.className("v-progress-linear__buffer"), 0));
+//        driverWait().until(ExpectedConditions.numberOfElementsToBe(By.className("v-progress-linear__buffer"), 0));
+        driverWait().until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@class='v-progress-linear__buffer']")));
+    }
+
+    public void hoverOverDetailsButton() {
+        driverWait().until(ExpectedConditions.visibilityOf(detailsButton));
+        new Actions(driver).moveToElement(detailsButton).build().perform();
+        driverWait().until(ExpectedConditions.attributeToBe(detailsButton, "aria-expanded","true"));
+    }
+
+    public LinkedHashMap<String,String> getDetailsData() {
+        LinkedHashMap<String,String> result;
+        result = detailsCard.findElements(By.xpath("//div[@class='header']")).stream()
+            .collect(Collectors.toMap(WebElement::getText, e -> {
+                WebElement element = e.findElement(By.xpath("./..//span"));
+                driverWait().until(ExpectedConditions.elementToBeClickable(element));
+                return e.findElement(By.xpath("./..//span")).getText();
+            }, (e1, e2) -> e1, LinkedHashMap::new));
+        System.out.println(result);
+        return result;
+    }
+
+    public boolean areEqual(Map<String, String> first, Map<String, String> second) {
+        if (first.size() != second.size()) {
+            return false;
+        }
+        return first.entrySet().stream()
+            .allMatch(e -> e.getValue().toLowerCase().equals(second.get(e.getKey()).toLowerCase()));
     }
 }

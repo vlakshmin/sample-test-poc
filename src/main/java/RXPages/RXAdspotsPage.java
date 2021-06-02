@@ -1,6 +1,8 @@
 package RXPages;
 
 import RXUtitities.RXUtile;
+import java.util.HashMap;
+import java.util.Map;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
@@ -16,6 +18,7 @@ public class RXAdspotsPage extends RXBasePage {
 	RXUtile rxUTL;
 	PublisherListPage pubPage;
 	public String adspotsHeaderStr = "Ad Spots";
+	public static Map<String,String> adSpotTypeEnteredValues = new HashMap<>();
 
 	// Seats page heading
 	@FindBy(xpath = "//h1[text()='Ad Spots']")
@@ -27,7 +30,7 @@ public class RXAdspotsPage extends RXBasePage {
 	@FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr[1]/td"))
 	public List<WebElement> adspotsTableColumns;
 	@FindBy(xpath = "//*[@class='v-text-field__slot']/input")
-	WebElement adSpotsSearchField;
+	public WebElement adSpotsSearchField;
 
 	// overview buttons
 	@FindBy(xpath = "//button/span[text()='Create Ad Spot']")
@@ -63,7 +66,7 @@ public class RXAdspotsPage extends RXBasePage {
 	public WebElement adSpotCloseSideDialog;
 	@FindBy(xpath = "//form/div[5]//label[text()='Ad Sizes']/following-sibling::div[@class='v-select__selections']/input")
 	public WebElement adSizeInput;
-	
+
 	@FindBy(xpath = "//label[text()='Related Media']/following-sibling::div[@class='v-select__selections']")
 	public WebElement relatedMediaDropDown;
 	@FindBy(xpath = "//label[text()='Related Media']/following-sibling::div[@class='v-select__selections']/div")
@@ -201,8 +204,8 @@ public class RXAdspotsPage extends RXBasePage {
 			overviewSecondButton.click();
 		}
 	}
-	
-	
+
+
 	public void clickOverViewMultipleEnablebuttons() {
 		driverWait().until(ExpectedConditions.visibilityOf(overviewMultipleEnableButton));
 		if (overviewMultipleEnableButton.isDisplayed()) {
@@ -221,4 +224,23 @@ public class RXAdspotsPage extends RXBasePage {
 		driverWait().until(ExpectedConditions.visibilityOf(createPageHeader));
 	}
 
+	public static Map<String,String> getAdSpotTypeEnteredValues() {
+		return adSpotTypeEnteredValues;
+	}
+
+	public String getCurrencyCode(String value) {
+		switch (value) {
+			case "JPY:":
+				return " ¥";
+			case "USD:":
+				return " $";
+			case "EUR:":
+				return " €";
+			case "RUB:":
+				return " ₽";
+			default:
+				break;
+		}
+		return "";
+	}
 }

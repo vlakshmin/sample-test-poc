@@ -99,8 +99,6 @@ public class RXDealsPage extends RXBasePage {
 	public WebElement value;
 	
 	//Deals buyers details
-	@FindBy(xpath = "//tr//td//button[contains(@class,'v-btn--round')]")
-	private WebElement detailsButton;
 	@FindBy(xpath = "//div[contains(@class,'v-list-item__content')]//span[contains(@class,'mb-4')]//following-sibling::span")
 	private WebElement detailsCard;
 	@FindBy(xpath = "//span[@class='v-btn__content' and contains(.,'Add More Seats')]/parent::button" )
@@ -236,13 +234,7 @@ public class RXDealsPage extends RXBasePage {
 		return 	field;
 	}
 
-	public void hoverOverDetailsButton() {
-		wait.until(ExpectedConditions.visibilityOf(detailsButton));
-		new Actions(driver).moveToElement(detailsButton).build().perform();
-		wait.until(ExpectedConditions.attributeToBe(detailsButton, "aria-expanded","true"));
-	}
-
-	public LinkedHashMap<String,String> getDetailsData() {
+	public LinkedHashMap<String,String> getDealsDetailsData() {
 		return detailsCard.findElements(By.xpath("//span[@class='bigger-label']")).stream()
 					.collect(Collectors.toMap(WebElement::getText, e -> {
 						WebElement element = e.findElement(By.xpath("./../p"));

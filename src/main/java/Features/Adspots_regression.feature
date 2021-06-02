@@ -766,7 +766,108 @@ Feature: Adspots page regression
       | Video Placement Type   |
 
 
-  Scenario: Verify pop-up Banner/Native/Video enabled/disabled
+  Scenario: 1.5.6.Verify pop-up Banner/Native/Video enabled/disabled and modify
+    Given admin user login to RX UI with valid username and password
+    When Click on Adspots option under Inventory
+    And User displayed with Adspots page
+    When Click on the Adspot create button
+    Then Enter the following data in the general card of adspot
+      | FieldName           | Value     | ListValueIndex |
+      | Publisher Name      | Viber     |                |
+      | Ad Spot Name        | Auto_Test |                |
+      | Related Media       | ListValue | 1              |
+      | Categories          | ListValue | 2              |
+      | Position            | ListValue | 2              |
+      | Filter              | ListValue | 1              |
+      | Default Ad Sizes    | ListValue | 2              |
+      | Default Floor Price | 10        |                |
+    Then "Disable" the banner card
+    And "Disable" the native card
+    And "Disable" the in-banner video card
+    And Click on save button and wait for dialog to close
+    And Hover over adspot details button
+    Then Verify adspot details data is correct
+    When Click on the created adspotname in the overview page
+    And "Enable" the banner card
+    And "Enable" the native card
+    And "Enable" the in-banner video card
+    And "Expand" the in-banner video card
+    Then Enter the following data in the in-banner video card of adspot
+      | FieldName              | Value     | ListValueIndex |
+      | Video Placement Type   | ListValue | 1              |
+      | Ad Sizes               | ListValue | 2              |
+      | Minimum Video Duration | ListValue | 1              |
+      | Maximum Video Duration | ListValue | 1              |
+      | Playback Methods       | ListValue | 1              |
+    And Click on save button and wait for dialog to close
+    And Hover over adspot details button
+    Then Verify adspot details data is correct
+
+
+  Scenario: 2.3.4.Verify adspot pop-up floor prices/ad sizes/video playback method and duration
+    Given admin user login to RX UI with valid username and password
+    When Click on Adspots option under Inventory
+    And User displayed with Adspots page
+    When Click on the Adspot create button
+    Then Enter the following data in the general card of adspot
+      | FieldName           | Value     | ListValueIndex |
+      | Publisher Name      | Viber     |                |
+      | Ad Spot Name        | Auto_Test |                |
+      | Related Media       | ListValue | 1              |
+      | Categories          | ListValue | 2              |
+      | Position            | ListValue | 2              |
+      | Filter              | ListValue | 1              |
+      | Default Ad Sizes    | ListValue | 2              |
+      | Default Floor Price | 10        |                |
+    And "Enable" the banner card
+    And "Expand" the banner card
+    And Enter the following data in the banner card of adspot
+      | FieldName   | Value     | ListValueIndex |
+      | Ad Sizes    | ListValue | 2              |
+      | Floor Price | 3         |                |
+    And "Enable" the native card
+    And "Expand" the native card
+    And Enter the following data in the native card of adspot
+      | FieldName   | Value |
+      | Floor Price | 6     |
+    And "Enable" the in-banner video card
+    And "Expand" the in-banner video card
+    Then Enter the following data in the in-banner video card of adspot
+      | FieldName              | Value     | ListValueIndex |
+      | Video Placement Type   | ListValue | 1              |
+      | Floor Price            | 2         |                |
+      | Ad Sizes               | ListValue | 2              |
+      | Minimum Video Duration | ListValue | 1              |
+      | Maximum Video Duration | ListValue | 1              |
+      | Playback Methods       | ListValue | 1              |
+    And Click on save button and wait for dialog to close
+    And Hover over adspot details button
+    Then Verify adspot details data is correct
+
+  Scenario: 58.61.Verily that disabled items are displayed as "Inactive"
+    Given admin user login to RX UI with valid username and password
+    When Click on Adspots option under Inventory
+    And User displayed with Adspots page
+    When Click on the Adspot create button
+    Then Enter the following data in the general card of adspot
+      | FieldName           | Value     | ListValueIndex |
+      | Publisher Name      | Viber     |                |
+      | Ad Spot Name        | Auto_Test |                |
+      | Related Media       | ListValue | 1              |
+      | Categories          | ListValue | 2              |
+      | Position            | ListValue | 2              |
+      | Filter              | ListValue | 1              |
+      | Default Ad Sizes    | ListValue | 2              |
+      | Default Floor Price | 10        |                |
+    Then "Disable" the banner card
+    And "Disable" the native card
+    And "Disable" the in-banner video card
+    And Click on save button and wait for dialog to close
+    And Hover over adspot details button
+    Then Verify adspot details data is correct
+
+  Scenario: 59.60.Verily that intems with out Floor price and Ad size display "Same as default" and
+  Min and Max Duration has int value with "seconds"
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
@@ -789,16 +890,9 @@ Feature: Adspots page regression
       | FieldName              | Value     | ListValueIndex |
       | Video Placement Type   | ListValue | 1              |
       | Ad Sizes               | ListValue | 2              |
-      | Minimum Video Duration | ListValue | 1              |
-      | Maximum Video Duration | ListValue | 1              |
+      | Minimum Video Duration | ListValue | 2              |
+      | Maximum Video Duration | ListValue | 2              |
       | Playback Methods       | ListValue | 1              |
     And Click on save button and wait for dialog to close
-
-    When Click on the created adspotname in the overview page
-    And Verify the banner card is "Enabled"
-    And Verify the native card is "Enabled"
-    And Verify the in-banner video card is "Enabled"
-    Then "Disable" the banner card
-    And "Disable" the native card
-    And "Disable" the in-banner video card
-    And Click on save button and wait for dialog to close
+    And Hover over adspot details button
+    Then Verify adspot details data is correct
