@@ -668,7 +668,7 @@ Feature: Adspots page regression
       | Playback Methods       |
       | Video Placement Type   |
 
-  
+  @Ignore
   Scenario: Verify successful creation and updation of an adspot for a default size along with 1*1 and in editing check with default size as 1*1 alone and a size alone
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
