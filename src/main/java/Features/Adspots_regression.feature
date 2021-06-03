@@ -287,7 +287,7 @@ Feature: Adspots page regression
       | Maximum Video Duration |
       | Playback Methods       |
       | Video Placement Type   |
-	
+
 	#Editing flow
     When Enter the following data in the general card of adspot
       | FieldName           | Value          | ListValueIndex |
@@ -379,7 +379,7 @@ Feature: Adspots page regression
       | Related Media       |
       | Default Ad Sizes    |
       | Default Floor Price |
-	
+
 	#Editing flow
     When Enter the following data in the general card of adspot
       | FieldName | Value  | ListValueIndex |
@@ -614,7 +614,7 @@ Feature: Adspots page regression
     Then Verify the following columns value with the created data for the native card of adspot
       | FieldName   |
       | Floor Price |
-	
+
 	#Editing flow
 
     And "Enable" the banner card
@@ -810,7 +810,7 @@ Feature: Adspots page regression
     And Hover over adspot details button
     Then Verify adspot details data is correct
 
-
+  @Ignore
   Scenario: 2.3.4.Verify adspot pop-up floor prices/ad sizes/video playback method and duration
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
@@ -873,7 +873,7 @@ Feature: Adspots page regression
     And Hover over adspot details button
     Then Verify adspot details data is correct
 
-
+  @Ignore
   Scenario: 59.60.Verily that intems with out Floor price and Ad size display "Same as default" and
   Min and Max Duration has int value with "seconds"
     Given admin user login to RX UI with valid username and password

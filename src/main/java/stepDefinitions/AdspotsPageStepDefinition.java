@@ -80,7 +80,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.adspotsUndrInventory));
 		navOptions.adspotsUndrInventory.click();
-
+		adSpotTypeEnteredValues.clear();
 	}
 
 	@When("^Click on Adspots sub menu$")
