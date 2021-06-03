@@ -3,8 +3,11 @@ package RXPages;
 import RXBaseClass.RXBaseClass;
 import RXUtitities.RXUtile;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -15,6 +18,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class RXPrivateAuctionsPage extends RXBaseClass {
@@ -55,6 +59,18 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
     public WebElement privateAuctionNameInput;
     @FindBy(xpath = "//span[text() = 'Create Private Auction']/ancestor::button")
     public WebElement createPrivateAuctionButton;
+    
+    @FindBy(xpath = "//aside[@class='dialog']//div[@class='v-banner banner v-sheet theme--light rounded-0 v-banner--has-icon']")
+    public WebElement warningBannerUnderPublishername;
+    
+    @FindAll(@FindBy(css = "#app > div.menuable__content__active > span"))
+    public List<WebElement> details;
+    
+    @FindBy(css = "#app > div.menuable__content__active > span")
+    public WebElement detailsForInventory;
+    
+    @FindBy(xpath = "//label[contains(text(), 'Date Range')]/ancestor::div[@class = 'v-input__slot']/following-sibling::div//div[@class='v-messages__message']")
+    public WebElement dateMessage;
 
     public WebElement publisherNameSearchListItem(String publisherName) {
         return driver.findElement(By.xpath("//div[@class = 'v-list-item__title' and text() = '" + publisherName + "']"));
@@ -131,6 +147,31 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
                 "']/ancestor::button[contains(@class, 'v-expansion-panel-header flex')]/ancestor::" +
                 "div[contains(@class, 'v-expansion-panel--active')]//table[@class = 'included-table fixed']//td[text()]"));
     }
+    
+    public String mandatorFieldIsDisabledForCreatePage(String fieldName) {
+    	return driver
+				.findElement(By.xpath("//aside[@class='dialog']//label[text()='" + fieldName + "']"))
+				.getAttribute("class");
+    }
+    
+    public String toggleFieldIsEnabledForCreatePage(String fieldName) {
+    	return driver
+				.findElement(
+						By.xpath("//aside[@class='dialog']//label[text()='" + fieldName + "']/parent::div//input"))
+				.getAttribute("aria-checked");
+    }
+    
+    public String targetingFieldIsDisabledForCreatePage(String fieldName) {
+    	return driver
+				.findElement(
+						By.xpath("//h3[text() = '" + fieldName +"']/parent::button/parent::div//table/parent::div"))
+				.getAttribute("class");
+    }
+    
+    public WebElement toggleField(String fieldName) {
+    	return driver.findElement(
+				By.xpath("//aside[@class='dialog']//label[text()='" + fieldName + "']/parent::div/div"));
+    }
 
     // Action object
     Actions act = new Actions(driver);
@@ -205,9 +246,11 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
     }
 
     public void selectTargetingBlockListItem(String itemName) {
-        targetingBlockListItem(itemName).click();
+    	JavascriptExecutor js = (JavascriptExecutor) driver;
+    	js.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[@class= 'options selectable']")));
+    	wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[@class= 'options selectable included']"))));    	
     }
-
+    
     public void clickTargetingBlockIncludedListItemClear(String itemName) {
         targetingBlockIncludedListItemClear(itemName).click();
     }
@@ -306,4 +349,117 @@ public class RXPrivateAuctionsPage extends RXBaseClass {
         dateRangeContainer.click();
         driverWait().until(ExpectedConditions.visibilityOf(dashboardPage.previousMonthBtn));
     }
+    
+    public void selectForBlock(String targetingName, String itemName) {
+    	//Check if panel is expanded,expand it if not
+    	if(!targetingExpandPanel(targetingName.replace(" Child", "")).getAttribute("class").contains("active")) {
+    		targetingExpandPanel(targetingName.replace(" Child", "")).click();
+    	}
+    	
+        if(targetingName.equals("Inventory")) {
+        	 driverWait().until(ExpectedConditions.visibilityOf(targetingBlockListItem(itemName)));
+        	selectTargetingInventoryItem(itemName);
+        	driverWait().until(ExpectedConditions.visibilityOf(targetingBlockIncludedListItem(itemName)));
+            Assert.assertTrue(targetingBlockIncludedListItem(itemName).isDisplayed());
+        }else if(targetingName.equals("Inventory Child")){
+        	 driverWait().until(ExpectedConditions.visibilityOf(targetingBlockListItem(itemName.split(">")[0].trim())));
+        	selectTargetingInventoryChildItem(itemName);
+        	driverWait().until(ExpectedConditions.visibilityOf(targetingBlockIncludedListItem(itemName.split(">")[1].trim())));
+            Assert.assertTrue(targetingBlockIncludedListItem(itemName.split(">")[1].trim()).isDisplayed());
+        }else {
+        	 driverWait().until(ExpectedConditions.visibilityOf(targetingBlockListItem(itemName)));
+        	selectTargetingBlockListItem(itemName);
+        	driverWait().until(ExpectedConditions.visibilityOf(targetingBlockIncludedListItem(itemName)));
+            Assert.assertTrue(targetingBlockIncludedListItem(itemName).isDisplayed());
+        }
+		
+    }
+
+public void selectTargetingInventoryChildItem(String itemName) {
+	targetingBlockListItem(itemName.split(">")[0].trim()).click();
+	 driverWait().until(ExpectedConditions.visibilityOf(inventary_child_items_displayed(itemName.split(">")[1].trim())));
+	 inventary_child_items_displayed(itemName.split(">")[1].trim()).click();
+	}
+
+	public void selectTargetingInventoryItem(String itemName) {
+			driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[4]")).click();
+	}
+
+	public WebElement inventary_child_items_displayed(String child_itemName) {
+		return driver.findElement(By.xpath("//div[contains(text() , '" + child_itemName + "')]/ancestor::tbody/tr[2]/td[4]"));
+	}
+
+	public void verify_that_Details_matched(WebElement e, Map<String, String> targeting) {
+		Assert.assertEquals(e.findElement(By.cssSelector("div.v-list")).getText(),targeting.get(e.findElement(By.cssSelector("div.header")).getText()).replace(",", "\n"));
+	}
+	
+	public WebElement errorNearSaveButton(String error) {
+		return driver.findElement(By.xpath("//div[@class='v-alert__wrapper']//li[contains(text() , '" + error + "')]"));
+	}
+
+	public void error_are_displayed_near_save_button(String error) {
+		Assert.assertTrue(errorNearSaveButton(error).isDisplayed(), error +" is not displayed near save button");
+	}
+
+	public void error_disapear_according_to_fields_filled(String error) {
+		Assert.assertFalse(IsElementPresent("//div[@class='v-alert__wrapper']//li[contains(text() , '" + error + "')]"), error +" is displayed near save button");
+	}
+	
+	private boolean IsElementPresent(String xpathString)
+    {
+        try
+        {
+        	driver.findElement(By.xpath(xpathString));
+            return true;
+        }
+        catch (NoSuchElementException e)
+        {
+            return false;
+        }
+    }
+	
+	public boolean IsElementPresent(WebElement element)
+    {
+        try
+        {
+        	element.isDisplayed();
+        	System.out.println(element.isDisplayed());
+            return true;
+        }
+        catch (NoSuchElementException e)
+        {
+            return false;
+        }
+    }
+
+	public WebElement privateAuctionsCheckBox(int k) {
+		return driver
+				.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+k+"]/td[1]"));
+	}
+
+	public WebElement toolbarButton(String e) {
+		return driver
+				.findElement(By.xpath("//span[contains(text() , '" + e + "')]/parent::button"));
+	}
+
+	public String adSpotName(int k) {
+		return driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+k+"]/td[4]/a"))
+				.getText();
+	}
+	
+	public String publisherName(int k) {
+		return driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+k+"]/td[5]"))
+				.getText();
+	}
+	
+	public WebElement privateAuctionsActive(int k) {
+		return driver
+				.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+k+"]/td[7]"));
+	}
+
+	public WebElement targetingExpandPanelContent(String fieldName) {
+		return driver
+				.findElement(
+						By.xpath("//h3[text() = '" + fieldName +"']/parent::button/parent::div/div[@class='v-expansion-panel-content']"));
+	}
 }
