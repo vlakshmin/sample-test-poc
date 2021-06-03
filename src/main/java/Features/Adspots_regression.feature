@@ -668,7 +668,7 @@ Feature: Adspots page regression
       | Playback Methods       |
       | Video Placement Type   |
 
-  @Ignore
+  
   Scenario: Verify successful creation and updation of an adspot for a default size along with 1*1 and in editing check with default size as 1*1 alone and a size alone
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
@@ -772,7 +772,7 @@ Feature: Adspots page regression
       | Playback Methods       |
       | Video Placement Type   |
 
-  @Ignore
+
   Scenario: 1.5.6.Verify pop-up Banner/Native/Video enabled/disabled and modify
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
@@ -810,7 +810,7 @@ Feature: Adspots page regression
     And Hover over adspot details button
     Then Verify adspot details data is correct
 
-  @Ignore
+
   Scenario: 2.3.4.Verify adspot pop-up floor prices/ad sizes/video playback method and duration
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
@@ -873,7 +873,7 @@ Feature: Adspots page regression
     And Hover over adspot details button
     Then Verify adspot details data is correct
 
-  @Ignore
+
   Scenario: 59.60.Verily that intems with out Floor price and Ad size display "Same as default" and
   Min and Max Duration has int value with "seconds"
     Given admin user login to RX UI with valid username and password
