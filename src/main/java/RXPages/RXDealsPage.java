@@ -1,5 +1,6 @@
 package RXPages;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -9,6 +10,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.*;
 import org.openqa.selenium.support.ui.*;
+import org.openqa.selenium.NoSuchElementException;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
@@ -67,9 +69,9 @@ public class RXDealsPage extends RXBasePage {
 
 	@FindBy(xpath = "//label[text()='Publisher Name']/following-sibling::div[@class='v-select__selections']/div")
 	public WebElement publisherNamesEntered;
-	@FindBy(xpath = "//label[text()='Private Auction']/following-sibling::div[@class='v-select__selections']") 
+	@FindBy(xpath = "//label[text()='Private Auction']/following-sibling::div[@class='v-input__append-inner']/div")
 	public WebElement privateAuctionDropDown;
-	@FindBy(xpath = "//label[text()='Private Auction']/following-sibling::div[@class='v-select__selections']/div") 
+	@FindBy(xpath = "//label[text()='Private Auction']/following-sibling::div[@class='v-select__selections']/div")
 	public WebElement privateActionFieldValue;
 	@FindBy(xpath = "//label[text()='Name']/following-sibling::input") 
 	public WebElement dealName;
@@ -83,7 +85,9 @@ public class RXDealsPage extends RXBasePage {
 	 */
 	@FindBy(xpath = "//label[text()='Date Range']/following-sibling::input" ) 
 	public WebElement dateRange;
-	@FindBy(xpath = "//aside[@class='dialog']//div[@class='v-toolbar__title']/div" ) 
+	@FindBy(xpath = "//label[text()='Date Range']/parent::div/parent::div/following-sibling::div/div/div/div" )
+	public WebElement dateRangeErrorMsg;
+	@FindBy(xpath = "//aside[@class='dialog']//div[@class='v-toolbar__title']/div" )
 	public WebElement dealHeaderName;
 	@FindBy(xpath = "//label[text()='Currency']/following-sibling::div/div" ) 
 	public WebElement currencyValue;
@@ -97,7 +101,11 @@ public class RXDealsPage extends RXBasePage {
 	public WebElement dspValue;
 	@FindBy(xpath = "//label[text()='Floor Price']/following-sibling::input" ) 
 	public WebElement value;
-	
+	@FindBy(xpath = "//label[text()='DSP']/following-sibling::div[@class='v-input__append-inner']/i" )
+	public WebElement dspInfoIcon;
+	@FindBy(xpath = "//div[contains(@class, 'v-tooltip__content')]/span" )
+	public WebElement dspInfo;
+
 	//Deals buyers details
 	@FindBy(xpath = "//div[contains(@class,'v-list-item__content')]//span[contains(@class,'mb-4')]//following-sibling::span")
 	private WebElement detailsCard;
@@ -119,6 +127,15 @@ public class RXDealsPage extends RXBasePage {
 	public WebElement dSPDomainAdvertiserPassthroughString;
 	@FindBy(xpath = "//div[contains(@class, 'menuable__content__active')]")
 	public WebElement detailsPopup;
+	@FindBy(css = "div.buyers-card-label > h3")
+	public WebElement buyerCardLabel;
+	@FindBy(xpath = "//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']/input")
+	public WebElement enableBtnInBuyerPanel;
+	@FindBy(xpath = "//div[@class='buyers-card-grid']/button")
+	public WebElement deleteBtnInBuyerPanel;
+	@FindAll(@FindBy(css = "div.buyers-cards > div.cardPadding"))
+	List<WebElement> buyerPanelList;
+
 	/*
 	 * @FindBy(xpath = "//label[text()='Related Proposal']/following-sibling::input"
 	 * ) public WebElement relatedProposal;
@@ -149,7 +166,11 @@ public class RXDealsPage extends RXBasePage {
 	@FindBy(xpath = "//div[contains(text(),'changing the DSP')]/ancestor::div[@class='v-banner__wrapper']//span[contains(text(),'ACCEPT')]" ) 
 	public WebElement acceptDSPChangeBanner;
 
-	
+	//Change Currency Banner
+	@FindBy(xpath = "//div[contains(@class,'v-banner__text') and contains(text(),'Changing the currency')]" )
+	public WebElement changeCurrencyBannerMsg;
+
+
 	//Save deal
 	@FindBy(xpath = "//button[@type='submit']")
 	public WebElement saveButton;
@@ -171,7 +192,12 @@ public class RXDealsPage extends RXBasePage {
 
 	@FindBy(xpath = "//table/tbody/tr[1]/td[4]/a")
 	public WebElement dealNameInListview;
-	
+
+	//validation errors
+	@FindBy(css = "div.v-alert__content > div")
+	public WebElement validationErrorsPanel;
+	public  String validationErrorsCssPath = "div.v-alert__content > div > ul > li";
+
 //	String dealNameInListOne="//table/tbody/tr[1]/td[3]/span/a[contains(text(),";
 	String dealNameInListOne="//table/tbody/tr[1]/td[4]/a[contains(text(),";
 
@@ -380,7 +406,11 @@ public class RXDealsPage extends RXBasePage {
 	public void enterValue(String dealValue)
 	{
 		value.sendKeys(dealValue);
-		enteredValue=value.getAttribute("value") + ".00";
+//		enteredValue=value.getAttribute("value");
+		BigDecimal bd = new BigDecimal(dealValue);
+		enteredValue = String.valueOf(bd.setScale(2, BigDecimal.ROUND_HALF_UP));
+		System.out.println("Floor Price's entered value >>> " + dealValue);
+		System.out.println("Format Floor Price's entered value >>> " + enteredValue);
 			
 	}
 	public void clickBuyerActivationToggle(String action)
@@ -598,7 +628,7 @@ public class RXDealsPage extends RXBasePage {
 		js.executeScript("arguments[0].scrollIntoView();",driver.findElement(By.xpath(buyerEnableDisable+"["+n+"]")));
 		return driver.findElement(By.xpath(buyerEnableDisable+"["+n+"]"));
 	}
-	
+
 	public WebElement buyerDelete(int n) 
 	{
 		js.executeScript("arguments[0].scrollIntoView();",driver.findElement(By.xpath(buyerDelete+"["+n+"]")));
@@ -613,5 +643,50 @@ public class RXDealsPage extends RXBasePage {
 	{
 		js.executeScript("arguments[0].scrollIntoView();",driver.findElement(By.xpath(dSPDisable+"["+n+"]")));
 		return driver.findElement(By.xpath(dSPDisable+"["+n+"]"));
+	}
+
+	public int getBuyersCardPaddingElemts(){
+		return buyerPanelList.size();
+	}
+
+	public WebElement getCurrencyDropdownValue(String value){
+		return driver.findElement(By.xpath("//div[text()='" + value + "']"));
+	}
+
+	public String getChangeCurrencyBannerMsg()
+	{
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+
+		wait.until(
+				ExpectedConditions.visibilityOf(changeCurrencyBannerMsg));
+		String actualMessage =changeCurrencyBannerMsg.getText().replaceAll("\u3000", "");
+		return actualMessage;
+	}
+
+	public boolean checkIfErrorIsDisplayed(String error){
+		boolean flag = false;
+		System.out.println("the expected error === " + error);
+		for(WebElement elemt : driver.findElements(By.cssSelector(this.validationErrorsCssPath))){
+			System.out.println("validation error >>> " + elemt.getText().trim());
+			if(elemt.getText().trim().equals(error)){
+				flag = true;
+				break;
+			}
+		}
+		return flag;
+	}
+
+	public boolean isElementPresent(String path){
+		try{
+			driver.findElement(By.cssSelector(path));
+			return true;
+		}catch (NoSuchElementException e) {
+			return false;
+		}
+	}
+
+	public void hoverOverOnDSPInfoICon(){
+		new Actions(driver).moveToElement(this.dspInfoIcon).build().perform();
+		wait.until(ExpectedConditions.attributeToBe(this.dspInfoIcon, "aria-expanded","true"));
 	}
 }
