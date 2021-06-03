@@ -20,7 +20,7 @@ import cucumber.api.testng.TestNGCucumberRunner;
 @CucumberOptions(
 
 
-		features = {
+		features = {"src/main/java/Features/Deals_regression.feature",
         "src/main/java/Features/Adspots_regression.feature"},
         glue = {"stepDefinitions"},
         tags = {"~@Ignore"},
