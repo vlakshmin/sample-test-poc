@@ -5,6 +5,7 @@ import RXBaseClass.RXBaseClass;
 import RXUtitities.RXUtile;
 import RXPages.*;
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.*;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
@@ -12,8 +13,11 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.*;
 import org.testng.Assert;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 import java.util.*;
 
@@ -170,8 +174,8 @@ public class DealsPageStepDefinition extends RXBaseClass {
 //        Thread.sleep(5000);
         Assert.assertTrue(dealsPage.verifyRequiredFields());
     }
-	
-	@Then("^Select privateAuction by name: \"([^\"]*)\"$")
+
+	@Then("^Select Private Auction by name: \"([^\"]*)\"$")
 	public void select_privateAuction_by_name(String name) throws Throwable {
 		dealsPage.selectPrivateAuctionByName(name);
 	}
@@ -246,7 +250,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	}
 	@When("^change the publisher name to \"([^\"]*)\"$")
 	public void change_the_publisher_name_to(String publName) throws Throwable {
-		js.executeScript("arguments[0].scrollIntoView();",dealsPage.publisherNameInput );	
+		js.executeScript("arguments[0].scrollIntoView();",dealsPage.publisherNameInput );
 		dealsPage.expandPublisherNameList();
 		dealsPage.selectPublisherByName(publName);
 	}
@@ -516,10 +520,10 @@ public class DealsPageStepDefinition extends RXBaseClass {
 
 	@When("^change the DSP name to \"([^\"]*)\"$")
 	public void change_the_DSP_name_to(String dealName) throws Throwable {
-		js.executeScript("arguments[0].scrollIntoView();",dealsPage.dspDropDown );	
+		js.executeScript("arguments[0].scrollIntoView();",dealsPage.dspDropDown );
 		dealsPage.selectDSPByName(dealName);
 	}
-	
+
 	@Then("^Verify the following message is displayed when the DSP changed for deal$")
 	public void verify_the_following_message_is_displayed_when_the_DSP_changed_for_deal(DataTable dt) throws Throwable {
 		
@@ -612,7 +616,13 @@ public class DealsPageStepDefinition extends RXBaseClass {
 			  	System.out.println("Count time"+i);
 			}
 	  }
-	  
+
+	@Then("^Click on Add more seats button$")
+	public void click_on_Add_more_seats_button() throws Throwable
+	{
+		dealsPage.clickAddMoreSeats();
+	}
+
 	
 	  @Then("^Verify that the Add more seats is disabled and ten DSP panels are added$") 
 	  public void verify_that_the_Add_more_seats_is_disabled_and_ten_DSP_panels_are_added() throws Throwable
@@ -686,4 +696,246 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		  Assert.assertTrue(flag); 
 	  }
 
-}	
+
+	@Then("^Verify \"([^\"]*)\" seat panels are displayed$")
+	public void verify_seat_panels_are_displayed(String arg0) throws Throwable {
+		int buyersCount = dealsPage.getBuyersCardPaddingElemts();
+		System.out.println("Buyer count >>> " + buyersCount);
+		if(buyersCount != Integer.parseInt(arg0)){
+			fail(buyersCount + " seat panels are displayed, not " + arg0);
+		}
+	}
+
+	@Then("^Verify no buyers entities were saved$")
+	public void verify_no_buyers_entities_were_saved() {
+		int buyersCount = dealsPage.getBuyersCardPaddingElemts();
+		String buyerCardLabel = dealsPage.buyerCardLabel.getText().trim();
+		System.out.println("Buyer count >>> " + buyersCount);
+		System.out.println("Buyer Card Label >>> " + buyerCardLabel);
+		if(buyersCount != 1){
+			fail("More than one buyers entities are displayed.");
+		}
+		if(!buyerCardLabel.equals("")){
+			fail("Buyer values are displayed.");
+		}
+	}
+
+	@When("^Disabled \"([^\"]*)\" added seats$")
+	public void disabled_added_seats(String arg0) throws Throwable {
+		for(int i=1;i<=Integer.parseInt(arg0);i++) {
+			js.executeScript("arguments[0].scrollIntoView();",dealsPage.enableDSPdisable(i));
+			dealsPage.enableDSPdisable(i).click();
+		}
+	}
+
+	@Then("^Verify \"([^\"]*)\" added seats are disabled$")
+	public void verify_added_seats_are_disabled(String arg0) throws Throwable {
+		for(int i=1;i<=Integer.parseInt(arg0);i++) {
+			js.executeScript("arguments[0].scrollIntoView();",dealsPage.dSPDisable(i));
+			Assert.assertTrue(dealsPage.dSPDisable(i).isEnabled());
+		}
+	}
+
+	@Then("^Verify entity page is disabled$")
+	public void verify_entity_page_is_disabled() {
+		//Publisher name
+		System.out.println("Publisher Name field's class attribute >>> " + dealsPage.publisherNamesEntered.getAttribute("class"));
+		if( !dealsPage.publisherNamesEntered.getAttribute("class").contains("disabled")){
+			fail("Publisher Name in Create Deal is not disabled.");
+		}
+
+		//Deal Name
+		System.out.println("Deal Name field's enabled >>> " + dealsPage.dealName.isEnabled());
+		if( dealsPage.dealName.isEnabled()){
+			fail("Deal Name in Create Deal is not disabled.");
+		}
+
+		//Floor Price
+		System.out.println("Floor Price field's enabled >>> " + dealsPage.value.isEnabled());
+		if( dealsPage.value.isEnabled()){
+			fail("Floor Price in Create Deal is not disabled.");
+		}
+
+		//Currency
+		System.out.println("Currency field's class attribute >>> " + dealsPage.currencyValue.getAttribute("class"));
+		if( !dealsPage.currencyValue.getAttribute("class").contains("disabled")){
+			fail("Currency in Create Deal is not disabled.");
+		}
+
+		//DSP
+		System.out.println("DSP field's enabled >>> " + dealsPage.dspValue.isEnabled());
+		if( dealsPage.dspValue.isEnabled()){
+			fail("DSP in Create Deal is not disabled.");
+		}
+
+		//Add more seats button
+		System.out.println("Add more seats button's enabled >>> " + dealsPage.addMoreSeats.isEnabled());
+		if( dealsPage.addMoreSeats.isEnabled()){
+			fail("Add more seats button in Create Deal is not disabled.");
+		}
+
+		//Enable button
+		System.out.println("Enable button's enabled >>> " + dealsPage.enableBtnInBuyerPanel.isEnabled());
+		if( dealsPage.enableBtnInBuyerPanel.isEnabled()){
+			fail("Enable button in Create Deal is not disabled.");
+		}
+
+		//DSP Seat ID
+		System.out.println("DSP Seat ID's enabled >>> " + dealsPage.dSPSeatID.isEnabled());
+		if( dealsPage.dSPSeatID.isEnabled()){
+			fail("DSP Seat ID in Create Deal is not disabled.");
+		}
+
+		//DSP Seat Name
+		System.out.println("DSP Seat Name's enabled >>> " + dealsPage.dSPSeatName.isEnabled());
+		if( dealsPage.dSPSeatName.isEnabled()){
+			fail("DSP Seat Name in Create Deal is not disabled.");
+		}
+
+		//Advertiser ID
+		System.out.println("Advertiser ID's enabled >>> " + dealsPage.AdvertiserId.isEnabled());
+		if( dealsPage.AdvertiserId.isEnabled()){
+			fail("Advertiser ID in Create Deal is not disabled.");
+		}
+
+		//Advertiser Name
+		System.out.println("Advertiser Name's enabled >>> " + dealsPage.advertiserName.isEnabled());
+		if( dealsPage.advertiserName.isEnabled()){
+			fail("Advertiser Name in Create Deal is not disabled.");
+		}
+
+		//DSP Seat Passthrough String
+		System.out.println("DSP Seat Passthrough String's enabled >>> " + dealsPage.dSPSeatPassthroughString.isEnabled());
+		if( dealsPage.dSPSeatPassthroughString.isEnabled()){
+			fail("DSP Seat Passthrough String in Create Deal is not disabled.");
+		}
+
+		//DSP Domain Advertiser Passthrough String
+		System.out.println("DSP Domain Advertiser Passthrough String's enabled >>> " + dealsPage.dSPDomainAdvertiserPassthroughString.isEnabled());
+		if( dealsPage.dSPDomainAdvertiserPassthroughString.isEnabled()){
+			fail("DSP Domain Advertiser Passthrough String in Create Deal is not disabled.");
+		}
+
+		//Delete button
+		System.out.println("Delete button's enabled >>> " + dealsPage.deleteBtnInBuyerPanel.isEnabled());
+		if( dealsPage.deleteBtnInBuyerPanel.isEnabled()){
+			fail("Delete button in Create Deal is not disabled.");
+		}
+
+		//Save Deal button
+		System.out.println("Save Deal button's enabled >>> " + dealsPage.saveButton.isEnabled());
+		if( dealsPage.saveButton.isEnabled()){
+			fail("Save Deal button in Create Deal is not disabled.");
+		}
+
+	}
+
+	@When("^Enter the following values for Single Publisher user$")
+	public void enter_the_following_value_for_Single_Publisher_user(DataTable dt) {
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+
+		for (Map<String, String> stringMap : list) {
+			String privAucName = stringMap.get("PrivateAuction");
+			String dSPvalue = stringMap.get("DSPValue");
+			String dealName = stringMap.get("EntDealName") + rxUTL.getRandomNumberFourDigit();
+			String dealValue = stringMap.get("Values");
+			wait.until(ExpectedConditions.elementToBeClickable(dealsPage.dealName));
+			dealsPage.selectPrivateAuctionByName(privAucName);
+			dealsPage.selectDSPByName(dSPvalue);
+			enteredDSP = dealsPage.dspValue.getText();
+			dealsPage.enterDealName(dealName);
+			dealsPage.enterValue(dealValue);
+		}
+	}
+
+	@When("^Click on any deal name in Deals list$")
+	public void click_on_any_deal_name_in_Deals_list() {
+		dealsPage.dealNameInListview.click();
+		wait.until(ExpectedConditions.elementToBeClickable(dealsPage.dealName));
+	}
+
+	@When("^Select \"([^\"]*)\" from Currency$")
+	public void select_value_from_Currency(String arg0) throws Throwable {
+		wait.until(ExpectedConditions.elementToBeClickable(dealsPage.addMoreSeats));
+		dealsPage.currencyValue.click();
+		dealsPage.getCurrencyDropdownValue(arg0).click();
+	}
+
+	@Then("^Verify the following message is displayed when the Currency changed for deal$")
+	public void verify_the_following_message_is_displayed_when_the_Currency_changed_for_deal(DataTable dt) throws Throwable {
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		for (Map<String, String> stringMap : list) {
+			String expectedMessage = stringMap.get("Message");
+			System.out.println("the actual result of Currency Banner Message >>> " + dealsPage.getChangeCurrencyBannerMsg());
+			Assert.assertEquals(dealsPage.getChangeCurrencyBannerMsg(), expectedMessage);
+		}
+	}
+
+	@Then("^Verify the validation errors display$")
+	public void verify_the_validation_errors_display(DataTable dt) {
+		js.executeScript("arguments[0].scrollIntoView();",dealsPage.validationErrorsPanel);
+		getDataFromTable(dt).forEach(e ->
+				Assert.assertTrue(dealsPage.checkIfErrorIsDisplayed(e.getValue())));
+	}
+
+	@Then("^Verify the validation error does not display$")
+	public void verify_the_validation_error_does_not_display(DataTable dt) {
+		js.executeScript("arguments[0].scrollIntoView();",dealsPage.validationErrorsPanel);
+		getDataFromTable(dt).forEach(e ->
+				Assert.assertFalse(dealsPage.checkIfErrorIsDisplayed(e.getValue())));
+	}
+
+	@Then("^The Currency field is not null$")
+	public void verify_Currency_field_is_not_null() {
+		wait.until(ExpectedConditions.elementToBeClickable(dealsPage.addMoreSeats));
+		Assert.assertNotNull(dealsPage.currencyValue.getText());
+	}
+
+	@When("^Enter \"([^\"]*)\" into Name$")
+	public void enter_value_into_Name(String arg0) throws Throwable {
+		String dealName = arg0 + rxUTL.getRandomNumberFourDigit();
+		dealsPage.enterDealName(dealName);
+	}
+
+	@When("^Enter \"([^\"]*)\" into Floor Price$")
+	public void enter_value_into_Floor_Price(String arg0) throws Throwable {
+		dealsPage.enterValue(arg0);
+	}
+
+	@Then("^Verify no validation errors display$")
+	public void verify_no_validation_errors_display() {
+        js.executeScript("arguments[0].scrollIntoView();",dealsPage.saveButton);
+		Assert.assertFalse(dealsPage.isElementPresent(dealsPage.validationErrorsCssPath));
+	}
+
+	@Then("^Verify only one error message displays below Date Range input$")
+	public void verify_only_one_error_message_displays_below_Date_Range_input(DataTable dt) {
+		js.executeScript("arguments[0].scrollIntoView();",dealsPage.dateRange);
+		wait.until(ExpectedConditions.visibilityOf(dealsPage.dateRangeErrorMsg));
+		String msg = dealsPage.dateRangeErrorMsg.getText().trim();
+		System.out.println("dealsPage.dateRangeErrorMsg.getText().trim() >>> " + msg);
+		getDataFromTable(dt).forEach(e ->
+				Assert.assertEquals(msg,e.getValue()));
+	}
+
+	@Then("^Verify the change Publisher banner message is not displayed$")
+	public void verify_the_change_Publisher_banner_message_is_not_displayed(DataTable dt) {
+		js.executeScript("arguments[0].scrollIntoView();",dealsPage.publisherNameInput);
+		Assert.assertFalse(dealsPage.changePublisherBannerMsg.isDisplayed());
+	}
+
+	@When("^Hover over on DSP info icon$")
+	public void hover_over_on_DSP_info_icon() {
+		dealsPage.hoverOverOnDSPInfoICon();
+	}
+
+	@Then("^Verify the DSP information displays$")
+	public void verify_the_DSP_information_displays(DataTable dt) {
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		for (Map<String, String> stringMap : list) {
+			String expectedMessage = stringMap.get("Message");
+			System.out.println("The actual result of the DSP info Message >>> " + dealsPage.dspInfo.getText().trim());
+			Assert.assertEquals(dealsPage.dspInfo.getText().trim(), expectedMessage);
+		}
+	}
+}
