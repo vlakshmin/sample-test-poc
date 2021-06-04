@@ -1,6 +1,5 @@
 package RXPages;
 
-import RXBaseClass.RXBaseClass;
 import RXUtitities.RXUtile;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -21,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class RXPrivateAuctionsPage extends RXBaseClass {
+public class RXPrivateAuctionsPage extends RXBasePage {
     // Utility object
     RXUtile rxUTL;
     PublisherListPage pubPage;

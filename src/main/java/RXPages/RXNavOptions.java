@@ -68,6 +68,8 @@ public class RXNavOptions extends RXBaseClass {
 	public WebElement saveButton;
 	@FindBy(xpath = "//button[@type='submit']/span")
 	public WebElement saveButtonTxt;
+	@FindBy(xpath = "//div[@class = 'v-snack__content']")
+	public WebElement errorPopup;
 
 	// subMenu of Rules main menu
 	@FindBy(xpath = "//div[text()='Filters']")
@@ -90,6 +92,8 @@ public class RXNavOptions extends RXBaseClass {
 	public List<WebElement> tableColumnsCount;
 	@FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[2]"))
 	public WebElement tableFirstRowName;
+	@FindAll(@FindBy(xpath = "//div[@class='v-progress-linear__buffer']"))
+	public WebElement tableLoaderBar;
 
 	@FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//thead//th/span"))
 	public List<WebElement> tableHeadersList;

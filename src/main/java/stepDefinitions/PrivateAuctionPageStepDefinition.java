@@ -1,11 +1,6 @@
 package stepDefinitions;
 
-import RXBaseClass.RXBaseClass;
-import RXPages.PublisherListPage;
-import RXPages.RXAdspotsPage;
-import RXPages.RXDealsPage;
-import RXPages.RXNavOptions;
-import RXPages.RXPrivateAuctionsPage;
+import RXPages.*;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
@@ -26,7 +21,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-public class PrivateAuctionPageStepDefinition extends RXBaseClass {
+public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 
 	RXPrivateAuctionsPage auctionPage;
 	RXNavOptions navOptions;
@@ -83,6 +78,12 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 	}
 
 	// Verify enabling abd disabling of an adspot from the overview page
+	@When("^Click on the Pricate Auction create button$")
+	public void createPrivateAuctionButtonClick() throws InterruptedException {
+		createButtonClick("Create Private Auction");
+	}
+
+    //Verify enabling abd disabling of an adspot from the overview page
 
 	@When("^Verify enabling and disabling of an auction from the overview page$")
 	public void verifyHEnableDiableAdspot() throws InterruptedException {
@@ -222,8 +223,8 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
 			String isDisabled = auctionPage.mandatorFieldIsDisabledForCreatePage(fieldName);
-					
-					
+
+
 			Assert.assertTrue(isDisabled.contains("disabled"));
 
 		}
@@ -239,9 +240,9 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 			String fieldName = list.get(i).get("FieldName");
 			String active = list.get(i).get("Active");
 			String isEnabled = auctionPage.toggleFieldIsEnabledForCreatePage(fieldName);
-					
-							
-					
+
+
+
 			if (active.equalsIgnoreCase("Yes")) {
 				Assert.assertEquals(isEnabled, "true");
 
@@ -261,19 +262,19 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
 			String isEnabled = auctionPage.toggleFieldIsEnabledForCreatePage(fieldName);
-					
-				
-			
+
+
+
 			if (enable.equalsIgnoreCase("Enable") && isEnabled.equals("false")) {
-				
+
 				auctionPage.toggleField(fieldName)
 						.click();
 			} else if (enable.equalsIgnoreCase("Disable") && isEnabled.equals("true")) {
-				
+
 						auctionPage.toggleField(fieldName)
 						.click();
 			}
-			
+
 		}
 	}
 
@@ -448,7 +449,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions
 				.visibilityOf(auctionPage.detailsForInventory));
-		
+
 		auctionPage.details.forEach(e -> auctionPage.verify_that_Details_matched(e, list.get(0)));
 	}
 
@@ -457,7 +458,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 		List<List<String>> data = dt.asLists(String.class);
 		data.forEach(e -> auctionPage.selectForBlock(e.get(0), e.get(1)));
 	}
-	
+
 	@Then("^Verify that warning banner is under Publisher name$")
 	public void verify_that_warning_banner_is_under_Publisher_name(){
 		WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -480,7 +481,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 				Assert.assertEquals(isDisabled, "scrollable disabled");
 		}
 	}
-	
+
 	@Then("^Verify \"([^\"]*)\" button in create Private Auction page is disabled$")
 	public void verify_button_in_create_Private_Auction_page_is_disabled(String arg1) {
 		String isDisabled = "";
@@ -496,7 +497,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 	   }
 	   Assert.assertEquals(isDisabled, "true");
 	}
-	
+
 	@Then("^Verify following errors are displayed near save button$")
 	public void verify_following_errors_are_displayed_near_save_button(DataTable dt) {
 		List<String> data = dt.asList(String.class);
@@ -508,12 +509,12 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 		List<String> data = dt.asList(String.class);
 		data.forEach(e -> auctionPage.error_disapear_according_to_fields_filled(e));
 	}
-	
+
 	@Then("^Check only one error \"([^\"]*)\" is present for date$")
 	public void check_only_one_error_is_present_for_date(String error) {
 		Assert.assertEquals(auctionPage.dateMessage.getText(),error);
 	}
-	
+
 	@Then("^Verify that warning banner is not under Publisher name$")
 	public void verify_that_warning_banner_is_not_under_Publisher_name()  {
 		Assert.assertFalse(auctionPage.warningBannerUnderPublishername.isDisplayed());
@@ -532,7 +533,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 				}
 		}
 	}
-	
+
 	@Then("^Verify the edited private auction data is matching with its overview list values$")
 	public void verify_the_edited_private_auction_data_is_matching_with_its_overview_list_values() throws Throwable {
 		String adSpotName = "";
@@ -546,7 +547,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 			}
 		}
 		Assert.assertEquals(adSpotName, entergedName);
-		
+
 	}
 
 	@Then("^Verify that following buttons are present in Private Auctions list page$")
@@ -571,7 +572,7 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(
 				By.xpath("//aside[@class='dialog']/header//div[contains(text(),'" + enteredAuctionNameList.get(0) + "')]"))));
 	}
-	
+
 	@Then("^\"([^\"]*)\" is displayed for the created private auctions$")
 	public void is_displayed_for_the_created_private_auction(String arg1) {
 		List<WebElement> listOfNames = driver
@@ -585,9 +586,9 @@ public class PrivateAuctionPageStepDefinition extends RXBaseClass {
 				}
 			}
 		}
-		
+
 	}
-	
+
 	@Then("^Select (\\d+) \"([^\"]*)\" and (\\d+) \"([^\"]*)\" Private Auctions items$")
 	public void select_and_Private_Auctions_items(int num1, String inactive, int num3, String active) throws Throwable {
 		enteredAuctionNameList.clear();

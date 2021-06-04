@@ -14,12 +14,11 @@ import org.openqa.selenium.NoSuchElementException;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
-public class RXDealsPage extends RXBaseClass {
+public class RXDealsPage extends RXBasePage {
 	// Utility object
 	RXUtile rxUTL;
 	PublisherListPage pubPage;
 	public String dealHeaderStr = "Deals";
-	JavascriptExecutor js = (JavascriptExecutor) driver;
 
 	// deals page heading
 	@FindBy(xpath = "//h1[text()='Deals']")
@@ -45,8 +44,7 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement publisherNameInput;
 	@FindBy(xpath="//div[./label[contains(@class,'v-label') and .='Name']]")
 	private WebElement nameInput;
-	@FindAll({@FindBy(xpath = "//div[contains(@role,'listbox') and contains(@class,'v-list')]/div")})
-	public List<WebElement> dropdownValues;
+
 	@FindBy(xpath="//div[contains(@class,'v-input__control') and contains(.,'Currency')]//div[contains(@class,'v-select__selection--comma')]")
 	private WebElement 	currencyOption;
 	@FindBy(xpath="//div[./label[contains(@class,'v-label') and contains(.,'Date')]]")
@@ -89,7 +87,7 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement dateRange;
 	@FindBy(xpath = "//label[text()='Date Range']/parent::div/parent::div/following-sibling::div/div/div/div" )
 	public WebElement dateRangeErrorMsg;
-	@FindBy(xpath = "//aside[@class='dialog']//div[@class='v-toolbar__title']/div" ) 
+	@FindBy(xpath = "//aside[@class='dialog']//div[@class='v-toolbar__title']/div" )
 	public WebElement dealHeaderName;
 	@FindBy(xpath = "//label[text()='Currency']/following-sibling::div/div" ) 
 	public WebElement currencyValue;
@@ -107,10 +105,8 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement dspInfoIcon;
 	@FindBy(xpath = "//div[contains(@class, 'v-tooltip__content')]/span" )
 	public WebElement dspInfo;
-	
+
 	//Deals buyers details
-	@FindBy(xpath = "//tr//td//button[contains(@class,'v-btn--round')]")
-	private WebElement detailsButton;
 	@FindBy(xpath = "//div[contains(@class,'v-list-item__content')]//span[contains(@class,'mb-4')]//following-sibling::span")
 	private WebElement detailsCard;
 	@FindBy(xpath = "//span[@class='v-btn__content' and contains(.,'Add More Seats')]/parent::button" )
@@ -174,7 +170,7 @@ public class RXDealsPage extends RXBaseClass {
 	@FindBy(xpath = "//div[contains(@class,'v-banner__text') and contains(text(),'Changing the currency')]" )
 	public WebElement changeCurrencyBannerMsg;
 
-	
+
 	//Save deal
 	@FindBy(xpath = "//button[@type='submit']")
 	public WebElement saveButton;
@@ -264,13 +260,7 @@ public class RXDealsPage extends RXBaseClass {
 		return 	field;
 	}
 
-	public void hoverOverDetailsButton() {
-		wait.until(ExpectedConditions.visibilityOf(detailsButton));
-		new Actions(driver).moveToElement(detailsButton).build().perform();
-		wait.until(ExpectedConditions.attributeToBe(detailsButton, "aria-expanded","true"));
-	}
-
-	public LinkedHashMap<String,String> getDetailsData() {
+	public LinkedHashMap<String,String> getDealsDetailsData() {
 		return detailsCard.findElements(By.xpath("//span[@class='bigger-label']")).stream()
 					.collect(Collectors.toMap(WebElement::getText, e -> {
 						WebElement element = e.findElement(By.xpath("./../p"));
@@ -381,7 +371,9 @@ public class RXDealsPage extends RXBaseClass {
 								.replaceAll("Floor Price","Value")));
 	}
 	public String getErrorMessageTextByField(WebElement element) {
-		return element.findElement(By.xpath("./ancestor::div[2]//div[contains(@class,'v-messages__message')]")).getText();
+		String text = element.findElement(By.xpath("./ancestor::div[@class = 'v-input__control']//div[contains(@class,'v-messages__message')]")).getText();
+		System.out.println(text);
+		return text;
 	}
 	public boolean verifyRequiredFields() {
 		clickSaveDealButton();
@@ -389,27 +381,9 @@ public class RXDealsPage extends RXBaseClass {
 				selectDateButton, floorPriceField, dspList);
 	}
 	// TO DO: Check if this method works in other menus.
-	public void selectValueFromDropdown(String name) {
-		int attempt = 0;
 
-		// Check if list contains parameter name, scroll down if not
-		do {
-			js.executeScript("arguments[0].scrollIntoView(false)", dropdownValues.get(dropdownValues.size() - 1));
-		}
-		while (!dropdownValues.stream()
-				.map(WebElement::getText)
-				.anyMatch(text -> name.equals(text)) && attempt++ < 20);
-
-		// Get web element by name from the method parameter
-		WebElement dropDownElementByName = dropdownValues.stream()
-				.filter(i -> i.getText().equalsIgnoreCase(name))
-				.findFirst()
-				.orElseThrow(() -> new org.openqa.selenium.NoSuchElementException(String.format("Private Auction by the name %s wasn't found.", name)));
-		js.executeScript("arguments[0].scrollIntoView({block: \"center\"})", dropDownElementByName);
-		wait.until(elementToBeClickable(dropDownElementByName));
-		dropDownElementByName.click();
-	}
 	public void selectPrivateAuctionByName(String name) {
+		driverWait().until(ExpectedConditions.elementToBeClickable(privateAuctionDropDown));
 		privateAuctionDropDown.click();
 		selectValueFromDropdown(name);
 		enteredDateRange=dateRange.getAttribute("value");

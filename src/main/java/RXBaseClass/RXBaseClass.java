@@ -130,6 +130,6 @@ public class RXBaseClass {
 		return copy;
 	}
 	public static WebDriverWait driverWait() {
-		return new WebDriverWait(driver, 10);
+		return new WebDriverWait(driver, 5);
 	}
 }

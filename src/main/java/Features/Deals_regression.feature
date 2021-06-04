@@ -53,7 +53,7 @@ Scenario:  Verify enabling and disabling of a deal from the overview page
     When Click on Deals option under Sales
 	And User displayed with Deals page
     Then Verify the search functionality with the following names
-	|Name|CoumnName|
+	|Name|ColumnName|
 	|RTBHouse Deal|Name|
 	Then Verify enabling and disabling of a deal from the overview page
 
