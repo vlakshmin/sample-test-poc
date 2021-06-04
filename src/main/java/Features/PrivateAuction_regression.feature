@@ -66,9 +66,7 @@ Feature: Private Auctions page regression
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-    And Click on the following create button
-      | CreateButtonName       |
-      | Create Private Auction |
+    And Click on the Pricate Auction create button
     Then Click on Save Private Auction & Close button
     Then Verify following fields are mandatory for create page
       | FieldName      |
@@ -86,9 +84,7 @@ Feature: Private Auctions page regression
     Given Publisher user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-    And Click on the following create button
-      | CreateButtonName       |
-      | Create Private Auction |
+    And Click on the Pricate Auction create button
     Then Verify publisher field is disabled on create/edit page
 @Ignore
   Scenario: Verify select/unselect for targeting options
@@ -131,9 +127,7 @@ Feature: Private Auctions page regression
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-    And Click on the following create button
-      | CreateButtonName       |
-      | Create Private Auction |
+    And Click on the Pricate Auction create button
     Then Verify following fields are not enabled for create page
       | FieldName  |
       | Name       |
@@ -146,9 +140,7 @@ Feature: Private Auctions page regression
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-    And Click on the following create button
-      | CreateButtonName       |
-      | Create Private Auction |
+    And Click on the Pricate Auction create button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue |              2 |
@@ -162,9 +154,7 @@ Feature: Private Auctions page regression
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-    And Click on the following create button
-      | CreateButtonName       |
-      | Create Private Auction |
+    And Click on the Pricate Auction create button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue |              1 |
@@ -204,9 +194,7 @@ Feature: Private Auctions page regression
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-    And Click on the following create button
-      | CreateButtonName       |
-      | Create Private Auction |
+    And Click on the Pricate Auction create button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue |              1 |
@@ -220,9 +208,7 @@ Feature: Private Auctions page regression
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-    And Click on the following create button
-      | CreateButtonName       |
-      | Create Private Auction |
+    And Click on the Pricate Auction create button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue |              1 |
@@ -234,9 +220,7 @@ Feature: Private Auctions page regression
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-    And Click on the following create button
-      | CreateButtonName       |
-      | Create Private Auction |
+    And Click on the Pricate Auction create button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue |              1 |
@@ -283,13 +267,13 @@ Feature: Private Auctions page regression
     And Open create New Private Auction page
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
-      | Publisher Name | ListValue |              2 |
+      | Publisher Name | Viki      |                |
       | Name           | Test      |                |
       | Date Range     | Future    |                |
     And Select targeting options items
-      | Inventory        | supply-chains and Sons Media |
+      | Inventory        | Viki Android                 |
       | Device           | Phone                        |
-      | Operating System | Android                      |
+      | Operating System | Windows                      |
       | Geo              | Afghanistan                  |
       | Ad Format        | Banner                       |
       | Ad Size          | 120x60                       |
@@ -298,7 +282,7 @@ Feature: Private Auctions page regression
     When Hover on the Details column of the created private auction data
     Then Verify that Details display the following data for each targeting
       | Inventory                    | Devices | Operating Systems | Geos        | Ad Format | Ad Sizes           |
-      | supply-chains and Sons Media | Phone   | Android           | Afghanistan | Banner    | Financial (120x60) |
+      | Viki Android                 | Phone   | Windows           | Afghanistan | Banner    | Financial (120x60) |
 
   Scenario: 42.Verify Details display properly Inventory parent items
     Given admin user login to RX UI with valid username and password
@@ -306,17 +290,17 @@ Feature: Private Auctions page regression
     And Open create New Private Auction page
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
-      | Publisher Name | ListValue |              2 |
+      | Publisher Name | Viki      |                |
       | Name           | Test      |                |
       | Date Range     | Future    |                |
     And Select targeting options items
-      | Inventory | supply-chains and Sons Media |
+      | Inventory | Viki Android   |
     Then Click on Save and wait for dialog to close
     Then Verify the created private auction data is matching with its overview list values
     When Hover on the Details column of the created private auction data
     Then Verify that Details display the following data for each targeting
       | Inventory                    | Devices                  | Operating Systems                  | Geos                  | Ad Format                  | Ad Sizes                  |
-      | supply-chains and Sons Media | All Devices are included | All Operating Systems are included | All Geos are included | All Ad Format are included | All Ad Sizes are included |
+      | Viki Android                 | All Devices are included | All Operating Systems are included | All Geos are included | All Ad Format are included | All Ad Sizes are included |
 
   Scenario: 43.Verify Details display properly Inventory child items
     Given admin user login to RX UI with valid username and password
@@ -324,17 +308,17 @@ Feature: Private Auctions page regression
     And Open create New Private Auction page
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
-      | Publisher Name | ListValue |              2 |
+      | Publisher Name | Viki      |                |
       | Name           | Test      |                |
       | Date Range     | Future    |                |
     And Select targeting options items
-      | Inventory Child| supply-chains and Sons Media > TCP orchid |
+      | Inventory Child| Viki Android > Viki Android PreRoll |
     Then Click on Save and wait for dialog to close
     Then Verify the created private auction data is matching with its overview list values
     When Hover on the Details column of the created private auction data
     Then Verify that Details display the following data for each targeting
       | Inventory  | Devices                  | Operating Systems                  | Geos                  | Ad Format                  | Ad Sizes                  |
-      | TCP orchid | All Devices are included | All Operating Systems are included | All Geos are included | All Ad Format are included | All Ad Sizes are included |
+      | Viki Android PreRoll | All Devices are included | All Operating Systems are included | All Geos are included | All Ad Format are included | All Ad Sizes are included |
 
       Scenario: 44.Verify Details display properly Inventory parent and child items
       Given admin user login to RX UI with valid username and password
@@ -359,9 +343,7 @@ Feature: Private Auctions page regression
       Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-    And Click on the following create button
-      | CreateButtonName       |
-      | Create Private Auction |
+    And Click on the Pricate Auction create button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue |              1 |
@@ -376,9 +358,7 @@ Feature: Private Auctions page regression
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-    And Click on the following create button
-      | CreateButtonName       |
-      | Create Private Auction |
+    And Click on the Pricate Auction create button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue |              1 |
@@ -411,9 +391,7 @@ Feature: Private Auctions page regression
       Given Publisher user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-    And Click on the following create button
-      | CreateButtonName       |
-      | Create Private Auction |
+    And Click on the Pricate Auction create button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue |              1 |
@@ -446,9 +424,7 @@ Feature: Private Auctions page regression
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-    And Click on the following create button
-      | CreateButtonName       |
-      | Create Private Auction |
+    And Click on the Pricate Auction create button
     And Click on Save Private Auction & Close button
     Then Verify following errors are displayed near save button
     |The Publisher Name field is required|
@@ -474,9 +450,7 @@ Feature: Private Auctions page regression
   Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-    And Click on the following create button
-      | CreateButtonName       |
-      | Create Private Auction |
+    And Click on the Pricate Auction create button
     And Click on Save Private Auction & Close button
     Then Check only one error "The Date Range field is required" is present for date
      And Enter the following data in the general card of private auction
@@ -551,9 +525,7 @@ Feature: Private Auctions page regression
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-    And Click on the following create button
-      | CreateButtonName       |
-      | Create Private Auction |
+    And Click on the Pricate Auction create button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue |              1 |
@@ -671,9 +643,7 @@ Feature: Private Auctions page regression
      Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-    And Click on the following create button
-      | CreateButtonName       |
-      | Create Private Auction |
+    And Click on the Pricate Auction create button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue |              1 |

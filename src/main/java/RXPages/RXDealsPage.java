@@ -383,6 +383,7 @@ public class RXDealsPage extends RXBasePage {
 	// TO DO: Check if this method works in other menus.
 
 	public void selectPrivateAuctionByName(String name) {
+		driverWait().until(ExpectedConditions.elementToBeClickable(privateAuctionDropDown));
 		privateAuctionDropDown.click();
 		selectValueFromDropdown(name);
 		enteredDateRange=dateRange.getAttribute("value");
