@@ -208,10 +208,10 @@ Feature: Adspots page regression
     And Click on save button
     Then Verify error messages for sizes and floor price for the following cards
       | Card          | SizeErrorMsg                       | FloorPriceErrorMsg                          |
-      | General       | Default Ad Sizes must be 1 or less | Floor price must be between 0 and 10,000.00 |
-      | Banner        | Banner Ad Sizes must be 1 or less  | Floor price must be between 0 and 10,000.00 |
-      | Native        |                                    | Floor price must be between 0 and 10,000.00 |
-      | InBannerVideo | Video Ad Sizes must be 1 or less   | Floor price must be between 0 and 10,000.00 |
+      | General       | Default Ad Sizes must be 1 or less | A valid price is between 0.00 and 999,999.99 |
+      | Banner        | Banner Ad Sizes must be 1 or less  | A valid price is between 0.00 and 999,999.99 |
+      | Native        |                                    | A valid price is between 0.00 and 999,999.99 |
+      | InBannerVideo | Video Ad Sizes must be 1 or less   | A valid price is between 0.00 and 999,999.99 |
 
 
   Scenario: Verify successful creation and updation of an adspot
@@ -781,6 +781,7 @@ Feature: Adspots page regression
     Then Enter the following data in the general card of adspot
       | FieldName           | Value     | ListValueIndex |
       | Publisher Name      | Viber     |                |
+      | Active              | Inactive  |                |
       | Ad Spot Name        | Auto_Test |                |
       | Related Media       | ListValue | 1              |
       | Categories          | ListValue | 2              |
@@ -859,6 +860,7 @@ Feature: Adspots page regression
     Then Enter the following data in the general card of adspot
       | FieldName           | Value     | ListValueIndex |
       | Publisher Name      | Viber     |                |
+      | Active              | Inactive  |                |
       | Ad Spot Name        | Auto_Test |                |
       | Related Media       | ListValue | 1              |
       | Categories          | ListValue | 2              |

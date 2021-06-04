@@ -531,7 +531,7 @@ Feature: Private Auctions page regression
       | Publisher Name | ListValue |              1 |
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
-      | Publisher Name | ListValue |              2 |
+      | Publisher Name | Viki      |                |
     Then Verify that warning banner is not under Publisher name
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
@@ -545,9 +545,9 @@ Feature: Private Auctions page regression
       | FieldName |
       | Always on |
     And Select targeting options items
-      | Inventory        | supply-chains and Sons Media |
+      | Inventory        | Viki Android                 |
       | Device           | Phone                        |
-      | Operating System | Android                      |
+      | Operating System | Windows                      |
       | Geo              | Afghanistan                  |
       | Ad Format        | Banner                       |
       | Ad Size          | 120x60                       |
@@ -593,11 +593,11 @@ Feature: Private Auctions page regression
       | Always on |
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
-      | Publisher Name | ListValue |              2 |
+      | Publisher Name | Viki      |              1 |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     And Select targeting options items
-      | Inventory        | supply-chains and Sons Media |
+      | Inventory        | Viki Android |
      And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue |              3 |
@@ -646,7 +646,7 @@ Feature: Private Auctions page regression
     And Click on the Pricate Auction create button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
-      | Publisher Name | ListValue |              1 |
+      | Publisher Name | Viki      |                |
     And "Disable" following toggle fields in create page
       | FieldName |
       | Optimize  |
