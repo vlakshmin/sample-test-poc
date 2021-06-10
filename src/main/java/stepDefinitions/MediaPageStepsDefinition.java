@@ -2,13 +2,13 @@ package stepDefinitions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import cucumber.api.DataTable;
+import cucumber.api.java.en.And;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -21,11 +21,14 @@ import RXUtitities.RXUtile;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
+
 public class MediaPageStepsDefinition extends RXBaseClass {
 
 	RXMediaPage mediaPage;
 	RXNavOptions navOptions;
 	PublisherListPage pubListPgs;
+	RXUtile rxUTL;
 	Logger log = Logger.getLogger(MediaPageStepsDefinition.class);
 
 	public MediaPageStepsDefinition() {
@@ -33,10 +36,19 @@ public class MediaPageStepsDefinition extends RXBaseClass {
 		mediaPage = new RXMediaPage();
 		navOptions = new RXNavOptions();
 		pubListPgs = new PublisherListPage();
-
+		rxUTL = new RXUtile();
 	}
-
+	WebDriverWait wait = new WebDriverWait(driver, 30);
 	JavascriptExecutor js = (JavascriptExecutor) driver;
+
+	public String enteredPublisher;
+	public String enteredMediaName;
+	public String enteredMediaType;
+	public String enteredSiteURL;
+	public String enteredCategory;
+	public String mediaID;
+	List<String> activeMediaIDList = new ArrayList<>();
+	List<String> inactiveMediaIDList = new ArrayList<>();
 //=========================================================================================================	
 	// Verify if user is displayed with media list page on clicking media navigation
 	// link
@@ -47,7 +59,7 @@ public class MediaPageStepsDefinition extends RXBaseClass {
 				+ pubListPgs.logodisplayed());
 		Assert.assertTrue(pubListPgs.logodisplayed());
 		navOptions.expandInventory();
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+//		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.mediaUndrInventory));
 		navOptions.mediaUndrInventory.click();
 
@@ -72,7 +84,7 @@ public class MediaPageStepsDefinition extends RXBaseClass {
 //=========================================================================================================
 
 	@When("^\"(.*)\" a media from the media overview page$")
-	public void verifyHEnableDiableMedia(String action) throws InterruptedException {
+	public void verifyHEnableDisableMedia(String action) throws InterruptedException {
 
 		driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]/div//i")).click();
 		List<WebElement> coulmnData = navOptions.getColumnDataMatchingHeader("Status");
@@ -105,4 +117,284 @@ public class MediaPageStepsDefinition extends RXBaseClass {
 		}
 	}
 
+	@When("^Click on Create Media button$")
+	public void clickOnCreateMediaButton() {
+		wait.until(visibilityOf(mediaPage.createMediaBtn));
+		mediaPage.createMediaBtn.click();
+		wait.until(visibilityOf(mediaPage.createMediaHeader));
+	}
+
+	@When("^Enter the following values in Create Media page$")
+	public void enterTheFollowingValuesInCreateMediaPage(DataTable dt) {
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		String enteredValue = "";
+		for(Map<String, String> stringMap : list){
+			for(String key : stringMap.keySet()){
+				enteredValue = stringMap.get(key);
+				System.out.println("=== select/enter value for " + key + " ===");
+				switch (key){
+					case "Publisher":
+						mediaPage.publisherNameDropdown.click();
+						mediaPage.selectValueFromDropdown(enteredValue);
+						this.enteredPublisher = enteredValue;
+						break;
+					case "Media Name":
+						this.enteredMediaName = enteredValue+ RXUtile.getRandomNumberFourDigit();
+						wait.until(ExpectedConditions.elementToBeClickable(mediaPage.mediaNameInput));
+						mediaPage.mediaNameInput.sendKeys(this.enteredMediaName);
+						break;
+					case "Media Type":
+						mediaPage.mediaTypeDropdown.click();
+						mediaPage.selectValueFromDropdown(enteredValue);
+						this.enteredMediaType = enteredValue;
+						break;
+					case "Site URL":
+						wait.until(ExpectedConditions.elementToBeClickable(mediaPage.siteURLInput));
+						mediaPage.siteURLInput.sendKeys(enteredValue);
+						this.enteredSiteURL = enteredValue;
+						break;
+					case "Categories":
+						mediaPage.categoriesDropdown.click();
+						mediaPage.getCategoriesDropdownCheckbox(enteredValue).click();
+						this.enteredCategory = enteredValue;
+						break;
+				}
+			}
+		}
+	}
+
+	@When("^Click on Save Media button$")
+	public void clickOnSaveMediaButton() {
+		mediaPage.saveButton.click();
+	}
+
+	@And("^Click on Publisher input$")
+	public void clickOnPublisherInput() {
+		mediaPage.publisherNameDropdown.click();
+	}
+
+	@Then("^Verify the following message is displayed when the publisher changed for Media$")
+	public void verifyTheFollowingMessageIsDisplayedWhenThePublisherChangedForMedia(DataTable dt) {
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		for (Map<String, String> stringMap : list) {
+			String expectedMessage = stringMap.get("Message");
+			System.out.println("Banner Message "+ mediaPage.getChangePublisherBannerMsg());
+			Assert.assertEquals(mediaPage.getChangePublisherBannerMsg(), expectedMessage);
+		}
+	}
+
+	@Then("^Verify the Create Media entity page is disabled$")
+	public void verifyTheCreateMediaEntityPageIsDisabled() {
+		//Publisher
+		System.out.println("Publisher field's enabled >>> " + mediaPage.publisherNameInput.isEnabled());
+		Assert.assertFalse(mediaPage.publisherNameInput.isEnabled());
+
+		//Active button
+		System.out.println("Active button's enabled >>> " + mediaPage.activeCheckbox.isEnabled());
+		Assert.assertFalse(mediaPage.activeCheckbox.isEnabled());
+
+		//Media Name
+		System.out.println("Media Name field's enabled >>> " + mediaPage.mediaNameInput.isEnabled());
+		Assert.assertFalse(mediaPage.mediaNameInput.isEnabled());
+
+		//Media Type
+		System.out.println("Media Type dropdown's enabled >>> " + mediaPage.mediaTypeInput.isEnabled());
+		Assert.assertFalse(mediaPage.mediaTypeInput.isEnabled());
+
+		//Site URL
+		System.out.println("Site URL field's enabled >>> " + mediaPage.siteURLInput.isEnabled());
+		Assert.assertFalse(mediaPage.siteURLInput.isEnabled());
+
+		//Categories
+		System.out.println("Categories field's enabled >>> " + mediaPage.categoriesInput.isEnabled());
+		Assert.assertFalse(mediaPage.categoriesInput.isEnabled());
+
+		//Save Media
+		System.out.println("Save Media button's enabled >>> " + mediaPage.saveButton.isEnabled());
+		Assert.assertFalse(mediaPage.saveButton.isEnabled());
+	}
+
+	@Then("^Verify the Create Media page is filled with data$")
+	public void verifyTheCreateMediaPageIsFilledWithData() {
+		//Publisher
+		System.out.println("Publisher field's value >>> " + mediaPage.publisherNameDropdown.getText());
+		Assert.assertEquals(mediaPage.publisherNameDropdown.getText().trim(), this.enteredPublisher);
+
+		//Media Name
+		System.out.println("Media Name field's value >>> " + mediaPage.mediaNameInput.getAttribute("value"));
+		Assert.assertEquals(mediaPage.mediaNameInput.getAttribute("value"), this.enteredMediaName);
+
+		//Media Type
+		System.out.println("Media Type field's value >>> " + mediaPage.mediaTypeDropdown.getText().trim());
+		Assert.assertEquals(mediaPage.mediaTypeDropdown.getText().trim(), this.enteredMediaType);
+
+		//Site URL
+		System.out.println("Site URL field's value >>> " + mediaPage.siteURLInput.getAttribute("value"));
+		Assert.assertEquals(mediaPage.siteURLInput.getAttribute("value"), this.enteredSiteURL);
+
+		//Categories
+		System.out.println("Categories field's value >>> " + mediaPage.categoriesDropdown.getText().trim());
+		Assert.assertEquals(mediaPage.categoriesDropdown.getText().trim(), this.enteredCategory);
+	}
+
+	@Then("^Verify the validation errors display near Save Media button$")
+	public void verifyTheValidationErrorsDisplayNearSaveMediaButton(DataTable dt) {
+		js.executeScript("arguments[0].scrollIntoView();",mediaPage.validationErrorsPanel);
+		getDataFromTable(dt).forEach(e ->
+				Assert.assertTrue(mediaPage.checkIfErrorIsDisplayed(e.getValue())));
+	}
+
+	@When("^Select publisher by name: \"([^\"]*)\" in Create Media page$")
+	public void selectPublisherByNameInCreateMediaPage(String arg0) throws Throwable {
+		mediaPage.publisherNameDropdown.click();
+		mediaPage.selectValueFromDropdown(arg0);
+	}
+
+	@Then("^Verify the validation error does not display in Create Media page$")
+	public void verifyTheValidationErrorDoesNotDisplayInCreateMediaPage(DataTable dt) {
+		js.executeScript("arguments[0].scrollIntoView();",mediaPage.validationErrorsPanel);
+		getDataFromTable(dt).forEach(e ->
+				Assert.assertFalse(mediaPage.checkIfErrorIsDisplayed(e.getValue())));
+	}
+
+	@When("^Enter \"([^\"]*)\" into Media Name in Create Media page$")
+	public void enterIntoMediaNameInCreateMediaPage(String arg0) throws Throwable {
+		wait.until(ExpectedConditions.elementToBeClickable(mediaPage.mediaNameInput));
+		mediaPage.mediaNameInput.sendKeys(arg0 + RXUtile.getRandomNumberFourDigit());
+	}
+
+	@When("^Select Media Type by value: \"([^\"]*)\" in Create Media page$")
+	public void selectMediaTypeByValueInCreateMediaPage(String arg0) throws Throwable {
+		mediaPage.mediaTypeDropdown.click();
+		mediaPage.selectValueFromDropdown(arg0);
+	}
+
+	@When("^Enter \"([^\"]*)\" into Site URL in Create Media page$")
+	public void enterIntoSiteURLInCreateMediaPage(String arg0) throws Throwable {
+		wait.until(ExpectedConditions.elementToBeClickable(mediaPage.siteURLInput));
+		mediaPage.siteURLInput.sendKeys(arg0);
+	}
+
+	@Then("^Verify no validation errors display in Create Media page$")
+	public void verifyNoValidationErrorsDisplayInCreateMediaPage() {
+		js.executeScript("arguments[0].scrollIntoView();",mediaPage.saveButton);
+		Assert.assertFalse(mediaPage.isElementPresent(mediaPage.validationErrorsCssPath));
+	}
+
+	@When("^Select \"([^\"]*)\" \"([^\"]*)\" media in list view$")
+	public void selectActiveMediaInListView(String count, String status) throws Throwable {
+		int rowNum = 0;
+		String mediaID = "";
+		int loop = Integer.parseInt(count);
+		for(int i = 0; i < loop; i++){
+			System.out.println("select "+ status + " media loop >>> " + loop);
+			for(int j = 0; j < mediaPage.statusColumnsMediaTable.size(); j++){
+				String value = mediaPage.statusColumnsMediaTable.get(j).getText().trim();
+				System.out.println("status column value >>> " + value);
+				if(value.equals(status)){
+					rowNum = j + 1;
+					System.out.println(status + " in row number >>> " + rowNum);
+					if(!mediaPage.verifyIfCheckboxIsChecked(rowNum)){
+						mediaPage.getCheckboxInSpecifiedRowInMediaTable(rowNum).click();
+						mediaID = mediaPage.getMediaIDElemtByRowNumber(rowNum).getText().trim();
+						if(status.equals("Active")){
+							System.out.println("Store Active media ID"  + mediaID + " to activeMediaIDList");
+							this.activeMediaIDList.add(mediaID);
+						}else{
+							System.out.println("Store Inactive media ID"  + mediaID +" to inactiveMediaIDList");
+							this.inactiveMediaIDList.add(mediaID);
+						}
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	@Then("^Verify the following buttons are present in Media page$")
+	public void verifyTheFollowingButtonsArePresentInMediaPage(DataTable dt) {
+		getDataFromTable(dt).forEach(e ->
+				Assert.assertTrue(mediaPage.verifyButtonDisplaysInHeaderOfMediaPage(e.getValue())));
+	}
+
+	@When("^Click on Edit Media button$")
+	public void clickOnEditMediaButton() {
+		mediaPage.clickOverViewEditbutton();
+	}
+
+	@Then("^Verify Edit Media page displays$")
+	public void verifyEditMediaPageDisplays() {
+		wait.until(ExpectedConditions.visibilityOf(mediaPage.saveButton));
+		Assert.assertTrue(mediaPage.pageTitle.getText().contains("Edit Media"));
+	}
+
+	@When("^Close Edit Media page$")
+	public void closeEditMediaPage() {
+		mediaPage.closeEditMediatBtn.click();
+	}
+
+	@When("^Click on \"([^\"]*)\" Media button$")
+	public void clickOnDeactivateActivateMediaButton(String arg0) throws Throwable {
+		if(arg0.equals("Deactivate")){
+			mediaPage.clickOverViewDisablebutton();
+		}else{
+			mediaPage.clickOverViewEnablebutton();
+		}
+		wait.until(ExpectedConditions.visibilityOf(mediaPage.createMediaBtn));
+	}
+
+	@Then("^Verify the selected \"([^\"]*)\" media change to \"([^\"]*)\" status in Media list view$")
+	public void verifyTheSelectedMediaChangeToStatusInMediaListView(String status, String expectedStatus) throws Throwable {
+		if(status.equals("Inactive")){
+			for(String id : this.inactiveMediaIDList){
+				System.out.println("Media ID >>> " + id);
+				Assert.assertEquals(mediaPage.getStatusElemtByID(id).getText().trim(), expectedStatus);
+			}
+			this.inactiveMediaIDList.clear();
+		}else{
+			for(String id : this.activeMediaIDList){
+				System.out.println("Media ID >>> " + id);
+				Assert.assertEquals(mediaPage.getStatusElemtByID(id).getText().trim(), expectedStatus);
+			}
+			this.activeMediaIDList.clear();
+		}
+	}
+
+	@When("^Enter \"([^\"]*)\" into Search input in Media page$")
+	public void enterIntoSearchInputInMediaPage(String arg0) throws Throwable {
+		mediaPage.searchInput.sendKeys(arg0);
+		Thread.sleep(2000);
+	}
+
+	@Then("^Verify that search results displayed and publisher in search results \"([^\"]*)\"$")
+	public void verifyThatSearchResultsDisplayedAndPublisherInSearchResults(String arg0) throws Throwable {
+		int itemCount = mediaPage.mediaTableRows.size();
+		String classAttribute = mediaPage.mediaTableRows.get(0).getAttribute("class");
+		System.out.println("mediaPage.mediaTableRows.size() >>> " + itemCount);
+		System.out.println("The first item class attribute >>> " + classAttribute);
+		if(itemCount == 1 && classAttribute.contains("empty")){
+			Assert.fail("No data available");
+		}else{
+			for(WebElement publisherElemt : mediaPage.publisherColumnsMediaTable){
+				Assert.assertEquals(publisherElemt.getText().trim(), arg0);
+			}
+		}
+	}
+
+	@Then("^Verify following columns are displayed by default in the Media list$")
+	public void verifyFollowingColumnsAreDisplayedByDefaultInTheMediaList(DataTable dt) {
+        getDataFromTable(dt).forEach(e ->
+                Assert.assertTrue(mediaPage.verifyHeaderDisplayInMediaTable(e.getValue())));
+	}
+
+	@Then("^Verify that Active toggle set to true$")
+	public void verifyThatActiveToggleSetToTrue() {
+		Assert.assertEquals(mediaPage.activeCheckbox.getAttribute("aria-checked"), "true");
+	}
+
+	@Then("^Verify that Active as a value displayed in Status column$")
+	public void verifyThatActiveAsAValueDisplayedInStatusColumn() {
+		wait.until(ExpectedConditions.visibilityOf(mediaPage.createMediaBtn));
+		Assert.assertEquals(mediaPage.getStatusElemtByMediaName(this.enteredMediaName).getText().trim(), "Active");
+	}
 }
