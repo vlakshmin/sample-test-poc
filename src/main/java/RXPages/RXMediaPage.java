@@ -53,9 +53,9 @@ public class RXMediaPage extends RXBaseClass {
 	// overview buttons
 	@FindBy(xpath = "//button/span[text()='Edit Media']")
 	public WebElement overviewEditbutton;
-	@FindBy(xpath = "//button/span[text()='Deactivate Media']")
+	@FindBy(xpath = "//span[text()='Deactivate Media']/parent::button")
 	public WebElement overviewDisablebutton;
-	@FindBy(xpath = "//button/span[text()='Activate Media']")
+	@FindBy(xpath = "//span[text()='Activate Media']/parent::button")
 	public WebElement overviewEnablebutton;
 
 	//Create Media page
