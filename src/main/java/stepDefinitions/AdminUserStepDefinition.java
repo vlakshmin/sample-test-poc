@@ -1,8 +1,13 @@
 package stepDefinitions;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -10,8 +15,10 @@ import org.testng.Assert;
 
 import RXBaseClass.RXBaseClass;
 import RXPages.PublisherListPage;
+import RXPages.RXDealsPage;
 import RXPages.RXNavOptions;
 import RXPages.RXUsers;
+import cucumber.api.DataTable;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
@@ -19,6 +26,7 @@ public class AdminUserStepDefinition extends RXBaseClass {
 	RXUsers rxUserPage;
 	RXNavOptions navOptions;
 	PublisherListPage pubListPgs;
+	RXDealsPage dealsPage;
 	Logger log = Logger.getLogger(AdminUserStepDefinition.class);
 	
 	//Variables
@@ -33,6 +41,8 @@ public class AdminUserStepDefinition extends RXBaseClass {
 	static int userId;
 	static int modifyUserId;
 	static String roleType;
+	String enteredUserName = "";
+	List<String> enteredUserNameList = new ArrayList<String>();
 	
 	public AdminUserStepDefinition()
 	{
@@ -40,9 +50,10 @@ public class AdminUserStepDefinition extends RXBaseClass {
 		rxUserPage = new RXUsers();
 		navOptions = new RXNavOptions();
 		pubListPgs = new PublisherListPage();
-		
+		dealsPage = new RXDealsPage();
 	}
 	
+	WebDriverWait wait = new WebDriverWait(driver, 10);
 	//==============================================================================================================
 	// Verify if user is displayed with list of user accounts for admin login.
 	
@@ -532,5 +543,162 @@ public class AdminUserStepDefinition extends RXBaseClass {
 			
 		}
 		
+		@When("^Click on SAVE USER button$")
+		public void click_on_SAVE_USER_button() {
+			rxUserPage.saveButton.click();
+			wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
+		}
+
+		@When("^Enter the following data in the Create User page$")
+		public void enter_the_following_data_in_the_Create_User_page(DataTable dt) throws Throwable {
+			List<String> list = dt.asList(String.class);
+			log.info("Fetch the test data from");
+			tesData=rxUserPage.getTestData("Create");
+			for (int i = 0; i < list.size(); i++) {
+				String fieldName = list.get(i);
+//				String value = list.get(i).get("Value");
+				switch (fieldName) {
+				case "Publisher":
+					rxUserPage.dropDwonSelect.click();
+					dealsPage.selectPublisherByName(tesData.get(0));
+					wait.until(ExpectedConditions.visibilityOf(rxUserPage.userName));
+					break;
+				case "Username":
+					while (!rxUserPage.userName.getAttribute("value").equals("")) {
+						rxUserPage.userName.sendKeys(Keys.BACK_SPACE);
+					}
+					uAcName=tesData.get(1);
+					enteredUserName = uAcName;
+					rxUserPage.userName.sendKeys(uAcName);
+					break;
+				case "Email":
+					while (!rxUserPage.userEmail.getAttribute("value").equals("")) {
+						rxUserPage.userEmail.sendKeys(Keys.BACK_SPACE);
+					}
+					uEMail=tesData.get(2);
+					rxUserPage.userEmail.sendKeys(uEMail);
+					break;
+				case "Password":
+					while (!rxUserPage.userPassword.getAttribute("value").equals("")) {
+						rxUserPage.userPassword.sendKeys(Keys.BACK_SPACE);
+					}
+					uPwd=tesData.get(3);
+					rxUserPage.userPassword.sendKeys(uPwd);
+					break;
+				default:
+					Assert.fail(fieldName + " is not present.");
+				}
+			}
+		}
 		
+		@Then("^Select one \"([^\"]*)\" User item$")
+		public void select_one_User_item(String active) {
+			enteredUserNameList.clear();
+			List<WebElement> listActives = driver.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[6]"));
+			for (int k = 0; k < listActives.size(); k++) {
+					String reqActive = listActives.get(k).getText().replaceAll("\\s", "");
+					if (active.equals(reqActive)) {
+						rxUserPage.userCheckBox(k+1).click();
+						enteredUserNameList.add(rxUserPage.userName(k+1));
+						break;
+					}
+			}
+		}
+
+		@Then("^Verify that following buttons are present in User list page$")
+		public void verify_that_following_buttons_are_present_in_User_list_page(DataTable dt) {
+			List<String> buttons = dt.asList(String.class);
+			buttons.forEach(e -> Assert.assertTrue(rxUserPage.toolbarButton(e).isDisplayed(), e + " is not present."));
+		}
+
+		@When("^Click \"([^\"]*)\" button in User list page$")
+		public void click_button_in_User_list_page(String buttonName) {
+			rxUserPage.toolbarButton(buttonName).click();
+			if(!buttonName.equals("Edit User")) {
+				wait.until(ExpectedConditions.invisibilityOf(rxUserPage.toolbarButton(buttonName)));
+			}
+		}
+
+		@Then("^Edit User pop up is present$")
+		public void edit_User_pop_up_is_present()  {
+			wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
+			wait.until(ExpectedConditions.visibilityOf(driver.findElement(
+					By.xpath("//aside[@class='dialog']/header//div[contains(text(),'" + enteredUserNameList.get(0) + "')]"))));
+		}
+
+		@Then("^Verify the edited User data is matching with its overview list values$")
+		public void verify_the_edited_User_data_is_matching_with_its_overview_list_values()  {
+			String userName = "";
+			String enteredName = enteredUserName.replaceAll("\\s", "");
+			List<WebElement> listNames = driver
+					.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[3]/a"));
+			for (int k = 0; k < listNames.size(); k++) {
+				userName = listNames.get(k).getText().replaceAll("\\s", "");
+				if (enteredName.equals(userName)) {
+					break;
+				}
+			}
+			Assert.assertEquals(userName, enteredName);
+		}
+
+		@Then("^\"([^\"]*)\" is displayed for the created User$")
+		public void is_displayed_for_the_created_User(String arg1)  {
+			List<WebElement> listOfNames = driver
+					.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[4]/a"));
+			for(int i=0;i<enteredUserNameList.size();i++) {
+				for (int k = 0; k < listOfNames.size(); k++) {
+					String reqName = listOfNames.get(k).getText().replaceAll("\\s", "");
+					if (enteredUserNameList.get(i).equals(reqName)) {
+						Assert.assertEquals(rxUserPage.userActive(k+1).getText(), arg1, rxUserPage.userActive(k+1).getText() +" is displayed for the created private auction");
+						break;
+					}
+				}
+			}
+		}
+
+		@Then("^Select (\\d+) \"([^\"]*)\" and (\\d+) \"([^\"]*)\" User items$")
+		public void select_and_User_items(int num1, String inactive, int num3, String active){
+			enteredUserNameList.clear();
+			List<WebElement> listActives = driver.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[6]"));
+			for (int k = 0; k < listActives.size(); k++) {
+					String reqActive = listActives.get(k).getText().replaceAll("\\s", "");
+					if (active.equals(reqActive) && num3 > 0) {
+						rxUserPage.userCheckBox(k+1).click();
+						enteredUserNameList.add(rxUserPage.userName(k+1));
+						num3--;
+					}
+					if(inactive.equals(reqActive) && num1 > 0) {
+						rxUserPage.userCheckBox(k+1).click();
+						enteredUserNameList.add(rxUserPage.userName(k+1));
+						num1--;
+					}
+					if(num1 == 0 && num3 == 0) {
+						break;
+					}
+			}
+			Assert.assertEquals(num1,0,num1 +" Inactive User is not selected.");
+			Assert.assertEquals(num3,0,num3 +" Active User is not selected.");
+		}
+
+		@Then("^Verify that active toggle button is present in the top left corner of the form and is enabled by default$")
+		public void verify_that_active_toggle_button_is_present_in_the_top_left_corner_of_the_form_and_is_enabled_by_default() {
+			Assert.assertTrue(rxUserPage.toggleField("Active").isDisplayed());
+			Assert.assertEquals(rxUserPage.toggleFieldIsEnabledForCreatePage("Active"), "true");
+		}
+
+		@Then("^Verify that the user created/edited should be \"([^\"]*)\"$")
+		public void verify_that_the_user_created_edited_should_be(String active) {
+//			String userName = "";//div[@class='v-data-table__wrapper']//tbody/tr/td[6]
+//			String enteredName = enteredUserName.replaceAll("\\s", "");
+//			;
+//			List<WebElement> listNames = driver
+//					.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[3]/a"));
+//			for (int k = 0; k < listNames.size(); k++) {
+//				userName = listNames.get(k).getText().replaceAll("\\s", "");
+//				if (enteredName.equals(userName)) {
+//					break;
+//				}
+//			}
+			Assert.assertEquals(rxUserPage.getActiveWithName(enteredUserName), active);
+		}
 }

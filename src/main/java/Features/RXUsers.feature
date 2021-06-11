@@ -210,3 +210,114 @@ Scenario:  Verify non default column names in the users overview page
 	|Create Date|
 	|Update Date|
 	
+Scenario:  94.Verify that errors are displayed near save button on Create/update date for Users
+  Given admin user login to RX UI with valid username and password 
+	When click on User option under accounts.
+	Then user displayed with User page.
+	When click on create user.
+	And Click on SAVE USER button
+	Then Verify following errors are displayed near save button
+	|The Publisher field is required|
+  |The Username field is required|
+  |The Email field is required|
+  When Enter the following data in the Create User page
+  |Publisher|
+  Then Verify that error disapear according to fields filled
+  |The Publisher field is required|
+  When Enter the following data in the Create User page
+  | Username           | 
+  Then Verify that error disapear according to fields filled
+    |The Username field is required|
+  When Enter the following data in the Create User page
+  |Email|
+  Then Verify that error disapear according to fields filled
+  |The Email field is required|
+  
+Scenario:  118.Verify that Activate Deactivate buttons are displayed at same time for Users list page
+  Given admin user login to RX UI with valid username and password 
+	When click on User option under accounts.
+	Then user displayed with User page.
+	And Select one "Active" User item
+    Then Verify that following buttons are present in User list page
+    |Edit User|
+    |Deactivate User|
+    |Activate User|
+    When Click "Edit User" button in User list page
+    Then Edit User pop up is present
+    When Enter the following data in the Create User page
+  | Username           | 
+    Then Click on SAVE USER button
+    Then Verify the edited User data is matching with its overview list values
+    When Click "Activate User" button in User list page
+    Then "Active" is displayed for the created User
+    And Select one "Active" User item
+    When Click "Deactivate User" button in User list page
+    Then "Inactive" is displayed for the created User
+    And Select 1 "Inactive" and 1 "Active" User items
+    Then Verify that following buttons are present in User list page
+    |Deactivate User|
+    |Activate User|
+    When Click "Deactivate User" button in User list page
+    Then "Inactive" is displayed for the created User
+     And Select 2 "Inactive" and 2 "Active" User items
+    Then Verify that following buttons are present in User list page
+    |Deactivate User|
+    |Activate User|
+    When Click "Deactivate User" button in User list page
+    Then "Inactive" is displayed for the created User
+    And Select 1 "Inactive" and 1 "Active" User items
+    Then Verify that following buttons are present in User list page
+    |Deactivate User|
+    |Activate User|
+    When Click "Activate User" button in User list page
+    Then "Active" is displayed for the created User
+    And Select one "Inactive" User item
+    Then Verify that following buttons are present in User list page
+    |Edit User|
+    |Deactivate User|
+    |Activate User|
+    When Click "Edit User" button in User list page
+    Then Edit User pop up is present
+    And Enter the following data in the Create User page
+      | Username           | 
+    Then Click on SAVE USER button
+    Then Verify the edited User data is matching with its overview list values
+    When Click "Deactivate User" button in User list page
+    Then "Inactive" is displayed for the created User
+    And Select one "Inactive" User item
+     When Click "Activate User" button in User list page
+    Then "Active" is displayed for the created User
+    And Select 2 "Inactive" and 2 "Active" User items
+    Then Verify that following buttons are present in User list page
+    |Deactivate User|
+    |Activate User|
+    When Click "Activate User" button in User list page
+    Then "Active" is displayed for the created User
+   
+Scenario:  166.Verify presence of active toggle button in users entity page
+  Given admin user login to RX UI with valid username and password 
+	When click on User option under accounts.
+	Then user displayed with User page.
+	When click on create user.
+	Then Verify that active toggle button is present in the top left corner of the form and is enabled by default 
+	When "Enable" following toggle fields in create page
+      | FieldName |
+      | Active    |
+	When Enter the following data in the Create User page
+   |Publisher|
+   | Username  | 
+   |Email|
+   |Password|
+  And Click on SAVE USER button
+  Then Verify that the user created/edited should be "Active"
+  And Select one "Active" User item
+  When Click "Edit User" button in User list page
+  Then Edit User pop up is present
+  When "Disable" following toggle fields in create page
+  | FieldName |
+      | Active    |
+  When Enter the following data in the Create User page
+  | Username           | 
+  Then Click on SAVE USER button
+  Then Verify that the user created/edited should be "Inactive"
+	
