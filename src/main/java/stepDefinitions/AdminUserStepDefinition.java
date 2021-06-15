@@ -547,12 +547,14 @@ public class AdminUserStepDefinition extends RXBaseClass {
 		
 		@When("^Click on SAVE USER button$")
 		public void click_on_SAVE_USER_button() {
+			wait.until(ExpectedConditions.visibilityOf(rxUserPage.saveButton));
 			rxUserPage.saveButton.click();
 			
 		}
 		
 		@Then("^Create User page should be closed$")
 		public void create_User_page_should_be_closed() {
+			driver.findElement(By.xpath("//div[@class='v-alert__wrapper']")).isDisplayed();
 			wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
 		}
 

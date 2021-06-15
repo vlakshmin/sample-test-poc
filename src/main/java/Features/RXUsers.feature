@@ -211,7 +211,7 @@ Scenario:  Verify non default column names in the users overview page
 	|ColumnName|
 	|Create Date|
 	|Update Date|
-	
+	@Ignore
 Scenario:  94.Verify that errors are displayed near save button on Create/update date for Users
   Given admin user login to RX UI with valid username and password 
 	When click on User option under accounts.
@@ -234,7 +234,7 @@ Scenario:  94.Verify that errors are displayed near save button on Create/update
   |Email|
   Then Verify that error disapear according to fields filled
   |The Email field is required|
-  
+  @Ignore
 Scenario:  118.Verify that Activate Deactivate buttons are displayed at same time for Users list page
   Given admin user login to RX UI with valid username and password 
 	When click on User option under accounts.
