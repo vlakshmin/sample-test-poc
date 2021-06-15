@@ -548,8 +548,14 @@ public class AdminUserStepDefinition extends RXBaseClass {
 		@When("^Click on SAVE USER button$")
 		public void click_on_SAVE_USER_button() {
 			js.executeScript("arguments[0].click();",rxUserPage.saveButton);
+			
+		}
+		
+		@Then("^Create User page should be closed$")
+		public void create_User_page_should_be_closed() {
 			wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
 		}
+
 
 		@When("^Enter the following data in the Create User page$")
 		public void enter_the_following_data_in_the_Create_User_page(DataTable dt) throws Throwable {

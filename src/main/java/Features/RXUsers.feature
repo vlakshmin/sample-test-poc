@@ -247,6 +247,7 @@ Scenario:  118.Verify that Activate Deactivate buttons are displayed at same tim
   When Enter the following data in the Create User page
     | Username           | 
   Then Click on SAVE USER button
+  Then Create User page should be closed
   Then Verify the edited User data is matching with its overview list values
   When Click "Activate User" button in User list page
   Then "Active" is displayed for the created User
@@ -281,6 +282,7 @@ Scenario:  118.Verify that Activate Deactivate buttons are displayed at same tim
   And Enter the following data in the Create User page
       | Username           | 
   Then Click on SAVE USER button
+  Then Create User page should be closed
   Then Verify the edited User data is matching with its overview list values
   When Click "Deactivate User" button in User list page
   Then "Inactive" is displayed for the created User
@@ -309,6 +311,7 @@ Scenario:  166.Verify presence of active toggle button in users entity page
    |Email|
    |Password|
   And Click on SAVE USER button
+  Then Create User page should be closed
   Then Verify that the user created/edited should be "Active"
   And Select one "Active" User item
   When Click "Edit User" button in User list page
@@ -319,6 +322,7 @@ Scenario:  166.Verify presence of active toggle button in users entity page
   When Enter the following data in the Create User page
   | Username           | 
   Then Click on SAVE USER button
+  Then Create User page should be closed
   Then Verify that the user created/edited should be "Inactive"
 	
 Scenario:  202.Verify default columns for users list page
@@ -332,7 +336,7 @@ Scenario:  202.Verify default columns for users list page
   |Role|
   |Email|
   |Active/Inactive|
-  
+ 
 Scenario:  203.Verify non-default columns for users list page
   Given admin user login to RX UI with valid username and password 
 	When click on User option under accounts.

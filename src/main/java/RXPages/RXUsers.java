@@ -68,7 +68,7 @@ public class RXUsers extends RXBaseClass {
 	@FindBy(xpath = "//span[2]/div/div/div[2]/div/div/div")  WebElement accountNameMandatoryMsg;
 	@FindBy(xpath = "//span[3]/div/div/div[2]/div/div/div")  WebElement eMailMandatoryMsg;
 	@FindBy(xpath = "//span[1]/div/div/div[2]/div/div/div")  WebElement publisherMandatoryMsg;
-	@FindBy(xpath = "//span/form/div[3]/button/span")  public WebElement saveButton;
+	@FindBy(xpath = "//button[@type='submit']")  public WebElement saveButton;
 	@FindBy(xpath = "//aside/header/div/button/span/i")  WebElement closeBtn;
 	@FindBy(xpath = "//div[@class='table-options']/button")
 		public WebElement tableOptions;
