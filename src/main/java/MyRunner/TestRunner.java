@@ -20,7 +20,10 @@ import cucumber.api.testng.TestNGCucumberRunner;
 @CucumberOptions(
 
 
-		features = "src/main/java/Features/RXMedia.feature",
+		features = {"src/main/java/Features/RXMedia.feature",
+        "src/main/java/Features/Adspots_regression.feature",
+        "src/main/java/Features/PrivateAuction_regression.feature",
+        "src/main/java/Features/RXMedia.feature"},
         glue = {"stepDefinitions"},
         tags = {"~@Ignore"},
         plugin = {"com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html",

@@ -1,34 +1,27 @@
 package RXPages;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Properties;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+import RXUtitities.RXUtile;
+import java.util.HashMap;
+import java.util.Map;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import RXBaseClass.RXBaseClass;
-import RXUtitities.RXUtile;
+import java.util.ArrayList;
+import java.util.List;
 
-public class RXAdspotsPage extends RXBaseClass {
+public class RXAdspotsPage extends RXBasePage {
 	// Utility object
 	RXUtile rxUTL;
 	PublisherListPage pubPage;
-	public String adspotsHeaderStr = "AdSpots";
+	public String adspotsHeaderStr = "Ad Spots";
+	public static Map<String,String> adSpotTypeEnteredValues = new HashMap<>();
 
 	// Seats page heading
-	@FindBy(xpath = "//h1[text()='AdSpots']")
+	@FindBy(xpath = "//h1[text()='Ad Spots']")
 	WebElement adspotsPageHeader;
 	// Xpath of rows to get the total number of row and column displayed in the
 	// page.
@@ -37,31 +30,43 @@ public class RXAdspotsPage extends RXBaseClass {
 	@FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr[1]/td"))
 	public List<WebElement> adspotsTableColumns;
 	@FindBy(xpath = "//*[@class='v-text-field__slot']/input")
-	WebElement adSpotsSearchField;
+	public WebElement adSpotsSearchField;
 
 	// overview buttons
-	@FindBy(xpath = "//button/span[text()='Edit AdSpot']")
-	public WebElement overviewEditbutton;
-	@FindBy(xpath = "//button/span[text()='Deactivate AdSpot']")
-	public WebElement overviewDisablebutton;
+	@FindBy(xpath = "//button/span[text()='Create Ad Spot']")
+	public WebElement overviewCreateButton;
+	@FindBy(xpath = "//button/span[text()='Edit Ad Spot']")
+	public WebElement overviewEditButton;
+	@FindBy(xpath = "//button/span[text()='Deactivate Ad Spot']")
+	public WebElement overviewDisableButton;
 	@FindBy(xpath = "//div[@class='portal vue-portal-target']/button[2]/span")
-	public WebElement overviewEnablebutton;
-	@FindBy(xpath = "//button/span[text()='Activate AdSpots']")
-	public WebElement overviewMultipleEnablebutton;
-	@FindBy(xpath = "//button/span[text()='Deactivate AdSpots']")
-	public WebElement overviewMultipleDisablebutton;
+	public WebElement overviewSecondButton;
+	@FindBy(xpath = "//div[@class='portal vue-portal-target']/button[3]/span")
+	public WebElement overviewThirdButton;
+	@FindBy(xpath = "//div[@class='portal vue-portal-target']")
+	public WebElement overviewButtonsBlock;
+	@FindBy(xpath = "//button/span[text()='Activate Ad Spots']")
+	public WebElement overviewMultipleEnableButton;
+	@FindBy(xpath = "//button/span[text()='Deactivate Ad Spots']")
+	public WebElement overviewMultipleDisableButton;
+	@FindBy(xpath = "//*[@class='v-input__icon v-input__icon--clear']/button")
+	public WebElement clearSearchButton;
 	// Create/Edit Page labels
+	@FindBy(xpath = "//div[@class='hidden-xs-only vue-portal-target']")
+	public WebElement createPageHeader;
 	@FindBy(xpath = "//label[text()='Publisher Name']/following-sibling::div[@class='v-select__selections']")
 	public WebElement publisherNameDropDown;
 	@FindBy(xpath = "//label[text()='Publisher Name']/following-sibling::div[@class='v-select__selections']/div")
 	public WebElement publisherNameField;
-	@FindBy(xpath = "//label[text()='AdSpot Name']/following-sibling::input")
+	@FindBy(xpath = "//label[text()='Ad Spot Name']/following-sibling::input")
 	public WebElement adSpotNameField;
 	@FindBy(xpath = "//aside[@class='dialog']//div[@class='v-toolbar__title']/div")
 	public WebElement adSpotNameHeader;
 	@FindBy(xpath = "//aside[@class='dialog']//div[@class='v-toolbar__content']/button")
 	public WebElement adSpotCloseSideDialog;
-	
+	@FindBy(xpath = "//form/div[5]//label[text()='Ad Sizes']/following-sibling::div[@class='v-select__selections']/input")
+	public WebElement adSizeInput;
+
 	@FindBy(xpath = "//label[text()='Related Media']/following-sibling::div[@class='v-select__selections']")
 	public WebElement relatedMediaDropDown;
 	@FindBy(xpath = "//label[text()='Related Media']/following-sibling::div[@class='v-select__selections']/div")
@@ -140,7 +145,7 @@ public class RXAdspotsPage extends RXBaseClass {
 	public WebElement minVideoDurField;
 	@FindBy(xpath = "//form/div[5]//label[text()='Maximum Video Duration']/following-sibling::div[@class='v-select__selections']/div")
 	public WebElement maxVideoDurField;
-	@FindBy(xpath = "//form/div[5]//label[text()='Playback Methods']/following-sibling::div[@class='v-select__selections']")
+	@FindBy(xpath = "//form/div[5]//label[text()='Video Playback Methods']/following-sibling::div[@class='v-select__selections']")
 	public WebElement playbackMethodsDropDown;
 	@FindAll(@FindBy(xpath = "//form/div[5]//label[text()='Playback Methods']/following-sibling::div[@class='v-select__selections']/div"))
 	public List<WebElement> playbackMethodsField;
@@ -155,80 +160,87 @@ public class RXAdspotsPage extends RXBaseClass {
 	// Array for test data
 	static ArrayList<String> testData = new ArrayList<String>();
 
-	// Explicit Wait
-	WebDriverWait wait = new WebDriverWait(driver, 1000);
-
 	// Initialize page factory
 	public RXAdspotsPage() {
 		PageFactory.initElements(driver, this);
 		rxUTL = new RXUtile();
 		pubPage = new PublisherListPage();
-
 	}
 
 	// Get the text of the media page
 	public String getPageHeading() {
-
-		WebElement elem = wait.until(ExpectedConditions.visibilityOf(adspotsPageHeader));
+		WebElement elem = driverWait().until(ExpectedConditions.visibilityOf(adspotsPageHeader));
 		System.out.println(elem.getText());
 		return elem.getText();
-
 	}
 
 	public void searchAdspots(String text) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		WebElement elem = wait.until(ExpectedConditions.visibilityOf(adSpotsSearchField));
-		boolean isNotDisplayed = driver
-				.findElements(By.xpath("//*[@class='v-input__icon v-input__icon--clear']/button[@disabled='disabled']"))
-				.size() != 0;
-		if (!isNotDisplayed) {
-			driver.findElement(By.xpath("//*[@class='v-input__icon v-input__icon--clear']/button")).click();
+		WebElement elem = driverWait().until(ExpectedConditions.visibilityOf(adSpotsSearchField));
+		if(clearSearchButton.isEnabled()) {
+			clearSearchButton.click();
 		}
-        Thread.sleep(8000);
 		elem.sendKeys(text);
-
 	}
 
-	public void clickOverViewEditbutton() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.visibilityOf(overviewEditbutton));
-		if (overviewEditbutton.isDisplayed()) {
-			overviewEditbutton.click();
+	public void clickOverViewEditButton() {
+		driverWait().until(ExpectedConditions.visibilityOf(overviewEditButton));
+		if (overviewEditButton.isDisplayed()) {
+			overviewEditButton.click();
 		}
 	}
 
 	public void clickOverViewEnablebutton() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.visibilityOf(overviewEnablebutton));
-		String enableText = overviewEnablebutton.getText().replaceAll("\\s", "");
+		driverWait().until(ExpectedConditions.visibilityOf(overviewSecondButton));
+		String enableText = overviewThirdButton.getText().replaceAll("\\s", "");
 		if (enableText.equals("ACTIVATEADSPOT")) {
-			overviewEnablebutton.click();
+			overviewThirdButton.click();
 		}
 	}
 
 	public void clickOverViewDisablebutton() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.visibilityOf(overviewDisablebutton));
-		if (overviewDisablebutton.isDisplayed()) {
-			overviewDisablebutton.click();
+		driverWait().until(ExpectedConditions.visibilityOf(overviewDisableButton));
+		String enableText = overviewSecondButton.getText().replaceAll("\\s", "");
+		if (enableText.equals("DEACTIVATEADSPOT")) {
+			overviewSecondButton.click();
 		}
 	}
-	
-	
+
+
 	public void clickOverViewMultipleEnablebuttons() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.visibilityOf(overviewMultipleEnablebutton));
-		if (overviewMultipleEnablebutton.isDisplayed()) {
-			overviewMultipleEnablebutton.click();
+		driverWait().until(ExpectedConditions.visibilityOf(overviewMultipleEnableButton));
+		if (overviewMultipleEnableButton.isDisplayed()) {
+			overviewMultipleEnableButton.click();
 		}
 	}
 
 	public void clickOverViewMultipleDisablebuttons() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.visibilityOf(overviewMultipleDisablebutton));
-		if (overviewMultipleDisablebutton.isDisplayed()) {
-			overviewMultipleDisablebutton.click();
+		driverWait().until(ExpectedConditions.visibilityOf(overviewMultipleDisableButton));
+		if (overviewMultipleDisableButton.isDisplayed()) {
+			overviewMultipleDisableButton.click();
 		}
 	}
 
+	public void waitForCreatePageHeaderToBeVisible() {
+		driverWait().until(ExpectedConditions.visibilityOf(createPageHeader));
+	}
+
+	public static Map<String,String> getAdSpotTypeEnteredValues() {
+		return adSpotTypeEnteredValues;
+	}
+
+	public String getCurrencyCode(String value) {
+		switch (value) {
+			case "JPY:":
+				return " ¥";
+			case "USD:":
+				return " $";
+			case "EUR:":
+				return " €";
+			case "RUB:":
+				return " ₽";
+			default:
+				break;
+		}
+		return "";
+	}
 }

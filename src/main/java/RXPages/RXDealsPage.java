@@ -1,5 +1,6 @@
 package RXPages;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -9,15 +10,15 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.*;
 import org.openqa.selenium.support.ui.*;
+import org.openqa.selenium.NoSuchElementException;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
-public class RXDealsPage extends RXBaseClass {
+public class RXDealsPage extends RXBasePage {
 	// Utility object
 	RXUtile rxUTL;
 	PublisherListPage pubPage;
 	public String dealHeaderStr = "Deals";
-	JavascriptExecutor js = (JavascriptExecutor) driver;
 
 	// deals page heading
 	@FindBy(xpath = "//h1[text()='Deals']")
@@ -43,8 +44,7 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement publisherNameInput;
 	@FindBy(xpath="//div[./label[contains(@class,'v-label') and .='Name']]")
 	private WebElement nameInput;
-	@FindAll({@FindBy(xpath = "//div[contains(@role,'listbox') and contains(@class,'v-list')]/div")})
-	public List<WebElement> dropdownValues;
+
 	@FindBy(xpath="//div[contains(@class,'v-input__control') and contains(.,'Currency')]//div[contains(@class,'v-select__selection--comma')]")
 	private WebElement 	currencyOption;
 	@FindBy(xpath="//div[./label[contains(@class,'v-label') and contains(.,'Date')]]")
@@ -69,9 +69,9 @@ public class RXDealsPage extends RXBaseClass {
 
 	@FindBy(xpath = "//label[text()='Publisher Name']/following-sibling::div[@class='v-select__selections']/div")
 	public WebElement publisherNamesEntered;
-	@FindBy(xpath = "//label[text()='Private Auction']/following-sibling::div[@class='v-select__selections']") 
+	@FindBy(xpath = "//label[text()='Private Auction']/following-sibling::div[@class='v-input__append-inner']/div")
 	public WebElement privateAuctionDropDown;
-	@FindBy(xpath = "//label[text()='Private Auction']/following-sibling::div[@class='v-select__selections']/div") 
+	@FindBy(xpath = "//label[text()='Private Auction']/following-sibling::div[@class='v-select__selections']/div")
 	public WebElement privateActionFieldValue;
 	@FindBy(xpath = "//label[text()='Name']/following-sibling::input") 
 	public WebElement dealName;
@@ -85,7 +85,9 @@ public class RXDealsPage extends RXBaseClass {
 	 */
 	@FindBy(xpath = "//label[text()='Date Range']/following-sibling::input" ) 
 	public WebElement dateRange;
-	@FindBy(xpath = "//aside[@class='dialog']//div[@class='v-toolbar__title']/div" ) 
+	@FindBy(xpath = "//label[text()='Date Range']/parent::div/parent::div/following-sibling::div/div/div/div" )
+	public WebElement dateRangeErrorMsg;
+	@FindBy(xpath = "//aside[@class='dialog']//div[@class='v-toolbar__title']/div" )
 	public WebElement dealHeaderName;
 	@FindBy(xpath = "//label[text()='Currency']/following-sibling::div/div" ) 
 	public WebElement currencyValue;
@@ -99,10 +101,12 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement dspValue;
 	@FindBy(xpath = "//label[text()='Floor Price']/following-sibling::input" ) 
 	public WebElement value;
-	
+	@FindBy(xpath = "//label[text()='DSP']/following-sibling::div[@class='v-input__append-inner']/i" )
+	public WebElement dspInfoIcon;
+	@FindBy(xpath = "//div[contains(@class, 'v-tooltip__content')]/span" )
+	public WebElement dspInfo;
+
 	//Deals buyers details
-	@FindBy(xpath = "//tr//td//button[contains(@class,'v-btn--round')]")
-	private WebElement detailsButton;
 	@FindBy(xpath = "//div[contains(@class,'v-list-item__content')]//span[contains(@class,'mb-4')]//following-sibling::span")
 	private WebElement detailsCard;
 	@FindBy(xpath = "//span[@class='v-btn__content' and contains(.,'Add More Seats')]/parent::button" )
@@ -123,6 +127,15 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement dSPDomainAdvertiserPassthroughString;
 	@FindBy(xpath = "//div[contains(@class, 'menuable__content__active')]")
 	public WebElement detailsPopup;
+	@FindBy(css = "div.buyers-card-label > h3")
+	public WebElement buyerCardLabel;
+	@FindBy(xpath = "//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']/input")
+	public WebElement enableBtnInBuyerPanel;
+	@FindBy(xpath = "//div[@class='buyers-card-grid']/button")
+	public WebElement deleteBtnInBuyerPanel;
+	@FindAll(@FindBy(css = "div.buyers-cards > div.cardPadding"))
+	List<WebElement> buyerPanelList;
+
 	/*
 	 * @FindBy(xpath = "//label[text()='Related Proposal']/following-sibling::input"
 	 * ) public WebElement relatedProposal;
@@ -153,7 +166,11 @@ public class RXDealsPage extends RXBaseClass {
 	@FindBy(xpath = "//div[contains(text(),'changing the DSP')]/ancestor::div[@class='v-banner__wrapper']//span[contains(text(),'ACCEPT')]" ) 
 	public WebElement acceptDSPChangeBanner;
 
-	
+	//Change Currency Banner
+	@FindBy(xpath = "//div[contains(@class,'v-banner__text') and contains(text(),'Changing the currency')]" )
+	public WebElement changeCurrencyBannerMsg;
+
+
 	//Save deal
 	@FindBy(xpath = "//button[@type='submit']")
 	public WebElement saveButton;
@@ -173,11 +190,16 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement searchDealId;
 
 
-	@FindBy(xpath = "//table/tbody/tr[1]/td[3]/a")
+	@FindBy(xpath = "//table/tbody/tr[1]/td[4]/a")
 	public WebElement dealNameInListview;
-	
+
+	//validation errors
+	@FindBy(css = "div.v-alert__content > div")
+	public WebElement validationErrorsPanel;
+	public  String validationErrorsCssPath = "div.v-alert__content > div > ul > li";
+
 //	String dealNameInListOne="//table/tbody/tr[1]/td[3]/span/a[contains(text(),";
-	String dealNameInListOne="//table/tbody/tr[1]/td[3]/a[contains(text(),";
+	String dealNameInListOne="//table/tbody/tr[1]/td[4]/a[contains(text(),";
 
 	//Variables
 	public String enteredPrivateAuct;
@@ -238,13 +260,7 @@ public class RXDealsPage extends RXBaseClass {
 		return 	field;
 	}
 
-	public void hoverOverDetailsButton() {
-		wait.until(ExpectedConditions.visibilityOf(detailsButton));
-		new Actions(driver).moveToElement(detailsButton).build().perform();
-		wait.until(ExpectedConditions.attributeToBe(detailsButton, "aria-expanded","true"));
-	}
-
-	public LinkedHashMap<String,String> getDetailsData() {
+	public LinkedHashMap<String,String> getDealsDetailsData() {
 		return detailsCard.findElements(By.xpath("//span[@class='bigger-label']")).stream()
 					.collect(Collectors.toMap(WebElement::getText, e -> {
 						WebElement element = e.findElement(By.xpath("./../p"));
@@ -355,7 +371,9 @@ public class RXDealsPage extends RXBaseClass {
 								.replaceAll("Floor Price","Value")));
 	}
 	public String getErrorMessageTextByField(WebElement element) {
-		return element.findElement(By.xpath("./ancestor::div[2]//div[contains(@class,'v-messages__message')]")).getText();
+		String text = element.findElement(By.xpath("./ancestor::div[@class = 'v-input__control']//div[contains(@class,'v-messages__message')]")).getText();
+		System.out.println(text);
+		return text;
 	}
 	public boolean verifyRequiredFields() {
 		clickSaveDealButton();
@@ -363,27 +381,9 @@ public class RXDealsPage extends RXBaseClass {
 				selectDateButton, floorPriceField, dspList);
 	}
 	// TO DO: Check if this method works in other menus.
-	public void selectValueFromDropdown(String name) {
-		int attempt = 0;
 
-		// Check if list contains parameter name, scroll down if not
-		do {
-			js.executeScript("arguments[0].scrollIntoView(false)", dropdownValues.get(dropdownValues.size() - 1));
-		}
-		while (!dropdownValues.stream()
-				.map(WebElement::getText)
-				.anyMatch(text -> name.equals(text)) && attempt++ < 20);
-
-		// Get web element by name from the method parameter
-		WebElement dropDownElementByName = dropdownValues.stream()
-				.filter(i -> i.getText().equalsIgnoreCase(name))
-				.findFirst()
-				.orElseThrow(() -> new org.openqa.selenium.NoSuchElementException(String.format("Private Auction by the name %s wasn't found.", name)));
-		js.executeScript("arguments[0].scrollIntoView({block: \"center\"})", dropDownElementByName);
-		wait.until(elementToBeClickable(dropDownElementByName));
-		dropDownElementByName.click();
-	}
 	public void selectPrivateAuctionByName(String name) {
+		driverWait().until(ExpectedConditions.elementToBeClickable(privateAuctionDropDown));
 		privateAuctionDropDown.click();
 		selectValueFromDropdown(name);
 		enteredDateRange=dateRange.getAttribute("value");
@@ -407,7 +407,11 @@ public class RXDealsPage extends RXBaseClass {
 	public void enterValue(String dealValue)
 	{
 		value.sendKeys(dealValue);
-		enteredValue=value.getAttribute("value");
+//		enteredValue=value.getAttribute("value");
+		BigDecimal bd = new BigDecimal(dealValue);
+		enteredValue = String.valueOf(bd.setScale(2, BigDecimal.ROUND_HALF_UP));
+		System.out.println("Floor Price's entered value >>> " + dealValue);
+		System.out.println("Format Floor Price's entered value >>> " + enteredValue);
 			
 	}
 	public void clickBuyerActivationToggle(String action)
@@ -625,7 +629,7 @@ public class RXDealsPage extends RXBaseClass {
 		js.executeScript("arguments[0].scrollIntoView();",driver.findElement(By.xpath(buyerEnableDisable+"["+n+"]")));
 		return driver.findElement(By.xpath(buyerEnableDisable+"["+n+"]"));
 	}
-	
+
 	public WebElement buyerDelete(int n) 
 	{
 		js.executeScript("arguments[0].scrollIntoView();",driver.findElement(By.xpath(buyerDelete+"["+n+"]")));
@@ -640,5 +644,50 @@ public class RXDealsPage extends RXBaseClass {
 	{
 		js.executeScript("arguments[0].scrollIntoView();",driver.findElement(By.xpath(dSPDisable+"["+n+"]")));
 		return driver.findElement(By.xpath(dSPDisable+"["+n+"]"));
+	}
+
+	public int getBuyersCardPaddingElemts(){
+		return buyerPanelList.size();
+	}
+
+	public WebElement getCurrencyDropdownValue(String value){
+		return driver.findElement(By.xpath("//div[text()='" + value + "']"));
+	}
+
+	public String getChangeCurrencyBannerMsg()
+	{
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+
+		wait.until(
+				ExpectedConditions.visibilityOf(changeCurrencyBannerMsg));
+		String actualMessage =changeCurrencyBannerMsg.getText().replaceAll("\u3000", "");
+		return actualMessage;
+	}
+
+	public boolean checkIfErrorIsDisplayed(String error){
+		boolean flag = false;
+		System.out.println("the expected error === " + error);
+		for(WebElement elemt : driver.findElements(By.cssSelector(this.validationErrorsCssPath))){
+			System.out.println("validation error >>> " + elemt.getText().trim());
+			if(elemt.getText().trim().equals(error)){
+				flag = true;
+				break;
+			}
+		}
+		return flag;
+	}
+
+	public boolean isElementPresent(String path){
+		try{
+			driver.findElement(By.cssSelector(path));
+			return true;
+		}catch (NoSuchElementException e) {
+			return false;
+		}
+	}
+
+	public void hoverOverOnDSPInfoICon(){
+		new Actions(driver).moveToElement(this.dspInfoIcon).build().perform();
+		wait.until(ExpectedConditions.attributeToBe(this.dspInfoIcon, "aria-expanded","true"));
 	}
 }
