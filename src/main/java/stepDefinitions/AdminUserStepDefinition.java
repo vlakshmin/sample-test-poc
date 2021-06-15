@@ -547,7 +547,7 @@ public class AdminUserStepDefinition extends RXBaseClass {
 		
 		@When("^Click on SAVE USER button$")
 		public void click_on_SAVE_USER_button() {
-			js.executeScript("arguments[0].click();",rxUserPage.saveButton);
+			rxUserPage.saveButton.click();
 			
 		}
 		
@@ -578,6 +578,7 @@ public class AdminUserStepDefinition extends RXBaseClass {
 					uAcName=tesData.get(1);
 					enteredUserName = uAcName;
 					rxUserPage.userName.sendKeys(uAcName);
+					System.out.println(rxUserPage.userName.getAttribute("value"));
 					break;
 				case "Email":
 					while (!rxUserPage.userEmail.getAttribute("value").equals("")) {
