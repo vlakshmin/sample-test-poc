@@ -576,9 +576,10 @@ public class AdminUserStepDefinition extends RXBaseClass {
 						rxUserPage.userName.sendKeys(Keys.BACK_SPACE);
 					}
 					uAcName=tesData.get(1);
-					enteredUserName = uAcName;
+					System.out.println("name>>>>>"+uAcName);
 					rxUserPage.userName.sendKeys(uAcName);
-					System.out.println(rxUserPage.userName.getAttribute("value"));
+					enteredUserName = uAcName;
+					System.out.println("name>>>>>"+rxUserPage.userName.getAttribute("value"));
 					break;
 				case "Email":
 					while (!rxUserPage.userEmail.getAttribute("value").equals("")) {
