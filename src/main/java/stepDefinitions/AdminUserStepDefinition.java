@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -54,6 +55,7 @@ public class AdminUserStepDefinition extends RXBaseClass {
 	}
 	
 	WebDriverWait wait = new WebDriverWait(driver, 30);
+	JavascriptExecutor js = (JavascriptExecutor) driver;
 	//==============================================================================================================
 	// Verify if user is displayed with list of user accounts for admin login.
 	
@@ -545,7 +547,7 @@ public class AdminUserStepDefinition extends RXBaseClass {
 		
 		@When("^Click on SAVE USER button$")
 		public void click_on_SAVE_USER_button() {
-			rxUserPage.saveButton.click();
+			js.executeScript("arguments[0].click();",rxUserPage.saveButton);
 			wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
 		}
 
