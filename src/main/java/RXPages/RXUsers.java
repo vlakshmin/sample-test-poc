@@ -70,6 +70,11 @@ public class RXUsers extends RXBaseClass {
 	@FindBy(xpath = "//span[1]/div/div/div[2]/div/div/div")  WebElement publisherMandatoryMsg;
 	@FindBy(xpath = "//span/form/div[3]/button/span")  public WebElement saveButton;
 	@FindBy(xpath = "//aside/header/div/button/span/i")  WebElement closeBtn;
+	@FindBy(xpath = "//div[@class='table-options']/button")
+		public WebElement tableOptions;
+	    
+	@FindBy(xpath = "//div[@id='app']/div[@role='menu']")
+		public WebElement tableOptionsMenu;
 	
 	
 	//Enable and disable feature for the user
@@ -568,12 +573,18 @@ public class RXUsers extends RXBaseClass {
 					By.xpath("//aside[@class='dialog']//label[text()='" + fieldName + "']/parent::div/div"));
 	    }
 
-
-
-
-
 		public String getActiveWithName(String enteredUserName) {
 			return driver.findElement(By.xpath("//a[text()='"+enteredUserName+"']/parent::td/parent::tr/td[6]")).getText();
+		}
+
+		public WebElement getColumnHeader(String columnName) {
+			return driver.findElement(By.xpath(
+					"//div[@class='v-data-table__wrapper']//thead//th/span[text()='" + columnName + "']/parent::th"));
+		}
+		
+		public void selectColumnInTableOptions(String columnName) {
+			driver.findElement(By.xpath("//label[text()='"+columnName+"']/preceding-sibling::div")).click();
+			
 		}
 	
 }

@@ -238,61 +238,61 @@ Scenario:  118.Verify that Activate Deactivate buttons are displayed at same tim
 	When click on User option under accounts.
 	Then user displayed with User page.
 	And Select one "Active" User item
-    Then Verify that following buttons are present in User list page
+  Then Verify that following buttons are present in User list page
     |Edit User|
     |Deactivate User|
     |Activate User|
-    When Click "Edit User" button in User list page
-    Then Edit User pop up is present
-    When Enter the following data in the Create User page
-  | Username           | 
-    Then Click on SAVE USER button
-    Then Verify the edited User data is matching with its overview list values
-    When Click "Activate User" button in User list page
-    Then "Active" is displayed for the created User
-    And Select one "Active" User item
-    When Click "Deactivate User" button in User list page
-    Then "Inactive" is displayed for the created User
-    And Select 1 "Inactive" and 1 "Active" User items
-    Then Verify that following buttons are present in User list page
+  When Click "Edit User" button in User list page
+  Then Edit User pop up is present
+  When Enter the following data in the Create User page
+    | Username           | 
+  Then Click on SAVE USER button
+  Then Verify the edited User data is matching with its overview list values
+  When Click "Activate User" button in User list page
+  Then "Active" is displayed for the created User
+  And Select one "Active" User item
+  When Click "Deactivate User" button in User list page
+  Then "Inactive" is displayed for the created User
+  And Select 1 "Inactive" and 1 "Active" User items
+  Then Verify that following buttons are present in User list page
     |Deactivate User|
     |Activate User|
-    When Click "Deactivate User" button in User list page
-    Then "Inactive" is displayed for the created User
-     And Select 2 "Inactive" and 2 "Active" User items
-    Then Verify that following buttons are present in User list page
+  When Click "Deactivate User" button in User list page
+  Then "Inactive" is displayed for the created User
+  And Select 2 "Inactive" and 2 "Active" User items
+  Then Verify that following buttons are present in User list page
     |Deactivate User|
     |Activate User|
-    When Click "Deactivate User" button in User list page
-    Then "Inactive" is displayed for the created User
-    And Select 1 "Inactive" and 1 "Active" User items
-    Then Verify that following buttons are present in User list page
+  When Click "Deactivate User" button in User list page
+  Then "Inactive" is displayed for the created User
+  And Select 1 "Inactive" and 1 "Active" User items
+  Then Verify that following buttons are present in User list page
     |Deactivate User|
     |Activate User|
-    When Click "Activate User" button in User list page
-    Then "Active" is displayed for the created User
-    And Select one "Inactive" User item
-    Then Verify that following buttons are present in User list page
+  When Click "Activate User" button in User list page
+  Then "Active" is displayed for the created User
+  And Select one "Inactive" User item
+  Then Verify that following buttons are present in User list page
     |Edit User|
     |Deactivate User|
     |Activate User|
-    When Click "Edit User" button in User list page
-    Then Edit User pop up is present
-    And Enter the following data in the Create User page
+  When Click "Edit User" button in User list page
+  Then Edit User pop up is present
+  And Enter the following data in the Create User page
       | Username           | 
-    Then Click on SAVE USER button
-    Then Verify the edited User data is matching with its overview list values
-    When Click "Deactivate User" button in User list page
-    Then "Inactive" is displayed for the created User
-    And Select one "Inactive" User item
-     When Click "Activate User" button in User list page
-    Then "Active" is displayed for the created User
-    And Select 2 "Inactive" and 2 "Active" User items
-    Then Verify that following buttons are present in User list page
+  Then Click on SAVE USER button
+  Then Verify the edited User data is matching with its overview list values
+  When Click "Deactivate User" button in User list page
+  Then "Inactive" is displayed for the created User
+  And Select one "Inactive" User item
+  When Click "Activate User" button in User list page
+  Then "Active" is displayed for the created User
+  And Select 2 "Inactive" and 2 "Active" User items
+  Then Verify that following buttons are present in User list page
     |Deactivate User|
     |Activate User|
-    When Click "Activate User" button in User list page
-    Then "Active" is displayed for the created User
+  When Click "Activate User" button in User list page
+  Then "Active" is displayed for the created User
    
 Scenario:  166.Verify presence of active toggle button in users entity page
   Given admin user login to RX UI with valid username and password 
@@ -315,9 +315,33 @@ Scenario:  166.Verify presence of active toggle button in users entity page
   Then Edit User pop up is present
   When "Disable" following toggle fields in create page
   | FieldName |
-      | Active    |
+  | Active    |
   When Enter the following data in the Create User page
   | Username           | 
   Then Click on SAVE USER button
   Then Verify that the user created/edited should be "Inactive"
+	
+Scenario:  202.Verify default columns for users list page
+  Given admin user login to RX UI with valid username and password 
+	When click on User option under accounts.
+	Then user displayed with User page.
+	Then Verify following default columns in user list page
+	|ID|
+  |Name|                                                                
+  |Publisher|
+  |Role|
+  |Email|
+  |Active/Inactive|
+  
+Scenario:  203.Verify non-default columns for users list page
+  Given admin user login to RX UI with valid username and password 
+	When click on User option under accounts.
+	Then user displayed with User page.
+	When Click on Table Options button in users list page
+	And Select the columns from Users Table Options
+	|Create Date|                                                                    
+  |Update Date|
+	Then Verify following default columns in user list page
+	|Create Date|                                                                    
+  |Update Date|
 	

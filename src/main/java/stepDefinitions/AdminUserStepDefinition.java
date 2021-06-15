@@ -53,7 +53,7 @@ public class AdminUserStepDefinition extends RXBaseClass {
 		dealsPage = new RXDealsPage();
 	}
 	
-	WebDriverWait wait = new WebDriverWait(driver, 10);
+	WebDriverWait wait = new WebDriverWait(driver, 30);
 	//==============================================================================================================
 	// Verify if user is displayed with list of user accounts for admin login.
 	
@@ -688,17 +688,24 @@ public class AdminUserStepDefinition extends RXBaseClass {
 
 		@Then("^Verify that the user created/edited should be \"([^\"]*)\"$")
 		public void verify_that_the_user_created_edited_should_be(String active) {
-//			String userName = "";//div[@class='v-data-table__wrapper']//tbody/tr/td[6]
-//			String enteredName = enteredUserName.replaceAll("\\s", "");
-//			;
-//			List<WebElement> listNames = driver
-//					.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[3]/a"));
-//			for (int k = 0; k < listNames.size(); k++) {
-//				userName = listNames.get(k).getText().replaceAll("\\s", "");
-//				if (enteredName.equals(userName)) {
-//					break;
-//				}
-//			}
 			Assert.assertEquals(rxUserPage.getActiveWithName(enteredUserName), active);
+		}
+		
+		@Then("^Verify following default columns in user list page$")
+		public void verify_following_default_columns_in_user_list_page(DataTable dt) {
+		    List<String> headers = dt.asList(String.class);
+		    headers.forEach(e -> Assert.assertTrue(rxUserPage.getColumnHeader(e).isDisplayed()));
+		}
+		
+		@When("^Click on Table Options button in users list page$")
+		public void click_on_Table_Options_button_in_users_list_page() {
+			rxUserPage.tableOptions.click();
+			wait.until(ExpectedConditions.visibilityOf(rxUserPage.tableOptionsMenu));
+		}
+
+		@When("^Select the columns from Users Table Options$")
+		public void select_the_columns_from_Users_Table_Options(DataTable dt) throws Throwable {
+			List<String> columns = dt.asList(String.class);
+		    columns.forEach(e -> rxUserPage.selectColumnInTableOptions(e));
 		}
 }
