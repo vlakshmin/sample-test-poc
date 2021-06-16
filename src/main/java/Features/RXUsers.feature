@@ -256,21 +256,21 @@ Scenario:  118.Verify that Activate Deactivate buttons are displayed at same tim
   Then "Inactive" is displayed for the created User
   And Select 1 "Inactive" and 1 "Active" User items
   Then Verify that following buttons are present in User list page
-    |Deactivate User|
-    |Activate User|
-  When Click "Deactivate User" button in User list page
+    |Deactivate Users|
+    |Activate Users|
+  When Click "Deactivate Users" button in User list page
   Then "Inactive" is displayed for the created User
   And Select 2 "Inactive" and 2 "Active" User items
   Then Verify that following buttons are present in User list page
-    |Deactivate User|
-    |Activate User|
-  When Click "Deactivate User" button in User list page
+    |Deactivate Users|
+    |Activate Users|
+  When Click "Deactivate Users" button in User list page
   Then "Inactive" is displayed for the created User
   And Select 1 "Inactive" and 1 "Active" User items
   Then Verify that following buttons are present in User list page
-    |Deactivate User|
-    |Activate User|
-  When Click "Activate User" button in User list page
+    |Deactivate Users|
+    |Activate Users|
+  When Click "Activate Users" button in User list page
   Then "Active" is displayed for the created User
   And Select one "Inactive" User item
   Then Verify that following buttons are present in User list page
@@ -291,9 +291,9 @@ Scenario:  118.Verify that Activate Deactivate buttons are displayed at same tim
   Then "Active" is displayed for the created User
   And Select 2 "Inactive" and 2 "Active" User items
   Then Verify that following buttons are present in User list page
-    |Deactivate User|
-    |Activate User|
-  When Click "Activate User" button in User list page
+    |Deactivate Users|
+    |Activate Users|
+  When Click "Activate Users" button in User list page
   Then "Active" is displayed for the created User
    
 Scenario:  166.Verify presence of active toggle button in users entity page

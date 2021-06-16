@@ -554,7 +554,6 @@ public class AdminUserStepDefinition extends RXBaseClass {
 		
 		@Then("^Create User page should be closed$")
 		public void create_User_page_should_be_closed() {
-//			System.out.println(driver.findElement(By.xpath("//div[@class='v-alert__wrapper']")).getText());
 			wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
 		}
 
@@ -566,7 +565,6 @@ public class AdminUserStepDefinition extends RXBaseClass {
 			tesData=rxUserPage.getTestData("Create");
 			for (int i = 0; i < list.size(); i++) {
 				String fieldName = list.get(i);
-//				String value = list.get(i).get("Value");
 				switch (fieldName) {
 				case "Publisher":
 					rxUserPage.dropDwonSelect.click();
@@ -578,19 +576,15 @@ public class AdminUserStepDefinition extends RXBaseClass {
 						rxUserPage.userName.sendKeys(Keys.BACK_SPACE);
 					}
 					uAcName=tesData.get(1);
-					System.out.println("name>>>>>"+uAcName);
 					rxUserPage.userName.sendKeys(uAcName);
 					enteredUserName = uAcName;
-					System.out.println("name>>>>>"+rxUserPage.userName.getAttribute("value"));
 					break;
 				case "Email":
 					while (!rxUserPage.userEmail.getAttribute("value").equals("")) {
 						rxUserPage.userEmail.sendKeys(Keys.BACK_SPACE);
 					}
 					uEMail=tesData.get(2)+"@test.com";
-					System.out.println("email>>>>>"+uEMail);
 					rxUserPage.userEmail.sendKeys(uEMail);
-					System.out.println("email>>>>>"+rxUserPage.userEmail.getAttribute("value"));
 					break;
 				case "Password":
 					while (!rxUserPage.userPassword.getAttribute("value").equals("")) {
