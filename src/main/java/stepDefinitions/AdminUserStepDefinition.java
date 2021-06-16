@@ -554,7 +554,7 @@ public class AdminUserStepDefinition extends RXBaseClass {
 		
 		@Then("^Create User page should be closed$")
 		public void create_User_page_should_be_closed() {
-			driver.findElement(By.xpath("//div[@class='v-alert__wrapper']")).isDisplayed();
+			System.out.println(driver.findElement(By.xpath("//div[@class='v-alert__wrapper']")).getText());
 			wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
 		}
 
