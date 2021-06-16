@@ -995,3 +995,17 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		Then Verify the following message is displayed when the publisher changed for deal
 			|Message|
 			|By changing the Publisher the form will be reset and the previous changes will not be saved.|
+
+	Scenario: 219. Verify Floor Price limits for Deals
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And Select publisher by name: "Viber"
+		Then The Currency field is not null
+		When Enter "1234567" into Floor Price
+		Then Verify the error message displays below Floor Price input
+			|Message|
+			|A valid price is between 0.00 and 999,999.99|

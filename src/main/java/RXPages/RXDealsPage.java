@@ -61,6 +61,8 @@ public class RXDealsPage extends RXBaseClass {
 	private WebElement dspList;
 	@FindAll({@FindBy(xpath="//div[contains(@class,'v-messages__message')]")})
 	public List<WebElement> requiredFieldsMessages;
+	@FindBy(xpath="//label[text()='Floor Price']/parent::div/parent::div/following::div/div/div/div[@class='v-messages__message']")
+	public WebElement floorPriceErrorMsg;
 
 	@FindBy(xpath = "//div[@role='listbox']")
 	private WebElement list;

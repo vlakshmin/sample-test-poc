@@ -938,4 +938,13 @@ public class DealsPageStepDefinition extends RXBaseClass {
 			Assert.assertEquals(dealsPage.dspInfo.getText().trim(), expectedMessage);
 		}
 	}
+
+	@Then("^Verify the error message displays below Floor Price input$")
+	public void verifyTheErrorMessageDisplaysBelowFloorPriceInput(DataTable dt) {
+		wait.until(ExpectedConditions.visibilityOf(dealsPage.floorPriceErrorMsg));
+		String msg = dealsPage.floorPriceErrorMsg.getText().trim();
+		System.out.println("dealsPage.floorPriceErrorMsg.getText().trim() >>> " + msg);
+		getDataFromTable(dt).forEach(e ->
+				Assert.assertEquals(msg,e.getValue()));
+	}
 }
