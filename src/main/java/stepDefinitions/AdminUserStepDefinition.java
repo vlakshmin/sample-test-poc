@@ -554,7 +554,7 @@ public class AdminUserStepDefinition extends RXBaseClass {
 		
 		@Then("^Create User page should be closed$")
 		public void create_User_page_should_be_closed() {
-			System.out.println(driver.findElement(By.xpath("//div[@class='v-alert__wrapper']")).getText());
+//			System.out.println(driver.findElement(By.xpath("//div[@class='v-alert__wrapper']")).getText());
 			wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
 		}
 
@@ -587,7 +587,7 @@ public class AdminUserStepDefinition extends RXBaseClass {
 					while (!rxUserPage.userEmail.getAttribute("value").equals("")) {
 						rxUserPage.userEmail.sendKeys(Keys.BACK_SPACE);
 					}
-					uEMail=tesData.get(2);
+					uEMail=tesData.get(2)+"@test.com";
 					System.out.println("email>>>>>"+uEMail);
 					rxUserPage.userEmail.sendKeys(uEMail);
 					System.out.println("email>>>>>"+rxUserPage.userEmail.getAttribute("value"));

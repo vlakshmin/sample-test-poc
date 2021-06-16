@@ -178,10 +178,9 @@ Feature: RX users page Validation
 #	Then user displayed with User page.
 #	Then Verify the enabling and disabling feature of the user with index 1
 #	
-@Ignore
 Scenario:  Verify the toggle option is unavailable for old UI
 	Then Verify that user cannot navigate to old UI 
-	@Ignore
+	
 Scenario:  Verify the default column names in the users overview page
 	Given admin user login to RX UI with valid username and password 
 	When click on User option under accounts.
@@ -194,14 +193,13 @@ Scenario:  Verify the default column names in the users overview page
 	|Email|
 	|Active/Inactive|
 	|Role|
-@Ignore
 Scenario:  Verify hide/show columns from the table options for admin
     Given admin user login to RX UI with valid username and password 
 	When click on User option under accounts.
 	Then user displayed with User page.
     And User click on table options button
     Then Verify that column "Create Date" can be hidden and shown
-    @Ignore
+   
 Scenario:  Verify non default column names in the users overview page
 	Given admin user login to RX UI with valid username and password 
 	When click on User option under accounts.
@@ -211,7 +209,7 @@ Scenario:  Verify non default column names in the users overview page
 	|ColumnName|
 	|Create Date|
 	|Update Date|
-	@Ignore
+	
 Scenario:  94.Verify that errors are displayed near save button on Create/update date for Users
   Given admin user login to RX UI with valid username and password 
 	When click on User option under accounts.
@@ -234,7 +232,7 @@ Scenario:  94.Verify that errors are displayed near save button on Create/update
   |Email|
   Then Verify that error disapear according to fields filled
   |The Email field is required|
-  @Ignore
+  
 Scenario:  118.Verify that Activate Deactivate buttons are displayed at same time for Users list page
   Given admin user login to RX UI with valid username and password 
 	When click on User option under accounts.
@@ -326,7 +324,7 @@ Scenario:  166.Verify presence of active toggle button in users entity page
   Then Click on SAVE USER button
   Then Create User page should be closed
   Then Verify that the user created/edited should be "Inactive"
-	@Ignore
+	
 Scenario:  202.Verify default columns for users list page
   Given admin user login to RX UI with valid username and password 
 	When click on User option under accounts.
@@ -338,7 +336,7 @@ Scenario:  202.Verify default columns for users list page
   |Role|
   |Email|
   |Active/Inactive|
- @Ignore
+ 
 Scenario:  203.Verify non-default columns for users list page
   Given admin user login to RX UI with valid username and password 
 	When click on User option under accounts.
