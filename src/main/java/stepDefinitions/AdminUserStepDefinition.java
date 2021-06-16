@@ -588,7 +588,9 @@ public class AdminUserStepDefinition extends RXBaseClass {
 						rxUserPage.userEmail.sendKeys(Keys.BACK_SPACE);
 					}
 					uEMail=tesData.get(2);
+					System.out.println("email>>>>>"+uEMail);
 					rxUserPage.userEmail.sendKeys(uEMail);
+					System.out.println("email>>>>>"+rxUserPage.userEmail.getAttribute("value"));
 					break;
 				case "Password":
 					while (!rxUserPage.userPassword.getAttribute("value").equals("")) {
