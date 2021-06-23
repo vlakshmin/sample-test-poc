@@ -1,8 +1,12 @@
 package stepDefinitions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import cucumber.api.DataTable;
+import cucumber.api.java.en.And;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -11,15 +15,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import RXBaseClass.RXBaseClass;
-import RXPages.ProfilePage;
 import RXPages.PublisherListPage;
 import RXPages.RXAdspotsPage;
 import RXPages.RXLoginPage;
 import RXPages.RXNavOptions;
-import RXPages.RXAdspotsPage;
 import RXUtitities.RXUtile;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class PublisherStepDefinitions extends RXBaseClass  {
 	
@@ -34,10 +38,13 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 	 static String rn ;
 	 static String emailID;
 	 static String webSiteNa;
-	 static String pubNme;
+	 static String pubName;
 	 static String saleAcc;
-	 static int pId;
+	 static String publisherID;
 	 static ArrayList<WebElement> publist = new ArrayList<WebElement>();
+
+	WebDriverWait wait = new WebDriverWait(driver, 50);
+
 	public PublisherStepDefinitions() {
 		super();
 		
@@ -73,8 +80,8 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 	}
 
 	
-	@When("^Click on publisher option under account$")
-	public void click_on_publisher_option_under_account() throws Throwable {
+	@When("^Click on publisher option under Admin$")
+	public void click_on_publisher_option_under_Admin() throws Throwable {
 		navOptions.expandAdmin();
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.publisherUndrAdmin));
@@ -173,9 +180,174 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 		adspotsPage.adSpotCloseSideDialog.click();
 				
 		}
-	
-	
 
+
+	@When("^Click on Create Publisher button$")
+	public void clickOnCreatePublisherButton() {
+		wait.until(visibilityOf(pubListPgs.createPublisherBtn));
+		pubListPgs.createPublisherBtn.click();
+		wait.until(visibilityOf(pubListPgs.createPublisherHeader));
+	}
+
+	@And("^Enter the following values in Create Publisher page$")
+	public void enterTheFollowingValuesInCreatePublisherPage(DataTable dt) {
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		String enteredValue = "";
+		for(Map<String, String> stringMap : list){
+			for(String key : stringMap.keySet()){
+				enteredValue = stringMap.get(key);
+				System.out.println("=== select/enter value for " + key + " ===");
+				switch (key){
+					case "Publisher Name":
+						pubName = enteredValue + RXUtile.getRandomNumberFourDigit();
+						pubListPgs.publisherNameInput.sendKeys(pubName);
+						System.out.println("enter publisher name >>> " + pubName);
+						break;
+					case "Ad Ops Person":
+						pubListPgs.adOpsPersonInput.sendKeys(enteredValue);
+						break;
+					case "Ad Ops Email":
+						pubListPgs.adOpsEmailInput.sendKeys(enteredValue);
+						break;
+					case "Currency":
+						wait.until(ExpectedConditions.elementToBeClickable(pubListPgs.currencyDropdown));
+						pubListPgs.currencyDropdown.click();
+						pubListPgs.selectValueFromDropdown(enteredValue);
+						break;
+					case "Demand Source":
+						List<String> valueList = new ArrayList<String>();
+						pubListPgs.demandSourceDropdown.click();
+						if(enteredValue.contains(",")){
+							String[] valueArray = enteredValue.split(",");
+							valueList.addAll(Arrays.asList(valueArray));
+						}else{
+							valueList.add(enteredValue);
+						}
+						for (String value : valueList){
+							pubListPgs.selectValueFromDropdown(value);
+						}
+						pubListPgs.publisherNameInput.click();
+						break;
+					case "Domain":
+						pubListPgs.domainInput.sendKeys(enteredValue);
+						break;
+					case "Categories":
+						pubListPgs.categoriesDropdown.click();
+						pubListPgs.getCategoriesDropdownCheckbox(enteredValue).click();
+						pubListPgs.publisherNameInput.click();
+						break;
+				}
+			}
+		}
+	}
+
+	@When("^Click on Save Publisher button$")
+	public void clickOnSavePublisherButton() {
+		pubListPgs.savePublisherBtn.click();
+	}
+
+	@Then("^Verify that save publisher is successful$")
+	public void verifyThatSavePublisherIsSuccessful() throws InterruptedException {
+		pubListPgs.waitCreatePublisherPageDisappear();
+		Thread.sleep(5000);
+		Assert.assertTrue(pubListPgs.checkIfPublisherExist(pubName));
+	}
+
+	@When("^Select \"([^\"]*)\" publisher in list view$")
+	public void selectPublisherInListView(String arg0) throws Throwable {
+		int rowNum = 0;
+		int loop = Integer.parseInt(arg0);
+		for(int i = 0; i < loop; i++){
+			for(int j = 0; j < pubListPgs.publishersTableTrElemts.size(); j++){
+				rowNum = j + 1;
+				System.out.println(" row number >>> " + rowNum);
+				if(!pubListPgs.verifyIfCheckboxIsChecked(rowNum)){
+					pubListPgs.getCheckboxInSpecifiedRowInPublishersTable(rowNum).click();
+					pubName = pubListPgs.getPublisherNameElemtByRowNumber(rowNum).getText().trim();
+					break;
+				}
+			}
+		}
+	}
+
+	@When("^Click on Edit Publisher button$")
+	public void clickOnEditPublisherButton() {
+		wait.until(ExpectedConditions.visibilityOf(pubListPgs.overviewEditbutton));
+		pubListPgs.overviewEditbutton.click();
+		wait.until(ExpectedConditions.visibilityOf(pubListPgs.savePublisherBtn));
+	}
+
+    @When("^Clear the Demand Source values$")
+    public void clearTheDemandSourceValues() {
+	    List<String> selectedValueList = pubListPgs.getTheSelectedDemandSource();
+	    pubListPgs.demandSourceDropdown.click();
+	    //uncheck the selected value
+	    for(String value : selectedValueList){
+			pubListPgs.selectValueFromDropdown(value);
+		}
+        pubListPgs.publisherNameInput.click();
+	}
+
+	@When("^Click on Demand Source dropdown$")
+	public void clickOnDemandSourceDropdown() throws InterruptedException {
+		pubListPgs.demandSourceDropdown.click();
+		Thread.sleep(2000);
+	}
+
+	@Then("^Verify that all items are sorted alphabetically$")
+	public void verifyThatAllItemsAreSortedAlphabetically() throws InterruptedException {
+		String preItem;
+		String nextItem = "";
+		pubListPgs.scrollDownInDropdown();
+		Thread.sleep(2000);
+		int size = pubListPgs.getDemandSourceDropdownItem().size();
+		System.out.println("pubListPgs.getDemandSourceDropdownItem().size() >>> " + size);
+		for(int i = 0; i < size; i ++){
+			System.out.println("i >>> " + i);
+			preItem = nextItem;
+			nextItem = pubListPgs.getDemandSourceDropdownItem().get(i).getText().trim();
+			System.out.println("preItem >>> " + preItem);
+			System.out.println("nextItem >>> " + nextItem);
+			if(!preItem.equals("")){
+				Assert.assertTrue(preItem.compareToIgnoreCase(nextItem) <= 0);
+			}
+		}
+		//click publisher field to close Demand Source dropdown
+		pubListPgs.publisherNameInput.click();
+	}
+
+	@When("^Click on the newly created publisher in list view$")
+	public void clickOnTheNewlyCreatedPublisherInListView() {
+		pubListPgs.getPublisherNameLinkByText(pubName).click();
+		wait.until(ExpectedConditions.visibilityOf(pubListPgs.savePublisherBtn));
+	}
+
+	@Then("^Verify that selected Demand Sources are sorted alphabetically$")
+	public void verifyThatSelectedDemandSourcesAreSortedAlphabetically() {
+		String preItem = "";
+		String nextItem = "";
+		List<String> selectedValueList = pubListPgs.getTheSelectedDemandSource();
+		for(int i = 0; i < selectedValueList.size(); i ++){
+			System.out.println("i >>> " + i);
+			preItem = nextItem;
+			nextItem = selectedValueList.get(i);
+			System.out.println("preItem >>> " + preItem);
+			System.out.println("nextItem >>> " + nextItem);
+			if(!preItem.equals("")){
+				Assert.assertTrue(preItem.compareToIgnoreCase(nextItem) <= 0);
+			}
+		}
+	}
+
+	@Then("^Verify that Active toggle set to true in Create Publisher page$")
+	public void verifyThatActiveToggleSetToTrueInCreatePublisherPage() {
+		Assert.assertEquals(pubListPgs.activeCheckbox.getAttribute("aria-checked"), "true");
+	}
+
+	@Then("^Verify that Active as a value displayed in Active column in publisher list view$")
+	public void verifyThatActiveAsAValueDisplayedInActiveColumnInPublisherListView() {
+		Assert.assertEquals(pubListPgs.getActiveColumnByPublisherName(pubName).getText().trim(), "Active");
+	}
 }
 
 
