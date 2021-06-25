@@ -3,6 +3,9 @@ package RXPages;
 import RXUtitities.RXUtile;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
@@ -31,6 +34,8 @@ public class RXAdspotsPage extends RXBasePage {
 	public List<WebElement> adspotsTableColumns;
 	@FindBy(xpath = "//*[@class='v-text-field__slot']/input")
 	public WebElement adSpotsSearchField;
+	@FindBy(xpath = "//table/tbody/tr[1]/td[4]/a")
+	public WebElement adSpotNameInFirstRow;
 
 	// overview buttons
 	@FindBy(xpath = "//button/span[text()='Create Ad Spot']")
@@ -154,6 +159,12 @@ public class RXAdspotsPage extends RXBasePage {
 	@FindAll(@FindBy(xpath = "//form/div[5]//label[text()='Video Placement Type']/following-sibling::div[@class='v-select__selections']/div"))
 	public WebElement videoPlacementField;
 
+	//Floor Price input in Banner/Native/Video card
+	public String floorPriceInputString = "//div[text()='%s']/parent::div/following-sibling::span//label[contains(text(),'Floor Price')]/following-sibling::input";
+	public String floorPriceMsgString = "//div[text()='%s']/parent::div/following-sibling::span//label[contains(text(),'Floor Price')]/parent::div/parent::div/following-sibling::div//div[contains(@class,'v-messages__wrapper')]/div[contains(@class,'v-messages__message')]";
+	public String cardXpathString = "//div[text()='%s']";
+	public String duplicatedFloorPriceString = "//div[text()='%s']/parent::div/following-sibling::span//label[contains(text(),'Floor Price')]/preceding-sibling::div";
+
 	// Action object
 	Actions act = new Actions(driver);
 
@@ -242,5 +253,18 @@ public class RXAdspotsPage extends RXBasePage {
 				break;
 		}
 		return "";
+	}
+
+	public WebElement getElementByXpathString(String xpathString, String parameter){
+		return driver.findElement(By.xpath(String.format(xpathString,parameter)));
+	}
+
+	public boolean isElementPresent(String xpathString){
+		try{
+			driver.findElement(By.xpath(xpathString));
+			return true;
+		}catch (NoSuchElementException e) {
+			return false;
+		}
 	}
 }

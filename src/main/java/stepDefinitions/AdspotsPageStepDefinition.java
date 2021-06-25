@@ -10,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -1629,5 +1630,34 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 		System.out.println(RXAdspotsPage.getAdSpotTypeEnteredValues());
 		Assert.assertTrue(areEqual(RXAdspotsPage.getAdSpotTypeEnteredValues(), detailsData));
 		adspotsPage.adSpotsSearchField.click();
+	}
+
+	@When("^Click in Floor Price input in \"([^\"]*)\" card$")
+	public void clickInFloorPriceInputInCard(String arg0) throws Throwable {
+		adspotsPage.getElementByXpathString(adspotsPage.floorPriceInputString, arg0).click();
+		Thread.sleep(2000);
+	}
+
+	@And("^Click outside Floor Price input in \"([^\"]*)\" card$")
+	public void clickOutsideFloorPriceInputInCard(String arg0) throws Throwable {
+		adspotsPage.getElementByXpathString(adspotsPage.cardXpathString, arg0).click();
+		Thread.sleep(2000);
+	}
+
+	@Then("^verify that no error is displayed below Floor Price input in \"([^\"]*)\" card$")
+	public void verifyThatNoErrorIsDisplayedBelowFloorPriceInputInCard(String arg0) throws Throwable {
+		Assert.assertFalse(adspotsPage.isElementPresent(String.format(adspotsPage.floorPriceMsgString,arg0)));
+	}
+
+	@Then("^Verify that specified floor price not duplicated in \"([^\"]*)\" card$")
+	public void verifyThatSpecifiedFloorPriceNotDuplicatedInCard(String arg0) throws Throwable {
+		Assert.assertFalse(adspotsPage.isElementPresent(String.format(adspotsPage.duplicatedFloorPriceString,arg0)));
+	}
+
+	@When("^Click on Ad Spot Name in first row in list view$")
+	public void clickOnAdSpotNameInFirstRowInListView() {
+		WebDriverWait wait = new WebDriverWait(driver, 60);
+		adspotsPage.adSpotNameInFirstRow.click();
+		wait.until(ExpectedConditions.visibilityOf(navOptions.saveButton));
 	}
 }

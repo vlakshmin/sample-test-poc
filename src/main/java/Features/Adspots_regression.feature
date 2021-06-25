@@ -906,3 +906,89 @@ Feature: Adspots page regression
     And Click on save button and wait for dialog to close
     And Hover over adspot details button
     Then Verify adspot details data is correct
+
+  Scenario: 207.Verify that error is not displayed for optional floor price
+    Given admin user login to RX UI with valid username and password
+    When Click on Adspots option under Inventory
+    And User displayed with Adspots page
+    When Click on the Adspot create button
+    Then Enter the following data in the general card of adspot
+      | FieldName           | Value     | ListValueIndex |
+      | Publisher Name      | Viber     |                |
+      | Ad Spot Name        | Auto_Test |                |
+      | Related Media       | ListValue | 1              |
+      | Position            | ListValue | 2              |
+      | Filter              | ListValue | 1              |
+      | Default Ad Sizes    | ListValue | 2              |
+      | Default Floor Price | 10        |                |
+    And "Enable" the banner card
+    And "Expand" the banner card
+    And Click in Floor Price input in "Banner" card
+    And Click outside Floor Price input in "Banner" card
+    Then verify that no error is displayed below Floor Price input in "Banner" card
+    And "Enable" the native card
+    And "Expand" the native card
+    And Click in Floor Price input in "Native" card
+    And Click outside Floor Price input in "Native" card
+    Then verify that no error is displayed below Floor Price input in "Native" card
+    And "Enable" the in-banner video card
+    And "Expand" the in-banner video card
+    And Click in Floor Price input in "Video" card
+    And Click outside Floor Price input in "Video" card
+    Then verify that no error is displayed below Floor Price input in "Video" card
+    Then Enter the following data in the in-banner video card of adspot
+      | FieldName              | Value     | ListValueIndex |
+      | Video Placement Type   | ListValue | 1              |
+      | Playback Methods       | ListValue | 1              |
+    When Click on save button and wait for dialog to close
+
+  Scenario: 208.Verify that Floor Price not duplicating while creation AdSpot
+    Given admin user login to RX UI with valid username and password
+    When Click on Adspots option under Inventory
+    And User displayed with Adspots page
+    When Click on the Adspot create button
+    Then Enter the following data in the general card of adspot
+      | FieldName           | Value     | ListValueIndex |
+      | Publisher Name      | Viber     |                |
+    And "Enable" the banner card
+    And "Expand" the banner card
+    And Enter the following data in the banner card of adspot
+      | FieldName   | Value     | ListValueIndex |
+      | Floor Price | 3         |                |
+    Then Verify that specified floor price not duplicated in "Banner" card
+    And "Enable" the native card
+    And "Expand" the native card
+    And Enter the following data in the native card of adspot
+      | FieldName   | Value |
+      | Floor Price | 6     |
+    Then Verify that specified floor price not duplicated in "Native" card
+    And "Enable" the in-banner video card
+    And "Expand" the in-banner video card
+    Then Enter the following data in the in-banner video card of adspot
+      | FieldName              | Value     | ListValueIndex |
+      | Floor Price            | 2         |                |
+    Then Verify that specified floor price not duplicated in "Video" card
+
+  Scenario: 209.Verify that Floor Price not duplicating while editing existing AdSpot
+    Given admin user login to RX UI with valid username and password
+    When Click on Adspots option under Inventory
+    And User displayed with Adspots page
+    When Click on Ad Spot Name in first row in list view
+    And "Enable" the banner card
+    And "Expand" the banner card
+    And Enter the following data in the banner card of adspot
+      | FieldName   | Value     | ListValueIndex |
+      | Floor Price | 3         |                |
+    Then Verify that specified floor price not duplicated in "Banner" card
+    And "Enable" the native card
+    And "Expand" the native card
+    And Enter the following data in the native card of adspot
+      | FieldName   | Value |
+      | Floor Price | 6     |
+    Then Verify that specified floor price not duplicated in "Native" card
+    And "Enable" the in-banner video card
+    And "Expand" the in-banner video card
+    Then Enter the following data in the in-banner video card of adspot
+      | FieldName              | Value     | ListValueIndex |
+      | Floor Price            | 2         |                |
+    Then Verify that specified floor price not duplicated in "Video" card
