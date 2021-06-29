@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
 import java.text.ParseException;
@@ -1659,5 +1660,29 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 		WebDriverWait wait = new WebDriverWait(driver, 60);
 		adspotsPage.adSpotNameInFirstRow.click();
 		wait.until(ExpectedConditions.visibilityOf(navOptions.saveButton));
+	}
+
+	@Then("^Verify that Active toggle set to true in Create Ad Spot page$")
+	public void verifyThatActiveToggleSetToTrueInCreateAdSpotPage() {
+		Assert.assertEquals(adspotsPage.activeInput.getAttribute("aria-checked"),"true");
+	}
+
+	@Then("^Verify that Active as a value displayed in Active column for the created adspotname$")
+	public void verifyThatActiveAsAValueDisplayedInActiveColumnForTheCreatedAdspotname() {
+		Assert.assertEquals(adspotsPage.activeInactiveValueInFirstRow.getText().trim(),"Active");
+	}
+
+	@Then("^Verify the error message \"([^\"]*)\" displays below Floor Price in Create Ad Spot page$")
+	public void verifyTheErrorMessageDisplaysBelowFloorPriceInCreateAdSpotPage(String arg0) {
+		String msg = adspotsPage.defaultFloorPriceMsg.getText().trim();
+		System.out.println("adspotsPage.defaultFloorPriceMsg.getText().trim() >>> " + msg);
+		Assert.assertEquals(msg,arg0);
+	}
+
+	@Then("^Verify the error message \"([^\"]*)\" displays below Floor Price in \"([^\"]*)\" card$")
+	public void verifyTheErrorMessageDisplaysBelowFloorPriceInCard(String arg0, String arg1) {
+		String msg = adspotsPage.getElementByXpathString(adspotsPage.floorPriceMsgString, arg1).getText().trim();
+		System.out.println("adspotsPage.getElementByXpathString(adspotsPage.floorPriceMsgString, arg1).getText().trim() >>> " + msg);
+		Assert.assertEquals(msg, arg0);
 	}
 }

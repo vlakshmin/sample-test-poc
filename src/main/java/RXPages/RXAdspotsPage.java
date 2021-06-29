@@ -36,6 +36,8 @@ public class RXAdspotsPage extends RXBasePage {
 	public WebElement adSpotsSearchField;
 	@FindBy(xpath = "//table/tbody/tr[1]/td[4]/a")
 	public WebElement adSpotNameInFirstRow;
+	@FindBy(xpath = "//table/tbody/tr[1]/td[7]")
+	public WebElement activeInactiveValueInFirstRow;
 
 	// overview buttons
 	@FindBy(xpath = "//button/span[text()='Create Ad Spot']")
@@ -71,6 +73,8 @@ public class RXAdspotsPage extends RXBasePage {
 	public WebElement adSpotCloseSideDialog;
 	@FindBy(xpath = "//form/div[5]//label[text()='Ad Sizes']/following-sibling::div[@class='v-select__selections']/input")
 	public WebElement adSizeInput;
+	@FindBy(xpath = "//label[text()='Active']/parent::div/div/input")
+	public WebElement activeInput;
 
 	@FindBy(xpath = "//label[text()='Related Media']/following-sibling::div[@class='v-select__selections']")
 	public WebElement relatedMediaDropDown;
@@ -160,6 +164,9 @@ public class RXAdspotsPage extends RXBasePage {
 	public WebElement videoPlacementField;
 
 	//Floor Price input in Banner/Native/Video card
+	@FindBy(xpath = "//label[text()='Default Floor Price']/parent::div/parent::div/following-sibling::div//div[contains(@class,'v-messages__message')]")
+	public WebElement defaultFloorPriceMsg;
+
 	public String floorPriceInputString = "//div[text()='%s']/parent::div/following-sibling::span//label[contains(text(),'Floor Price')]/following-sibling::input";
 	public String floorPriceMsgString = "//div[text()='%s']/parent::div/following-sibling::span//label[contains(text(),'Floor Price')]/parent::div/parent::div/following-sibling::div//div[contains(@class,'v-messages__wrapper')]/div[contains(@class,'v-messages__message')]";
 	public String cardXpathString = "//div[text()='%s']";
