@@ -15,3 +15,15 @@ Examples:
     |xyz@gmail.com|Password2|
     |chandrashekhara.av@rakuten.com| 		  |
     | 	     |Password2|
+
+  Scenario: 45.Verify that Admin user is redirected to the page he directly navigates to
+    Given admin user login to RX "admin/users" UI with valid username and password
+    Then user displayed with User page.
+
+  Scenario: 46.Verify that Cross Publisher user is redirected to the page he directly navigates to
+    Given Cross Publisher user login to RX "media" UI with valid username and password
+    Then User displayed with media page
+
+  Scenario: 47.Verify that Single Publisher user is redirected to the page he directly navigates to
+    Given Single Publisher user login to RX "sales/private-auctions" UI with valid username and password
+    Then User displayed with Private Auctions page
