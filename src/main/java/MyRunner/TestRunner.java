@@ -20,7 +20,7 @@ import cucumber.api.testng.TestNGCucumberRunner;
 @CucumberOptions(
 
 
-		features = "src/main/java/Features/login.feature",
+		features = "src/main/java/Features/Login.feature",
         glue = {"stepDefinitions"},
         tags = {"~@Ignore"},
         plugin = {"com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html",

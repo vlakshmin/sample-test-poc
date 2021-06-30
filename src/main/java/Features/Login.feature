@@ -11,9 +11,9 @@ Scenario Outline: Verify if an admin user is not allowed to login with a invalid
 Examples:
     |username|password|
     | 	     | 		  |
-    |chandrashekhara.av@rakuten.com|Test@123 |
+    |adminuser@test.com|Test@123 |
     |xyz@gmail.com|Password2|
-    |chandrashekhara.av@rakuten.com| 		  |
+    |adminuser@test.com| 		  |
     | 	     |Password2|
 
   Scenario: 45.Verify that Admin user is redirected to the page he directly navigates to
