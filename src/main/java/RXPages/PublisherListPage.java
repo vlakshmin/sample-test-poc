@@ -39,6 +39,20 @@ public class PublisherListPage extends RXBaseClass {
 	List<WebElement> userTableRows;
 	@FindAll(@FindBy(xpath = "//table/tbody/tr[1]/td"))
 	List<WebElement> userTableColmn;
+	@FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr/td[5]"))
+	public List<WebElement> statusColumnsPublisherTable;
+	@FindAll(@FindBy(xpath = "//div[contains(@class,'vue-portal-target')]/button/span"))
+	public List<WebElement> buttonsInPubPageHeader;
+
+	String checkboxStringInPublisherable = "//div[@class='v-data-table__wrapper']//tbody/tr[%s]/td[1]/div";
+	String idStringInPublisherTable = "//div[@class='v-data-table__wrapper']//tbody/tr[%s]/td[2]";
+	String statusByIDInPubTable = "//td[text()='%s']/parent::tr/td[5]";
+
+	//Edit Publisher
+	@FindBy(css = "div.v-toolbar__title")
+	public WebElement pageTitle;
+	@FindBy(xpath = "//aside/header/div/button")
+	public WebElement closeEditPubtBtn;
 
 	// Forwared button in the table
 	String frwdButton = "//button[@type='button' and @aria-label='Next page']";
@@ -56,12 +70,10 @@ public class PublisherListPage extends RXBaseClass {
 	// overview buttons
 	@FindBy(xpath = "//span[text()='Edit Publisher']/parent::button")
 	public WebElement overviewEditbutton;
-	@FindBy(xpath = "//button/span[text()='Deactivate Publisher']")
-	public WebElement overviewDisablebutton;
-	@FindBy(xpath = "//button/span[text()='Activate Publisher']")
-	public WebElement overviewEnablebutton;
 	@FindBy(xpath = "//div[contains(@class, 'toast-wrapper')]//a[@class='remove']/i")
 	public WebElement closeToastButton;
+
+	String activateInactivateBtnString = "//span[text()='%s']/parent::button";
 	
 	// Account options
 	@FindBy(xpath = "//div[text()='Publishers']")
@@ -103,6 +115,8 @@ public class PublisherListPage extends RXBaseClass {
 	public WebElement savePublisherBtn;
 	@FindBy(xpath = "//label[text()='Active']/preceding-sibling::div/input")
 	public WebElement activeCheckbox;
+	@FindBy(xpath = "//label[text()='Active']/preceding-sibling::div")
+	public WebElement activeToggleBtn;
 
 	// Data for create or edit publisher.
 	public String pubName = "Publisher Test";
@@ -129,6 +143,11 @@ public class PublisherListPage extends RXBaseClass {
 	String demandSourceItemString = "//div[@role='listbox']/div/div/div[@class='v-list-item__title']";
 	String pubNameLinkStringInPubTable = "//table/tbody/tr/td/a[text()='%s']";
 	String activeColumnStringInPubTable = "//a[text()='%s']/parent::td/following-sibling::td[2]";
+
+	//validation errors
+	@FindBy(css = "div.v-alert__content > div")
+	public WebElement validationErrorsPanel;
+	public String validationErrorsCssPath = "div.v-alert__content > div > ul > li";
 
 	// Some declarations
 	int rownum = 1;
@@ -225,22 +244,6 @@ public class PublisherListPage extends RXBaseClass {
 		wait.until(ExpectedConditions.visibilityOf(overviewEditbutton));
 		if (overviewEditbutton.isDisplayed()) {
 			overviewEditbutton.click();
-		}
-	}
-
-	public void clickOverViewEnablebutton() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.visibilityOf(overviewEnablebutton));
-		if (overviewEnablebutton.isDisplayed()) {
-			overviewEnablebutton.click();
-		}
-	}
-
-	public void clickOverViewDisablebutton() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.visibilityOf(overviewDisablebutton));
-		if (overviewDisablebutton.isDisplayed()) {
-			overviewDisablebutton.click();
 		}
 	}
 	public void clickCloseToastMessageButton() {
@@ -356,5 +359,49 @@ public class PublisherListPage extends RXBaseClass {
 			selectedValueList.add(selectedValue);
 		}
 		return selectedValueList;
+	}
+
+	public boolean checkIfErrorIsDisplayed(String error){
+		boolean flag = false;
+		System.out.println("Check if the expected error displays === " + error);
+		for(WebElement elemt : driver.findElements(By.cssSelector(validationErrorsCssPath))){
+			System.out.println("validation error >>> " + elemt.getText().trim());
+			if(elemt.getText().trim().equals(error)){
+				flag = true;
+				break;
+			}
+		}
+		return flag;
+	}
+
+	public WebElement getCheckboxInSpecifiedRowInPublisherTable(int rownum){
+		return driver.findElement(By.xpath(String.format(checkboxStringInPublisherable, rownum)));
+	}
+
+	public WebElement getPubIDElemtByRowNumber(int rownum){
+		return driver.findElement(By.xpath(String.format(this.idStringInPublisherTable, rownum)));
+	}
+
+	public boolean verifyButtonDisplaysInHeaderOfMediaPage(String btnName){
+		boolean flag = false;
+		String button;
+		System.out.println("Check if button exist >>> " + btnName);
+		for(WebElement btnElemt : this.buttonsInPubPageHeader){
+			button = btnElemt.getText().trim();
+			System.out.println("btnElemt.getText().trim() >>> " + button);
+			if(button.equalsIgnoreCase(btnName)){
+				flag = true;
+				break;
+			}
+		}
+		return  flag;
+	}
+
+	public WebElement getStatusElemtByID(String id) {
+		return driver.findElement(By.xpath(String.format(this.statusByIDInPubTable, id)));
+	}
+
+	public WebElement getActivateInactivateBtnByName(String name) {
+		return driver.findElement(By.xpath(String.format(this.activateInactivateBtnString, name)));
 	}
 }

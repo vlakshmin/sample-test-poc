@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -44,6 +46,10 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 	 static ArrayList<WebElement> publist = new ArrayList<WebElement>();
 
 	WebDriverWait wait = new WebDriverWait(driver, 50);
+	JavascriptExecutor js = (JavascriptExecutor) driver;
+
+	List<String> activePubIDList = new ArrayList<>();
+	List<String> inactivePubIDList = new ArrayList<>();
 
 	public PublisherStepDefinitions() {
 		super();
@@ -131,42 +137,6 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 		}
 	}
 
-	
-	@When("^\"(.*)\" a publisher from the publisher overview page$")
-	public void verifyHEnableDiableAdspot(String action) throws InterruptedException {
-		
-			driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]/div//i")).click();
-			List<WebElement> coulmnData = navOptions.getColumnDataMatchingHeader("Active");
-			String status = coulmnData.get(0).getText();
-			if(action.equalsIgnoreCase("Enable")&& status.equals("Inactive") ||
-					action.equalsIgnoreCase("Disable")&& status.equals("Active")) {
-				
-			
-			switch (status) {
-			case "Active":
-				Assert.assertTrue(pubListPgs.overviewEditbutton.isDisplayed());
-				Assert.assertTrue(pubListPgs.overviewDisablebutton.isDisplayed());
-				pubListPgs.clickOverViewDisablebutton();
-				Thread.sleep(3000);
-				List<WebElement> coulmnData1 = navOptions.getColumnDataMatchingHeader("Active");
-				Assert.assertEquals(coulmnData1.get(0).getText(), "Inactive");
-				break;
-			case "Inactive":
-				Assert.assertTrue(pubListPgs.overviewEditbutton.isDisplayed());
-				Assert.assertTrue(pubListPgs.overviewEnablebutton.isDisplayed());
-				pubListPgs.clickOverViewEnablebutton();
-				Thread.sleep(3000);
-				List<WebElement> coulmnData2 = navOptions.getColumnDataMatchingHeader("Active");
-				Assert.assertEquals(coulmnData2.get(0).getText(), "Active");
-				break;
-
-			default:
-				Assert.assertTrue(false, "The status fields supplied does not match with the input");
-
-			}
-			}
-		}
-	
 	@When("^Close toast message$")
 	public void closeToastMessage() throws InterruptedException {
 		
@@ -344,9 +314,117 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 		Assert.assertEquals(pubListPgs.activeCheckbox.getAttribute("aria-checked"), "true");
 	}
 
-	@Then("^Verify that Active as a value displayed in Active column in publisher list view$")
-	public void verifyThatActiveAsAValueDisplayedInActiveColumnInPublisherListView() {
-		Assert.assertEquals(pubListPgs.getActiveColumnByPublisherName(pubName).getText().trim(), "Active");
+	@Then("^Verify that \"([^\"]*)\" as a value displayed in Active column in publisher list view$")
+	public void verifyThatActiveInactiveAsAValueDisplayedInActiveColumnInPublisherListView(String status) {
+		Assert.assertEquals(pubListPgs.getActiveColumnByPublisherName(pubName).getText().trim(), status);
+	}
+
+    @Then("^Verify that below errors are displayed near Save Publisher button$")
+    public void verifyThatAllErrorsAreDisplayedNearSavePublisherButton(DataTable dt) {
+		js.executeScript("arguments[0].scrollIntoView();",pubListPgs.validationErrorsPanel);
+		getDataFromTable(dt).forEach(e ->
+				Assert.assertTrue(pubListPgs.checkIfErrorIsDisplayed(e.getValue())));
+    }
+
+	@Then("^Verify that below errors are not displayed near Save Publisher button$")
+	public void verifyThatBelowErrorsAreNotDisplayedNearSavePublisherButton(DataTable dt) {
+		js.executeScript("arguments[0].scrollIntoView();",pubListPgs.validationErrorsPanel);
+		getDataFromTable(dt).forEach(e ->
+				Assert.assertFalse(pubListPgs.checkIfErrorIsDisplayed(e.getValue())));
+	}
+
+	@Then("^Verify no validation errors display in Create Publisher page$")
+	public void verifyNoValidationErrorsDisplayInCreatePublisherPage() {
+		js.executeScript("arguments[0].scrollIntoView();",pubListPgs.savePublisherBtn);
+		Assert.assertFalse(pubListPgs.isElementPresent(pubListPgs.validationErrorsCssPath));
+	}
+
+	@When("^Select \"([^\"]*)\" \"([^\"]*)\" publisher in list view$")
+	public void selectPublisherInListView(String count, String status) {
+		int rowNum = 0;
+		String pubID = "";
+		int loop = Integer.parseInt(count);
+		for(int i = 0; i < loop; i++){
+			System.out.println("select "+ status + " publisher loop >>> " + loop);
+			for(int j = 0; j < pubListPgs.statusColumnsPublisherTable.size(); j++){
+				String value = pubListPgs.statusColumnsPublisherTable.get(j).getText().trim();
+				System.out.println("status column value >>> " + value);
+				if(value.equals(status)){
+					rowNum = j + 1;
+					System.out.println(status + " in row number >>> " + rowNum);
+					if(!pubListPgs.verifyIfCheckboxIsChecked(rowNum)){
+						pubListPgs.getCheckboxInSpecifiedRowInPublisherTable(rowNum).click();
+						pubID = pubListPgs.getPubIDElemtByRowNumber(rowNum).getText().trim();
+						if(status.equals("Active")){
+							System.out.println("Store Active publisher ID"  + pubID + " to activePubIDList");
+							this.activePubIDList.add(pubID);
+						}else{
+							System.out.println("Store Inactive publisher ID"  + pubID +" to inactivePubIDList");
+							this.inactivePubIDList.add(pubID);
+						}
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	@Then("^Verify the following buttons are present in Publisher page$")
+	public void verifyTheFollowingButtonsArePresentInPublisherPage(DataTable dt) {
+		getDataFromTable(dt).forEach(e ->
+				Assert.assertTrue(pubListPgs.verifyButtonDisplaysInHeaderOfMediaPage(e.getValue())));
+	}
+
+	@Then("^Verify Edit Publisher page displays$")
+	public void verifyEditPublisherPageDisplays() {
+		wait.until(ExpectedConditions.visibilityOf(pubListPgs.savePublisherBtn));
+		Assert.assertTrue(pubListPgs.pageTitle.getText().contains("Edit Publisher"));
+	}
+
+	@When("^Close Edit Publisher page$")
+	public void closeEditPublisherPage() {
+		pubListPgs.closeEditPubtBtn.click();
+	}
+
+	@When("^Click on \"([^\"]*)\" button in Publisher page$")
+	public void clickOnPublisherButtonInPublisherPage(String arg0) {
+		pubListPgs.getActivateInactivateBtnByName(arg0).click();
+		wait.until(ExpectedConditions.visibilityOf(pubListPgs.createPublisherBtn));
+	}
+
+	@Then("^Verify the selected \"([^\"]*)\" publisher change to \"([^\"]*)\" status in Publisher list view$")
+	public void verifyTheSelectedPublisherChangeToStatusInPublisherListView(String status, String expectedStatus) {
+		if(status.equals("Inactive")){
+			for(String id : this.inactivePubIDList){
+				System.out.println("Publisher ID >>> " + id);
+				Assert.assertEquals(pubListPgs.getStatusElemtByID(id).getText().trim(), expectedStatus);
+			}
+			this.inactivePubIDList.clear();
+		}else{
+			for(String id : this.activePubIDList){
+				System.out.println("Publisher ID >>> " + id);
+				Assert.assertEquals(pubListPgs.getStatusElemtByID(id).getText().trim(), expectedStatus);
+			}
+			this.activePubIDList.clear();
+		}
+	}
+
+	@When("^\"([^\"]*)\" the Active toggle button in Create Publisher page$")
+	public void disableEnableTheActiveToggleButtonInCreatePublisherPage(String arg0) {
+		String flag = pubListPgs.activeCheckbox.getAttribute("aria-checked");
+		System.out.println("pubListPgs.activeCheckbox.getAttribute(\"aria-checked\") >>> " + flag);
+		switch (arg0){
+			case "Disable":
+				if(flag.equals("true")){
+					pubListPgs.activeToggleBtn.click();
+				}
+				break;
+			case "Enable":
+				if(flag.equals("false")){
+					pubListPgs.activeToggleBtn.click();
+				}
+				break;
+		}
 	}
 }
 
