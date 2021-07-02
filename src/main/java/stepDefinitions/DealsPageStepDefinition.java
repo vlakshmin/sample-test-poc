@@ -846,9 +846,17 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		}
 	}
 
-	@When("^Click on any deal name in Deals list$")
-	public void click_on_any_deal_name_in_Deals_list() {
-		dealsPage.dealNameInListview.click();
+	@When("^Click on any deal name that Currency is not \"([^\"]*)\" in Deals list$")
+	public void click_on_any_deal_name_in_Deals_list(String currency) {
+		int rownum = 0;
+		for(int i = 0; i < dealsPage.currencyColumnList.size(); i++){
+			System.out.println("dealsPage.currencyColumnList.get(i).getText() >>> " + dealsPage.currencyColumnList.get(i).getText().trim());
+			if(!dealsPage.currencyColumnList.get(i).getText().trim().equals(currency)){
+				rownum = i+1;
+				break;
+			}
+		}
+		dealsPage.getDealNameColumnLink(rownum).click();
 		wait.until(ExpectedConditions.elementToBeClickable(dealsPage.dealName));
 	}
 

@@ -197,6 +197,8 @@ public class RXDealsPage extends RXBaseClass {
 
 	@FindBy(xpath = "//table/tbody/tr[1]/td[4]/a")
 	public WebElement dealNameInListview;
+	@FindAll(@FindBy(xpath = "//table/tbody/tr/td[10]"))
+	public List<WebElement> currencyColumnList;
 
 	//validation errors
 	@FindBy(css = "div.v-alert__content > div")
@@ -235,6 +237,10 @@ public class RXDealsPage extends RXBaseClass {
 	public String buyerDelete="(//button[contains(@class,'alignRight')]/span)";
 	public String dSPEnable="(//ancestor::div[2]//div[contains(@class,'cardPadding')]//div[contains(@class,'v-input--is-label-active')]//input)";
 	public String dSPDisable="(//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']//input[@aria-checked='false'])";
+
+	public String currencyOptionString = "//div[@class='v-list-item__content']/div[text()='%s']";
+	public String dealNameColumnString = "//table/tbody/tr[%s]/td[4]/a";
+
 	// Action object
 	Actions act = new Actions(driver);
 
@@ -683,7 +689,7 @@ public class RXDealsPage extends RXBaseClass {
 	}
 
 	public WebElement getCurrencyDropdownValue(String value){
-		return driver.findElement(By.xpath("//div[text()='" + value + "']"));
+		return driver.findElement(By.xpath(String.format(currencyOptionString, value)));
 	}
 
 	public String getChangeCurrencyBannerMsg()
@@ -721,5 +727,9 @@ public class RXDealsPage extends RXBaseClass {
 	public void hoverOverOnDSPInfoICon(){
 		new Actions(driver).moveToElement(this.dspInfoIcon).build().perform();
 		wait.until(ExpectedConditions.attributeToBe(this.dspInfoIcon, "aria-expanded","true"));
+	}
+
+	public WebElement getDealNameColumnLink(int rownum){
+		return driver.findElement(By.xpath(String.format(dealNameColumnString, rownum)));
 	}
 }

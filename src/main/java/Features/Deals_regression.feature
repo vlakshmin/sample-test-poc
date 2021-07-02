@@ -893,7 +893,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
 		And User displayed with Deals page
-		And Click on any deal name in Deals list
+		And Click on any deal name that Currency is not "USD" in Deals list
 		And Select "USD - Dollars" from Currency
 		Then Verify the following message is displayed when the Currency changed for deal
 			|Message|
@@ -904,7 +904,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		Given Publisher user login to RX UI with valid username and password
 		When Click on Deals option under Sales
 		And User displayed with Deals page
-		And Click on any deal name in Deals list
+		And Click on any deal name that Currency is not "USD" in Deals list
 		And Select "USD - Dollars" from Currency
 		Then Verify the following message is displayed when the Currency changed for deal
 			|Message|
@@ -915,7 +915,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		Given Single Publisher user login to RX UI with valid username and password
 		When Click on Deals option under Sales
 		And User displayed with Deals page
-		And Click on any deal name in Deals list
+		And Click on any deal name that Currency is not "USD" in Deals list
 		And Select "USD - Dollars" from Currency
 		Then Verify the following message is displayed when the Currency changed for deal
 			|Message|
