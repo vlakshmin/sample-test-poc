@@ -1,20 +1,25 @@
 package RXPages;
 
 import RXUtitities.RXUtile;
+
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class RXAdspotsPage extends RXBasePage {
 	// Utility object
@@ -168,6 +173,7 @@ public class RXAdspotsPage extends RXBasePage {
 	public WebElement defaultFloorPriceMsg;
 
 	public String floorPriceInputString = "//div[text()='%s']/parent::div/following-sibling::span//label[contains(text(),'Floor Price')]/following-sibling::input";
+	public String floorPriceLabelString = "//div[text()='%s']/parent::div/following-sibling::span//label[contains(text(),'Floor Price')]";
 	public String floorPriceMsgString = "//div[text()='%s']/parent::div/following-sibling::span//label[contains(text(),'Floor Price')]/parent::div/parent::div/following-sibling::div//div[contains(@class,'v-messages__wrapper')]/div[contains(@class,'v-messages__message')]";
 	public String cardXpathString = "//div[text()='%s']";
 	public String duplicatedFloorPriceString = "//div[text()='%s']/parent::div/following-sibling::span//label[contains(text(),'Floor Price')]/preceding-sibling::div";
@@ -273,5 +279,22 @@ public class RXAdspotsPage extends RXBasePage {
 		}catch (NoSuchElementException e) {
 			return false;
 		}
+	}
+
+	private Function<? super WebDriver,Boolean> floorPriceIsFocused(String card, String isFocused) {
+		return new ExpectedCondition<Boolean>() {
+			public Boolean apply(WebDriver driver) {
+				System.out.println("Floor Price label's class attribute >>> " + getElementByXpathString(floorPriceLabelString,card).getAttribute("class"));
+				if(isFocused.equals("yes")){
+					return getElementByXpathString(floorPriceLabelString,card).getAttribute("class").contains("v-label--active");
+				}else{
+					return !getElementByXpathString(floorPriceLabelString,card).getAttribute("class").contains("v-label--active");
+				}
+			}
+		};
+	}
+
+	public void waitFloorPriceInputIsFocusedOrNot(String card, String isFocused) {
+		driverWait().pollingEvery(Duration.ofMillis(250)).until(floorPriceIsFocused(card, isFocused));
 	}
 }

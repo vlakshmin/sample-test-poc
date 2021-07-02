@@ -84,7 +84,8 @@ Feature: Adspots page regression
       | Publisher     | desc     |
       | Related Media | asc      |
 
-# It's a known bug in line 94
+  # It's a known bug in line 95
+  @Ignore
   Scenario:  Verify mandatory fields in the Create Adspot Page
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory

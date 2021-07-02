@@ -1636,13 +1636,13 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 	@When("^Click in Floor Price input in \"([^\"]*)\" card$")
 	public void clickInFloorPriceInputInCard(String arg0) throws Throwable {
 		adspotsPage.getElementByXpathString(adspotsPage.floorPriceInputString, arg0).click();
-		Thread.sleep(2000);
+		adspotsPage.waitFloorPriceInputIsFocusedOrNot(arg0, "yes");
 	}
 
 	@And("^Click outside Floor Price input in \"([^\"]*)\" card$")
 	public void clickOutsideFloorPriceInputInCard(String arg0) throws Throwable {
 		adspotsPage.getElementByXpathString(adspotsPage.cardXpathString, arg0).click();
-		Thread.sleep(2000);
+		adspotsPage.waitFloorPriceInputIsFocusedOrNot(arg0, "no");
 	}
 
 	@Then("^verify that no error is displayed below Floor Price input in \"([^\"]*)\" card$")
