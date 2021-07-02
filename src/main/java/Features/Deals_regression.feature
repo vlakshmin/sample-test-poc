@@ -1009,3 +1009,19 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		Then Verify the error message displays below Floor Price input
 			|Message|
 			|A valid price is between 0.00 and 999,999.99|
+
+	Scenario: 154. Verify that selecting a DSP that isn't the first option in the search doesn't trigger warning banner
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And Select publisher by name: "Viber"
+		Then The Currency field is not null
+		When Click on DSP input
+		And Type "d" in DSP input
+		And Select 2nd value that below the highlighted dropdown value
+		Then Verify the following message is not displayed when select the second DSP value
+			|Message|
+			|By changing the DSP, the Buyers section will be reset and will not be saved.|

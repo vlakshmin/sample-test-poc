@@ -97,12 +97,11 @@ public class RXDealsPage extends RXBaseClass {
 	public WebElement currencyValue;
 	@FindBy(xpath = "//label[text()='DSP']/following-sibling::div[@class='v-select__selections']" ) 
 	public WebElement dspDropDown;
-	/*
-	 * @FindBy(xpath = "//label[text()='DSP']/following-sibling::div[1]/div" )
-	 * public WebElement dspValue;
-	 */
-	@FindBy(xpath = "//label[text()='DSP']/following-sibling::div[1]/input" )
-	public WebElement dspValue;
+
+	@FindBy(xpath = "//label[text()='DSP']/following-sibling::div/div" )
+	public WebElement dspValueDiv;
+	@FindBy(xpath = "//label[text()='DSP']/following-sibling::div/input" )
+	public WebElement dspValueInput;
 	@FindBy(xpath = "//label[text()='Floor Price']/following-sibling::input" ) 
 	public WebElement value;
 	@FindBy(xpath = "//label[text()='DSP']/following-sibling::div[@class='v-input__append-inner']/i" )
@@ -203,6 +202,11 @@ public class RXDealsPage extends RXBaseClass {
 	@FindBy(css = "div.v-alert__content > div")
 	public WebElement validationErrorsPanel;
 	public  String validationErrorsCssPath = "div.v-alert__content > div > ul > li";
+
+	@FindBy(xpath = "//div[contains(@class,'v-list-item--highlighted')]/div/div[@class='v-list-item__title']")
+	public WebElement highlightedDropdownValue;
+	@FindBy(xpath = "//div[contains(@class,'v-list-item--highlighted')]/following-sibling::div/div/div[@class='v-list-item__title']")
+	public WebElement valueBelowHighlightedDropdownValue;
 
 //	String dealNameInListOne="//table/tbody/tr[1]/td[3]/span/a[contains(text(),";
 	String dealNameInListOne="//table/tbody/tr[1]/td[4]/a[contains(text(),";
@@ -422,7 +426,7 @@ public class RXDealsPage extends RXBaseClass {
 	public void selectDSPByName(String name) {
 		dspDropDown.click();
 		selectValueFromDropdown(name);
-		enteredDSPValue= dspValue.getText();
+		enteredDSPValue= dspValueInput.getText();
 	}
 	
 	public void enterDealName(String EntdealName)

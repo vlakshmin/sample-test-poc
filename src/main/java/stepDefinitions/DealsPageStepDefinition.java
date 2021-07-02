@@ -5,15 +5,13 @@ import RXBaseClass.RXBaseClass;
 import RXUtitities.RXUtile;
 import RXPages.*;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.*;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.*;
 import org.testng.Assert;
-
-import javax.xml.datatype.DatatypeConfigurationException;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.testng.Assert.assertTrue;
@@ -202,7 +200,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 			wait.until(ExpectedConditions.elementToBeClickable(dealsPage.dealName));
 			dealsPage.selectPrivateAuctionByName(privAucName);
 			dealsPage.selectDSPByName(dSPvalue);
-			enteredDSP=dealsPage.dspValue.getText();
+			enteredDSP=dealsPage.dspValueDiv.getText();
 			dealsPage.enterDealName(dealName);
 			dealsPage.enterValue(dealValue);
 			
@@ -320,7 +318,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 				break;
 			case "DSP":
 				System.out.println("Entered enteredDSPValue :"+ dealsPage.enteredDSPValue);
-				Assert.assertEquals(dealsPage.dspValue.getText(), enteredDSP);
+				Assert.assertEquals(dealsPage.dspValueDiv.getText(), enteredDSP);
 
 				break;
 
@@ -540,7 +538,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	    String cancOrAcce=dealsPage.cancelOrAcceptChangeDSPBannerMsg(cancelOrAccept);
 	    if(cancOrAcce.equalsIgnoreCase("Accepted"))
 	    {
-	    	enteredDSP=dealsPage.dspValue.getText();
+	    	enteredDSP=dealsPage.dspValueDiv.getText();
 	    }
 	}
 	
@@ -763,8 +761,8 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		}
 
 		//DSP
-		System.out.println("DSP field's enabled >>> " + dealsPage.dspValue.isEnabled());
-		if( dealsPage.dspValue.isEnabled()){
+		System.out.println("DSP field's enabled >>> " + dealsPage.dspValueInput.isEnabled());
+		if( dealsPage.dspValueInput.isEnabled()){
 			fail("DSP in Create Deal is not disabled.");
 		}
 
@@ -842,7 +840,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 			wait.until(ExpectedConditions.elementToBeClickable(dealsPage.dealName));
 			dealsPage.selectPrivateAuctionByName(privAucName);
 			dealsPage.selectDSPByName(dSPvalue);
-			enteredDSP = dealsPage.dspValue.getText();
+			enteredDSP = dealsPage.dspValueDiv.getText();
 			dealsPage.enterDealName(dealName);
 			dealsPage.enterValue(dealValue);
 		}
@@ -946,5 +944,34 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		System.out.println("dealsPage.floorPriceErrorMsg.getText().trim() >>> " + msg);
 		getDataFromTable(dt).forEach(e ->
 				Assert.assertEquals(msg,e.getValue()));
+	}
+
+	@When("^Click on DSP input$")
+	public void clickOnDSPInput() {
+		dealsPage.dspDropDown.click();
+	}
+
+	@When("^Type \"([^\"]*)\" in DSP input$")
+	public void typeInDSPInput(String arg0) {
+		Actions action = new Actions(driver);
+		action.sendKeys(arg0).perform();
+		Assert.assertTrue(dealsPage.highlightedDropdownValue.getText().startsWith(arg0));
+	}
+
+	@When("^Select 2nd value that below the highlighted dropdown value$")
+	public void select2ndValueThatBelowTheHighlightedDropdownValue() {
+		String secondValue = dealsPage.valueBelowHighlightedDropdownValue.getText().trim();
+		System.out.println(" dealsPage.valueBelowHighlightedDropdownValue.getText() >>> " + secondValue);
+		dealsPage.valueBelowHighlightedDropdownValue.click();
+
+		String selectedValue = dealsPage.dspValueDiv.getText().trim();
+		System.out.println(" dealsPage.dspValueDiv.getText() >>> " + selectedValue);
+
+		Assert.assertEquals(selectedValue, secondValue);
+	}
+
+	@Then("^Verify the following message is not displayed when select the second DSP value$")
+	public void verifyTheFollowingMessageIsNotDisplayedWhenSelectTheSecondDSPValue(DataTable dt) {
+		Assert.assertFalse(dealsPage.changeDSPBannerMsg.isDisplayed());
 	}
 }
