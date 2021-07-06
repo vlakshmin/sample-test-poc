@@ -57,8 +57,8 @@ public class RXNavOptionStepDefinitions extends RXBasePage {
 	}
 	
 	
-	@When("^Check for Sub mennu option under Admin main menu\\.$")
-	public void check_for_Sub_mennu_option_under_Admin_main_menu() throws Throwable {
+	@When("^Check for Sub menu option under Admin main menu\\.$")
+	public void check_for_Sub_menu_option_under_Admin_main_menu() throws Throwable {
 		 driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
 			log.info("User logged in to check the navigation option for Sub mennu option under Admin main menu :"+ pubListPgs.logodisplayed());
 			 Assert.assertTrue(pubListPgs.logodisplayed());
@@ -69,21 +69,18 @@ public class RXNavOptionStepDefinitions extends RXBasePage {
 				}
 	}
 
-	@Then("^Publisher,Users,Demand Sources and Buyers are displayed as sub main menu under Admin main menu as navigation options\\.$")
-	public void publisher_Users_Demand_Sources_and_Buyers_are_displayed_as_sub_main_menu_under_Admin_main_menu_as_navigation_options() throws Throwable {
+	@Then("^Publisher,Users and Demand Sources are displayed as sub main menu under Admin main menu as navigation options\\.$")
+	public void publisher_Users_and_Demand_Sources_are_displayed_as_sub_main_menu_under_Admin_main_menu_as_navigation_options() throws Throwable {
 		log.info("Publisher sub menu are displaying under Admin main menu : "+ rxNavOpt.ispublisherUndrAdminDisplayed());
 		Assert.assertTrue(rxNavOpt.ispublisherUndrAdminDisplayed());
 		log.info("Users sub menu are displaying under Admin main menu : "+ rxNavOpt.isusersUndrAdminDisplayed());
 		Assert.assertTrue(rxNavOpt.isusersUndrAdminDisplayed());
 		log.info("Demand Source sub menu are displaying under Admin main menu : "+ rxNavOpt.isdemandSourcesUndrAdminDisplayed());
 		Assert.assertTrue(rxNavOpt.isdemandSourcesUndrAdminDisplayed());
-		log.info("Buyer sub menu are displaying under Admin main menu : "+ rxNavOpt.isbuyersUndrAdminDisplayed());
-		Assert.assertTrue(rxNavOpt.isbuyersUndrAdminDisplayed());
-		
 	}
 	
-	@When("^Check for Sub mennu option under Inventory main menu\\.$")
-	public void check_for_Sub_mennu_option_under_Inventory_main_menu() throws Throwable {
+	@When("^Check for Sub menu option under Inventory main menu\\.$")
+	public void check_for_Sub_menu_option_under_Inventory_main_menu() throws Throwable {
 		log.info("User logged in to check the navigation option for Sub mennu option under Inventory main menu :"+ pubListPgs.logodisplayed());
 		 Assert.assertTrue(pubListPgs.logodisplayed());
 		 rxNavOpt.expandInventory();
@@ -99,18 +96,16 @@ public class RXNavOptionStepDefinitions extends RXBasePage {
 	}
 	
 	
-	@When("^Check for Sub mennu option under Rules main menu\\.$")
-	public void check_for_Sub_mennu_option_under_Rules_main_menu() throws Throwable {
+	@When("^Check for Sub menu option under Rules main menu\\.$")
+	public void check_for_Sub_menu_option_under_Rules_main_menu() throws Throwable {
 		log.info("User logged in to check the navigation option for Sub mennu option under Rules main menu :"+ pubListPgs.logodisplayed());
 		 Assert.assertTrue(pubListPgs.logodisplayed());
 		 rxNavOpt.expandRules();
 	}
 
-	@Then("^Filters and Targeting are displayed as sub main menu under Rules main menu as navigation options\\.$")
-	public void filters_and_Targeting_are_displayed_as_sub_main_menu_under_Rules_main_menu_as_navigation_options() throws Throwable {
+	@Then("^Targeting is displayed as sub main menu under Rules main menu as navigation options\\.$")
+	public void targeting_is_displayed_as_sub_main_menu_under_Rules_main_menu_as_navigation_options() throws Throwable {
 		Thread.sleep(2000);
-		log.info("Filter sub menu are displaying under Rules main menu : "+ rxNavOpt.isfiltersUndrRulesDisplayed());
-		Assert.assertTrue(rxNavOpt.isfiltersUndrRulesDisplayed());
 		driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
 		log.info("Targeting sub menu are displaying under Rules main menu : "+ rxNavOpt.istargetingUndrRulesDisplayed());
 		Assert.assertTrue(rxNavOpt.istargetingUndrRulesDisplayed());
@@ -137,7 +132,7 @@ public class RXNavOptionStepDefinitions extends RXBasePage {
 		log.info("User logged in to check the navigation option for Sub mennu option under Publisher main menu :"+ pubListPgs.logodisplayed());
 		
 			 log.info("Click on Inventory main menu expansion ");
-			 rxNavOpt.expandAdmin();
+			 rxNavOpt.expandInventory();
 			
 	}
 	

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
@@ -29,8 +30,7 @@ public class RXNavOptions extends RXBaseClass {
 	WebElement inventoryNav;
 	@FindBy(xpath = "//div[text()='Rules']")
 	WebElement ruleNav;
-	@FindBy(xpath = "//div[text()='Dashboard\n" +
-			"            ']")
+	@FindBy(xpath = "//div[text()='Dashboard ']")
 	WebElement dashBoardNav;
 
 	// Option expension
@@ -50,8 +50,6 @@ public class RXNavOptions extends RXBaseClass {
 	public WebElement usersUndrAdmin;
 	@FindBy(xpath = "//div[text()='Demand Sources']")
 	WebElement demandSourcesUndrAdmin;
-	@FindBy(xpath = "//div[text()='Buyers']")
-	WebElement buyersUndrAdmin;
 
 	// subMenu of Inventory main menu
 	@FindBy(xpath = "//div[text()='Media']")
@@ -72,8 +70,6 @@ public class RXNavOptions extends RXBaseClass {
 	public WebElement errorPopup;
 
 	// subMenu of Rules main menu
-	@FindBy(xpath = "//div[text()='Filters']")
-	WebElement filtersUndrRules;
 	@FindBy(xpath = "//div[text()='Targeting']")
 	WebElement targetingUndrRules;
 
@@ -133,8 +129,8 @@ public class RXNavOptions extends RXBaseClass {
 
 	// subMenu Publisher of Admin main menu
 	public boolean ispublisherUndrAdminDisplayed() {
-		return publisherUndrAdmin.isDisplayed();
-
+//		return publisherUndrAdmin.isDisplayed();
+		return isElementPresent(publisherUndrAdmin);
 	}
 
 	// subMenu Users of Admin main menu
@@ -146,12 +142,6 @@ public class RXNavOptions extends RXBaseClass {
 	// subMenu Demand Source of Admin main menu
 	public boolean isdemandSourcesUndrAdminDisplayed() {
 		return demandSourcesUndrAdmin.isDisplayed();
-
-	}
-
-	// subMenu Buyer of Admin main menu
-	public boolean isbuyersUndrAdminDisplayed() {
-		return buyersUndrAdmin.isDisplayed();
 
 	}
 
@@ -170,12 +160,6 @@ public class RXNavOptions extends RXBaseClass {
 	}
 
 	// subMenu of Rules main menu
-	// subMenu Filters of Rules main menu
-	public boolean isfiltersUndrRulesDisplayed() {
-		return filtersUndrRules.isDisplayed();
-
-	}
-
 	// subMenu Targeting of Rules main menu
 	public boolean istargetingUndrRulesDisplayed() {
 		return targetingUndrRules.isDisplayed();
@@ -325,6 +309,15 @@ public class RXNavOptions extends RXBaseClass {
 	public void clickDashBoardNav() {
 		if (dashBoardNav.isDisplayed()) {
 			dashBoardNav.click();
+		}
+	}
+
+	public boolean isElementPresent(WebElement element){
+		try{
+			element.isDisplayed();
+			return true;
+		}catch (NoSuchElementException e) {
+			return false;
 		}
 	}
 
