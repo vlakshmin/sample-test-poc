@@ -262,7 +262,7 @@ Feature: Private Auctions page regression
     Then Verify that Details display the following data for each targeting
       | Inventory                  | Devices                  | Operating Systems                  | Geos                  | Ad Format                  | Ad Sizes                  |
       | All Inventory are included | All Devices are included | All Operating Systems are included | All Geos are included | All Ad Format are included | All Ad Sizes are included |
-  @Ignore1
+  
   Scenario: 41.Verify Details if all targeting have every item included
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
