@@ -203,4 +203,12 @@ public class RXNavOptionStepDefinitions extends RXBasePage {
 		}
 		}
 		}
+
+	@Then("^Verify that Details is second column right on ID$")
+	public void verifyThatDetailsIsSecondColumnRightOnID() {
+		System.out.println("rxNavOpt.idColumn.getText().trim() >>> " + rxNavOpt.idColumn.getText().trim());
+		System.out.println("rxNavOpt.detailsColumn.getText().trim() >>> " + rxNavOpt.idColumn.getText().trim());
+		Assert.assertEquals(rxNavOpt.idColumn.getText().trim(), "ID");
+		Assert.assertEquals(rxNavOpt.detailsColumn.getText().trim(), "Details");
+	}
 }

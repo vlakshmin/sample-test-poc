@@ -40,6 +40,8 @@ public class RXNavOptions extends RXBaseClass {
 	WebElement inventoryExpensionBtn;
 	@FindBy(xpath = "//div[text()='Sales']/parent::div/following-sibling::div")
 	WebElement salesExpensionBtn;
+	@FindBy(xpath = "//div[text()='Sales']/parent::div/following-sibling::div/parent::div")
+	WebElement salesDiv;
 	@FindBy(xpath = "//div[text()='Rules']/parent::div/following-sibling::div")
 	WebElement rulesExpensionBtn;
 
@@ -97,6 +99,11 @@ public class RXNavOptions extends RXBaseClass {
 	// TableOptions
 	@FindBy(xpath = "//div[@class='table-options']//span")
 	public WebElement tableOptions;
+
+	@FindBy(xpath = "//thead/tr/th[2]/span")
+	public WebElement idColumn;
+	@FindBy(xpath = "//thead/tr/th[3]/span")
+	public WebElement detailsColumn;
 
 	public RXNavOptions() {
 		PageFactory.initElements(driver, this);
@@ -191,8 +198,9 @@ public class RXNavOptions extends RXBaseClass {
 		public void expandSales() {
 			WebDriverWait wait = new WebDriverWait(driver, 30);
 			WebElement element = wait.until(ExpectedConditions.visibilityOf(salesExpensionBtn));
-			element.click();
-
+			if(salesDiv.getAttribute("aria-expanded").equals("false")){
+				element.click();
+			}
 		}
 	// Clicking expansion of Rules
 
