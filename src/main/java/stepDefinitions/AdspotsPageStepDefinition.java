@@ -118,7 +118,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 			} else {
 				List<WebElement> coulmnData = navOptions.getColumnDataMatchingHeader(columnName);
 				for (int j = 0; j < coulmnData.size(); j++) {
-					Assert.assertEquals(coulmnData.get(j).getText().trim(), adspotName);
+					Assert.assertTrue(coulmnData.get(j).getText().trim().contains(adspotName));
 				}
 			}
 
@@ -343,11 +343,11 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
-			if(fieldName.contains("Date")) {
-				 expectedNotification = "Start date is required.";
-			}else {
+//			if(fieldName.contains("Date")) {
+//				 expectedNotification = "Start date is required.";
+//			}else {
 			 expectedNotification = "The" + " " + fieldName + " " + "field is required";
-			}
+//			}
 			WebElement notificationMsg = driver.findElement(
 					By.xpath("//div[@class='v-messages__wrapper']/div[text()='" + expectedNotification + "']"));
 			Assert.assertTrue(notificationMsg.isDisplayed());
