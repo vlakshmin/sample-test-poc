@@ -218,7 +218,8 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 
 	@Then("^Verify that save publisher is successful$")
 	public void verifyThatSavePublisherIsSuccessful() throws InterruptedException {
-		pubListPgs.waitCreatePublisherPageDisappear();
+		driverWait().until(ExpectedConditions.visibilityOfElementLocated(By.xpath(pubListPgs.loadingXpathString)));
+		driverWait().until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(pubListPgs.loadingXpathString)));
 		driverWait().until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.format(pubListPgs.pubNameXpathString,pubName))));
 	}
 

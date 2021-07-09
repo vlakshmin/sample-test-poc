@@ -150,6 +150,7 @@ public class PublisherListPage extends RXBaseClass {
 	public String validationErrorsCssPath = "div.v-alert__content > div > ul > li";
 
 	public String pubNameXpathString = "//tbody/tr/td[3]/a[text()='%s']";
+	public String loadingXpathString = "//main//div[@class='container container--fluid']//table/thead[2]";
 
 	// Some declarations
 	int rownum = 1;
@@ -275,18 +276,6 @@ public class PublisherListPage extends RXBaseClass {
 		js.executeScript("arguments[0].scrollIntoView({block: \"center\"})", dropDownElementByName);
 		wait.until(elementToBeClickable(dropDownElementByName));
 		dropDownElementByName.click();
-	}
-
-	public void waitCreatePublisherPageDisappear() {
-		wait.pollingEvery(Duration.ofMillis(250)).until(elementDisappear(createPubString));
-	}
-
-	private Function<? super WebDriver,Boolean> elementDisappear(String elementString) {
-		return new ExpectedCondition<Boolean>() {
-			public Boolean apply(WebDriver driver) {
-				return !isElementPresent(elementString);
-			}
-		};
 	}
 
 	public boolean isElementPresent(String path){
