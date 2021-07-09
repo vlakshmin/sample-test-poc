@@ -1,10 +1,10 @@
 Feature: Targeting page validation
 
-  Scenario:  Verify the pagination exists for the list in the targeting page for admin
+  Scenario:  267.Verify the pagination exists for the list in the Media page for admin
     Given admin user login to RX UI with valid username and password
     When Click on Media option under Inventory
     Then User displayed with media page
-    Then Verify the pagination of the listed rows in the Page with a selection of 10 rows per page with 5 columns
+    Then Verify the pagination of the listed rows in the Page with a selection of 50 rows per page with 5 columns
 
   Scenario:  Verify the pagination exists for the list in the targeting page for publisher
     Given Publisher user login to RX UI with valid username and password
@@ -162,3 +162,34 @@ Feature: Targeting page validation
       | Viber     | TestAutoMedia | Mobile Web | http://app.store | Automotive |
     And Click on Save Media button
     Then Verify that Active as a value displayed in Status column
+
+  Scenario: 268.Verify hide/show columns from the table options for admin
+    Given admin user login to RX UI with valid username and password
+    When Click on Media option under Inventory
+    Then User displayed with media page
+    And User click on table options button
+    Then Verify that column "Created Date" can be hidden and shown
+    Then Verify that column "Modified Date" can be hidden and shown
+
+  Scenario: 269.Verify onclicking relevant status from table options shows only that particular table rows with that status
+    Given admin user login to RX UI with valid username and password
+    When Click on Media option under Inventory
+    Then User displayed with media page
+    Then User click on table options button
+    And Verify that column "Status" only shows relevant rows in the table with filter "Active"
+    And Verify that column "Status" only shows relevant rows in the table with filter "Inactive"
+
+  Scenario: 270.Verify searching Media with available and non available Media name
+    Given admin user login to RX UI with valid username and password
+    When Click on Media option under Inventory
+    Then User displayed with media page
+    When Search Media with name "blockchains LLC Media"
+    Then Verify that Media "blockchains LLC Media" is displayed
+    When Search Media with name "blockchains LLC Media a"
+    Then Verify that no results are displayed
+ 
+  Scenario: 271.Verify enabling and disabling of Media from the overview page
+    Given admin user login to RX UI with valid username and password
+    When Click on Media option under Inventory
+    Then User displayed with media page
+    Then Verify that Media can be Enabled and Disabled from list

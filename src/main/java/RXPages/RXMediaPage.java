@@ -16,7 +16,7 @@ import RXUtitities.RXUtile;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 
-public class RXMediaPage extends RXBaseClass {
+public class RXMediaPage extends RXBasePage {
 	// Utility object
 	RXUtile rxUTL;
 	PublisherListPage pubPage;
@@ -25,7 +25,10 @@ public class RXMediaPage extends RXBaseClass {
 
 	// Seats page heading
 	@FindBy(xpath = "//h1[text()='Media']")
-	WebElement mediaPageHeader;
+	public WebElement mediaPageHeader;
+	@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]")
+	public WebElement noDataAvailable;
+
 	// Xpath of rows to get the total number of row and column displayed in the
 	// page.
 	@FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr"))

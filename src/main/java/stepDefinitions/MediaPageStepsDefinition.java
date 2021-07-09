@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import RXPages.RXAdspotsPage;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import org.apache.log4j.Logger;
@@ -23,11 +24,12 @@ import cucumber.api.java.en.When;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
-public class MediaPageStepsDefinition extends RXBaseClass {
+public class MediaPageStepsDefinition extends RXMediaPage {
 
 	RXMediaPage mediaPage;
 	RXNavOptions navOptions;
 	PublisherListPage pubListPgs;
+	RXAdspotsPage adspotsPage;
 	RXUtile rxUTL;
 	Logger log = Logger.getLogger(MediaPageStepsDefinition.class);
 
@@ -36,6 +38,7 @@ public class MediaPageStepsDefinition extends RXBaseClass {
 		mediaPage = new RXMediaPage();
 		navOptions = new RXNavOptions();
 		pubListPgs = new PublisherListPage();
+		adspotsPage = new RXAdspotsPage();
 		rxUTL = new RXUtile();
 	}
 	WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -397,4 +400,57 @@ public class MediaPageStepsDefinition extends RXBaseClass {
 		wait.until(ExpectedConditions.visibilityOf(mediaPage.createMediaBtn));
 		Assert.assertEquals(mediaPage.getStatusElemtByMediaName(this.enteredMediaName).getText().trim(), "Active");
 	}
-}
+	@When("^Search Media with name \"([^\"]*)\"$")
+	public void search_Media_with_name(String mediaName) throws Throwable {
+		adspotsPage.searchAdspots(mediaName);
+		waitForPageLoaderToDisappear();
+	}
+
+	@Then("^Verify that Media \"([^\"]*)\" is displayed$")
+	public void verify_that_Media_is_displayed(String mediaName) throws Throwable {
+		List<WebElement> coulmnData = navOptions.getColumnDataMatchingHeader("Media Name");
+		for (int j = 0; j < coulmnData.size(); j++) {
+			Assert.assertEquals(coulmnData.get(j).getText().trim(), mediaName);
+		}
+	}
+
+	@Then("^Verify that no results are displayed$")
+	public void verify_that_no_results_are_displayed() throws Throwable {
+		Assert.assertEquals(mediaPage.noDataAvailable.getText(), "No data available");
+	}
+
+	@Then("^Verify that Media can be Enabled and Disabled from list$")
+	public void verify_that_Media_can_be_Enabled_and_Disabled_from_list() throws Throwable {
+		for (int i = 0; i <= 1; i++) {
+			driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]/div//i")).click();
+			List<WebElement> coulmnData = navOptions.getColumnDataMatchingHeader("Status");
+			String status = coulmnData.get(0).getText();
+			switch (status) {
+				case "Active":
+					Assert.assertTrue(mediaPage.overviewEditbutton.isDisplayed());
+					Assert.assertTrue(mediaPage.overviewDisablebutton.isDisplayed());
+					mediaPage.clickOverViewDisablebutton();
+					waitForPageLoaderToDisappear();
+//					Thread.sleep(3000);
+					List<WebElement> coulmnData1 = navOptions.getColumnDataMatchingHeader("Status");
+					Assert.assertEquals(coulmnData1.get(0).getText(), "Inactive");
+					break;
+				case "Inactive":
+					Assert.assertTrue(mediaPage.overviewEditbutton.isDisplayed());
+					Assert.assertTrue(mediaPage.overviewEnablebutton.isDisplayed());
+					String enableText = mediaPage.overviewEnablebutton.getText().replaceAll("\\s", "");
+//					Assert.assertEquals(enableText, "ACTIVATEPRIVATEAUCTION");
+					mediaPage.clickOverViewEnablebutton();
+					waitForPageLoaderToDisappear();   
+//					Thread.sleep(3000);
+					List<WebElement> coulmnData2 = navOptions.getColumnDataMatchingHeader("Status");
+					Assert.assertEquals(coulmnData2.get(0).getText(), "Active");
+					break;
+
+				default:
+					Assert.assertTrue(false, "The status fields supplied does not match with the input");
+
+			}
+		}
+	}
+	}
