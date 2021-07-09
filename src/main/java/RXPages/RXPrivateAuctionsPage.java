@@ -16,6 +16,7 @@ import org.testng.Assert;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -37,7 +38,7 @@ public class RXPrivateAuctionsPage extends RXBasePage {
     public WebElement overviewEditbutton;
     @FindBy(xpath = "//button/span[text()='Deactivate Private Auction']")
     public WebElement overviewDisablebutton;
-    @FindBy(xpath = "//div[@class='portal vue-portal-target']/button[2]/span")
+    @FindBy(xpath = "//button/span[text()='Activate Private Auction']")
     public WebElement overviewEnablebutton;
     @FindBy(xpath = "//label[text()='Name']/following-sibling::input")
     public WebElement auctionNameField;
@@ -249,6 +250,12 @@ public class RXPrivateAuctionsPage extends RXBasePage {
     	js.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[@class= 'options selectable']")));
     	wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[@class= 'options selectable included']"))));    	
     }
+
+    public void unSelectTargetingBlockListItem(String itemName) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[@class= 'options selectable included']")));
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[@class= 'options selectable']"))));
+    }
     
     public void clickTargetingBlockIncludedListItemClear(String itemName) {
         targetingBlockIncludedListItemClear(itemName).click();
@@ -260,7 +267,7 @@ public class RXPrivateAuctionsPage extends RXBasePage {
         selectTargetingBlockListItem(itemName);
         driverWait().until(ExpectedConditions.visibilityOf(targetingBlockIncludedListItem(itemName)));
         Assert.assertTrue(targetingBlockIncludedListItem(itemName).isDisplayed());
-        selectTargetingBlockListItem(itemName);
+        unSelectTargetingBlockListItem(itemName);
         Assert.assertFalse(isTargetingBlockIncludedListItem(itemName));
         driverWait().until(ExpectedConditions.visibilityOf(targetingBlockListItem(itemName)));
         selectTargetingBlockListItem(itemName);
@@ -327,9 +334,17 @@ public class RXPrivateAuctionsPage extends RXBasePage {
     }
 
     public void isAllItemAdded(String targetingName) {
+        List<String> targetingBlockItemsListData =  new ArrayList<String>();
+        List<String> targetingBlockIncludedItemsListData =  new ArrayList<String>();
         for (int i = 0; i < targetingBlockItemsList(targetingName).size(); i++) {
-            Assert.assertEquals(targetingBlockItemsList(targetingName).get(i).getText(), targetingBlockIncludedItemsList(targetingName).get(i).getText());
+            targetingBlockItemsListData.add(targetingBlockItemsList(targetingName).get(i).getText());
         }
+        for(int j =0;j<targetingBlockIncludedItemsList(targetingName).size();j++){
+            targetingBlockIncludedItemsListData.add(targetingBlockIncludedItemsList(targetingName).get(j).getText());
+        }
+        Collections.sort(targetingBlockItemsListData);
+        Collections.sort(targetingBlockIncludedItemsListData);
+        Assert.assertEquals(targetingBlockItemsListData, targetingBlockIncludedItemsListData);
     }
 
     public void collectIncludedItems(String targetingName) {

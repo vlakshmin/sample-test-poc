@@ -1,17 +1,25 @@
 package RXPages;
 
 import RXUtitities.RXUtile;
+
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class RXAdspotsPage extends RXBasePage {
 	// Utility object
@@ -31,6 +39,10 @@ public class RXAdspotsPage extends RXBasePage {
 	public List<WebElement> adspotsTableColumns;
 	@FindBy(xpath = "//*[@class='v-text-field__slot']/input")
 	public WebElement adSpotsSearchField;
+	@FindBy(xpath = "//table/tbody/tr[1]/td[4]/a")
+	public WebElement adSpotNameInFirstRow;
+	@FindBy(xpath = "//table/tbody/tr[1]/td[7]")
+	public WebElement activeInactiveValueInFirstRow;
 
 	// overview buttons
 	@FindBy(xpath = "//button/span[text()='Create Ad Spot']")
@@ -66,6 +78,8 @@ public class RXAdspotsPage extends RXBasePage {
 	public WebElement adSpotCloseSideDialog;
 	@FindBy(xpath = "//form/div[5]//label[text()='Ad Sizes']/following-sibling::div[@class='v-select__selections']/input")
 	public WebElement adSizeInput;
+	@FindBy(xpath = "//label[text()='Active']/parent::div/div/input")
+	public WebElement activeInput;
 
 	@FindBy(xpath = "//label[text()='Related Media']/following-sibling::div[@class='v-select__selections']")
 	public WebElement relatedMediaDropDown;
@@ -153,6 +167,16 @@ public class RXAdspotsPage extends RXBasePage {
 	public WebElement videoPlacementDropDown;
 	@FindAll(@FindBy(xpath = "//form/div[5]//label[text()='Video Placement Type']/following-sibling::div[@class='v-select__selections']/div"))
 	public WebElement videoPlacementField;
+
+	//Floor Price input in Banner/Native/Video card
+	@FindBy(xpath = "//label[text()='Default Floor Price']/parent::div/parent::div/following-sibling::div//div[contains(@class,'v-messages__message')]")
+	public WebElement defaultFloorPriceMsg;
+
+	public String floorPriceInputString = "//div[text()='%s']/parent::div/following-sibling::span//label[contains(text(),'Floor Price')]/following-sibling::input";
+	public String floorPriceLabelString = "//div[text()='%s']/parent::div/following-sibling::span//label[contains(text(),'Floor Price')]";
+	public String floorPriceMsgString = "//div[text()='%s']/parent::div/following-sibling::span//label[contains(text(),'Floor Price')]/parent::div/parent::div/following-sibling::div//div[contains(@class,'v-messages__wrapper')]/div[contains(@class,'v-messages__message')]";
+	public String cardXpathString = "//div[text()='%s']";
+	public String duplicatedFloorPriceString = "//div[text()='%s']/parent::div/following-sibling::span//label[contains(text(),'Floor Price')]/preceding-sibling::div";
 
 	// Action object
 	Actions act = new Actions(driver);
@@ -242,5 +266,35 @@ public class RXAdspotsPage extends RXBasePage {
 				break;
 		}
 		return "";
+	}
+
+	public WebElement getElementByXpathString(String xpathString, String parameter){
+		return driver.findElement(By.xpath(String.format(xpathString,parameter)));
+	}
+
+	public boolean isElementPresent(String xpathString){
+		try{
+			driver.findElement(By.xpath(xpathString));
+			return true;
+		}catch (NoSuchElementException e) {
+			return false;
+		}
+	}
+
+	private Function<? super WebDriver,Boolean> floorPriceIsFocused(String card, String isFocused) {
+		return new ExpectedCondition<Boolean>() {
+			public Boolean apply(WebDriver driver) {
+				System.out.println("Floor Price label's class attribute >>> " + getElementByXpathString(floorPriceLabelString,card).getAttribute("class"));
+				if(isFocused.equals("yes")){
+					return getElementByXpathString(floorPriceLabelString,card).getAttribute("class").contains("v-label--active");
+				}else{
+					return !getElementByXpathString(floorPriceLabelString,card).getAttribute("class").contains("v-label--active");
+				}
+			}
+		};
+	}
+
+	public void waitFloorPriceInputIsFocusedOrNot(String card, String isFocused) {
+		driverWait().pollingEvery(Duration.ofMillis(250)).until(floorPriceIsFocused(card, isFocused));
 	}
 }

@@ -61,15 +61,20 @@ public class RXUsers extends RXBaseClass {
 	@FindBy(xpath = "//form/div[2]/div/div/div[1]/div/div[2]/div/div")  WebElement publisherUser;	
 	@FindBy(xpath = "//*[@id=\"input-364\"]")  WebElement publisSelect;
 	@FindBy(xpath = "//span[1]/div/div/div[1]/div[1]/div[1]")  WebElement publsSelect;
-	@FindBy(xpath = "//span[1]/div/div/div[1]/div[1]/div[2]/div/i")  WebElement dropDwonSelect;
-	@FindBy(xpath = "//label[text()='Account Name']/following-sibling::input[@type='text']")  WebElement userAccountName;
-	@FindBy(xpath = "//label[text()='E-Mail']/following-sibling::input[@type='text']")  WebElement userEmail;
-	@FindBy(xpath = "//label[text()='Password']/following-sibling::input[@type='password']")  WebElement userPassword;
+	@FindBy(xpath = "//span[1]/div/div/div[1]/div[1]/div[2]/div/i")  public WebElement dropDwonSelect;
+	@FindBy(xpath = "//label[text()='Username']/following-sibling::input[@type='text']")  public WebElement userName;
+	@FindBy(xpath = "//label[text()='Email']/following-sibling::input[@type='text']")  public WebElement userEmail;
+	@FindBy(xpath = "//label[text()='Password']/following-sibling::input[@type='password']")  public WebElement userPassword;
 	@FindBy(xpath = "//span[2]/div/div/div[2]/div/div/div")  WebElement accountNameMandatoryMsg;
 	@FindBy(xpath = "//span[3]/div/div/div[2]/div/div/div")  WebElement eMailMandatoryMsg;
 	@FindBy(xpath = "//span[1]/div/div/div[2]/div/div/div")  WebElement publisherMandatoryMsg;
-	@FindBy(xpath = "//span/form/div[3]/button/span")  WebElement saveButton;
+	@FindBy(xpath = "//button[@type='submit']")  public WebElement saveButton;
 	@FindBy(xpath = "//aside/header/div/button/span/i")  WebElement closeBtn;
+	@FindBy(xpath = "//div[@class='table-options']/button")
+		public WebElement tableOptions;
+	    
+	@FindBy(xpath = "//div[@id='app']/div[@role='menu']")
+		public WebElement tableOptionsMenu;
 	
 	
 	//Enable and disable feature for the user
@@ -85,7 +90,7 @@ public class RXUsers extends RXBaseClass {
 	static ArrayList<String> usertestData = new ArrayList<String>();
 
 	//Test data 
-	static String pubName="Mark Mceachran-Test1";
+	static String pubName="Adolfo Koepp_updated";
 	String userAccName="TestAccount";
 	String userPwd="Password1";
 	static String xpathFirstDropDownItem="//div[text()='";
@@ -244,13 +249,13 @@ public class RXUsers extends RXBaseClass {
 		if(roleOrEditPublisher.equalsIgnoreCase("Admin"))
 		{
 			adminUser.click();
-			userAccountName.sendKeys(accName);
+			userName.sendKeys(accName);
 			userEmail.sendKeys(eMail);
 			userPassword.sendKeys(pwd);
 		}else if(roleOrEditPublisher.equalsIgnoreCase("Publisher"))
 		{
 			publisherUser.click();
-			userAccountName.sendKeys(accName);
+			userName.sendKeys(accName);
 			userEmail.sendKeys(eMail);
 			userPassword.sendKeys(pwd);
 			publisherSelect=xpathFirstDropDownItem+publName+xpathSecondDropDownItem;
@@ -262,7 +267,7 @@ public class RXUsers extends RXBaseClass {
 			
 		}else if(roleOrEditPublisher.equalsIgnoreCase("EditPublisher"))
 		{
-			userAccountName.sendKeys(accName);
+			userName.sendKeys(accName);
 			userEmail.sendKeys(eMail);
 			userPassword.sendKeys(pwd);
 		}
@@ -336,14 +341,14 @@ public class RXUsers extends RXBaseClass {
 		WebElement saveClick = wait.until(ExpectedConditions.visibilityOf(saveButton));
 		if(saveClick.isDisplayed() && admUser.isSelected())
 		{
-			usertestData.add(userAccountName.getAttribute("value"));
+			usertestData.add(userName.getAttribute("value"));
 			usertestData.add(userEmail.getAttribute("value"));
 			usertestData.add(userPassword.getAttribute("value"));
 		}else if(saveClick.isDisplayed() && publisUser.isSelected())
 		{
 			System.out.println("Entered Publisher "+ driver.findElement(By.xpath(publisherSelect)).getText());
 			usertestData.add(driver.findElement(By.xpath(publisherSelect)).getText());
-			usertestData.add(userAccountName.getAttribute("value"));
+			usertestData.add(userName.getAttribute("value"));
 			usertestData.add(userEmail.getAttribute("value"));
 			usertestData.add(userPassword.getAttribute("value"));
 		}
@@ -361,14 +366,14 @@ public class RXUsers extends RXBaseClass {
 		{
 			wait.until(ExpectedConditions.visibilityOf(saveButton));
 			System.out.println("Admin user enabled :"+publisherUser.isSelected());
-			rxUTL.clearTextBox(userAccountName);
+			rxUTL.clearTextBox(userName);
 			rxUTL.clearTextBox(userEmail);
 			rxUTL.clearTextBox(userEmail);
 		}else if(publisUser.isSelected())
 		{
 			wait.until(ExpectedConditions.visibilityOf(saveButton));
 			
-			rxUTL.clearTextBox(userAccountName);
+			rxUTL.clearTextBox(userName);
 			rxUTL.clearTextBox(userEmail);
 			rxUTL.clearTextBox(userEmail);
 			
@@ -535,7 +540,51 @@ public class RXUsers extends RXBaseClass {
 			return text;
 
 		}
-	
-	
+
+		public WebElement userCheckBox(int i) {
+			return driver
+					.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+i+"]/td[1]"));
+		}
+
+		public String userName(int i) {
+			return driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+i+"]/td[3]/a"))
+					.getText();
+		}
+
+		public WebElement toolbarButton(String e) {
+			return driver
+					.findElement(By.xpath("//span[contains(text() , '" + e + "')]/parent::button"));
+		}
+
+		public WebElement userActive(int i) {
+			return driver
+					.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+i+"]/td[7]"));
+		}
+		
+		public String toggleFieldIsEnabledForCreatePage(String fieldName) {
+	    	return driver
+					.findElement(
+							By.xpath("//aside[@class='dialog']//label[text()='" + fieldName + "']/parent::div//input"))
+					.getAttribute("aria-checked");
+	    }
+		
+		public WebElement toggleField(String fieldName) {
+	    	return driver.findElement(
+					By.xpath("//aside[@class='dialog']//label[text()='" + fieldName + "']/parent::div/div"));
+	    }
+
+		public String getActiveWithName(String enteredUserName) {
+			return driver.findElement(By.xpath("//a[text()='"+enteredUserName+"']/parent::td/parent::tr/td[6]")).getText();
+		}
+
+		public WebElement getColumnHeader(String columnName) {
+			return driver.findElement(By.xpath(
+					"//div[@class='v-data-table__wrapper']//thead//th/span[text()='" + columnName + "']/parent::th"));
+		}
+		
+		public void selectColumnInTableOptions(String columnName) {
+			driver.findElement(By.xpath("//label[text()='"+columnName+"']/preceding-sibling::div")).click();
+			
+		}
 	
 }
