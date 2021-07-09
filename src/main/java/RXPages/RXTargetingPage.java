@@ -21,7 +21,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import RXBaseClass.RXBaseClass;
 import RXUtitities.RXUtile;
 
-public class RXTargetingPage extends RXBaseClass  {
+public class RXTargetingPage extends RXBasePage  {
 	//Utility object
 	RXUtile rxUTL ;
 	PublisherListPage pubPage;
@@ -41,8 +41,18 @@ public class RXTargetingPage extends RXBaseClass  {
 	
 	
 	@FindBy(xpath = "//div[contains(@class, 'v-list-item__title') and text()='Targeting']")  WebElement targetingNav;
-	
-	
+	@FindBy(xpath = "//button[@type='submit']")
+	public WebElement saveButton;
+	@FindBy(xpath = "//label[text()='Publisher Name']/following-sibling::div[@class='v-select__selections']")
+	public WebElement publisherNameDropDown;
+	@FindBy(xpath = "//label[text()='Rule Name']/following-sibling::input")
+	public WebElement ruleNameField;
+	@FindBy(xpath = "//h2[text() = 'Targeting']/following-sibling::span//button")
+	public WebElement addTargetingButton;
+	@FindBy(xpath = "//div[contains(@class, 'v-toolbar__title') and text()='Advertisers']")
+	public WebElement advertisersPopup;
+	@FindBy(xpath = "//div[contains(@class, 'v-toolbar__title') and text()='Advertisers']/preceding-sibling::button")
+	public WebElement closeAdvertisersPopup;
 	
 	
 	
@@ -83,9 +93,43 @@ public class RXTargetingPage extends RXBaseClass  {
 			targetingNav.click();
 		}
 	}
-	
-	
-	
-	
-	
+
+	public void selectAdvertiser(String name) {
+		driver.findElement(By.xpath("//div[contains(text() , '" + name + "')]/ancestor::tbody/tr")).click();
+//		driver.findElement(By.xpath("//div[@class='v-dialog v-dialog--active']//table[@class='select-table fixed']/tbody/tr")).click();
+	}
+
+	public WebElement advertiserIncludedListItem(String itemName) {
+		return driver.findElement(By.xpath("//div[contains(@class , 'pane results')]//div[contains(text() , '" + itemName + "')]"));
+	}
+
+
+	public WebElement ruleCheckBox(int k) {
+		return driver
+				.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+k+"]/td[1]"));
+	}
+
+	public String ruleName(int k) {
+		return driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+k+"]/td[2]/a"))
+				.getText();
+	}
+
+	public List<WebElement> ruleNames() {
+		return driver
+				.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[2]/a"));
+	}
+
+	public WebElement toolbarButton(String e) {
+		return driver
+				.findElement(By.xpath("//span[contains(text() , '" + e + "')]/parent::button"));
+	}
+
+	public WebElement ruleActive(int k) {
+		return driver
+				.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+k+"]/td[3]"));
+	}
+
+	public List<WebElement> ruleActives() {
+		return driver.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[3]"));
+	}
 }
