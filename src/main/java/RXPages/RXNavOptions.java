@@ -57,7 +57,9 @@ public class RXNavOptions extends RXBaseClass {
 	@FindBy(xpath = "//div[text()='Users']")
 	public WebElement usersUndrAdmin;
 	@FindBy(xpath = "//div[text()='Demand Sources']")
-	WebElement demandSourcesUndrAdmin;
+	public WebElement demandSourcesUndrAdmin;
+	@FindBy(xpath = "//div[text()='Buyers']")
+	WebElement buyersUndrAdmin;
 
 	// subMenu of Inventory main menu
 	@FindBy(xpath = "//div[text()='Media']")
