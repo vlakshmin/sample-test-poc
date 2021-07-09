@@ -149,6 +149,8 @@ public class PublisherListPage extends RXBaseClass {
 	public WebElement validationErrorsPanel;
 	public String validationErrorsCssPath = "div.v-alert__content > div > ul > li";
 
+	public String pubNameXpathString = "//tbody/tr/td[3]/a[text()='%s']";
+
 	// Some declarations
 	int rownum = 1;
 	int totRow = 0;
@@ -273,18 +275,6 @@ public class PublisherListPage extends RXBaseClass {
 		js.executeScript("arguments[0].scrollIntoView({block: \"center\"})", dropDownElementByName);
 		wait.until(elementToBeClickable(dropDownElementByName));
 		dropDownElementByName.click();
-	}
-
-	public boolean checkIfPublisherExist(String publisher){
-		boolean flag = false;
-		for(WebElement publisherElemt : publisherColumns){
-			System.out.println("publisherElemt.getText().trim() >>> " + publisherElemt.getText().trim());
-			if(publisherElemt.getText().trim().equals(publisher)){
-				flag = true;
-				break;
-			}
-		}
-		return flag;
 	}
 
 	public void waitCreatePublisherPageDisappear() {

@@ -219,8 +219,7 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 	@Then("^Verify that save publisher is successful$")
 	public void verifyThatSavePublisherIsSuccessful() throws InterruptedException {
 		pubListPgs.waitCreatePublisherPageDisappear();
-		Thread.sleep(5000);
-		Assert.assertTrue(pubListPgs.checkIfPublisherExist(pubName));
+		driverWait().until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.format(pubListPgs.pubNameXpathString,pubName))));
 	}
 
 	@When("^Select \"([^\"]*)\" publisher in list view$")
@@ -261,7 +260,6 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 	@When("^Click on Demand Source dropdown$")
 	public void clickOnDemandSourceDropdown() throws InterruptedException {
 		pubListPgs.demandSourceDropdown.click();
-		Thread.sleep(2000);
 	}
 
 	@Then("^Verify that all items are sorted alphabetically$")
@@ -269,7 +267,6 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 		String preItem;
 		String nextItem = "";
 		pubListPgs.scrollDownInDropdown();
-		Thread.sleep(2000);
 		int size = pubListPgs.getDemandSourceDropdownItem().size();
 		System.out.println("pubListPgs.getDemandSourceDropdownItem().size() >>> " + size);
 		for(int i = 0; i < size; i ++){
