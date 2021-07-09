@@ -20,7 +20,9 @@ import cucumber.api.testng.TestNGCucumberRunner;
 @CucumberOptions(
 
 
-		features = {"src/main/java/Features/RXNavOptions.feature"},
+
+		features = {"src/main/java/Features/PrivateAuction_regression.feature",
+		            "src/main/java/Features/RXNavOptions.feature"},
         glue = {"stepDefinitions"},
         tags = {"~@Ignore"},
         plugin = {"com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html",
