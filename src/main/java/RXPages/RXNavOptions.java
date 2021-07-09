@@ -36,14 +36,20 @@ public class RXNavOptions extends RXBaseClass {
 	// Option expension
 	@FindBy(xpath = "//div[text()='Admin']/parent::div/following-sibling::div")
 	WebElement adminExpensionBtn;
+	@FindBy(xpath = "//div[text()='Admin']/parent::div/parent::div")
+	WebElement adminExpensionDiv;
 	@FindBy(xpath = "//div[text()='Inventory']/parent::div/following-sibling::div")
 	WebElement inventoryExpensionBtn;
+	@FindBy(xpath = "//div[text()='Inventory']/parent::div/parent::div")
+	WebElement inventoryExpensionDiv;
 	@FindBy(xpath = "//div[text()='Sales']/parent::div/following-sibling::div")
 	WebElement salesExpensionBtn;
-	@FindBy(xpath = "//div[text()='Sales']/parent::div/following-sibling::div/parent::div")
-	WebElement salesDiv;
+	@FindBy(xpath = "//div[text()='Sales']/parent::div/parent::div")
+	WebElement salesExpensionDiv;
 	@FindBy(xpath = "//div[text()='Rules']/parent::div/following-sibling::div")
 	WebElement rulesExpensionBtn;
+	@FindBy(xpath = "//div[text()='Rules']/parent::div/parent::div")
+	WebElement rulesExpensionDiv;
 
 	// subMenu of Admin main menu
 	@FindBy(xpath = "//div[text()='Publishers']")
@@ -179,9 +185,9 @@ public class RXNavOptions extends RXBaseClass {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		Thread.sleep(2000);
 		WebElement element = wait.until(ExpectedConditions.visibilityOf(adminExpensionBtn));
-		element.click();
-		
-
+		if(adminExpensionDiv.getAttribute("aria-expanded").equals("false")){
+			element.click();
+		}
 	}
 
 	// Clicking expansion of Inventory
@@ -189,8 +195,9 @@ public class RXNavOptions extends RXBaseClass {
 	public void expandInventory() {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		WebElement element = wait.until(ExpectedConditions.visibilityOf(inventoryExpensionBtn));
-		element.click();
-
+		if(inventoryExpensionDiv.getAttribute("aria-expanded").equals("false")){
+			element.click();
+		}
 	}
 	
 	// Clicking expansion of Sales
@@ -198,7 +205,7 @@ public class RXNavOptions extends RXBaseClass {
 		public void expandSales() {
 			WebDriverWait wait = new WebDriverWait(driver, 30);
 			WebElement element = wait.until(ExpectedConditions.visibilityOf(salesExpensionBtn));
-			if(salesDiv.getAttribute("aria-expanded").equals("false")){
+			if(salesExpensionDiv.getAttribute("aria-expanded").equals("false")){
 				element.click();
 			}
 		}
@@ -207,8 +214,9 @@ public class RXNavOptions extends RXBaseClass {
 	public void expandRules() {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		WebElement element = wait.until(ExpectedConditions.visibilityOf(rulesExpensionBtn));
-		element.click();
-
+		if(rulesExpensionDiv.getAttribute("aria-expanded").equals("false")){
+			element.click();
+		}
 	}
 
 	// click on the next page navigation button
