@@ -146,4 +146,34 @@ public void setup()
 //			  driver.close();
 //		  }
 
+	@Given("^admin user login to RX \"([^\"]*)\" UI with valid username and password$")
+	public void admin_user_login_to_RX_UI_with_valid_username_and_password(String arg1) {
+		driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
+		driver.get(prop.getProperty("url")+arg1);
+		Reporter.addStepLog("The user has logged in "+prop.getProperty("url")+arg1+" as admin");
+		driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
+		pubListPgs = logain.clickLogin(prop.getProperty("username"), prop.getProperty("password"));
+	}
+
+	@Given("^Cross Publisher user login to RX \"([^\"]*)\" UI with valid username and password$")
+	public void cross_Publisher_user_login_to_RX_UI_with_valid_username_and_password(String arg1)  {
+		driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
+		driver.get(prop.getProperty("url")+arg1);
+		Reporter.addStepLog("The user has logged in "+prop.getProperty("url")+arg1+" as publisher");
+		driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
+		pubListPgs = logain.clickLogin(prop.getProperty("pbusername"), prop.getProperty("pbpassword"));
+		driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
+		Assert.assertTrue(pubListPgs.logodisplayed());
+	}
+
+	@Given("^Single Publisher user login to RX \"([^\"]*)\" UI with valid username and password$")
+	public void single_Publisher_user_login_to_RX_UI_with_valid_username_and_password(String arg1) throws Throwable {
+		driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
+		driver.get(prop.getProperty("url")+arg1);
+		Reporter.addStepLog("The user has logged in "+prop.getProperty("url")+" as publisher");
+		driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
+		pubListPgs = logain.clickLogin(prop.getProperty("singleUser"), prop.getProperty("pbpassword"));
+		driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
+		Assert.assertTrue(pubListPgs.logodisplayed());
+	}
 }
