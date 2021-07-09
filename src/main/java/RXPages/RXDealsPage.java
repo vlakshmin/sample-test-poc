@@ -59,6 +59,8 @@ public class RXDealsPage extends RXBasePage {
 	private WebElement dspList;
 	@FindAll({@FindBy(xpath="//div[contains(@class,'v-messages__message')]")})
 	public List<WebElement> requiredFieldsMessages;
+	@FindBy(xpath="//label[text()='Floor Price']/parent::div/parent::div/following::div/div/div/div[@class='v-messages__message']")
+	public WebElement floorPriceErrorMsg;
 
 	@FindBy(xpath = "//div[@role='listbox']")
 	private WebElement list;
@@ -93,12 +95,11 @@ public class RXDealsPage extends RXBasePage {
 	public WebElement currencyValue;
 	@FindBy(xpath = "//label[text()='DSP']/following-sibling::div[@class='v-select__selections']" ) 
 	public WebElement dspDropDown;
-	/*
-	 * @FindBy(xpath = "//label[text()='DSP']/following-sibling::div[1]/div" )
-	 * public WebElement dspValue;
-	 */
-	@FindBy(xpath = "//label[text()='DSP']/following-sibling::div[1]/input" )
-	public WebElement dspValue;
+
+	@FindBy(xpath = "//label[text()='DSP']/following-sibling::div/div" )
+	public WebElement dspValueDiv;
+	@FindBy(xpath = "//label[text()='DSP']/following-sibling::div/input" )
+	public WebElement dspValueInput;
 	@FindBy(xpath = "//label[text()='Floor Price']/following-sibling::input" ) 
 	public WebElement value;
 	@FindBy(xpath = "//label[text()='DSP']/following-sibling::div[@class='v-input__append-inner']/i" )
@@ -192,11 +193,18 @@ public class RXDealsPage extends RXBasePage {
 
 	@FindBy(xpath = "//table/tbody/tr[1]/td[4]/a")
 	public WebElement dealNameInListview;
+	@FindAll(@FindBy(xpath = "//table/tbody/tr/td[10]"))
+	public List<WebElement> currencyColumnList;
 
 	//validation errors
 	@FindBy(css = "div.v-alert__content > div")
 	public WebElement validationErrorsPanel;
 	public  String validationErrorsCssPath = "div.v-alert__content > div > ul > li";
+
+	@FindBy(xpath = "//div[contains(@class,'v-list-item--highlighted')]/div/div[@class='v-list-item__title']")
+	public WebElement highlightedDropdownValue;
+	@FindBy(xpath = "//div[contains(@class,'v-list-item--highlighted')]/following-sibling::div/div/div[@class='v-list-item__title']")
+	public WebElement valueBelowHighlightedDropdownValue;
 
 //	String dealNameInListOne="//table/tbody/tr[1]/td[3]/span/a[contains(text(),";
 	String dealNameInListOne="//table/tbody/tr[1]/td[4]/a[contains(text(),";
@@ -225,6 +233,10 @@ public class RXDealsPage extends RXBasePage {
 	public String buyerDelete="(//button[contains(@class,'alignRight')]/span)";
 	public String dSPEnable="(//ancestor::div[2]//div[contains(@class,'cardPadding')]//div[contains(@class,'v-input--is-label-active')]//input)";
 	public String dSPDisable="(//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']//input[@aria-checked='false'])";
+
+	public String currencyOptionString = "//div[@class='v-list-item__content']/div[text()='%s']";
+	public String dealNameColumnString = "//table/tbody/tr[%s]/td[4]/a";
+
 	// Action object
 	Actions act = new Actions(driver);
 
@@ -394,7 +406,7 @@ public class RXDealsPage extends RXBasePage {
 	public void selectDSPByName(String name) {
 		dspDropDown.click();
 		selectValueFromDropdown(name);
-		enteredDSPValue= dspValue.getText();
+		enteredDSPValue= dspValueInput.getText();
 	}
 	
 	public void enterDealName(String EntdealName)
@@ -651,7 +663,7 @@ public class RXDealsPage extends RXBasePage {
 	}
 
 	public WebElement getCurrencyDropdownValue(String value){
-		return driver.findElement(By.xpath("//div[text()='" + value + "']"));
+		return driver.findElement(By.xpath(String.format(currencyOptionString, value)));
 	}
 
 	public String getChangeCurrencyBannerMsg()
@@ -689,5 +701,9 @@ public class RXDealsPage extends RXBasePage {
 	public void hoverOverOnDSPInfoICon(){
 		new Actions(driver).moveToElement(this.dspInfoIcon).build().perform();
 		wait.until(ExpectedConditions.attributeToBe(this.dspInfoIcon, "aria-expanded","true"));
+	}
+
+	public WebElement getDealNameColumnLink(int rownum){
+		return driver.findElement(By.xpath(String.format(dealNameColumnString, rownum)));
 	}
 }

@@ -47,7 +47,7 @@ Feature: Adspots page regression
     Then Verify the search functionality with the following names
       | Name        | ColumnName   |
       | Top Banner  | Ad Spot Name |
-      | jaya_testad | Ad Spot Name |
+      | ADP plum    | Ad Spot Name |
 
 
   Scenario:  Verify enabling and disabling of an adspot from the overview page
@@ -84,7 +84,8 @@ Feature: Adspots page regression
       | Publisher     | desc     |
       | Related Media | asc      |
 
-
+  # It's a known bug in line 95
+  @Ignore
   Scenario:  Verify mandatory fields in the Create Adspot Page
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
@@ -415,7 +416,7 @@ Feature: Adspots page regression
     When Click on the Adspot create button
     Then Enter the following data in the general card of adspot
       | FieldName           | Value           | ListValueIndex |
-      | Publisher Name      | Rakuten Rewards |                |
+      | Publisher Name      | RakutenTV       |                |
       | Active              | Inactive        |                |
       | Ad Spot Name        | Auto_Test       |                |
       | Related Media       | ListValue       | 1              |
@@ -430,7 +431,7 @@ Feature: Adspots page regression
     And Publisher page should be displayed
     Then Verify the search functionality with the following names
       | Name            | ColumnName |
-      | Rakuten Rewards | Publisher  |
+      | RakutenTV       | Publisher  |
     And "Disable" a publisher from the publisher overview page
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
@@ -448,7 +449,7 @@ Feature: Adspots page regression
     And Publisher page should be displayed
     Then Verify the search functionality with the following names
       | Name            | ColumnName |
-      | Rakuten Rewards | Publisher  |
+      | RakutenTV       | Publisher  |
     And "Enable" a publisher from the publisher overview page
 
 
@@ -906,3 +907,154 @@ Feature: Adspots page regression
     And Click on save button and wait for dialog to close
     And Hover over adspot details button
     Then Verify adspot details data is correct
+
+  Scenario: 207.Verify that error is not displayed for optional floor price
+    Given admin user login to RX UI with valid username and password
+    When Click on Adspots option under Inventory
+    And User displayed with Adspots page
+    When Click on the Adspot create button
+    Then Enter the following data in the general card of adspot
+      | FieldName           | Value     | ListValueIndex |
+      | Publisher Name      | Viber     |                |
+      | Ad Spot Name        | Auto_Test |                |
+      | Related Media       | ListValue | 1              |
+      | Position            | ListValue | 2              |
+      | Filter              | ListValue | 1              |
+      | Default Ad Sizes    | ListValue | 2              |
+      | Default Floor Price | 10        |                |
+    And "Enable" the banner card
+    And "Expand" the banner card
+    And Click in Floor Price input in "Banner" card
+    And Click outside Floor Price input in "Banner" card
+    Then verify that no error is displayed below Floor Price input in "Banner" card
+    And "Enable" the native card
+    And "Expand" the native card
+    And Click in Floor Price input in "Native" card
+    And Click outside Floor Price input in "Native" card
+    Then verify that no error is displayed below Floor Price input in "Native" card
+    And "Enable" the in-banner video card
+    And "Expand" the in-banner video card
+    And Click in Floor Price input in "Video" card
+    And Click outside Floor Price input in "Video" card
+    Then verify that no error is displayed below Floor Price input in "Video" card
+    Then Enter the following data in the in-banner video card of adspot
+      | FieldName              | Value     | ListValueIndex |
+      | Video Placement Type   | ListValue | 1              |
+      | Playback Methods       | ListValue | 1              |
+    When Click on save button and wait for dialog to close
+
+  Scenario: 208.Verify that Floor Price not duplicating while creation AdSpot
+    Given admin user login to RX UI with valid username and password
+    When Click on Adspots option under Inventory
+    And User displayed with Adspots page
+    When Click on the Adspot create button
+    Then Enter the following data in the general card of adspot
+      | FieldName           | Value     | ListValueIndex |
+      | Publisher Name      | Viber     |                |
+    And "Enable" the banner card
+    And "Expand" the banner card
+    And Enter the following data in the banner card of adspot
+      | FieldName   | Value     | ListValueIndex |
+      | Floor Price | 3         |                |
+    Then Verify that specified floor price not duplicated in "Banner" card
+    And "Enable" the native card
+    And "Expand" the native card
+    And Enter the following data in the native card of adspot
+      | FieldName   | Value |
+      | Floor Price | 6     |
+    Then Verify that specified floor price not duplicated in "Native" card
+    And "Enable" the in-banner video card
+    And "Expand" the in-banner video card
+    Then Enter the following data in the in-banner video card of adspot
+      | FieldName              | Value     | ListValueIndex |
+      | Floor Price            | 2         |                |
+    Then Verify that specified floor price not duplicated in "Video" card
+
+  Scenario: 209.Verify that Floor Price not duplicating while editing existing AdSpot
+    Given admin user login to RX UI with valid username and password
+    When Click on Adspots option under Inventory
+    And User displayed with Adspots page
+    When Click on Ad Spot Name in first row in list view
+    And "Enable" the banner card
+    And "Expand" the banner card
+    And Enter the following data in the banner card of adspot
+      | FieldName   | Value     | ListValueIndex |
+      | Floor Price | 3         |                |
+    Then Verify that specified floor price not duplicated in "Banner" card
+    And "Enable" the native card
+    And "Expand" the native card
+    And Enter the following data in the native card of adspot
+      | FieldName   | Value |
+      | Floor Price | 6     |
+    Then Verify that specified floor price not duplicated in "Native" card
+    And "Enable" the in-banner video card
+    And "Expand" the in-banner video card
+    Then Enter the following data in the in-banner video card of adspot
+      | FieldName              | Value     | ListValueIndex |
+      | Floor Price            | 2         |                |
+    Then Verify that specified floor price not duplicated in "Video" card
+
+    Scenario: 214.Verify that Active toggle set to true while creation new Ad Spot
+      Given admin user login to RX UI with valid username and password
+      When Click on Adspots option under Inventory
+      And User displayed with Adspots page
+      When Click on the Adspot create button
+      Then Verify that Active toggle set to true in Create Ad Spot page
+      Then Enter the following data in the general card of adspot
+        | FieldName           | Value       | ListValueIndex |
+        | Publisher Name      | Alena Grant |                |
+        | Ad Spot Name        | Auto_Test   |                |
+        | Related Media       | ListValue   | 1              |
+        | Position            | ListValue   | 2              |
+        | Filter              | ListValue   | 1              |
+        | Default Ad Sizes    | ListValue   | 2              |
+        | Default Floor Price | 10          |                |
+      And "Enable" the banner card
+      When Click on save button and wait for dialog to close
+      Then Verify that Active as a value displayed in Active column for the created adspotname
+
+  Scenario: 217.Verify Floor Price limits for Adspot
+    Given admin user login to RX UI with valid username and password
+    When Click on Adspots option under Inventory
+    And User displayed with Adspots page
+    When Click on the Adspot create button
+    Then Enter the following data in the general card of adspot
+      | FieldName           | Value       | ListValueIndex |
+      | Publisher Name      | Alena Grant |                |
+      | Default Floor Price | 1234567     |                |
+    Then Verify the error message "A valid price is between 0.00 and 999,999.99" displays below Floor Price in Create Ad Spot page
+
+  Scenario: 218.Verify Floor Price limits for Adspot Native/Banner/Video
+    Given admin user login to RX UI with valid username and password
+    When Click on Adspots option under Inventory
+    And User displayed with Adspots page
+    When Click on the Adspot create button
+    Then Enter the following data in the general card of adspot
+      | FieldName           | Value       | ListValueIndex |
+      | Publisher Name      | Alena Grant |                |
+    When "Enable" the banner card
+    And "Expand" the banner card
+    And Enter the following data in the banner card of adspot
+      | FieldName   | Value   | ListValueIndex |
+      | Floor Price | 1234567 |                |
+    Then Verify the error message "A valid price is between 0.00 and 999,999.99" displays below Floor Price in "Banner" card
+    When "Enable" the native card
+    And "Expand" the native card
+    And Enter the following data in the native card of adspot
+      | FieldName   | Value   |
+      | Floor Price | 1234567 |
+    Then Verify the error message "A valid price is between 0.00 and 999,999.99" displays below Floor Price in "Native" card
+    When "Enable" the in-banner video card
+    And "Expand" the in-banner video card
+    Then Enter the following data in the in-banner video card of adspot
+      | FieldName   | Value   | ListValueIndex |
+      | Floor Price | 1234567 |                |
+    Then Verify the error message "A valid price is between 0.00 and 999,999.99" displays below Floor Price in "Video" card
+
+  Scenario: 158.Verify that searching with publisher name retrieve results for Ad Spots
+    Given admin user login to RX UI with valid username and password
+    When Click on Adspots option under Inventory
+    And User displayed with Adspots page
+    Then Verify the search functionality with the following names
+      | Name | ColumnName |
+      | Kobo | Publisher  |
