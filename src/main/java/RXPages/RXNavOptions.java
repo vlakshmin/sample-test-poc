@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
@@ -29,19 +30,26 @@ public class RXNavOptions extends RXBaseClass {
 	WebElement inventoryNav;
 	@FindBy(xpath = "//div[text()='Rules']")
 	WebElement ruleNav;
-	@FindBy(xpath = "//div[text()='Dashboard\n" +
-			"            ']")
+	@FindBy(xpath = "//div[text()='Dashboard ']")
 	WebElement dashBoardNav;
 
 	// Option expension
 	@FindBy(xpath = "//div[text()='Admin']/parent::div/following-sibling::div")
 	WebElement adminExpensionBtn;
+	@FindBy(xpath = "//div[text()='Admin']/parent::div/parent::div")
+	WebElement adminExpensionDiv;
 	@FindBy(xpath = "//div[text()='Inventory']/parent::div/following-sibling::div")
 	WebElement inventoryExpensionBtn;
+	@FindBy(xpath = "//div[text()='Inventory']/parent::div/parent::div")
+	WebElement inventoryExpensionDiv;
 	@FindBy(xpath = "//div[text()='Sales']/parent::div/following-sibling::div")
 	WebElement salesExpensionBtn;
+	@FindBy(xpath = "//div[text()='Sales']/parent::div/parent::div")
+	WebElement salesExpensionDiv;
 	@FindBy(xpath = "//div[text()='Rules']/parent::div/following-sibling::div")
 	WebElement rulesExpensionBtn;
+	@FindBy(xpath = "//div[text()='Rules']/parent::div/parent::div")
+	WebElement rulesExpensionDiv;
 
 	// subMenu of Admin main menu
 	@FindBy(xpath = "//div[text()='Publishers']")
@@ -72,8 +80,6 @@ public class RXNavOptions extends RXBaseClass {
 	public WebElement errorPopup;
 
 	// subMenu of Rules main menu
-	@FindBy(xpath = "//div[text()='Filters']")
-	WebElement filtersUndrRules;
 	@FindBy(xpath = "//div[text()='Targeting']")
 	WebElement targetingUndrRules;
 
@@ -101,6 +107,11 @@ public class RXNavOptions extends RXBaseClass {
 	// TableOptions
 	@FindBy(xpath = "//div[@class='table-options']//span")
 	public WebElement tableOptions;
+
+	@FindBy(xpath = "//thead/tr/th[2]/span")
+	public WebElement idColumn;
+	@FindBy(xpath = "//thead/tr/th[3]/span")
+	public WebElement detailsColumn;
 
 	public RXNavOptions() {
 		PageFactory.initElements(driver, this);
@@ -133,8 +144,8 @@ public class RXNavOptions extends RXBaseClass {
 
 	// subMenu Publisher of Admin main menu
 	public boolean ispublisherUndrAdminDisplayed() {
-		return publisherUndrAdmin.isDisplayed();
-
+//		return publisherUndrAdmin.isDisplayed();
+		return isElementPresent(publisherUndrAdmin);
 	}
 
 	// subMenu Users of Admin main menu
@@ -146,12 +157,6 @@ public class RXNavOptions extends RXBaseClass {
 	// subMenu Demand Source of Admin main menu
 	public boolean isdemandSourcesUndrAdminDisplayed() {
 		return demandSourcesUndrAdmin.isDisplayed();
-
-	}
-
-	// subMenu Buyer of Admin main menu
-	public boolean isbuyersUndrAdminDisplayed() {
-		return buyersUndrAdmin.isDisplayed();
 
 	}
 
@@ -170,12 +175,6 @@ public class RXNavOptions extends RXBaseClass {
 	}
 
 	// subMenu of Rules main menu
-	// subMenu Filters of Rules main menu
-	public boolean isfiltersUndrRulesDisplayed() {
-		return filtersUndrRules.isDisplayed();
-
-	}
-
 	// subMenu Targeting of Rules main menu
 	public boolean istargetingUndrRulesDisplayed() {
 		return targetingUndrRules.isDisplayed();
@@ -188,9 +187,9 @@ public class RXNavOptions extends RXBaseClass {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		Thread.sleep(2000);
 		WebElement element = wait.until(ExpectedConditions.visibilityOf(adminExpensionBtn));
-		element.click();
-		
-
+		if(adminExpensionDiv.getAttribute("aria-expanded").equals("false")){
+			element.click();
+		}
 	}
 
 	// Clicking expansion of Inventory
@@ -198,8 +197,9 @@ public class RXNavOptions extends RXBaseClass {
 	public void expandInventory() {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		WebElement element = wait.until(ExpectedConditions.visibilityOf(inventoryExpensionBtn));
-		element.click();
-
+		if(inventoryExpensionDiv.getAttribute("aria-expanded").equals("false")){
+			element.click();
+		}
 	}
 	
 	// Clicking expansion of Sales
@@ -207,16 +207,18 @@ public class RXNavOptions extends RXBaseClass {
 		public void expandSales() {
 			WebDriverWait wait = new WebDriverWait(driver, 30);
 			WebElement element = wait.until(ExpectedConditions.visibilityOf(salesExpensionBtn));
-			element.click();
-
+			if(salesExpensionDiv.getAttribute("aria-expanded").equals("false")){
+				element.click();
+			}
 		}
 	// Clicking expansion of Rules
 
 	public void expandRules() {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		WebElement element = wait.until(ExpectedConditions.visibilityOf(rulesExpensionBtn));
-		element.click();
-
+		if(rulesExpensionDiv.getAttribute("aria-expanded").equals("false")){
+			element.click();
+		}
 	}
 
 	// click on the next page navigation button
@@ -325,6 +327,15 @@ public class RXNavOptions extends RXBaseClass {
 	public void clickDashBoardNav() {
 		if (dashBoardNav.isDisplayed()) {
 			dashBoardNav.click();
+		}
+	}
+
+	public boolean isElementPresent(WebElement element){
+		try{
+			element.isDisplayed();
+			return true;
+		}catch (NoSuchElementException e) {
+			return false;
 		}
 	}
 

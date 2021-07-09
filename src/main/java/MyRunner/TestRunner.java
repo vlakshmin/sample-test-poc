@@ -21,7 +21,11 @@ import cucumber.api.testng.TestNGCucumberRunner;
 
 
 		features = {"src/main/java/Features/Targeting_regression.feature",
-        "src/main/java/Features/DemandSources_regression.feature"},
+        "src/main/java/Features/DemandSources_regression.feature",
+		    "src/main/java/Features/PrivateAuction_regression.feature",
+		    "src/main/java/Features/RXNavOptions.feature",
+        "src/main/java/Features/Adspots_regression.feature",
+        "src/main/java/Features/Deals_regression.feature"},
         glue = {"stepDefinitions"},
         tags = {"~@Ignore"},
         plugin = {"com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html",
