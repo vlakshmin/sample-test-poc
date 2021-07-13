@@ -423,6 +423,12 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 				break;
 		}
 	}
+
+    @Then("^Verify following columns are displayed by default in the Publishers overview page$")
+    public void verifyFollowingColumnsAreDisplayedByDefaultInThePublishersOverviewPage(DataTable dt) {
+		getDataFromTable(dt).forEach(e ->
+				Assert.assertTrue(pubListPgs.verifyHeaderDisplayInPublisherOverviewPage(e.getValue())));
+    }
 }
 
 

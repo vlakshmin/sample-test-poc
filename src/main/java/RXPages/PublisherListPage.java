@@ -43,6 +43,8 @@ public class PublisherListPage extends RXBaseClass {
 	public List<WebElement> statusColumnsPublisherTable;
 	@FindAll(@FindBy(xpath = "//div[contains(@class,'vue-portal-target')]/button/span"))
 	public List<WebElement> buttonsInPubPageHeader;
+	@FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//thead/tr/th"))
+	public List<WebElement> publisherTableHeaders;
 
 	String checkboxStringInPublisherable = "//div[@class='v-data-table__wrapper']//tbody/tr[%s]/td[1]/div";
 	String idStringInPublisherTable = "//div[@class='v-data-table__wrapper']//tbody/tr[%s]/td[2]";
@@ -382,5 +384,20 @@ public class PublisherListPage extends RXBaseClass {
 
 	public WebElement getActivateInactivateBtnByName(String name) {
 		return driver.findElement(By.xpath(String.format(this.activateInactivateBtnString, name)));
+	}
+
+	public boolean verifyHeaderDisplayInPublisherOverviewPage(String expectedHeader){
+		boolean flag = false;
+		String actualHeader = "";
+		System.out.println("Check if expected header exists ==== " + expectedHeader);
+		for(WebElement headerElemt : this.publisherTableHeaders){
+			actualHeader = headerElemt.getText().trim();
+			System.out.println("headerElemt.getText().trim() >>> " + actualHeader);
+			if(expectedHeader.equals(actualHeader)){
+				flag = true;
+				break;
+			}
+		}
+		return flag;
 	}
 }
