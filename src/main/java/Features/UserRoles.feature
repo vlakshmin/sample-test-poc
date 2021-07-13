@@ -27,11 +27,11 @@ Feature: User Roles
     When Click on the Create Rule button
     When Click on publisher input
     Then Verify all RX publishers are displayed in Publisher Name dropdown
-#    When Click on Media option under Inventory
-#    Then User displayed with media page
-#    When Click on Create Media button in Media page
-#    When Click on publisher input
-#    Then Verify all RX publishers are displayed in Publisher Name dropdown
+    When Click on Media option under Inventory
+    Then User displayed with media page
+    When Click on Create Media button
+    When Click on publisher input
+    Then Verify all RX publishers are displayed in Publisher Name dropdown
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
     When Click on the Adspot create button
@@ -87,11 +87,11 @@ Feature: User Roles
     When Click on the Create Rule button
     When Click on publisher input
     Then Verify all RX publishers are displayed in Publisher Name dropdown
-#    When Click on Media option under Inventory
-#    Then User displayed with media page
-#    When Click on Create Media button in Media page
-#    When Click on publisher input
-#    Then Verify all RX publishers are displayed in Publisher Name dropdown
+    When Click on Media option under Inventory
+    Then User displayed with media page
+    When Click on Create Media button
+    When Click on publisher input
+    Then Verify all RX publishers are displayed in Publisher Name dropdown
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
     When Click on the Adspot create button
@@ -130,9 +130,10 @@ Feature: User Roles
     Then User displayed with targeting page
     When Click on the Create Rule button
     Then Verify the Publisher Name input only display my publisher
-#    When Click on Media option under Inventory
-#    Then User displayed with media page
-#    When Click on Create Media button in Media page
+    When Click on Media option under Inventory
+    Then User displayed with media page
+    When Click on Create Media button
+    Then Verify the Publisher Name input only display my publisher
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
     When Click on the Adspot create button
