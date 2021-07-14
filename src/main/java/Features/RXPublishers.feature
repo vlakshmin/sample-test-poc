@@ -226,3 +226,21 @@ Feature: RX Publisher page Validation
       | ID         | asc      |
       | Publisher  | desc     |
       | Mail       | asc      |
+
+  Scenario: 287. Verify successful editing of Publisher
+    Given Admin user click on Login by entering valid username and password
+    When Click on publisher option under Admin
+    Then Publisher page should be displayed
+    When Click on Create Publisher button
+    And Enter the following values in Create Publisher page
+      | Publisher Name    | Ad Ops Person  | Ad Ops Email               | Currency      |
+      | TestAutoPublisher | Test Publisher | TestAutoPublisher@test.com | USD - Dollars |
+    And Click on Save Publisher button
+    Then Verify that save publisher is successful
+    When Click on the newly created publisher in list view
+    And Enter the following values in Create Publisher page
+      | Publisher Name     | Ad Ops Person  | Ad Ops Email                |
+      | TestAutoPub_update | TestPub_update | TestAutoPub_update@test.com |
+    And Click on Save Publisher button
+    Then Verify that save publisher is successful
+    Then Verify that update was successful for edit publisher
