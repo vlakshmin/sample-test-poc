@@ -234,7 +234,7 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 				rowNum = j + 1;
 				System.out.println(" row number >>> " + rowNum);
 				if(!pubListPgs.verifyIfCheckboxIsChecked(rowNum)){
-					pubListPgs.getElementByXpathWithParameter(pubListPgs.checkboxStringInPublishersTable, String.valueOf(rowNum)).click();
+					pubListPgs.getElementByXpathWithParameter(pubListPgs.checkboxColumnByRowNumber, String.valueOf(rowNum)).click();
 					pubName = pubListPgs.getElementByXpathWithParameter(pubListPgs.pubNameColumnByRowNumber, String.valueOf(rowNum)).getText().trim();
 					break;
 				}
@@ -355,13 +355,13 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 					rowNum = j + 1;
 					System.out.println(status + " in row number >>> " + rowNum);
 					if(!pubListPgs.verifyIfCheckboxIsChecked(rowNum)){
-						pubListPgs.getElementByXpathWithParameter(pubListPgs.checkboxStringInPublisherable, String.valueOf(rowNum)).click();
-						pubID = pubListPgs.getElementByXpathWithParameter(pubListPgs.idStringInPublisherTable, String.valueOf(rowNum)).getText().trim();
+						pubListPgs.getElementByXpathWithParameter(pubListPgs.checkboxColumnByRowNumber, String.valueOf(rowNum)).click();
+						pubID = pubListPgs.getElementByXpathWithParameter(pubListPgs.idColumnByRowNumber, String.valueOf(rowNum)).getText().trim();
 						if(status.equals("Active")){
-							System.out.println("Store Active publisher ID"  + pubID + " to activePubIDList");
+							System.out.println("Store Active publisher ID "  + pubID + " to activePubIDList");
 							this.activePubIDList.add(pubID);
 						}else{
-							System.out.println("Store Inactive publisher ID"  + pubID +" to inactivePubIDList");
+							System.out.println("Store Inactive publisher ID "  + pubID +" to inactivePubIDList");
 							this.inactivePubIDList.add(pubID);
 						}
 						break;

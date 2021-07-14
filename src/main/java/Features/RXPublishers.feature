@@ -133,6 +133,13 @@ Feature: RX Publisher page Validation
     When Close Edit Publisher page
     When Click on "Activate Publisher" button in Publisher page
     Then Verify the selected "Inactive" publisher change to "Active" status in Publisher list view
+    When Select "2" "Active" publisher in list view
+    Then Verify the following buttons are present in Publisher page
+      | Button                |
+      | Activate Publishers   |
+      | Deactivate Publishers |
+    When Click on "Deactivate Publishers" button in Publisher page
+    Then Verify the selected "Active" publisher change to "Inactive" status in Publisher list view
     When Select "1" "Active" publisher in list view
     When Select "1" "Inactive" publisher in list view
     Then Verify the following buttons are present in Publisher page
@@ -151,13 +158,6 @@ Feature: RX Publisher page Validation
     When Click on "Activate Publishers" button in Publisher page
     Then Verify the selected "Active" publisher change to "Active" status in Publisher list view
     Then Verify the selected "Inactive" publisher change to "Active" status in Publisher list view
-    When Select "2" "Active" publisher in list view
-    Then Verify the following buttons are present in Publisher page
-      | Button                |
-      | Activate Publishers   |
-      | Deactivate Publishers |
-    When Click on "Deactivate Publishers" button in Publisher page
-    Then Verify the selected "Active" publisher change to "Inactive" status in Publisher list view
     When Select "2" "Inactive" publisher in list view
     Then Verify the following buttons are present in Publisher page
       | Button                |

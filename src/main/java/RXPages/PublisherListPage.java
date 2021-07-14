@@ -46,10 +46,6 @@ public class PublisherListPage extends RXBaseClass {
 	@FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//thead/tr/th"))
 	public List<WebElement> publisherTableHeaders;
 
-	public String checkboxStringInPublisherable = "//div[@class='v-data-table__wrapper']//tbody/tr[%s]/td[1]/div";
-	public String idStringInPublisherTable = "//div[@class='v-data-table__wrapper']//tbody/tr[%s]/td[2]";
-	public String statusByIDInPubTable = "//td[text()='%s']/parent::tr/td[5]";
-
 	//Edit Publisher
 	@FindBy(css = "div.v-toolbar__title")
 	public WebElement pageTitle;
@@ -74,8 +70,6 @@ public class PublisherListPage extends RXBaseClass {
 	public WebElement overviewEditbutton;
 	@FindBy(xpath = "//div[contains(@class, 'toast-wrapper')]//a[@class='remove']/i")
 	public WebElement closeToastButton;
-
-	public String activateInactivateBtnString = "//span[text()='%s']/parent::button";
 	
 	// Account options
 	@FindBy(xpath = "//div[text()='Publishers']")
@@ -139,7 +133,7 @@ public class PublisherListPage extends RXBaseClass {
 
 	public String createPubString = "//div[contains(@class,'v-toolbar__title')]/div[contains(text(),'Create Publisher')]";
 	public String trStringInPublishersTable = "//table/tbody/tr[%s]";
-	public String checkboxStringInPublishersTable = "//table/tbody/tr[%s]/td[1]/div";
+	public String checkboxColumnByRowNumber = "//table/tbody/tr[%s]/td[1]/div";
 	public String pubNameColumnByRowNumber = "//table/tbody/tr[%s]/td[3]";
 	public String categoriesValueString = "//div[contains(@class,'category-select-item')]/div/div/div[@class='v-list-item__content' and text()='%s']/preceding-sibling::div/div";
 	public String demandSourceItemString = "//div[@role='listbox']/div/div/div[@class='v-list-item__title']";
@@ -149,6 +143,11 @@ public class PublisherListPage extends RXBaseClass {
 	public String pubNameColumnByID = "//td[text()='%s']/following-sibling::td[1]";
 	public String adOpsPersonColumnByID = "//td[text()='%s']/following-sibling::td[6]";
 	public String adOpsMailColumnByID = "//td[text()='%s']/following-sibling::td[7]";
+
+	public String idColumnByRowNumber = "//div[@class='v-data-table__wrapper']//tbody/tr[%s]/td[2]";
+	public String statusByIDInPubTable = "//td[text()='%s']/parent::tr/td[5]";
+
+	public String activateInactivateBtnString = "//span[text()='%s']/parent::button";
 
 	//validation errors
 	@FindBy(css = "div.v-alert__content > div")
