@@ -10,6 +10,7 @@ import cucumber.api.java.en.And;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -142,6 +143,9 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 						this.enteredPublisher = enteredValue;
 						break;
 					case "Media Name":
+						while (!mediaPage.mediaNameInput.getAttribute("value").equals("")) {
+							mediaPage.mediaNameInput.sendKeys(Keys.BACK_SPACE);
+						}
 						this.enteredMediaName = enteredValue+ RXUtile.getRandomNumberFourDigit();
 						wait.until(ExpectedConditions.elementToBeClickable(mediaPage.mediaNameInput));
 						mediaPage.mediaNameInput.sendKeys(this.enteredMediaName);
@@ -451,6 +455,88 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 					Assert.assertTrue(false, "The status fields supplied does not match with the input");
 
 			}
+		}
+	}
+
+	@Then("^Verify Publisher name field is disabled on Create Media page$")
+	public void verify_Publisher_name_field_is_disabled_on_Create_Media_page() throws Throwable {
+		WebDriverWait wait = new WebDriverWait(driver, 35);
+		String isPubNameDisabled = mediaPage.publisherNameField.getAttribute("class");
+		String value = mediaPage.publisherNameField.getText();
+		Assert.assertTrue(isPubNameDisabled.contains("disabled"));
+		Assert.assertFalse(value.isEmpty());
+	}
+
+	@Then("^Verify following fields are not enabled for create Media page$")
+	public void verify_following_fields_are_not_enabled_for_create_Media_page(DataTable dt) throws Throwable {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		Thread.sleep(1000);
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		for (int i = 0; i < list.size(); i++) {
+			String fieldName = list.get(i).get("FieldName");
+			String isDisabled = mediaPage.mandatorFieldIsDisabledForCreatePage(fieldName);
+			Assert.assertTrue(isDisabled.contains("disabled"),fieldName+" is not disable.");
+		}
+	}
+
+	@Then("^Verify every fields go to default state$")
+	public void verify_every_fields_go_to_default_state() throws Throwable {
+		//Publisher
+		System.out.println("Publisher field's value >>> " + mediaPage.publisherNameDropdown.getText());
+		Assert.assertEquals(mediaPage.publisherNameDropdown.getText().trim(), this.enteredPublisher);
+
+		//Media Name
+		System.out.println("Media Name field's value >>> " + mediaPage.mediaNameInput.getAttribute("value"));
+		Assert.assertEquals(mediaPage.mediaNameInput.getAttribute("value"), "");
+
+		//Media Type
+		System.out.println("Media Type field's value >>> " + mediaPage.mediaTypeDropdown.getText().trim());
+		Assert.assertEquals(mediaPage.mediaTypeDropdown.getText().trim(), "");
+
+		//Site URL
+		System.out.println("Site URL field's value >>> " + mediaPage.siteURLInput.getAttribute("value"));
+		Assert.assertEquals(mediaPage.siteURLInput.getAttribute("value"), "");
+
+		//Categories
+		System.out.println("Categories field's value >>> " + mediaPage.categoriesDropdown.getText().trim());
+		Assert.assertEquals(mediaPage.categoriesDropdown.getText().trim(), "");
+	}
+
+	@Then("^Verify the created media data is matching with its overview list values$")
+	public void verify_the_created_media_data_is_matching_with_its_overview_list_values() throws Throwable {
+		wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
+		String mediaName = mediaPage.getMediaName();
+		Assert.assertEquals(mediaName, this.enteredMediaName);
+		String publisherName = mediaPage.getPublisherName();
+		Assert.assertEquals(publisherName, this.enteredPublisher);
+		String mediaType = mediaPage.getMediaType();
+		Assert.assertEquals(mediaType, this.enteredMediaType);
+	}
+
+	@Then("^Click on the created media name in the overview page$")
+	public void click_on_the_created_media_name_in_the_overview_page() throws Throwable {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		try {
+			String enteredName = this.enteredMediaName.replaceAll("\\s", "");
+			List<WebElement> listOfNames = driver
+					.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[3]/a"));
+			for (int k = 0; k < listOfNames.size(); k++) {
+				String reqName = listOfNames.get(k).getText().replaceAll("\\s", "");
+
+				if (enteredName.equals(reqName)) {
+					listOfNames.get(k).click();
+					break;
+				}
+			}
+			wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
+			wait.until(ExpectedConditions.visibilityOf(driver.findElement(
+					By.xpath("//aside[@class='dialog']/header//div[contains(text(),'" + this.enteredMediaName + "')]"))));
+				System.out.println("??????"+driver.findElement(
+						By.xpath("//label[text()='Categories']/following-sibling::div[@class='v-select__selections']/span")).getAttribute("class"));
+		} catch (NullPointerException e) {
+			driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[3]/a")).click();
+			wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
+
 		}
 	}
 	}

@@ -28,7 +28,8 @@ public class RXMediaPage extends RXBasePage {
 	public WebElement mediaPageHeader;
 	@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]")
 	public WebElement noDataAvailable;
-
+	@FindBy(xpath = "//label[text()='Publisher']/following-sibling::div[@class='v-select__selections']/div")
+	public WebElement publisherNameField;
 	// Xpath of rows to get the total number of row and column displayed in the
 	// page.
 	@FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr"))
@@ -84,6 +85,8 @@ public class RXMediaPage extends RXBasePage {
 	public WebElement siteURLInput;
 	@FindBy(xpath = "//label[text()='Categories']/following-sibling::div[@class='v-select__selections']")
 	public WebElement categoriesDropdown;
+	@FindBy(xpath = "//label[text()='Categories']/following-sibling::div[@class='v-select__selections']/span")
+	public WebElement categoriesValue;
 	@FindBy(xpath = "//label[text()='Categories']/following-sibling::div[@class='v-select__selections']/input")
 	public WebElement categoriesInput;
 	@FindBy(xpath = "//div[contains(@class,'v-banner__text') and contains(text(),'changing the Publisher')]" )
@@ -258,5 +261,26 @@ public class RXMediaPage extends RXBasePage {
 			}
 		}
 		return flag;
+	}
+
+	public String mandatorFieldIsDisabledForCreatePage(String fieldName) {
+		return driver
+				.findElement(By.xpath("//aside[@class='dialog']//label[text()='" + fieldName + "']"))
+				.getAttribute("class");
+	}
+
+	public String getMediaName() {
+		return driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[3]/a"))
+				.getText().replaceAll("\\s", "");
+	}
+
+	public String getPublisherName() {
+		return driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[4]"))
+				.getText();
+	}
+
+	public String getMediaType() {
+		return driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[5]"))
+				.getText();
 	}
 }

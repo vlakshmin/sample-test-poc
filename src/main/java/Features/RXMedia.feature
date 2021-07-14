@@ -187,9 +187,103 @@ Feature: Targeting page validation
     Then Verify that Media "blockchains LLC Media" is displayed
     When Search Media with name "blockchains LLC Media a"
     Then Verify that no results are displayed
- 
+
   Scenario: 271.Verify enabling and disabling of Media from the overview page
     Given admin user login to RX UI with valid username and password
     When Click on Media option under Inventory
     Then User displayed with media page
     Then Verify that Media can be Enabled and Disabled from list
+
+  Scenario: 272.Verify sorting of the list's columns of the Media overview page
+    Given admin user login to RX UI with valid username and password
+    When Click on Media option under Inventory
+    Then User displayed with media page
+    Then Verify the sorting functionality with the following columns
+      | ColumnName | SortType |
+      | ID         | desc      |
+      | Publisher  | asc     |
+      | Media Name     | asc      |
+
+  Scenario: 273.Verify mandatory fields in the Create Media Page
+    Given admin user login to RX UI with valid username and password
+    When Click on Media option under Inventory
+    Then User displayed with media page
+    When Click on Create Media button
+    Then Click on Save Media button
+    Then Verify following fields are mandatory for create page
+      | FieldName      |
+      | Publisher|
+    When Select publisher by name: "Viber" in Create Media page
+    Then Verify following fields are mandatory for create page
+      | FieldName  |
+      | Media Name       |
+      | Media Type |
+    |  Site URL  |
+
+  Scenario: 274.Verify on single publisher user login, publisher field is disabled in the Create Media Page
+    Given Single Publisher user login to RX UI with valid username and password
+    When Click on Media option under Inventory
+    Then User displayed with media page
+    When Click on Create Media button
+    Then Verify Publisher name field is disabled on Create Media page
+
+  Scenario: 275.Verify without selecting publisher the card is not enabled to fill in the Create Median Page
+    Given admin user login to RX UI with valid username and password
+    When Click on Media option under Inventory
+    Then User displayed with media page
+    When Click on Create Media button
+    Then Verify following fields are not enabled for create Media page
+      | FieldName  |
+      | Media Name       |
+      | Media Type |
+      | Site URL     |
+      | Categories  |
+
+  Scenario: 276.Verify Changing publisher name alert the user and then on change every fields go to default state
+    Given admin user login to RX UI with valid username and password
+    When Click on Media option under Inventory
+    Then User displayed with media page
+    When Click on Create Media button
+    And Enter the following values in Create Media page
+      | Publisher | Media Name    | Media Type | Site URL         | Categories |
+      | Viber     | TestAutoMedia | Mobile Web | http://app.store | Automotive |
+    And Enter the following values in Create Media page
+      | Publisher |
+      | Viki      |
+    Then Verify the following message is displayed when the publisher changed for Media
+      | Message                                                                                      |
+      | By changing the Publisher the form will be reset and the previous changes will not be saved. |
+    When Select "Accept" on the publisher change banner
+    Then Verify every fields go to default state
+
+  Scenario: 277.Verify successful creation of Media on clicking Save Media button
+    Given admin user login to RX UI with valid username and password
+    When Click on Media option under Inventory
+    Then User displayed with media page
+    When Click on Create Media button
+    And Enter the following values in Create Media page
+      | Publisher | Media Name    | Media Type | Site URL         | Categories |
+      | Viber     | TestAutoMedia | Mobile Web | http://app.store | Automotive |
+    And Click on Save Media button
+    Then Verify the created media data is matching with its overview list values
+  
+  Scenario: 278.Verify successful editing of Media
+    Given admin user login to RX UI with valid username and password
+    When Click on Media option under Inventory
+    Then User displayed with media page
+    When Click on Create Media button
+    And Enter the following values in Create Media page
+      | Publisher | Media Name    | Media Type | Site URL         | Categories |
+      | Viber     | TestAutoMedia | Mobile Web | http://app.store | Automotive |
+    And Click on Save Media button
+    Then Verify the created media data is matching with its overview list values
+    Then Click on the created media name in the overview page
+    Then Verify Publisher name field is disabled on Create Media page
+    Then Verify the Create Media page is filled with data
+    And Enter the following values in Create Media page
+      | Media Name    |
+      | TestAutoMedia |
+    And Click on Save Media button
+    Then Verify the created media data is matching with its overview list values
+    Then Click on the created media name in the overview page
+    Then Verify the Create Media page is filled with data
