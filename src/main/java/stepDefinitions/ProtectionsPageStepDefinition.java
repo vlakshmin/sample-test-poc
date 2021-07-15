@@ -29,7 +29,7 @@ import RXPages.RXDealsPage;
 import RXPages.RXPrivateAuctionsPage;
 import RXPages.RXProtectionsPage;
 
-public class ProtectionsPageStepDefinition  extends RXBaseClass{
+public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	RXProtectionsPage protectionsPage;
 	RXPrivateAuctionsPage auctionPage;
 	PublisherListPage pubListPgs;
@@ -435,5 +435,10 @@ public class ProtectionsPageStepDefinition  extends RXBaseClass{
 		}
 		Assert.assertEquals(num1,0,num1 +" Inactive Protections is not selected.");
 		Assert.assertEquals(num3,0,num3 +" Active Protections is not selected.");
+	}
+
+	@Then("^Click on the Create Protections button$")
+	public void click_on_the_following_create_button() throws Throwable {
+		createButtonClick("Create Protections");
 	}
 }

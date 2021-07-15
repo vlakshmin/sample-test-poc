@@ -23,7 +23,7 @@ import org.testng.Assert;
 import RXBaseClass.RXBaseClass;
 import RXUtitities.RXUtile;
 
-public class RXProtectionsPage extends RXBaseClass {
+public class RXProtectionsPage extends RXBasePage {
 	public String protectionsHeaderStr = "Protections";
 	RXPrivateAuctionsPage privateAuctionsPage;
 	

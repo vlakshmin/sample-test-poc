@@ -264,9 +264,7 @@ Feature: Protections page regression
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
     Then User displayed with Protections page
-    And Click on the following create button
-      | CreateButtonName   |
-      | Create Protections |
+    And Click on the Create Protections button
     And Click Add Protections Targeting button
     Then Verify that following items are present
       | Advertiser  |
@@ -281,9 +279,7 @@ Feature: Protections page regression
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
     Then User displayed with Protections page
-    And Click on the following create button
-      | CreateButtonName   |
-      | Create Protections |
+    And Click on the Create Protections button
     And Click Add Protections Targeting button
     Then Verify that following items are present
       | Advertiser  |
@@ -307,9 +303,7 @@ Feature: Protections page regression
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
     Then User displayed with Protections page
-    And Click on the following create button
-      | CreateButtonName   |
-      | Create Protections |
+    And Click on the Create Protections button
     And Click Add Protections Targeting button
     Then Verify that following items are present
       | Advertiser  |
@@ -337,9 +331,7 @@ Feature: Protections page regression
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
     Then User displayed with Protections page
-    And Click on the following create button
-      | CreateButtonName   |
-      | Create Protections |
+    And Click on the Create Protections button
     And Click Add Protections Targeting button
     Then Verify that following items are present
       | Advertiser  |
@@ -353,9 +345,7 @@ Feature: Protections page regression
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
     Then User displayed with Protections page
-    And Click on the following create button
-      | CreateButtonName   |
-      | Create Protections |
+    And Click on the Create Protections button
     Then Verify that all elements are present and have proper default value
 
   Scenario: 101.Verify Protection entity page change Publisher resets all data
@@ -363,9 +353,7 @@ Feature: Protections page regression
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
     Then User displayed with Protections page
-    And Click on the following create button
-      | CreateButtonName   |
-      | Create Protections |
+    And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
       | Publisher Name | Alfonso Armstrong |                |
@@ -397,13 +385,9 @@ Feature: Protections page regression
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
     Then User displayed with Protections page
-    And Click on the following create button
-      | CreateButtonName   |
-      | Create Protections |
+    And Click on the Create Protections button
     Then Verify that search with "Z" works properly for Publisher dropdown
-    And Click on the following create button
-      | CreateButtonName   |
-      | Create Protections |
+    And Click on the Create Protections button
     Then Verify that search with "Viki" works properly for Publisher dropdown
 
   @Ignore
@@ -412,9 +396,7 @@ Feature: Protections page regression
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
     Then User displayed with Protections page
-    And Click on the following create button
-      | CreateButtonName   |
-      | Create Protections |
+    And Click on the Create Protections button
     And Click on Save Protection button
     Then Verify that error apear for Name
     And Enter the following data in the Create Protections page
@@ -429,9 +411,7 @@ Feature: Protections page regression
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
     Then User displayed with Protections page
-    And Click on the following create button
-      | CreateButtonName   |
-      | Create Protections |
+    And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
       | Publisher Name | Alfonso Armstrong |                |
@@ -450,9 +430,7 @@ Feature: Protections page regression
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
     Then User displayed with Protections page
-    And Click on the following create button
-      | CreateButtonName   |
-      | Create Protections |
+    And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
       | Publisher Name | Alfonso Armstrong |                |
@@ -536,9 +514,7 @@ Feature: Protections page regression
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
     Then User displayed with Protections page
-    And Click on the following create button
-      | CreateButtonName   |
-      | Create Protections |
+    And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 1              |
