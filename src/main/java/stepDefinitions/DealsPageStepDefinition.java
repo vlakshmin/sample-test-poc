@@ -5,6 +5,7 @@ import RXBaseClass.RXBaseClass;
 import RXUtitities.RXUtile;
 import RXPages.*;
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.*;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
@@ -42,6 +43,8 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	public String enteredDSP;
 	private Map<String,List<Boolean>> floorPriceValues = new HashMap<>();
 	private LinkedHashMap<String,String> detailsData = new LinkedHashMap<>();
+	public List<String> activeDealIDList = new ArrayList<>();
+	public List<String> inactiveDealIDList = new ArrayList<>();
 //=========================================================================================================	
 	// Verify if user is displayed with media list page on clicking media navigation
 	// link
@@ -157,7 +160,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	@And("^Select publisher by name: \"(.*)\"$")
 	public void selectPublisherByName(String name) throws Throwable {
 		 dealsPage.selectPublisherByName(name); 
-		
+
 	}
 
     @Then("^Verify the currency is correct$")
@@ -182,31 +185,36 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	public void select_DSP_by_name(String name) throws Throwable {
 		dealsPage.selectDSPByName(name);
 	}
-	
+
 	@Then("^enter the following values$")
 	public void enter_the_following_values(DataTable dt) throws Throwable {
+		String value;
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
-		
-		for (int i = 0; i < list.size(); i++) 
-		{
-			
-			String publName = list.get(i).get("publisher");
-			String privAucName = list.get(i).get("PrivateAuction");
-			String dSPvalue = list.get(i).get("DSPValue");
-			String dealName = list.get(i).get("EntDealName")+ rxUTL.getRandomNumberFourDigit();
-			String dealValue = list.get(i).get("Values");
-			dealsPage.selectPublisherByName(publName);
-			enteredPublisher=dealsPage.publisherNamesEntered.getText();
-			wait.until(ExpectedConditions.elementToBeClickable(dealsPage.dealName));
-			dealsPage.selectPrivateAuctionByName(privAucName);
-			dealsPage.selectDSPByName(dSPvalue);
-			enteredDSP=dealsPage.dspValueDiv.getText();
-			dealsPage.enterDealName(dealName);
-			dealsPage.enterValue(dealValue);
-			
-
+		for (Map<String, String> stringMap : list) {
+			for (String key : stringMap.keySet()) {
+				value = stringMap.get(key);
+				System.out.println("=== select/enter value for " + key + " ===");
+				switch (key) {
+					case "publisher":
+						dealsPage.selectPublisherByName(value);
+						enteredPublisher = dealsPage.publisherNamesEntered.getText();
+						break;
+					case "PrivateAuction":
+						dealsPage.selectPrivateAuctionByName(value);
+						break;
+					case "DSPValue":
+						dealsPage.selectDSPByName(value);
+						enteredDSP = dealsPage.dspValueDiv.getText();
+						break;
+					case "EntDealName":
+						dealsPage.enterDealName(value + rxUTL.getRandomNumberFourDigit());
+						break;
+					case "Values":
+						dealsPage.enterValue(value);
+						break;
+				}
+			}
 		}
-	    
 	}
 
 	@Then("^enter the following DSP buyer details\\.$")
@@ -266,6 +274,17 @@ public class DealsPageStepDefinition extends RXBaseClass {
 			String expectedMessage = list.get(i).get("Message");
 			System.out.println("Banner Message "+ dealsPage.getChangePublisherBannerMsg());
 			Assert.assertEquals(dealsPage.getChangePublisherBannerMsg(), expectedMessage);
+
+		}
+	}
+
+	@Then("^Verify the following message is not displayed when the publisher changed for deal$")
+	public void verify_the_following_message_is_not_displayed_when_the_publisher_changed_for_deal(DataTable dt) throws Throwable {
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		for (int i = 0; i < list.size(); i++) {
+			String expectedMessage = list.get(i).get("Message");
+			System.out.println("Check if Banner Message is displayed >>> "+ expectedMessage);
+			Assert.assertFalse(dealsPage.getElementByXpathWithParameter(dealsPage.changePubBannerMsgXpath, expectedMessage).isDisplayed());
 
 		}
 	}
@@ -981,5 +1000,100 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	@Then("^Verify the following message is not displayed when select the second DSP value$")
 	public void verifyTheFollowingMessageIsNotDisplayedWhenSelectTheSecondDSPValue(DataTable dt) {
 		Assert.assertFalse(dealsPage.changeDSPBannerMsg.isDisplayed());
+	}
+
+    @When("^Select \"([^\"]*)\" \"([^\"]*)\" deal in list view$")
+    public void selectDealInListView(String count, String status) {
+		int rowNum = 0;
+		String dealID = "";
+		int loop = Integer.parseInt(count);
+		for(int i = 0; i < loop; i++) {
+			System.out.println("select " + status + " deal loop >>> " + loop);
+			for(int j = 0; j < dealsPage.statusColumnsInDealsList.size(); j++){
+				String value = dealsPage.statusColumnsInDealsList.get(j).getText().trim();
+				System.out.println("status column value >>> " + value);
+				if(value.equals(status)){
+					rowNum = j + 1;
+					System.out.println(status + " in row number >>> " + rowNum);
+					if(!dealsPage.verifyIfCheckboxIsChecked(rowNum)){
+						dealsPage.getElementByXpathWithParameter(dealsPage.checkboxByRowNum, String.valueOf(rowNum)).click();
+						dealID = dealsPage.getElementByXpathWithParameter(dealsPage.idByRowNumber, String.valueOf(rowNum)).getText().trim();
+						if(status.equals("Active")){
+							System.out.println("Store Active deal ID"  + dealID + " to activeDealIDList");
+							this.activeDealIDList.add(dealID);
+						}else{
+							System.out.println("Store Inactive deal ID"  + dealID +" to inactiveDealIDList");
+							this.inactiveDealIDList.add(dealID);
+						}
+						break;
+					}
+				}
+			}
+		}
+    }
+
+	@Then("^Verify the following buttons are present in page header$")
+	public void verifyTheFollowingButtonsArePresentInPageHeader(DataTable dt) {
+		getDataFromTable(dt).forEach(e ->
+				Assert.assertTrue(dealsPage.verifyButtonDisplaysInPageHeader(e.getValue())));
+	}
+
+	@When("^Click on \"([^\"]*)\" button in Deals page$")
+	public void clickOnButtonInDealsPage(String arg0) {
+		switch (arg0){
+			case "Edit Deal":
+				wait.until(ExpectedConditions.visibilityOf(dealsPage.overviewEditbutton));
+				dealsPage.overviewEditbutton.click();
+				wait.until(ExpectedConditions.visibilityOf(dealsPage.saveButton));
+				break;
+			case "Deactivate Deal":
+				wait.until(ExpectedConditions.visibilityOf(dealsPage.overviewDisablebutton));
+				dealsPage.overviewDisablebutton.click();
+				wait.until(ExpectedConditions.visibilityOf(dealsPage.createDealButton));
+				break;
+			case "Activate Deal":
+				wait.until(ExpectedConditions.visibilityOf(dealsPage.overviewEnablebutton));
+				dealsPage.overviewEnablebutton.click();
+				wait.until(ExpectedConditions.visibilityOf(dealsPage.createDealButton));
+				break;
+			case "Deactivate Deals":
+				wait.until(ExpectedConditions.visibilityOf(dealsPage.deactivateDealsbutton));
+				dealsPage.deactivateDealsbutton.click();
+				wait.until(ExpectedConditions.visibilityOf(dealsPage.createDealButton));
+				break;
+			case "Activate Deals":
+				wait.until(ExpectedConditions.visibilityOf(dealsPage.activateDealsbutton));
+				dealsPage.activateDealsbutton.click();
+				wait.until(ExpectedConditions.visibilityOf(dealsPage.createDealButton));
+				break;
+		}
+	}
+
+	@Then("^Verify Edit Deal page displays$")
+	public void verifyEditDealPageDisplays() {
+		wait.until(ExpectedConditions.visibilityOf(dealsPage.saveButton));
+		Assert.assertTrue(dealsPage.pageTitle.getText().contains("Edit Deal"));
+	}
+
+	@When("^Close \"([^\"]*)\" Deal page$")
+	public void closeEditOrCreateDealPage(String arg0) {
+		dealsPage.closeBtn.click();
+	}
+
+	@Then("^Verify the selected \"([^\"]*)\" deal change to \"([^\"]*)\" status in Deals list view$")
+	public void verifyTheSelectedDealChangeToStatusInDealsListView(String status, String expectedStatus) {
+		if(status.equals("Inactive")){
+			for(String id : this.inactiveDealIDList){
+				System.out.println("Deal ID >>> " + id);
+				Assert.assertEquals(dealsPage.getElementByXpathWithParameter(dealsPage.statusByID, id).getText().trim(), expectedStatus);
+			}
+			this.inactiveDealIDList.clear();
+		}else{
+			for(String id : this.activeDealIDList){
+				System.out.println("Deal ID >>> " + id);
+				Assert.assertEquals(dealsPage.getElementByXpathWithParameter(dealsPage.statusByID, id).getText().trim(), expectedStatus);
+			}
+			this.activeDealIDList.clear();
+		}
 	}
 }

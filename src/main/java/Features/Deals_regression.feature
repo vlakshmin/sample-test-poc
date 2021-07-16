@@ -1025,3 +1025,102 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		Then Verify the following message is not displayed when select the second DSP value
 			|Message|
 			|By changing the DSP, the Buyers section will be reset and will not be saved.|
+
+	Scenario: 122. Verify that Activate Deactivate buttons are displayed at same time for Deals list page
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		When Select "1" "Active" deal in list view
+		Then Verify the following buttons are present in page header
+			| Button          |
+			| Edit Deal       |
+			| Activate Deal   |
+			| Deactivate Deal |
+		When Click on "Edit Deal" button in Deals page
+		Then Verify Edit Deal page displays
+		When Close "Edit" Deal page
+		When Click on "Deactivate Deal" button in Deals page
+		Then Verify the selected "Active" deal change to "Inactive" status in Deals list view
+		When Select "1" "Inactive" deal in list view
+		Then Verify the following buttons are present in page header
+			| Button          |
+			| Edit Deal       |
+			| Activate Deal   |
+			| Deactivate Deal |
+		When Click on "Edit Deal" button in Deals page
+		Then Verify Edit Deal page displays
+		When Close "Edit" Deal page
+		When Click on "Activate Deal" button in Deals page
+		Then Verify the selected "Inactive" deal change to "Active" status in Deals list view
+		When Select "2" "Active" deal in list view
+		Then Verify the following buttons are present in page header
+			| Button           |
+			| Activate Deals   |
+			| Deactivate Deals |
+		When Click on "Deactivate Deals" button in Deals page
+		Then Verify the selected "Active" deal change to "Inactive" status in Deals list view
+		When Select "1" "Active" deal in list view
+		When Select "1" "Inactive" deal in list view
+		Then Verify the following buttons are present in page header
+			| Button           |
+			| Activate Deals   |
+			| Deactivate Deals |
+		When Click on "Deactivate Deals" button in Deals page
+		Then Verify the selected "Active" deal change to "Inactive" status in Deals list view
+		Then Verify the selected "Inactive" deal change to "Inactive" status in Deals list view
+		When Select "1" "Active" deal in list view
+		When Select "1" "Inactive" deal in list view
+		Then Verify the following buttons are present in page header
+			| Button           |
+			| Activate Deals   |
+			| Deactivate Deals |
+		When Click on "Activate Deals" button in Deals page
+		Then Verify the selected "Active" deal change to "Active" status in Deals list view
+		Then Verify the selected "Inactive" deal change to "Active" status in Deals list view
+		When Select "2" "Inactive" deal in list view
+		Then Verify the following buttons are present in page header
+			| Button           |
+			| Activate Deals   |
+			| Deactivate Deals |
+		When Click on "Activate Deals" button in Deals page
+		Then Verify the selected "Inactive" deal change to "Active" status in Deals list view
+
+	Scenario: 136. Verify that Publisher warning banned appears only if any forms were modified on Deals page
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And Select publisher by name: "Viki"
+		When change the publisher name to "Viber"
+		Then Verify the following message is not displayed when the publisher changed for deal
+			| Message                                                                                      |
+			| By changing the Publisher the form will be reset and the previous changes will not be saved. |
+		And enter the following values
+			| PrivateAuction   | DSPValue | EntDealName  | Values |
+			| RTBHouse Auction | RBidder  | TestAutoDeal | 2      |
+		And "Enable" the DSP buyer
+		And enter the following DSP buyer details.
+			| DSP Seat ID    | DSP Seat Name       | Advertiser ID        | Advertiser Name        | DSP Seat Passthrough String      | DSP Domain Advertiser Passthrough String     |
+			| TestAutoSeatID | TestAutodSPSeatName | TestAutoAdvertiserId | TestAutoadvertiserName | TestAutodSPSeatPassthroughString | TestAutodSPDomainAdvertiserPassthroughString |
+		When change the publisher name to "Viki"
+		Then Verify the following message is displayed when the publisher changed for deal
+			| Message                                                                                      |
+			| By changing the Publisher the form will be reset and the previous changes will not be saved. |
+		And Select "Accept" on the publisher change banner displayed for deal
+		When Close "Create" Deal page
+		Then User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And Select publisher by name: "Viber"
+		And enter the following values
+			| PrivateAuction   |
+			| RTBHouse Auction |
+		When change the publisher name to "Viki"
+		Then Verify the following message is displayed when the publisher changed for deal
+			| Message                                                                                      |
+			| By changing the Publisher the form will be reset and the previous changes will not be saved. |
+		And Select "Accept" on the publisher change banner displayed for deal
+		When Close "Create" Deal page
