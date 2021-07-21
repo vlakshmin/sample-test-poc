@@ -45,7 +45,7 @@ public class RXDealsPage extends RXBasePage {
 	@FindBy(xpath = "//button/span[text()='Activate Deals']")
 	public WebElement activateDealsbutton;
 
-	@FindBy(xpath = "//i[contains(@class,'newspaper')]/parent::span")
+	@FindBy(xpath = "//button[.//span[text()='Create Deal']]")
 	public WebElement createDealButton;
 	@FindBy(xpath = "//div[contains(@class,'hidden') and contains(.,'Edit')]")
 	private WebElement editDealMenuHeader;
@@ -100,6 +100,12 @@ public class RXDealsPage extends RXBasePage {
 	public WebElement dateRange;
 	@FindBy(xpath = "//label[text()='Date Range']/parent::div/parent::div/following-sibling::div/div/div/div" )
 	public WebElement dateRangeErrorMsg;
+	@FindBy(xpath = "//div[contains(@class,'v-date-picker-table')]/table" )
+	public WebElement dateRangePickerTable;
+	@FindBy(xpath = "//td/button[contains(@class,'light-blue--text')]" )
+	public WebElement dateRangeHighlightDate;
+	@FindBy(xpath = "//td[.//button[contains(@class,'light-blue')]]/following-sibling::td[1]/button" )
+	public WebElement dateRangeNextToHighlightDate;
 	@FindBy(xpath = "//aside[@class='dialog']//div[@class='v-toolbar__title']/div" )
 	public WebElement dealHeaderName;
 	@FindBy(xpath = "//label[text()='Currency']/following-sibling::div/div" ) 
@@ -244,7 +250,7 @@ public class RXDealsPage extends RXBasePage {
 	public String buyerDSPPanel="(//ancestor::div[2]//div[contains(@class,'cardPadding')])";
 	public String buyerEnableDisable="(//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input'])";
 	public String buyerDelete="(//button[contains(@class,'alignRight')]/span)";
-	public String dSPEnable="(//ancestor::div[2]//div[contains(@class,'cardPadding')]//div[contains(@class,'v-input--is-label-active')]//input)";
+	public String dSPEnable="(//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']//input[@aria-checked='true'])";
 	public String dSPDisable="(//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']//input[@aria-checked='false'])";
 
 	public String currencyOptionString = "//div[@class='v-list-item__content']/div[text()='%s']";
@@ -324,9 +330,9 @@ public class RXDealsPage extends RXBasePage {
 	}
 
 	public void clickCreateDealButton() {
-		wait.until(visibilityOf(createDealButton));
+		wait.until(ExpectedConditions.visibilityOf(createDealButton));
 		createDealButton.click();
-		wait.until(visibilityOf(createDealMenuHeader));
+		wait.until(ExpectedConditions.visibilityOf(createDealMenuHeader));
 	}
 	public void enterFloorPrice(int amount) {
 		floorPriceField.findElement(By.xpath(".//input")).sendKeys(String.valueOf(amount));
@@ -653,7 +659,6 @@ public class RXDealsPage extends RXBasePage {
 	public void clickAddMoreSeats() 
 	{
 		wait.until(ExpectedConditions.elementToBeClickable(addMoreSeats));
-		System.out.println("Inner Side Count time" + 1);
 		addMoreSeats.click();
 	}
 

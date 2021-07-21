@@ -5,7 +5,6 @@ import RXBaseClass.RXBaseClass;
 import RXUtitities.RXUtile;
 import RXPages.*;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.*;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
@@ -14,10 +13,14 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.*;
 import org.testng.Assert;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
-import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class DealsPageStepDefinition extends RXBaseClass {
@@ -45,6 +48,8 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	private LinkedHashMap<String,String> detailsData = new LinkedHashMap<>();
 	public List<String> activeDealIDList = new ArrayList<>();
 	public List<String> inactiveDealIDList = new ArrayList<>();
+	public String startDate;
+	public String endDate;
 //=========================================================================================================	
 	// Verify if user is displayed with media list page on clicking media navigation
 	// link
@@ -589,7 +594,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	@When("^Select the deal and click on edit$")
 	public void Select_the_deal_and_click_on_edit() throws Throwable {
 		dealsPage.clickOnDealNameInListView();
-		
+		wait.until(ExpectedConditions.visibilityOf(dealsPage.saveButton));
 	}
 	
 	@Then("^Verify Publisher,Private Auction and DSP are non-editable$")
@@ -745,12 +750,27 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		}
 	}
 
-	@Then("^Verify \"([^\"]*)\" added seats are disabled$")
-	public void verify_added_seats_are_disabled(String arg0) throws Throwable {
-		for(int i=1;i<=Integer.parseInt(arg0);i++) {
-			js.executeScript("arguments[0].scrollIntoView();",dealsPage.dSPDisable(i));
-			Assert.assertTrue(dealsPage.dSPDisable(i).isEnabled());
+	@Then("^Verify \"([^\"]*)\" added seats are \"([^\"]*)\"$")
+	public void verify_added_seats_are_disabled(String count, String status) throws Throwable {
+//		WebElement element = null;
+//		for(int i=1;i<=Integer.parseInt(count);i++) {
+//			System.out.println("verify_added_seats_are_disabled i >>> " + i);
+//			if(status.equals("disabled")){
+//				element = dealsPage.dSPDisable(i);
+//			}else{
+//				element = dealsPage.dSPEnable(i);
+//			}
+//			js.executeScript("arguments[0].scrollIntoView();", element);
+//			Assert.assertTrue(element.isEnabled());
+//		}
+
+		String elemetXpath;
+		if(status.equals("disabled")){
+			elemetXpath = dealsPage.dSPDisable;
+		}else{
+			elemetXpath = dealsPage.dSPEnable;
 		}
+		Assert.assertEquals(String.valueOf(driver.findElements(By.xpath(elemetXpath)).size()),count);
 	}
 
 	@Then("^Verify entity page is disabled$")
@@ -1077,6 +1097,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 
 	@When("^Close \"([^\"]*)\" Deal page$")
 	public void closeEditOrCreateDealPage(String arg0) {
+		wait.until(ExpectedConditions.elementToBeClickable(dealsPage.closeBtn));
 		dealsPage.closeBtn.click();
 	}
 
@@ -1095,5 +1116,44 @@ public class DealsPageStepDefinition extends RXBaseClass {
 			}
 			this.activeDealIDList.clear();
 		}
+	}
+
+	@When("^Click on Date Range input$")
+	public void clickOnDateRangeInput() {
+		wait.until(ExpectedConditions.elementToBeClickable(dealsPage.dateRange));
+		dealsPage.dateRange.click();
+	}
+
+	@And("^Select current and next date in Date Range picker table$")
+	public void selectCurrentAndNextDateInDateRangePickerTable() {
+		wait.until(ExpectedConditions.visibilityOf(dealsPage.dateRangePickerTable));
+		dealsPage.dateRangeHighlightDate.click();
+		dealsPage.dateRangeNextToHighlightDate.click();
+	}
+
+	@Then("^Verify the default start date in Date Range should be today in Create Deal page$")
+	public void verifyTheDefaultStartDateInDateRangeShouldBeTodayInCreateDealPage() {
+		String dateRangeValue = dealsPage.dateRange.getAttribute("value");
+		System.out.println("dateRangeValue >>> " + dateRangeValue);
+		startDate = dateRangeValue.split(" ")[0].trim();
+		System.out.println("startDate in Date Range >>> " + startDate);
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String today = LocalDate.now(ZoneId.of("GMT")).format(formatter);
+		System.out.println("today >>> " + today);
+		Assert.assertEquals(startDate, today);
+	}
+
+	@Then("^Verify end date should be 90 days in the future in Create Deal page$")
+	public void verifyEndDateShouldBe90DaysInTheFutureInCreateDealPage() throws ParseException {
+		String dateRangeValue = dealsPage.dateRange.getAttribute("value");
+		System.out.println("dateRangeValue >>> " + dateRangeValue);
+		endDate = dateRangeValue.split(" ")[2].trim();
+		System.out.println("endDate in Date Range >>> " + endDate);
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate start = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		LocalDate end = LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		Assert.assertEquals(ChronoUnit.DAYS.between(start, end), 90);
 	}
 }
