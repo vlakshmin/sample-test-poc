@@ -47,11 +47,11 @@ public class RXMediaPage extends RXBasePage {
 	@FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//thead/tr/th"))
 	public List<WebElement> mediaTableHeaders;
 
-	String checkboxStringInMediaTable = "//div[@class='v-data-table__wrapper']//tbody/tr[%s]/td[1]/div";
-	String idStringInMediaTable = "//div[@class='v-data-table__wrapper']//tbody/tr[%s]/td[2]";
-	String trStringInMediaTable = "//div[@class='v-data-table__wrapper']//tbody/tr[%s]";
-	String statusByIDInMediaTable = "//td[text()='%s']/parent::tr/td[6]";
-	String statusByMediaNameInMediaTable = "//a[text()='%s']/parent::td/following-sibling::td[3]";
+	public String checkboxStringInMediaTable = "//div[@class='v-data-table__wrapper']//tbody/tr[%s]/td[1]/div";
+	public String idStringInMediaTable = "//div[@class='v-data-table__wrapper']//tbody/tr[%s]/td[2]";
+	public String trStringInMediaTable = "//div[@class='v-data-table__wrapper']//tbody/tr[%s]";
+	public String statusByIDInMediaTable = "//td[text()='%s']/parent::tr/td[6]";
+	public String statusByMediaNameInMediaTable = "//a[text()='%s']/parent::td/following-sibling::td[3]";
 
 
 	// overview buttons
@@ -98,12 +98,13 @@ public class RXMediaPage extends RXBasePage {
 	public WebElement validationErrorsPanel;
 
 	public String validationErrorsCssPath = "div.v-alert__content > div > ul > li";
+	public String changePubBannerMsgXpath = "//div[contains(@class,'v-banner__text') and contains(text(),'%s')]";
 
 	//Edit Media
 	@FindBy(css = "div.v-toolbar__title")
 	public WebElement pageTitle;
 	@FindBy(xpath = "//aside/header/div/button")
-	public WebElement closeEditMediatBtn;
+	public WebElement closeBtn;
 
 	// Action object
 	Actions act = new Actions(driver);
@@ -155,27 +156,6 @@ public class RXMediaPage extends RXBasePage {
 		}
 	}
 
-	public void selectValueFromDropdown(String name) {
-		int attempt = 0;
-
-		// Check if list contains parameter name, scroll down if not
-		do {
-			js.executeScript("arguments[0].scrollIntoView(false)", dropdownValues.get(dropdownValues.size() - 1));
-		}
-		while (!dropdownValues.stream()
-				.map(WebElement::getText)
-				.anyMatch(text -> name.equals(text)) && attempt++ < 20);
-
-		// Get web element by name from the method parameter
-		WebElement dropDownElementByName = dropdownValues.stream()
-				.filter(i -> i.getText().equalsIgnoreCase(name))
-				.findFirst()
-				.orElseThrow(() -> new org.openqa.selenium.NoSuchElementException(String.format("In dropdown the name %s wasn't found.", name)));
-		js.executeScript("arguments[0].scrollIntoView({block: \"center\"})", dropDownElementByName);
-		wait.until(elementToBeClickable(dropDownElementByName));
-		dropDownElementByName.click();
-	}
-
 	public WebElement getCategoriesDropdownCheckbox(String categoriesName){
 		return driver.findElement(By.xpath("//div[contains(@class,'category-select-item')]/div/div/div[@class='v-list-item__content' and text()='"+ categoriesName +"']/preceding-sibling::div/div"));
 	}
@@ -208,10 +188,6 @@ public class RXMediaPage extends RXBasePage {
 		}
 	}
 
-	public WebElement getCheckboxInSpecifiedRowInMediaTable(int rownum){
-		return driver.findElement(By.xpath(String.format(checkboxStringInMediaTable, rownum)));
-	}
-
 	public boolean verifyIfCheckboxIsChecked(int rowNum){
 		boolean flag = false;
 		String classAttr = driver.findElement(By.xpath(String.format(trStringInMediaTable, rowNum))).getAttribute("class");
@@ -234,18 +210,6 @@ public class RXMediaPage extends RXBasePage {
 			}
 		}
 		return  flag;
-	}
-
-	public WebElement getStatusElemtByID(String id) {
-		return driver.findElement(By.xpath(String.format(this.statusByIDInMediaTable, id)));
-	}
-
-	public WebElement getStatusElemtByMediaName(String name) {
-		return driver.findElement(By.xpath(String.format(this.statusByMediaNameInMediaTable, name)));
-	}
-
-	public WebElement getMediaIDElemtByRowNumber(int rownum){
-		return driver.findElement(By.xpath(String.format(this.idStringInMediaTable, rownum)));
 	}
 
 	public boolean verifyHeaderDisplayInMediaTable(String expectedHeader){
@@ -282,5 +246,9 @@ public class RXMediaPage extends RXBasePage {
 	public String getMediaType() {
 		return driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[5]"))
 				.getText();
+	}
+
+	public WebElement getElementByXpathWithParameter(String xpath, String parameter){
+		return driver.findElement(By.xpath(String.format(xpath, parameter)));
 	}
 }

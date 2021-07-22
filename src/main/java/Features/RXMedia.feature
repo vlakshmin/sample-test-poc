@@ -85,7 +85,7 @@ Feature: Targeting page validation
       | Deactivate Media |
     When Click on Edit Media button
     Then Verify Edit Media page displays
-    When Close Edit Media page
+    When Close "Edit" Media page
     When Click on "Deactivate" Media button
     Then Verify the selected "Active" media change to "Inactive" status in Media list view
     When Select "1" "Inactive" media in list view
@@ -96,7 +96,7 @@ Feature: Targeting page validation
       | Deactivate Media |
     When Click on Edit Media button
     Then Verify Edit Media page displays
-    When Close Edit Media page
+    When Close "Edit" Media page
     When Click on "Activate" Media button
     Then Verify the selected "Inactive" media change to "Active" status in Media list view
     When Select "1" "Active" media in list view
@@ -287,3 +287,70 @@ Feature: Targeting page validation
     Then Verify the created media data is matching with its overview list values
     Then Click on the created media name in the overview page
     Then Verify the Create Media page is filled with data
+
+  Scenario: 137.Verify that Publisher warning banned apears only if any forms were modified on Media page
+    Given admin user login to RX UI with valid username and password
+    When Click on Media option under Inventory
+    Then User displayed with media page
+    When Click on Create Media button
+    And Enter the following values in Create Media page
+      | Publisher |
+      | Viki      |
+    When Select publisher by name: "Viber" in Create Media page
+    Then Verify the following message is not displayed when the publisher changed for Media
+      | Message                                                                                      |
+      | By changing the Publisher the form will be reset and the previous changes will not be saved. |
+    When Enter the following values in Create Media page
+      | Media Name    | Media Type | Site URL         | Categories |
+      | TestAutoMedia | Mobile Web | http://app.store | Automotive |
+    When Select publisher by name: "Trace White" in Create Media page
+    Then Verify the following message is displayed when the publisher changed for Media
+      | Message                                                                                      |
+      | By changing the Publisher the form will be reset and the previous changes will not be saved. |
+    When Select "Accept" on the publisher change banner
+    When Close "Create" Media page
+    Then User displayed with media page
+    When Click on Create Media button
+    And Enter the following values in Create Media page
+      | Publisher | Media Name    |
+      | Viber     | TestAutoMedia |
+    When Select publisher by name: "Viki" in Create Media page
+    Then Verify the following message is displayed when the publisher changed for Media
+      | Message                                                                                      |
+      | By changing the Publisher the form will be reset and the previous changes will not be saved. |
+    When Select "Accept" on the publisher change banner
+    When Close "Create" Media page
+    Then User displayed with media page
+    When Click on Create Media button
+    And Enter the following values in Create Media page
+      | Publisher | Media Type |
+      | Viber     | Mobile Web |
+    When Select publisher by name: "Viki" in Create Media page
+    Then Verify the following message is displayed when the publisher changed for Media
+      | Message                                                                                      |
+      | By changing the Publisher the form will be reset and the previous changes will not be saved. |
+    When Select "Accept" on the publisher change banner
+    When Close "Create" Media page
+    Then User displayed with media page
+    When Click on Create Media button
+    And Enter the following values in Create Media page
+      | Publisher | Site URL         |
+      | Viber     | http://app.store |
+    When Select publisher by name: "Viki" in Create Media page
+    Then Verify the following message is displayed when the publisher changed for Media
+      | Message                                                                                      |
+      | By changing the Publisher the form will be reset and the previous changes will not be saved. |
+    When Select "Accept" on the publisher change banner
+    When Close "Create" Media page
+    Then User displayed with media page
+    When Click on Create Media button
+    And Enter the following values in Create Media page
+      | Publisher | Categories |
+      | Viber     | Automotive |
+    When Select publisher by name: "Viki" in Create Media page
+    Then Verify the following message is displayed when the publisher changed for Media
+      | Message                                                                                      |
+      | By changing the Publisher the form will be reset and the previous changes will not be saved. |
+    When Select "Accept" on the publisher change banner
+    When Close "Create" Media page
+    Then User displayed with media page

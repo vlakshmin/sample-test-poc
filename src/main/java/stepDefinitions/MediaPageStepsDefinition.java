@@ -15,7 +15,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import RXBaseClass.RXBaseClass;
 import RXPages.PublisherListPage;
 import RXPages.RXMediaPage;
 import RXPages.RXNavOptions;
@@ -190,6 +189,16 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 		}
 	}
 
+	@Then("^Verify the following message is not displayed when the publisher changed for Media$")
+	public void verifyTheFollowingMessageIsNotDisplayedWhenThePublisherChangedForMedia(DataTable dt) {
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		for (int i = 0; i < list.size(); i++) {
+			String expectedMessage = list.get(i).get("Message");
+			System.out.println("Check if Banner Message is displayed >>> "+ expectedMessage);
+			Assert.assertFalse(mediaPage.getElementByXpathWithParameter(mediaPage.changePubBannerMsgXpath, expectedMessage).isDisplayed());
+		}
+	}
+
 	@Then("^Verify the Create Media entity page is disabled$")
 	public void verifyTheCreateMediaEntityPageIsDisabled() {
 		//Publisher
@@ -302,8 +311,8 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 					rowNum = j + 1;
 					System.out.println(status + " in row number >>> " + rowNum);
 					if(!mediaPage.verifyIfCheckboxIsChecked(rowNum)){
-						mediaPage.getCheckboxInSpecifiedRowInMediaTable(rowNum).click();
-						mediaID = mediaPage.getMediaIDElemtByRowNumber(rowNum).getText().trim();
+						mediaPage.getElementByXpathWithParameter(mediaPage.checkboxStringInMediaTable, String.valueOf(rowNum)).click();
+						mediaID = mediaPage.getElementByXpathWithParameter(mediaPage.idStringInMediaTable, String.valueOf(rowNum)).getText().trim();
 						if(status.equals("Active")){
 							System.out.println("Store Active media ID"  + mediaID + " to activeMediaIDList");
 							this.activeMediaIDList.add(mediaID);
@@ -335,9 +344,10 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 		Assert.assertTrue(mediaPage.pageTitle.getText().contains("Edit Media"));
 	}
 
-	@When("^Close Edit Media page$")
-	public void closeEditMediaPage() {
-		mediaPage.closeEditMediatBtn.click();
+	@When("^Close \"([^\"]*)\" Media page$")
+	public void closeEditMediaPage(String arg0) {
+		wait.until(ExpectedConditions.elementToBeClickable(mediaPage.closeBtn));
+		mediaPage.closeBtn.click();
 	}
 
 	@When("^Click on \"([^\"]*)\" Media button$")
@@ -355,13 +365,13 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 		if(status.equals("Inactive")){
 			for(String id : this.inactiveMediaIDList){
 				System.out.println("Media ID >>> " + id);
-				Assert.assertEquals(mediaPage.getStatusElemtByID(id).getText().trim(), expectedStatus);
+				Assert.assertEquals(mediaPage.getElementByXpathWithParameter(mediaPage.statusByIDInMediaTable,id).getText().trim(), expectedStatus);
 			}
 			this.inactiveMediaIDList.clear();
 		}else{
 			for(String id : this.activeMediaIDList){
 				System.out.println("Media ID >>> " + id);
-				Assert.assertEquals(mediaPage.getStatusElemtByID(id).getText().trim(), expectedStatus);
+				Assert.assertEquals(mediaPage.getElementByXpathWithParameter(mediaPage.statusByIDInMediaTable,id).getText().trim(), expectedStatus);
 			}
 			this.activeMediaIDList.clear();
 		}
@@ -402,7 +412,7 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 	@Then("^Verify that Active as a value displayed in Status column$")
 	public void verifyThatActiveAsAValueDisplayedInStatusColumn() {
 		wait.until(ExpectedConditions.visibilityOf(mediaPage.createMediaBtn));
-		Assert.assertEquals(mediaPage.getStatusElemtByMediaName(this.enteredMediaName).getText().trim(), "Active");
+		Assert.assertEquals(mediaPage.getElementByXpathWithParameter(mediaPage.statusByMediaNameInMediaTable, this.enteredMediaName).getText().trim(), "Active");
 	}
 	@When("^Search Media with name \"([^\"]*)\"$")
 	public void search_Media_with_name(String mediaName) throws Throwable {
@@ -539,4 +549,5 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 
 		}
 	}
-	}
+
+}
