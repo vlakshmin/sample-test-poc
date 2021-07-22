@@ -893,8 +893,8 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
 		And User displayed with Deals page
-		And Click on any deal name that Currency is not "USD" in Deals list
-		And Select "USD - Dollars" from Currency
+		And Click on any deal name that Currency is not "JPY" in Deals list
+		And Select "JPY - Yen" from Currency
 		Then Verify the following message is displayed when the Currency changed for deal
 			|Message|
 			|Changing the currency type associated with the value of this deal may lead to its buyers bidding below the price currently set. Due to echange rate fluctuations the new value may differ dramatically. Are you sure you want to proceed? |
@@ -904,8 +904,8 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		Given Publisher user login to RX UI with valid username and password
 		When Click on Deals option under Sales
 		And User displayed with Deals page
-		And Click on any deal name that Currency is not "USD" in Deals list
-		And Select "USD - Dollars" from Currency
+		And Click on any deal name that Currency is not "JPY" in Deals list
+		And Select "JPY - Yen" from Currency
 		Then Verify the following message is displayed when the Currency changed for deal
 			|Message|
 			|Changing the currency type associated with the value of this deal may lead to its buyers bidding below the price currently set. Due to echange rate fluctuations the new value may differ dramatically. Are you sure you want to proceed? |
@@ -915,8 +915,8 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		Given Single Publisher user login to RX UI with valid username and password
 		When Click on Deals option under Sales
 		And User displayed with Deals page
-		And Click on any deal name that Currency is not "USD" in Deals list
-		And Select "USD - Dollars" from Currency
+		And Click on any deal name that Currency is not "JPY" in Deals list
+		And Select "JPY - Yen" from Currency
 		Then Verify the following message is displayed when the Currency changed for deal
 			|Message|
 			|Changing the currency type associated with the value of this deal may lead to its buyers bidding below the price currently set. Due to echange rate fluctuations the new value may differ dramatically. Are you sure you want to proceed? |
