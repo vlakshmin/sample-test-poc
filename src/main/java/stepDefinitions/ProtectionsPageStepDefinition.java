@@ -385,7 +385,8 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		protectionsPage.toolbarButton(buttonName).click();
 		if(!buttonName.equals("Edit Protections")) {
 			WebDriverWait wait = new WebDriverWait(driver, 30);
-			wait.until(ExpectedConditions.invisibilityOf(protectionsPage.toolbarButton(buttonName)));
+//			wait.until(ExpectedConditions.invisibilityOf(protectionsPage.toolbarButton(buttonName)));
+			wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//span[contains(text() , '" + buttonName + "')]/parent::button")));
 		}
 	}
 

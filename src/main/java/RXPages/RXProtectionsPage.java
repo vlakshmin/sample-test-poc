@@ -26,6 +26,7 @@ import RXUtitities.RXUtile;
 public class RXProtectionsPage extends RXBasePage {
 	public String protectionsHeaderStr = "Protections";
 	RXPrivateAuctionsPage privateAuctionsPage;
+	public String loading = "//main//div[@class='container container--fluid']//table/tbody/tr";
 	
 	@FindBy(xpath = "//div[text()='Protections ']")
     public WebElement protectionsLabel;
@@ -118,7 +119,8 @@ public class RXProtectionsPage extends RXBasePage {
 	private Function<? super WebDriver,Boolean> LoadingDisappear() {
       return new ExpectedCondition<Boolean>() {
     	  public Boolean apply(WebDriver driver) {
-    		  return !protectionsLoading.getText().contains("Loading");
+    		  return !driver.findElement(By.xpath(loading)).getText().contains("Loading");
+//			  return !protectionsLoading.getText().contains("Loading");
     		  }
       };
 	}

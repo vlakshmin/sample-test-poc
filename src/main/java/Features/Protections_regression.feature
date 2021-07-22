@@ -27,7 +27,7 @@ Feature: Protections page regression
     Then Verify that default value is 20 items per page
     Then Verify that each items value displayes proper amount of items
     Then Verify that next page/prev page displays proper amount of items
-
+  
   Scenario: 8.Verify pagination on Protections list page for admin
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -433,7 +433,7 @@ Feature: Protections page regression
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Alfonso Armstrong |                |
+      | Publisher Name | Asa VonRueden |                |
       | Name           | Test              |                |
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
@@ -508,7 +508,7 @@ Feature: Protections page regression
       | Activate   |
     When Click "Activate" button in Protections list page
     Then "Active" is displayed for the created Protections
-
+  @Ignore
   Scenario: 147.Verify that clicking save button triggers dirty flag for Protections
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
