@@ -36,11 +36,14 @@ public class RXTargetingPage extends RXBasePage  {
 	public List<WebElement> targetingTableRows;
     @FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr[1]/td")) 
     public List<WebElement> targetingTableColumns;
+	@FindBy(xpath = "//aside/header/div/button")
+	public WebElement closeBtn;
+	@FindBy(xpath = "//span[text()='Create Rule']/parent::button")
+	public WebElement createRuleBtn;
 	
 	
-	
-	
-	@FindBy(xpath = "//div[contains(@class, 'v-list-item__title') and text()='Targeting']")  WebElement targetingNav;
+	@FindBy(xpath = "//div[contains(@class, 'v-list-item__title') and text()='Targeting']")
+	WebElement targetingNav;
 	@FindBy(xpath = "//button[@type='submit']")
 	public WebElement saveButton;
 	@FindBy(xpath = "//label[text()='Publisher Name']/following-sibling::div[@class='v-select__selections']")
@@ -53,10 +56,16 @@ public class RXTargetingPage extends RXBasePage  {
 	public WebElement advertisersPopup;
 	@FindBy(xpath = "//div[contains(@class, 'v-toolbar__title') and text()='Advertisers']/preceding-sibling::button")
 	public WebElement closeAdvertisersPopup;
-	
-	
-	
-	
+	@FindBy(xpath = "//div[contains(@class,'v-banner__text') and contains(text(),'Changing the Publisher')]" )
+	public WebElement changePublisherBannerMsg;
+	@FindBy(xpath = "//div[contains(@class,'v-tabs-bar__content')][.//span[contains(text(),'Geography')]]" )
+	public WebElement protectSpecificInventoryPopup;
+
+	public String changePubBannerMsgXpath = "//div[contains(@class,'v-banner__text') and contains(text(),'%s')]";
+	public String checkboxInInventoryXpath = "//label[text()='%s']/preceding-sibling::div";
+	public String checkboxDivInInventoryXpath = "//label[text()='%s']/parent::div";
+	public String selectRowValueInProtectSpecificInventoryPopup = "//tr[@class='select-row'][.//div[@title='%s']]";
+	public String includedValueInProtectSpecificInventoryPopup = "//table[contains(@class,'included-table')][.//div[@title='%s']]";
 	
 	
 	
@@ -68,7 +77,7 @@ public class RXTargetingPage extends RXBasePage  {
 
 	
 	//Explicit Wait
-	WebDriverWait wait = new WebDriverWait(driver, 1000);
+	WebDriverWait wait = new WebDriverWait(driver, 30);
 	
 	// Initialize page factory
 	public RXTargetingPage()
@@ -131,5 +140,15 @@ public class RXTargetingPage extends RXBasePage  {
 
 	public List<WebElement> ruleActives() {
 		return driver.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[3]"));
+	}
+
+	public WebElement getElementByXpathWithParameter(String xpath, String parameter){
+		return driver.findElement(By.xpath(String.format(xpath, parameter)));
+	}
+
+	public String getChangePublisherBannerMsg()
+	{
+		wait.until(ExpectedConditions.visibilityOf(changePublisherBannerMsg));
+		return changePublisherBannerMsg.getText().replaceAll("\u3000", "");
 	}
 }

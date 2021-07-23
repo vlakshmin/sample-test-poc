@@ -6,16 +6,15 @@ import java.util.List;
 import java.util.Map;
 
 import RXPages.RXAdspotsPage;
-import RXPages.RXDealsPage;
+import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import RXBaseClass.RXBaseClass;
 import RXPages.RXNavOptions;
 import RXPages.RXTargetingPage;
-import RXUtitities.RXUtile;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -24,7 +23,6 @@ public class TargetingPageStepsDefinition extends RXTargetingPage    {
 	
 	RXTargetingPage targetingPage;
 	RXNavOptions navOptions;
-	RXDealsPage dealsPage;
 	RXAdspotsPage adspotsPage;
 	Logger log = Logger.getLogger(TargetingPageStepsDefinition.class);
 	WebDriverWait wait = new WebDriverWait(driver,30);
@@ -37,7 +35,6 @@ public class TargetingPageStepsDefinition extends RXTargetingPage    {
 		super();
 		targetingPage = new RXTargetingPage();
 		navOptions = new RXNavOptions();
-		dealsPage = new RXDealsPage();
 		adspotsPage = new RXAdspotsPage();
 	}
 	
@@ -128,9 +125,10 @@ public void verifyShowStats(String column, String filter) throws InterruptedExce
 
 }
 
-	@Then("^Click on the Create Rule button$")
+	@When("^Click on the Create Rule button$")
 	public void click_on_the_Create_Rule_button() throws InterruptedException {
-		createButtonClick("Create Rule","Create Rule");
+		wait.until(ExpectedConditions.visibilityOf(targetingPage.createRuleBtn));
+		targetingPage.createRuleBtn.click();
 	}
 
 	@Then("^Click on Save Rule button$")
@@ -162,7 +160,7 @@ public void verifyShowStats(String column, String filter) throws InterruptedExce
 						js.executeScript("arguments[0].scrollIntoView()", dropDownPublisher);
 						dropDownPublisher.click();
 					} else {
-						dealsPage.selectPublisherByName(value);
+						targetingPage.selectValueFromDropdown(value);
 					}
 					enteredPublisherName = adspotsPage.publisherNameField.getText();
 					System.out.println("publisher entered as :" + enteredPublisherName);
@@ -189,6 +187,8 @@ public void verifyShowStats(String column, String filter) throws InterruptedExce
 
 	@Then("^Add Advertiser in the general card of Rule$")
 	public void add_Advertiser_in_the_general_card_of_Rule() throws Throwable {
+		wait.until(ExpectedConditions.elementToBeClickable(targetingPage.addTargetingButton));
+		js.executeScript("arguments[0].scrollIntoView()", targetingPage.addTargetingButton);
 		targetingPage.addTargetingButton.click();
 		wait.until(ExpectedConditions.visibilityOf(targetingPage.advertisersPopup));
 		targetingPage.selectAdvertiser("Slotomania™ Vegas Casino Slots");
@@ -284,5 +284,45 @@ public void verifyShowStats(String column, String filter) throws InterruptedExce
 		}
 		Assert.assertEquals(num1,0,num1 +" Inactive Rule is not selected.");
 		Assert.assertEquals(num3,0,num3 +" Active Rule is not selected.");
+	}
+
+	@Then("^Verify the following message is not displayed when the publisher changed for targeting rule$")
+	public void verifyTheFollowingMessageIsNotDisplayedWhenThePublisherChangedForTargetingRule(DataTable dt) {
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		for (int i = 0; i < list.size(); i++) {
+			String expectedMessage = list.get(i).get("Message");
+			System.out.println("Check if Banner Message is displayed >>> "+ expectedMessage);
+			Assert.assertFalse(targetingPage.getElementByXpathWithParameter(targetingPage.changePubBannerMsgXpath, expectedMessage).isDisplayed());
+		}
+	}
+
+	@Then("^Verify the following message is displayed when the publisher changed for targeting rule$")
+	public void verifyTheFollowingMessageIsDisplayedWhenThePublisherChangedForTargetingRule(DataTable dt) {
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		for (int i = 0; i < list.size(); i++) {
+			String expectedMessage = list.get(i).get("Message");
+			System.out.println("Banner Message "+ targetingPage.getChangePublisherBannerMsg());
+			Assert.assertEquals(targetingPage.getChangePublisherBannerMsg(), expectedMessage);
+		}
+	}
+
+	@When("^Close \"([^\"]*)\" Rule page$")
+	public void closeCreateOrEditRulePage(String arg0) {
+		wait.until(ExpectedConditions.elementToBeClickable(targetingPage.closeBtn));
+		targetingPage.closeBtn.click();
+	}
+
+	@When("^Enable \"([^\"]*)\" checkbox in Inventory section$")
+	public void enableCheckboxInInventorySection(String arg0) {
+		if(!targetingPage.getElementByXpathWithParameter(targetingPage.checkboxDivInInventoryXpath, arg0).getAttribute("class").contains("v-item--active")){
+			targetingPage.getElementByXpathWithParameter(targetingPage.checkboxInInventoryXpath, arg0).click();
+		}
+	}
+
+	@And("^Select \"([^\"]*)\" from Protect specific inventory popup$")
+	public void selectFromProtectSpecificInventoryPopup(String arg0) {
+		wait.until(ExpectedConditions.visibilityOf(targetingPage.protectSpecificInventoryPopup));
+		targetingPage.getElementByXpathWithParameter(targetingPage.selectRowValueInProtectSpecificInventoryPopup, arg0).click();
+		wait.until(ExpectedConditions.visibilityOf(targetingPage.getElementByXpathWithParameter(targetingPage.includedValueInProtectSpecificInventoryPopup,arg0)));
 	}
 }
