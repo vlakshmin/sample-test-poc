@@ -102,3 +102,80 @@ Feature: Targeting page regression
       |Activate Rules|
     When Click "Activate Rules" button in Rule list page
     Then "Active" is displayed for the Rule
+
+  Scenario: 140.Verify that Publisher warning banned apears only if any forms were modified on Targeting page
+    Given admin user login to RX UI with valid username and password
+    When Click on Targeting option under Rules
+    Then User displayed with targeting page
+    When Click on the Create Rule button
+    And Enter the following data in the general card of Rule
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viki  |                |
+    And Enter the following data in the general card of Rule
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+    Then Verify the following message is not displayed when the publisher changed for targeting rule
+      | Message                                                                                      |
+      | By Changing the Publisher the form will be reset and the previous changes will no be saved. |
+    When Close "Create" Rule page
+    Then User displayed with targeting page
+    When Click on the Create Rule button
+    And Enter the following data in the general card of Rule
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
+    And Enable "Protect specific inventory" checkbox in Inventory section
+    And Select "Angola" from Protect specific inventory popup
+    And Add Advertiser in the general card of Rule
+    And Enter the following data in the general card of Rule
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viki  |                |
+    Then Verify the following message is displayed when the publisher changed for targeting rule
+      | Message                                                                                      |
+      | By Changing the Publisher the form will be reset and the previous changes will no be saved. |
+    When Select "Accept" on the publisher change banner
+    When Close "Create" Rule page
+    Then User displayed with targeting page
+    When Click on the Create Rule button
+    And Enter the following data in the general card of Rule
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
+    And Enter the following data in the general card of Rule
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viki  |                |
+    Then Verify the following message is displayed when the publisher changed for targeting rule
+      | Message                                                                                      |
+      | By Changing the Publisher the form will be reset and the previous changes will no be saved. |
+    When Select "Accept" on the publisher change banner
+    When Close "Create" Rule page
+    Then User displayed with targeting page
+    When Click on the Create Rule button
+    And Enter the following data in the general card of Rule
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+    And Enable "Protect specific inventory" checkbox in Inventory section
+    And Select "Angola" from Protect specific inventory popup
+    And Enter the following data in the general card of Rule
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viki  |                |
+    Then Verify the following message is displayed when the publisher changed for targeting rule
+      | Message                                                                                      |
+      | By Changing the Publisher the form will be reset and the previous changes will no be saved. |
+    When Select "Accept" on the publisher change banner
+    When Close "Create" Rule page
+    Then User displayed with targeting page
+    When Click on the Create Rule button
+    And Enter the following data in the general card of Rule
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+    And Add Advertiser in the general card of Rule
+    And Enter the following data in the general card of Rule
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viki  |                |
+    Then Verify the following message is displayed when the publisher changed for targeting rule
+      | Message                                                                                      |
+      | By Changing the Publisher the form will be reset and the previous changes will no be saved. |
+    When Select "Accept" on the publisher change banner
+    When Close "Create" Rule page
+    Then User displayed with targeting page
