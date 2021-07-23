@@ -113,7 +113,8 @@ public class RXProtectionsPage extends RXBasePage {
 	}
 
 	public void waitProtectionsTableLoading() {
-		wait.pollingEvery(Duration.ofMillis(250)).until(LoadingDisappear());
+		wait.until(LoadingDisappear());
+//		wait.pollingEvery(Duration.ofMillis(250)).until(LoadingDisappear());
 	}
 
 	private Function<? super WebDriver,Boolean> LoadingDisappear() {

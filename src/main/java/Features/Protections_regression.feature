@@ -27,7 +27,7 @@ Feature: Protections page regression
     Then Verify that default value is 20 items per page
     Then Verify that each items value displayes proper amount of items
     Then Verify that next page/prev page displays proper amount of items
-  
+
   Scenario: 8.Verify pagination on Protections list page for admin
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -356,13 +356,13 @@ Feature: Protections page regression
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Alfonso Armstrong |                |
+      | Publisher Name | Amani Raynor |                |
       | Name           | Test              |                |
     And "Disable" following toggle fields in create page
       | FieldName |
       | Active    |
     And Select targeting options items
-      | Inventory        | supply-chains and Sons Media |
+      | Inventory        | supply-chains LLC Media |
       | Device           | Phone                        |
       | Operating System | Android                      |
       | Geo              | Afghanistan                  |
@@ -375,7 +375,7 @@ Feature: Protections page regression
     When Select "Advertiser" from Add Protections Targeting
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
-      | Publisher Name | ListValue | 2              |
+      | Publisher Name | ListValue | 3              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     Then Verify that all data is reseted
@@ -386,7 +386,7 @@ Feature: Protections page regression
     When Click on Protections option in Menu
     Then User displayed with Protections page
     And Click on the Create Protections button
-    Then Verify that search with "Z" works properly for Publisher dropdown
+    Then Verify that search with "F" works properly for Publisher dropdown
     And Click on the Create Protections button
     Then Verify that search with "Viki" works properly for Publisher dropdown
 
@@ -414,10 +414,10 @@ Feature: Protections page regression
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Alfonso Armstrong |                |
+      | Publisher Name | Amani Raynor |                |
       | Name           | Test              |                |
     And Select targeting options items
-      | Inventory        | supply-chains and Sons Media |
+      | Inventory        | supply-chains LLC Media |
       | Device           | Phone                        |
       | Operating System | Android                      |
       | Geo              | Afghanistan                  |
