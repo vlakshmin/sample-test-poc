@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
 import java.text.ParseException;
@@ -10,6 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -116,7 +118,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 			} else {
 				List<WebElement> coulmnData = navOptions.getColumnDataMatchingHeader(columnName);
 				for (int j = 0; j < coulmnData.size(); j++) {
-					Assert.assertEquals(coulmnData.get(j).getText().trim(), adspotName);
+					Assert.assertTrue(coulmnData.get(j).getText().trim().contains(adspotName));
 				}
 			}
 
@@ -341,11 +343,11 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
-			if(fieldName.contains("Date")) {
-				 expectedNotification = "Start date is required.";
-			}else {
+//			if(fieldName.contains("Date")) {
+//				 expectedNotification = "Start date is required.";
+//			}else {
 			 expectedNotification = "The" + " " + fieldName + " " + "field is required";
-			}
+//			}
 			WebElement notificationMsg = driver.findElement(
 					By.xpath("//div[@class='v-messages__wrapper']/div[text()='" + expectedNotification + "']"));
 			Assert.assertTrue(notificationMsg.isDisplayed());
@@ -1629,5 +1631,58 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 		System.out.println(RXAdspotsPage.getAdSpotTypeEnteredValues());
 		Assert.assertTrue(areEqual(RXAdspotsPage.getAdSpotTypeEnteredValues(), detailsData));
 		adspotsPage.adSpotsSearchField.click();
+	}
+
+	@When("^Click in Floor Price input in \"([^\"]*)\" card$")
+	public void clickInFloorPriceInputInCard(String arg0) throws Throwable {
+		adspotsPage.getElementByXpathString(adspotsPage.floorPriceInputString, arg0).click();
+		adspotsPage.waitFloorPriceInputIsFocusedOrNot(arg0, "yes");
+	}
+
+	@And("^Click outside Floor Price input in \"([^\"]*)\" card$")
+	public void clickOutsideFloorPriceInputInCard(String arg0) throws Throwable {
+		adspotsPage.getElementByXpathString(adspotsPage.cardXpathString, arg0).click();
+		adspotsPage.waitFloorPriceInputIsFocusedOrNot(arg0, "no");
+	}
+
+	@Then("^verify that no error is displayed below Floor Price input in \"([^\"]*)\" card$")
+	public void verifyThatNoErrorIsDisplayedBelowFloorPriceInputInCard(String arg0) throws Throwable {
+		Assert.assertFalse(adspotsPage.isElementPresent(String.format(adspotsPage.floorPriceMsgString,arg0)));
+	}
+
+	@Then("^Verify that specified floor price not duplicated in \"([^\"]*)\" card$")
+	public void verifyThatSpecifiedFloorPriceNotDuplicatedInCard(String arg0) throws Throwable {
+		Assert.assertFalse(adspotsPage.isElementPresent(String.format(adspotsPage.duplicatedFloorPriceString,arg0)));
+	}
+
+	@When("^Click on Ad Spot Name in first row in list view$")
+	public void clickOnAdSpotNameInFirstRowInListView() {
+		WebDriverWait wait = new WebDriverWait(driver, 60);
+		adspotsPage.adSpotNameInFirstRow.click();
+		wait.until(ExpectedConditions.visibilityOf(navOptions.saveButton));
+	}
+
+	@Then("^Verify that Active toggle set to true in Create Ad Spot page$")
+	public void verifyThatActiveToggleSetToTrueInCreateAdSpotPage() {
+		Assert.assertEquals(adspotsPage.activeInput.getAttribute("aria-checked"),"true");
+	}
+
+	@Then("^Verify that Active as a value displayed in Active column for the created adspotname$")
+	public void verifyThatActiveAsAValueDisplayedInActiveColumnForTheCreatedAdspotname() {
+		Assert.assertEquals(adspotsPage.activeInactiveValueInFirstRow.getText().trim(),"Active");
+	}
+
+	@Then("^Verify the error message \"([^\"]*)\" displays below Floor Price in Create Ad Spot page$")
+	public void verifyTheErrorMessageDisplaysBelowFloorPriceInCreateAdSpotPage(String arg0) {
+		String msg = adspotsPage.defaultFloorPriceMsg.getText().trim();
+		System.out.println("adspotsPage.defaultFloorPriceMsg.getText().trim() >>> " + msg);
+		Assert.assertEquals(msg,arg0);
+	}
+
+	@Then("^Verify the error message \"([^\"]*)\" displays below Floor Price in \"([^\"]*)\" card$")
+	public void verifyTheErrorMessageDisplaysBelowFloorPriceInCard(String arg0, String arg1) {
+		String msg = adspotsPage.getElementByXpathString(adspotsPage.floorPriceMsgString, arg1).getText().trim();
+		System.out.println("adspotsPage.getElementByXpathString(adspotsPage.floorPriceMsgString, arg1).getText().trim() >>> " + msg);
+		Assert.assertEquals(msg, arg0);
 	}
 }

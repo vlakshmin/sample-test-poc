@@ -1,23 +1,26 @@
 Feature: Private Auctions page regression
-@Ignore
-  Scenario: Verify the default column names in the private auctions overview page
+
+  Scenario: 248.Verify the default column names in the private auctions overview page
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
     Then Verify the overview page contains following columns
       | ColumnName    |
       | ID            |
+      |Details        |
       | Name          |
       | Publisher     |
       | Optimize      |
       | Active        |
-      | Related Deals |
-@Ignore
-  Scenario: Verify the pagination exists for the list in the private auctions page for admin
+      | Always On |
+ |Start Date  |
+  |End Date             |
+
+  Scenario: 249.Verify the pagination exists for the list in the private auctions page for admin
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-    Then Verify the pagination of the listed rows in the Page with a selection of 50 rows per page with 6 columns
+    Then Verify the pagination of the listed rows in the Page with a selection of 50 rows per page with 9 columns
 
   Scenario: Verify hide/show columns from the table options for admin
     Given admin user login to RX UI with valid username and password
@@ -39,17 +42,14 @@ Feature: Private Auctions page regression
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
     Then Verify the search functionality with the following names
-      | Name      | CoumnName |
-      | reg_test  | Name      |
-      | reg_testa | Name      |
-@Ignore
-  Scenario: Verify enabling and disabling of a private auction from the overview page
+      | Name      | ColumnName |
+      | before  | Name      |
+      | after | Name      |
+
+  Scenario: 253.Verify enabling and disabling of a private auction from the overview page
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
-    Then Verify the search functionality with the following names
-      | Name        | CoumnName |
-      | TestUpdated | Name      |
     Then Verify enabling and disabling of an auction from the overview page
 
   Scenario: Verify sorting of the list's columns of the private auctions overview page
@@ -61,8 +61,8 @@ Feature: Private Auctions page regression
       | ID         | asc      |
       | Publisher  | desc     |
       | Active     | asc      |
-@Ignore
-  Scenario: Verify mandatory fields in the Create private auction Page
+
+  Scenario: 255.Verify mandatory fields in the Create private auction Page
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
@@ -71,6 +71,8 @@ Feature: Private Auctions page regression
     Then Verify following fields are mandatory for create page
       | FieldName      |
       | Publisher Name |
+      | Name       |
+      | Date Range |
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue |              2 |
@@ -79,16 +81,16 @@ Feature: Private Auctions page regression
       | FieldName  |
       | Name       |
       | Date Range |
-@Ignore
-  Scenario: Verify on publisher user login, publisher field is disabled in the Create private auction Page
-    Given Publisher user login to RX UI with valid username and password
+
+  Scenario: 256.Verify on single publisher user login, publisher field is disabled in the Create private auction Page
+    Given Single Publisher user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
     And Click on the Pricate Auction create button
     Then Verify publisher field is disabled on create/edit page
-@Ignore
-  Scenario: Verify select/unselect for targeting options
-    Given Admin user login by entering valid username and password
+
+  Scenario: 257.Verify select/unselect for targeting options
+    Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And Open create New Private Auction page
     And Select publisher for Private Auction
@@ -96,11 +98,11 @@ Feature: Private Auctions page regression
       | Device           | Phone       |
       | Operating System | Android     |
       | Geo              | Afghanistan |
-      | Ad Format        | Audio       |
+      | Ad Format        |  Video       |
       | Ad Size          | 120x60      |
-@Ignore
-  Scenario: Verify select/unselect all for targeting options
-    Given Admin user login by entering valid username and password
+
+  Scenario: 258.Verify select/unselect all for targeting options
+    Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And Open create New Private Auction page
     And Select publisher for Private Auction
@@ -108,11 +110,11 @@ Feature: Private Auctions page regression
       | Device           |
       | Operating System |
       | Geo              |
-      #      | Ad Format        |
+            | Ad Format        |
       | Ad Size          |
-@Ignore
-  Scenario: Verify Search for targeting options
-    Given Admin user login by entering valid username and password
+
+  Scenario: 259.Verify Search for targeting options
+    Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And Open create New Private Auction page
     And Select publisher for Private Auction
@@ -120,10 +122,10 @@ Feature: Private Auctions page regression
       | Device           | Phone       |
       | Operating System | Android     |
       | Geo              | Afghanistan |
-      | Ad Format        | Audio       |
+      | Ad Format        | Video       |
       | Ad Size          | 120x60      |
-@Ignore
-  Scenario: Verify without selecting publisher the card is not enabled to fill in the Create private auction Page
+
+  Scenario: 260.Verify without selecting publisher the card is not enabled to fill in the Create private auction Page
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
@@ -135,8 +137,8 @@ Feature: Private Auctions page regression
       | Active     |
       | Always on  |
       | Optimize   |
-@Ignore
-  Scenario: Verify default values for toggle fields in the Create private auction Page
+
+  Scenario: 261.Verify default values for toggle fields in the Create private auction Page
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
@@ -149,8 +151,8 @@ Feature: Private Auctions page regression
       | Active    | Yes    |
       | Always on | No     |
       | Optimize  | Yes    |
-@Ignore
-  Scenario: Verify Changing publisher name alert the user and then on change every fields go to default state
+
+  Scenario: 262.Verify Changing publisher name alert the user and then on change every fields go to default state
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
@@ -189,8 +191,8 @@ Feature: Private Auctions page regression
       | FieldName  |
       | Name       |
       | Date Range |
-@Ignore
-  Scenario: Verify successful creation of private auction on clicking \Save and close\
+
+  Scenario: 263.Verify successful creation of private auction on clicking \Save and close\
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
@@ -203,8 +205,8 @@ Feature: Private Auctions page regression
     Then Click on Save and wait for dialog to close
     Then Verify the created private auction data is matching with its overview list values
     Then Verify clicking on Create a deal banner opens create deal entity page
-@Ignore
-  Scenario: Verify creation of private auction and navigating to create deal page on clicking \Save and create deal\
+
+  Scenario: 264.Verify creation of private auction and navigating to create deal page on clicking \Save and create deal\
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
@@ -215,8 +217,8 @@ Feature: Private Auctions page regression
       | Name           | Test      |                |
       | Date Range     | Future    |                |
     Then Click on Save Private Auction & Create Deal button and verify create deal page is opened
-@Ignore
-  Scenario: Verify successful editing of private auction
+
+  Scenario: 265.Verify successful editing of private auction
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
     And User displayed with Private Auctions page
@@ -260,7 +262,7 @@ Feature: Private Auctions page regression
     Then Verify that Details display the following data for each targeting
       | Inventory                  | Devices                  | Operating Systems                  | Geos                  | Ad Format                  | Ad Sizes                  |
       | All Inventory are included | All Devices are included | All Operating Systems are included | All Geos are included | All Ad Format are included | All Ad Sizes are included |
-
+  
   Scenario: 41.Verify Details if all targeting have every item included
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales
@@ -282,7 +284,7 @@ Feature: Private Auctions page regression
     When Hover on the Details column of the created private auction data
     Then Verify that Details display the following data for each targeting
       | Inventory                    | Devices | Operating Systems | Geos        | Ad Format | Ad Sizes           |
-      | Viki Android                 | Phone   | Windows           | Afghanistan | Banner    | Financial (120x60) |
+      | Viki Android                 | Phone   | Windows           | Afghanistan | Banner    | 120x60 |
 
   Scenario: 42.Verify Details display properly Inventory parent items
     Given admin user login to RX UI with valid username and password
