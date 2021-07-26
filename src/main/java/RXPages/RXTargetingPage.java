@@ -66,8 +66,8 @@ public class RXTargetingPage extends RXBasePage  {
 	public String checkboxDivInInventoryXpath = "//label[text()='%s']/parent::div";
 	public String selectRowValueInProtectSpecificInventoryPopup = "//tr[@class='select-row'][.//div[@title='%s']]";
 	public String includedValueInProtectSpecificInventoryPopup = "//table[contains(@class,'included-table')][.//div[@title='%s']]";
-	
-	
+	public String createOrEditRuleDialogPopup = "//aside[@class='dialog']";
+	public String editRuleDialogHeader = "//aside[@class='dialog']/header//div[contains(text(),'%s')]";
 	
 	//Action object
 	Actions act = new Actions(driver);

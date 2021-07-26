@@ -226,14 +226,13 @@ public void verifyShowStats(String column, String filter) throws InterruptedExce
 
 	@Then("^Edit Rule pop up is present$")
 	public void edit_Rule_pop_up_is_present() throws Throwable {
-		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
-		wait.until(ExpectedConditions.visibilityOf(driver.findElement(
-				By.xpath("//aside[@class='dialog']/header//div[contains(text(),'" + enteredRuleNameList.get(0) + "')]"))));
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(targetingPage.createOrEditRuleDialogPopup))));
+		wait.until(ExpectedConditions.visibilityOf(targetingPage.getElementByXpathWithParameter(targetingPage.editRuleDialogHeader,enteredRuleNameList.get(0))));
 	}
 
 	@Then("^Verify the edited Rule data is matching with its overview list values$")
 	public void verify_the_edited_Rule_data_is_matching_with_its_overview_list_values() throws Throwable {
-		wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(targetingPage.createOrEditRuleDialogPopup)));
 		String ruleName = "";
 		String enteredName = enteredRuleName.replaceAll("\\s", "");
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.linkText(enteredName))));
