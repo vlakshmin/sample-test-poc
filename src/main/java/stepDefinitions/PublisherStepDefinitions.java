@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -36,12 +36,9 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 	RXNavOptions navOptions;
 	RXAdspotsPage adspotsPage;
 	Logger log = Logger.getLogger(ProfileStepDefinition.class);
-//	 static int rn ;
-	 static String rn ;
-	 static String emailID;
-	 static String webSiteNa;
+	 static String adOpsMail;
 	 static String pubName;
-	 static String saleAcc;
+	 static String adOpsPerson;
 	 static String publisherID;
 	 static ArrayList<WebElement> publist = new ArrayList<WebElement>();
 
@@ -170,14 +167,19 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 				switch (key){
 					case "Publisher Name":
 						pubName = enteredValue + RXUtile.getRandomNumberFourDigit();
+						pubListPgs.publisherNameInput.sendKeys(Keys.CONTROL + "a");
 						pubListPgs.publisherNameInput.sendKeys(pubName);
 						System.out.println("enter publisher name >>> " + pubName);
 						break;
 					case "Ad Ops Person":
+						pubListPgs.adOpsPersonInput.sendKeys(Keys.CONTROL + "a");
 						pubListPgs.adOpsPersonInput.sendKeys(enteredValue);
+						adOpsPerson = enteredValue;
 						break;
 					case "Ad Ops Email":
+						pubListPgs.adOpsEmailInput.sendKeys(Keys.CONTROL + "a");
 						pubListPgs.adOpsEmailInput.sendKeys(enteredValue);
+						adOpsMail = enteredValue;
 						break;
 					case "Currency":
 						wait.until(ExpectedConditions.elementToBeClickable(pubListPgs.currencyDropdown));
@@ -199,11 +201,12 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 						pubListPgs.publisherNameInput.click();
 						break;
 					case "Domain":
+						pubListPgs.domainInput.sendKeys(Keys.CONTROL + "a");
 						pubListPgs.domainInput.sendKeys(enteredValue);
 						break;
 					case "Categories":
 						pubListPgs.categoriesDropdown.click();
-						pubListPgs.getCategoriesDropdownCheckbox(enteredValue).click();
+						pubListPgs.getElementByXpathWithParameter(pubListPgs.categoriesValueString, enteredValue).click();
 						pubListPgs.publisherNameInput.click();
 						break;
 				}
@@ -219,7 +222,7 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 	@Then("^Verify that save publisher is successful$")
 	public void verifyThatSavePublisherIsSuccessful() throws InterruptedException {
 		driverWait().until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(pubListPgs.loadingXpathString)));
-		driverWait().until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.format(pubListPgs.pubNameXpathString,pubName))));
+		driverWait().until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.format(pubListPgs.pubNameLinkStringInPubTable,pubName))));
 	}
 
 	@When("^Select \"([^\"]*)\" publisher in list view$")
@@ -231,8 +234,8 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 				rowNum = j + 1;
 				System.out.println(" row number >>> " + rowNum);
 				if(!pubListPgs.verifyIfCheckboxIsChecked(rowNum)){
-					pubListPgs.getCheckboxInSpecifiedRowInPublishersTable(rowNum).click();
-					pubName = pubListPgs.getPublisherNameElemtByRowNumber(rowNum).getText().trim();
+					pubListPgs.getElementByXpathWithParameter(pubListPgs.checkboxColumnByRowNumber, String.valueOf(rowNum)).click();
+					pubName = pubListPgs.getElementByXpathWithParameter(pubListPgs.pubNameColumnByRowNumber, String.valueOf(rowNum)).getText().trim();
 					break;
 				}
 			}
@@ -285,7 +288,9 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 
 	@When("^Click on the newly created publisher in list view$")
 	public void clickOnTheNewlyCreatedPublisherInListView() {
-		pubListPgs.getPublisherNameLinkByText(pubName).click();
+		publisherID = pubListPgs.getElementByXpathWithParameter(pubListPgs.idColumnByPubName,pubName).getText().trim();
+		System.out.println("publisherID >>> " + publisherID);
+		pubListPgs.getElementByXpathWithParameter(pubListPgs.pubNameLinkStringInPubTable, pubName).click();
 		wait.until(ExpectedConditions.visibilityOf(pubListPgs.savePublisherBtn));
 	}
 
@@ -313,7 +318,7 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 
 	@Then("^Verify that \"([^\"]*)\" as a value displayed in Active column in publisher list view$")
 	public void verifyThatActiveInactiveAsAValueDisplayedInActiveColumnInPublisherListView(String status) {
-		Assert.assertEquals(pubListPgs.getActiveColumnByPublisherName(pubName).getText().trim(), status);
+		Assert.assertEquals(pubListPgs.getElementByXpathWithParameter(pubListPgs.activeColumnStringInPubTable, pubName).getText().trim(), status);
 	}
 
     @Then("^Verify that below errors are displayed near Save Publisher button$")
@@ -350,13 +355,13 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 					rowNum = j + 1;
 					System.out.println(status + " in row number >>> " + rowNum);
 					if(!pubListPgs.verifyIfCheckboxIsChecked(rowNum)){
-						pubListPgs.getCheckboxInSpecifiedRowInPublisherTable(rowNum).click();
-						pubID = pubListPgs.getPubIDElemtByRowNumber(rowNum).getText().trim();
+						pubListPgs.getElementByXpathWithParameter(pubListPgs.checkboxColumnByRowNumber, String.valueOf(rowNum)).click();
+						pubID = pubListPgs.getElementByXpathWithParameter(pubListPgs.idColumnByRowNumber, String.valueOf(rowNum)).getText().trim();
 						if(status.equals("Active")){
-							System.out.println("Store Active publisher ID"  + pubID + " to activePubIDList");
+							System.out.println("Store Active publisher ID "  + pubID + " to activePubIDList");
 							this.activePubIDList.add(pubID);
 						}else{
-							System.out.println("Store Inactive publisher ID"  + pubID +" to inactivePubIDList");
+							System.out.println("Store Inactive publisher ID "  + pubID +" to inactivePubIDList");
 							this.inactivePubIDList.add(pubID);
 						}
 						break;
@@ -385,7 +390,7 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 
 	@When("^Click on \"([^\"]*)\" button in Publisher page$")
 	public void clickOnPublisherButtonInPublisherPage(String arg0) {
-		pubListPgs.getActivateInactivateBtnByName(arg0).click();
+		pubListPgs.getElementByXpathWithParameter(pubListPgs.activateInactivateBtnString, arg0).click();
 		wait.until(ExpectedConditions.visibilityOf(pubListPgs.createPublisherBtn));
 	}
 
@@ -394,13 +399,13 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 		if(status.equals("Inactive")){
 			for(String id : this.inactivePubIDList){
 				System.out.println("Publisher ID >>> " + id);
-				Assert.assertEquals(pubListPgs.getStatusElemtByID(id).getText().trim(), expectedStatus);
+				Assert.assertEquals(pubListPgs.getElementByXpathWithParameter(pubListPgs.statusByIDInPubTable,id).getText().trim(), expectedStatus);
 			}
 			this.inactivePubIDList.clear();
 		}else{
 			for(String id : this.activePubIDList){
 				System.out.println("Publisher ID >>> " + id);
-				Assert.assertEquals(pubListPgs.getStatusElemtByID(id).getText().trim(), expectedStatus);
+				Assert.assertEquals(pubListPgs.getElementByXpathWithParameter(pubListPgs.statusByIDInPubTable,id).getText().trim(), expectedStatus);
 			}
 			this.activePubIDList.clear();
 		}
@@ -422,6 +427,19 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 				}
 				break;
 		}
+	}
+
+    @Then("^Verify following columns are displayed by default in the Publishers overview page$")
+    public void verifyFollowingColumnsAreDisplayedByDefaultInThePublishersOverviewPage(DataTable dt) {
+		getDataFromTable(dt).forEach(e ->
+				Assert.assertTrue(pubListPgs.verifyHeaderDisplayInPublisherOverviewPage(e.getValue())));
+    }
+
+	@Then("^Verify that update was successful for edit publisher$")
+	public void verifyThatUpdateWasSuccessfulForEditPublisher() {
+		Assert.assertEquals(pubListPgs.getElementByXpathWithParameter(pubListPgs.pubNameColumnByID, publisherID).getText().trim(), pubName);
+		Assert.assertEquals(pubListPgs.getElementByXpathWithParameter(pubListPgs.adOpsPersonColumnByID, publisherID).getText().trim(), adOpsPerson);
+		Assert.assertEquals(pubListPgs.getElementByXpathWithParameter(pubListPgs.adOpsMailColumnByID, publisherID).getText().trim(), adOpsMail);
 	}
 }
 
