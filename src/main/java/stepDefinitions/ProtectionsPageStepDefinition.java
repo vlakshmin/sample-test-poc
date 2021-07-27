@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import bsh.CallStack;
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -248,6 +249,12 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	@Then("^Delete \"([^\"]*)\" in Create Protections page$")
 	public void delete_in_Create_Protections_page(String item){
 		wait.until(ExpectedConditions.elementToBeClickable(protectionsPage.getRemoveButton(item))).click();
+//		js.executeScript("arguments[0].click()", protectionsPage.getRemoveButton(item));
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Then("^Verify that each card can be added only one at a time$")
@@ -286,8 +293,13 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 				while (!auctionPage.auctionNameField.getAttribute("value").equals("")) {
 					auctionPage.auctionNameField.sendKeys(Keys.BACK_SPACE);
 				}
-				Calendar cal = Calendar.getInstance();
-				auctionPage.auctionNameField.sendKeys(value + cal.getTimeInMillis());
+				if(value.equals("Long value")){
+					auctionPage.auctionNameField.sendKeys(RandomStringUtils.randomAlphanumeric(255));
+				}else{
+					Calendar cal = Calendar.getInstance();
+					auctionPage.auctionNameField.sendKeys(value + cal.getTimeInMillis());
+				}
+
 				enteredProtectionsName = auctionPage.auctionNameField.getAttribute("value");
 				System.out.println("Entered Auction name:" + enteredProtectionsName);
 				break;

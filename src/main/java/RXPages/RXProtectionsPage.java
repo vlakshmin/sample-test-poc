@@ -264,7 +264,12 @@ public class RXProtectionsPage extends RXBasePage {
 	}
 	
 	public WebElement getRemoveButton(String item) {
-		return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/following-sibling::button"));
+    	if(item.equals("Advertiser")){
+    		return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/parent::div/parent::div/span//button"));
+		}else{
+			return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/following-sibling::button"));
+		}
+
 	}
 
 	public String isInventoryDisplayDefaultValue(String fieldName) {
@@ -292,7 +297,7 @@ public class RXProtectionsPage extends RXBasePage {
 	}
 
 	public WebElement getNameColumn(String enteredProtectionsName) {
-		return driver.findElement(By.linkText(enteredProtectionsName));
+    	return driver.findElement(By.linkText(enteredProtectionsName));
 	}
 
 	public void waitCreateProtectionsClosed() {

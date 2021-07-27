@@ -265,6 +265,9 @@ Feature: Protections page regression
     When Click on Protections option in Menu
     Then User displayed with Protections page
     And Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value             | ListValueIndex |
+      | Publisher Name | Amani Raynor |                |
     And Click Add Protections Targeting button
     Then Verify that following items are present
       | Advertiser  |
@@ -273,13 +276,16 @@ Feature: Protections page regression
     Then tooltip "Block/whitelist advertisers" displays when mouse hovered on "Advertiser"
     Then tooltip "Block/whitelist ads content categories" displays when mouse hovered on "Ad Category"
     Then tooltip "Block all ads from serving" displays when mouse hovered on "All Ads"
-
+  @Ignore
   Scenario: 80.Verify Protection Targeting can be selected All Ads or Advertsier/Ad Category
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
     Then User displayed with Protections page
     And Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value             | ListValueIndex |
+      | Publisher Name | Amani Raynor |                |
     And Click Add Protections Targeting button
     Then Verify that following items are present
       | Advertiser  |
@@ -297,13 +303,16 @@ Feature: Protections page regression
     And Select "All Ads" from Add Protections Targeting
     Then Verify that "Advertiser" is disabled
     Then Verify that "Ad Category" is disabled
-
+  @Ignore
   Scenario: 81.Verify Protection Targeting section elements can be deleted
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
     Then User displayed with Protections page
     And Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value             | ListValueIndex |
+      | Publisher Name | Amani Raynor |                |
     And Click Add Protections Targeting button
     Then Verify that following items are present
       | Advertiser  |
@@ -332,6 +341,9 @@ Feature: Protections page regression
     When Click on Protections option in Menu
     Then User displayed with Protections page
     And Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value             | ListValueIndex |
+      | Publisher Name | Amani Raynor |                |
     And Click Add Protections Targeting button
     Then Verify that following items are present
       | Advertiser  |
@@ -389,8 +401,7 @@ Feature: Protections page regression
     Then Verify that search with "F" works properly for Publisher dropdown
     And Click on the Create Protections button
     Then Verify that search with "Viki" works properly for Publisher dropdown
-
-  @Ignore
+    
   Scenario: 103.Verify Protection entity page name input vorks properly
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -401,8 +412,15 @@ Feature: Protections page regression
     Then Verify that error apear for Name
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Alfonso Armstrong |                |
-      | Name           | Test              |                |
+      | Publisher Name | Amani Raynor |                |
+      | Name           | 1234567              |                |
+    And Click on Save Protection button
+    Then Verify the created Protection data is matching with its overview list values
+    And Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value             | ListValueIndex |
+      | Publisher Name | Amani Raynor |                |
+      | Name           | Long value              |                |
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
 
@@ -508,6 +526,10 @@ Feature: Protections page regression
       | Activate   |
     When Click "Activate" button in Protections list page
     Then "Active" is displayed for the created Protections
+
+  Scenario: 139.Verify that Publisher warning banned apears only if any forms were modified on Protections page
+    Given admin user login to RX UI with valid username and password
+
   @Ignore
   Scenario: 147.Verify that clicking save button triggers dirty flag for Protections
     Given admin user login to RX UI with valid username and password
