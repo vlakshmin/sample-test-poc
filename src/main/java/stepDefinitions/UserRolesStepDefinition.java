@@ -66,7 +66,7 @@ public class UserRolesStepDefinition extends RXBasePage {
     @Then("^Verify all RX publishers are displayed in Publisher Name dropdown$")
     public void verifyAllRXPublishersAreDisplayedInPublisherNameDropdown() {
         userRolesPage.scrollDownInDropdown();
-        Assert.assertTrue(userRolesPage.dropdownValues.size() > 200);
+        Assert.assertTrue(userRolesPage.dropdownValues.size() > 100);
         userRolesPage.clickCloseButton();
     }
 
