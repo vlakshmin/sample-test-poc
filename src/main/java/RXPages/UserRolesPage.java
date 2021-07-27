@@ -54,7 +54,6 @@ public class UserRolesPage extends RXBaseClass {
     public boolean checkIfValueExist(List<WebElement> elementList, String value){
         boolean flag = false;
         for(WebElement element : elementList){
-            System.out.println("element.getText().trim() >>> " + element.getText().trim());
             if(element.getText().trim().equals(value)){
                 flag = true;
                 break;
