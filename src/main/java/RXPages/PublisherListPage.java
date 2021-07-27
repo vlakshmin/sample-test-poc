@@ -43,10 +43,8 @@ public class PublisherListPage extends RXBaseClass {
 	public List<WebElement> statusColumnsPublisherTable;
 	@FindAll(@FindBy(xpath = "//div[contains(@class,'vue-portal-target')]/button/span"))
 	public List<WebElement> buttonsInPubPageHeader;
-
-	String checkboxStringInPublisherable = "//div[@class='v-data-table__wrapper']//tbody/tr[%s]/td[1]/div";
-	String idStringInPublisherTable = "//div[@class='v-data-table__wrapper']//tbody/tr[%s]/td[2]";
-	String statusByIDInPubTable = "//td[text()='%s']/parent::tr/td[5]";
+	@FindAll(@FindBy(xpath = "//div[@class='v-data-table__wrapper']//thead/tr/th"))
+	public List<WebElement> publisherTableHeaders;
 
 	//Edit Publisher
 	@FindBy(css = "div.v-toolbar__title")
@@ -72,8 +70,6 @@ public class PublisherListPage extends RXBaseClass {
 	public WebElement overviewEditbutton;
 	@FindBy(xpath = "//div[contains(@class, 'toast-wrapper')]//a[@class='remove']/i")
 	public WebElement closeToastButton;
-
-	String activateInactivateBtnString = "//span[text()='%s']/parent::button";
 	
 	// Account options
 	@FindBy(xpath = "//div[text()='Publishers']")
@@ -135,21 +131,29 @@ public class PublisherListPage extends RXBaseClass {
 	@FindAll({@FindBy(xpath = "//table/tbody/tr")})
 	public List<WebElement> publishersTableTrElemts;
 
-	String createPubString = "//div[contains(@class,'v-toolbar__title')]/div[contains(text(),'Create Publisher')]";
-	String trStringInPublishersTable = "//table/tbody/tr[%s]";
-	String checkboxStringInPublishersTable = "//table/tbody/tr[%s]/td[1]/div";
-	String pubNameStringInPublisherTable = "//table/tbody/tr[%s]/td[3]";
-	String categoriesValueString = "//div[contains(@class,'category-select-item')]/div/div/div[@class='v-list-item__content' and text()='%s']/preceding-sibling::div/div";
-	String demandSourceItemString = "//div[@role='listbox']/div/div/div[@class='v-list-item__title']";
-	String pubNameLinkStringInPubTable = "//table/tbody/tr/td/a[text()='%s']";
-	String activeColumnStringInPubTable = "//a[text()='%s']/parent::td/following-sibling::td[2]";
+	public String createPubString = "//div[contains(@class,'v-toolbar__title')]/div[contains(text(),'Create Publisher')]";
+	public String trStringInPublishersTable = "//table/tbody/tr[%s]";
+	public String checkboxColumnByRowNumber = "//table/tbody/tr[%s]/td[1]/div";
+	public String pubNameColumnByRowNumber = "//table/tbody/tr[%s]/td[3]";
+	public String categoriesValueString = "//div[contains(@class,'category-select-item')]/div/div/div[@class='v-list-item__content' and text()='%s']/preceding-sibling::div/div";
+	public String demandSourceItemString = "//div[@role='listbox']/div/div/div[@class='v-list-item__title']";
+	public String pubNameLinkStringInPubTable = "//table/tbody/tr/td/a[text()='%s']";
+	public String activeColumnStringInPubTable = "//a[text()='%s']/parent::td/following-sibling::td[2]";
+	public String idColumnByPubName = "//a[text()='%s']/parent::td/preceding-sibling::td[1]";
+	public String pubNameColumnByID = "//td[text()='%s']/following-sibling::td[1]";
+	public String adOpsPersonColumnByID = "//td[text()='%s']/following-sibling::td[6]";
+	public String adOpsMailColumnByID = "//td[text()='%s']/following-sibling::td[7]";
+
+	public String idColumnByRowNumber = "//div[@class='v-data-table__wrapper']//tbody/tr[%s]/td[2]";
+	public String statusByIDInPubTable = "//td[text()='%s']/parent::tr/td[5]";
+
+	public String activateInactivateBtnString = "//span[text()='%s']/parent::button";
 
 	//validation errors
 	@FindBy(css = "div.v-alert__content > div")
 	public WebElement validationErrorsPanel;
 	public String validationErrorsCssPath = "div.v-alert__content > div > ul > li";
 
-	public String pubNameXpathString = "//tbody/tr/td[3]/a[text()='%s']";
 	public String loadingXpathString = "//main//div[@class='container container--fluid']//table/thead[2]";
 
 	// Some declarations
@@ -297,27 +301,8 @@ public class PublisherListPage extends RXBaseClass {
 		return flag;
 	}
 
-	public WebElement getCheckboxInSpecifiedRowInPublishersTable(int rownum){
-		return driver.findElement(By.xpath(String.format(checkboxStringInPublishersTable, rownum)));
-	}
-
-	public WebElement getPublisherNameElemtByRowNumber(int rownum){
-		return driver.findElement(By.xpath(String.format(pubNameStringInPublisherTable, rownum)));
-	}
-
-	public WebElement getPublisherNameLinkByText(String pubName){
-		return driver.findElement(By.xpath(String.format(pubNameLinkStringInPubTable, pubName)));
-	}
-
-	public WebElement getCategoriesDropdownCheckbox(String categoriesName){
-		return driver.findElement(By.xpath(String.format(categoriesValueString, categoriesName)));
-	}
-
 	public List<WebElement> getDemandSourceDropdownItem(){
 		return driver.findElements(By.xpath(demandSourceItemString));
-	}
-	public WebElement getActiveColumnByPublisherName(String pubName){
-		return driver.findElement(By.xpath(String.format(activeColumnStringInPubTable, pubName)));
 	}
 
 	public void scrollDownInDropdown(){
@@ -353,14 +338,6 @@ public class PublisherListPage extends RXBaseClass {
 		return flag;
 	}
 
-	public WebElement getCheckboxInSpecifiedRowInPublisherTable(int rownum){
-		return driver.findElement(By.xpath(String.format(checkboxStringInPublisherable, rownum)));
-	}
-
-	public WebElement getPubIDElemtByRowNumber(int rownum){
-		return driver.findElement(By.xpath(String.format(this.idStringInPublisherTable, rownum)));
-	}
-
 	public boolean verifyButtonDisplaysInHeaderOfMediaPage(String btnName){
 		boolean flag = false;
 		String button;
@@ -376,11 +353,22 @@ public class PublisherListPage extends RXBaseClass {
 		return  flag;
 	}
 
-	public WebElement getStatusElemtByID(String id) {
-		return driver.findElement(By.xpath(String.format(this.statusByIDInPubTable, id)));
+	public boolean verifyHeaderDisplayInPublisherOverviewPage(String expectedHeader){
+		boolean flag = false;
+		String actualHeader = "";
+		System.out.println("Check if expected header exists ==== " + expectedHeader);
+		for(WebElement headerElemt : this.publisherTableHeaders){
+			actualHeader = headerElemt.getText().trim();
+			System.out.println("headerElemt.getText().trim() >>> " + actualHeader);
+			if(expectedHeader.equals(actualHeader)){
+				flag = true;
+				break;
+			}
+		}
+		return flag;
 	}
 
-	public WebElement getActivateInactivateBtnByName(String name) {
-		return driver.findElement(By.xpath(String.format(this.activateInactivateBtnString, name)));
+	public WebElement getElementByXpathWithParameter(String xpath, String parameter) {
+		return driver.findElement(By.xpath(String.format(xpath, parameter)));
 	}
 }

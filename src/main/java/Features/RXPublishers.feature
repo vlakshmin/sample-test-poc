@@ -1,10 +1,10 @@
 Feature: RX Publisher page Validation
 
-  Scenario: Verify if an admin user will be able to login with a valid username and valid password
+  Scenario: 280.Verify the pagination exists for the list in the Publisher page for admin
     Given Admin user click on Login by entering valid username and password
     When Click on publisher option under Admin
     Then Publisher page should be displayed
-    Then Verify the pagination of the listed rows in the Page with a selection of 10 rows per page with 8 columns
+    Then Verify the pagination of the listed rows in the Page with a selection of 50 rows per page with 8 columns
 
   Scenario: 204. Verify that multiple demand sources can be added to publisher while creating publisher
     Given Admin user click on Login by entering valid username and password
@@ -133,6 +133,13 @@ Feature: RX Publisher page Validation
     When Close Edit Publisher page
     When Click on "Activate Publisher" button in Publisher page
     Then Verify the selected "Inactive" publisher change to "Active" status in Publisher list view
+    When Select "2" "Active" publisher in list view
+    Then Verify the following buttons are present in Publisher page
+      | Button                |
+      | Activate Publishers   |
+      | Deactivate Publishers |
+    When Click on "Deactivate Publishers" button in Publisher page
+    Then Verify the selected "Active" publisher change to "Inactive" status in Publisher list view
     When Select "1" "Active" publisher in list view
     When Select "1" "Inactive" publisher in list view
     Then Verify the following buttons are present in Publisher page
@@ -151,13 +158,6 @@ Feature: RX Publisher page Validation
     When Click on "Activate Publishers" button in Publisher page
     Then Verify the selected "Active" publisher change to "Active" status in Publisher list view
     Then Verify the selected "Inactive" publisher change to "Active" status in Publisher list view
-    When Select "2" "Active" publisher in list view
-    Then Verify the following buttons are present in Publisher page
-      | Button                |
-      | Activate Publishers   |
-      | Deactivate Publishers |
-    When Click on "Deactivate Publishers" button in Publisher page
-    Then Verify the selected "Active" publisher change to "Inactive" status in Publisher list view
     When Select "2" "Inactive" publisher in list view
     Then Verify the following buttons are present in Publisher page
       | Button                |
@@ -184,3 +184,63 @@ Feature: RX Publisher page Validation
     And Click on Save Publisher button
     Then Verify that save publisher is successful
     And Verify that "Active" as a value displayed in Active column in publisher list view
+
+  Scenario: 279. Verify the default column names in the Publisher overview page
+    Given Admin user click on Login by entering valid username and password
+    When Click on publisher option under Admin
+    Then Publisher page should be displayed
+    Then Verify following columns are displayed by default in the Publishers overview page
+      | Columns       |
+      | ID            |
+      | Publisher     |
+      | Category      |
+      | Active        |
+      | Domain        |
+      | Currency      |
+      | Ad Ops Person |
+      | Mail          |
+
+  Scenario: 281. Verify hide/show columns from the table options for admin
+    Given Admin user click on Login by entering valid username and password
+    When Click on publisher option under Admin
+    Then Publisher page should be displayed
+    And User click on table options button
+    Then Verify that column "Mail" can be hidden and shown
+    Then Verify that column "Domain" can be hidden and shown
+
+  Scenario: 282. Verify searching Publisher with available and non available Publisher name
+    Given Admin user click on Login by entering valid username and password
+    When Click on publisher option under Admin
+    Then Publisher page should be displayed
+    Then Verify the search functionality with the following names
+      | Name  | ColumnName |
+      | Frank | Publisher  |
+      | abc   | Publisher  |
+
+  Scenario: 284. Verify sorting of the list's columns of the Publisher overview page
+    Given Admin user click on Login by entering valid username and password
+    When Click on publisher option under Admin
+    Then Publisher page should be displayed
+    Then Verify the sorting functionality with the following columns
+      | ColumnName | SortType |
+      | ID         | asc      |
+      | Publisher  | desc     |
+      | Mail       | asc      |
+
+  Scenario: 287. Verify successful editing of Publisher
+    Given Admin user click on Login by entering valid username and password
+    When Click on publisher option under Admin
+    Then Publisher page should be displayed
+    When Click on Create Publisher button
+    And Enter the following values in Create Publisher page
+      | Publisher Name    | Ad Ops Person  | Ad Ops Email               | Currency      |
+      | TestAutoPublisher | Test Publisher | TestAutoPublisher@test.com | USD - Dollars |
+    And Click on Save Publisher button
+    Then Verify that save publisher is successful
+    When Click on the newly created publisher in list view
+    And Enter the following values in Create Publisher page
+      | Publisher Name     | Ad Ops Person  | Ad Ops Email                |
+      | TestAutoPub_update | TestPub_update | TestAutoPub_update@test.com |
+    And Click on Save Publisher button
+    Then Verify that save publisher is successful
+    Then Verify that update was successful for edit publisher

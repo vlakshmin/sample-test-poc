@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import RXBaseClass.RXBaseClass;
 import RXUtitities.RXUtile;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -24,6 +23,12 @@ public class RXDealsPage extends RXBasePage {
 	@FindBy(xpath = "//h1[text()='Deals']")
 	WebElement dealsPageHeader;
 
+	//Edit deal
+	@FindBy(css = "div.v-toolbar__title")
+	public WebElement pageTitle;
+	@FindBy(xpath = "//aside/header/div/button")
+	public WebElement closeBtn;
+
 	// overview buttons
 	@FindBy(xpath = "//button/span[text()='Edit Deal']")
 	public WebElement overviewEditbutton;
@@ -33,8 +38,14 @@ public class RXDealsPage extends RXBasePage {
 	public WebElement overviewEnablebutton;
 	@FindBy(xpath = "//div[@class='portal vue-portal-target']")
 	public WebElement overviewButtons;
+	@FindAll(@FindBy(xpath = "//div[contains(@class,'vue-portal-target')]/button/span"))
+	public List<WebElement> buttonsInPageHeader;
+	@FindBy(xpath = "//button/span[text()='Deactivate Deals']")
+	public WebElement deactivateDealsbutton;
+	@FindBy(xpath = "//button/span[text()='Activate Deals']")
+	public WebElement activateDealsbutton;
 
-	@FindBy(xpath = "//i[contains(@class,'newspaper')]/parent::span")
+	@FindBy(xpath = "//button[.//span[text()='Create Deal']]")
 	public WebElement createDealButton;
 	@FindBy(xpath = "//div[contains(@class,'hidden') and contains(.,'Edit')]")
 	private WebElement editDealMenuHeader;
@@ -89,6 +100,12 @@ public class RXDealsPage extends RXBasePage {
 	public WebElement dateRange;
 	@FindBy(xpath = "//label[text()='Date Range']/parent::div/parent::div/following-sibling::div/div/div/div" )
 	public WebElement dateRangeErrorMsg;
+	@FindBy(xpath = "//div[contains(@class,'v-date-picker-table')]/table" )
+	public WebElement dateRangePickerTable;
+	@FindBy(xpath = "//td/button[contains(@class,'light-blue--text')]" )
+	public WebElement dateRangeHighlightDate;
+	@FindBy(xpath = "//td[.//button[contains(@class,'light-blue')]]/following-sibling::td[1]/button" )
+	public WebElement dateRangeNextToHighlightDate;
 	@FindBy(xpath = "//aside[@class='dialog']//div[@class='v-toolbar__title']/div" )
 	public WebElement dealHeaderName;
 	@FindBy(xpath = "//label[text()='Currency']/following-sibling::div/div" ) 
@@ -195,6 +212,8 @@ public class RXDealsPage extends RXBasePage {
 	public WebElement dealNameInListview;
 	@FindAll(@FindBy(xpath = "//table/tbody/tr/td[10]"))
 	public List<WebElement> currencyColumnList;
+	@FindAll(@FindBy(xpath = "//tbody/tr/td[7]"))
+	public List<WebElement> statusColumnsInDealsList;
 
 	//validation errors
 	@FindBy(css = "div.v-alert__content > div")
@@ -231,11 +250,18 @@ public class RXDealsPage extends RXBasePage {
 	public String buyerDSPPanel="(//ancestor::div[2]//div[contains(@class,'cardPadding')])";
 	public String buyerEnableDisable="(//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input'])";
 	public String buyerDelete="(//button[contains(@class,'alignRight')]/span)";
-	public String dSPEnable="(//ancestor::div[2]//div[contains(@class,'cardPadding')]//div[contains(@class,'v-input--is-label-active')]//input)";
+	public String dSPEnable="(//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']//input[@aria-checked='true'])";
 	public String dSPDisable="(//label[text()='Enabled']/preceding-sibling::div[@class='v-input--selection-controls__input']//input[@aria-checked='false'])";
 
 	public String currencyOptionString = "//div[@class='v-list-item__content']/div[text()='%s']";
 	public String dealNameColumnString = "//table/tbody/tr[%s]/td[4]/a";
+	public String trByRowNumberInDealsList = "//table/tbody/tr[%s]";
+	public String checkboxByRowNum = "//tbody/tr[%s]/td[1]/div";
+	public String idByRowNumber = "//tbody/tr[%s]/td[2]";
+	public String statusByID = "//td[text()='%s']/parent::tr/td[7]";
+
+	public String dropdownDivXpath = "//div[contains(@class,'menuable__content__active')]";
+	public String changePubBannerMsgXpath = "//div[contains(@class,'v-banner__text') and contains(text(),'%s')]";
 
 	// Action object
 	Actions act = new Actions(driver);
@@ -304,9 +330,9 @@ public class RXDealsPage extends RXBasePage {
 	}
 
 	public void clickCreateDealButton() {
-		wait.until(visibilityOf(createDealButton));
+		wait.until(ExpectedConditions.visibilityOf(createDealButton));
 		createDealButton.click();
-		wait.until(visibilityOf(createDealMenuHeader));
+		wait.until(ExpectedConditions.visibilityOf(createDealMenuHeader));
 	}
 	public void enterFloorPrice(int amount) {
 		floorPriceField.findElement(By.xpath(".//input")).sendKeys(String.valueOf(amount));
@@ -350,6 +376,7 @@ public class RXDealsPage extends RXBasePage {
 
 	public void selectPublisherByName(String name) throws Throwable {
 		selectValueFromDropdown(name);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(this.dropdownDivXpath)));
 	}
 
 	public String getCurrencyText () {
@@ -632,7 +659,6 @@ public class RXDealsPage extends RXBasePage {
 	public void clickAddMoreSeats() 
 	{
 		wait.until(ExpectedConditions.elementToBeClickable(addMoreSeats));
-		System.out.println("Inner Side Count time" + 1);
 		addMoreSeats.click();
 	}
 
@@ -705,5 +731,34 @@ public class RXDealsPage extends RXBasePage {
 
 	public WebElement getDealNameColumnLink(int rownum){
 		return driver.findElement(By.xpath(String.format(dealNameColumnString, rownum)));
+	}
+
+	public boolean verifyIfCheckboxIsChecked(int rowNum){
+		boolean flag = false;
+		String classAttr = driver.findElement(By.xpath(String.format(trByRowNumberInDealsList, rowNum))).getAttribute("class");
+		System.out.println("tr class atrribute >>> " + classAttr);
+		if(classAttr.contains("selected")){
+			flag = true;
+		}
+		return flag;
+	}
+
+	public WebElement getElementByXpathWithParameter(String xpath, String parameter){
+		return driver.findElement(By.xpath(String.format(xpath, parameter)));
+	}
+
+	public boolean verifyButtonDisplaysInPageHeader(String btnName){
+		boolean flag = false;
+		String button;
+		System.out.println("Check if button exist >>> " + btnName);
+		for(WebElement btnElemt : this.buttonsInPageHeader){
+			button = btnElemt.getText().trim();
+			System.out.println("btnElemt.getText().trim() >>> " + button);
+			if(button.equalsIgnoreCase(btnName)){
+				flag = true;
+				break;
+			}
+		}
+		return  flag;
 	}
 }
