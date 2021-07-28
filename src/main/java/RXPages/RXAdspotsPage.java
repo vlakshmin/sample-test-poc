@@ -177,6 +177,7 @@ public class RXAdspotsPage extends RXBasePage {
 	public String floorPriceMsgString = "//div[text()='%s']/parent::div/following-sibling::span//label[contains(text(),'Floor Price')]/parent::div/parent::div/following-sibling::div//div[contains(@class,'v-messages__wrapper')]/div[contains(@class,'v-messages__message')]";
 	public String cardXpathString = "//div[text()='%s']";
 	public String duplicatedFloorPriceString = "//div[text()='%s']/parent::div/following-sibling::span//label[contains(text(),'Floor Price')]/preceding-sibling::div";
+	public String createOrEditPopup = "//aside[@class='dialog']";
 
 	// Action object
 	Actions act = new Actions(driver);

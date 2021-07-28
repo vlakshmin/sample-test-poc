@@ -1002,7 +1002,7 @@ Feature: Adspots page regression
       Then Verify that Active toggle set to true in Create Ad Spot page
       Then Enter the following data in the general card of adspot
         | FieldName           | Value       | ListValueIndex |
-        | Publisher Name      | Alena Grant |                |
+        | Publisher Name      | Viber       |                |
         | Ad Spot Name        | Auto_Test   |                |
         | Related Media       | ListValue   | 1              |
         | Position            | ListValue   | 2              |
