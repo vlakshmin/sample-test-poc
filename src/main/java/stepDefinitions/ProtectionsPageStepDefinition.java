@@ -213,7 +213,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	
 	@When("^Click Add Protections Targeting button$")
 	public void click_Add_Protections_Targeting_button(){
-		protectionsPage.addProtectionsTargetingButton.click();
+		wait.until(ExpectedConditions.elementToBeClickable(protectionsPage.addProtectionsTargetingButton)).click();
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@role='menu']"))));
 	}
 
@@ -249,12 +249,6 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	@Then("^Delete \"([^\"]*)\" in Create Protections page$")
 	public void delete_in_Create_Protections_page(String item){
 		wait.until(ExpectedConditions.elementToBeClickable(protectionsPage.getRemoveButton(item))).click();
-//		js.executeScript("arguments[0].click()", protectionsPage.getRemoveButton(item));
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Then("^Verify that each card can be added only one at a time$")
@@ -264,7 +258,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	
 	@Then("^Enter the following data in the Create Protections page$")
 	public void enterGenaralCardProtections(DataTable dt) throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
+
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -284,9 +278,10 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 				} else {
 					dealsPage.selectPublisherByName(value);
 				}
-				Thread.sleep(5000);
+
 				enteredPublisherName = adspotsPage.publisherNameField.getText();
 				System.out.println("publisher entered as :" + enteredPublisherName);
+				protectionsPage.waitPublisherNameLoading();
 				wait.until(ExpectedConditions.visibilityOf(auctionPage.auctionNameField));
 				break;
 			case "Name":
@@ -396,7 +391,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	public void click_button_in_Protections_list_page(String buttonName){
 		protectionsPage.toolbarButton(buttonName).click();
 		if(!buttonName.equals("Edit Protections")) {
-			WebDriverWait wait = new WebDriverWait(driver, 30);
+
 //			wait.until(ExpectedConditions.invisibilityOf(protectionsPage.toolbarButton(buttonName)));
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//span[contains(text() , '" + buttonName + "')]/parent::button")));
 		}
@@ -404,7 +399,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 
 	@Then("^Edit Protections pop up is present$")
 	public void edit_Protections_pop_up_is_present() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(
 				By.xpath("//aside[@class='dialog']/header//div[contains(text(),'" + enteredProtectionsNameList.get(0) + "')]"))));
@@ -453,5 +448,12 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	@Then("^Click on the Create Protections button$")
 	public void click_on_the_following_create_button() throws Throwable {
 		createButtonClick("Create Protections");
+	}
+
+	@Then("^Verify that warning banner is not displayed under Publisher name$")
+	public void verify_that_warning_banner_is_not_displayed_under_Publisher_name() throws Throwable {
+		wait.until(
+				ExpectedConditions.invisibilityOf(auctionPage.warningBannerUnderPublishername));
+//		Assert.assertTrue(auctionPage.warningBannerUnderPublishername.isDisplayed());
 	}
 }

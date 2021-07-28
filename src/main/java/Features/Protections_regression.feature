@@ -276,7 +276,7 @@ Feature: Protections page regression
     Then tooltip "Block/whitelist advertisers" displays when mouse hovered on "Advertiser"
     Then tooltip "Block/whitelist ads content categories" displays when mouse hovered on "Ad Category"
     Then tooltip "Block all ads from serving" displays when mouse hovered on "All Ads"
-  @Ignore
+
   Scenario: 80.Verify Protection Targeting can be selected All Ads or Advertsier/Ad Category
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -303,7 +303,7 @@ Feature: Protections page regression
     And Select "All Ads" from Add Protections Targeting
     Then Verify that "Advertiser" is disabled
     Then Verify that "Ad Category" is disabled
-  @Ignore
+
   Scenario: 81.Verify Protection Targeting section elements can be deleted
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -401,7 +401,7 @@ Feature: Protections page regression
     Then Verify that search with "F" works properly for Publisher dropdown
     And Click on the Create Protections button
     Then Verify that search with "Viki" works properly for Publisher dropdown
-    
+
   Scenario: 103.Verify Protection entity page name input vorks properly
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -526,10 +526,97 @@ Feature: Protections page regression
       | Activate   |
     When Click "Activate" button in Protections list page
     Then "Active" is displayed for the created Protections
-
+  @Ignore
   Scenario: 139.Verify that Publisher warning banned apears only if any forms were modified on Protections page
     Given admin user login to RX UI with valid username and password
-
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue | 1              |
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue | 2              |
+    Then Verify that warning banner is not displayed under Publisher name
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value             | ListValueIndex |
+      | Publisher Name | Amani Raynor |                |
+      | Name           | Test              |                |
+    And "Disable" following toggle fields in create page
+      | FieldName |
+      | Active    |
+    And Select targeting options items
+      | Inventory        | supply-chains LLC Media |
+      | Device           | Phone                        |
+      | Operating System | Android                      |
+      | Geo              | Afghanistan                  |
+      | Ad Size          | 120x60                       |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue | 3              |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+#    Then Verify that all data is reseted
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value             | ListValueIndex |
+      | Name           | Test              |                |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue | 4              |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+#    Then Verify that all data is reseted
+    And "Disable" following toggle fields in create page
+      | FieldName |
+      | Active    |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue | 1              |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+#    Then Verify that all data is reseted
+    And Select targeting options items
+      | Inventory        | supply-chains LLC Media |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue | 2              |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+#    Then Verify that all data is reseted
+    And Select targeting options items
+      | Device           | Phone                        |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue | 3              |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+#    Then Verify that all data is reseted
+    And Select targeting options items
+      | Operating System | Android                      |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue | 4              |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+#    Then Verify that all data is reseted
+    And Select targeting options items
+      | Geo              | Afghanistan                  |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue | 1              |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+#    Then Verify that all data is reseted
+    And Select targeting options items
+      | Ad Size          | 120x60                       |
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue | 2              |
+    Then Verify that warning banner is under Publisher name
+    And Select "Accept" on the publisher change banner
+#    Then Verify that all data is reseted
   @Ignore
   Scenario: 147.Verify that clicking save button triggers dirty flag for Protections
     Given admin user login to RX UI with valid username and password

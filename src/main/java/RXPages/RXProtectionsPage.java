@@ -42,7 +42,7 @@ public class RXProtectionsPage extends RXBasePage {
     public WebElement protectionsSearchButton;
     
 //    @FindBy(xpath = "//*[@class='v-data-table_progress']")
-    @FindBy(xpath = "//main//div[@class='container container--fluid']//table/thead[2]")
+    @FindBy(xpath = "//main//div[@class='container container--fluid']//table//tr[@class='v-data-table__progress']")
     public WebElement protectionsSearchProgress;
     
     @FindBy(xpath = "//main//div[@class='container container--fluid']//table/tbody/tr")
@@ -127,7 +127,9 @@ public class RXProtectionsPage extends RXBasePage {
 	}
 
 	public void waitAllProtectionsItemsLoading() {
-		wait.pollingEvery(Duration.ofMillis(250)).until(AllProtectionsItemsLoading());
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//main//div[@class='container container--fluid']//table//tr[@class='v-data-table__progress']")));
+//		wait.pollingEvery(Duration.ofMillis(250)).until(AllProtectionsItemsLoading());
+
 	}
 
 	private Function<? super WebDriver,Boolean> AllProtectionsItemsLoading() {
@@ -264,12 +266,7 @@ public class RXProtectionsPage extends RXBasePage {
 	}
 	
 	public WebElement getRemoveButton(String item) {
-    	if(item.equals("Advertiser")){
-    		return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/parent::div/parent::div/span//button"));
-		}else{
-			return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/following-sibling::button"));
-		}
-
+    	return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/following-sibling::button"));
 	}
 
 	public String isInventoryDisplayDefaultValue(String fieldName) {
@@ -326,5 +323,9 @@ public class RXProtectionsPage extends RXBasePage {
 	public WebElement protectionsActive(int k) {
 		return driver
 				.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+k+"]/td[5]"));
+	}
+
+	public void waitPublisherNameLoading() {
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//aside//div[@class='content']//div[@class='v-overlay__content']")));
 	}
 }
