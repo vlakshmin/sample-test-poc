@@ -52,7 +52,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		auctionPage = new RXPrivateAuctionsPage();
 	}
 	
-	WebDriverWait wait = new WebDriverWait(driver, 10);
+	WebDriverWait wait = new WebDriverWait(driver, 20);
 	
 	JavascriptExecutor js = (JavascriptExecutor) driver;
 	
