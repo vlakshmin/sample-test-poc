@@ -111,6 +111,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 			adspotsPage.searchAdspots(adspotName);
 			waitForPageLoaderToDisappear();
 			WebElement elem = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]"));
+			System.out.println("elem.getText() >>> " + elem.getText());
 			if (elem.getText().equals("No data available")) {
 				log.info("The searched adspot named as " + adspotName + "is not available");
 				Assert.assertTrue(true,
@@ -118,6 +119,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 			} else {
 				List<WebElement> coulmnData = navOptions.getColumnDataMatchingHeader(columnName);
 				for (int j = 0; j < coulmnData.size(); j++) {
+					System.out.println("coulmnData.get(j).getText() >>> " + coulmnData.get(j).getText());
 					Assert.assertTrue(coulmnData.get(j).getText().trim().contains(adspotName));
 				}
 			}
