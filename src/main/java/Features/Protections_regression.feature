@@ -526,7 +526,7 @@ Feature: Protections page regression
       | Activate   |
     When Click "Activate" button in Protections list page
     Then "Active" is displayed for the created Protections
-  @Ignore
+
   Scenario: 139.Verify that Publisher warning banned apears only if any forms were modified on Protections page
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -558,16 +558,24 @@ Feature: Protections page regression
       | Publisher Name | ListValue | 3              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
-#    Then Verify that all data is reseted
+    When Close Create Protections page
+    Then User displayed with Protections page
+    And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
+      | Publisher Name | ListValue | 3              |
       | Name           | Test              |                |
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 4              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
-#    Then Verify that all data is reseted
+    When Close Create Protections page
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue | 4              |
     And "Disable" following toggle fields in create page
       | FieldName |
       | Active    |
@@ -576,7 +584,12 @@ Feature: Protections page regression
       | Publisher Name | ListValue | 1              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
-#    Then Verify that all data is reseted
+    When Close Create Protections page
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | Amani Raynor |                |
     And Select targeting options items
       | Inventory        | supply-chains LLC Media |
     And Enter the following data in the general card of private auction
@@ -584,7 +597,12 @@ Feature: Protections page regression
       | Publisher Name | ListValue | 2              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
-#    Then Verify that all data is reseted
+    When Close Create Protections page
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue | 4              |
     And Select targeting options items
       | Device           | Phone                        |
     And Enter the following data in the general card of private auction
@@ -592,15 +610,25 @@ Feature: Protections page regression
       | Publisher Name | ListValue | 3              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
-#    Then Verify that all data is reseted
+    When Close Create Protections page
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue | 4              |
     And Select targeting options items
       | Operating System | Android                      |
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
-      | Publisher Name | ListValue | 4              |
+      | Publisher Name | ListValue | 3              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
-#    Then Verify that all data is reseted
+    When Close Create Protections page
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue | 4              |
     And Select targeting options items
       | Geo              | Afghanistan                  |
     And Enter the following data in the general card of private auction
@@ -608,7 +636,12 @@ Feature: Protections page regression
       | Publisher Name | ListValue | 1              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
-#    Then Verify that all data is reseted
+    When Close Create Protections page
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | ListValue | 4              |
     And Select targeting options items
       | Ad Size          | 120x60                       |
     And Enter the following data in the general card of private auction
@@ -616,7 +649,6 @@ Feature: Protections page regression
       | Publisher Name | ListValue | 2              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
-#    Then Verify that all data is reseted
   @Ignore
   Scenario: 147.Verify that clicking save button triggers dirty flag for Protections
     Given admin user login to RX UI with valid username and password

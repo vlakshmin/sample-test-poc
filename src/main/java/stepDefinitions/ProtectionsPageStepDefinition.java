@@ -258,7 +258,6 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	
 	@Then("^Enter the following data in the Create Protections page$")
 	public void enterGenaralCardProtections(DataTable dt) throws Throwable {
-
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -266,13 +265,10 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 			String listValueIndex = list.get(i).get("ListValueIndex");
 			switch (fieldName) {
 			case "Publisher Name":
-//				WebElement dropDownPublisher;
 				wait.until(ExpectedConditions.visibilityOf(adspotsPage.publisherNameDropDown));
 				adspotsPage.publisherNameDropDown.click();
 				if (value.equalsIgnoreCase("ListValue")) {
 					wait.until(ExpectedConditions.visibilityOf(protectionsPage.dropDownPublisher(listValueIndex)));
-//					dropDownPublisher = driver
-//							.findElement(By.xpath("//div[@role='listbox']/div[" + listValueIndex + "]"));
 					js.executeScript("arguments[0].scrollIntoView()", protectionsPage.dropDownPublisher(listValueIndex));
 					protectionsPage.dropDownPublisher(listValueIndex).click();
 				} else {
@@ -391,15 +387,12 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	public void click_button_in_Protections_list_page(String buttonName){
 		protectionsPage.toolbarButton(buttonName).click();
 		if(!buttonName.equals("Edit Protections")) {
-
-//			wait.until(ExpectedConditions.invisibilityOf(protectionsPage.toolbarButton(buttonName)));
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//span[contains(text() , '" + buttonName + "')]/parent::button")));
 		}
 	}
 
 	@Then("^Edit Protections pop up is present$")
 	public void edit_Protections_pop_up_is_present() {
-
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(
 				By.xpath("//aside[@class='dialog']/header//div[contains(text(),'" + enteredProtectionsNameList.get(0) + "')]"))));
@@ -454,6 +447,11 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	public void verify_that_warning_banner_is_not_displayed_under_Publisher_name() throws Throwable {
 		wait.until(
 				ExpectedConditions.invisibilityOf(auctionPage.warningBannerUnderPublishername));
-//		Assert.assertTrue(auctionPage.warningBannerUnderPublishername.isDisplayed());
+	}
+
+	@When("^Close Create Protections page$")
+	public void close_Create_Protections_page() throws Throwable {
+		protectionsPage.protectionsCloseSideDialog.click();
+		protectionsPage.waitCreateProtectionsClosed();
 	}
 }
