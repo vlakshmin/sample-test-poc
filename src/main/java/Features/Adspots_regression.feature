@@ -47,7 +47,7 @@ Feature: Adspots page regression
     Then Verify the search functionality with the following names
       | Name        | ColumnName   |
       | Top Banner  | Ad Spot Name |
-      | ADP plum    | Ad Spot Name |
+      | zoo test    | Ad Spot Name |
 
 
   Scenario:  Verify enabling and disabling of an adspot from the overview page
@@ -426,13 +426,13 @@ Feature: Adspots page regression
       | Default Floor Price | 10              |                |
     And Click on save button and wait for dialog to close
     Then Verify the created adspot data is matching with its overview list values
-    And Click on publisher option under account
-#    And Click on publisher option from left menu
+    And Click on publisher option under Admin
     And Publisher page should be displayed
     Then Verify the search functionality with the following names
       | Name            | ColumnName |
       | RakutenTV       | Publisher  |
-    And "Disable" a publisher from the publisher overview page
+    When Select "1" publisher in list view
+    And Click on "Deactivate Publisher" button in Publisher page
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
     And Click on the created adspotname in the overview page
@@ -444,13 +444,14 @@ Feature: Adspots page regression
     And Close toast message
     And Close Adspot entity page
     And User displayed with Adspots page
-    And Click on publisher option under account
+    And Click on publisher option under Admin
 #    And Click on publisher option from left menu
     And Publisher page should be displayed
     Then Verify the search functionality with the following names
       | Name            | ColumnName |
       | RakutenTV       | Publisher  |
-    And "Enable" a publisher from the publisher overview page
+    When Select "1" publisher in list view
+    And Click on "Activate Publisher" button in Publisher page
 
 
   Scenario: Verify creation of adspot is successful if the related media is disabled
@@ -1002,7 +1003,7 @@ Feature: Adspots page regression
       Then Verify that Active toggle set to true in Create Ad Spot page
       Then Enter the following data in the general card of adspot
         | FieldName           | Value       | ListValueIndex |
-        | Publisher Name      | Alena Grant |                |
+        | Publisher Name      | Viber       |                |
         | Ad Spot Name        | Auto_Test   |                |
         | Related Media       | ListValue   | 1              |
         | Position            | ListValue   | 2              |
@@ -1019,9 +1020,9 @@ Feature: Adspots page regression
     And User displayed with Adspots page
     When Click on the Adspot create button
     Then Enter the following data in the general card of adspot
-      | FieldName           | Value       | ListValueIndex |
-      | Publisher Name      | Alena Grant |                |
-      | Default Floor Price | 1234567     |                |
+      | FieldName           | Value   | ListValueIndex |
+      | Publisher Name      | Viber   |                |
+      | Default Floor Price | 1234567 |                |
     Then Verify the error message "A valid price is between 0.00 and 999,999.99" displays below Floor Price in Create Ad Spot page
 
   Scenario: 218.Verify Floor Price limits for Adspot Native/Banner/Video

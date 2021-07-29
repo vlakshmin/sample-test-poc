@@ -407,9 +407,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 		WebDriverWait wait = new WebDriverWait(driver, 45);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.saveButton));
 		navOptions.saveButton.click();
-		wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
-		Thread.sleep(5000);
-
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(adspotsPage.createOrEditPopup)));
 	}
 
 	@When("^Select publisher name from the dropdown list item index (.*)$")
