@@ -649,18 +649,4 @@ Feature: Protections page regression
       | Publisher Name | ListValue | 2              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
-  @Ignore
-  Scenario: 147.Verify that clicking save button triggers dirty flag for Protections
-    Given admin user login to RX UI with valid username and password
-    Then Protections is present in the left nav menu
-    When Click on Protections option in Menu
-    Then User displayed with Protections page
-    And Click on the Create Protections button
-    And Enter the following data in the Create Protections page
-      | FieldName      | Value     | ListValueIndex |
-      | Publisher Name | ListValue | 1              |
-    Then Click on Save Protection button
-    And Enter the following data in the general card of private auction
-      | FieldName      | Value     | ListValueIndex |
-      | Publisher Name | ListValue | 2              |
-    Then Verify that warning banner is under Publisher name
+  
