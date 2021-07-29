@@ -22,8 +22,7 @@ import cucumber.api.testng.TestNGCucumberRunner;
 
     features = {"src/main/java/Features/Adspots_regression.feature"},
         glue = {"stepDefinitions"},
-        tags = {"@debug"},
-//        tags = {"~@Ignore"},
+        tags = {"~@Ignore"},
         plugin = {"com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html",
         		"json:target/cucumber-reports/CucumberTestReport.json",
                 "pretty",
