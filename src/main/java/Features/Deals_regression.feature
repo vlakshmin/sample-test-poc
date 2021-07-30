@@ -790,7 +790,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		And Click on Add more seats button
 		Then Verify "4" seat panels are displayed
 		When Disabled "3" added seats
-		Then Verify "3" added seats are disabled
+		Then Verify "3" added seats are "disabled"
 		When click on Save deal
 		Then Verify deal contains copy deal id message
 		And copy the deal ID
@@ -893,8 +893,8 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		Given admin user login to RX UI with valid username and password
 		When Click on Deals option under Sales
 		And User displayed with Deals page
-		And Click on any deal name in Deals list
-		And Select "USD - Dollars" from Currency
+		And Click on any deal name that Currency is not "JPY" in Deals list
+		And Select "JPY - Yen" from Currency
 		Then Verify the following message is displayed when the Currency changed for deal
 			|Message|
 			|Changing the currency type associated with the value of this deal may lead to its buyers bidding below the price currently set. Due to echange rate fluctuations the new value may differ dramatically. Are you sure you want to proceed? |
@@ -904,8 +904,8 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		Given Publisher user login to RX UI with valid username and password
 		When Click on Deals option under Sales
 		And User displayed with Deals page
-		And Click on any deal name in Deals list
-		And Select "USD - Dollars" from Currency
+		And Click on any deal name that Currency is not "JPY" in Deals list
+		And Select "JPY - Yen" from Currency
 		Then Verify the following message is displayed when the Currency changed for deal
 			|Message|
 			|Changing the currency type associated with the value of this deal may lead to its buyers bidding below the price currently set. Due to echange rate fluctuations the new value may differ dramatically. Are you sure you want to proceed? |
@@ -915,8 +915,8 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		Given Single Publisher user login to RX UI with valid username and password
 		When Click on Deals option under Sales
 		And User displayed with Deals page
-		And Click on any deal name in Deals list
-		And Select "USD - Dollars" from Currency
+		And Click on any deal name that Currency is not "JPY" in Deals list
+		And Select "JPY - Yen" from Currency
 		Then Verify the following message is displayed when the Currency changed for deal
 			|Message|
 			|Changing the currency type associated with the value of this deal may lead to its buyers bidding below the price currently set. Due to echange rate fluctuations the new value may differ dramatically. Are you sure you want to proceed? |
@@ -995,3 +995,425 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		Then Verify the following message is displayed when the publisher changed for deal
 			|Message|
 			|By changing the Publisher the form will be reset and the previous changes will not be saved.|
+
+	Scenario: 219. Verify Floor Price limits for Deals
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And Select publisher by name: "Viber"
+		Then The Currency field is not null
+		When Enter "1234567" into Floor Price
+		Then Verify the error message displays below Floor Price input
+			|Message|
+			|A valid price is between 0.00 and 999,999.99|
+
+	Scenario: 154. Verify that selecting a DSP that isn't the first option in the search doesn't trigger warning banner
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And Select publisher by name: "Viber"
+		Then The Currency field is not null
+		When Click on DSP input
+		And Type "d" in DSP input
+		And Select 2nd value that below the highlighted dropdown value
+		Then Verify the following message is not displayed when select the second DSP value
+			|Message|
+			|By changing the DSP, the Buyers section will be reset and will not be saved.|
+
+	Scenario: 122. Verify that Activate Deactivate buttons are displayed at same time for Deals list page
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		When Select "1" "Active" deal in list view
+		Then Verify the following buttons are present in page header
+			| Button          |
+			| Edit Deal       |
+			| Activate Deal   |
+			| Deactivate Deal |
+		When Click on "Edit Deal" button in Deals page
+		Then Verify Edit Deal page displays
+		When Close "Edit" Deal page
+		When Click on "Deactivate Deal" button in Deals page
+		Then Verify the selected "Active" deal change to "Inactive" status in Deals list view
+		When Select "1" "Inactive" deal in list view
+		Then Verify the following buttons are present in page header
+			| Button          |
+			| Edit Deal       |
+			| Activate Deal   |
+			| Deactivate Deal |
+		When Click on "Edit Deal" button in Deals page
+		Then Verify Edit Deal page displays
+		When Close "Edit" Deal page
+		When Click on "Activate Deal" button in Deals page
+		Then Verify the selected "Inactive" deal change to "Active" status in Deals list view
+		When Select "2" "Active" deal in list view
+		Then Verify the following buttons are present in page header
+			| Button           |
+			| Activate Deals   |
+			| Deactivate Deals |
+		When Click on "Deactivate Deals" button in Deals page
+		Then Verify the selected "Active" deal change to "Inactive" status in Deals list view
+		When Select "1" "Active" deal in list view
+		When Select "1" "Inactive" deal in list view
+		Then Verify the following buttons are present in page header
+			| Button           |
+			| Activate Deals   |
+			| Deactivate Deals |
+		When Click on "Deactivate Deals" button in Deals page
+		Then Verify the selected "Active" deal change to "Inactive" status in Deals list view
+		Then Verify the selected "Inactive" deal change to "Inactive" status in Deals list view
+		When Select "1" "Active" deal in list view
+		When Select "1" "Inactive" deal in list view
+		Then Verify the following buttons are present in page header
+			| Button           |
+			| Activate Deals   |
+			| Deactivate Deals |
+		When Click on "Activate Deals" button in Deals page
+		Then Verify the selected "Active" deal change to "Active" status in Deals list view
+		Then Verify the selected "Inactive" deal change to "Active" status in Deals list view
+		When Select "2" "Inactive" deal in list view
+		Then Verify the following buttons are present in page header
+			| Button           |
+			| Activate Deals   |
+			| Deactivate Deals |
+		When Click on "Activate Deals" button in Deals page
+		Then Verify the selected "Inactive" deal change to "Active" status in Deals list view
+
+	Scenario: 136. Verify that Publisher warning banned appears only if any forms were modified on Deals page
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And Select publisher by name: "Viki"
+		When change the publisher name to "Viber"
+		Then Verify the following message is not displayed when the publisher changed for deal
+			| Message                                                                                      |
+			| By changing the Publisher the form will be reset and the previous changes will not be saved. |
+		And enter the following values
+			| PrivateAuction   | DSPValue | EntDealName  | Values |
+			| RTBHouse Auction | RBidder  | TestAutoDeal | 2      |
+		And "Enable" the DSP buyer
+		And enter the following DSP buyer details.
+			| DSP Seat ID    | DSP Seat Name       | Advertiser ID | Advertiser Name | DSP Seat Passthrough String      | DSP Domain Advertiser Passthrough String     |
+			| TestAutoSeatID | TestAutoDSPSeatName | TestAutoAdvId | TestAutoAdvName | TestAutoDSPSeatPassthroughString | TestAutoDSPDomainAdvertiserPassthroughString |
+		When change the publisher name to "Viki"
+		Then Verify the following message is displayed when the publisher changed for deal
+			| Message                                                                                      |
+			| By changing the Publisher the form will be reset and the previous changes will not be saved. |
+		And Select "Accept" on the publisher change banner displayed for deal
+		When Close "Create" Deal page
+		Then User displayed with Deals page
+		When Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And Select publisher by name: "Viber"
+		And enter the following values
+			| PrivateAuction   |
+			| RTBHouse Auction |
+		When change the publisher name to "Viki"
+		Then Verify the following message is displayed when the publisher changed for deal
+			| Message                                                                                      |
+			| By changing the Publisher the form will be reset and the previous changes will not be saved. |
+		And Select "Accept" on the publisher change banner displayed for deal
+		When Close "Create" Deal page
+		Then User displayed with Deals page
+		When Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And Select publisher by name: "Viber"
+		And enter the following values
+			| EntDealName  |
+			| TestAutoDeal |
+		When change the publisher name to "Viki"
+		Then Verify the following message is displayed when the publisher changed for deal
+			| Message                                                                                      |
+			| By changing the Publisher the form will be reset and the previous changes will not be saved. |
+		And Select "Accept" on the publisher change banner displayed for deal
+		When Close "Create" Deal page
+		Then User displayed with Deals page
+		When Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And Select publisher by name: "Viber"
+		When Click on Date Range input
+		And Select current and next date in Date Range picker table
+		When change the publisher name to "Viki"
+		Then Verify the following message is displayed when the publisher changed for deal
+			| Message                                                                                      |
+			| By changing the Publisher the form will be reset and the previous changes will not be saved. |
+		And Select "Accept" on the publisher change banner displayed for deal
+		When Close "Create" Deal page
+		Then User displayed with Deals page
+		When Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And Select publisher by name: "Viber"
+		And enter the following values
+			| Values |
+			| 1      |
+		When change the publisher name to "Viki"
+		Then Verify the following message is displayed when the publisher changed for deal
+			| Message                                                                                      |
+			| By changing the Publisher the form will be reset and the previous changes will not be saved. |
+		And Select "Accept" on the publisher change banner displayed for deal
+		When Close "Create" Deal page
+		Then User displayed with Deals page
+		When Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And Select publisher by name: "Viber"
+		And Select "USD - Dollars" from Currency
+		When change the publisher name to "Viki"
+		Then Verify the following message is displayed when the publisher changed for deal
+			| Message                                                                                      |
+			| By changing the Publisher the form will be reset and the previous changes will not be saved. |
+		And Select "Accept" on the publisher change banner displayed for deal
+		When Close "Create" Deal page
+		Then User displayed with Deals page
+		When Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And Select publisher by name: "Viber"
+		And enter the following values
+			| DSPValue |
+			| RBidder  |
+		When change the publisher name to "Viki"
+		Then Verify the following message is displayed when the publisher changed for deal
+			| Message                                                                                      |
+			| By changing the Publisher the form will be reset and the previous changes will not be saved. |
+		And Select "Accept" on the publisher change banner displayed for deal
+		When Close "Create" Deal page
+		Then User displayed with Deals page
+		When Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And Select publisher by name: "Viber"
+		And "Enable" the DSP buyer
+		And enter the following DSP buyer details.
+			| DSP Seat ID    |
+			| TestAutoSeatID |
+		When change the publisher name to "Viki"
+		Then Verify the following message is displayed when the publisher changed for deal
+			| Message                                                                                      |
+			| By changing the Publisher the form will be reset and the previous changes will not be saved. |
+		And Select "Accept" on the publisher change banner displayed for deal
+		When Close "Create" Deal page
+		Then User displayed with Deals page
+		When Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And Select publisher by name: "Viber"
+		And "Enable" the DSP buyer
+		And enter the following DSP buyer details.
+			| DSP Seat Name       |
+			| TestAutoDSPSeatName |
+		When change the publisher name to "Viki"
+		Then Verify the following message is displayed when the publisher changed for deal
+			| Message                                                                                      |
+			| By changing the Publisher the form will be reset and the previous changes will not be saved. |
+		And Select "Accept" on the publisher change banner displayed for deal
+		When Close "Create" Deal page
+		Then User displayed with Deals page
+		When Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And Select publisher by name: "Viber"
+		And "Enable" the DSP buyer
+		And enter the following DSP buyer details.
+			| Advertiser ID |
+			| TestAutoAdvId |
+		When change the publisher name to "Viki"
+		Then Verify the following message is displayed when the publisher changed for deal
+			| Message                                                                                      |
+			| By changing the Publisher the form will be reset and the previous changes will not be saved. |
+		And Select "Accept" on the publisher change banner displayed for deal
+		When Close "Create" Deal page
+		Then User displayed with Deals page
+		When Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And Select publisher by name: "Viber"
+		And "Enable" the DSP buyer
+		And enter the following DSP buyer details.
+			| Advertiser Name |
+			| TestAutoAdvName |
+		When change the publisher name to "Viki"
+		Then Verify the following message is displayed when the publisher changed for deal
+			| Message                                                                                      |
+			| By changing the Publisher the form will be reset and the previous changes will not be saved. |
+		And Select "Accept" on the publisher change banner displayed for deal
+		When Close "Create" Deal page
+		Then User displayed with Deals page
+		When Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And Select publisher by name: "Viber"
+		And "Enable" the DSP buyer
+		And enter the following DSP buyer details.
+			| DSP Seat Passthrough String      |
+			| TestAutoDSPSeatPassthroughString |
+		When change the publisher name to "Viki"
+		Then Verify the following message is displayed when the publisher changed for deal
+			| Message                                                                                      |
+			| By changing the Publisher the form will be reset and the previous changes will not be saved. |
+		And Select "Accept" on the publisher change banner displayed for deal
+		When Close "Create" Deal page
+		Then User displayed with Deals page
+		When Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And Select publisher by name: "Viber"
+		And "Enable" the DSP buyer
+		And enter the following DSP buyer details.
+			| DSP Domain Advertiser Passthrough String     |
+			| TestAutoDSPDomainAdvertiserPassthroughString |
+		When change the publisher name to "Viki"
+		Then Verify the following message is displayed when the publisher changed for deal
+			| Message                                                                                      |
+			| By changing the Publisher the form will be reset and the previous changes will not be saved. |
+		And Select "Accept" on the publisher change banner displayed for deal
+		When Close "Create" Deal page
+		Then User displayed with Deals page
+
+	Scenario: 55. Verify that several Buyers without full details are saved for the deal
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And enter the following values
+			| publisher | PrivateAuction   | DSPValue | EntDealName  | Values |
+			| Viber     | RTBHouse Auction | RBidder  | TestAutoDeal | 2      |
+		And enter the following DSP buyer details.
+			| DSP Seat ID    |
+			| TestAutoSeatID |
+		And Click on Add more seats button
+		And enter the following DSP buyer details.
+			| DSP Seat Name       |
+			| TestAutoDSPSeatName |
+		And "Disable" the DSP buyer
+		Then Verify the buyer is "Disabled"
+		When Click on Add more seats button
+		And enter the following DSP buyer details.
+			| Advertiser ID |
+			| TestAutoAdvId |
+		And "Disable" the DSP buyer
+		Then Verify the buyer is "Disabled"
+		When Click on Add more seats button
+		And enter the following DSP buyer details.
+			| Advertiser Name |
+			| TestAutoAdvName |
+		And "Disable" the DSP buyer
+		Then Verify the buyer is "Disabled"
+		Then Verify "4" seat panels are displayed
+		Then Verify "3" added seats are "disabled"
+		Then Verify "1" added seats are "enabled"
+		When click on Save deal
+		Then Verify deal contains copy deal id message
+		And copy the deal ID
+		And search the deal ID
+		And Select the deal and click on edit
+		Then Verify "4" seat panels are displayed
+		Then Verify "3" added seats are "disabled"
+		Then Verify "1" added seats are "enabled"
+
+	Scenario: 56. Verify that several active Buyers without any details are saved for the deal with one existing buyer
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And enter the following values
+			| publisher | PrivateAuction   | DSPValue | EntDealName  | Values |
+			| Viber     | RTBHouse Auction | RBidder  | TestAutoDeal | 2      |
+		And "Enable" the DSP buyer
+		And enter the following DSP buyer details.
+			| DSP Seat ID    | DSP Seat Name       | Advertiser ID | Advertiser Name | DSP Seat Passthrough String      | DSP Domain Advertiser Passthrough String     |
+			| TestAutoSeatID | TestAutoDSPSeatName | TestAutoAdvId | TestAutoAdvName | TestAutoDSPSeatPassthroughString | TestAutoDSPDomainAdvertiserPassthroughString |
+		When click on Save deal
+		Then Verify deal contains copy deal id message
+		When copy the deal ID
+		And search the deal ID
+		And Select the deal and click on edit
+		Then Verify "1" seat panels are displayed
+		Then Verify "1" added seats are "enabled"
+		And Click on Add more seats button
+		And "Enable" the DSP buyer
+		And enter the following DSP buyer details.
+			| DSP Seat ID    |
+			| TestAutoSeatID |
+		And Click on Add more seats button
+		And "Enable" the DSP buyer
+		And enter the following DSP buyer details.
+			| Advertiser ID |
+			| TestAutoAdvId |
+		When click on Save deal
+		Then Verify deal contains copy deal id message
+		And copy the deal ID
+		And search the deal ID
+		And Select the deal and click on edit
+		Then Verify "3" seat panels are displayed
+		Then Verify "3" added seats are "enabled"
+
+	Scenario: 57. Verify that several inactive Buyers without any details are saved for the deal with one existing buyer
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And enter the following values
+			| publisher | PrivateAuction   | DSPValue | EntDealName  | Values |
+			| Viber     | RTBHouse Auction | RBidder  | TestAutoDeal | 2      |
+		And "Enable" the DSP buyer
+		And enter the following DSP buyer details.
+			| DSP Seat ID    | DSP Seat Name       | Advertiser ID | Advertiser Name | DSP Seat Passthrough String      | DSP Domain Advertiser Passthrough String     |
+			| TestAutoSeatID | TestAutoDSPSeatName | TestAutoAdvId | TestAutoAdvName | TestAutoDSPSeatPassthroughString | TestAutoDSPDomainAdvertiserPassthroughString |
+		When click on Save deal
+		Then Verify deal contains copy deal id message
+		When copy the deal ID
+		And search the deal ID
+		And Select the deal and click on edit
+		Then Verify "1" seat panels are displayed
+		Then Verify "1" added seats are "enabled"
+		And Click on Add more seats button
+		And "Disable" the DSP buyer
+		And enter the following DSP buyer details.
+			| DSP Seat ID    |
+			| TestAutoSeatID |
+		And Click on Add more seats button
+		And "Disable" the DSP buyer
+		And enter the following DSP buyer details.
+			| Advertiser ID |
+			| TestAutoAdvId |
+		When click on Save deal
+		Then Verify deal contains copy deal id message
+		And copy the deal ID
+		And search the deal ID
+		And Select the deal and click on edit
+		Then Verify "3" seat panels are displayed
+		Then Verify "1" added seats are "enabled"
+		Then Verify "2" added seats are "disabled"
+
+	Scenario: 22. Create deal for the existing auction with the date/dates in the past
+		Given admin user login to RX UI with valid username and password
+		When Click on Deals option under Sales
+		And User displayed with Deals page
+		And Click create a new deal
+		Then Create deal menu is opened
+		When Click on publisher input
+		And enter the following values
+			| publisher | PrivateAuction   |
+			| Viber     | RTBHouse Auction |
+		Then Verify the default start date in Date Range should be today in Create Deal page
+		Then Verify end date should be 90 days in the future in Create Deal page

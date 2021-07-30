@@ -330,7 +330,7 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 
 				break;
 			case "Date Range":
-				Assert.assertEquals(auctionPage.dateInput.getAttribute("value").trim(), "GMT");
+				Assert.assertEquals(auctionPage.dateInput.getAttribute("value").trim(), "");
 
 				break;
 
