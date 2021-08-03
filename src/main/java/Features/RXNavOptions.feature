@@ -48,3 +48,55 @@ Feature: GS-535 navigation menus validation
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
     Then Verify that Details is second column right on ID
+
+  Scenario: 110.For the front-end, search for the result that is on another page should return the result
+    Given Admin user click on Login by entering valid username and password
+    When Click on publisher option under Admin
+    Then Publisher page should be displayed
+    When Update "Publisher" column value in the first row to a unique value in "Publishers" page
+    And Click on next page button
+    Then Check the "Publisher" value that is noted in first row does not exist in second page
+    When Enter the "Publisher" value that is noted in first row into search textbox
+    Then Verify the "Publisher" value that is noted in first row is returned
+    When click on User option under accounts.
+    Then user displayed with User page.
+    When Update "Name" column value in the first row to a unique value in "Users" page
+    And Click on next page button
+    Then Check the "Name" value that is noted in first row does not exist in second page
+    When Enter the "Name" value that is noted in first row into search textbox
+    Then Verify the "Name" value that is noted in first row is returned
+    When Click on Media option under Inventory
+    Then User displayed with media page
+    When Update "Media Name" column value in the first row to a unique value in "Media" page
+    And Click on next page button
+    Then Check the "Media Name" value that is noted in first row does not exist in second page
+    When Enter the "Media Name" value that is noted in first row into search textbox
+    Then Verify the "Media Name" value that is noted in first row is returned
+    When Click on Adspots option under Inventory
+    And User displayed with Adspots page
+    When Update "Ad Spot Name" column value in the first row to a unique value in "Ad Spots" page
+    And Click on next page button
+    Then Check the "Ad Spot Name" value that is noted in first row does not exist in second page
+    When Enter the "Ad Spot Name" value that is noted in first row into search textbox
+    Then Verify the "Ad Spot Name" value that is noted in first row is returned
+    When Click on Private Auctions option under Sales
+    And User displayed with Private Auctions page
+    When Update "Name" column value in the first row to a unique value in "Private Auctions" page
+    And Click on next page button
+    Then Check the "Name" value that is noted in first row does not exist in second page
+    When Enter the "Name" value that is noted in first row into search textbox
+    Then Verify the "Name" value that is noted in first row is returned
+    When Click on Deals option under Sales
+    And User displayed with Deals page
+    When Update "Name" column value in the first row to a unique value in "Deals" page
+    And Click on next page button
+    Then Check the "Name" value that is noted in first row does not exist in second page
+    When Enter the "Name" value that is noted in first row into search textbox
+    Then Verify the "Name" value that is noted in first row is returned
+    When Click on Targeting option under Rules
+    Then User displayed with targeting page
+    When Update "Name" column value in the first row to a unique value in "Targeting Rules" page
+    And Click on next page button
+    Then Check the "Name" value that is noted in first row does not exist in second page
+    When Enter the "Name" value that is noted in first row into search textbox
+    Then Verify the "Name" value that is noted in first row is returned

@@ -113,6 +113,15 @@ public class RXNavOptions extends RXBaseClass {
 	@FindBy(xpath = "//thead/tr/th[3]/span")
 	public WebElement detailsColumn;
 
+	@FindBy(xpath = "//*[@class='v-text-field__slot']/input")
+	public WebElement searchField;
+	@FindBy(xpath = "//*[@class='v-input__icon v-input__icon--clear']/button")
+	public WebElement clearSearchButton;
+
+	public String specifiedColumnIn1stRowString = "//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[%s]";
+	public String nameLinkString = "//table/tbody/tr[1]/td[%s]/a";
+	public String saveBtnString = "//button[@type='submit']";
+
 	public RXNavOptions() {
 		PageFactory.initElements(driver, this);
 		rxUTL = new RXUtile();
@@ -337,6 +346,34 @@ public class RXNavOptions extends RXBaseClass {
 		}catch (NoSuchElementException e) {
 			return false;
 		}
+	}
+
+	public void searchValueInListView(String text) {
+		WebElement elem = driverWait().until(ExpectedConditions.visibilityOf(searchField));
+		if(clearSearchButton.isEnabled()) {
+			clearSearchButton.click();
+		}
+		elem.sendKeys(text);
+	}
+
+	public WebElement getElementByXpathWithParam(String xpath, String parameter) {
+		return driver.findElement(By.xpath(String.format(xpath, parameter)));
+	}
+
+	public List<WebElement> getElementListByXpathWithParam(String xpath, String parameter) {
+		return driver.findElements(By.xpath(String.format(xpath, parameter)));
+	}
+
+	public int getHeaderIndex(String headerName){
+		int headerIndex = 0;
+		List<WebElement> numberOFHeaders = tableHeadersList;
+		for (int i = 0; i < numberOFHeaders.size(); i++) {
+			if (numberOFHeaders.get(i).getText().equals(headerName)) {
+				headerIndex = i + 1;
+			}
+		}
+		System.out.println("headerIndex >>> " + headerIndex);
+		return headerIndex;
 	}
 
 }

@@ -1,36 +1,49 @@
 package stepDefinitions;
 
-import RXPages.PublisherListPage;
-import RXPages.RXBasePage;
-import RXPages.RXNavOptions;
-import RXPages.RXUsers;
+import RXPages.*;
 import RXUtitities.RXUtile;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static org.testng.Assert.fail;
 
 public class RXNavOptionStepDefinitions extends RXBasePage {
 	
 	RXUsers rxUserPage;
 	RXNavOptions rxNavOpt;
 	PublisherListPage pubListPgs;
+	RXMediaPage mediaPage;
+	RXAdspotsPage adspotsPage;
+	RXPrivateAuctionsPage auctionPage;
+	RXDealsPage dealsPage;
+	RXTargetingPage targetingPage;
 	Logger log = Logger.getLogger(RXNavOptionStepDefinitions.class);
 	JavascriptExecutor js = (JavascriptExecutor) driver;
-	
+
+	String valueInSpecifiedColumn;
+
 	public RXNavOptionStepDefinitions()
 	{
 		super();
 		rxUserPage = new RXUsers();
 		rxNavOpt = new RXNavOptions();
 		pubListPgs = new PublisherListPage();
-		
+		mediaPage = new RXMediaPage();
+		adspotsPage = new RXAdspotsPage();
+		auctionPage = new RXPrivateAuctionsPage();
+		dealsPage = new RXDealsPage();
+		targetingPage = new RXTargetingPage();
 	}
 	
 	
@@ -210,5 +223,81 @@ public class RXNavOptionStepDefinitions extends RXBasePage {
 		System.out.println("rxNavOpt.detailsColumn.getText().trim() >>> " + rxNavOpt.idColumn.getText().trim());
 		Assert.assertEquals(rxNavOpt.idColumn.getText().trim(), "ID");
 		Assert.assertEquals(rxNavOpt.detailsColumn.getText().trim(), "Details");
+	}
+
+	@When("^Update \"([^\"]*)\" column value in the first row to a unique value in \"([^\"]*)\" page$")
+	public void updateColumnValueInTheFirstRowToAUniqueValueInSpecifiedPage(String headerName, String page) {
+		WebElement element = null;
+		switch(page){
+			case "Publishers":
+				element = pubListPgs.publisherNameInput;
+				break;
+			case "Users":
+				element = rxUserPage.userName;
+				break;
+			case "Media":
+				element = mediaPage.mediaNameInput;
+				break;
+			case "Ad Spots":
+				element = adspotsPage.adSpotNameField;
+				break;
+			case "Private Auctions":
+				element = auctionPage.auctionNameField;
+				break;
+			case "Deals":
+				element = dealsPage.dealName;
+				break;
+			case "Targeting Rules":
+				element = targetingPage.ruleNameField;
+				break;
+		}
+
+		int columnIndex = rxNavOpt.getHeaderIndex(headerName) + 1;
+		System.out.println("column index >>> " + columnIndex);
+
+		rxNavOpt.getElementByXpathWithParam(rxNavOpt.nameLinkString, String.valueOf(columnIndex)).click();
+		driverWait().until(ExpectedConditions.visibilityOf(rxNavOpt.saveButton));
+
+		this.valueInSpecifiedColumn = "TestAuto" + RXUtile.getRandomNumberFourDigit();
+		element.sendKeys(Keys.CONTROL + "a");
+		element.sendKeys(this.valueInSpecifiedColumn);
+		System.out.println("Update " + headerName + " column value in the first row in " + page + " page >>> " + this.valueInSpecifiedColumn);
+
+		rxNavOpt.saveButton.click();
+		driverWait().until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(rxNavOpt.saveBtnString)));
+	}
+
+	@When("^Click on next page button$")
+	public void clickOnNextPageButton() {
+		rxNavOpt.clickNextPageNav();
+		driverWait().until(ExpectedConditions.visibilityOf(rxNavOpt.tableLoaderBar));
+		waitForPageLoaderToDisappear();
+	}
+
+	@Then("^Check the \"([^\"]*)\" value that is noted in first row does not exist in second page$")
+	public void checkTheValueThatIsNotedInFirstRowDoesnotExistInSecondPage(String headerName) throws InterruptedException {
+		for(WebElement element : rxNavOpt.getColumnDataMatchingHeader(headerName)){
+			if(element.getText().trim().equals(this.valueInSpecifiedColumn)){
+				fail("In column " + headerName + ", " + this.valueInSpecifiedColumn + " also exists in second page, please create a unique value.");
+			}
+		}
+	}
+
+	@When("^Enter the \"([^\"]*)\" value that is noted in first row into search textbox$")
+	public void enterTheValueThatIsNotedInFirstRowIntoSearchTextbox(String headerName) {
+		rxNavOpt.searchValueInListView(this.valueInSpecifiedColumn);
+		waitForPageLoaderToDisappear();
+	}
+
+	@Then("^Verify the \"([^\"]*)\" value that is noted in first row is returned$")
+	public void verifyTheValueThatIsNotedInFirstRowIsReturned(String headerName) throws InterruptedException {
+		if (rxNavOpt.getElementByXpathWithParam(rxNavOpt.specifiedColumnIn1stRowString, "1").getText().equals("No data available")) {
+			fail("The searched name as " + this.valueInSpecifiedColumn + "is not available");
+		} else {
+			List<WebElement> coulmnData = rxNavOpt.getColumnDataMatchingHeader(headerName);
+			for (int j = 0; j < coulmnData.size(); j++) {
+				Assert.assertTrue(coulmnData.get(j).getText().trim().contains(this.valueInSpecifiedColumn));
+			}
+		}
 	}
 }
