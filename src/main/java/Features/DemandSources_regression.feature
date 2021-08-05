@@ -13,9 +13,9 @@ Feature: Demand Sources page regression
     Then Edit DSP pop up is present
     And Enter the following data in the general card of DSP
       | FieldName |
-      | Request Adjustment Rate      |
+      | Endpoint URI      |
     Then Click on Save DSP button
-    Then Verify the edited DSP data is matching with its overview list values
+    Then Verify "Endpoint URI" is saved properly for the edited DSP data
     When Click "Enable DSP" button in DSP list page
     Then "true" is displayed for the DSP
     And Select one "true" Active DSP item
@@ -48,9 +48,9 @@ Feature: Demand Sources page regression
     Then Edit DSP pop up is present
     And Enter the following data in the general card of DSP
       | FieldName |
-      | Request Adjustment Rate      |
+      | Endpoint URI      |
     Then Click on Save DSP button
-    Then Verify the edited DSP data is matching with its overview list values
+    Then Verify "Endpoint URI" is saved properly for the edited DSP data
     When Click "Disable DSP" button in DSP list page
     Then "false" is displayed for the DSP
     And Select one "false" Active DSP item
@@ -62,3 +62,39 @@ Feature: Demand Sources page regression
       |Enable DSPs|
     When Click "Enable DSPs" button in Rule list page
     Then "true" is displayed for the Rule
+
+  Scenario:  296.Verify that if DSP not active - user able to save it with empty datacenter/endpoint URI fields
+    Given admin user login to RX UI with valid username and password
+    And Click on Demand Sources option under Admin
+    Then User displayed with Demand Sources page
+    When Search "DSP-Test-7" DSP item
+    And Click on Bidder column for "DSP-Test-7" DSP item
+    Then Edit DSP pop up is present
+    When Click on Save DSP button
+    Then DSP saved successfully without error message
+
+  Scenario:  297.Verify that if DSP not active - user able to save it with data specified in datacenter/endpoint URI fields
+    Given admin user login to RX UI with valid username and password
+    And Click on Demand Sources option under Admin
+    Then User displayed with Demand Sources page
+    When Search "DSP-Test-5" DSP item
+    And Click on Bidder column for "DSP-Test-5" DSP item
+    Then Edit DSP pop up is present
+    And Enter the following data in the general card of DSP
+      | FieldName |
+      | Endpoint URI      |
+    When Click on Save DSP button
+    Then DSP saved successfully without error message
+
+  Scenario:  298.Verify that if DSP active - user can't save it with empty datacenter/endpoint URI because of validation
+    Given admin user login to RX UI with valid username and password
+    And Click on Demand Sources option under Admin
+    Then User displayed with Demand Sources page
+    When Search "DSP-Test-5" DSP item
+    And Click on Bidder column for "DSP-Test-5" DSP item
+    Then Edit DSP pop up is present
+    And Erase data from endpoint input
+    When Click on Save DSP button
+    Then Verify following errors are displayed near save button
+      |The Endpoint URI field is required|
+    Then Verify error "The Endpoint URI field is required" is present for Endpoint URI
