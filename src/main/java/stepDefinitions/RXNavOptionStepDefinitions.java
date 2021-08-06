@@ -270,7 +270,7 @@ public class RXNavOptionStepDefinitions extends RXBasePage {
 	@When("^Click on next page button$")
 	public void clickOnNextPageButton() {
 		rxNavOpt.clickNextPageNav();
-		driverWait().until(ExpectedConditions.visibilityOf(rxNavOpt.tableLoaderBar));
+//		driverWait().until(ExpectedConditions.visibilityOf(rxNavOpt.tableLoaderBar));
 		waitForPageLoaderToDisappear();
 	}
 
