@@ -3,12 +3,14 @@ package stepDefinitions;
 import RXPages.PublisherListPage;
 import RXPages.RXDemandSourcesPage;
 import RXPages.RXNavOptions;
+import RXUtitities.RXUtile;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -30,6 +32,7 @@ public class DemandSourcesPageStepsDefinition extends RXDemandSourcesPage {
     List<String> enteredDemandNoList = new ArrayList<String>();
     String enteredRequestAdjustmentRate;
     String enteredDemandNo;
+    String enterEndpointURI;
 
     public DemandSourcesPageStepsDefinition(){
         super();
@@ -38,6 +41,7 @@ public class DemandSourcesPageStepsDefinition extends RXDemandSourcesPage {
         pubListPgs = new PublisherListPage();
     }
     WebDriverWait wait = new WebDriverWait(driver, 30);
+    JavascriptExecutor js = (JavascriptExecutor) driver;
 
     @Given("^Click on Demand Sources option under Admin$")
     public void click_on_Demand_Sources_option_under_Admin() throws Throwable {
@@ -102,6 +106,14 @@ public class DemandSourcesPageStepsDefinition extends RXDemandSourcesPage {
                     demandSourcesPage.requestAdjustmentRate.sendKeys(Keys.ARROW_DOWN);
                     enteredRequestAdjustmentRate = demandSourcesPage.requestAdjustmentRate.getAttribute("value");
                     break;
+                case "Endpoint URI":
+                    wait.until(ExpectedConditions.visibilityOf(demandSourcesPage.endpointURIText));
+                    while (!demandSourcesPage.endpointURIText.getAttribute("value").equals("")) {
+                        demandSourcesPage.endpointURIText.sendKeys(Keys.BACK_SPACE);
+                    }
+                    enterEndpointURI = RXUtile.getRandomNumberFourDigit()+".com";
+                    demandSourcesPage.endpointURIText.sendKeys(enterEndpointURI);
+                    break;
                 default:
                     Assert.assertTrue(false, "The status fields supplied does not match with the input");
             }
@@ -114,21 +126,30 @@ public class DemandSourcesPageStepsDefinition extends RXDemandSourcesPage {
         demandSourcesPage.saveButton.click();
     }
 
-    @Then("^Verify the edited DSP data is matching with its overview list values$")
-    public void verify_the_edited_DSP_data_is_matching_with_its_overview_list_values() throws Throwable {
-        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
+    @Then("^Verify \"([^\"]*)\" is saved properly for the edited DSP data$")
+    public void verify_is_saved_properly_for_the_edited_DSP_data(String arg1) throws Throwable {
+        wait.until(ExpectedConditions.invisibilityOf(demandSourcesPage.editPagePresent()));
         String demandNo = "";
         String entereddemandNo = enteredDemandNoList.get(0);
-        String requestAdjustmentRate = "";
         List<WebElement> listNos = demandSourcesPage.demandNos();
         for (int k = 0; k < listNos.size(); k++) {
             demandNo = listNos.get(k).getText().replaceAll("\\s", "");
             if (entereddemandNo.equals(demandNo)) {
-                requestAdjustmentRate =demandSourcesPage.getRequestAdjustmentRateInList(k);
+                if(demandSourcesPage.demandItem(k+1).getAttribute("class").contains("selected")){
+                    click_button_in_DSP_list_page("Edit");
+                }
+                wait.until(ExpectedConditions.visibilityOf(demandSourcesPage.editPagePresent()));
                 break;
             }
         }
-        Assert.assertEquals(requestAdjustmentRate, enteredRequestAdjustmentRate);
+        switch(arg1){
+            case "Endpoint URI":
+                Assert.assertEquals(demandSourcesPage.endpointURIText.getAttribute("value"), enterEndpointURI);
+                break;
+            default:
+                Assert.assertTrue(false, "The status fields supplied does not match with the input");
+        }
+
     }
 
     @Then("^\"([^\"]*)\" is displayed for the DSP$")
@@ -168,4 +189,34 @@ public class DemandSourcesPageStepsDefinition extends RXDemandSourcesPage {
         Assert.assertEquals(num1,0,num1 +" Inactive DSP is not selected.");
         Assert.assertEquals(num3,0,num3 +" Active DSP is not selected.");
     }
+
+    @When("^Search \"([^\"]*)\" DSP item$")
+    public void search_DSP_item(String arg1) throws Throwable {
+        demandSourcesPage.searchField.sendKeys(arg1);
+    }
+
+    @When("^Click on Bidder column for \"([^\"]*)\" DSP item$")
+    public void click_on_Bidder_column_for_DSP_item(String arg1) throws Throwable {
+        wait.until(ExpectedConditions.visibilityOf(demandSourcesPage.getBidder_column(arg1)));
+        demandSourcesPage.getBidder_column(arg1).click();
+    }
+
+    @Then("^DSP saved successfully without error message$")
+    public void dsp_saved_successfully_without_error_message() throws Throwable {
+        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
+    }
+
+    @Then("^Erase data from endpoint input$")
+    public void erase_data_from_endpoint_input() throws Throwable {
+        wait.until(ExpectedConditions.visibilityOf(demandSourcesPage.endpointURIText));
+        while (!demandSourcesPage.endpointURIText.getAttribute("value").equals("")) {
+            demandSourcesPage.endpointURIText.sendKeys(Keys.BACK_SPACE);
+        }
+    }
+
+    @Then("^Verify error \"([^\"]*)\" is present for Endpoint URI$")
+    public void verify_error_is_present_for_Endpoint_URI(String arg1) throws Throwable {
+        Assert.assertEquals(demandSourcesPage.endpointURIError.getText(),arg1);
+    }
+
 }
