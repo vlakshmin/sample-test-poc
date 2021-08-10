@@ -18,6 +18,18 @@ public class RXDemandSourcesPage extends RXBasePage{
     @FindBy(xpath = "//button[@type='submit']")
     public WebElement saveButton;
 
+    //Search text field
+    @FindBy(xpath = "//input[@autocomplete='nope']")
+    public WebElement searchField;
+
+    //Endpoint URI input
+    @FindBy(xpath = "//label[text()='Endpoint URI']/following-sibling::input")
+    public WebElement endpointURIText;
+
+    //Endpoint URI error
+    @FindBy(xpath = "//div[@class='v-messages__message']")
+    public WebElement endpointURIError;
+
     //Explicit Wait
     WebDriverWait wait = new WebDriverWait(driver, 30);
 
@@ -61,8 +73,21 @@ public class RXDemandSourcesPage extends RXBasePage{
                     .findElement(By.xpath("//span[contains(text() , '" + e + "')]/parent::button"));
     }
 
-    public String getRequestAdjustmentRateInList(int k){
-        return driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+k+"]/td[8]"))
-                .getText();
+    public WebElement getBidder_column(int k){
+        return driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']/table/tbody/tr["+k+"]/td[3]"));
+    }
+
+   public WebElement getBidder_column(String arg1) {
+       return driver
+               .findElement(By.linkText(arg1));
+    }
+
+    public WebElement editPagePresent(){
+        return driver.findElement(By.xpath("//aside[@class='dialog']"));
+    }
+
+    public WebElement demandItem(int i) {
+        return driver
+                .findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+i+"]"));
     }
 }
