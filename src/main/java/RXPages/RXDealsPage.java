@@ -287,7 +287,7 @@ public class RXDealsPage extends RXBasePage {
 	public String getPageHeading() {
 		WebDriverWait wait = new WebDriverWait(driver, 50);
 		WebElement elem = wait.until(ExpectedConditions.visibilityOf(dealsPageHeader));
-		System.out.println(elem.getText());
+//		System.out.println(elem.getText());
 		return elem.getText();
 
 	}
@@ -411,7 +411,7 @@ public class RXDealsPage extends RXBasePage {
 	}
 	public String getErrorMessageTextByField(WebElement element) {
 		String text = element.findElement(By.xpath("./ancestor::div[@class = 'v-input__control']//div[contains(@class,'v-messages__message')]")).getText();
-		System.out.println(text);
+//		System.out.println(text);
 		return text;
 	}
 	public boolean verifyRequiredFields() {
@@ -449,8 +449,8 @@ public class RXDealsPage extends RXBasePage {
 //		enteredValue=value.getAttribute("value");
 		BigDecimal bd = new BigDecimal(dealValue);
 		enteredValue = String.valueOf(bd.setScale(2, BigDecimal.ROUND_HALF_UP));
-		System.out.println("Floor Price's entered value >>> " + dealValue);
-		System.out.println("Format Floor Price's entered value >>> " + enteredValue);
+//		System.out.println("Floor Price's entered value >>> " + dealValue);
+//		System.out.println("Format Floor Price's entered value >>> " + enteredValue);
 			
 	}
 	public void clickBuyerActivationToggle(String action)
@@ -704,9 +704,9 @@ public class RXDealsPage extends RXBasePage {
 
 	public boolean checkIfErrorIsDisplayed(String error){
 		boolean flag = false;
-		System.out.println("the expected error === " + error);
+//		System.out.println("the expected error === " + error);
 		for(WebElement elemt : driver.findElements(By.cssSelector(this.validationErrorsCssPath))){
-			System.out.println("validation error >>> " + elemt.getText().trim());
+//			System.out.println("validation error >>> " + elemt.getText().trim());
 			if(elemt.getText().trim().equals(error)){
 				flag = true;
 				break;
@@ -736,7 +736,7 @@ public class RXDealsPage extends RXBasePage {
 	public boolean verifyIfCheckboxIsChecked(int rowNum){
 		boolean flag = false;
 		String classAttr = driver.findElement(By.xpath(String.format(trByRowNumberInDealsList, rowNum))).getAttribute("class");
-		System.out.println("tr class atrribute >>> " + classAttr);
+//		System.out.println("tr class atrribute >>> " + classAttr);
 		if(classAttr.contains("selected")){
 			flag = true;
 		}
@@ -750,10 +750,10 @@ public class RXDealsPage extends RXBasePage {
 	public boolean verifyButtonDisplaysInPageHeader(String btnName){
 		boolean flag = false;
 		String button;
-		System.out.println("Check if button exist >>> " + btnName);
+//		System.out.println("Check if button exist >>> " + btnName);
 		for(WebElement btnElemt : this.buttonsInPageHeader){
 			button = btnElemt.getText().trim();
-			System.out.println("btnElemt.getText().trim() >>> " + button);
+//			System.out.println("btnElemt.getText().trim() >>> " + button);
 			if(button.equalsIgnoreCase(btnName)){
 				flag = true;
 				break;

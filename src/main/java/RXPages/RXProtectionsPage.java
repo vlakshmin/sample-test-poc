@@ -100,7 +100,7 @@ public class RXProtectionsPage extends RXBasePage {
 	// Get the text of the Protections page
     public String getPageHeading() {
         WebElement elem = wait.until(ExpectedConditions.visibilityOf(protectionsPageHeader));
-        System.out.println(elem.getText());
+//        System.out.println(elem.getText());
         return elem.getText();
     }
 

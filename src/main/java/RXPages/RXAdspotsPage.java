@@ -195,7 +195,7 @@ public class RXAdspotsPage extends RXBasePage {
 	// Get the text of the media page
 	public String getPageHeading() {
 		WebElement elem = driverWait().until(ExpectedConditions.visibilityOf(adspotsPageHeader));
-		System.out.println(elem.getText());
+//		System.out.println(elem.getText());
 		return elem.getText();
 	}
 
@@ -285,7 +285,7 @@ public class RXAdspotsPage extends RXBasePage {
 	private Function<? super WebDriver,Boolean> floorPriceIsFocused(String card, String isFocused) {
 		return new ExpectedCondition<Boolean>() {
 			public Boolean apply(WebDriver driver) {
-				System.out.println("Floor Price label's class attribute >>> " + getElementByXpathString(floorPriceLabelString,card).getAttribute("class"));
+//				System.out.println("Floor Price label's class attribute >>> " + getElementByXpathString(floorPriceLabelString,card).getAttribute("class"));
 				if(isFocused.equals("yes")){
 					return getElementByXpathString(floorPriceLabelString,card).getAttribute("class").contains("v-label--active");
 				}else{

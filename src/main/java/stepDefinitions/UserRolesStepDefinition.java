@@ -44,11 +44,11 @@ public class UserRolesStepDefinition extends RXBasePage {
         List<Map<String, String>> list = dt.asMaps(String.class, String.class);
         for (Map<String,String> map: list) {
             String labelTitle = map.get("Label");
-            System.out.println("check if label exist >>> " + labelTitle);
+//            System.out.println("check if label exist >>> " + labelTitle);
             Assert.assertTrue(userRolesPage.checkIfValueExist(userRolesPage.userInfoSubTitleList, labelTitle));
             if(labelTitle.equals("Publisher")){
                 this.pubNameInUserInfo = userRolesPage.pubNameLinkInUserInfo.getText().trim();
-                System.out.println("userRolesPage.pubNameInUserInfo.getText().trim() >>> " + this.pubNameInUserInfo);
+//                System.out.println("userRolesPage.pubNameInUserInfo.getText().trim() >>> " + this.pubNameInUserInfo);
             }
         }
     }
@@ -58,7 +58,7 @@ public class UserRolesStepDefinition extends RXBasePage {
         List<Map<String, String>> list = dt.asMaps(String.class, String.class);
         for (Map<String,String> map: list) {
             String subTitle = map.get("Title");
-            System.out.println("check if sub title exist >>> " + subTitle);
+//            System.out.println("check if sub title exist >>> " + subTitle);
             Assert.assertTrue(userRolesPage.checkIfValueExist(userRolesPage.userInfoCardTitleList, subTitle));
         }
     }
@@ -85,7 +85,7 @@ public class UserRolesStepDefinition extends RXBasePage {
         List<Map<String, String>> list = dt.asMaps(String.class, String.class);
         for (Map<String,String> map: list) {
             String value = map.get("Radio button");
-            System.out.println("check if radio button exist >>> " + value);
+//            System.out.println("check if radio button exist >>> " + value);
             Assert.assertTrue(userRolesPage.isElementPresent(String.format(userRolesPage.radioBtnString, value)));
         }
     }
@@ -103,7 +103,7 @@ public class UserRolesStepDefinition extends RXBasePage {
     @Then("^Verify the Publisher Name input only display my publisher$")
     public void verifyThePublisherNameInputOnlyDisplayMyPublisher() {
         String value = userRolesPage.pubNameValue.getText().trim();
-        System.out.println("userRolesPage.pubNameValue.getText().trim() >>> " + value);
+//        System.out.println("userRolesPage.pubNameValue.getText().trim() >>> " + value);
         Assert.assertEquals(value, this.pubNameInUserInfo);
         userRolesPage.clickCloseButton();
     }

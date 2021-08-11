@@ -63,7 +63,7 @@ public class UserRolesPage extends RXBaseClass {
     }
 
     public void clickCloseButton(){
-        System.out.println("Close create page");
+//        System.out.println("Close create page");
         this.closeBtn.click();
         driverWait().until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(this.closeBtnString)));
     }

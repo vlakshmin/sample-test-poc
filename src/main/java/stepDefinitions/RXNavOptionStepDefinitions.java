@@ -181,11 +181,11 @@ public class RXNavOptionStepDefinitions extends RXBasePage {
         //Thread.sleep(5000);
 		String paginationTextPattern = rxNavOpt.getPaginationText();
 		String paginationText = paginationTextPattern.replaceAll("\\s", "");
-		System.out.println(paginationText);
+//		System.out.println(paginationText);
 		TotalRowsCount = Integer.parseInt(paginationText.substring(paginationText.indexOf('f')+1, paginationText.length()));
 		finalRowCountPerPage = Integer.parseInt(paginationText.substring(paginationText.indexOf('-')+1, paginationText.indexOf('o')));
-		System.out.println(TotalRowsCount);
-		System.out.println(finalRowCountPerPage);
+//		System.out.println(TotalRowsCount);
+//		System.out.println(finalRowCountPerPage);
 		if(finalRowCountPerPage==TotalRowsCount) {
 			Assert.assertTrue((boolean) js.executeScript("return arguments[0].hasAttribute(\"disabled\");", rxNavOpt.nextPageNavButton));
 			break;
@@ -219,8 +219,8 @@ public class RXNavOptionStepDefinitions extends RXBasePage {
 
 	@Then("^Verify that Details is second column right on ID$")
 	public void verifyThatDetailsIsSecondColumnRightOnID() {
-		System.out.println("rxNavOpt.idColumn.getText().trim() >>> " + rxNavOpt.idColumn.getText().trim());
-		System.out.println("rxNavOpt.detailsColumn.getText().trim() >>> " + rxNavOpt.idColumn.getText().trim());
+//		System.out.println("rxNavOpt.idColumn.getText().trim() >>> " + rxNavOpt.idColumn.getText().trim());
+//		System.out.println("rxNavOpt.detailsColumn.getText().trim() >>> " + rxNavOpt.idColumn.getText().trim());
 		Assert.assertEquals(rxNavOpt.idColumn.getText().trim(), "ID");
 		Assert.assertEquals(rxNavOpt.detailsColumn.getText().trim(), "Details");
 	}
@@ -253,7 +253,7 @@ public class RXNavOptionStepDefinitions extends RXBasePage {
 		}
 
 		int columnIndex = rxNavOpt.getHeaderIndex(headerName) + 1;
-		System.out.println("column index >>> " + columnIndex);
+//		System.out.println("column index >>> " + columnIndex);
 
 		rxNavOpt.getElementByXpathWithParam(rxNavOpt.nameLinkString, String.valueOf(columnIndex)).click();
 		driverWait().until(ExpectedConditions.visibilityOf(rxNavOpt.saveButton));
@@ -261,7 +261,7 @@ public class RXNavOptionStepDefinitions extends RXBasePage {
 		this.valueInSpecifiedColumn = "TestAuto" + RXUtile.getRandomNumberFourDigit();
 		element.sendKeys(Keys.CONTROL + "a");
 		element.sendKeys(this.valueInSpecifiedColumn);
-		System.out.println("Update " + headerName + " column value in the first row in " + page + " page >>> " + this.valueInSpecifiedColumn);
+//		System.out.println("Update " + headerName + " column value in the first row in " + page + " page >>> " + this.valueInSpecifiedColumn);
 
 		rxNavOpt.saveButton.click();
 		driverWait().until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(rxNavOpt.saveBtnString)));

@@ -125,7 +125,7 @@ public class RXUsers extends RXBaseClass {
 	{
 
 		WebElement elem = wait.until(ExpectedConditions.visibilityOf(userPageHeader));
-		System.out.println(elem.getText());
+//		System.out.println(elem.getText());
 		return elem.getText();
 
 	}
@@ -346,7 +346,7 @@ public class RXUsers extends RXBaseClass {
 			usertestData.add(userPassword.getAttribute("value"));
 		}else if(saveClick.isDisplayed() && publisUser.isSelected())
 		{
-			System.out.println("Entered Publisher "+ driver.findElement(By.xpath(publisherSelect)).getText());
+//			System.out.println("Entered Publisher "+ driver.findElement(By.xpath(publisherSelect)).getText());
 			usertestData.add(driver.findElement(By.xpath(publisherSelect)).getText());
 			usertestData.add(userName.getAttribute("value"));
 			usertestData.add(userEmail.getAttribute("value"));
@@ -365,7 +365,7 @@ public class RXUsers extends RXBaseClass {
 		if(admUser.isSelected())
 		{
 			wait.until(ExpectedConditions.visibilityOf(saveButton));
-			System.out.println("Admin user enabled :"+publisherUser.isSelected());
+//			System.out.println("Admin user enabled :"+publisherUser.isSelected());
 			rxUTL.clearTextBox(userName);
 			rxUTL.clearTextBox(userEmail);
 			rxUTL.clearTextBox(userEmail);
@@ -383,7 +383,7 @@ public class RXUsers extends RXBaseClass {
 				WebElement btnElem = wait.until(ExpectedConditions.visibilityOf(dropDwonSelect));
 				btnElem.click();
 				WebElement selectDropeDown =wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(publisherSelect))));
-				System.out.println("Publisher user enabled :"+selectDropeDown.getText());
+//				System.out.println("Publisher user enabled :"+selectDropeDown.getText());
 				selectDropeDown.click();
 				act.sendKeys(Keys.TAB).build().perform();
 				
@@ -393,7 +393,7 @@ public class RXUsers extends RXBaseClass {
 				WebElement btnElem = wait.until(ExpectedConditions.visibilityOf(dropDwonSelect));
 				btnElem.click();
 				WebElement selectDropeDown =wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(publisherSelect))));
-				System.out.println("Publisher user enabled :"+selectDropeDown.getText());
+//				System.out.println("Publisher user enabled :"+selectDropeDown.getText());
 				selectDropeDown.click();
 				act.sendKeys(Keys.TAB).build().perform();
 				editPubName=pubName;
@@ -461,7 +461,7 @@ public class RXUsers extends RXBaseClass {
 		WebElement btnElem = wait.until(ExpectedConditions.visibilityOf(dropDwonSelect));
 		btnElem.click();
 		WebElement selectDropeDown =wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(publisherSelect))));
-		System.out.println("Publisher user enabled :"+selectDropeDown.getText());
+//		System.out.println("Publisher user enabled :"+selectDropeDown.getText());
 		selectDropeDown.click();
 		act.sendKeys(Keys.TAB).build().perform();
 	}
@@ -524,7 +524,7 @@ public class RXUsers extends RXBaseClass {
 	{
 
 		WebElement elem = wait.until(ExpectedConditions.visibilityOf(enableDisableButton));
-		System.out.println(elem.getText());
+//		System.out.println(elem.getText());
 		String text = elem.getText().replaceAll("\\s", "").toUpperCase();
 		return text;
 
@@ -535,7 +535,7 @@ public class RXUsers extends RXBaseClass {
 		{
 
 			WebElement elem = wait.until(ExpectedConditions.visibilityOf(userActiveFieldList.get(index-1)));
-			System.out.println(elem.getText());
+//			System.out.println(elem.getText());
 			String text = elem.getText().replaceAll("\\s", "");
 			return text;
 

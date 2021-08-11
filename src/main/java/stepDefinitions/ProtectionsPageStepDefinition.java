@@ -129,14 +129,14 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 
 	@Then("^Verify that next page/prev page displays proper amount of items$")
 	public void verify_that_next_page_prev_page_displays_proper_amount_of_items(){
-		System.out.println("Click on next page button.");
+//		System.out.println("Click on next page button.");
 	    while(protectionsPage.nextPage.getAttribute("disabled") == null) {
 	    	js.executeScript("arguments[0].click()", protectionsPage.nextPage);
 	    	wait.until(ExpectedConditions.visibilityOf(protectionsPage.protectionsSearchProgress));
 			protectionsPage.waitAllProtectionsItemsLoading();
 			Assert.assertEquals(protectionsPage.getTotalProtectionsWebElements().size(),protectionsPage.getProtectionsPerPageNum());
 	    }
-		System.out.println("Click on previous page button.");
+//		System.out.println("Click on previous page button.");
 	    while(protectionsPage.previousPage.getAttribute("disabled") == null) {
 	    	js.executeScript("arguments[0].click()", protectionsPage.previousPage);
 	    	wait.until(ExpectedConditions.visibilityOf(protectionsPage.protectionsSearchProgress));
@@ -276,7 +276,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 				}
 
 				enteredPublisherName = adspotsPage.publisherNameField.getText();
-				System.out.println("publisher entered as :" + enteredPublisherName);
+//				System.out.println("publisher entered as :" + enteredPublisherName);
 				protectionsPage.waitPublisherNameLoading();
 				wait.until(ExpectedConditions.visibilityOf(auctionPage.auctionNameField));
 				break;
@@ -292,7 +292,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 				}
 
 				enteredProtectionsName = auctionPage.auctionNameField.getAttribute("value");
-				System.out.println("Entered Auction name:" + enteredProtectionsName);
+//				System.out.println("Entered Auction name:" + enteredProtectionsName);
 				break;
 			default:
 				Assert.assertTrue(false, "The status fields supplied does not match with the input");
@@ -426,7 +426,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 			}
 			if(inactive.equals(reqActive) && num1 > 0) {
 				protectionsPage.protectionsCheckBox(k+1).click();
-				System.out.println(protectionsPage.protectionsName(k+1));
+//				System.out.println(protectionsPage.protectionsName(k+1));
 				enteredProtectionsNameList.add(protectionsPage.protectionsName(k+1));
 				num1--;
 			}

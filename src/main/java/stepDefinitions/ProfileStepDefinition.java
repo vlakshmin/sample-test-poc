@@ -79,10 +79,10 @@ public class ProfileStepDefinition extends RXBaseClass {
 		Random rand = new Random();
 		int n = rand.nextInt(50);
 		newPassword = "Passwrd" + n;
-		System.out.println("Before change pwd a new pass" + newPassword);
-		System.out.println("Old Password" + prop.getProperty("password"));
+//		System.out.println("Before change pwd a new pass" + newPassword);
+//		System.out.println("Old Password" + prop.getProperty("password"));
 		proPage.enterChangePassword(prop.getProperty("password"), newPassword, newPassword);
-		System.out.println("After change pwd a new pass" + newPassword);
+//		System.out.println("After change pwd a new pass" + newPassword);
 
 	}
 
@@ -105,9 +105,9 @@ public class ProfileStepDefinition extends RXBaseClass {
 		  out.close();
 		 
 		driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
-		System.out.println("Password Changed");
+//		System.out.println("Password Changed");
 		proPage.clickOnLogOut();
-		System.out.println("Logout Successfull");
+//		System.out.println("Logout Successfull");
 //		driver.close();
 	}
 

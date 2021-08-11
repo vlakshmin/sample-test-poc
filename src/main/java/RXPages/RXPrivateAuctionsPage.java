@@ -195,7 +195,7 @@ public class RXPrivateAuctionsPage extends RXBasePage {
     public String getPageHeading() {
 
         WebElement elem = wait.until(ExpectedConditions.visibilityOf(auctionPageHeader));
-        System.out.println(elem.getText());
+//        System.out.println(elem.getText());
         return elem.getText();
 
     }
@@ -437,7 +437,7 @@ public void selectTargetingInventoryChildItem(String itemName) {
         try
         {
         	element.isDisplayed();
-        	System.out.println(element.isDisplayed());
+//        	System.out.println(element.isDisplayed());
             return true;
         }
         catch (NoSuchElementException e)

@@ -144,7 +144,7 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 				}
 				Thread.sleep(5000);
 				enteredPublisherName = adspotsPage.publisherNameField.getText();
-				System.out.println("publisher entered as :" + enteredPublisherName);
+//				System.out.println("publisher entered as :" + enteredPublisherName);
 				wait.until(ExpectedConditions.visibilityOf(auctionPage.auctionNameField));
 				break;
 
@@ -156,7 +156,7 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 				Calendar cal = Calendar.getInstance();
 				auctionPage.auctionNameField.sendKeys(value + cal.getTimeInMillis());
 				enteredAuctionName = auctionPage.auctionNameField.getAttribute("value");
-				System.out.println("Entered Auction name:" + enteredAuctionName);
+//				System.out.println("Entered Auction name:" + enteredAuctionName);
 				break;
 			case "Related Packages":
 				while (!auctionPage.auctionPackages.getAttribute("value").equals("")) {
@@ -164,13 +164,13 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 				}
 				auctionPage.auctionPackages.sendKeys(value);
 				enteredAuctionPackages = auctionPage.auctionPackages.getText();
-				System.out.println("Entered Auction packages:" + enteredAuctionPackages);
+//				System.out.println("Entered Auction packages:" + enteredAuctionPackages);
 				break;
 
 			case "Date Range":
 				auctionPage.selectFifteenDaysRangeInNextMonth();
 				enteredAuctionDates = auctionPage.dateInput.getAttribute("value");
-				System.out.println("Entered Auction dates:" + enteredAuctionDates);
+//				System.out.println("Entered Auction dates:" + enteredAuctionDates);
 				break;
 
 			default:
@@ -299,7 +299,7 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 
 				break;
 			case "Date Range":
-				System.out.println("Date range entered" + auctionPage.dateInput.getAttribute("value"));
+//				System.out.println("Date range entered" + auctionPage.dateInput.getAttribute("value"));
 				Assert.assertEquals(auctionPage.dateInput.getAttribute("value"), enteredAuctionDates);
 
 				break;
@@ -472,7 +472,7 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
-			System.out.println(fieldName);
+//			System.out.println(fieldName);
 			auctionPage.targetingExpandPanel(fieldName).click();
 			WebDriverWait wait = new WebDriverWait(driver, 30);
 			wait.until(
@@ -602,7 +602,7 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 				}
 				if(inactive.equals(reqActive) && num1 > 0) {
 					auctionPage.privateAuctionsCheckBox(k+1).click();
-					System.out.println(auctionPage.adSpotName(k+1));
+//					System.out.println(auctionPage.adSpotName(k+1));
 					enteredAuctionNameList.add(auctionPage.adSpotName(k+1));
 					num1--;
 				}

@@ -127,7 +127,7 @@ public class RXMediaPage extends RXBasePage {
 	public String getPageHeading() {
 
 		WebElement elem = wait.until(ExpectedConditions.visibilityOf(mediaPageHeader));
-		System.out.println(elem.getText());
+//		System.out.println(elem.getText());
 		return elem.getText();
 
 	}
@@ -168,9 +168,9 @@ public class RXMediaPage extends RXBasePage {
 
 	public boolean checkIfErrorIsDisplayed(String error){
 		boolean flag = false;
-		System.out.println("expected error === " + error);
+//		System.out.println("expected error === " + error);
 		for(WebElement elemt : driver.findElements(By.cssSelector(this.validationErrorsCssPath))){
-			System.out.println("validation error >>> " + elemt.getText().trim());
+//			System.out.println("validation error >>> " + elemt.getText().trim());
 			if(elemt.getText().trim().equals(error)){
 				flag = true;
 				break;
@@ -191,7 +191,7 @@ public class RXMediaPage extends RXBasePage {
 	public boolean verifyIfCheckboxIsChecked(int rowNum){
 		boolean flag = false;
 		String classAttr = driver.findElement(By.xpath(String.format(trStringInMediaTable, rowNum))).getAttribute("class");
-		System.out.println("tr class atrribute >>> " + classAttr);
+//		System.out.println("tr class atrribute >>> " + classAttr);
 		if(classAttr.contains("selected")){
 			flag = true;
 		}
@@ -203,7 +203,7 @@ public class RXMediaPage extends RXBasePage {
 		String button;
 		for(WebElement btnElemt : this.buttonsInMediaPageHeader){
 			button = btnElemt.getText().trim();
-			System.out.println("btnElemt.getText().trim() >>> " + button);
+//			System.out.println("btnElemt.getText().trim() >>> " + button);
 			if(button.equalsIgnoreCase(btnName)){
 				flag = true;
 				break;
@@ -215,10 +215,10 @@ public class RXMediaPage extends RXBasePage {
 	public boolean verifyHeaderDisplayInMediaTable(String expectedHeader){
 		boolean flag = false;
 		String actualHeader = "";
-		System.out.println("Check if expected header exists ==== " + expectedHeader);
+//		System.out.println("Check if expected header exists ==== " + expectedHeader);
 		for(WebElement headerElemt : this.mediaTableHeaders){
 			actualHeader = headerElemt.getText().trim();
-			System.out.println("headerElemt.getText().trim() >>> " + actualHeader);
+//			System.out.println("headerElemt.getText().trim() >>> " + actualHeader);
 			if(expectedHeader.equals(actualHeader)){
 				flag = true;
 				break;

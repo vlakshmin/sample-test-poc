@@ -163,13 +163,13 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 		for(Map<String, String> stringMap : list){
 			for(String key : stringMap.keySet()){
 				enteredValue = stringMap.get(key);
-				System.out.println("=== select/enter value for " + key + " ===");
+//				System.out.println("=== select/enter value for " + key + " ===");
 				switch (key){
 					case "Publisher Name":
 						pubName = enteredValue + RXUtile.getRandomNumberFourDigit();
 						pubListPgs.publisherNameInput.sendKeys(Keys.CONTROL + "a");
 						pubListPgs.publisherNameInput.sendKeys(pubName);
-						System.out.println("enter publisher name >>> " + pubName);
+//						System.out.println("enter publisher name >>> " + pubName);
 						break;
 					case "Ad Ops Person":
 						pubListPgs.adOpsPersonInput.sendKeys(Keys.CONTROL + "a");
@@ -232,7 +232,7 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 		for(int i = 0; i < loop; i++){
 			for(int j = 0; j < pubListPgs.publishersTableTrElemts.size(); j++){
 				rowNum = j + 1;
-				System.out.println(" row number >>> " + rowNum);
+//				System.out.println(" row number >>> " + rowNum);
 				if(!pubListPgs.verifyIfCheckboxIsChecked(rowNum)){
 					pubListPgs.getElementByXpathWithParameter(pubListPgs.checkboxColumnByRowNumber, String.valueOf(rowNum)).click();
 					pubName = pubListPgs.getElementByXpathWithParameter(pubListPgs.pubNameColumnByRowNumber, String.valueOf(rowNum)).getText().trim();
@@ -271,13 +271,13 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 		String nextItem = "";
 		pubListPgs.scrollDownInDropdown();
 		int size = pubListPgs.getDemandSourceDropdownItem().size();
-		System.out.println("pubListPgs.getDemandSourceDropdownItem().size() >>> " + size);
+//		System.out.println("pubListPgs.getDemandSourceDropdownItem().size() >>> " + size);
 		for(int i = 0; i < size; i ++){
-			System.out.println("i >>> " + i);
+//			System.out.println("i >>> " + i);
 			preItem = nextItem;
 			nextItem = pubListPgs.getDemandSourceDropdownItem().get(i).getText().trim();
-			System.out.println("preItem >>> " + preItem);
-			System.out.println("nextItem >>> " + nextItem);
+//			System.out.println("preItem >>> " + preItem);
+//			System.out.println("nextItem >>> " + nextItem);
 			if(!preItem.equals("")){
 				Assert.assertTrue(preItem.compareToIgnoreCase(nextItem) <= 0);
 			}
@@ -289,7 +289,7 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 	@When("^Click on the newly created publisher in list view$")
 	public void clickOnTheNewlyCreatedPublisherInListView() {
 		publisherID = pubListPgs.getElementByXpathWithParameter(pubListPgs.idColumnByPubName,pubName).getText().trim();
-		System.out.println("publisherID >>> " + publisherID);
+//		System.out.println("publisherID >>> " + publisherID);
 		pubListPgs.getElementByXpathWithParameter(pubListPgs.pubNameLinkStringInPubTable, pubName).click();
 		wait.until(ExpectedConditions.visibilityOf(pubListPgs.savePublisherBtn));
 	}
@@ -300,11 +300,11 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 		String nextItem = "";
 		List<String> selectedValueList = pubListPgs.getTheSelectedDemandSource();
 		for(int i = 0; i < selectedValueList.size(); i ++){
-			System.out.println("i >>> " + i);
+//			System.out.println("i >>> " + i);
 			preItem = nextItem;
 			nextItem = selectedValueList.get(i);
-			System.out.println("preItem >>> " + preItem);
-			System.out.println("nextItem >>> " + nextItem);
+//			System.out.println("preItem >>> " + preItem);
+//			System.out.println("nextItem >>> " + nextItem);
 			if(!preItem.equals("")){
 				Assert.assertTrue(preItem.compareToIgnoreCase(nextItem) <= 0);
 			}
@@ -347,21 +347,21 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 		String pubID = "";
 		int loop = Integer.parseInt(count);
 		for(int i = 0; i < loop; i++){
-			System.out.println("select "+ status + " publisher loop >>> " + loop);
+//			System.out.println("select "+ status + " publisher loop >>> " + loop);
 			for(int j = 0; j < pubListPgs.statusColumnsPublisherTable.size(); j++){
 				String value = pubListPgs.statusColumnsPublisherTable.get(j).getText().trim();
-				System.out.println("status column value >>> " + value);
+//				System.out.println("status column value >>> " + value);
 				if(value.equals(status)){
 					rowNum = j + 1;
-					System.out.println(status + " in row number >>> " + rowNum);
+//					System.out.println(status + " in row number >>> " + rowNum);
 					if(!pubListPgs.verifyIfCheckboxIsChecked(rowNum)){
 						pubListPgs.getElementByXpathWithParameter(pubListPgs.checkboxColumnByRowNumber, String.valueOf(rowNum)).click();
 						pubID = pubListPgs.getElementByXpathWithParameter(pubListPgs.idColumnByRowNumber, String.valueOf(rowNum)).getText().trim();
 						if(status.equals("Active")){
-							System.out.println("Store Active publisher ID "  + pubID + " to activePubIDList");
+//							System.out.println("Store Active publisher ID "  + pubID + " to activePubIDList");
 							this.activePubIDList.add(pubID);
 						}else{
-							System.out.println("Store Inactive publisher ID "  + pubID +" to inactivePubIDList");
+//							System.out.println("Store Inactive publisher ID "  + pubID +" to inactivePubIDList");
 							this.inactivePubIDList.add(pubID);
 						}
 						break;
@@ -398,13 +398,13 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 	public void verifyTheSelectedPublisherChangeToStatusInPublisherListView(String status, String expectedStatus) {
 		if(status.equals("Inactive")){
 			for(String id : this.inactivePubIDList){
-				System.out.println("Publisher ID >>> " + id);
+//				System.out.println("Publisher ID >>> " + id);
 				Assert.assertEquals(pubListPgs.getElementByXpathWithParameter(pubListPgs.statusByIDInPubTable,id).getText().trim(), expectedStatus);
 			}
 			this.inactivePubIDList.clear();
 		}else{
 			for(String id : this.activePubIDList){
-				System.out.println("Publisher ID >>> " + id);
+//				System.out.println("Publisher ID >>> " + id);
 				Assert.assertEquals(pubListPgs.getElementByXpathWithParameter(pubListPgs.statusByIDInPubTable,id).getText().trim(), expectedStatus);
 			}
 			this.activePubIDList.clear();
@@ -414,7 +414,7 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 	@When("^\"([^\"]*)\" the Active toggle button in Create Publisher page$")
 	public void disableEnableTheActiveToggleButtonInCreatePublisherPage(String arg0) {
 		String flag = pubListPgs.activeCheckbox.getAttribute("aria-checked");
-		System.out.println("pubListPgs.activeCheckbox.getAttribute(\"aria-checked\") >>> " + flag);
+//		System.out.println("pubListPgs.activeCheckbox.getAttribute(\"aria-checked\") >>> " + flag);
 		switch (arg0){
 			case "Disable":
 				if(flag.equals("true")){

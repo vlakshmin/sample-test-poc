@@ -578,7 +578,7 @@ public class AdminUserStepDefinition extends RXBaseClass {
 					uAcName=tesData.get(1);
 					rxUserPage.userName.sendKeys(uAcName);
 					enteredUserName = uAcName;
-					System.out.println("enteredUserName>>>>"+rxUserPage.userName.getAttribute("value"));
+//					System.out.println("enteredUserName>>>>"+rxUserPage.userName.getAttribute("value"));
 					break;
 				case "Email":
 					while (!rxUserPage.userEmail.getAttribute("value").equals("")) {
@@ -586,7 +586,7 @@ public class AdminUserStepDefinition extends RXBaseClass {
 					}
 					uEMail=tesData.get(2)+"@test.com";
 					rxUserPage.userEmail.sendKeys(uEMail);
-					System.out.println("entereduserEmail>>>>"+rxUserPage.userEmail.getAttribute("value"));
+//					System.out.println("entereduserEmail>>>>"+rxUserPage.userEmail.getAttribute("value"));
 					break;
 				case "Password":
 					while (!rxUserPage.userPassword.getAttribute("value").equals("")) {
@@ -594,7 +594,7 @@ public class AdminUserStepDefinition extends RXBaseClass {
 					}
 					uPwd=tesData.get(3);
 					rxUserPage.userPassword.sendKeys(uPwd);
-					System.out.println("entereduserPassword>>>>"+rxUserPage.userPassword.getAttribute("value"));
+//					System.out.println("entereduserPassword>>>>"+rxUserPage.userPassword.getAttribute("value"));
 					break;
 				default:
 					Assert.fail(fieldName + " is not present.");

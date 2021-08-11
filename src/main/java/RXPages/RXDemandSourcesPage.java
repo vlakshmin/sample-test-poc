@@ -40,7 +40,7 @@ public class RXDemandSourcesPage extends RXBasePage{
     public String getUserPageHeading()
     {
         WebElement elem = wait.until(ExpectedConditions.visibilityOf(demandPageHeader));
-        System.out.println(elem.getText());
+//        System.out.println(elem.getText());
         return elem.getText();
     }
 

@@ -134,7 +134,7 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 		for(Map<String, String> stringMap : list){
 			for(String key : stringMap.keySet()){
 				enteredValue = stringMap.get(key);
-				System.out.println("=== select/enter value for " + key + " ===");
+//				System.out.println("=== select/enter value for " + key + " ===");
 				switch (key){
 					case "Publisher":
 						mediaPage.publisherNameDropdown.click();
@@ -184,7 +184,7 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (Map<String, String> stringMap : list) {
 			String expectedMessage = stringMap.get("Message");
-			System.out.println("Banner Message "+ mediaPage.getChangePublisherBannerMsg());
+//			System.out.println("Banner Message "+ mediaPage.getChangePublisherBannerMsg());
 			Assert.assertEquals(mediaPage.getChangePublisherBannerMsg(), expectedMessage);
 		}
 	}
@@ -194,7 +194,7 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String expectedMessage = list.get(i).get("Message");
-			System.out.println("Check if Banner Message is displayed >>> "+ expectedMessage);
+//			System.out.println("Check if Banner Message is displayed >>> "+ expectedMessage);
 			Assert.assertFalse(mediaPage.getElementByXpathWithParameter(mediaPage.changePubBannerMsgXpath, expectedMessage).isDisplayed());
 		}
 	}
@@ -202,54 +202,54 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 	@Then("^Verify the Create Media entity page is disabled$")
 	public void verifyTheCreateMediaEntityPageIsDisabled() {
 		//Publisher
-		System.out.println("Publisher field's enabled >>> " + mediaPage.publisherNameInput.isEnabled());
+//		System.out.println("Publisher field's enabled >>> " + mediaPage.publisherNameInput.isEnabled());
 		Assert.assertFalse(mediaPage.publisherNameInput.isEnabled());
 
 		//Active button
-		System.out.println("Active button's enabled >>> " + mediaPage.activeCheckbox.isEnabled());
+//		System.out.println("Active button's enabled >>> " + mediaPage.activeCheckbox.isEnabled());
 		Assert.assertFalse(mediaPage.activeCheckbox.isEnabled());
 
 		//Media Name
-		System.out.println("Media Name field's enabled >>> " + mediaPage.mediaNameInput.isEnabled());
+//		System.out.println("Media Name field's enabled >>> " + mediaPage.mediaNameInput.isEnabled());
 		Assert.assertFalse(mediaPage.mediaNameInput.isEnabled());
 
 		//Media Type
-		System.out.println("Media Type dropdown's enabled >>> " + mediaPage.mediaTypeInput.isEnabled());
+//		System.out.println("Media Type dropdown's enabled >>> " + mediaPage.mediaTypeInput.isEnabled());
 		Assert.assertFalse(mediaPage.mediaTypeInput.isEnabled());
 
 		//Site URL
-		System.out.println("Site URL field's enabled >>> " + mediaPage.siteURLInput.isEnabled());
+//		System.out.println("Site URL field's enabled >>> " + mediaPage.siteURLInput.isEnabled());
 		Assert.assertFalse(mediaPage.siteURLInput.isEnabled());
 
 		//Categories
-		System.out.println("Categories field's enabled >>> " + mediaPage.categoriesInput.isEnabled());
+//		System.out.println("Categories field's enabled >>> " + mediaPage.categoriesInput.isEnabled());
 		Assert.assertFalse(mediaPage.categoriesInput.isEnabled());
 
 		//Save Media
-		System.out.println("Save Media button's enabled >>> " + mediaPage.saveButton.isEnabled());
+//		System.out.println("Save Media button's enabled >>> " + mediaPage.saveButton.isEnabled());
 		Assert.assertFalse(mediaPage.saveButton.isEnabled());
 	}
 
 	@Then("^Verify the Create Media page is filled with data$")
 	public void verifyTheCreateMediaPageIsFilledWithData() {
 		//Publisher
-		System.out.println("Publisher field's value >>> " + mediaPage.publisherNameDropdown.getText());
+//		System.out.println("Publisher field's value >>> " + mediaPage.publisherNameDropdown.getText());
 		Assert.assertEquals(mediaPage.publisherNameDropdown.getText().trim(), this.enteredPublisher);
 
 		//Media Name
-		System.out.println("Media Name field's value >>> " + mediaPage.mediaNameInput.getAttribute("value"));
+//		System.out.println("Media Name field's value >>> " + mediaPage.mediaNameInput.getAttribute("value"));
 		Assert.assertEquals(mediaPage.mediaNameInput.getAttribute("value"), this.enteredMediaName);
 
 		//Media Type
-		System.out.println("Media Type field's value >>> " + mediaPage.mediaTypeDropdown.getText().trim());
+//		System.out.println("Media Type field's value >>> " + mediaPage.mediaTypeDropdown.getText().trim());
 		Assert.assertEquals(mediaPage.mediaTypeDropdown.getText().trim(), this.enteredMediaType);
 
 		//Site URL
-		System.out.println("Site URL field's value >>> " + mediaPage.siteURLInput.getAttribute("value"));
+//		System.out.println("Site URL field's value >>> " + mediaPage.siteURLInput.getAttribute("value"));
 		Assert.assertEquals(mediaPage.siteURLInput.getAttribute("value"), this.enteredSiteURL);
 
 		//Categories
-		System.out.println("Categories field's value >>> " + mediaPage.categoriesDropdown.getText().trim());
+//		System.out.println("Categories field's value >>> " + mediaPage.categoriesDropdown.getText().trim());
 		Assert.assertEquals(mediaPage.categoriesDropdown.getText().trim(), this.enteredCategory);
 	}
 
@@ -303,21 +303,21 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 		String mediaID = "";
 		int loop = Integer.parseInt(count);
 		for(int i = 0; i < loop; i++){
-			System.out.println("select "+ status + " media loop >>> " + loop);
+//			System.out.println("select "+ status + " media loop >>> " + loop);
 			for(int j = 0; j < mediaPage.statusColumnsMediaTable.size(); j++){
 				String value = mediaPage.statusColumnsMediaTable.get(j).getText().trim();
-				System.out.println("status column value >>> " + value);
+//				System.out.println("status column value >>> " + value);
 				if(value.equals(status)){
 					rowNum = j + 1;
-					System.out.println(status + " in row number >>> " + rowNum);
+//					System.out.println(status + " in row number >>> " + rowNum);
 					if(!mediaPage.verifyIfCheckboxIsChecked(rowNum)){
 						mediaPage.getElementByXpathWithParameter(mediaPage.checkboxStringInMediaTable, String.valueOf(rowNum)).click();
 						mediaID = mediaPage.getElementByXpathWithParameter(mediaPage.idStringInMediaTable, String.valueOf(rowNum)).getText().trim();
 						if(status.equals("Active")){
-							System.out.println("Store Active media ID"  + mediaID + " to activeMediaIDList");
+//							System.out.println("Store Active media ID"  + mediaID + " to activeMediaIDList");
 							this.activeMediaIDList.add(mediaID);
 						}else{
-							System.out.println("Store Inactive media ID"  + mediaID +" to inactiveMediaIDList");
+//							System.out.println("Store Inactive media ID"  + mediaID +" to inactiveMediaIDList");
 							this.inactiveMediaIDList.add(mediaID);
 						}
 						break;
@@ -364,13 +364,13 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 	public void verifyTheSelectedMediaChangeToStatusInMediaListView(String status, String expectedStatus) throws Throwable {
 		if(status.equals("Inactive")){
 			for(String id : this.inactiveMediaIDList){
-				System.out.println("Media ID >>> " + id);
+//				System.out.println("Media ID >>> " + id);
 				Assert.assertEquals(mediaPage.getElementByXpathWithParameter(mediaPage.statusByIDInMediaTable,id).getText().trim(), expectedStatus);
 			}
 			this.inactiveMediaIDList.clear();
 		}else{
 			for(String id : this.activeMediaIDList){
-				System.out.println("Media ID >>> " + id);
+//				System.out.println("Media ID >>> " + id);
 				Assert.assertEquals(mediaPage.getElementByXpathWithParameter(mediaPage.statusByIDInMediaTable,id).getText().trim(), expectedStatus);
 			}
 			this.activeMediaIDList.clear();
@@ -387,8 +387,8 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 	public void verifyThatSearchResultsDisplayedAndPublisherInSearchResults(String arg0) throws Throwable {
 		int itemCount = mediaPage.mediaTableRows.size();
 		String classAttribute = mediaPage.mediaTableRows.get(0).getAttribute("class");
-		System.out.println("mediaPage.mediaTableRows.size() >>> " + itemCount);
-		System.out.println("The first item class attribute >>> " + classAttribute);
+//		System.out.println("mediaPage.mediaTableRows.size() >>> " + itemCount);
+//		System.out.println("The first item class attribute >>> " + classAttribute);
 		if(itemCount == 1 && classAttribute.contains("empty")){
 			Assert.fail("No data available");
 		}else{
@@ -492,23 +492,23 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 	@Then("^Verify every fields go to default state$")
 	public void verify_every_fields_go_to_default_state() throws Throwable {
 		//Publisher
-		System.out.println("Publisher field's value >>> " + mediaPage.publisherNameDropdown.getText());
+//		System.out.println("Publisher field's value >>> " + mediaPage.publisherNameDropdown.getText());
 		Assert.assertEquals(mediaPage.publisherNameDropdown.getText().trim(), this.enteredPublisher);
 
 		//Media Name
-		System.out.println("Media Name field's value >>> " + mediaPage.mediaNameInput.getAttribute("value"));
+//		System.out.println("Media Name field's value >>> " + mediaPage.mediaNameInput.getAttribute("value"));
 		Assert.assertEquals(mediaPage.mediaNameInput.getAttribute("value"), "");
 
 		//Media Type
-		System.out.println("Media Type field's value >>> " + mediaPage.mediaTypeDropdown.getText().trim());
+//		System.out.println("Media Type field's value >>> " + mediaPage.mediaTypeDropdown.getText().trim());
 		Assert.assertEquals(mediaPage.mediaTypeDropdown.getText().trim(), "");
 
 		//Site URL
-		System.out.println("Site URL field's value >>> " + mediaPage.siteURLInput.getAttribute("value"));
+//		System.out.println("Site URL field's value >>> " + mediaPage.siteURLInput.getAttribute("value"));
 		Assert.assertEquals(mediaPage.siteURLInput.getAttribute("value"), "");
 
 		//Categories
-		System.out.println("Categories field's value >>> " + mediaPage.categoriesDropdown.getText().trim());
+//		System.out.println("Categories field's value >>> " + mediaPage.categoriesDropdown.getText().trim());
 		Assert.assertEquals(mediaPage.categoriesDropdown.getText().trim(), "");
 	}
 
@@ -541,8 +541,8 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 			wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
 			wait.until(ExpectedConditions.visibilityOf(driver.findElement(
 					By.xpath("//aside[@class='dialog']/header//div[contains(text(),'" + this.enteredMediaName + "')]"))));
-				System.out.println("??????"+driver.findElement(
-						By.xpath("//label[text()='Categories']/following-sibling::div[@class='v-select__selections']/span")).getAttribute("class"));
+//				System.out.println("??????"+driver.findElement(
+//						By.xpath("//label[text()='Categories']/following-sibling::div[@class='v-select__selections']/span")).getAttribute("class"));
 		} catch (NullPointerException e) {
 			driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[3]/a")).click();
 			wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));

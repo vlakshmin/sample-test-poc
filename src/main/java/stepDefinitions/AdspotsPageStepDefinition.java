@@ -264,10 +264,10 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					List<WebElement> coulmnData2 = navOptions.getColumnDataMatchingHeader(columnName);
 					dataInEachColumnSorted = returnListOfColumnData(coulmnData2, columnName);
 					dataInEachColumn = new ArrayList(dataInEachColumnSorted);
-					System.out.println("Before sorting: " + dataInEachColumn);
+//					System.out.println("Before sorting: " + dataInEachColumn);
 					Collections.sort(dataInEachColumnSorted);
 					Collections.reverse(dataInEachColumnSorted);
-					System.out.println("After sorting: " + dataInEachColumnSorted);
+//					System.out.println("After sorting: " + dataInEachColumnSorted);
 					Assert.assertEquals(dataInEachColumn, dataInEachColumnSorted);
 
 				}
@@ -275,9 +275,9 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				List<WebElement> coulmnData1 = navOptions.getColumnDataMatchingHeader(columnName);
 				dataInEachColumnSorted = returnListOfColumnData(coulmnData1, columnName);
 				dataInEachColumn = new ArrayList(dataInEachColumnSorted);
-				System.out.println("Before sorting: " + dataInEachColumn);
+//				System.out.println("Before sorting: " + dataInEachColumn);
 				Collections.sort(dataInEachColumnSorted);
-				System.out.println("After sorting: " + dataInEachColumnSorted);
+//				System.out.println("After sorting: " + dataInEachColumnSorted);
 				Assert.assertEquals(dataInEachColumn, dataInEachColumnSorted);
 				}
 				break;
@@ -286,19 +286,19 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					List<WebElement> coulmnData1 = navOptions.getColumnDataMatchingHeader(columnName);
 					dataInEachColumnSorted = returnListOfColumnData(coulmnData1, columnName);
 					dataInEachColumn = new ArrayList(dataInEachColumnSorted);
-					System.out.println("Before sorting: " + dataInEachColumn);
+//					System.out.println("Before sorting: " + dataInEachColumn);
 					Collections.sort(dataInEachColumnSorted);
-					System.out.println("After sorting: " + dataInEachColumnSorted);
+//					System.out.println("After sorting: " + dataInEachColumnSorted);
 					Assert.assertEquals(dataInEachColumn, dataInEachColumnSorted);
 
 				}else {
 				List<WebElement> coulmnData2 = navOptions.getColumnDataMatchingHeader(columnName);
 				dataInEachColumnSorted = returnListOfColumnData(coulmnData2, columnName);
 				dataInEachColumn = new ArrayList(dataInEachColumnSorted);
-				System.out.println("Before sorting: " + dataInEachColumn);
+//				System.out.println("Before sorting: " + dataInEachColumn);
 				Collections.sort(dataInEachColumnSorted);
 				Collections.reverse(dataInEachColumnSorted);
-				System.out.println("After sorting: " + dataInEachColumnSorted);
+//				System.out.println("After sorting: " + dataInEachColumnSorted);
 				Assert.assertEquals(dataInEachColumn, dataInEachColumnSorted);
 				}
 				break;
@@ -422,7 +422,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 		dropDownValue.click();
 		Thread.sleep(5000);
 		enteredPublisherName = adspotsPage.publisherNameField.getText();
-		System.out.println("publisher entered as :" + enteredPublisherName);
+//		System.out.println("publisher entered as :" + enteredPublisherName);
 
 	}
 
@@ -452,7 +452,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					selectValueFromDropdown(value);
 				}
 				enteredPublisherName = adspotsPage.publisherNameField.getText();
-				System.out.println("publisher entered as :" + enteredPublisherName);
+//				System.out.println("publisher entered as :" + enteredPublisherName);
 				wait.until(ExpectedConditions.visibilityOf(adspotsPage.categoriesDropDown));
 				break;
 			case "Active":
@@ -488,7 +488,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				}
 				adspotsPage.adSpotNameField.sendKeys(value);
 				enteredAdSpotName = value;
-				System.out.println("Entered Adspot name:" + enteredAdSpotName);
+//				System.out.println("Entered Adspot name:" + enteredAdSpotName);
 				break;
 			case "Related Media":
 				WebElement dropDownValueMedia;
@@ -513,7 +513,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				dropDownValueMedia.click();
 				Thread.sleep(2000);
 				enteredRelatedMedia = adspotsPage.relatedMediaField.getText();
-				System.out.println("Related Media entered as :" + enteredRelatedMedia);
+//				System.out.println("Related Media entered as :" + enteredRelatedMedia);
 				break;
 			case "Categories":
 				if (value.equalsIgnoreCase("ListValue")) {
@@ -548,7 +548,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					driver.findElement(By.xpath("//label[text()='Test Mode']")).click();
 					Thread.sleep(2000);
 					enteredCategories = adspotsPage.categoriesField.getText();
-					System.out.println("Categories entered as :" + enteredCategories);
+//					System.out.println("Categories entered as :" + enteredCategories);
 				}
 
 				break;
@@ -567,7 +567,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 					Thread.sleep(2000);
 					enteredFilter = adspotsPage.filterField.getText();
-					System.out.println("Filter entered as :" + enteredFilter);
+//					System.out.println("Filter entered as :" + enteredFilter);
 				}
 				break;
 			case "Position":
@@ -585,7 +585,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 					Thread.sleep(2000);
 					enteredPosition = adspotsPage.positionField.getText();
-					System.out.println("Categories entered as :" + enteredPosition);
+//					System.out.println("Categories entered as :" + enteredPosition);
 				}
 				break;
 			case "Default Ad Sizes":
@@ -626,7 +626,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					for (int k = 0; k < enteredSizesLsit.size(); k++) {
 						enteredDefaultSizes += enteredSizesLsit.get(k).getText();
 					}
-					System.out.println("Default Sizes entered as :" + enteredDefaultSizes);
+//					System.out.println("Default Sizes entered as :" + enteredDefaultSizes);
 					}
 				}
 				break;
@@ -638,7 +638,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				Thread.sleep(2000);
 				enteredDefaultPrice = adspotsPage.defaultPriceField.getAttribute("value") + ".00";
 				defaultPriceCurrency = adspotsPage.defaultPriceCurrency.getText();
-				System.out.println("Entered Default floor price:" + defaultPriceCurrency + enteredDefaultPrice);
+//				System.out.println("Entered Default floor price:" + defaultPriceCurrency + enteredDefaultPrice);
 				break;
 			default:
 				Assert.assertTrue(false, "The status fields supplied does not match with the input");
@@ -675,7 +675,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				bannerPriceCurrency = adspotsPage.bannerPriceCurrency.getText();
 				currencyCode = adspotsPage.getCurrencyCode(bannerPriceCurrency);
 				adSpotTypeEnteredValues.put("Banner Floor Price", bannerPriceCurrency + currencyCode + enteredBannerPrice);
-				System.out.println("Entered floor price for banner:" + bannerPriceCurrency + enteredBannerPrice);
+//				System.out.println("Entered floor price for banner:" + bannerPriceCurrency + enteredBannerPrice);
 				}
 				break;
 			case "Ad Sizes":
@@ -717,7 +717,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 						enteredBannerSizes += enteredSizesLsit.get(k).getText();
 					}
 					adSpotTypeEnteredValues.put("Banner Ad Sizes", enteredBannerSizes);
-					System.out.println("Banner Sizes entered as :" + enteredBannerSizes);
+//					System.out.println("Banner Sizes entered as :" + enteredBannerSizes);
 				}else if (value.equalsIgnoreCase("Default")) {
 					enteredBannerSizes = "Same as default";
 				}
@@ -758,8 +758,8 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				inBannerVideoPriceCurrency = adspotsPage.inBannerVideoPriceCurrency.getText();
 				currencyCode = adspotsPage.getCurrencyCode(inBannerVideoPriceCurrency);
 				adSpotTypeEnteredValues.put("Video Floor Price", inBannerVideoPriceCurrency + currencyCode + enteredInBannerVideoPrice);
-				System.out.println("Entered floor price for in-banner video:" + inBannerVideoPriceCurrency
-						+ enteredInBannerVideoPrice);
+//				System.out.println("Entered floor price for in-banner video:" + inBannerVideoPriceCurrency
+//						+ enteredInBannerVideoPrice);
 				}
 				break;
 			case "Ad Sizes":
@@ -801,7 +801,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					for (int k = 0; k < enteredSizesLsit.size(); k++) {
 						enteredInBannerVideoSizes += enteredSizesLsit.get(k).getText();
 					}
-					System.out.println("InBanner Video Sizes entered as :" + enteredInBannerVideoSizes);
+//					System.out.println("InBanner Video Sizes entered as :" + enteredInBannerVideoSizes);
 				}else if (value.equalsIgnoreCase("Default")) {
 					enteredInBannerVideoSizes = "Same as default";
 				}
@@ -826,7 +826,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					} else {
 					adSpotTypeEnteredValues.put("Video Min Duration", enteredMinVideoDuration);
 					}
-					System.out.println("Miniumum Video Duration entered as :" + enteredMinVideoDuration);
+//					System.out.println("Miniumum Video Duration entered as :" + enteredMinVideoDuration);
 				}
 				break;
 			case "Maximum Video Duration":
@@ -849,7 +849,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					} else {
 						adSpotTypeEnteredValues.put("Video Max Duration", enteredMaxVideoDuration);
 					}
-					System.out.println("Maximum Video Duration entered as :" + enteredMaxVideoDuration);
+//					System.out.println("Maximum Video Duration entered as :" + enteredMaxVideoDuration);
 				}
 				break;
 			case "Playback Methods":
@@ -891,7 +891,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					for (int k = 0; k < enteredSizesLsit.size(); k++) {
 						enteredInBannerPlayback += enteredSizesLsit.get(k).getText();
 					}
-					System.out.println("InBanner Video Playback Methods entered as :" + enteredInBannerPlayback);
+//					System.out.println("InBanner Video Playback Methods entered as :" + enteredInBannerPlayback);
 				}
 				break;
 			case "Video Placement Type":
@@ -927,7 +927,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					Thread.sleep(3000);
 					enteredVideoPlacementType = adspotsPage.videoPlacementField.getText();
 					adSpotTypeEnteredValues.put("Video Placement Type", enteredVideoPlacementType);
-					System.out.println("Video Placement Type entered as :" + enteredVideoPlacementType);
+//					System.out.println("Video Placement Type entered as :" + enteredVideoPlacementType);
 
 				}
 				break;
@@ -964,7 +964,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				nativePriceCurrency = adspotsPage.nativePriceCurrency.getText();
 				currencyCode = adspotsPage.getCurrencyCode(nativePriceCurrency);
 				adSpotTypeEnteredValues.put("Native Floor Price", nativePriceCurrency + currencyCode + enteredNativePrice);
-				System.out.println("Entered floor price for native:" + nativePriceCurrency + enteredNativePrice);
+//				System.out.println("Entered floor price for native:" + nativePriceCurrency + enteredNativePrice);
 				}
 				break;
 
@@ -1065,8 +1065,8 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				for (int k = 0; k < enteredSizesLsit.size(); k++) {
 					sizes += enteredSizesLsit.get(k).getText();
 				}
-				System.out.println(sizes);
-				System.out.println(enteredBannerSizes);
+//				System.out.println(sizes);
+//				System.out.println(enteredBannerSizes);
 				Assert.assertEquals(sizes, enteredBannerSizes);
 				}
 				break;
@@ -1523,15 +1523,15 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 						By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[8]//div"))
 				.getText().replaceAll("\\s", "");
 		String enteredSizes = enteredDefaultSizes.replaceAll("\\s", "");
-		System.out.println(defaultSize);
-		System.out.println(enteredSizes);
+//		System.out.println(defaultSize);
+//		System.out.println(enteredSizes);
 		Assert.assertEquals(defaultSize, enteredSizes);
 		String floorPrice = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[9]"))
 				.getText();
 		String price = enteredDefaultPrice;
 		String currency = defaultPriceCurrency.substring(0, defaultPriceCurrency.indexOf(":"));
-		System.out.println(price + " " + currency);
-		System.out.println(floorPrice);
+//		System.out.println(price + " " + currency);
+//		System.out.println(floorPrice);
 		Assert.assertEquals(floorPrice, price + " " + currency);
 
 	}
@@ -1626,7 +1626,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Verify adspot details data is correct$")
 	public void verifyDetailsData() {
-		System.out.println(RXAdspotsPage.getAdSpotTypeEnteredValues());
+//		System.out.println(RXAdspotsPage.getAdSpotTypeEnteredValues());
 		Assert.assertTrue(areEqual(RXAdspotsPage.getAdSpotTypeEnteredValues(), detailsData));
 		adspotsPage.adSpotsSearchField.click();
 	}
@@ -1673,14 +1673,14 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 	@Then("^Verify the error message \"([^\"]*)\" displays below Floor Price in Create Ad Spot page$")
 	public void verifyTheErrorMessageDisplaysBelowFloorPriceInCreateAdSpotPage(String arg0) {
 		String msg = adspotsPage.defaultFloorPriceMsg.getText().trim();
-		System.out.println("adspotsPage.defaultFloorPriceMsg.getText().trim() >>> " + msg);
+//		System.out.println("adspotsPage.defaultFloorPriceMsg.getText().trim() >>> " + msg);
 		Assert.assertEquals(msg,arg0);
 	}
 
 	@Then("^Verify the error message \"([^\"]*)\" displays below Floor Price in \"([^\"]*)\" card$")
 	public void verifyTheErrorMessageDisplaysBelowFloorPriceInCard(String arg0, String arg1) {
 		String msg = adspotsPage.getElementByXpathString(adspotsPage.floorPriceMsgString, arg1).getText().trim();
-		System.out.println("adspotsPage.getElementByXpathString(adspotsPage.floorPriceMsgString, arg1).getText().trim() >>> " + msg);
+//		System.out.println("adspotsPage.getElementByXpathString(adspotsPage.floorPriceMsgString, arg1).getText().trim() >>> " + msg);
 		Assert.assertEquals(msg, arg0);
 	}
 }
