@@ -129,19 +129,23 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 
 	@Then("^Verify that next page/prev page displays proper amount of items$")
 	public void verify_that_next_page_prev_page_displays_proper_amount_of_items(){
+		int nextPage_loop = 1;
+		int prePage_loop = 1;
 //		System.out.println("Click on next page button.");
-	    while(protectionsPage.nextPage.getAttribute("disabled") == null) {
+	    while(protectionsPage.nextPage.getAttribute("disabled") == null && nextPage_loop < 3) {
 	    	js.executeScript("arguments[0].click()", protectionsPage.nextPage);
 	    	wait.until(ExpectedConditions.visibilityOf(protectionsPage.protectionsSearchProgress));
 			protectionsPage.waitAllProtectionsItemsLoading();
 			Assert.assertEquals(protectionsPage.getTotalProtectionsWebElements().size(),protectionsPage.getProtectionsPerPageNum());
+			nextPage_loop++;
 	    }
 //		System.out.println("Click on previous page button.");
-	    while(protectionsPage.previousPage.getAttribute("disabled") == null) {
+	    while(protectionsPage.previousPage.getAttribute("disabled") == null && prePage_loop < 3) {
 	    	js.executeScript("arguments[0].click()", protectionsPage.previousPage);
 	    	wait.until(ExpectedConditions.visibilityOf(protectionsPage.protectionsSearchProgress));
 	    	protectionsPage.waitAllProtectionsItemsLoading();
 			Assert.assertEquals(protectionsPage.getTotalProtectionsWebElements().size(),protectionsPage.getProtectionsPerPageNum());
+			prePage_loop++;
 	    }
 	}
 
