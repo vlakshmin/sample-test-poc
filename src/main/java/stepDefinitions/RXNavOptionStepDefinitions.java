@@ -164,6 +164,7 @@ public class RXNavOptionStepDefinitions extends RXBasePage {
 		int finalRowCountPerPage;
 		int TotalRowsCount;
 		int initialCount ;
+		int loop = 1;
 		WebDriverWait wait = new WebDriverWait(driver,30);
 		wait.until(ExpectedConditions.visibilityOf(rxNavOpt.tableFirstRowName));
 		rxNavOpt.clickNoOfPagesDropDown();
@@ -177,7 +178,7 @@ public class RXNavOptionStepDefinitions extends RXBasePage {
 			Assert.assertTrue((boolean) js.executeScript("return arguments[0].hasAttribute(\"disabled\");", rxNavOpt.previousPageNavButton));
 		}else {
 		
-		while(true) {
+		while(loop < 3) {
         //Thread.sleep(5000);
 		String paginationTextPattern = rxNavOpt.getPaginationText();
 		String paginationText = paginationTextPattern.replaceAll("\\s", "");
@@ -194,8 +195,10 @@ public class RXNavOptionStepDefinitions extends RXBasePage {
 		Assert.assertEquals(rxNavOpt.tableColumnsCount.size(),noOfColumns+1);
 		Assert.assertEquals(rxNavOpt.tableRowsCount.size(), Integer.parseInt(noOfRowsPerPage));
 		rxNavOpt.clickNextPageNav();
+		loop++;
 		}
-		while(true) {
+		loop = 1;
+		while(loop < 3) {
 			if((boolean)js.executeScript("return arguments[0].hasAttribute(\"disabled\");", rxNavOpt.nextPageNavButton)) {
 				Assert.assertEquals(rxNavOpt.tableColumnsCount.size(),noOfColumns+1);
 				rxNavOpt.clickPreviousPageNav();
@@ -213,6 +216,7 @@ public class RXNavOptionStepDefinitions extends RXBasePage {
 			}
 			rxNavOpt.clickPreviousPageNav();
 			}
+			loop++;
 		}
 		}
 		}
