@@ -180,7 +180,7 @@ public class RXPrivateAuctionsPage extends RXBasePage {
     static ArrayList<String> testData = new ArrayList<String>();
 
     // Explicit Wait
-    WebDriverWait wait = new WebDriverWait(driver, 1000);
+    WebDriverWait wait = new WebDriverWait(driver, 10);
 
     // Initialize page factory
     public RXPrivateAuctionsPage() {
@@ -201,7 +201,6 @@ public class RXPrivateAuctionsPage extends RXBasePage {
     }
 
     public void clickOverViewEditbutton() {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.visibilityOf(overviewEditbutton));
         if (overviewEditbutton.isDisplayed()) {
             overviewEditbutton.click();
@@ -209,7 +208,6 @@ public class RXPrivateAuctionsPage extends RXBasePage {
     }
 
     public void clickOverViewEnablebutton() {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.visibilityOf(overviewEnablebutton));
         String enableText = overviewEnablebutton.getText().replaceAll("\\s", "");
         if (enableText.equals("ACTIVATEPRIVATEAUCTION")) {
@@ -218,7 +216,6 @@ public class RXPrivateAuctionsPage extends RXBasePage {
     }
 
     public void clickOverViewDisablebutton() {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.visibilityOf(overviewDisablebutton));
         if (overviewDisablebutton.isDisplayed()) {
             overviewDisablebutton.click();

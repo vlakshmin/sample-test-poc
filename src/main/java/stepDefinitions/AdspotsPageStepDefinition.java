@@ -68,6 +68,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 	}
 
 	JavascriptExecutor js = (JavascriptExecutor) driver;
+	WebDriverWait wait = new WebDriverWait(driver, 10);
 	private LinkedHashMap<String,String> detailsData = new LinkedHashMap<>();
 //=========================================================================================================	
 	// Verify if user is displayed with media list page on clicking media navigation
@@ -79,7 +80,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				+ pubListPgs.logodisplayed());
 		Assert.assertTrue(pubListPgs.logodisplayed());
 		navOptions.expandInventory();
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.adspotsUndrInventory));
 		navOptions.adspotsUndrInventory.click();
 		adSpotTypeEnteredValues.clear();
@@ -87,7 +87,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@When("^Click on Adspots sub menu$")
 	public void check_for_Adspot() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.adspotsUndrInventory));
 		navOptions.adspotsUndrInventory.click();
 
@@ -232,7 +231,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 //Verify sorting of the table list columns
 	@Then("^Verify the sorting functionality with the following columns$")
 	public void verifySort(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 45);
 		driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//thead//th/span[text()='ID']/parent::th"))
 				.click();
 		List dataInEachColumn;
@@ -338,7 +336,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 	@Then("^Verify following fields are mandatory for create page$")
 	public void verifyMandatorFields(DataTable dt) throws InterruptedException {
 		String expectedNotification;
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		Thread.sleep(1000);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
@@ -359,7 +356,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@When("^Verify the following message is displayed when the publisher changed$")
 	public void verifyMessageOnPublisherChange(DataTable dt) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String expectedMessage = list.get(i).get("Message");
@@ -373,7 +369,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@When("^Select \"(.*)\" on the publisher change banner$")
 	public void clickBannerAcceptOrCancel(String action) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@class='v-banner__actions']"))));
 		if (action.equalsIgnoreCase("Cancel")) {
 			driver.findElement(By.xpath("//div[@class='v-banner__actions']/button[1]")).click();
@@ -387,7 +382,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@When("^Click on save button$")
 	public void clickSaveBtn() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		Thread.sleep(5000);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.saveButton));
 		navOptions.saveButton.click();
@@ -404,7 +398,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@When("^Click on save button and wait for dialog to close$")
 	public void clickSaveBtnCloseDialog() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 45);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.saveButton));
 		navOptions.saveButton.click();
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(adspotsPage.createOrEditPopup)));
@@ -412,7 +405,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@When("^Select publisher name from the dropdown list item index (.*)$")
 	public void selectPublisherDropDown(int index) throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(adspotsPage.publisherNameDropDown));
 		adspotsPage.publisherNameDropDown.click();
 		wait.until(ExpectedConditions
@@ -428,7 +420,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Enter the following data in the general card of adspot$")
 	public void enterGenaralCard(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		waitForCreatePageHeaderToBeVisible();
 		for (int i = 0; i < list.size(); i++) {
@@ -650,7 +641,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Enter the following data in the banner card of adspot$")
 	public void enterBannerCard(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -733,7 +723,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Enter the following data in the in-banner video card of adspot$")
 	public void enterinBannerCard(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -941,7 +930,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Enter the following data in the native card of adspot$")
 	public void enterNativeCard(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -978,7 +966,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Verify the following columns value with the created data for the general card of adspot$")
 	public void verifyGeneralCardValues(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -1045,7 +1032,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Verify the following columns value with the created data for the banner card of adspot$")
 	public void verifyBannerCardValues(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -1090,7 +1076,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Verify the following columns value with the created data for the native card of adspot$")
 	public void verifyNativeCardValues(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -1119,7 +1104,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Verify the following columns value with the created data for the in-banner video card of adspot$")
 	public void verifyInBannerCardValues(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -1183,9 +1167,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Verify the following columns values for the general card of adspot is empty$")
 	public void verifyGeneralCardValuesEmpty(DataTable dt) throws InterruptedException, ParseException {
-
 		boolean isPresent;
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -1247,7 +1229,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@When("^Verify error messages for sizes and floor price for the following cards$")
 	public void verifyCardErrorMsg(DataTable dt) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String card = list.get(i).get("Card");
@@ -1538,8 +1519,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@When("^Click on the created adspotname in the overview page$")
 	public void clickNameOverview() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-
 		try {
 
 			String enteredName = enteredAdSpotName.replaceAll("\\s", "");
@@ -1566,7 +1545,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Verify following fields are disabled on create/edit adspot page$")
 	public void verifyLabelsDisabled(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -1590,7 +1568,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Verify publisher field is disabled on create/edit page$")
 	public void verifyPubLabelDisabled() throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		String isPubNameDisabled = adspotsPage.publisherNameField.getAttribute("class");
 	    String value = adspotsPage.publisherNameField.getText();
 		Assert.assertTrue(isPubNameDisabled.contains("disabled"));
@@ -1599,7 +1576,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Verify Categories filed has subcategories$")
 	public void verifySubCategories() throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		wait.until(ExpectedConditions.visibilityOf(adspotsPage.categoriesDropDown));
 		adspotsPage.categoriesDropDown.click();
 		js.executeScript("arguments[0].click()", adspotsPage.categoriesDropDown);
@@ -1655,7 +1631,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@When("^Click on Ad Spot Name in first row in list view$")
 	public void clickOnAdSpotNameInFirstRowInListView() {
-		WebDriverWait wait = new WebDriverWait(driver, 60);
 		adspotsPage.adSpotNameInFirstRow.click();
 		wait.until(ExpectedConditions.visibilityOf(navOptions.saveButton));
 	}

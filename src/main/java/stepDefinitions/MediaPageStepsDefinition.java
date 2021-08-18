@@ -41,7 +41,7 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 		adspotsPage = new RXAdspotsPage();
 		rxUTL = new RXUtile();
 	}
-	WebDriverWait wait = new WebDriverWait(driver, 30);
+	WebDriverWait wait = new WebDriverWait(driver, 10);
 	JavascriptExecutor js = (JavascriptExecutor) driver;
 
 	public String enteredPublisher;
@@ -62,7 +62,6 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 				+ pubListPgs.logodisplayed());
 		Assert.assertTrue(pubListPgs.logodisplayed());
 		navOptions.expandInventory();
-//		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.mediaUndrInventory));
 		navOptions.mediaUndrInventory.click();
 
@@ -70,8 +69,6 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 
 	@When("^Click on Media sub menu$")
 	public void check_for_Media() throws Throwable {
-
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		Thread.sleep(1000);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.mediaUndrInventory));
 		navOptions.mediaUndrInventory.click();
@@ -470,7 +467,6 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 
 	@Then("^Verify Publisher name field is disabled on Create Media page$")
 	public void verify_Publisher_name_field_is_disabled_on_Create_Media_page() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		String isPubNameDisabled = mediaPage.publisherNameField.getAttribute("class");
 		String value = mediaPage.publisherNameField.getText();
 		Assert.assertTrue(isPubNameDisabled.contains("disabled"));
@@ -479,7 +475,6 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 
 	@Then("^Verify following fields are not enabled for create Media page$")
 	public void verify_following_fields_are_not_enabled_for_create_Media_page(DataTable dt) throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		Thread.sleep(1000);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
@@ -525,7 +520,6 @@ public class MediaPageStepsDefinition extends RXMediaPage {
 
 	@Then("^Click on the created media name in the overview page$")
 	public void click_on_the_created_media_name_in_the_overview_page() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		try {
 			String enteredName = this.enteredMediaName.replaceAll("\\s", "");
 			List<WebElement> listOfNames = driver

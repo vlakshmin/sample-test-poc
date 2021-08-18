@@ -25,7 +25,7 @@ public class TargetingPageStepsDefinition extends RXTargetingPage    {
 	RXNavOptions navOptions;
 	RXAdspotsPage adspotsPage;
 	Logger log = Logger.getLogger(TargetingPageStepsDefinition.class);
-	WebDriverWait wait = new WebDriverWait(driver,30);
+	WebDriverWait wait = new WebDriverWait(driver,10);
 	String enteredPublisherName;
 	String enteredRuleName;
 	List<String> enteredRuleNameList = new ArrayList<String>();;
@@ -133,14 +133,12 @@ public void verifyShowStats(String column, String filter) throws InterruptedExce
 
 	@Then("^Click on Save Rule button$")
 	public void click_on_Save_Rule_button() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(targetingPage.saveButton));
 		targetingPage.saveButton.click();
 	}
 
 	@Then("^Enter the following data in the general card of Rule$")
 	public void enter_the_following_data_in_the_general_card_of_Rule(DataTable dt) throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");

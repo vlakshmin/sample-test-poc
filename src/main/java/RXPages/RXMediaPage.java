@@ -113,7 +113,7 @@ public class RXMediaPage extends RXBasePage {
 	static ArrayList<String> testData = new ArrayList<String>();
 
 	// Explicit Wait
-	WebDriverWait wait = new WebDriverWait(driver, 50);
+	WebDriverWait wait = new WebDriverWait(driver, 10);
 
 	// Initialize page factory
 	public RXMediaPage() {

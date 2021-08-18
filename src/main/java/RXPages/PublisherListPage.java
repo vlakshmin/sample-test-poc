@@ -159,7 +159,7 @@ public class PublisherListPage extends RXBaseClass {
 	// Some declarations
 	int rownum = 1;
 	int totRow = 0;
-	WebDriverWait wait = new WebDriverWait(driver, 30);
+	WebDriverWait wait = new WebDriverWait(driver, 10);
 	Actions act = new Actions(driver);
 	JavascriptExecutor js = (JavascriptExecutor) driver;
 
@@ -177,7 +177,6 @@ public class PublisherListPage extends RXBaseClass {
 
 	// Click on Save or Update button
 	public void clickAccount() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(accountOption));
 		if (accountOption.isDisplayed()) {
 			accountOption.click();
@@ -247,14 +246,12 @@ public class PublisherListPage extends RXBaseClass {
 	}
 
 	public void clickOverViewEditbutton() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(overviewEditbutton));
 		if (overviewEditbutton.isDisplayed()) {
 			overviewEditbutton.click();
 		}
 	}
 	public void clickCloseToastMessageButton() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(closeToastButton));
 		if (closeToastButton.isDisplayed()) {
 			closeToastButton.click();

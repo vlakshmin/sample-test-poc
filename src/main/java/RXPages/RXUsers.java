@@ -98,7 +98,7 @@ public class RXUsers extends RXBaseClass {
 	static String editPubName="Kobo";
 	static String publisherSelect;
 	//Explicit Wait
-	WebDriverWait wait = new WebDriverWait(driver, 6000);
+	WebDriverWait wait = new WebDriverWait(driver, 10);
 	
 	//some variable
 	static String rnNum;

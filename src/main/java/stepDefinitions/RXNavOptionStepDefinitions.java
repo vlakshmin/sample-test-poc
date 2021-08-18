@@ -165,7 +165,7 @@ public class RXNavOptionStepDefinitions extends RXBasePage {
 		int TotalRowsCount;
 		int initialCount ;
 		int loop = 1;
-		WebDriverWait wait = new WebDriverWait(driver,30);
+		WebDriverWait wait = new WebDriverWait(driver,10);
 		wait.until(ExpectedConditions.visibilityOf(rxNavOpt.tableFirstRowName));
 		rxNavOpt.clickNoOfPagesDropDown();
 		driver.findElement(By.xpath("//div[@class='v-menu__content theme--light menuable__content__active']"

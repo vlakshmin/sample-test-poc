@@ -270,7 +270,7 @@ public class RXDealsPage extends RXBasePage {
 	static ArrayList<String> testData = new ArrayList<String>();
 
 	// Explicit Wait
-	WebDriverWait wait = new WebDriverWait(driver, 50);
+	WebDriverWait wait = new WebDriverWait(driver, 10);
 
 	// Initialize page factory
 	public RXDealsPage() {
@@ -285,7 +285,6 @@ public class RXDealsPage extends RXBasePage {
 
 	// Get the text of the media page
 	public String getPageHeading() {
-		WebDriverWait wait = new WebDriverWait(driver, 50);
 		WebElement elem = wait.until(ExpectedConditions.visibilityOf(dealsPageHeader));
 //		System.out.println(elem.getText());
 		return elem.getText();
@@ -566,10 +565,7 @@ public class RXDealsPage extends RXBasePage {
 
 	public String getChangePublisherBannerMsg()
 	{
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		
-			wait.until(
-					ExpectedConditions.visibilityOf(changePublisherBannerMsg));
+			wait.until(ExpectedConditions.visibilityOf(changePublisherBannerMsg));
 			String actualMessage =changePublisherBannerMsg.getText().replaceAll("\u3000", "");
 			return actualMessage;
 	}
@@ -597,10 +593,7 @@ public class RXDealsPage extends RXBasePage {
 	}
 	public String getChangeDSPBannerMsg()
 	{
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		
-			wait.until(
-					ExpectedConditions.visibilityOf(changeDSPBannerMsg));
+			wait.until(ExpectedConditions.visibilityOf(changeDSPBannerMsg));
 			String actualMessage =changeDSPBannerMsg.getText().replaceAll("\u3000", "");
 			return actualMessage;
 	}
@@ -694,10 +687,7 @@ public class RXDealsPage extends RXBasePage {
 
 	public String getChangeCurrencyBannerMsg()
 	{
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-
-		wait.until(
-				ExpectedConditions.visibilityOf(changeCurrencyBannerMsg));
+		wait.until(ExpectedConditions.visibilityOf(changeCurrencyBannerMsg));
 		String actualMessage =changeCurrencyBannerMsg.getText().replaceAll("\u3000", "");
 		return actualMessage;
 	}

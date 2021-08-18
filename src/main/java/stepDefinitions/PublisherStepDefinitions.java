@@ -42,7 +42,7 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 	 static String publisherID;
 	 static ArrayList<WebElement> publist = new ArrayList<WebElement>();
 
-	WebDriverWait wait = new WebDriverWait(driver, 50);
+	WebDriverWait wait = new WebDriverWait(driver, 10);
 	JavascriptExecutor js = (JavascriptExecutor) driver;
 
 	List<String> activePubIDList = new ArrayList<>();
@@ -86,15 +86,12 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 	@When("^Click on publisher option under Admin$")
 	public void click_on_publisher_option_under_Admin() throws Throwable {
 		navOptions.expandAdmin();
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.publisherUndrAdmin));
 		navOptions.publisherUndrAdmin.click();
 
 	}
 	@When("^Click on publisher option from left menu$")
 	public void click_on_publisher_optionMenu() throws Throwable {
-	
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.publisherUndrAdmin));
 		navOptions.publisherUndrAdmin.click();
 
@@ -108,10 +105,7 @@ public class PublisherStepDefinitions extends RXBaseClass  {
 	
 	@When("^Click on publisher name \"(.*)\" in the publisher overview page$")
 	public void clickNameOverview(String name) throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-
 		try {
-
 			String enteredName = name.replaceAll("\\s", "");
 			List<WebElement> listOfNames = driver
 					.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[3]/span/a"));

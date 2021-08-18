@@ -54,7 +54,7 @@ public class AdminUserStepDefinition extends RXBaseClass {
 		dealsPage = new RXDealsPage();
 	}
 	
-	WebDriverWait wait = new WebDriverWait(driver, 30);
+	WebDriverWait wait = new WebDriverWait(driver, 10);
 	JavascriptExecutor js = (JavascriptExecutor) driver;
 	//==============================================================================================================
 	// Verify if user is displayed with list of user accounts for admin login.
@@ -65,7 +65,6 @@ public class AdminUserStepDefinition extends RXBaseClass {
 				+ pubListPgs.logodisplayed());
 		Assert.assertTrue(pubListPgs.logodisplayed());
 		navOptions.expandAdmin();;
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.usersUndrAdmin));
 		navOptions.usersUndrAdmin.click();
 	}
@@ -508,7 +507,6 @@ public class AdminUserStepDefinition extends RXBaseClass {
 		
 		@Then("^Verify the enabling and disabling feature of the user with index (.*)$")
 		public void userEnableDisable(int index) throws InterruptedException {
-			WebDriverWait wait = new WebDriverWait(driver,30);
 			rxUserPage.clickUserCheckBox(index);
 			String status = rxUserPage.getActiveFieldText(index);
 			switch(status) {

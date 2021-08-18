@@ -40,7 +40,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		rxUTL =new RXUtile();
 
 	}
-	WebDriverWait wait = new WebDriverWait(driver, 50);
+	WebDriverWait wait = new WebDriverWait(driver, 10);
 	JavascriptExecutor js = (JavascriptExecutor) driver;
 	public String enteredPublisher;
 	public String enteredDSP;
@@ -60,7 +60,6 @@ public class DealsPageStepDefinition extends RXBaseClass {
 				+ pubListPgs.logodisplayed());
 		Assert.assertTrue(pubListPgs.logodisplayed());
 		navOptions.expandSales();
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.dealsLabel));
 		navOptions.dealsLabel.click();
 
@@ -68,7 +67,6 @@ public class DealsPageStepDefinition extends RXBaseClass {
 
 	@When("^Click on Deals sub menu$")
 	public void check_for_Adspot() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.dealsLabel));
 		navOptions.dealsLabel.click();
 

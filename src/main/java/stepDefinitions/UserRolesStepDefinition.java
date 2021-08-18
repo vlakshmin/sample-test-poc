@@ -21,7 +21,7 @@ public class UserRolesStepDefinition extends RXBasePage {
     PublisherListPage pubListPage;
 
     JavascriptExecutor js = (JavascriptExecutor) driver;
-    WebDriverWait wait = new WebDriverWait(driver,60);
+    WebDriverWait wait = new WebDriverWait(driver,10);
 
     String pubNameInUserInfo = "";
 
