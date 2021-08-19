@@ -246,12 +246,14 @@ public class PublisherStepDefinitions extends RXBaseClass  {
     @When("^Clear the Demand Source values$")
     public void clearTheDemandSourceValues() {
 	    List<String> selectedValueList = pubListPgs.getTheSelectedDemandSource();
-	    pubListPgs.demandSourceDropdown.click();
-	    //uncheck the selected value
-	    for(String value : selectedValueList){
-			pubListPgs.selectValueFromDropdown(value);
+		//uncheck the selected value
+	    if(selectedValueList.size() > 0){
+			pubListPgs.demandSourceDropdown.click();
+			for(String value : selectedValueList){
+				pubListPgs.selectValueFromDropdown(value);
+			}
+			pubListPgs.publisherNameInput.click();
 		}
-        pubListPgs.publisherNameInput.click();
 	}
 
 	@When("^Click on Demand Source dropdown$")

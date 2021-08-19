@@ -111,7 +111,7 @@ public class PublisherListPage extends RXBaseClass {
 	public WebElement savePublisherBtn;
 	@FindBy(xpath = "//label[text()='Active']/preceding-sibling::div/input")
 	public WebElement activeCheckbox;
-	@FindBy(xpath = "//label[text()='Active']/preceding-sibling::div")
+	@FindBy(xpath = "//label[text()='Active']/preceding-sibling::div/div[contains(@class,'selection-controls')]")
 	public WebElement activeToggleBtn;
 
 	// Data for create or edit publisher.

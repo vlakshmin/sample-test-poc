@@ -397,7 +397,7 @@ public void selectTargetingInventoryChildItem(String itemName) {
 	}
 
 	public WebElement inventary_child_items_displayed(String child_itemName) {
-		return driver.findElement(By.xpath("//div[contains(text() , '" + child_itemName + "')]/ancestor::tbody/tr[2]/td[4]"));
+		return driver.findElement(By.xpath("//div[contains(text() , '" + child_itemName + "')]/parent::td/following-sibling::td[contains(@class,'options')]"));
 	}
 
 	public void verify_that_Details_matched(WebElement e, Map<String, String> targeting) {

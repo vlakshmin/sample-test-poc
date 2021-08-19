@@ -266,7 +266,7 @@ public class RXProtectionsPage extends RXBasePage {
 	}
 	
 	public WebElement getRemoveButton(String item) {
-    	return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/following-sibling::button"));
+    	return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/parent::div/following-sibling::span/div/div/button"));
 	}
 
 	public String isInventoryDisplayDefaultValue(String fieldName) {
