@@ -48,7 +48,7 @@ Feature: GS-535 navigation menus validation
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
     Then Verify that Details is second column right on ID
-
+@debug
   Scenario: 110.For the front-end, search for the result that is on another page should return the result
     Given Admin user click on Login by entering valid username and password
     When Click on publisher option under Admin

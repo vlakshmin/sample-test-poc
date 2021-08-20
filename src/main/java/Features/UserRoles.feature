@@ -104,7 +104,7 @@ Feature: User Roles
     When Click on Close button
     Then Verify "Users" sub menu is not displayed
     Then Verify "Demand Sources" sub menu is not displayed
-
+@debug
   Scenario: 163.Verify for a single publisher user login, in the profile page, the user cannot edit the publisher details
     Given Single Publisher user login to RX UI with valid username and password
     When Click on user info main menu

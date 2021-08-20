@@ -39,7 +39,7 @@ Feature: Targeting page regression
     And Add Advertiser in the general card of Rule
     Then Verify that error disapear according to fields filled
       |The Advertisers field is required|
-
+  @debug
   Scenario:  126.Verify that Activate Deactivate buttons are displayed at same time for Targeting list page
     Given admin user login to RX UI with valid username and password
     When Click on Targeting option under Rules
