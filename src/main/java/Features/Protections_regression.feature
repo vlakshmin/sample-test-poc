@@ -303,7 +303,7 @@ Feature: Protections page regression
     And Select "All Ads" from Add Protections Targeting
     Then Verify that "Advertiser" is disabled
     Then Verify that "Ad Category" is disabled
-@debug
+
   Scenario: 81.Verify Protection Targeting section elements can be deleted
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu

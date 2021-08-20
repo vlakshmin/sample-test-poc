@@ -39,15 +39,15 @@ Feature: Adspots page regression
     And Verify that column "Active/Inactive" only shows relevant rows in the table with filter "Active"
     And Verify that column "Active/Inactive" only shows relevant rows in the table with filter "Inactive"
 
-@debug
+  @debug
   Scenario:  Verify searching adspots with avaiable and non available adspot name
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
     Then Verify the search functionality with the following names
-      | Name        | ColumnName   |
-      | Top Banner  | Ad Spot Name |
-      | zoo test    | Ad Spot Name |
+      | Name       | ColumnName   |
+      | zoo test   | Ad Spot Name |
+      | Top Banner | Ad Spot Name |
 
 
   Scenario:  Verify enabling and disabling of an adspot from the overview page
@@ -813,7 +813,7 @@ Feature: Adspots page regression
     And Hover over adspot details button
     Then Verify adspot details data is correct
 
-@debug
+
   Scenario: 2.3.4.Verify adspot pop-up floor prices/ad sizes/video playback method and duration
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
