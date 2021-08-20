@@ -109,7 +109,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 			String columnName = list.get(i).get("ColumnName");
 			adspotsPage.searchAdspots(adspotName);
 			waitForPageLoaderToDisappear();
-			wait.until(ExpectedConditions.visibilityOf(adspotsPage.clearSearchButton));
 			WebElement elem = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[1]"));
 			if (elem.getText().equals("No data available")) {
 				log.info("The searched adspot named as " + adspotName + "is not available");

@@ -203,6 +203,7 @@ public class RXAdspotsPage extends RXBasePage {
 		WebElement elem = driverWait().until(ExpectedConditions.visibilityOf(adSpotsSearchField));
 		if(clearSearchButton.isEnabled()) {
 			clearSearchButton.click();
+			waitForPageLoaderToDisappear();
 		}
 		elem.sendKeys(text);
 	}
