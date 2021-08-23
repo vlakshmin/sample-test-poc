@@ -29,6 +29,7 @@ public class ProfileStepDefinition extends RXBaseClass {
 	RXLoginPage logain;
 	PublisherListPage pubListPgs;
 	Logger log = Logger.getLogger(ProfileStepDefinition.class);
+	WebDriverWait wait = new WebDriverWait(driver,10);
 
 	public ProfileStepDefinition() {
 		super();
@@ -79,17 +80,16 @@ public class ProfileStepDefinition extends RXBaseClass {
 		Random rand = new Random();
 		int n = rand.nextInt(50);
 		newPassword = "Passwrd" + n;
-		System.out.println("Before change pwd a new pass" + newPassword);
-		System.out.println("Old Password" + prop.getProperty("password"));
+//		System.out.println("Before change pwd a new pass" + newPassword);
+//		System.out.println("Old Password" + prop.getProperty("password"));
 		proPage.enterChangePassword(prop.getProperty("password"), newPassword, newPassword);
-		System.out.println("After change pwd a new pass" + newPassword);
+//		System.out.println("After change pwd a new pass" + newPassword);
 
 	}
 
 	@Then("^Change password should be success$")
 	public void change_password_should_be_success() throws Throwable {
 		proPage.clickUpdatePassword();
-		WebDriverWait wait = new WebDriverWait(driver,10);
 		WebElement element =wait.until(ExpectedConditions.visibilityOf(proPage.updatedTheChangePwd));
 		Assert.assertEquals(element.getText(), "UPDATED!");
 //		boolean element =wait.until(ExpectedConditions.(proPage.updatedTheChangePwd, "Updated!"));
@@ -105,9 +105,9 @@ public class ProfileStepDefinition extends RXBaseClass {
 		  out.close();
 		 
 		driver.manage().timeouts().pageLoadTimeout(RXUtile.PAGELOAD_TIME, TimeUnit.SECONDS);
-		System.out.println("Password Changed");
+//		System.out.println("Password Changed");
 		proPage.clickOnLogOut();
-		System.out.println("Logout Successfull");
+//		System.out.println("Logout Successfull");
 //		driver.close();
 	}
 
@@ -134,7 +134,6 @@ public class ProfileStepDefinition extends RXBaseClass {
 	@Then("^Change password should fail$")
 	public void change_password_should_not_be_success() throws Throwable {
 		proPage.clickUpdatePassword();
-		WebDriverWait wait = new WebDriverWait(driver,10);
 		WebElement element =wait.until(ExpectedConditions.visibilityOf(proPage.updatedTheChangePwd));
 		Assert.assertEquals(element.getText(), "FAILED!");
 		
@@ -159,7 +158,6 @@ public class ProfileStepDefinition extends RXBaseClass {
 
 	@Then("^user is displayed with miss-match of New Password and Confirmation password$")
 	public void user_is_displayed_with_miss_match_of_New_Password_and_Confirmation_password() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver,10);
 		WebElement element =wait.until(ExpectedConditions.visibilityOf(proPage.newPwdConfpwdMismatch));
 		Assert.assertEquals(element.getText(), "The confirmPassword field confirmation does not match");
 	}

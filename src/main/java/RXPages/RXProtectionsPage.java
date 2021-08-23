@@ -100,7 +100,7 @@ public class RXProtectionsPage extends RXBasePage {
 	// Get the text of the Protections page
     public String getPageHeading() {
         WebElement elem = wait.until(ExpectedConditions.visibilityOf(protectionsPageHeader));
-        System.out.println(elem.getText());
+//        System.out.println(elem.getText());
         return elem.getText();
     }
 
@@ -266,7 +266,11 @@ public class RXProtectionsPage extends RXBasePage {
 	}
 	
 	public WebElement getRemoveButton(String item) {
-    	return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/following-sibling::button"));
+    	if(item.equals("All Ads")){
+			return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/following-sibling::button"));
+		}else {
+			return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/parent::div/following-sibling::span/div/div/button"));
+		}
 	}
 
 	public String isInventoryDisplayDefaultValue(String fieldName) {

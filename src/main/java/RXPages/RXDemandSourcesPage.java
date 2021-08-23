@@ -31,7 +31,7 @@ public class RXDemandSourcesPage extends RXBasePage{
     public WebElement endpointURIError;
 
     //Explicit Wait
-    WebDriverWait wait = new WebDriverWait(driver, 30);
+    WebDriverWait wait = new WebDriverWait(driver, 10);
 
     public RXDemandSourcesPage(){
         PageFactory.initElements(driver, this);
@@ -40,7 +40,7 @@ public class RXDemandSourcesPage extends RXBasePage{
     public String getUserPageHeading()
     {
         WebElement elem = wait.until(ExpectedConditions.visibilityOf(demandPageHeader));
-        System.out.println(elem.getText());
+//        System.out.println(elem.getText());
         return elem.getText();
     }
 

@@ -25,7 +25,7 @@ public class TargetingPageStepsDefinition extends RXTargetingPage    {
 	RXNavOptions navOptions;
 	RXAdspotsPage adspotsPage;
 	Logger log = Logger.getLogger(TargetingPageStepsDefinition.class);
-	WebDriverWait wait = new WebDriverWait(driver,30);
+	WebDriverWait wait = new WebDriverWait(driver,10);
 	String enteredPublisherName;
 	String enteredRuleName;
 	List<String> enteredRuleNameList = new ArrayList<String>();;
@@ -133,14 +133,12 @@ public void verifyShowStats(String column, String filter) throws InterruptedExce
 
 	@Then("^Click on Save Rule button$")
 	public void click_on_Save_Rule_button() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(targetingPage.saveButton));
 		targetingPage.saveButton.click();
 	}
 
 	@Then("^Enter the following data in the general card of Rule$")
 	public void enter_the_following_data_in_the_general_card_of_Rule(DataTable dt) throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -163,7 +161,7 @@ public void verifyShowStats(String column, String filter) throws InterruptedExce
 						targetingPage.selectValueFromDropdown(value);
 					}
 					enteredPublisherName = adspotsPage.publisherNameField.getText();
-					System.out.println("publisher entered as :" + enteredPublisherName);
+//					System.out.println("publisher entered as :" + enteredPublisherName);
 					wait.until(ExpectedConditions.visibilityOf(targetingPage.ruleNameField));
 					break;
 
@@ -174,7 +172,7 @@ public void verifyShowStats(String column, String filter) throws InterruptedExce
 					Calendar cal = Calendar.getInstance();
 					targetingPage.ruleNameField.sendKeys(value + cal.getTimeInMillis());
 					enteredRuleName = targetingPage.ruleNameField.getAttribute("value");
-					System.out.println("Entered Auction name:" + enteredRuleName);
+//					System.out.println("Entered Auction name:" + enteredRuleName);
 					break;
 
 				default:
@@ -273,7 +271,7 @@ public void verifyShowStats(String column, String filter) throws InterruptedExce
 			}
 			if(inactive.equals(reqActive) && num1 > 0) {
 				targetingPage.ruleCheckBox(k+1).click();
-				System.out.println(targetingPage.ruleName(k+1));
+//				System.out.println(targetingPage.ruleName(k+1));
 				enteredRuleNameList.add(targetingPage.ruleName(k+1));
 				num1--;
 			}
@@ -290,7 +288,7 @@ public void verifyShowStats(String column, String filter) throws InterruptedExce
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String expectedMessage = list.get(i).get("Message");
-			System.out.println("Check if Banner Message is displayed >>> "+ expectedMessage);
+//			System.out.println("Check if Banner Message is displayed >>> "+ expectedMessage);
 			Assert.assertFalse(targetingPage.getElementByXpathWithParameter(targetingPage.changePubBannerMsgXpath, expectedMessage).isDisplayed());
 		}
 	}
@@ -300,7 +298,7 @@ public void verifyShowStats(String column, String filter) throws InterruptedExce
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String expectedMessage = list.get(i).get("Message");
-			System.out.println("Banner Message "+ targetingPage.getChangePublisherBannerMsg());
+//			System.out.println("Banner Message "+ targetingPage.getChangePublisherBannerMsg());
 			Assert.assertEquals(targetingPage.getChangePublisherBannerMsg(), expectedMessage);
 		}
 	}

@@ -180,7 +180,7 @@ public class RXPrivateAuctionsPage extends RXBasePage {
     static ArrayList<String> testData = new ArrayList<String>();
 
     // Explicit Wait
-    WebDriverWait wait = new WebDriverWait(driver, 1000);
+    WebDriverWait wait = new WebDriverWait(driver, 10);
 
     // Initialize page factory
     public RXPrivateAuctionsPage() {
@@ -195,13 +195,12 @@ public class RXPrivateAuctionsPage extends RXBasePage {
     public String getPageHeading() {
 
         WebElement elem = wait.until(ExpectedConditions.visibilityOf(auctionPageHeader));
-        System.out.println(elem.getText());
+//        System.out.println(elem.getText());
         return elem.getText();
 
     }
 
     public void clickOverViewEditbutton() {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.visibilityOf(overviewEditbutton));
         if (overviewEditbutton.isDisplayed()) {
             overviewEditbutton.click();
@@ -209,7 +208,6 @@ public class RXPrivateAuctionsPage extends RXBasePage {
     }
 
     public void clickOverViewEnablebutton() {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.visibilityOf(overviewEnablebutton));
         String enableText = overviewEnablebutton.getText().replaceAll("\\s", "");
         if (enableText.equals("ACTIVATEPRIVATEAUCTION")) {
@@ -218,7 +216,6 @@ public class RXPrivateAuctionsPage extends RXBasePage {
     }
 
     public void clickOverViewDisablebutton() {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.visibilityOf(overviewDisablebutton));
         if (overviewDisablebutton.isDisplayed()) {
             overviewDisablebutton.click();
@@ -400,7 +397,7 @@ public void selectTargetingInventoryChildItem(String itemName) {
 	}
 
 	public WebElement inventary_child_items_displayed(String child_itemName) {
-		return driver.findElement(By.xpath("//div[contains(text() , '" + child_itemName + "')]/ancestor::tbody/tr[2]/td[4]"));
+		return driver.findElement(By.xpath("//div[contains(text() , '" + child_itemName + "')]/parent::td/following-sibling::td[contains(@class,'options')]"));
 	}
 
 	public void verify_that_Details_matched(WebElement e, Map<String, String> targeting) {
@@ -437,7 +434,7 @@ public void selectTargetingInventoryChildItem(String itemName) {
         try
         {
         	element.isDisplayed();
-        	System.out.println(element.isDisplayed());
+//        	System.out.println(element.isDisplayed());
             return true;
         }
         catch (NoSuchElementException e)

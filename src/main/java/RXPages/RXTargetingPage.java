@@ -77,7 +77,7 @@ public class RXTargetingPage extends RXBasePage  {
 
 	
 	//Explicit Wait
-	WebDriverWait wait = new WebDriverWait(driver, 30);
+	WebDriverWait wait = new WebDriverWait(driver, 10);
 	
 	// Initialize page factory
 	public RXTargetingPage()
@@ -93,7 +93,7 @@ public class RXTargetingPage extends RXBasePage  {
 		{
 			
 			WebElement elem = wait.until(ExpectedConditions.visibilityOf(targetingPageHeader));
-			System.out.println(elem.getText());
+//			System.out.println(elem.getText());
 			return elem.getText();
 			
 		}

@@ -40,7 +40,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		rxUTL =new RXUtile();
 
 	}
-	WebDriverWait wait = new WebDriverWait(driver, 50);
+	WebDriverWait wait = new WebDriverWait(driver, 10);
 	JavascriptExecutor js = (JavascriptExecutor) driver;
 	public String enteredPublisher;
 	public String enteredDSP;
@@ -60,7 +60,6 @@ public class DealsPageStepDefinition extends RXBaseClass {
 				+ pubListPgs.logodisplayed());
 		Assert.assertTrue(pubListPgs.logodisplayed());
 		navOptions.expandSales();
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.dealsLabel));
 		navOptions.dealsLabel.click();
 
@@ -68,7 +67,6 @@ public class DealsPageStepDefinition extends RXBaseClass {
 
 	@When("^Click on Deals sub menu$")
 	public void check_for_Adspot() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.dealsLabel));
 		navOptions.dealsLabel.click();
 
@@ -123,7 +121,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 			List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 			for (Map<String,String> map: list) {
 				String columnName = map.get("ColumnName");
-				System.out.println(columnName);
+//				System.out.println(columnName);
 				Assert.assertTrue(columnsNamePresent.contains(columnName));
 			}
 		}
@@ -198,7 +196,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		for (Map<String, String> stringMap : list) {
 			for (String key : stringMap.keySet()) {
 				value = stringMap.get(key);
-				System.out.println("=== select/enter value for " + key + " ===");
+//				System.out.println("=== select/enter value for " + key + " ===");
 				switch (key) {
 					case "publisher":
 						dealsPage.selectPublisherByName(value);
@@ -277,7 +275,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String expectedMessage = list.get(i).get("Message");
-			System.out.println("Banner Message "+ dealsPage.getChangePublisherBannerMsg());
+//			System.out.println("Banner Message "+ dealsPage.getChangePublisherBannerMsg());
 			Assert.assertEquals(dealsPage.getChangePublisherBannerMsg(), expectedMessage);
 
 		}
@@ -288,7 +286,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String expectedMessage = list.get(i).get("Message");
-			System.out.println("Check if Banner Message is displayed >>> "+ expectedMessage);
+//			System.out.println("Check if Banner Message is displayed >>> "+ expectedMessage);
 			Assert.assertFalse(dealsPage.getElementByXpathWithParameter(dealsPage.changePubBannerMsgXpath, expectedMessage).isDisplayed());
 
 		}
@@ -312,36 +310,36 @@ public class DealsPageStepDefinition extends RXBaseClass {
 			switch (fieldName) {
 			
 			case "Publisher Name":
-				System.out.println("Entered Publisher Name :"+ enteredPublisher);
+//				System.out.println("Entered Publisher Name :"+ enteredPublisher);
 				Assert.assertEquals(dealsPage.publisherNamesEntered.getText(),enteredPublisher);
 				break;
 			case "Deal Name":
-				System.out.println("Entered Deal Name :"+ dealsPage.EntereddealName);
+//				System.out.println("Entered Deal Name :"+ dealsPage.EntereddealName);
 				Assert.assertEquals(dealsPage.dealName.getAttribute("value"), dealsPage.EntereddealName);
 
 				break;
 			case "Private Auction":
-				System.out.println("Entered Private Auction :"+ dealsPage.enteredPrivateAuct);
+//				System.out.println("Entered Private Auction :"+ dealsPage.enteredPrivateAuct);
 				Assert.assertEquals(dealsPage.privateActionFieldValue.getText(), dealsPage.enteredPrivateAuct);
 
 				break;
 			case "Date Range":
-				System.out.println("Entered enteredDateRange :"+ dealsPage.enteredDateRange);
+//				System.out.println("Entered enteredDateRange :"+ dealsPage.enteredDateRange);
 				Assert.assertEquals(dealsPage.dateRange.getAttribute("value"), dealsPage.enteredDateRange);
 
 				break;
 			case "Value":
-				System.out.println("Entered enteredValue :"+ dealsPage.enteredValue);
+//				System.out.println("Entered enteredValue :"+ dealsPage.enteredValue);
 				Assert.assertEquals(dealsPage.value.getAttribute("value"), dealsPage.enteredValue);
 
 				break;
 			case "Currency":
-				System.out.println("Entered currencyFiledValue :"+ dealsPage.currencyFiledValue);
+//				System.out.println("Entered currencyFiledValue :"+ dealsPage.currencyFiledValue);
 				Assert.assertEquals(dealsPage.currencyValue.getText(), dealsPage.currencyFiledValue);
 
 				break;
 			case "DSP":
-				System.out.println("Entered enteredDSPValue :"+ dealsPage.enteredDSPValue);
+//				System.out.println("Entered enteredDSPValue :"+ dealsPage.enteredDSPValue);
 				Assert.assertEquals(dealsPage.dspValueDiv.getText(), enteredDSP);
 
 				break;
@@ -552,7 +550,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String expectedMessage = list.get(i).get("Message");
-			System.out.println("Banner Message "+ dealsPage.getChangeDSPBannerMsg());
+//			System.out.println("Banner Message "+ dealsPage.getChangeDSPBannerMsg());
 			Assert.assertEquals(dealsPage.getChangeDSPBannerMsg(), expectedMessage);
 
 		}
@@ -572,7 +570,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	}
 	@Then("^Verify deal contains copy deal id message$")
 	public void verify_deal_id_has_copy_message() throws Throwable {
-		System.out.println(dealsPage.getBannerMessage());
+//		System.out.println(dealsPage.getBannerMessage());
 		Assert.assertTrue(dealsPage.getBannerMessage().toLowerCase().contains("copy deal id"));
 	}
 	@When("^Verify banner message about inactive buyers$")
@@ -635,7 +633,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		  for(int i=1;i<=9;i++)
 			{
 			  	dealsPage.clickAddMoreSeats(); 
-			  	System.out.println("Count time"+i);
+//			  	System.out.println("Count time"+i);
 			}
 	  }
 
@@ -722,7 +720,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	@Then("^Verify \"([^\"]*)\" seat panels are displayed$")
 	public void verify_seat_panels_are_displayed(String arg0) throws Throwable {
 		int buyersCount = dealsPage.getBuyersCardPaddingElemts();
-		System.out.println("Buyer count >>> " + buyersCount);
+//		System.out.println("Buyer count >>> " + buyersCount);
 		if(buyersCount != Integer.parseInt(arg0)){
 			fail(buyersCount + " seat panels are displayed, not " + arg0);
 		}
@@ -732,8 +730,8 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	public void verify_no_buyers_entities_were_saved() {
 		int buyersCount = dealsPage.getBuyersCardPaddingElemts();
 		String buyerCardLabel = dealsPage.buyerCardLabel.getText().trim();
-		System.out.println("Buyer count >>> " + buyersCount);
-		System.out.println("Buyer Card Label >>> " + buyerCardLabel);
+//		System.out.println("Buyer count >>> " + buyersCount);
+//		System.out.println("Buyer Card Label >>> " + buyerCardLabel);
 		if(buyersCount != 1){
 			fail("More than one buyers entities are displayed.");
 		}
@@ -776,91 +774,91 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	@Then("^Verify entity page is disabled$")
 	public void verify_entity_page_is_disabled() {
 		//Publisher name
-		System.out.println("Publisher Name field's class attribute >>> " + dealsPage.publisherNamesEntered.getAttribute("class"));
+//		System.out.println("Publisher Name field's class attribute >>> " + dealsPage.publisherNamesEntered.getAttribute("class"));
 		if( !dealsPage.publisherNamesEntered.getAttribute("class").contains("disabled")){
 			fail("Publisher Name in Create Deal is not disabled.");
 		}
 
 		//Deal Name
-		System.out.println("Deal Name field's enabled >>> " + dealsPage.dealName.isEnabled());
+//		System.out.println("Deal Name field's enabled >>> " + dealsPage.dealName.isEnabled());
 		if( dealsPage.dealName.isEnabled()){
 			fail("Deal Name in Create Deal is not disabled.");
 		}
 
 		//Floor Price
-		System.out.println("Floor Price field's enabled >>> " + dealsPage.value.isEnabled());
+//		System.out.println("Floor Price field's enabled >>> " + dealsPage.value.isEnabled());
 		if( dealsPage.value.isEnabled()){
 			fail("Floor Price in Create Deal is not disabled.");
 		}
 
 		//Currency
-		System.out.println("Currency field's class attribute >>> " + dealsPage.currencyValue.getAttribute("class"));
+//		System.out.println("Currency field's class attribute >>> " + dealsPage.currencyValue.getAttribute("class"));
 		if( !dealsPage.currencyValue.getAttribute("class").contains("disabled")){
 			fail("Currency in Create Deal is not disabled.");
 		}
 
 		//DSP
-		System.out.println("DSP field's enabled >>> " + dealsPage.dspValueInput.isEnabled());
+//		System.out.println("DSP field's enabled >>> " + dealsPage.dspValueInput.isEnabled());
 		if( dealsPage.dspValueInput.isEnabled()){
 			fail("DSP in Create Deal is not disabled.");
 		}
 
 		//Add more seats button
-		System.out.println("Add more seats button's enabled >>> " + dealsPage.addMoreSeats.isEnabled());
+//		System.out.println("Add more seats button's enabled >>> " + dealsPage.addMoreSeats.isEnabled());
 		if( dealsPage.addMoreSeats.isEnabled()){
 			fail("Add more seats button in Create Deal is not disabled.");
 		}
 
 		//Enable button
-		System.out.println("Enable button's enabled >>> " + dealsPage.enableBtnInBuyerPanel.isEnabled());
+//		System.out.println("Enable button's enabled >>> " + dealsPage.enableBtnInBuyerPanel.isEnabled());
 		if( dealsPage.enableBtnInBuyerPanel.isEnabled()){
 			fail("Enable button in Create Deal is not disabled.");
 		}
 
 		//DSP Seat ID
-		System.out.println("DSP Seat ID's enabled >>> " + dealsPage.dSPSeatID.isEnabled());
+//		System.out.println("DSP Seat ID's enabled >>> " + dealsPage.dSPSeatID.isEnabled());
 		if( dealsPage.dSPSeatID.isEnabled()){
 			fail("DSP Seat ID in Create Deal is not disabled.");
 		}
 
 		//DSP Seat Name
-		System.out.println("DSP Seat Name's enabled >>> " + dealsPage.dSPSeatName.isEnabled());
+//		System.out.println("DSP Seat Name's enabled >>> " + dealsPage.dSPSeatName.isEnabled());
 		if( dealsPage.dSPSeatName.isEnabled()){
 			fail("DSP Seat Name in Create Deal is not disabled.");
 		}
 
 		//Advertiser ID
-		System.out.println("Advertiser ID's enabled >>> " + dealsPage.AdvertiserId.isEnabled());
+//		System.out.println("Advertiser ID's enabled >>> " + dealsPage.AdvertiserId.isEnabled());
 		if( dealsPage.AdvertiserId.isEnabled()){
 			fail("Advertiser ID in Create Deal is not disabled.");
 		}
 
 		//Advertiser Name
-		System.out.println("Advertiser Name's enabled >>> " + dealsPage.advertiserName.isEnabled());
+//		System.out.println("Advertiser Name's enabled >>> " + dealsPage.advertiserName.isEnabled());
 		if( dealsPage.advertiserName.isEnabled()){
 			fail("Advertiser Name in Create Deal is not disabled.");
 		}
 
 		//DSP Seat Passthrough String
-		System.out.println("DSP Seat Passthrough String's enabled >>> " + dealsPage.dSPSeatPassthroughString.isEnabled());
+//		System.out.println("DSP Seat Passthrough String's enabled >>> " + dealsPage.dSPSeatPassthroughString.isEnabled());
 		if( dealsPage.dSPSeatPassthroughString.isEnabled()){
 			fail("DSP Seat Passthrough String in Create Deal is not disabled.");
 		}
 
 		//DSP Domain Advertiser Passthrough String
-		System.out.println("DSP Domain Advertiser Passthrough String's enabled >>> " + dealsPage.dSPDomainAdvertiserPassthroughString.isEnabled());
+//		System.out.println("DSP Domain Advertiser Passthrough String's enabled >>> " + dealsPage.dSPDomainAdvertiserPassthroughString.isEnabled());
 		if( dealsPage.dSPDomainAdvertiserPassthroughString.isEnabled()){
 			fail("DSP Domain Advertiser Passthrough String in Create Deal is not disabled.");
 		}
 
 		//Delete button
-		System.out.println("Delete button's enabled >>> " + dealsPage.deleteBtnInBuyerPanel.isEnabled());
+//		System.out.println("Delete button's enabled >>> " + dealsPage.deleteBtnInBuyerPanel.isEnabled());
 		if( dealsPage.deleteBtnInBuyerPanel.isEnabled()){
 			fail("Delete button in Create Deal is not disabled.");
 		}
 
 		//Save Deal button
-		System.out.println("Save Deal button's enabled >>> " + dealsPage.saveButton.isEnabled());
+//		System.out.println("Save Deal button's enabled >>> " + dealsPage.saveButton.isEnabled());
 		if( dealsPage.saveButton.isEnabled()){
 			fail("Save Deal button in Create Deal is not disabled.");
 		}
@@ -889,7 +887,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	public void click_on_any_deal_name_in_Deals_list(String currency) {
 		int rownum = 0;
 		for(int i = 0; i < dealsPage.currencyColumnList.size(); i++){
-			System.out.println("dealsPage.currencyColumnList.get(i).getText() >>> " + dealsPage.currencyColumnList.get(i).getText().trim());
+//			System.out.println("dealsPage.currencyColumnList.get(i).getText() >>> " + dealsPage.currencyColumnList.get(i).getText().trim());
 			if(!dealsPage.currencyColumnList.get(i).getText().trim().equals(currency)){
 				rownum = i+1;
 				break;
@@ -911,7 +909,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (Map<String, String> stringMap : list) {
 			String expectedMessage = stringMap.get("Message");
-			System.out.println("the actual result of Currency Banner Message >>> " + dealsPage.getChangeCurrencyBannerMsg());
+//			System.out.println("the actual result of Currency Banner Message >>> " + dealsPage.getChangeCurrencyBannerMsg());
 			Assert.assertEquals(dealsPage.getChangeCurrencyBannerMsg(), expectedMessage);
 		}
 	}
@@ -958,7 +956,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		js.executeScript("arguments[0].scrollIntoView();",dealsPage.dateRange);
 		wait.until(ExpectedConditions.visibilityOf(dealsPage.dateRangeErrorMsg));
 		String msg = dealsPage.dateRangeErrorMsg.getText().trim();
-		System.out.println("dealsPage.dateRangeErrorMsg.getText().trim() >>> " + msg);
+//		System.out.println("dealsPage.dateRangeErrorMsg.getText().trim() >>> " + msg);
 		getDataFromTable(dt).forEach(e ->
 				Assert.assertEquals(msg,e.getValue()));
 	}
@@ -979,7 +977,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (Map<String, String> stringMap : list) {
 			String expectedMessage = stringMap.get("Message");
-			System.out.println("The actual result of the DSP info Message >>> " + dealsPage.dspInfo.getText().trim());
+//			System.out.println("The actual result of the DSP info Message >>> " + dealsPage.dspInfo.getText().trim());
 			Assert.assertEquals(dealsPage.dspInfo.getText().trim(), expectedMessage);
 		}
 	}
@@ -988,7 +986,7 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	public void verifyTheErrorMessageDisplaysBelowFloorPriceInput(DataTable dt) {
 		wait.until(ExpectedConditions.visibilityOf(dealsPage.floorPriceErrorMsg));
 		String msg = dealsPage.floorPriceErrorMsg.getText().trim();
-		System.out.println("dealsPage.floorPriceErrorMsg.getText().trim() >>> " + msg);
+//		System.out.println("dealsPage.floorPriceErrorMsg.getText().trim() >>> " + msg);
 		getDataFromTable(dt).forEach(e ->
 				Assert.assertEquals(msg,e.getValue()));
 	}
@@ -1008,11 +1006,11 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	@When("^Select 2nd value that below the highlighted dropdown value$")
 	public void select2ndValueThatBelowTheHighlightedDropdownValue() {
 		String secondValue = dealsPage.valueBelowHighlightedDropdownValue.getText().trim();
-		System.out.println(" dealsPage.valueBelowHighlightedDropdownValue.getText() >>> " + secondValue);
+//		System.out.println(" dealsPage.valueBelowHighlightedDropdownValue.getText() >>> " + secondValue);
 		dealsPage.valueBelowHighlightedDropdownValue.click();
 
 		String selectedValue = dealsPage.dspValueDiv.getText().trim();
-		System.out.println(" dealsPage.dspValueDiv.getText() >>> " + selectedValue);
+//		System.out.println(" dealsPage.dspValueDiv.getText() >>> " + selectedValue);
 
 		Assert.assertEquals(selectedValue, secondValue);
 	}
@@ -1028,21 +1026,21 @@ public class DealsPageStepDefinition extends RXBaseClass {
 		String dealID = "";
 		int loop = Integer.parseInt(count);
 		for(int i = 0; i < loop; i++) {
-			System.out.println("select " + status + " deal loop >>> " + loop);
+//			System.out.println("select " + status + " deal loop >>> " + loop);
 			for(int j = 0; j < dealsPage.statusColumnsInDealsList.size(); j++){
 				String value = dealsPage.statusColumnsInDealsList.get(j).getText().trim();
-				System.out.println("status column value >>> " + value);
+//				System.out.println("status column value >>> " + value);
 				if(value.equals(status)){
 					rowNum = j + 1;
-					System.out.println(status + " in row number >>> " + rowNum);
+//					System.out.println(status + " in row number >>> " + rowNum);
 					if(!dealsPage.verifyIfCheckboxIsChecked(rowNum)){
 						dealsPage.getElementByXpathWithParameter(dealsPage.checkboxByRowNum, String.valueOf(rowNum)).click();
 						dealID = dealsPage.getElementByXpathWithParameter(dealsPage.idByRowNumber, String.valueOf(rowNum)).getText().trim();
 						if(status.equals("Active")){
-							System.out.println("Store Active deal ID"  + dealID + " to activeDealIDList");
+//							System.out.println("Store Active deal ID"  + dealID + " to activeDealIDList");
 							this.activeDealIDList.add(dealID);
 						}else{
-							System.out.println("Store Inactive deal ID"  + dealID +" to inactiveDealIDList");
+//							System.out.println("Store Inactive deal ID"  + dealID +" to inactiveDealIDList");
 							this.inactiveDealIDList.add(dealID);
 						}
 						break;
@@ -1105,13 +1103,13 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	public void verifyTheSelectedDealChangeToStatusInDealsListView(String status, String expectedStatus) {
 		if(status.equals("Inactive")){
 			for(String id : this.inactiveDealIDList){
-				System.out.println("Deal ID >>> " + id);
+//				System.out.println("Deal ID >>> " + id);
 				Assert.assertEquals(dealsPage.getElementByXpathWithParameter(dealsPage.statusByID, id).getText().trim(), expectedStatus);
 			}
 			this.inactiveDealIDList.clear();
 		}else{
 			for(String id : this.activeDealIDList){
-				System.out.println("Deal ID >>> " + id);
+//				System.out.println("Deal ID >>> " + id);
 				Assert.assertEquals(dealsPage.getElementByXpathWithParameter(dealsPage.statusByID, id).getText().trim(), expectedStatus);
 			}
 			this.activeDealIDList.clear();
@@ -1134,22 +1132,22 @@ public class DealsPageStepDefinition extends RXBaseClass {
 	@Then("^Verify the default start date in Date Range should be today in Create Deal page$")
 	public void verifyTheDefaultStartDateInDateRangeShouldBeTodayInCreateDealPage() {
 		String dateRangeValue = dealsPage.dateRange.getAttribute("value");
-		System.out.println("dateRangeValue >>> " + dateRangeValue);
+//		System.out.println("dateRangeValue >>> " + dateRangeValue);
 		startDate = dateRangeValue.split(" ")[0].trim();
-		System.out.println("startDate in Date Range >>> " + startDate);
+//		System.out.println("startDate in Date Range >>> " + startDate);
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String today = LocalDate.now(ZoneId.of("GMT")).format(formatter);
-		System.out.println("today >>> " + today);
+//		System.out.println("today >>> " + today);
 		Assert.assertEquals(startDate, today);
 	}
 
 	@Then("^Verify end date should be 90 days in the future in Create Deal page$")
 	public void verifyEndDateShouldBe90DaysInTheFutureInCreateDealPage() throws ParseException {
 		String dateRangeValue = dealsPage.dateRange.getAttribute("value");
-		System.out.println("dateRangeValue >>> " + dateRangeValue);
+//		System.out.println("dateRangeValue >>> " + dateRangeValue);
 		endDate = dateRangeValue.split(" ")[2].trim();
-		System.out.println("endDate in Date Range >>> " + endDate);
+//		System.out.println("endDate in Date Range >>> " + endDate);
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate start = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));

@@ -40,7 +40,7 @@ public class DemandSourcesPageStepsDefinition extends RXDemandSourcesPage {
         navOptions = new RXNavOptions();
         pubListPgs = new PublisherListPage();
     }
-    WebDriverWait wait = new WebDriverWait(driver, 30);
+    WebDriverWait wait = new WebDriverWait(driver, 10);
     JavascriptExecutor js = (JavascriptExecutor) driver;
 
     @Given("^Click on Demand Sources option under Admin$")

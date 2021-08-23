@@ -122,6 +122,8 @@ public class RXNavOptions extends RXBaseClass {
 	public String nameLinkString = "//table/tbody/tr[1]/td[%s]/a";
 	public String saveBtnString = "//button[@type='submit']";
 
+	WebDriverWait wait = new WebDriverWait(driver, 10);
+
 	public RXNavOptions() {
 		PageFactory.initElements(driver, this);
 		rxUTL = new RXUtile();
@@ -193,8 +195,7 @@ public class RXNavOptions extends RXBaseClass {
 	// Clicking expansion of Admin
 
 	public void expandAdmin() throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		Thread.sleep(2000);
+//		Thread.sleep(2000);
 		WebElement element = wait.until(ExpectedConditions.visibilityOf(adminExpensionBtn));
 		if(adminExpensionDiv.getAttribute("aria-expanded").equals("false")){
 			element.click();
@@ -204,7 +205,6 @@ public class RXNavOptions extends RXBaseClass {
 	// Clicking expansion of Inventory
 
 	public void expandInventory() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		WebElement element = wait.until(ExpectedConditions.visibilityOf(inventoryExpensionBtn));
 		if(inventoryExpensionDiv.getAttribute("aria-expanded").equals("false")){
 			element.click();
@@ -214,7 +214,6 @@ public class RXNavOptions extends RXBaseClass {
 	// Clicking expansion of Sales
 
 		public void expandSales() {
-			WebDriverWait wait = new WebDriverWait(driver, 30);
 			WebElement element = wait.until(ExpectedConditions.visibilityOf(salesExpensionBtn));
 			if(salesExpensionDiv.getAttribute("aria-expanded").equals("false")){
 				element.click();
@@ -223,7 +222,6 @@ public class RXNavOptions extends RXBaseClass {
 	// Clicking expansion of Rules
 
 	public void expandRules() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		WebElement element = wait.until(ExpectedConditions.visibilityOf(rulesExpensionBtn));
 		if(rulesExpensionDiv.getAttribute("aria-expanded").equals("false")){
 			element.click();
@@ -372,7 +370,7 @@ public class RXNavOptions extends RXBaseClass {
 				headerIndex = i + 1;
 			}
 		}
-		System.out.println("headerIndex >>> " + headerIndex);
+//		System.out.println("headerIndex >>> " + headerIndex);
 		return headerIndex;
 	}
 

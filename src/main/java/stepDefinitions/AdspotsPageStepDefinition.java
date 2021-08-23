@@ -68,6 +68,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 	}
 
 	JavascriptExecutor js = (JavascriptExecutor) driver;
+	WebDriverWait wait = new WebDriverWait(driver, 10);
 	private LinkedHashMap<String,String> detailsData = new LinkedHashMap<>();
 //=========================================================================================================	
 	// Verify if user is displayed with media list page on clicking media navigation
@@ -79,7 +80,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				+ pubListPgs.logodisplayed());
 		Assert.assertTrue(pubListPgs.logodisplayed());
 		navOptions.expandInventory();
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.adspotsUndrInventory));
 		navOptions.adspotsUndrInventory.click();
 		adSpotTypeEnteredValues.clear();
@@ -87,7 +87,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@When("^Click on Adspots sub menu$")
 	public void check_for_Adspot() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.adspotsUndrInventory));
 		navOptions.adspotsUndrInventory.click();
 
@@ -118,6 +117,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 			} else {
 				List<WebElement> coulmnData = navOptions.getColumnDataMatchingHeader(columnName);
 				for (int j = 0; j < coulmnData.size(); j++) {
+//					System.out.println("coulmnData.get(j).getText().trim() >>> " + coulmnData.get(j).getText().trim());
 					Assert.assertTrue(coulmnData.get(j).getText().trim().contains(adspotName));
 				}
 			}
@@ -232,7 +232,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 //Verify sorting of the table list columns
 	@Then("^Verify the sorting functionality with the following columns$")
 	public void verifySort(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 45);
 		driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//thead//th/span[text()='ID']/parent::th"))
 				.click();
 		List dataInEachColumn;
@@ -264,10 +263,10 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					List<WebElement> coulmnData2 = navOptions.getColumnDataMatchingHeader(columnName);
 					dataInEachColumnSorted = returnListOfColumnData(coulmnData2, columnName);
 					dataInEachColumn = new ArrayList(dataInEachColumnSorted);
-					System.out.println("Before sorting: " + dataInEachColumn);
+//					System.out.println("Before sorting: " + dataInEachColumn);
 					Collections.sort(dataInEachColumnSorted);
 					Collections.reverse(dataInEachColumnSorted);
-					System.out.println("After sorting: " + dataInEachColumnSorted);
+//					System.out.println("After sorting: " + dataInEachColumnSorted);
 					Assert.assertEquals(dataInEachColumn, dataInEachColumnSorted);
 
 				}
@@ -275,9 +274,9 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				List<WebElement> coulmnData1 = navOptions.getColumnDataMatchingHeader(columnName);
 				dataInEachColumnSorted = returnListOfColumnData(coulmnData1, columnName);
 				dataInEachColumn = new ArrayList(dataInEachColumnSorted);
-				System.out.println("Before sorting: " + dataInEachColumn);
+//				System.out.println("Before sorting: " + dataInEachColumn);
 				Collections.sort(dataInEachColumnSorted);
-				System.out.println("After sorting: " + dataInEachColumnSorted);
+//				System.out.println("After sorting: " + dataInEachColumnSorted);
 				Assert.assertEquals(dataInEachColumn, dataInEachColumnSorted);
 				}
 				break;
@@ -286,19 +285,19 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					List<WebElement> coulmnData1 = navOptions.getColumnDataMatchingHeader(columnName);
 					dataInEachColumnSorted = returnListOfColumnData(coulmnData1, columnName);
 					dataInEachColumn = new ArrayList(dataInEachColumnSorted);
-					System.out.println("Before sorting: " + dataInEachColumn);
+//					System.out.println("Before sorting: " + dataInEachColumn);
 					Collections.sort(dataInEachColumnSorted);
-					System.out.println("After sorting: " + dataInEachColumnSorted);
+//					System.out.println("After sorting: " + dataInEachColumnSorted);
 					Assert.assertEquals(dataInEachColumn, dataInEachColumnSorted);
 
 				}else {
 				List<WebElement> coulmnData2 = navOptions.getColumnDataMatchingHeader(columnName);
 				dataInEachColumnSorted = returnListOfColumnData(coulmnData2, columnName);
 				dataInEachColumn = new ArrayList(dataInEachColumnSorted);
-				System.out.println("Before sorting: " + dataInEachColumn);
+//				System.out.println("Before sorting: " + dataInEachColumn);
 				Collections.sort(dataInEachColumnSorted);
 				Collections.reverse(dataInEachColumnSorted);
-				System.out.println("After sorting: " + dataInEachColumnSorted);
+//				System.out.println("After sorting: " + dataInEachColumnSorted);
 				Assert.assertEquals(dataInEachColumn, dataInEachColumnSorted);
 				}
 				break;
@@ -338,7 +337,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 	@Then("^Verify following fields are mandatory for create page$")
 	public void verifyMandatorFields(DataTable dt) throws InterruptedException {
 		String expectedNotification;
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		Thread.sleep(1000);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
@@ -359,7 +357,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@When("^Verify the following message is displayed when the publisher changed$")
 	public void verifyMessageOnPublisherChange(DataTable dt) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String expectedMessage = list.get(i).get("Message");
@@ -373,7 +370,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@When("^Select \"(.*)\" on the publisher change banner$")
 	public void clickBannerAcceptOrCancel(String action) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@class='v-banner__actions']"))));
 		if (action.equalsIgnoreCase("Cancel")) {
 			driver.findElement(By.xpath("//div[@class='v-banner__actions']/button[1]")).click();
@@ -387,7 +383,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@When("^Click on save button$")
 	public void clickSaveBtn() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		Thread.sleep(5000);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.saveButton));
 		navOptions.saveButton.click();
@@ -404,7 +399,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@When("^Click on save button and wait for dialog to close$")
 	public void clickSaveBtnCloseDialog() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 45);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.saveButton));
 		navOptions.saveButton.click();
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(adspotsPage.createOrEditPopup)));
@@ -412,7 +406,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@When("^Select publisher name from the dropdown list item index (.*)$")
 	public void selectPublisherDropDown(int index) throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(adspotsPage.publisherNameDropDown));
 		adspotsPage.publisherNameDropDown.click();
 		wait.until(ExpectedConditions
@@ -422,13 +415,12 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 		dropDownValue.click();
 		Thread.sleep(5000);
 		enteredPublisherName = adspotsPage.publisherNameField.getText();
-		System.out.println("publisher entered as :" + enteredPublisherName);
+//		System.out.println("publisher entered as :" + enteredPublisherName);
 
 	}
 
 	@Then("^Enter the following data in the general card of adspot$")
 	public void enterGenaralCard(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		waitForCreatePageHeaderToBeVisible();
 		for (int i = 0; i < list.size(); i++) {
@@ -452,7 +444,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					selectValueFromDropdown(value);
 				}
 				enteredPublisherName = adspotsPage.publisherNameField.getText();
-				System.out.println("publisher entered as :" + enteredPublisherName);
+//				System.out.println("publisher entered as :" + enteredPublisherName);
 				wait.until(ExpectedConditions.visibilityOf(adspotsPage.categoriesDropDown));
 				break;
 			case "Active":
@@ -488,7 +480,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				}
 				adspotsPage.adSpotNameField.sendKeys(value);
 				enteredAdSpotName = value;
-				System.out.println("Entered Adspot name:" + enteredAdSpotName);
+//				System.out.println("Entered Adspot name:" + enteredAdSpotName);
 				break;
 			case "Related Media":
 				WebElement dropDownValueMedia;
@@ -513,7 +505,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				dropDownValueMedia.click();
 				Thread.sleep(2000);
 				enteredRelatedMedia = adspotsPage.relatedMediaField.getText();
-				System.out.println("Related Media entered as :" + enteredRelatedMedia);
+//				System.out.println("Related Media entered as :" + enteredRelatedMedia);
 				break;
 			case "Categories":
 				if (value.equalsIgnoreCase("ListValue")) {
@@ -548,7 +540,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					driver.findElement(By.xpath("//label[text()='Test Mode']")).click();
 					Thread.sleep(2000);
 					enteredCategories = adspotsPage.categoriesField.getText();
-					System.out.println("Categories entered as :" + enteredCategories);
+//					System.out.println("Categories entered as :" + enteredCategories);
 				}
 
 				break;
@@ -567,7 +559,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 					Thread.sleep(2000);
 					enteredFilter = adspotsPage.filterField.getText();
-					System.out.println("Filter entered as :" + enteredFilter);
+//					System.out.println("Filter entered as :" + enteredFilter);
 				}
 				break;
 			case "Position":
@@ -585,7 +577,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 					Thread.sleep(2000);
 					enteredPosition = adspotsPage.positionField.getText();
-					System.out.println("Categories entered as :" + enteredPosition);
+//					System.out.println("Categories entered as :" + enteredPosition);
 				}
 				break;
 			case "Default Ad Sizes":
@@ -626,7 +618,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					for (int k = 0; k < enteredSizesLsit.size(); k++) {
 						enteredDefaultSizes += enteredSizesLsit.get(k).getText();
 					}
-					System.out.println("Default Sizes entered as :" + enteredDefaultSizes);
+//					System.out.println("Default Sizes entered as :" + enteredDefaultSizes);
 					}
 				}
 				break;
@@ -638,7 +630,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				Thread.sleep(2000);
 				enteredDefaultPrice = adspotsPage.defaultPriceField.getAttribute("value") + ".00";
 				defaultPriceCurrency = adspotsPage.defaultPriceCurrency.getText();
-				System.out.println("Entered Default floor price:" + defaultPriceCurrency + enteredDefaultPrice);
+//				System.out.println("Entered Default floor price:" + defaultPriceCurrency + enteredDefaultPrice);
 				break;
 			default:
 				Assert.assertTrue(false, "The status fields supplied does not match with the input");
@@ -650,7 +642,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Enter the following data in the banner card of adspot$")
 	public void enterBannerCard(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -675,7 +666,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				bannerPriceCurrency = adspotsPage.bannerPriceCurrency.getText();
 				currencyCode = adspotsPage.getCurrencyCode(bannerPriceCurrency);
 				adSpotTypeEnteredValues.put("Banner Floor Price", bannerPriceCurrency + currencyCode + enteredBannerPrice);
-				System.out.println("Entered floor price for banner:" + bannerPriceCurrency + enteredBannerPrice);
+//				System.out.println("Entered floor price for banner:" + bannerPriceCurrency + enteredBannerPrice);
 				}
 				break;
 			case "Ad Sizes":
@@ -717,7 +708,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 						enteredBannerSizes += enteredSizesLsit.get(k).getText();
 					}
 					adSpotTypeEnteredValues.put("Banner Ad Sizes", enteredBannerSizes);
-					System.out.println("Banner Sizes entered as :" + enteredBannerSizes);
+//					System.out.println("Banner Sizes entered as :" + enteredBannerSizes);
 				}else if (value.equalsIgnoreCase("Default")) {
 					enteredBannerSizes = "Same as default";
 				}
@@ -733,7 +724,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Enter the following data in the in-banner video card of adspot$")
 	public void enterinBannerCard(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -758,8 +748,8 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				inBannerVideoPriceCurrency = adspotsPage.inBannerVideoPriceCurrency.getText();
 				currencyCode = adspotsPage.getCurrencyCode(inBannerVideoPriceCurrency);
 				adSpotTypeEnteredValues.put("Video Floor Price", inBannerVideoPriceCurrency + currencyCode + enteredInBannerVideoPrice);
-				System.out.println("Entered floor price for in-banner video:" + inBannerVideoPriceCurrency
-						+ enteredInBannerVideoPrice);
+//				System.out.println("Entered floor price for in-banner video:" + inBannerVideoPriceCurrency
+//						+ enteredInBannerVideoPrice);
 				}
 				break;
 			case "Ad Sizes":
@@ -801,7 +791,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					for (int k = 0; k < enteredSizesLsit.size(); k++) {
 						enteredInBannerVideoSizes += enteredSizesLsit.get(k).getText();
 					}
-					System.out.println("InBanner Video Sizes entered as :" + enteredInBannerVideoSizes);
+//					System.out.println("InBanner Video Sizes entered as :" + enteredInBannerVideoSizes);
 				}else if (value.equalsIgnoreCase("Default")) {
 					enteredInBannerVideoSizes = "Same as default";
 				}
@@ -826,7 +816,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					} else {
 					adSpotTypeEnteredValues.put("Video Min Duration", enteredMinVideoDuration);
 					}
-					System.out.println("Miniumum Video Duration entered as :" + enteredMinVideoDuration);
+//					System.out.println("Miniumum Video Duration entered as :" + enteredMinVideoDuration);
 				}
 				break;
 			case "Maximum Video Duration":
@@ -849,7 +839,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					} else {
 						adSpotTypeEnteredValues.put("Video Max Duration", enteredMaxVideoDuration);
 					}
-					System.out.println("Maximum Video Duration entered as :" + enteredMaxVideoDuration);
+//					System.out.println("Maximum Video Duration entered as :" + enteredMaxVideoDuration);
 				}
 				break;
 			case "Playback Methods":
@@ -891,7 +881,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					for (int k = 0; k < enteredSizesLsit.size(); k++) {
 						enteredInBannerPlayback += enteredSizesLsit.get(k).getText();
 					}
-					System.out.println("InBanner Video Playback Methods entered as :" + enteredInBannerPlayback);
+//					System.out.println("InBanner Video Playback Methods entered as :" + enteredInBannerPlayback);
 				}
 				break;
 			case "Video Placement Type":
@@ -927,7 +917,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 					Thread.sleep(3000);
 					enteredVideoPlacementType = adspotsPage.videoPlacementField.getText();
 					adSpotTypeEnteredValues.put("Video Placement Type", enteredVideoPlacementType);
-					System.out.println("Video Placement Type entered as :" + enteredVideoPlacementType);
+//					System.out.println("Video Placement Type entered as :" + enteredVideoPlacementType);
 
 				}
 				break;
@@ -941,7 +931,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Enter the following data in the native card of adspot$")
 	public void enterNativeCard(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -964,7 +953,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				nativePriceCurrency = adspotsPage.nativePriceCurrency.getText();
 				currencyCode = adspotsPage.getCurrencyCode(nativePriceCurrency);
 				adSpotTypeEnteredValues.put("Native Floor Price", nativePriceCurrency + currencyCode + enteredNativePrice);
-				System.out.println("Entered floor price for native:" + nativePriceCurrency + enteredNativePrice);
+//				System.out.println("Entered floor price for native:" + nativePriceCurrency + enteredNativePrice);
 				}
 				break;
 
@@ -978,7 +967,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Verify the following columns value with the created data for the general card of adspot$")
 	public void verifyGeneralCardValues(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -1045,7 +1033,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Verify the following columns value with the created data for the banner card of adspot$")
 	public void verifyBannerCardValues(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -1065,8 +1052,8 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 				for (int k = 0; k < enteredSizesLsit.size(); k++) {
 					sizes += enteredSizesLsit.get(k).getText();
 				}
-				System.out.println(sizes);
-				System.out.println(enteredBannerSizes);
+//				System.out.println(sizes);
+//				System.out.println(enteredBannerSizes);
 				Assert.assertEquals(sizes, enteredBannerSizes);
 				}
 				break;
@@ -1090,7 +1077,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Verify the following columns value with the created data for the native card of adspot$")
 	public void verifyNativeCardValues(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -1119,7 +1105,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Verify the following columns value with the created data for the in-banner video card of adspot$")
 	public void verifyInBannerCardValues(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -1183,9 +1168,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Verify the following columns values for the general card of adspot is empty$")
 	public void verifyGeneralCardValuesEmpty(DataTable dt) throws InterruptedException, ParseException {
-
 		boolean isPresent;
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -1247,7 +1230,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@When("^Verify error messages for sizes and floor price for the following cards$")
 	public void verifyCardErrorMsg(DataTable dt) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String card = list.get(i).get("Card");
@@ -1523,23 +1505,21 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 						By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[8]//div"))
 				.getText().replaceAll("\\s", "");
 		String enteredSizes = enteredDefaultSizes.replaceAll("\\s", "");
-		System.out.println(defaultSize);
-		System.out.println(enteredSizes);
+//		System.out.println(defaultSize);
+//		System.out.println(enteredSizes);
 		Assert.assertEquals(defaultSize, enteredSizes);
 		String floorPrice = driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[9]"))
 				.getText();
 		String price = enteredDefaultPrice;
 		String currency = defaultPriceCurrency.substring(0, defaultPriceCurrency.indexOf(":"));
-		System.out.println(price + " " + currency);
-		System.out.println(floorPrice);
+//		System.out.println(price + " " + currency);
+//		System.out.println(floorPrice);
 		Assert.assertEquals(floorPrice, price + " " + currency);
 
 	}
 
 	@When("^Click on the created adspotname in the overview page$")
 	public void clickNameOverview() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-
 		try {
 
 			String enteredName = enteredAdSpotName.replaceAll("\\s", "");
@@ -1566,7 +1546,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Verify following fields are disabled on create/edit adspot page$")
 	public void verifyLabelsDisabled(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -1590,7 +1569,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Verify publisher field is disabled on create/edit page$")
 	public void verifyPubLabelDisabled() throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		String isPubNameDisabled = adspotsPage.publisherNameField.getAttribute("class");
 	    String value = adspotsPage.publisherNameField.getText();
 		Assert.assertTrue(isPubNameDisabled.contains("disabled"));
@@ -1599,7 +1577,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Verify Categories filed has subcategories$")
 	public void verifySubCategories() throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		wait.until(ExpectedConditions.visibilityOf(adspotsPage.categoriesDropDown));
 		adspotsPage.categoriesDropDown.click();
 		js.executeScript("arguments[0].click()", adspotsPage.categoriesDropDown);
@@ -1626,7 +1603,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@Then("^Verify adspot details data is correct$")
 	public void verifyDetailsData() {
-		System.out.println(RXAdspotsPage.getAdSpotTypeEnteredValues());
+//		System.out.println(RXAdspotsPage.getAdSpotTypeEnteredValues());
 		Assert.assertTrue(areEqual(RXAdspotsPage.getAdSpotTypeEnteredValues(), detailsData));
 		adspotsPage.adSpotsSearchField.click();
 	}
@@ -1655,7 +1632,6 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 
 	@When("^Click on Ad Spot Name in first row in list view$")
 	public void clickOnAdSpotNameInFirstRowInListView() {
-		WebDriverWait wait = new WebDriverWait(driver, 60);
 		adspotsPage.adSpotNameInFirstRow.click();
 		wait.until(ExpectedConditions.visibilityOf(navOptions.saveButton));
 	}
@@ -1673,14 +1649,14 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 	@Then("^Verify the error message \"([^\"]*)\" displays below Floor Price in Create Ad Spot page$")
 	public void verifyTheErrorMessageDisplaysBelowFloorPriceInCreateAdSpotPage(String arg0) {
 		String msg = adspotsPage.defaultFloorPriceMsg.getText().trim();
-		System.out.println("adspotsPage.defaultFloorPriceMsg.getText().trim() >>> " + msg);
+//		System.out.println("adspotsPage.defaultFloorPriceMsg.getText().trim() >>> " + msg);
 		Assert.assertEquals(msg,arg0);
 	}
 
 	@Then("^Verify the error message \"([^\"]*)\" displays below Floor Price in \"([^\"]*)\" card$")
 	public void verifyTheErrorMessageDisplaysBelowFloorPriceInCard(String arg0, String arg1) {
 		String msg = adspotsPage.getElementByXpathString(adspotsPage.floorPriceMsgString, arg1).getText().trim();
-		System.out.println("adspotsPage.getElementByXpathString(adspotsPage.floorPriceMsgString, arg1).getText().trim() >>> " + msg);
+//		System.out.println("adspotsPage.getElementByXpathString(adspotsPage.floorPriceMsgString, arg1).getText().trim() >>> " + msg);
 		Assert.assertEquals(msg, arg0);
 	}
 }

@@ -46,6 +46,7 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 	}
 
 	JavascriptExecutor js = (JavascriptExecutor) driver;
+	WebDriverWait wait = new WebDriverWait(driver, 10);
 //=========================================================================================================	
 	// Verify if user is displayed with media list page on clicking media navigation
 	// link
@@ -56,7 +57,6 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 				+ pubListPgs.logodisplayed());
 		Assert.assertTrue(pubListPgs.logodisplayed());
 		navOptions.expandSales();
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.privateAuctionLabel));
 		navOptions.privateAuctionLabel.click();
 
@@ -64,7 +64,6 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 
 	@When("^Click on Private Auctions sub menu$")
 	public void check_for_Adspot() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(navOptions.privateAuctionLabel));
 		navOptions.privateAuctionLabel.click();
 
@@ -120,7 +119,6 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 
 	@Then("^Enter the following data in the general card of private auction$")
 	public void enterGenaralCardAuction(DataTable dt) throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -144,7 +142,7 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 				}
 				Thread.sleep(5000);
 				enteredPublisherName = adspotsPage.publisherNameField.getText();
-				System.out.println("publisher entered as :" + enteredPublisherName);
+//				System.out.println("publisher entered as :" + enteredPublisherName);
 				wait.until(ExpectedConditions.visibilityOf(auctionPage.auctionNameField));
 				break;
 
@@ -156,7 +154,7 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 				Calendar cal = Calendar.getInstance();
 				auctionPage.auctionNameField.sendKeys(value + cal.getTimeInMillis());
 				enteredAuctionName = auctionPage.auctionNameField.getAttribute("value");
-				System.out.println("Entered Auction name:" + enteredAuctionName);
+//				System.out.println("Entered Auction name:" + enteredAuctionName);
 				break;
 			case "Related Packages":
 				while (!auctionPage.auctionPackages.getAttribute("value").equals("")) {
@@ -164,13 +162,13 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 				}
 				auctionPage.auctionPackages.sendKeys(value);
 				enteredAuctionPackages = auctionPage.auctionPackages.getText();
-				System.out.println("Entered Auction packages:" + enteredAuctionPackages);
+//				System.out.println("Entered Auction packages:" + enteredAuctionPackages);
 				break;
 
 			case "Date Range":
 				auctionPage.selectFifteenDaysRangeInNextMonth();
 				enteredAuctionDates = auctionPage.dateInput.getAttribute("value");
-				System.out.println("Entered Auction dates:" + enteredAuctionDates);
+//				System.out.println("Entered Auction dates:" + enteredAuctionDates);
 				break;
 
 			default:
@@ -183,8 +181,7 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 
 	@When("^Click on Save Private Auction & Close button$")
 	public void clickSaveBtn() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		Thread.sleep(5000);
+//		Thread.sleep(5000);
 		wait.until(ExpectedConditions.visibilityOf(auctionPage.saveandcloseButton));
 		auctionPage.saveandcloseButton.click();
 
@@ -192,19 +189,17 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 
 	@When("^Click on Save and wait for dialog to close$")
 	public void clickSaveBtnDialogClose() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		Thread.sleep(5000);
+//		Thread.sleep(5000);
 		wait.until(ExpectedConditions.visibilityOf(auctionPage.saveandcloseButton));
 		auctionPage.saveandcloseButton.click();
 		wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
-		Thread.sleep(5000);
+//		Thread.sleep(5000);
 
 	}
 
 	@When("^Click on Save Private Auction & Create Deal button and verify create deal page is opened$")
 	public void clickSaveBtnCreateDeal() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		Thread.sleep(5000);
+//		Thread.sleep(5000);
 		wait.until(ExpectedConditions.visibilityOf(auctionPage.saveandcreatedealButton));
 		auctionPage.saveandcreatedealButton.click();
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
@@ -217,7 +212,6 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 
 	@Then("^Verify following fields are not enabled for create page$")
 	public void verifyMandatorFields(DataTable dt) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		Thread.sleep(1000);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
@@ -233,7 +227,6 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 
 	@Then("^Verify input values for following toggle fields in create page$")
 	public void verifyDefaultValues(DataTable dt) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		Thread.sleep(1000);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
@@ -256,7 +249,6 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 
 	@Then("^\"(.*)\" following toggle fields in create page$")
 	public void changeToggleFields(String enable, DataTable dt) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		Thread.sleep(1000);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
@@ -280,7 +272,6 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 
 	@Then("^Verify the following columns value with the created data for the general card of private auction$")
 	public void verifyGeneralCardValues(DataTable dt) throws InterruptedException, ParseException {
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -299,7 +290,7 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 
 				break;
 			case "Date Range":
-				System.out.println("Date range entered" + auctionPage.dateInput.getAttribute("value"));
+//				System.out.println("Date range entered" + auctionPage.dateInput.getAttribute("value"));
 				Assert.assertEquals(auctionPage.dateInput.getAttribute("value"), enteredAuctionDates);
 
 				break;
@@ -313,9 +304,7 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 
 	@Then("^Verify the following columns values for the general card of private auction is empty$")
 	public void verifyGeneralCardValuesEmpty(DataTable dt) throws InterruptedException, ParseException {
-
 		boolean isPresent;
-		WebDriverWait wait = new WebDriverWait(driver, 35);
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
@@ -344,8 +333,6 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 
 	@When("^Click on the created auction name in the overview page$")
 	public void clickNameOverview() throws Throwable {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-
 		try {
 
 			String enteredName = enteredAuctionName.replaceAll("\\s", "");
@@ -410,7 +397,6 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 
 	@When("^Verify clicking on Create a deal banner opens create deal entity page")
 	public void verifyCreateDealBanner() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(
 				driver.findElement(By.xpath("//div[@class='v-banner__content']//div[@class='v-banner__text']"))));
 		String bannerText = driver
@@ -446,7 +432,6 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 	@Then("^Verify that Details display the following data for each targeting$")
 	public void verify_that_Details_display_the_following_data_for_each_targeting(DataTable dt) {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions
 				.visibilityOf(auctionPage.detailsForInventory));
 
@@ -461,7 +446,6 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 
 	@Then("^Verify that warning banner is under Publisher name$")
 	public void verify_that_warning_banner_is_under_Publisher_name(){
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(
 				ExpectedConditions.visibilityOf(auctionPage.warningBannerUnderPublishername));
 		Assert.assertTrue(auctionPage.warningBannerUnderPublishername.isDisplayed());
@@ -472,9 +456,8 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		for (int i = 0; i < list.size(); i++) {
 			String fieldName = list.get(i).get("FieldName");
-			System.out.println(fieldName);
+//			System.out.println(fieldName);
 			auctionPage.targetingExpandPanel(fieldName).click();
-			WebDriverWait wait = new WebDriverWait(driver, 30);
 			wait.until(
 					ExpectedConditions.visibilityOf(auctionPage.targetingExpandPanelContent(fieldName)));
 			String isDisabled = auctionPage.targetingFieldIsDisabledForCreatePage(fieldName);
@@ -560,14 +543,12 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 	public void click_button_in_Private_Auctions_list_page(String buttonName) {
 		auctionPage.toolbarButton(buttonName).click();
 		if(!buttonName.equals("Edit Private Auction")) {
-			WebDriverWait wait = new WebDriverWait(driver, 30);
 			wait.until(ExpectedConditions.invisibilityOf(auctionPage.toolbarButton(buttonName)));
 		}
 	}
 
 	@Then("^Edit Private Auction pop up is present$")
 	public void edit_Private_Auction_pop_up_is_present() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(
 				By.xpath("//aside[@class='dialog']/header//div[contains(text(),'" + enteredAuctionNameList.get(0) + "')]"))));
@@ -602,7 +583,7 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 				}
 				if(inactive.equals(reqActive) && num1 > 0) {
 					auctionPage.privateAuctionsCheckBox(k+1).click();
-					System.out.println(auctionPage.adSpotName(k+1));
+//					System.out.println(auctionPage.adSpotName(k+1));
 					enteredAuctionNameList.add(auctionPage.adSpotName(k+1));
 					num1--;
 				}

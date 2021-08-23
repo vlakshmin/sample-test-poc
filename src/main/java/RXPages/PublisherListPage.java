@@ -111,7 +111,7 @@ public class PublisherListPage extends RXBaseClass {
 	public WebElement savePublisherBtn;
 	@FindBy(xpath = "//label[text()='Active']/preceding-sibling::div/input")
 	public WebElement activeCheckbox;
-	@FindBy(xpath = "//label[text()='Active']/preceding-sibling::div")
+	@FindBy(xpath = "//label[text()='Active']/preceding-sibling::div/div[contains(@class,'selection-controls')]")
 	public WebElement activeToggleBtn;
 
 	// Data for create or edit publisher.
@@ -159,7 +159,7 @@ public class PublisherListPage extends RXBaseClass {
 	// Some declarations
 	int rownum = 1;
 	int totRow = 0;
-	WebDriverWait wait = new WebDriverWait(driver, 10000);
+	WebDriverWait wait = new WebDriverWait(driver, 10);
 	Actions act = new Actions(driver);
 	JavascriptExecutor js = (JavascriptExecutor) driver;
 
@@ -177,7 +177,6 @@ public class PublisherListPage extends RXBaseClass {
 
 	// Click on Save or Update button
 	public void clickAccount() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(accountOption));
 		if (accountOption.isDisplayed()) {
 			accountOption.click();
@@ -247,14 +246,12 @@ public class PublisherListPage extends RXBaseClass {
 	}
 
 	public void clickOverViewEditbutton() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(overviewEditbutton));
 		if (overviewEditbutton.isDisplayed()) {
 			overviewEditbutton.click();
 		}
 	}
 	public void clickCloseToastMessageButton() {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(closeToastButton));
 		if (closeToastButton.isDisplayed()) {
 			closeToastButton.click();
@@ -294,7 +291,7 @@ public class PublisherListPage extends RXBaseClass {
 	public boolean verifyIfCheckboxIsChecked(int rowNum){
 		boolean flag = false;
 		String classAttr = driver.findElement(By.xpath(String.format(trStringInPublishersTable, rowNum))).getAttribute("class");
-		System.out.println("tr class atrribute >>> " + classAttr);
+//		System.out.println("tr class atrribute >>> " + classAttr);
 		if(classAttr.contains("selected")){
 			flag = true;
 		}
@@ -316,10 +313,10 @@ public class PublisherListPage extends RXBaseClass {
 	public List<String> getTheSelectedDemandSource(){
 		List<String> selectedValueList = new ArrayList<String>();
 		String selectedValue = "";
-		System.out.println("pubListPgs.demandSourceValues.size() >>> " + this.demandSourceValues.size());
+//		System.out.println("pubListPgs.demandSourceValues.size() >>> " + this.demandSourceValues.size());
 		for(WebElement valueElemt : this.demandSourceValues){
 			selectedValue = valueElemt.getText().trim();
-			System.out.println("valueElemt.getText().trim() >>> " + selectedValue);
+//			System.out.println("valueElemt.getText().trim() >>> " + selectedValue);
 			selectedValueList.add(selectedValue);
 		}
 		return selectedValueList;
@@ -327,9 +324,9 @@ public class PublisherListPage extends RXBaseClass {
 
 	public boolean checkIfErrorIsDisplayed(String error){
 		boolean flag = false;
-		System.out.println("Check if the expected error displays === " + error);
+//		System.out.println("Check if the expected error displays === " + error);
 		for(WebElement elemt : driver.findElements(By.cssSelector(validationErrorsCssPath))){
-			System.out.println("validation error >>> " + elemt.getText().trim());
+//			System.out.println("validation error >>> " + elemt.getText().trim());
 			if(elemt.getText().trim().equals(error)){
 				flag = true;
 				break;
@@ -341,10 +338,10 @@ public class PublisherListPage extends RXBaseClass {
 	public boolean verifyButtonDisplaysInHeaderOfMediaPage(String btnName){
 		boolean flag = false;
 		String button;
-		System.out.println("Check if button exist >>> " + btnName);
+//		System.out.println("Check if button exist >>> " + btnName);
 		for(WebElement btnElemt : this.buttonsInPubPageHeader){
 			button = btnElemt.getText().trim();
-			System.out.println("btnElemt.getText().trim() >>> " + button);
+//			System.out.println("btnElemt.getText().trim() >>> " + button);
 			if(button.equalsIgnoreCase(btnName)){
 				flag = true;
 				break;
@@ -356,10 +353,10 @@ public class PublisherListPage extends RXBaseClass {
 	public boolean verifyHeaderDisplayInPublisherOverviewPage(String expectedHeader){
 		boolean flag = false;
 		String actualHeader = "";
-		System.out.println("Check if expected header exists ==== " + expectedHeader);
+//		System.out.println("Check if expected header exists ==== " + expectedHeader);
 		for(WebElement headerElemt : this.publisherTableHeaders){
 			actualHeader = headerElemt.getText().trim();
-			System.out.println("headerElemt.getText().trim() >>> " + actualHeader);
+//			System.out.println("headerElemt.getText().trim() >>> " + actualHeader);
 			if(expectedHeader.equals(actualHeader)){
 				flag = true;
 				break;

@@ -35,7 +35,7 @@ public class ProfilePage extends RXBaseClass {
 	@FindBy(xpath = "//label[text()='New password']/following-sibling::input[@type='password']") WebElement enterNewPwd;
 	@FindBy(xpath = "//label[text()='Confirm new password']/following-sibling::input[@type='password']") WebElement enterConfPwd;
 
-	WebDriverWait wait = new WebDriverWait(driver, 10000);
+	WebDriverWait wait = new WebDriverWait(driver, 10);
 
 	public ProfilePage()
 	{

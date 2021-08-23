@@ -45,9 +45,9 @@ Feature: Adspots page regression
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
     Then Verify the search functionality with the following names
-      | Name        | ColumnName   |
-      | Top Banner  | Ad Spot Name |
-      | zoo test    | Ad Spot Name |
+      | Name       | ColumnName   |
+      | zoo test   | Ad Spot Name |
+      | Top Banner | Ad Spot Name |
 
 
   Scenario:  Verify enabling and disabling of an adspot from the overview page
