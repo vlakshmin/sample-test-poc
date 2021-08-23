@@ -117,7 +117,7 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 			} else {
 				List<WebElement> coulmnData = navOptions.getColumnDataMatchingHeader(columnName);
 				for (int j = 0; j < coulmnData.size(); j++) {
-					System.out.println("coulmnData.get(j).getText().trim() >>> " + coulmnData.get(j).getText().trim());
+//					System.out.println("coulmnData.get(j).getText().trim() >>> " + coulmnData.get(j).getText().trim());
 					Assert.assertTrue(coulmnData.get(j).getText().trim().contains(adspotName));
 				}
 			}
