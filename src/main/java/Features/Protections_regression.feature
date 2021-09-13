@@ -650,7 +650,6 @@ Feature: Protections page regression
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
 
-  @debug
   Scenario: 301.Verify that appropriate information displayed in details column for created protection
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -666,7 +665,6 @@ Feature: Protections page regression
     When Hover over the Details icon in Protections page
     Then Verify the protections details data is correct
 
-  @debug
   Scenario: 302.Verify that blocked advertisers displayed in details column as Blocking X Advertisers
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -689,7 +687,6 @@ Feature: Protections page regression
     When Hover over the Details icon in Protections page
     Then Verify that details popup contain Advertisers section and advertisers that were selected before displayed in "Blocking" X Advertisers section
 
-  @debug
   Scenario: 303.Verify that blocked advertisers displayed in details column as Allowing X Advertisers
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
