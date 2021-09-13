@@ -649,4 +649,65 @@ Feature: Protections page regression
       | Publisher Name | ListValue | 2              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
-  
+
+  @debug
+  Scenario: 301.Verify that appropriate information displayed in details column for created protection
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
+    And Click on Save Protection button
+    Then Verify the created Protection data is matching with its overview list values
+    When Hover over the Details icon in Protections page
+    Then Verify the protections details data is correct
+
+  @debug
+  Scenario: 302.Verify that blocked advertisers displayed in details column as Blocking X Advertisers
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
+    And Click Add Protections Targeting button
+    And Select "Advertiser" from Add Protections Targeting
+    And Enable "Target away from the following advertiser (block)" radio button in Add Protections Targeting section
+    And Select the following advertisers from left panel in Add Protections Targeting section
+      | Advertiser                        |
+      | Cosphera Nahrungsergänzungsmittel |
+      | ICM                               |
+    And Click on Save Protection button
+    Then Verify the created Protection data is matching with its overview list values
+    When Hover over the Details icon in Protections page
+    Then Verify that details popup contain Advertisers section and advertisers that were selected before displayed in "Blocking" X Advertisers section
+
+  @debug
+  Scenario: 303.Verify that blocked advertisers displayed in details column as Allowing X Advertisers
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
+    And Click Add Protections Targeting button
+    And Select "Advertiser" from Add Protections Targeting
+    And Enable "Target towards the following advertiser (whitelist)" radio button in Add Protections Targeting section
+    And Select the following advertisers from left panel in Add Protections Targeting section
+      | Advertiser                        |
+      | Cosphera Nahrungsergänzungsmittel |
+      | ICM                               |
+    And Click on Save Protection button
+    Then Verify the created Protection data is matching with its overview list values
+    When Hover over the Details icon in Protections page
+    Then Verify that details popup contain Advertisers section and advertisers that were selected before displayed in "Allowing" X Advertisers section

@@ -3,9 +3,11 @@ package RXPages;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -27,6 +29,11 @@ public class RXProtectionsPage extends RXBasePage {
 	public String protectionsHeaderStr = "Protections";
 	RXPrivateAuctionsPage privateAuctionsPage;
 	public String loading = "//main//div[@class='container container--fluid']//table/tbody/tr";
+	public String targetAwayRadioBtn = "//label[text()='%s']/preceding-sibling::div";
+	public String targetAwayParentDiv = "//label[text()='%s']/parent::div";
+	public String advInSelectTable = "//table[contains(@class,'select-table')]/tbody/tr/td/div[contains(@title, '%s')]";
+	public String advInIncludedTable = "//table[contains(@class,'included-table')]/tr/td/div[contains(@title, '%s')]";
+	public String cardTitleProtectionsTargeting = "//div[contains(@class,'v-card__title') and contains(text(),'%s')]/following-sibling::span";
 	
 	@FindBy(xpath = "//div[text()='Protections ']")
     public WebElement protectionsLabel;
@@ -87,6 +94,9 @@ public class RXProtectionsPage extends RXBasePage {
     
     @FindBy(xpath = "//label[contains(text(), 'Name')]/ancestor::div[@class = 'v-input__slot']/following-sibling::div//div[@class='v-messages__message']")
     public WebElement nameMessage;
+
+	@FindBy(xpath = "//div[contains(@class,'v-list')]/ancestor::div[contains(@class, 'menu-wrapper')]")
+	private WebElement detailsCard;
     
 	 // Explicit Wait
     WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -331,5 +341,21 @@ public class RXProtectionsPage extends RXBasePage {
 
 	public void waitPublisherNameLoading() {
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//aside//div[@class='content']//div[@class='v-overlay__content']")));
+	}
+
+	public WebElement getElementByXpathWithParameter(String xpath, String param){
+		return driver.findElement(By.xpath(String.format(xpath, param)));
+	}
+
+	public LinkedHashMap<String,String> getProtectionsDetailsData() {
+		LinkedHashMap<String,String> result;
+		result = detailsCard.findElements(By.xpath("//div[@class='header']")).stream()
+				.collect(Collectors.toMap(WebElement::getText, e -> {
+					WebElement element = e.findElement(By.xpath("./..//span"));
+					driverWait().until(ExpectedConditions.elementToBeClickable(element));
+					return e.findElement(By.xpath("./..//span")).getText();
+				}, (e1, e2) -> e1, LinkedHashMap::new));
+		System.out.println(result);
+		return result;
 	}
 }

@@ -2,12 +2,8 @@ package stepDefinitions;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import bsh.CallStack;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -19,9 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import RXBaseClass.RXBaseClass;
 import cucumber.api.DataTable;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import RXPages.PublisherListPage;
@@ -42,6 +36,9 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	String enteredPublisherName = "";
 	String enteredProtectionsName = "";
 	List<String> enteredProtectionsNameList = new ArrayList<String>();
+	LinkedHashMap<String,String> detailsData;
+	List<String> advIncludedTable = new ArrayList<String>();
+	Map<String,String> enteredDataInCreateProtections = new HashMap<>();
 
 	public ProtectionsPageStepDefinition() {
 		super();
@@ -68,6 +65,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	@When("^Click on Protections option in Menu$")
 	public void click_on_Protections_option_in_Menu()  {
 		protectionsPage.protectionsLabel.click();
+		enteredDataInCreateProtections.clear();
 	}
 
 	@Then("^User displayed with Protections page$")
@@ -300,8 +298,12 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 				break;
 			default:
 				Assert.assertTrue(false, "The status fields supplied does not match with the input");
-
 			}
+			enteredDataInCreateProtections.put("Inventory", "All Inventory are included");
+			enteredDataInCreateProtections.put("Devices", "All Devices are included");
+			enteredDataInCreateProtections.put("Operating Systems", "All Operating Systems are included");
+			enteredDataInCreateProtections.put("Geos", "All Geos are included");
+			enteredDataInCreateProtections.put("Ad Sizes", "All Ad Sizes are included");
 		}
 	}
 	
@@ -457,5 +459,52 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	public void close_Create_Protections_page() throws Throwable {
 		protectionsPage.protectionsCloseSideDialog.click();
 		protectionsPage.waitCreateProtectionsClosed();
+	}
+
+	@When("^Hover over the Details icon in Protections page$")
+	public void hoverOverTheDetailsIcon() {
+//		driver.navigate().refresh();
+		adspotsPage.hoverOverDetailsButton();
+		detailsData = protectionsPage.getProtectionsDetailsData();
+	}
+
+	@When("^Enable \"([^\"]*)\" radio button in Add Protections Targeting section$")
+	public void enableRadioBtnInAddProtectionsTargetingSection(String btnName) {
+		wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.targetAwayParentDiv, btnName)));
+		if(!protectionsPage.getElementByXpathWithParameter(protectionsPage.targetAwayParentDiv, btnName).getAttribute("class").contains("active")){
+			protectionsPage.getElementByXpathWithParameter(protectionsPage.targetAwayRadioBtn, btnName).click();
+		}
+	}
+
+	@When("^Select the following advertisers from left panel in Add Protections Targeting section$")
+	public void selectTheFollowingAdvFromLeftPanelInAddProtectionsTargetingSection(DataTable dt) {
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		String value = "";
+		for (Map<String, String> stringMap : list) {
+			String advName = stringMap.get("Advertiser");
+			advIncludedTable.add(advName);
+			WebElement advElemt = protectionsPage.getElementByXpathWithParameter(protectionsPage.advInSelectTable, advName);
+			js.executeScript("arguments[0].scrollIntoView()", advElemt);
+			advElemt.click();
+			wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.advInIncludedTable, advName)));
+		}
+
+		String cardValue = protectionsPage.getElementByXpathWithParameter(protectionsPage.cardTitleProtectionsTargeting, "Advertiser").getText().trim();
+		if(cardValue.contains("Whitelist")){
+			value = cardValue.replace("Whitelist", "Allowing");
+		}else if(cardValue.contains("Block")){
+			value = cardValue.replace("Block", "Blocking");
+		}
+		enteredDataInCreateProtections.put("Advertisers", value);
+	}
+
+	@Then("^Verify the protections details data is correct$")
+	public void VerifyTheProtectionsDetailsDataIsCorrect() {
+		Assert.assertTrue(areEqual(detailsData,enteredDataInCreateProtections));
+	}
+
+	@Then("^Verify that details popup contain Advertisers section and advertisers that were selected before displayed in \"([^\"]*)\" X Advertisers section$")
+	public void VerifyThatDetailsPopupContainAdvertisersSectionAndAdvertisersThatWereSelectedBeforeDisplayedInBlockingOrAllowingAdvertisersSection(String arg0) {
+		Assert.assertEquals(enteredDataInCreateProtections.get("Advertisers").toLowerCase(), detailsData.get("Advertisers").toLowerCase());
 	}
 }
