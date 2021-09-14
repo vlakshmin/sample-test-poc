@@ -132,7 +132,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 //		System.out.println("Click on next page button.");
 	    while(protectionsPage.nextPage.getAttribute("disabled") == null && nextPage_loop < 3) {
 	    	js.executeScript("arguments[0].click()", protectionsPage.nextPage);
-	    	wait.until(ExpectedConditions.visibilityOf(protectionsPage.protectionsSearchProgress));
+//	    	wait.until(ExpectedConditions.visibilityOf(protectionsPage.protectionsSearchProgress));
 			protectionsPage.waitAllProtectionsItemsLoading();
 			Assert.assertEquals(protectionsPage.getTotalProtectionsWebElements().size(),protectionsPage.getProtectionsPerPageNum());
 			nextPage_loop++;
@@ -140,7 +140,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 //		System.out.println("Click on previous page button.");
 	    while(protectionsPage.previousPage.getAttribute("disabled") == null && prePage_loop < 3) {
 	    	js.executeScript("arguments[0].click()", protectionsPage.previousPage);
-	    	wait.until(ExpectedConditions.visibilityOf(protectionsPage.protectionsSearchProgress));
+//	    	wait.until(ExpectedConditions.visibilityOf(protectionsPage.protectionsSearchProgress));
 	    	protectionsPage.waitAllProtectionsItemsLoading();
 			Assert.assertEquals(protectionsPage.getTotalProtectionsWebElements().size(),protectionsPage.getProtectionsPerPageNum());
 			prePage_loop++;

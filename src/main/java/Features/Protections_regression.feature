@@ -367,18 +367,18 @@ Feature: Protections page regression
     Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
-      | FieldName      | Value             | ListValueIndex |
+      | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viber |                |
-      | Name           | Test              |                |
+      | Name           | Test  |                |
     And "Disable" following toggle fields in create page
       | FieldName |
       | Active    |
     And Select targeting options items
-      | Inventory        | supply-chains LLC Media |
-      | Device           | Phone                        |
-      | Operating System | Android                      |
-      | Geo              | Afghanistan                  |
-      | Ad Size          | 120x60                       |
+      | Inventory        | Viber Desktop App |
+      | Device           | Phone                |
+      | Operating System | MacOSX              |
+      | Geo              | Afghanistan          |
+      | Ad Size          | 120x60               |
     And Click Add Protections Targeting button
     Then Verify that following items are present
       | Advertiser  |
@@ -431,15 +431,15 @@ Feature: Protections page regression
     Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
-      | FieldName      | Value             | ListValueIndex |
+      | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viber |                |
-      | Name           | Test              |                |
+      | Name           | Test  |                |
     And Select targeting options items
-      | Inventory        | supply-chains LLC Media |
-      | Device           | Phone                        |
-      | Operating System | Android                      |
-      | Geo              | Afghanistan                  |
-      | Ad Size          | 120x60                       |
+      | Inventory        | Viber Desktop App |
+      | Device           | Phone                |
+      | Operating System | MacOSX               |
+      | Geo              | Afghanistan          |
+      | Ad Size          | 120x60               |
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
 
@@ -548,11 +548,11 @@ Feature: Protections page regression
       | FieldName |
       | Active    |
     And Select targeting options items
-      | Inventory        | supply-chains LLC Media |
-      | Device           | Phone                        |
-      | Operating System | Android                      |
-      | Geo              | Afghanistan                  |
-      | Ad Size          | 120x60                       |
+      | Inventory        | Viber Desktop App |
+      | Device           | Phone                |
+      | Operating System | MacOSX               |
+      | Geo              | Afghanistan          |
+      | Ad Size          | 120x60               |
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 3              |
@@ -591,7 +591,7 @@ Feature: Protections page regression
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | Viber |                |
     And Select targeting options items
-      | Inventory        | supply-chains LLC Media |
+      | Inventory        | Viber Desktop App |
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 2              |
@@ -617,7 +617,7 @@ Feature: Protections page regression
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 4              |
     And Select targeting options items
-      | Operating System | Android                      |
+      | Operating System | MacOSX |
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 3              |

@@ -330,7 +330,7 @@ public class RXProtectionsPage extends RXBasePage {
 	}
 
 	public String protectionsName(int k) {
-		return driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+k+"]/td[3]/a"))
+		return driver.findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+k+"]/td[4]/a"))
 				.getText();
 	}
 
