@@ -267,7 +267,7 @@ Feature: Protections page regression
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
+      | Publisher Name | Viber |                |
     And Click Add Protections Targeting button
     Then Verify that following items are present
       | Advertiser  |
@@ -285,7 +285,7 @@ Feature: Protections page regression
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
+      | Publisher Name | Viber |                |
     And Click Add Protections Targeting button
     Then Verify that following items are present
       | Advertiser  |
@@ -312,7 +312,7 @@ Feature: Protections page regression
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
+      | Publisher Name | Viber |                |
     And Click Add Protections Targeting button
     Then Verify that following items are present
       | Advertiser  |
@@ -343,7 +343,7 @@ Feature: Protections page regression
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
+      | Publisher Name | Viber |                |
     And Click Add Protections Targeting button
     Then Verify that following items are present
       | Advertiser  |
@@ -368,7 +368,7 @@ Feature: Protections page regression
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
+      | Publisher Name | Viber |                |
       | Name           | Test              |                |
     And "Disable" following toggle fields in create page
       | FieldName |
@@ -398,7 +398,7 @@ Feature: Protections page regression
     When Click on Protections option in Menu
     Then User displayed with Protections page
     And Click on the Create Protections button
-    Then Verify that search with "F" works properly for Publisher dropdown
+    Then Verify that search with "R" works properly for Publisher dropdown
     And Click on the Create Protections button
     Then Verify that search with "Viki" works properly for Publisher dropdown
 
@@ -412,14 +412,14 @@ Feature: Protections page regression
     Then Verify that error apear for Name
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
+      | Publisher Name | Viber |                |
       | Name           | 1234567              |                |
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
+      | Publisher Name | Viber |                |
       | Name           | Long value              |                |
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
@@ -432,7 +432,7 @@ Feature: Protections page regression
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
+      | Publisher Name | Viber |                |
       | Name           | Test              |                |
     And Select targeting options items
       | Inventory        | supply-chains LLC Media |
@@ -450,9 +450,9 @@ Feature: Protections page regression
     Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
-      | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Asa VonRueden |                |
-      | Name           | Test              |                |
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
     When Select the created Protection
@@ -542,7 +542,7 @@ Feature: Protections page regression
     Then Verify that warning banner is not displayed under Publisher name
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
+      | Publisher Name | Viber |                |
       | Name           | Test              |                |
     And "Disable" following toggle fields in create page
       | FieldName |
@@ -589,7 +589,7 @@ Feature: Protections page regression
     And Click on the Create Protections button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
+      | Publisher Name | Viber |                |
     And Select targeting options items
       | Inventory        | supply-chains LLC Media |
     And Enter the following data in the general card of private auction

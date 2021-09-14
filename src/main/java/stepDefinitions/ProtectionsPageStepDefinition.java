@@ -372,7 +372,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	@Then("^Select one \"([^\"]*)\" Protections item$")
 	public void select_one_Protections_item(String active) {
 		enteredProtectionsNameList.clear();
-		List<WebElement> listActives = driver.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[5]"));
+		List<WebElement> listActives = driver.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[6]"));
 		for (int k = 0; k < listActives.size(); k++) {
 			String reqActive = listActives.get(k).getText().replaceAll("\\s", "");
 			if (active.equals(reqActive)) {
