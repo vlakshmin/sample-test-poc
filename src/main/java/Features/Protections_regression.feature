@@ -267,7 +267,7 @@ Feature: Protections page regression
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
+      | Publisher Name | Viber |                |
     And Click Add Protections Targeting button
     Then Verify that following items are present
       | Advertiser  |
@@ -285,7 +285,7 @@ Feature: Protections page regression
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
+      | Publisher Name | Viber |                |
     And Click Add Protections Targeting button
     Then Verify that following items are present
       | Advertiser  |
@@ -312,7 +312,7 @@ Feature: Protections page regression
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
+      | Publisher Name | Viber |                |
     And Click Add Protections Targeting button
     Then Verify that following items are present
       | Advertiser  |
@@ -343,7 +343,7 @@ Feature: Protections page regression
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
+      | Publisher Name | Viber |                |
     And Click Add Protections Targeting button
     Then Verify that following items are present
       | Advertiser  |
@@ -367,18 +367,18 @@ Feature: Protections page regression
     Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
-      | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
-      | Name           | Test              |                |
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
     And "Disable" following toggle fields in create page
       | FieldName |
       | Active    |
     And Select targeting options items
-      | Inventory        | supply-chains LLC Media |
-      | Device           | Phone                        |
-      | Operating System | Android                      |
-      | Geo              | Afghanistan                  |
-      | Ad Size          | 120x60                       |
+      | Inventory        | Viber Desktop App |
+      | Device           | Phone                |
+      | Operating System | MacOSX              |
+      | Geo              | Afghanistan          |
+      | Ad Size          | 120x60               |
     And Click Add Protections Targeting button
     Then Verify that following items are present
       | Advertiser  |
@@ -398,7 +398,7 @@ Feature: Protections page regression
     When Click on Protections option in Menu
     Then User displayed with Protections page
     And Click on the Create Protections button
-    Then Verify that search with "F" works properly for Publisher dropdown
+    Then Verify that search with "R" works properly for Publisher dropdown
     And Click on the Create Protections button
     Then Verify that search with "Viki" works properly for Publisher dropdown
 
@@ -412,14 +412,14 @@ Feature: Protections page regression
     Then Verify that error apear for Name
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
+      | Publisher Name | Viber |                |
       | Name           | 1234567              |                |
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
+      | Publisher Name | Viber |                |
       | Name           | Long value              |                |
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
@@ -431,15 +431,15 @@ Feature: Protections page regression
     Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
-      | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
-      | Name           | Test              |                |
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
     And Select targeting options items
-      | Inventory        | supply-chains LLC Media |
-      | Device           | Phone                        |
-      | Operating System | Android                      |
-      | Geo              | Afghanistan                  |
-      | Ad Size          | 120x60                       |
+      | Inventory        | Viber Desktop App |
+      | Device           | Phone                |
+      | Operating System | MacOSX               |
+      | Geo              | Afghanistan          |
+      | Ad Size          | 120x60               |
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
 
@@ -450,9 +450,9 @@ Feature: Protections page regression
     Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
-      | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Asa VonRueden |                |
-      | Name           | Test              |                |
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
     When Select the created Protection
@@ -542,17 +542,17 @@ Feature: Protections page regression
     Then Verify that warning banner is not displayed under Publisher name
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
+      | Publisher Name | Viber |                |
       | Name           | Test              |                |
     And "Disable" following toggle fields in create page
       | FieldName |
       | Active    |
     And Select targeting options items
-      | Inventory        | supply-chains LLC Media |
-      | Device           | Phone                        |
-      | Operating System | Android                      |
-      | Geo              | Afghanistan                  |
-      | Ad Size          | 120x60                       |
+      | Inventory        | Viber Desktop App |
+      | Device           | Phone                |
+      | Operating System | MacOSX               |
+      | Geo              | Afghanistan          |
+      | Ad Size          | 120x60               |
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 3              |
@@ -589,9 +589,9 @@ Feature: Protections page regression
     And Click on the Create Protections button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
-      | Publisher Name | Amani Raynor |                |
+      | Publisher Name | Viber |                |
     And Select targeting options items
-      | Inventory        | supply-chains LLC Media |
+      | Inventory        | Viber Desktop App |
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 2              |
@@ -617,7 +617,7 @@ Feature: Protections page regression
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 4              |
     And Select targeting options items
-      | Operating System | Android                      |
+      | Operating System | MacOSX |
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 3              |
@@ -649,4 +649,62 @@ Feature: Protections page regression
       | Publisher Name | ListValue | 2              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
-  
+
+  Scenario: 301.Verify that appropriate information displayed in details column for created protection
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
+    And Click on Save Protection button
+    Then Verify the created Protection data is matching with its overview list values
+    When Hover over the Details icon in Protections page
+    Then Verify the protections details data is correct
+
+  Scenario: 302.Verify that blocked advertisers displayed in details column as Blocking X Advertisers
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
+    And Click Add Protections Targeting button
+    And Select "Advertiser" from Add Protections Targeting
+    And Enable "Target away from the following advertiser (block)" radio button in Add Protections Targeting section
+    And Select the following advertisers from left panel in Add Protections Targeting section
+      | Advertiser                        |
+      | Cosphera Nahrungsergänzungsmittel |
+      | ICM                               |
+    And Click on Save Protection button
+    Then Verify the created Protection data is matching with its overview list values
+    When Hover over the Details icon in Protections page
+    Then Verify that details popup contain Advertisers section and advertisers that were selected before displayed in "Blocking" X Advertisers section
+
+  Scenario: 303.Verify that blocked advertisers displayed in details column as Allowing X Advertisers
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
+    And Click Add Protections Targeting button
+    And Select "Advertiser" from Add Protections Targeting
+    And Enable "Target towards the following advertiser (whitelist)" radio button in Add Protections Targeting section
+    And Select the following advertisers from left panel in Add Protections Targeting section
+      | Advertiser                        |
+      | Cosphera Nahrungsergänzungsmittel |
+      | ICM                               |
+    And Click on Save Protection button
+    Then Verify the created Protection data is matching with its overview list values
+    When Hover over the Details icon in Protections page
+    Then Verify that details popup contain Advertisers section and advertisers that were selected before displayed in "Allowing" X Advertisers section
