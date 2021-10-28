@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import RXPages.*;
+import cucumber.api.PendingException;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -18,11 +20,6 @@ import org.testng.Assert;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import RXPages.PublisherListPage;
-import RXPages.RXAdspotsPage;
-import RXPages.RXDealsPage;
-import RXPages.RXPrivateAuctionsPage;
-import RXPages.RXProtectionsPage;
 
 public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	RXProtectionsPage protectionsPage;
@@ -279,8 +276,9 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 
 				enteredPublisherName = adspotsPage.publisherNameField.getText();
 //				System.out.println("publisher entered as :" + enteredPublisherName);
-				protectionsPage.waitPublisherNameLoading();
-				wait.until(ExpectedConditions.visibilityOf(auctionPage.auctionNameField));
+//				protectionsPage.waitPublisherNameLoading();
+//				wait.until(ExpectedConditions.visibilityOf(auctionPage.auctionNameField));
+				wait.until(ExpectedConditions.elementToBeClickable(auctionPage.auctionNameField));
 				break;
 			case "Name":
 				while (!auctionPage.auctionNameField.getAttribute("value").equals("")) {
@@ -444,7 +442,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		Assert.assertEquals(num3,0,num3 +" Active Protections is not selected.");
 	}
 
-	@Then("^Click on the Create Protections button$")
+	@When("^Click on the Create Protections button$")
 	public void click_on_the_following_create_button() throws Throwable {
 		createButtonClick("Create Protections");
 	}
@@ -483,13 +481,13 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		for (Map<String, String> stringMap : list) {
 			String advName = stringMap.get("Advertiser");
 			advIncludedTable.add(advName);
-			WebElement advElemt = protectionsPage.getElementByXpathWithParameter(protectionsPage.advInSelectTable, advName);
+			WebElement advElemt = protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInSelectTable, advName);
 			js.executeScript("arguments[0].scrollIntoView()", advElemt);
 			advElemt.click();
-			wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.advInIncludedTable, advName)));
+			wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTable, advName)));
 		}
 
-		String cardValue = protectionsPage.getElementByXpathWithParameter(protectionsPage.cardTitleProtectionsTargeting, "Advertiser").getText().trim();
+		String cardValue = protectionsPage.getElementByXpathWithParameter(protectionsPage.cardValueProtectionsTargeting, "Advertiser").getText().trim();
 		if(cardValue.contains("Whitelist")){
 			value = cardValue.replace("Whitelist", "Allowing");
 		}else if(cardValue.contains("Block")){
@@ -506,5 +504,90 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	@Then("^Verify that details popup contain Advertisers section and advertisers that were selected before displayed in \"([^\"]*)\" X Advertisers section$")
 	public void VerifyThatDetailsPopupContainAdvertisersSectionAndAdvertisersThatWereSelectedBeforeDisplayedInBlockingOrAllowingAdvertisersSection(String arg0) {
 		Assert.assertEquals(enteredDataInCreateProtections.get("Advertisers").toLowerCase(), detailsData.get("Advertisers").toLowerCase());
+	}
+
+	@Then("^Verify that Protection Type displayed under the Name field$")
+	public void VerifyThatProtectionTypeDisplayedUnderTheNameField() {
+		protectionsPage.protectionTypeLabel.getText().trim().equals("Protection Type");
+	}
+
+	@When("^Click on the Protection Type button$")
+	public void click_on_the_Protection_Type_button(){
+		wait.until(ExpectedConditions.elementToBeClickable(protectionsPage.protectionTypeDropdown)).click();
+	}
+
+	@Then("^Verify that below values display in Protection Type$")
+	public void VerifyThatBelowValuesDisplayInProtectionType(DataTable dt) {
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		wait.until(ExpectedConditions.visibilityOf(protectionsPage.protectionTypeDropdownDiv));
+		Assert.assertEquals(list.size(), protectionsPage.protectionTypeValuesList.size());
+		for (Map<String, String> stringMap : list) {
+			boolean flag = false;
+			String value = stringMap.get("Values");
+			for(WebElement actualValue : protectionsPage.protectionTypeValuesList){
+				if(value.equals(actualValue.getText().trim())){
+					flag = true;
+					break;
+				}
+			}
+			if(!flag){
+				Assert.fail("The Protection Type doesn't have " + value);
+			}
+		}
+	}
+
+	@When("^Select \"([^\"]*)\" from Protection Type dropdown$")
+	public void select_from_Protection_Type_dropdown(String item) {
+		wait.until(ExpectedConditions.visibilityOf(protectionsPage.protectionTypeDropdownDiv));
+		protectionsPage.getElementByXpathWithParameter(protectionsPage.protectionTypeDropdownValue, item).click();
+	}
+
+	@When("^Select below Advertisers from list in Protection targeting section$")
+	public void SelectBelowAdvertisersFromListInProtectionTargetingSection(DataTable dt) {
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.cardNameProtectionsTargeting, "Advertiser")));
+		String value = "";
+		for (Map<String, String> stringMap : list) {
+			String advName = stringMap.get("Advertiser Name");
+			advIncludedTable.add(advName);
+			WebElement advElemt = protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInSelectTable, advName);
+			js.executeScript("arguments[0].scrollIntoView()", advElemt);
+			advElemt.click();
+			wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTable, advName)));
+		}
+
+		String cardValue = protectionsPage.getElementByXpathWithParameter(protectionsPage.cardValueProtectionsTargeting, "Advertiser").getText().trim();
+		if(cardValue.contains("Block")){
+			value = cardValue.replace("Block", "Blocking");
+		}
+		enteredDataInCreateProtections.put("Advertisers", value);
+	}
+
+	@When("^Select below Category from list in Protection targeting section$")
+	public void selectBelowCategoryFromListInProtectionTargetingSection(DataTable dt) {
+		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+		wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.cardNameProtectionsTargeting, "Ad Categories")));
+		String value = "";
+		for (Map<String, String> stringMap : list) {
+			String category = stringMap.get("Category");
+			advIncludedTable.add(category);
+			WebElement categoryElemt = protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInSelectTable, category);
+			js.executeScript("arguments[0].scrollIntoView()", categoryElemt);
+			categoryElemt.click();
+			wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTable, category)));
+		}
+
+		String cardValue = protectionsPage.getElementByXpathWithParameter(protectionsPage.cardValueProtectionsTargeting, "Ad Categories").getText().trim();
+		if(cardValue.contains("Whitelist")){
+			value = cardValue.replace("Categories", "Category");
+		}else if(cardValue.contains("Block")){
+			value = cardValue.replace("Block", "Blocking");
+		}
+		enteredDataInCreateProtections.put("Ad categories", value);
+	}
+
+	@Then("^Verify the error message \"([^\"]*)\" displays in Create Protections page$")
+	public void verifyTheErrorMessageDisplaysInCreateProtectionsPage(String arg0){
+		Assert.assertTrue(protectionsPage.getElementByXpathWithParameter(protectionsPage.errorMsg,arg0).isDisplayed());
 	}
 }

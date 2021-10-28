@@ -31,9 +31,12 @@ public class RXProtectionsPage extends RXBasePage {
 	public String loading = "//main//div[@class='container container--fluid']//table/tbody/tr";
 	public String targetAwayRadioBtn = "//label[text()='%s']/preceding-sibling::div";
 	public String targetAwayParentDiv = "//label[text()='%s']/parent::div";
-	public String advInSelectTable = "//table[contains(@class,'select-table')]/tbody/tr/td/div[contains(@title, '%s')]";
-	public String advInIncludedTable = "//table[contains(@class,'included-table')]/tr/td/div[contains(@title, '%s')]";
-	public String cardTitleProtectionsTargeting = "//div[contains(@class,'v-card__title') and contains(text(),'%s')]/following-sibling::span";
+	public String valueInSelectTable = "//table[contains(@class,'select-table')]/tbody/tr/td/div[contains(@title, '%s')]/parent::td/following-sibling::td";
+	public String valueInIncludedTable = "//table[contains(@class,'included-table')]/tr/td/div[contains(@title, '%s')]";
+	public String cardNameProtectionsTargeting = "//div[not(contains(@style,'none'))]/div/div[contains(@class,'v-card__title') and contains(text(),'%s')]";
+	public String cardValueProtectionsTargeting = "//div[not(contains(@style,'none'))]/div/div[contains(@class,'v-card__title') and contains(text(),'%s')]/following-sibling::span";
+	public String protectionTypeDropdownValue = "//div[@class='v-list-item__content']/div[contains(text(), '%s')]";
+	public String errorMsg = "//div[@class='v-messages__message' and text()='%s']";
 	
 	@FindBy(xpath = "//div[text()='Protections ']")
     public WebElement protectionsLabel;
@@ -97,6 +100,18 @@ public class RXProtectionsPage extends RXBasePage {
 
 	@FindBy(xpath = "//div[contains(@class,'v-list')]/ancestor::div[contains(@class, 'menu-wrapper')]")
 	private WebElement detailsCard;
+
+	@FindBy(xpath = "//label[text()='Name']/ancestor::div[@class='row']/following-sibling::div[1]/descendant::label")
+	public WebElement protectionTypeLabel;
+
+	@FindBy(xpath = "//label[text()='Protection Type']/following-sibling::div[@class='v-select__selections']")
+	public WebElement protectionTypeDropdown;
+
+	@FindBy(xpath = "//div[contains(@class,'menuable__content__active')]")
+	public WebElement protectionTypeDropdownDiv;
+
+	@FindAll(@FindBy(xpath = "//div[contains(@class,'menuable__content__active')]/div/div/div/div[@class='v-list-item__title']"))
+	public List<WebElement> protectionTypeValuesList;
     
 	 // Explicit Wait
     WebDriverWait wait = new WebDriverWait(driver, 10);

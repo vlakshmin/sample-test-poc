@@ -1,4 +1,3 @@
-#noinspection CucumberUndefinedStep
 Feature: Protections page regression
 
   Scenario: 7.Verify left nav menu intem Protections for Single Publisher
@@ -708,3 +707,95 @@ Feature: Protections page regression
     Then Verify the created Protection data is matching with its overview list values
     When Hover over the Details icon in Protections page
     Then Verify that details popup contain Advertisers section and advertisers that were selected before displayed in "Allowing" X Advertisers section
+
+  Scenario: 313.Verify that "Protection Type" displayed under Protection name field
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    Then Verify that Protection Type displayed under the Name field
+
+  Scenario: 314.Verify that "Protection Type" has "Advertiser", "AD Categories", "Supply Exclusions"
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    When Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+    And Click on the Protection Type button
+    Then Verify that below values display in Protection Type
+      | Values            |
+      | Advertiser        |
+      | Ad Categories     |
+      | Supply Exclusions |
+
+  Scenario: 315.Verify that there is an ability to create protection with  "Protection Type" = "Advertiser"
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    When Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
+    And Click on the Protection Type button
+    And Select "Advertiser" from Protection Type dropdown
+    And Select below Advertisers from list in Protection targeting section
+      | Advertiser Name                |
+      | betclic.fr                     |
+      | https                          |
+      | Slotomania™ Vegas Casino Slots |
+    And Click on Save Protection button
+    Then Verify the created Protection data is matching with its overview list values
+
+  Scenario: 316.Verify that there is an ability to create protection with  "Protection Type" = "AD Categories"
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    When Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
+    And Click on the Protection Type button
+    And Select "Ad Categories" from Protection Type dropdown
+    And Select below Category from list in Protection targeting section
+      | Category               |
+      | News                   |
+      | Automotive             |
+      | Technology & Computing |
+    And Click on Save Protection button
+    Then Verify the created Protection data is matching with its overview list values
+
+  Scenario: 317.Verify that there is an ability to create protection with  "Protection Type" = "Supply Exclusions"
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    When Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
+    And Click on the Protection Type button
+    And Select "Supply Exclusions" from Protection Type dropdown
+    And Click on Save Protection button
+    Then Verify the created Protection data is matching with its overview list values
+
+  Scenario: 318.Verify that error message displayed in case value from "Protection Type" not selected
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    When Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
+    And Click on Save Protection button
+    Then Verify the error message "Protection Type is required" displays in Create Protections page
