@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import RXPages.*;
-import cucumber.api.PendingException;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -276,9 +275,9 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 
 				enteredPublisherName = adspotsPage.publisherNameField.getText();
 //				System.out.println("publisher entered as :" + enteredPublisherName);
-//				protectionsPage.waitPublisherNameLoading();
+				protectionsPage.waitPublisherNameLoading();
 //				wait.until(ExpectedConditions.visibilityOf(auctionPage.auctionNameField));
-				wait.until(ExpectedConditions.elementToBeClickable(auctionPage.auctionNameField));
+//				wait.until(ExpectedConditions.elementToBeClickable(auctionPage.auctionNameField));
 				break;
 			case "Name":
 				while (!auctionPage.auctionNameField.getAttribute("value").equals("")) {
@@ -370,6 +369,9 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	@Then("^Select one \"([^\"]*)\" Protections item$")
 	public void select_one_Protections_item(String active) {
 		enteredProtectionsNameList.clear();
+		while(!protectionsPage.checkbox_i_Column.getAttribute("class").contains("mdi-checkbox-blank-outline")){ //uncheck all protections items
+			protectionsPage.checkbox_div_Column.click();
+		}
 		List<WebElement> listActives = driver.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[6]"));
 		for (int k = 0; k < listActives.size(); k++) {
 			String reqActive = listActives.get(k).getText().replaceAll("\\s", "");
@@ -451,12 +453,6 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	public void verify_that_warning_banner_is_not_displayed_under_Publisher_name() throws Throwable {
 		wait.until(
 				ExpectedConditions.invisibilityOf(auctionPage.warningBannerUnderPublishername));
-	}
-
-	@When("^Close Create Protections page$")
-	public void close_Create_Protections_page() throws Throwable {
-		protectionsPage.protectionsCloseSideDialog.click();
-		protectionsPage.waitCreateProtectionsClosed();
 	}
 
 	@When("^Hover over the Details icon in Protections page$")
@@ -589,5 +585,22 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	@Then("^Verify the error message \"([^\"]*)\" displays in Create Protections page$")
 	public void verifyTheErrorMessageDisplaysInCreateProtectionsPage(String arg0){
 		Assert.assertTrue(protectionsPage.getElementByXpathWithParameter(protectionsPage.errorMsg,arg0).isDisplayed());
+	}
+
+	@When("^\"([^\"]*)\" targeting options items in Inventory Targeting section$")
+	public void includeOrExcludeTargetingOptionsItemsInInventoryTargetingSection(String selectFlag, DataTable dt) {
+		List<List<String>> data = dt.asLists(String.class);
+		data.forEach(e -> protectionsPage.includeOrExcludeItemInInventoryTargetingSection(selectFlag, e.get(0), e.get(1)));
+	}
+
+	@Then("^Verify the Protection Type value is disabled$")
+	public void verifyTheProtectionTypeValueIsDisabled() {
+		Assert.assertFalse(protectionsPage.protectionTypeInput.isEnabled());
+	}
+
+	@Then("^Verify that Include/Exclude buttons displayed for focused entitiy when put mouse over the below entity in Inventory Targeting section$")
+	public void verifyThatIncludeExcludeButtonsDisplayedForFocusedEntitiyWhenPutMouseOverTheBelowEntityInInventoryTargetingSection(DataTable dt) {
+		List<List<String>> data = dt.asLists(String.class);
+		data.forEach(e -> protectionsPage.verifyIncludeExcludeButtonsDisplayed(e.get(0), e.get(1)));
 	}
 }

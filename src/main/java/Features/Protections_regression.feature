@@ -546,7 +546,7 @@ Feature: Protections page regression
     And "Disable" following toggle fields in create page
       | FieldName |
       | Active    |
-    And Select targeting options items
+    And "Include" targeting options items in Inventory Targeting section
       | Inventory        | Viber Desktop App |
       | Device           | Phone                |
       | Operating System | MacOSX               |
@@ -557,7 +557,7 @@ Feature: Protections page regression
       | Publisher Name | ListValue | 3              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
-    When Close Create Protections page
+    When Click on Close button
     Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
@@ -569,7 +569,7 @@ Feature: Protections page regression
       | Publisher Name | ListValue | 4              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
-    When Close Create Protections page
+    When Click on Close button
     Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the general card of private auction
@@ -583,65 +583,65 @@ Feature: Protections page regression
       | Publisher Name | ListValue | 1              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
-    When Close Create Protections page
+    When Click on Close button
     Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | Viber |                |
-    And Select targeting options items
+    And "Include" targeting options items in Inventory Targeting section
       | Inventory        | Viber Desktop App |
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 2              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
-    When Close Create Protections page
+    When Click on Close button
     Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 4              |
-    And Select targeting options items
+    And "Include" targeting options items in Inventory Targeting section
       | Device           | Phone                        |
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 3              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
-    When Close Create Protections page
+    When Click on Close button
     Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 4              |
-    And Select targeting options items
+    And "Include" targeting options items in Inventory Targeting section
       | Operating System | MacOSX |
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 3              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
-    When Close Create Protections page
+    When Click on Close button
     Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 4              |
-    And Select targeting options items
+    And "Include" targeting options items in Inventory Targeting section
       | Geo              | Afghanistan                  |
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 1              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
-    When Close Create Protections page
+    When Click on Close button
     Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 4              |
-    And Select targeting options items
+    And "Include" targeting options items in Inventory Targeting section
       | Ad Size          | 120x60                       |
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
@@ -799,3 +799,77 @@ Feature: Protections page regression
       | Name           | Test  |                |
     And Click on Save Protection button
     Then Verify the error message "Protection Type is required" displays in Create Protections page
+
+  Scenario: 319.Verify that there is no ability to change "Protection Type" while editing existing protection
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    When Select one "Active" Protections item
+    And Click on "Edit Protections" button in Protections list page
+    Then Edit Protections pop up is present
+    And Verify the Protection Type value is disabled
+    When Click on Close button
+    Then User displayed with Protections page
+    When Select one "Inactive" Protections item
+    And Click on "Edit Protections" button in Protections list page
+    Then Edit Protections pop up is present
+    And Verify the Protection Type value is disabled
+
+  Scenario: 320.Verify that next error message displayed “Advertiser has no selections." displayed in case no Advertiser selected
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    When Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
+    And Click on the Protection Type button
+    And Select "Advertiser" from Protection Type dropdown
+    And Click on Save Protection button
+    Then Verify the error message "Advertisers has no selections" displays in Create Protections page
+
+  Scenario: 321.Verify that next error message displayed “Ad Categories has no selections." displayed in case no Ad Categories selected
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    When Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
+    And Click on the Protection Type button
+    And Select "Ad Categories" from Protection Type dropdown
+    And Click on Save Protection button
+    Then Verify the error message "Ad Categories has no selections" displays in Create Protections page
+
+  Scenario: 322.Include/Exclude buttons displaying for parent entities
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    When Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+    Then Verify that Include/Exclude buttons displayed for focused entitiy when put mouse over the below entity in Inventory Targeting section
+      | Inventory        | Viber Desktop App |
+      | Device           | Phone             |
+      | Operating System | MacOSX            |
+      | Geo              | Afghanistan       |
+      | Ad Size          | 120x60            |
+
+  Scenario: 323.Include/Exclude buttons displaying for child entities
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    When Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+    Then Verify that Include/Exclude buttons displayed for focused entitiy when put mouse over the below entity in Inventory Targeting section
+      | Inventory | Viber iOS App Prod > Viber iOS Explore Screen Prod |

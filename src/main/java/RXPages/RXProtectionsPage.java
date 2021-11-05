@@ -1,19 +1,16 @@
 package RXPages;
 
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -22,22 +19,22 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import RXBaseClass.RXBaseClass;
-import RXUtitities.RXUtile;
-
 public class RXProtectionsPage extends RXBasePage {
 	public String protectionsHeaderStr = "Protections";
 	RXPrivateAuctionsPage privateAuctionsPage;
 	public String loading = "//main//div[@class='container container--fluid']//table/tbody/tr";
 	public String targetAwayRadioBtn = "//label[text()='%s']/preceding-sibling::div";
 	public String targetAwayParentDiv = "//label[text()='%s']/parent::div";
-	public String valueInSelectTable = "//table[contains(@class,'select-table')]/tbody/tr/td/div[contains(@title, '%s')]/parent::td/following-sibling::td";
+	public String valueInSelectTable = "//table[contains(@class,'select-table')]/tbody/tr/td/div[contains(@title, '%s')]/parent::td/following-sibling::td[contains(@class,'options')]";
+	public String valueTdElmtInSelectTable = "//table[contains(@class,'select-table')]/tbody/tr/td/div[contains(@title, '%s')]/ancestor::tr";
 	public String valueInIncludedTable = "//table[contains(@class,'included-table')]/tr/td/div[contains(@title, '%s')]";
 	public String cardNameProtectionsTargeting = "//div[not(contains(@style,'none'))]/div/div[contains(@class,'v-card__title') and contains(text(),'%s')]";
 	public String cardValueProtectionsTargeting = "//div[not(contains(@style,'none'))]/div/div[contains(@class,'v-card__title') and contains(text(),'%s')]/following-sibling::span";
 	public String protectionTypeDropdownValue = "//div[@class='v-list-item__content']/div[contains(text(), '%s')]";
-	public String errorMsg = "//div[@class='v-messages__message' and text()='%s']";
-	
+	public String errorMsg = "//div[contains(@class,'validation-errors')]/div/div/div/ul/li[text()='%s']";
+	public String includeBtn = "//div[contains(text() , '%s')]/parent::td/following-sibling::td[contains(@class,'options')]/div[contains(@class,'include')]/button[contains(@class,'unchecked')]";
+	public String excludeBtn = "//div[contains(text() , '%s')]/parent::td/following-sibling::td[contains(@class,'options')]/div[contains(@class,'exclude')]/button[contains(@class,'unchecked')]";
+
 	@FindBy(xpath = "//div[text()='Protections ']")
     public WebElement protectionsLabel;
 	
@@ -110,8 +107,17 @@ public class RXProtectionsPage extends RXBasePage {
 	@FindBy(xpath = "//div[contains(@class,'menuable__content__active')]")
 	public WebElement protectionTypeDropdownDiv;
 
+	@FindBy(xpath = "//label[text()='Protection Type']/following-sibling::div[@class='v-select__selections']/input")
+	public WebElement protectionTypeInput;
+
 	@FindAll(@FindBy(xpath = "//div[contains(@class,'menuable__content__active')]/div/div/div/div[@class='v-list-item__title']"))
 	public List<WebElement> protectionTypeValuesList;
+
+	@FindBy(xpath = "//thead/tr/th[1]/div/i")
+	public WebElement checkbox_i_Column;
+
+	@FindBy(xpath = "//thead/tr/th[1]/div")
+	public WebElement checkbox_div_Column;
     
 	 // Explicit Wait
     WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -119,7 +125,7 @@ public class RXProtectionsPage extends RXBasePage {
  // Initialize page factory
     public RXProtectionsPage() {
         PageFactory.initElements(driver, this);
-
+		privateAuctionsPage = new RXPrivateAuctionsPage();
     }
 	
 	// Get the text of the Protections page
@@ -372,5 +378,54 @@ public class RXProtectionsPage extends RXBasePage {
 				}, (e1, e2) -> e1, LinkedHashMap::new));
 		System.out.println(result);
 		return result;
+	}
+
+	public void verifyIncludeExcludeButtonsDisplayed(String targetingName, String itemName){
+		Actions actions = new Actions(driver);
+
+		//Check if panel is expanded,expand it if not
+		if(!privateAuctionsPage.targetingExpandPanel(targetingName).getAttribute("class").contains("active")) {
+			privateAuctionsPage.targetingExpandPanel(targetingName).click();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
+		//expand parent entity
+		if(itemName.contains(">")){
+			WebElement parentElement = this.getElementByXpathWithParameter(this.valueTdElmtInSelectTable,itemName.split(">")[0].trim());
+			driverWait().until(ExpectedConditions.visibilityOf(parentElement));
+			parentElement.click();
+
+			itemName = itemName.split(">")[1].trim();
+		}
+
+		//put mouse hover item
+		WebElement itemElemt = this.getElementByXpathWithParameter(this.valueTdElmtInSelectTable, itemName);
+		driverWait().until(ExpectedConditions.visibilityOf(itemElemt));
+		actions.moveToElement(itemElemt).build().perform();
+
+		Assert.assertTrue(this.getElementByXpathWithParameter(this.includeBtn, itemName).isDisplayed());
+		Assert.assertTrue(this.getElementByXpathWithParameter(this.excludeBtn, itemName).isDisplayed());
+	}
+
+	public void includeOrExcludeItemInInventoryTargetingSection(String selectFlag, String targetingName, String itemName){
+		String selectStr;
+		if(selectFlag.equals("Include")){
+			selectStr = this.includeBtn;
+		}else{
+			selectStr = this.excludeBtn;
+		}
+
+		this.verifyIncludeExcludeButtonsDisplayed(targetingName, itemName);
+
+		if(itemName.contains(">")){
+			itemName = itemName.split(">")[1].trim();
+		}
+
+		this.getElementByXpathWithParameter(selectStr, itemName).click();
+		driverWait().until(ExpectedConditions.visibilityOf(this.getElementByXpathWithParameter(this.valueInIncludedTable,itemName)));
 	}
 }
