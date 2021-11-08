@@ -191,6 +191,7 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 	public void clickSaveBtnDialogClose() throws Throwable {
 //		Thread.sleep(5000);
 		wait.until(ExpectedConditions.visibilityOf(auctionPage.saveandcloseButton));
+		js.executeScript("arguments[0].scrollIntoView()", auctionPage.saveandcloseButton);
 		auctionPage.saveandcloseButton.click();
 		wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
 //		Thread.sleep(5000);
