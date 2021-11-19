@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import RXPages.*;
+import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -601,6 +603,76 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	@Then("^Verify that Include/Exclude buttons displayed for focused entitiy when put mouse over the below entity in Inventory Targeting section$")
 	public void verifyThatIncludeExcludeButtonsDisplayedForFocusedEntitiyWhenPutMouseOverTheBelowEntityInInventoryTargetingSection(DataTable dt) {
 		List<List<String>> data = dt.asLists(String.class);
-		data.forEach(e -> protectionsPage.verifyIncludeExcludeButtonsDisplayed(e.get(0), e.get(1)));
+//		data.forEach(e -> protectionsPage.putMouseOverItem(e.get(0), e.get(1)));
+		for(int i = 0; i < data.size(); i++){
+			String item = protectionsPage.putMouseOverItem(data.get(i).get(0), data.get(i).get(1));
+			protectionsPage.verifyIncludeExcludeButtonsDisplayed(item);
+		}
+	}
+
+	@Then("^Verify that Include/Exclude buttons displayed$")
+	public void verifyThatIncludeExcludeButtonsDisplayed(String item) {
+	}
+
+	@Then("^Verify that Clear All link available in \"([^\"]*)\" panel$")
+	public void verifyThatClearAllLinkAvailableInPanel(String arg0) {
+		Assert.assertTrue(protectionsPage.getElementByXpathWithParameter(protectionsPage.clearAllBtn, arg0).isEnabled());
+	}
+
+	@When("^Click \"([^\"]*)\" button in \"([^\"]*)\" panel$")
+	public void clickIncludeAllButtonInPanel(String arg0, String arg1) {
+		String button = "";
+		if(arg0.equals("Include All")){
+			button = protectionsPage.includeAllBtn;
+		}else if(arg0.equals("Exclude All")){
+			button = protectionsPage.excludeAllBtn;
+		}
+		protectionsPage.getElementByXpathWithParameter(button, arg1).click();
+	}
+
+	@Then("^Verify that all items are displayed in \"([^\"]*)\" list in \"([^\"]*)\" panel$")
+	public void verifyThatAllItemsAreDisplayedInListInPanel(String arg0, String arg1) {
+		boolean flag;
+		List<WebElement> itemsInSelectTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.allItemsInSelectTable, arg1);
+		List<WebElement> itemsInIncludedTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.allItemsInIncludedTable, arg1);
+		Assert.assertEquals(itemsInIncludedTable.size(), itemsInSelectTable.size());
+		for(WebElement element : itemsInSelectTable){
+			flag = false;
+			String name = element.getText().trim();
+			for(WebElement element1 : itemsInIncludedTable){
+				if(element1.getText().trim().equals(name)){
+					flag = true;
+					break;
+				}
+			}
+			if(!flag){
+				Assert.fail(name + " is not displayed in Included table");
+			}
+		}
+	}
+
+	@Then("^Verify that the \"([^\"]*)\" items in right list are sorted in the same order as in left list in \"([^\"]*)\" panel$")
+	public void verifyThatTheItemsInRightListAreSortedInTheSameOrderAsInLeftListInPanel(String arg0,String arg1) {
+		List<WebElement> selectedItemsInSelectTable = new ArrayList<WebElement>();
+		if(arg0.equalsIgnoreCase("included")){
+			selectedItemsInSelectTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.includedItemsInSelectTable, arg1);
+		}else if(arg0.equalsIgnoreCase("excluded")){
+			selectedItemsInSelectTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.excludedItemsInSelectTable, arg1);
+		}
+		List<WebElement> itemsInIncludedTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.allItemsInIncludedTable, arg1);
+		Assert.assertEquals(itemsInIncludedTable.size(), selectedItemsInSelectTable.size());
+		for(int i = 0; i < itemsInIncludedTable.size(); i++){
+			Assert.assertEquals(itemsInIncludedTable.get(i).getText().trim(), selectedItemsInSelectTable.get(i).getText().trim());
+		}
+	}
+
+	@Then("^Verify that the included items in right list are sorted in the same order as in left list in \"([^\"]*)\" panel$")
+	public void verifyThatTheIncludedItemsInRightListAreSortedInTheSameOrderAsInLeftListInPanel(String arg0) {
+		List<WebElement> selectedItemsInSelectTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.includedItemsInSelectTableInProtectionTargeting, arg0);
+		List<WebElement> itemsInIncludedTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.allItemsInIncludedTableInProtectionTargeting, arg0);
+		Assert.assertEquals(itemsInIncludedTable.size(), selectedItemsInSelectTable.size());
+		for(int i = 0; i < itemsInIncludedTable.size(); i++){
+			Assert.assertEquals(itemsInIncludedTable.get(i).getText().trim(), selectedItemsInSelectTable.get(i).getText().trim());
+		}
 	}
 }

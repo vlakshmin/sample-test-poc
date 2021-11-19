@@ -873,3 +873,199 @@ Feature: Protections page regression
       | Publisher Name | Viber |                |
     Then Verify that Include/Exclude buttons displayed for focused entitiy when put mouse over the below entity in Inventory Targeting section
       | Inventory | Viber iOS App Prod > Viber iOS Explore Screen Prod |
+
+  Scenario: 324."Clear all" link availability for Include operation
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    When Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+    And "Include" targeting options items in Inventory Targeting section
+      | Inventory | Viber Desktop App |
+    Then Verify that Clear All link available in "Inventory" panel
+    When "Include" targeting options items in Inventory Targeting section
+      | Device | Phone |
+    Then Verify that Clear All link available in "Device" panel
+    When "Include" targeting options items in Inventory Targeting section
+      | Operating System | MacOSX |
+    Then Verify that Clear All link available in "Operating System" panel
+    When "Include" targeting options items in Inventory Targeting section
+      | Geo | Afghanistan |
+    Then Verify that Clear All link available in "Geo" panel
+    When "Include" targeting options items in Inventory Targeting section
+      | Ad Size | 120x60 |
+    Then Verify that Clear All link available in "Ad Size" panel
+
+  Scenario: 325."Clear all" link availability for Exclude operation
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    When Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+    And "Exclude" targeting options items in Inventory Targeting section
+      | Inventory | Viber iOS App Prod > Viber iOS Explore Screen Prod |
+    Then Verify that Clear All link available in "Inventory" panel
+    When "Exclude" targeting options items in Inventory Targeting section
+      | Device | Tablet |
+    Then Verify that Clear All link available in "Device" panel
+    When "Exclude" targeting options items in Inventory Targeting section
+      | Operating System | Windows |
+    Then Verify that Clear All link available in "Operating System" panel
+    When "Exclude" targeting options items in Inventory Targeting section
+      | Geo | Bolivia |
+    Then Verify that Clear All link available in "Geo" panel
+    When "Exclude" targeting options items in Inventory Targeting section
+      | Ad Size | 120x60 |
+    Then Verify that Clear All link available in "Ad Size" panel
+
+  Scenario: 326.Include objects in multi-pane select list
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    When Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+    And "Include" targeting options items in Inventory Targeting section
+      | Inventory | Viber Desktop App                              |
+      | Inventory | Viber iOS App Prod > Viber iOS BCI 320x50 Prod |
+    And Click "Include All" button in "Inventory" panel
+    Then Verify that all items are displayed in "Included" list in "Inventory" panel
+    When "Include" targeting options items in Inventory Targeting section
+      | Device | Tablet |
+    And Click "Include All" button in "Device" panel
+    Then Verify that all items are displayed in "Included" list in "Device" panel
+    When "Include" targeting options items in Inventory Targeting section
+      | Operating System | Windows |
+    And Click "Include All" button in "Operating System" panel
+    Then Verify that all items are displayed in "Included" list in "Operating System" panel
+    When "Include" targeting options items in Inventory Targeting section
+      | Geo | Bolivia |
+    And Click "Include All" button in "Geo" panel
+    Then Verify that all items are displayed in "Included" list in "Geo" panel
+    When "Include" targeting options items in Inventory Targeting section
+      | Ad Size | 120x60 |
+    And Click "Include All" button in "Ad Size" panel
+    Then Verify that all items are displayed in "Included" list in "Ad Size" panel
+
+  Scenario: 327.Exclude objects in multi-pane select list
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    When Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+    And "Exclude" targeting options items in Inventory Targeting section
+      | Inventory | Viber Desktop App                              |
+      | Inventory | Viber iOS App Prod > Viber iOS BCI 320x50 Prod |
+    And Click "Exclude All" button in "Inventory" panel
+    Then Verify that all items are displayed in "Excluded" list in "Inventory" panel
+    When "Exclude" targeting options items in Inventory Targeting section
+      | Device | Tablet |
+    And Click "Exclude All" button in "Device" panel
+    Then Verify that all items are displayed in "Excluded" list in "Device" panel
+    When "Exclude" targeting options items in Inventory Targeting section
+      | Operating System | Windows |
+    And Click "Exclude All" button in "Operating System" panel
+    Then Verify that all items are displayed in "Excluded" list in "Operating System" panel
+    When "Exclude" targeting options items in Inventory Targeting section
+      | Geo | Bolivia |
+    And Click "Exclude All" button in "Geo" panel
+    Then Verify that all items are displayed in "Excluded" list in "Geo" panel
+    When "Exclude" targeting options items in Inventory Targeting section
+      | Ad Size | 120x60 |
+    And Click "Exclude All" button in "Ad Size" panel
+    Then Verify that all items are displayed in "Excluded" list in "Ad Size" panel
+
+  Scenario: 328.Sorting in right and left list should be consistent
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    When Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+    When "Include" targeting options items in Inventory Targeting section
+      | Inventory | Viber Desktop App |
+      | Inventory | Viber iOS App Prod |
+      | Inventory | test for table 2 |
+    Then Verify that the "included" items in right list are sorted in the same order as in left list in "Inventory" panel
+    When "Include" targeting options items in Inventory Targeting section
+      | Device | Set Top Box |
+      | Device | Connected TV  |
+      | Device | Phone  |
+    Then Verify that the "included" items in right list are sorted in the same order as in left list in "Device" panel
+    When "Include" targeting options items in Inventory Targeting section
+      | Operating System | Windows |
+      | Operating System | Android |
+      | Operating System | MacOSX  |
+    Then Verify that the "included" items in right list are sorted in the same order as in left list in "Operating System" panel
+    When "Include" targeting options items in Inventory Targeting section
+      | Geo | Bolivia |
+      | Geo | Albania   |
+      | Geo | Yemen   |
+    Then Verify that the "included" items in right list are sorted in the same order as in left list in "Geo" panel
+    When "Include" targeting options items in Inventory Targeting section
+      | Ad Size | 120x60 |
+      | Ad Size | In-Feed Native (1x1)  |
+      | Ad Size | 300x50  |
+    Then Verify that the "included" items in right list are sorted in the same order as in left list in "Ad Size" panel
+    When Click on the Protection Type button
+    And Select "Advertiser" from Protection Type dropdown
+    And Select below Advertisers from list in Protection targeting section
+      | Advertiser Name                |
+      | ICM                           |
+      | betclic.fr                     |
+      | Slotomania™ Vegas Casino Slots |
+    Then Verify that the included items in right list are sorted in the same order as in left list in "Advertiser" panel
+    When Click on Close button
+    Then User displayed with Protections page
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    When Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+    When "Exclude" targeting options items in Inventory Targeting section
+      | Inventory | Viber Desktop App |
+      | Inventory | Viber iOS App Prod |
+      | Inventory | test for table 2 |
+    Then Verify that the "excluded" items in right list are sorted in the same order as in left list in "Inventory" panel
+    When "Exclude" targeting options items in Inventory Targeting section
+      | Device | Set Top Box |
+      | Device | Connected TV  |
+      | Device | Phone  |
+    Then Verify that the "excluded" items in right list are sorted in the same order as in left list in "Device" panel
+    When "Exclude" targeting options items in Inventory Targeting section
+      | Operating System | Windows |
+      | Operating System | Android |
+      | Operating System | MacOSX  |
+    Then Verify that the "excluded" items in right list are sorted in the same order as in left list in "Operating System" panel
+    When "Exclude" targeting options items in Inventory Targeting section
+      | Geo | Bolivia |
+      | Geo | Albania   |
+      | Geo | Yemen   |
+    Then Verify that the "excluded" items in right list are sorted in the same order as in left list in "Geo" panel
+    When "Exclude" targeting options items in Inventory Targeting section
+      | Ad Size | 120x60 |
+      | Ad Size | In-Feed Native (1x1)  |
+      | Ad Size | 300x50  |
+    Then Verify that the "excluded" items in right list are sorted in the same order as in left list in "Ad Size" panel
+    When Click on the Protection Type button
+    And Select "Ad Categories" from Protection Type dropdown
+    And Select below Category from list in Protection targeting section
+      | Category               |
+      | News                   |
+      | Automotive             |
+      | Technology & Computing |
+    Then Verify that the included items in right list are sorted in the same order as in left list in "Ad Categories" panel
