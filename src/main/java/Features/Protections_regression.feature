@@ -258,104 +258,104 @@ Feature: Protections page regression
       | Both |
     Then Both "Active" and "Inactive" items are displayed for Active/Inactive column
 
-  Scenario: 79.Verify Protection Targeting section elements
-    Given admin user login to RX UI with valid username and password
-    Then Protections is present in the left nav menu
-    When Click on Protections option in Menu
-    Then User displayed with Protections page
-    And Click on the Create Protections button
-    And Enter the following data in the Create Protections page
-      | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Viber |                |
-    And Click Add Protections Targeting button
-    Then Verify that following items are present
-      | Advertiser  |
-      | Ad Category |
-      | All Ads     |
-    Then tooltip "Block/whitelist advertisers" displays when mouse hovered on "Advertiser"
-    Then tooltip "Block/whitelist ads content categories" displays when mouse hovered on "Ad Category"
-    Then tooltip "Block all ads from serving" displays when mouse hovered on "All Ads"
-
-  Scenario: 80.Verify Protection Targeting can be selected All Ads or Advertsier/Ad Category
-    Given admin user login to RX UI with valid username and password
-    Then Protections is present in the left nav menu
-    When Click on Protections option in Menu
-    Then User displayed with Protections page
-    And Click on the Create Protections button
-    And Enter the following data in the Create Protections page
-      | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Viber |                |
-    And Click Add Protections Targeting button
-    Then Verify that following items are present
-      | Advertiser  |
-      | Ad Category |
-      | All Ads     |
-    When Select "Advertiser" from Add Protections Targeting
-    Then Verify that "Ad Category" is enabled
-    Then Verify that "All Ads" is disabled
-    Then Delete "Advertiser" in Create Protections page
-    When Click Add Protections Targeting button
-    Then Verify that following items are present
-      | Advertiser  |
-      | Ad Category |
-      | All Ads     |
-    And Select "All Ads" from Add Protections Targeting
-    Then Verify that "Advertiser" is disabled
-    Then Verify that "Ad Category" is disabled
-
-  Scenario: 81.Verify Protection Targeting section elements can be deleted
-    Given admin user login to RX UI with valid username and password
-    Then Protections is present in the left nav menu
-    When Click on Protections option in Menu
-    Then User displayed with Protections page
-    And Click on the Create Protections button
-    And Enter the following data in the Create Protections page
-      | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Viber |                |
-    And Click Add Protections Targeting button
-    Then Verify that following items are present
-      | Advertiser  |
-      | Ad Category |
-      | All Ads     |
-    When Select "Advertiser" from Add Protections Targeting
-    Then Delete "Advertiser" in Create Protections page
-    And Click Add Protections Targeting button
-    Then Verify that following items are present
-      | Advertiser  |
-      | Ad Category |
-      | All Ads     |
-    When Select "Ad Category" from Add Protections Targeting
-    Then Delete "Ad Category" in Create Protections page
-    And Click Add Protections Targeting button
-    Then Verify that following items are present
-      | Advertiser  |
-      | Ad Category |
-      | All Ads     |
-    When Select "All Ads" from Add Protections Targeting
-    Then Delete "All Ads" in Create Protections page
-
-  Scenario: 82.Verify Protection Targeting each card can be added only one at a time
-    Given admin user login to RX UI with valid username and password
-    Then Protections is present in the left nav menu
-    When Click on Protections option in Menu
-    Then User displayed with Protections page
-    And Click on the Create Protections button
-    And Enter the following data in the Create Protections page
-      | FieldName      | Value             | ListValueIndex |
-      | Publisher Name | Viber |                |
-    And Click Add Protections Targeting button
-    Then Verify that following items are present
-      | Advertiser  |
-      | Ad Category |
-      | All Ads     |
-    When Select "Advertiser" from Add Protections Targeting
-    Then Verify that each card can be added only one at a time
+#  Scenario: 79.Verify Protection Targeting section elements
+#    Given admin user login to RX UI with valid username and password
+#    Then Protections is present in the left nav menu
+#    When Click on Protections option in Menu
+#    Then User displayed with Protections page
+#    And Click on the Create Protections button
+#    And Enter the following data in the Create Protections page
+#      | FieldName      | Value             | ListValueIndex |
+#      | Publisher Name | Viber |                |
+#    And Click Add Protections Targeting button
+#    Then Verify that following items are present
+#      | Advertiser  |
+#      | Ad Category |
+#      | All Ads     |
+#    Then tooltip "Block/whitelist advertisers" displays when mouse hovered on "Advertiser"
+#    Then tooltip "Block/whitelist ads content categories" displays when mouse hovered on "Ad Category"
+#    Then tooltip "Block all ads from serving" displays when mouse hovered on "All Ads"
+#
+#  Scenario: 80.Verify Protection Targeting can be selected All Ads or Advertsier/Ad Category
+#    Given admin user login to RX UI with valid username and password
+#    Then Protections is present in the left nav menu
+#    When Click on Protections option in Menu
+#    Then User displayed with Protections page
+#    And Click on the Create Protections button
+#    And Enter the following data in the Create Protections page
+#      | FieldName      | Value             | ListValueIndex |
+#      | Publisher Name | Viber |                |
+#    And Click Add Protections Targeting button
+#    Then Verify that following items are present
+#      | Advertiser  |
+#      | Ad Category |
+#      | All Ads     |
+#    When Select "Advertiser" from Add Protections Targeting
+#    Then Verify that "Ad Category" is enabled
+#    Then Verify that "All Ads" is disabled
+#    Then Delete "Advertiser" in Create Protections page
+#    When Click Add Protections Targeting button
+#    Then Verify that following items are present
+#      | Advertiser  |
+#      | Ad Category |
+#      | All Ads     |
+#    And Select "All Ads" from Add Protections Targeting
+#    Then Verify that "Advertiser" is disabled
+#    Then Verify that "Ad Category" is disabled
+#
+#  Scenario: 81.Verify Protection Targeting section elements can be deleted
+#    Given admin user login to RX UI with valid username and password
+#    Then Protections is present in the left nav menu
+#    When Click on Protections option in Menu
+#    Then User displayed with Protections page
+#    And Click on the Create Protections button
+#    And Enter the following data in the Create Protections page
+#      | FieldName      | Value             | ListValueIndex |
+#      | Publisher Name | Viber |                |
+#    And Click Add Protections Targeting button
+#    Then Verify that following items are present
+#      | Advertiser  |
+#      | Ad Category |
+#      | All Ads     |
+#    When Select "Advertiser" from Add Protections Targeting
+#    Then Delete "Advertiser" in Create Protections page
+#    And Click Add Protections Targeting button
+#    Then Verify that following items are present
+#      | Advertiser  |
+#      | Ad Category |
+#      | All Ads     |
+#    When Select "Ad Category" from Add Protections Targeting
+#    Then Delete "Ad Category" in Create Protections page
+#    And Click Add Protections Targeting button
+#    Then Verify that following items are present
+#      | Advertiser  |
+#      | Ad Category |
+#      | All Ads     |
+#    When Select "All Ads" from Add Protections Targeting
+#    Then Delete "All Ads" in Create Protections page
+#
+#  Scenario: 82.Verify Protection Targeting each card can be added only one at a time
+#    Given admin user login to RX UI with valid username and password
+#    Then Protections is present in the left nav menu
+#    When Click on Protections option in Menu
+#    Then User displayed with Protections page
+#    And Click on the Create Protections button
+#    And Enter the following data in the Create Protections page
+#      | FieldName      | Value             | ListValueIndex |
+#      | Publisher Name | Viber |                |
+#    And Click Add Protections Targeting button
+#    Then Verify that following items are present
+#      | Advertiser  |
+#      | Ad Category |
+#      | All Ads     |
+#    When Select "Advertiser" from Add Protections Targeting
+#    Then Verify that each card can be added only one at a time
 
   Scenario: 100.Verify Protection entity page default values
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
-    Then User displayed with Protections page
+#    Then User displayed with Protections page
     And Click on the Create Protections button
     Then Verify that all elements are present and have proper default value
 
@@ -372,18 +372,23 @@ Feature: Protections page regression
     And "Disable" following toggle fields in create page
       | FieldName |
       | Active    |
-    And Select targeting options items
+    And "Include" targeting options items in Inventory Targeting section
       | Inventory        | Viber Desktop App |
-      | Device           | Phone                |
-      | Operating System | MacOSX              |
-      | Geo              | Afghanistan          |
-      | Ad Size          | 120x60               |
-    And Click Add Protections Targeting button
-    Then Verify that following items are present
-      | Advertiser  |
-      | Ad Category |
-      | All Ads     |
-    When Select "Advertiser" from Add Protections Targeting
+      | Device           | Phone             |
+      | Operating System | MacOSX            |
+      | Geo              | Afghanistan       |
+      | Ad Size          | 120x60            |
+#    And Click Add Protections Targeting button
+#    Then Verify that following items are present
+#      | Advertiser  |
+#      | Ad Category |
+#      | All Ads     |
+#    When Select "Advertiser" from Add Protections Targeting
+    When Click on the Protection Type button
+    And Select "Advertiser" from Protection Type dropdown
+    And Select below Advertisers from list in Protection targeting section
+      | Advertiser Name |
+      | ICM             |
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 3              |
@@ -413,6 +418,8 @@ Feature: Protections page regression
       | FieldName      | Value             | ListValueIndex |
       | Publisher Name | Viber |                |
       | Name           | 1234567              |                |
+    When Click on the Protection Type button
+    And Select "Supply Exclusions" from Protection Type dropdown
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
     And Click on the Create Protections button
@@ -420,6 +427,8 @@ Feature: Protections page regression
       | FieldName      | Value             | ListValueIndex |
       | Publisher Name | Viber |                |
       | Name           | Long value              |                |
+    When Click on the Protection Type button
+    And Select "Supply Exclusions" from Protection Type dropdown
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
 
@@ -433,12 +442,17 @@ Feature: Protections page regression
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viber |                |
       | Name           | Test  |                |
-    And Select targeting options items
+    And "Include" targeting options items in Inventory Targeting section
       | Inventory        | Viber Desktop App |
       | Device           | Phone                |
       | Operating System | MacOSX               |
       | Geo              | Afghanistan          |
       | Ad Size          | 120x60               |
+    When Click on the Protection Type button
+    And Select "Ad Categories" from Protection Type dropdown
+    And Select below Category from list in Protection targeting section
+      | Category   |
+      | Automotive |
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
 
@@ -452,6 +466,8 @@ Feature: Protections page regression
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viber |                |
       | Name           | Test  |                |
+    When Click on the Protection Type button
+    And Select "Supply Exclusions" from Protection Type dropdown
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
     When Select the created Protection
@@ -659,6 +675,11 @@ Feature: Protections page regression
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viber |                |
       | Name           | Test  |                |
+    When Click on the Protection Type button
+    And Select "Ad Categories" from Protection Type dropdown
+    And Select below Category from list in Protection targeting section
+      | Category   |
+      | Automotive |
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
     When Hover over the Details icon in Protections page
@@ -674,13 +695,19 @@ Feature: Protections page regression
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viber |                |
       | Name           | Test  |                |
-    And Click Add Protections Targeting button
-    And Select "Advertiser" from Add Protections Targeting
-    And Enable "Target away from the following advertiser (block)" radio button in Add Protections Targeting section
-    And Select the following advertisers from left panel in Add Protections Targeting section
-      | Advertiser                        |
-      | Cosphera Nahrungsergänzungsmittel |
-      | ICM                               |
+#    And Click Add Protections Targeting button
+#    And Select "Advertiser" from Add Protections Targeting
+#    And Enable "Target away from the following advertiser (block)" radio button in Add Protections Targeting section
+#    And Select the following advertisers from left panel in Add Protections Targeting section
+#      | Advertiser                        |
+#      | Cosphera Nahrungsergänzungsmittel |
+#      | ICM                               |
+    When Click on the Protection Type button
+    And Select "Advertiser" from Protection Type dropdown
+    And Enable "Target away from the following advertiser (block)" radio button in Protections Targeting section
+    And Select below Advertisers from list in Protection targeting section
+      | Advertiser Name |
+      | ICM             |
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
     When Hover over the Details icon in Protections page
@@ -696,13 +723,19 @@ Feature: Protections page regression
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viber |                |
       | Name           | Test  |                |
-    And Click Add Protections Targeting button
-    And Select "Advertiser" from Add Protections Targeting
-    And Enable "Target towards the following advertiser (whitelist)" radio button in Add Protections Targeting section
-    And Select the following advertisers from left panel in Add Protections Targeting section
-      | Advertiser                        |
-      | Cosphera Nahrungsergänzungsmittel |
-      | ICM                               |
+#    And Click Add Protections Targeting button
+#    And Select "Advertiser" from Add Protections Targeting
+#    And Enable "Target towards the following advertiser (whitelist)" radio button in Add Protections Targeting section
+#    And Select the following advertisers from left panel in Add Protections Targeting section
+#      | Advertiser                        |
+#      | Cosphera Nahrungsergänzungsmittel |
+#      | ICM                               |
+    When Click on the Protection Type button
+    And Select "Advertiser" from Protection Type dropdown
+    And Enable "Target towards the following advertiser (whitelist)" radio button in Protections Targeting section
+    And Select below Advertisers from list in Protection targeting section
+      | Advertiser Name |
+      | ICM             |
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
     When Hover over the Details icon in Protections page
@@ -811,6 +844,19 @@ Feature: Protections page regression
     And Verify the Protection Type value is disabled
     When Click on Close button
     Then User displayed with Protections page
+    When Uncheck all protections items
+    When Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
+    And "Disable" following toggle fields in create page
+      | FieldName |
+      | Active    |
+    And Click on the Protection Type button
+    And Select "Supply Exclusions" from Protection Type dropdown
+    And Click on Save Protection button
+    Then Verify the created Protection data is matching with its overview list values
     When Select one "Inactive" Protections item
     And Click on "Edit Protections" button in Protections list page
     Then Edit Protections pop up is present

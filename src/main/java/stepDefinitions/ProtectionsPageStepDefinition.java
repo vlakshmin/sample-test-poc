@@ -211,50 +211,50 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		columns.forEach(e ->  protectionsPage.bothActiveAndInactiveAreDisplayed(e));
 	}
 	
-	@When("^Click Add Protections Targeting button$")
-	public void click_Add_Protections_Targeting_button(){
-		wait.until(ExpectedConditions.elementToBeClickable(protectionsPage.addProtectionsTargetingButton)).click();
-		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@role='menu']"))));
-	}
+//	@When("^Click Add Protections Targeting button$")
+//	public void click_Add_Protections_Targeting_button(){
+//		wait.until(ExpectedConditions.elementToBeClickable(protectionsPage.addProtectionsTargetingButton)).click();
+//		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@role='menu']"))));
+//	}
 
-	@Then("^Verify that following items are present$")
-	public void verify_that_following_items_are_present(DataTable dt) {
-		List<String> items= dt.asList(String.class);
-		items.forEach(e -> Assert.assertTrue(protectionsPage.getMenuItemIcon(e).isDisplayed()));
-	}
+//	@Then("^Verify that following items are present$")
+//	public void verify_that_following_items_are_present(DataTable dt) {
+//		List<String> items= dt.asList(String.class);
+//		items.forEach(e -> Assert.assertTrue(protectionsPage.getMenuItemIcon(e).isDisplayed()));
+//	}
 
-	@Then("^tooltip \"([^\"]*)\" displays when mouse hovered on \"([^\"]*)\"$")
-	public void tooltip_displays_when_mouse_hovered_on(String tooltip, String item){
-		Actions action = new Actions(driver);
-		action.moveToElement(protectionsPage.getMenuItemIcon(item)).perform();
-		wait.until(ExpectedConditions.visibilityOf(protectionsPage.tooltip));
-		Assert.assertTrue(tooltip.equals(protectionsPage.tooltip.getText()),tooltip+ ">>>>>" +protectionsPage.tooltip.getText());
-	}
-	
-	@When("^Select \"([^\"]*)\" from Add Protections Targeting$")
-	public void select_from_Add_Protections_Targeting(String item) {
-		protectionsPage.getMenuItemIcon(item).click();
-	}
+//	@Then("^tooltip \"([^\"]*)\" displays when mouse hovered on \"([^\"]*)\"$")
+//	public void tooltip_displays_when_mouse_hovered_on(String tooltip, String item){
+//		Actions action = new Actions(driver);
+//		action.moveToElement(protectionsPage.getMenuItemIcon(item)).perform();
+//		wait.until(ExpectedConditions.visibilityOf(protectionsPage.tooltip));
+//		Assert.assertTrue(tooltip.equals(protectionsPage.tooltip.getText()),tooltip+ ">>>>>" +protectionsPage.tooltip.getText());
+//	}
 
-	@Then("^Verify that \"([^\"]*)\" is enabled$")
-	public void verify_that_is_enabled(String item) {
-		wait.until(ExpectedConditions.attributeToBe(protectionsPage.getMenuItem(item), "aria-disabled", ""));
-	}
+//	@When("^Select \"([^\"]*)\" from Add Protections Targeting$")
+//	public void select_from_Add_Protections_Targeting(String item) {
+//		protectionsPage.getMenuItemIcon(item).click();
+//	}
 
-	@Then("^Verify that \"([^\"]*)\" is disabled$")
-	public void verify_that_is_disabled(String item) {
-		wait.until(ExpectedConditions.attributeToBe(protectionsPage.getMenuItem(item), "aria-disabled", "true"));
-	}
+//	@Then("^Verify that \"([^\"]*)\" is enabled$")
+//	public void verify_that_is_enabled(String item) {
+//		wait.until(ExpectedConditions.attributeToBe(protectionsPage.getMenuItem(item), "aria-disabled", ""));
+//	}
+//
+//	@Then("^Verify that \"([^\"]*)\" is disabled$")
+//	public void verify_that_is_disabled(String item) {
+//		wait.until(ExpectedConditions.attributeToBe(protectionsPage.getMenuItem(item), "aria-disabled", "true"));
+//	}
 
-	@Then("^Delete \"([^\"]*)\" in Create Protections page$")
-	public void delete_in_Create_Protections_page(String item){
-		wait.until(ExpectedConditions.elementToBeClickable(protectionsPage.getRemoveButton(item))).click();
-	}
-
-	@Then("^Verify that each card can be added only one at a time$")
-	public void verify_that_each_card_can_be_added_only_one_at_a_time() {
-		wait.until(ExpectedConditions.attributeToBe(protectionsPage.addProtectionsTargetingButton, "aria-expanded", "false"));
-	}
+//	@Then("^Delete \"([^\"]*)\" in Create Protections page$")
+//	public void delete_in_Create_Protections_page(String item){
+//		wait.until(ExpectedConditions.elementToBeClickable(protectionsPage.getRemoveButton(item))).click();
+//	}
+//
+//	@Then("^Verify that each card can be added only one at a time$")
+//	public void verify_that_each_card_can_be_added_only_one_at_a_time() {
+//		wait.until(ExpectedConditions.attributeToBe(protectionsPage.addProtectionsTargetingButton, "aria-expanded", "false"));
+//	}
 	
 	@Then("^Enter the following data in the Create Protections page$")
 	public void enterGenaralCardProtections(DataTable dt) throws Throwable {
@@ -315,9 +315,13 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		//verify Inventory is reset
 		protectionsPage.allInventorysDisplayDefaultValue();
 		//verify Protection targeting is reset
-		verify_that_is_enabled("Advertiser");
-		verify_that_is_enabled("Ad Category");
-		verify_that_is_enabled("All Ads");
+		Assert.assertFalse(protectionsPage.IsElementPresent(protectionsPage.protectionTargetingSection));
+		//verify Protection Type is reset
+		Assert.assertFalse(protectionsPage.IsElementPresent(protectionsPage.protectionTypeSelectedValue));
+
+//		verify_that_is_enabled("Advertiser");
+//		verify_that_is_enabled("Ad Category");
+//		verify_that_is_enabled("All Ads");
 	}
 	
 	@Then("^Verify that search with \"([^\"]*)\" works properly for Publisher dropdown$")
@@ -336,7 +340,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		Assert.assertTrue(adspotsPage.publisherNameDropDown.isDisplayed());
 		Assert.assertTrue(auctionPage.auctionNameField.isDisplayed());
 		Assert.assertTrue(auctionPage.toggleField("Active").isDisplayed());
-		Assert.assertTrue(protectionsPage.addProtectionsTargetingButton.isDisplayed());
+		Assert.assertTrue(protectionsPage.protectionTypeDropdown.isDisplayed());
 		Assert.assertTrue(protectionsPage.saveProtectionButton.isDisplayed());
 		protectionsPage.allInventorysDisplayDefaultValue();
 	}
@@ -371,9 +375,6 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	@Then("^Select one \"([^\"]*)\" Protections item$")
 	public void select_one_Protections_item(String active) {
 		enteredProtectionsNameList.clear();
-		while(!protectionsPage.checkbox_i_Column.getAttribute("class").contains("mdi-checkbox-blank-outline")){ //uncheck all protections items
-			protectionsPage.checkbox_div_Column.click();
-		}
 		List<WebElement> listActives = driver.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[6]"));
 		for (int k = 0; k < listActives.size(); k++) {
 			String reqActive = listActives.get(k).getText().replaceAll("\\s", "");
@@ -382,6 +383,13 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 				enteredProtectionsNameList.add(protectionsPage.protectionsName(k+1));
 				break;
 			}
+		}
+	}
+
+	@When("^Uncheck all protections items$")
+	public void uncheckAllProtectionsItems() {
+		while(!protectionsPage.checkbox_i_Column.getAttribute("class").contains("mdi-checkbox-blank-outline")){
+			protectionsPage.checkbox_div_Column.click();
 		}
 	}
 
@@ -464,35 +472,35 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		detailsData = protectionsPage.getProtectionsDetailsData();
 	}
 
-	@When("^Enable \"([^\"]*)\" radio button in Add Protections Targeting section$")
-	public void enableRadioBtnInAddProtectionsTargetingSection(String btnName) {
+	@When("^Enable \"([^\"]*)\" radio button in Protections Targeting section$")
+	public void enableRadioBtnInProtectionsTargetingSection(String btnName) {
 		wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.targetAwayParentDiv, btnName)));
 		if(!protectionsPage.getElementByXpathWithParameter(protectionsPage.targetAwayParentDiv, btnName).getAttribute("class").contains("active")){
 			protectionsPage.getElementByXpathWithParameter(protectionsPage.targetAwayRadioBtn, btnName).click();
 		}
 	}
 
-	@When("^Select the following advertisers from left panel in Add Protections Targeting section$")
-	public void selectTheFollowingAdvFromLeftPanelInAddProtectionsTargetingSection(DataTable dt) {
-		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
-		String value = "";
-		for (Map<String, String> stringMap : list) {
-			String advName = stringMap.get("Advertiser");
-			advIncludedTable.add(advName);
-			WebElement advElemt = protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInSelectTable, advName);
-			js.executeScript("arguments[0].scrollIntoView()", advElemt);
-			advElemt.click();
-			wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTable, advName)));
-		}
-
-		String cardValue = protectionsPage.getElementByXpathWithParameter(protectionsPage.cardValueProtectionsTargeting, "Advertiser").getText().trim();
-		if(cardValue.contains("Whitelist")){
-			value = cardValue.replace("Whitelist", "Allowing");
-		}else if(cardValue.contains("Block")){
-			value = cardValue.replace("Block", "Blocking");
-		}
-		enteredDataInCreateProtections.put("Advertisers", value);
-	}
+//	@When("^Select the following advertisers from left panel in Add Protections Targeting section$")
+//	public void selectTheFollowingAdvFromLeftPanelInAddProtectionsTargetingSection(DataTable dt) {
+//		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+//		String value = "";
+//		for (Map<String, String> stringMap : list) {
+//			String advName = stringMap.get("Advertiser");
+//			advIncludedTable.add(advName);
+//			WebElement advElemt = protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInSelectTable, advName);
+//			js.executeScript("arguments[0].scrollIntoView()", advElemt);
+//			advElemt.click();
+//			wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTable, advName)));
+//		}
+//
+//		String cardValue = protectionsPage.getElementByXpathWithParameter(protectionsPage.cardValueProtectionsTargeting, "Advertiser").getText().trim();
+//		if(cardValue.contains("Whitelist")){
+//			value = cardValue.replace("Whitelist", "Allowing");
+//		}else if(cardValue.contains("Block")){
+//			value = cardValue.replace("Block", "Blocking");
+//		}
+//		enteredDataInCreateProtections.put("Advertisers", value);
+//	}
 
 	@Then("^Verify the protections details data is correct$")
 	public void VerifyTheProtectionsDetailsDataIsCorrect() {
@@ -576,12 +584,10 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		}
 
 		String cardValue = protectionsPage.getElementByXpathWithParameter(protectionsPage.cardValueProtectionsTargeting, "Ad Categories").getText().trim();
-		if(cardValue.contains("Whitelist")){
-			value = cardValue.replace("Categories", "Category");
-		}else if(cardValue.contains("Block")){
+		if(cardValue.contains("Block")){
 			value = cardValue.replace("Block", "Blocking");
 		}
-		enteredDataInCreateProtections.put("Ad categories", value);
+		enteredDataInCreateProtections.put("Ad categories", value.replace("Categories", "category"));
 	}
 
 	@Then("^Verify the error message \"([^\"]*)\" displays in Create Protections page$")
@@ -608,10 +614,6 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 			String item = protectionsPage.putMouseOverItem(data.get(i).get(0), data.get(i).get(1));
 			protectionsPage.verifyIncludeExcludeButtonsDisplayed(item);
 		}
-	}
-
-	@Then("^Verify that Include/Exclude buttons displayed$")
-	public void verifyThatIncludeExcludeButtonsDisplayed(String item) {
 	}
 
 	@Then("^Verify that Clear All link available in \"([^\"]*)\" panel$")
