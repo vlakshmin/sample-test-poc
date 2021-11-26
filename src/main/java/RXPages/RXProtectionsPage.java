@@ -27,7 +27,8 @@ public class RXProtectionsPage extends RXBasePage {
 	public String targetAwayParentDiv = "//label[text()='%s']/parent::div";
 	public String valueInSelectTable = "//table[contains(@class,'select-table')]/tbody/tr/td/div[contains(@title,'%s')]/parent::td/following-sibling::td[contains(@class,'options')]";
 	public String valueTrElmtInSelectTable = "//table[contains(@class,'select-table')]/tbody/tr/td/div[@title='%s']/ancestor::tr";
-	public String valueInIncludedTable = "//table[contains(@class,'included-table')]/tr/td/div[contains(@title,'%s')]";
+	public String valueInIncludedTable = "//table[contains(@class,'included-table')]/tr/td/div[contains(@title,'%s') and not(@class='parent-label')]";
+	public String valueInIncludedTableByRowNum = "//table[contains(@class,'included-table')]/tr[%s]/td[1]/div[not(@class='parent-label')]";
 	public String cardNameProtectionsTargeting = "//div[not(contains(@style,'none'))]/div/div[contains(@class,'v-card__title') and contains(text(),'%s')]";
 	public String cardValueProtectionsTargeting = "//div[not(contains(@style,'none'))]/div/div[contains(@class,'v-card__title') and contains(text(),'%s')]/following-sibling::span";
 	public String cardValueInventoryTargeting = "//h3[text()='%s']/following-sibling::div[@class='selectionInfo']/span";
@@ -46,6 +47,13 @@ public class RXProtectionsPage extends RXBasePage {
 	public String allItemsInIncludedTableInProtectionTargeting = "//div[contains(@class,'v-card__title') and contains(text(),'%s')]/parent::div/parent::div[not(contains(@style,'none'))]//table[contains(@class,'included-table')]/tr/td[1]/div";
 	public String protectionTargetingSection = "//h2[text()='Protection targeting']/ancestor::div[@class='container']";
 	public String protectionTypeSelectedValue = "//label[text()='Protection Type']/following-sibling::div[@class='v-select__selections']/div";
+	public String includedTableLabel = "//h3[text()='%s']/parent::button/following-sibling::div//div[@class='results-header']/following-sibling::div[contains(@class,'banner')]";
+	public String includeOrExcludeAllBtnLabel = "//h3[text()='%s']/parent::button/following-sibling::div//button[contains(@class,'select-all')]/span/div[1]";
+	public String parentLabelInRightPanel = "//table[contains(@class,'included-table')]//div[@title='%s']/preceding-sibling::div[@class='parent-label']";
+	public String previousPanel = "//h3[text()='%s']/ancestor::div[contains(@class,'v-expansion-panel')]/preceding::div[contains(@class,'v-expansion-panel--next-active')]/button/following-sibling::div";
+	public String bannerInIncludedTable = "//h3[text()='%s']/parent::button/following-sibling::div//div[@class='results-header']/following-sibling::div[contains(@class,'-banner')]";
+	public String expandIconInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]/tbody/tr/td[@class='nested']/i";
+	public String valueOptionsTdElmtInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]/tbody/tr/td[contains(@class,'options')]";
 
 	@FindBy(xpath = "//div[text()='Protections ']")
     public WebElement protectionsLabel;
@@ -130,6 +138,9 @@ public class RXProtectionsPage extends RXBasePage {
 
 	@FindBy(xpath = "//thead/tr/th[1]/div")
 	public WebElement checkbox_div_Column;
+
+	@FindAll(@FindBy(xpath = "//table[contains(@class,'included-table')]/tr"))
+	public List<WebElement> trElmentListInIncludedTable;
 
 	 // Explicit Wait
     WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -403,10 +414,8 @@ public class RXProtectionsPage extends RXBasePage {
 		//Check if panel is expanded,expand it if not
 		if(!privateAuctionsPage.targetingExpandPanel(targetingName).getAttribute("class").contains("active")) {
 			privateAuctionsPage.targetingExpandPanel(targetingName).click();
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			if(!targetingName.equalsIgnoreCase("Inventory")){
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(String.format(this.previousPanel,targetingName))));
 			}
 		}
 

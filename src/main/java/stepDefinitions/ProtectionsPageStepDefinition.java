@@ -3,6 +3,7 @@ package stepDefinitions;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.regex.Pattern;
 
 import RXPages.*;
 import cucumber.api.PendingException;
@@ -272,7 +273,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 					js.executeScript("arguments[0].scrollIntoView()", protectionsPage.dropDownPublisher(listValueIndex));
 					protectionsPage.dropDownPublisher(listValueIndex).click();
 				} else {
-					dealsPage.selectPublisherByName(value);
+					protectionsPage.selectValueFromDropdown(value);
 				}
 
 				enteredPublisherName = adspotsPage.publisherNameField.getText();
@@ -552,7 +553,6 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	public void SelectBelowAdvertisersFromListInProtectionTargetingSection(DataTable dt) {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.cardNameProtectionsTargeting, "Advertiser")));
-		String value = "";
 		for (Map<String, String> stringMap : list) {
 			String advName = stringMap.get("Advertiser Name");
 			advIncludedTable.add(advName);
@@ -564,16 +564,15 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 
 		String cardValue = protectionsPage.getElementByXpathWithParameter(protectionsPage.cardValueProtectionsTargeting, "Advertiser").getText().trim();
 		if(cardValue.contains("Block")){
-			value = cardValue.replace("Block", "Blocking");
+			cardValue = cardValue.replace("Block", "Blocking");
 		}
-		enteredDataInCreateProtections.put("Advertisers", value);
+		enteredDataInCreateProtections.put("Advertisers", cardValue);
 	}
 
 	@When("^Select below Category from list in Protection targeting section$")
 	public void selectBelowCategoryFromListInProtectionTargetingSection(DataTable dt) {
 		List<Map<String, String>> list = dt.asMaps(String.class, String.class);
 		wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.cardNameProtectionsTargeting, "Ad Categories")));
-		String value = "";
 		for (Map<String, String> stringMap : list) {
 			String category = stringMap.get("Category");
 			advIncludedTable.add(category);
@@ -585,9 +584,9 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 
 		String cardValue = protectionsPage.getElementByXpathWithParameter(protectionsPage.cardValueProtectionsTargeting, "Ad Categories").getText().trim();
 		if(cardValue.contains("Block")){
-			value = cardValue.replace("Block", "Blocking");
+			cardValue = cardValue.replace("Block", "Blocking");
 		}
-		enteredDataInCreateProtections.put("Ad categories", value.replace("Categories", "category"));
+		enteredDataInCreateProtections.put("Ad categories", cardValue.replace("Categories", "category"));
 	}
 
 	@Then("^Verify the error message \"([^\"]*)\" displays in Create Protections page$")
@@ -676,5 +675,86 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		for(int i = 0; i < itemsInIncludedTable.size(); i++){
 			Assert.assertEquals(itemsInIncludedTable.get(i).getText().trim(), selectedItemsInSelectTable.get(i).getText().trim());
 		}
+	}
+
+	@Then("^Verify that \"([^\"]*)\" are displayed in \"([^\"]*)\" panel$")
+	public void verifyThatValueAreDisplayedInPanel(String arg0, String arg1) {
+		String xpathStr = "";
+		if(arg1.equalsIgnoreCase("Advertiser") || arg1.equalsIgnoreCase("Ad Categories")){
+			xpathStr = protectionsPage.cardValueProtectionsTargeting;
+		}else{
+			xpathStr = protectionsPage.cardValueInventoryTargeting;
+		}
+		Assert.assertEquals(protectionsPage.getElementByXpathWithParameter(xpathStr, arg1).getText().trim(), arg0);
+	}
+
+	@Then("^Verify that objects can now be added as \"([^\"]*)\" and \"([^\"]*)\" is available in \"([^\"]*)\" panel$")
+	public void verifyThatObjectsCanNowBeAddedAsAndIsAvailableInPanel(String arg0, String arg1, String arg2) {
+		Assert.assertEquals(protectionsPage.getElementByXpathWithParameter(protectionsPage.includedTableLabel, arg2).getText().trim(), arg0);
+		Assert.assertEquals(protectionsPage.getElementByXpathWithParameter(protectionsPage.includeOrExcludeAllBtnLabel, arg2).getText().trim(), arg1);
+	}
+
+	@Then("^Verify that child object \"([^\"]*)\" is displayed properly with parent name \"([^\"]*)\" in right list$")
+	public void verifyThatChildObjectIsDisplayedProperlyWithParentNameInRightList(String arg0, String arg1) {
+		Assert.assertEquals(protectionsPage.getElementByXpathWithParameter(protectionsPage.parentLabelInRightPanel, arg0).getAttribute("title").trim(), arg1);
+	}
+
+	@Then("^Verify that \"([^\"]*)\" is displayed as \"([^\"]*)\" in right list in \"([^\"]*)\" panel$")
+	public void verifyThatIsDisplayedAsIncludedOrExcludedInRightListInPanel(String arg0, String arg1, String arg2) {
+		int rownum = 0;
+		int begin = 0;
+		int end = 0;
+		boolean flag = false;
+		for(int i = 0; i < protectionsPage.trElmentListInIncludedTable.size(); i ++) {
+			if(protectionsPage.trElmentListInIncludedTable.get(i).getAttribute("class").contains("inline-banner")){
+				flag = true;
+				rownum = i + 1;
+				break;
+			}
+		}
+
+		if(arg1.equalsIgnoreCase("Included")){
+			begin = 1;
+			end = rownum;
+		}else if(arg1.equalsIgnoreCase("Excluded")){
+			begin = rownum + 1;
+			end = protectionsPage.trElmentListInIncludedTable.size();
+		}
+
+		if(flag) {
+			//retrieve Included/Excluded items
+			flag = false;
+			for (int j = begin; j <= end; j++) {
+				if (protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTableByRowNum, String.valueOf(j)).getAttribute("title").equals(arg0)) {
+					flag = true;
+					break;
+				}
+			}
+			if(!flag){
+				Assert.fail(arg0 + " is not displayed as " + arg1 + " in right list.");
+			}
+		}else{
+			Assert.fail("There only have the " + protectionsPage.getElementByXpathWithParameter(protectionsPage.bannerInIncludedTable, arg2).getText().trim() + " item in right list.");
+		}
+	}
+
+	@Then("^Verify that all changes in left and right columns are reseted in \"([^\"]*)\" Panel$")
+	public void verifyThatAllChangesInLeftAndRightColumnsAreResetedInPanel(String arg0) {
+		//verify select table reset
+		String classAttr = "";
+		for(WebElement expandIcon : protectionsPage.getElementListByXpathWithParameter(protectionsPage.expandIconInSelectTable, arg0)){
+			expandIcon.click(); //expand parent
+		}
+		for(WebElement item : protectionsPage.getElementListByXpathWithParameter(protectionsPage.valueOptionsTdElmtInSelectTable, arg0)){
+			classAttr = item.getAttribute("class");
+//			System.out.println("classAttr >>> " + classAttr);
+			Assert.assertFalse(classAttr.contains("excluded") && classAttr.contains("included"));
+		}
+
+		//verify include table reset
+		Assert.assertEquals(protectionsPage.trElmentListInIncludedTable.size(), 0);
+
+		//verify selection info reset
+		Assert.assertTrue(Pattern.matches("All(.*)included", protectionsPage.isInventoryDisplayDefaultValue(arg0)));
 	}
 }
