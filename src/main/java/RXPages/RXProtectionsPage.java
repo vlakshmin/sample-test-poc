@@ -1,19 +1,16 @@
 package RXPages;
 
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -22,19 +19,42 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import RXBaseClass.RXBaseClass;
-import RXUtitities.RXUtile;
-
 public class RXProtectionsPage extends RXBasePage {
 	public String protectionsHeaderStr = "Protections";
 	RXPrivateAuctionsPage privateAuctionsPage;
 	public String loading = "//main//div[@class='container container--fluid']//table/tbody/tr";
 	public String targetAwayRadioBtn = "//label[text()='%s']/preceding-sibling::div";
 	public String targetAwayParentDiv = "//label[text()='%s']/parent::div";
-	public String advInSelectTable = "//table[contains(@class,'select-table')]/tbody/tr/td/div[contains(@title, '%s')]";
-	public String advInIncludedTable = "//table[contains(@class,'included-table')]/tr/td/div[contains(@title, '%s')]";
-	public String cardTitleProtectionsTargeting = "//div[contains(@class,'v-card__title') and contains(text(),'%s')]/following-sibling::span";
-	
+	public String valueInSelectTable = "//table[contains(@class,'select-table')]/tbody/tr/td/div[contains(@title,'%s')]/parent::td/following-sibling::td[contains(@class,'options')]";
+	public String valueTrElmtInSelectTable = "//table[contains(@class,'select-table')]/tbody/tr/td/div[@title='%s']/ancestor::tr";
+	public String valueInIncludedTable = "//table[contains(@class,'included-table')]/tr/td/div[contains(@title,'%s') and not(@class='parent-label')]";
+	public String valueInIncludedTableByRowNum = "//table[contains(@class,'included-table')]/tr[%s]/td[1]/div[not(@class='parent-label')]";
+	public String cardNameProtectionsTargeting = "//div[not(contains(@style,'none'))]/div/div[contains(@class,'v-card__title') and contains(text(),'%s')]";
+	public String cardValueProtectionsTargeting = "//div[not(contains(@style,'none'))]/div/div[contains(@class,'v-card__title') and contains(text(),'%s')]/following-sibling::span";
+	public String cardValueInventoryTargeting = "//h3[text()='%s']/following-sibling::div[@class='selectionInfo']/span";
+	public String protectionTypeDropdownValue = "//div[@class='v-list-item__content']/div[contains(text(), '%s')]";
+	public String errorMsg = "//div[contains(@class,'validation-errors')]/div/div/div/ul/li[text()='%s']";
+	public String includeBtn = "//div[@title='%s']/parent::td/following-sibling::td[contains(@class,'options')]/div[contains(@class,'include')]/button[contains(@class,'unchecked')]";
+	public String excludeBtn = "//div[@title='%s']/parent::td/following-sibling::td[contains(@class,'options')]/div[contains(@class,'exclude')]/button[contains(@class,'unchecked')]";
+	public String clearAllBtn = "//h3[text()='%s']/parent::button/following-sibling::div//span[text()='Clear All']/parent::button";
+	public String includeAllBtn = "//h3[text()='%s']/parent::button/following-sibling::div//div[contains(text(),'Include All')]/ancestor::button";
+	public String excludeAllBtn = "//h3[text()='%s']/parent::button/following-sibling::div//div[contains(text(),'Exclude All')]/ancestor::button";
+	public String allItemsInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]/tbody/tr[@class='select-row']/td[@class='first']/div";
+	public String allItemsInIncludedTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'included-table')]/tr/td[1]/div";
+	public String includedItemsInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//td[contains(@class,'included')]/parent::tr/td[@class='first']/div";
+	public String excludedItemsInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//td[contains(@class,'excluded')]/parent::tr/td[@class='first']/div";
+	public String includedItemsInSelectTableInProtectionTargeting = "//div[contains(@class,'v-card__title') and contains(text(),'%s')]/parent::div/parent::div[not(contains(@style,'none'))]//td[contains(@class,'included')]/parent::tr/td[@class='first']/div";
+	public String allItemsInIncludedTableInProtectionTargeting = "//div[contains(@class,'v-card__title') and contains(text(),'%s')]/parent::div/parent::div[not(contains(@style,'none'))]//table[contains(@class,'included-table')]/tr/td[1]/div";
+	public String protectionTargetingSection = "//h2[text()='Protection targeting']/ancestor::div[@class='container']";
+	public String protectionTypeSelectedValue = "//label[text()='Protection Type']/following-sibling::div[@class='v-select__selections']/div";
+	public String includedTableLabel = "//h3[text()='%s']/parent::button/following-sibling::div//div[@class='results-header']/following-sibling::div[contains(@class,'banner')]";
+	public String includeOrExcludeAllBtnLabel = "//h3[text()='%s']/parent::button/following-sibling::div//button[contains(@class,'select-all')]/span/div[1]";
+	public String parentLabelInRightPanel = "//table[contains(@class,'included-table')]//div[@title='%s']/preceding-sibling::div[@class='parent-label']";
+	public String previousPanel = "//h3[text()='%s']/ancestor::div[contains(@class,'v-expansion-panel')]/preceding::div[contains(@class,'v-expansion-panel--next-active')]/button/following-sibling::div";
+	public String bannerInIncludedTable = "//h3[text()='%s']/parent::button/following-sibling::div//div[@class='results-header']/following-sibling::div[contains(@class,'-banner')]";
+	public String expandIconInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]/tbody/tr/td[@class='nested']/i";
+	public String valueOptionsTdElmtInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]/tbody/tr/td[contains(@class,'options')]";
+
 	@FindBy(xpath = "//div[text()='Protections ']")
     public WebElement protectionsLabel;
 	
@@ -80,11 +100,11 @@ public class RXProtectionsPage extends RXBasePage {
     @FindBy(xpath = "//div[@id='app']/div[@role='menu']")
 	public WebElement tableOptionsMenu;
     
-    @FindBy(xpath = "//div[@class='v-tooltip__content menuable__content__active v-tooltip__content--fixed']")
-	public WebElement tooltip;
+//    @FindBy(xpath = "//div[@class='v-tooltip__content menuable__content__active v-tooltip__content--fixed']")
+//	public WebElement tooltip;
     
-    @FindBy(xpath = "//span[contains(text(),'Add Protections Targeting')]/parent::button")
-    public WebElement addProtectionsTargetingButton;
+//    @FindBy(xpath = "//span[contains(text(),'Add Protections Targeting')]/parent::button")
+//    public WebElement addProtectionsTargetingButton;
     
     @FindBy(xpath = "//aside[@class='dialog']//div[@class='v-toolbar__content']/button")
 	public WebElement protectionsCloseSideDialog;
@@ -97,14 +117,38 @@ public class RXProtectionsPage extends RXBasePage {
 
 	@FindBy(xpath = "//div[contains(@class,'v-list')]/ancestor::div[contains(@class, 'menu-wrapper')]")
 	private WebElement detailsCard;
-    
+
+	@FindBy(xpath = "//label[text()='Name']/ancestor::div[@class='row']/following-sibling::div[1]/descendant::label")
+	public WebElement protectionTypeLabel;
+
+	@FindBy(xpath = "//label[text()='Protection Type']/following-sibling::div[@class='v-select__selections']")
+	public WebElement protectionTypeDropdown;
+
+	@FindBy(xpath = "//div[contains(@class,'menuable__content__active')]")
+	public WebElement protectionTypeDropdownDiv;
+
+	@FindBy(xpath = "//label[text()='Protection Type']/following-sibling::div[@class='v-select__selections']/input")
+	public WebElement protectionTypeInput;
+
+	@FindAll(@FindBy(xpath = "//div[contains(@class,'menuable__content__active')]/div/div/div/div[@class='v-list-item__title']"))
+	public List<WebElement> protectionTypeValuesList;
+
+	@FindBy(xpath = "//thead/tr/th[1]/div/i")
+	public WebElement checkbox_i_Column;
+
+	@FindBy(xpath = "//thead/tr/th[1]/div")
+	public WebElement checkbox_div_Column;
+
+	@FindAll(@FindBy(xpath = "//table[contains(@class,'included-table')]/tr"))
+	public List<WebElement> trElmentListInIncludedTable;
+
 	 // Explicit Wait
     WebDriverWait wait = new WebDriverWait(driver, 10);
     
  // Initialize page factory
     public RXProtectionsPage() {
         PageFactory.initElements(driver, this);
-
+		privateAuctionsPage = new RXPrivateAuctionsPage();
     }
 	
 	// Get the text of the Protections page
@@ -130,8 +174,8 @@ public class RXProtectionsPage extends RXBasePage {
 	private Function<? super WebDriver,Boolean> LoadingDisappear() {
       return new ExpectedCondition<Boolean>() {
     	  public Boolean apply(WebDriver driver) {
-    		  return !driver.findElement(By.xpath(loading)).getText().contains("Loading");
-//			  return !protectionsLoading.getText().contains("Loading");
+//    		  return !driver.findElement(By.xpath(loading)).getText().contains("Loading");
+			  return !protectionsLoading.getText().contains("Loading");
     		  }
       };
 	}
@@ -266,22 +310,22 @@ public class RXProtectionsPage extends RXBasePage {
 		}
 		return false;
 	}
-	
-	public WebElement getMenuItemIcon(String item) {
-		return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/i"));
-	}
+//
+//	public WebElement getMenuItemIcon(String item) {
+//		return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/i"));
+//	}
 
-	public WebElement getMenuItem(String item) {
-		return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/parent::div"));
-	}
-	
-	public WebElement getRemoveButton(String item) {
-    	if(item.equals("All Ads")){
-			return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/following-sibling::button"));
-		}else {
-			return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/parent::div/following-sibling::span/div/div/button"));
-		}
-	}
+//	public WebElement getMenuItem(String item) {
+//		return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/parent::div"));
+//	}
+//
+//	public WebElement getRemoveButton(String item) {
+//    	if(item.equals("All Ads")){
+//			return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/following-sibling::button"));
+//		}else {
+//			return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/parent::div/following-sibling::span/div/div/button"));
+//		}
+//	}
 
 	public String isInventoryDisplayDefaultValue(String fieldName) {
 		return driver
@@ -347,6 +391,10 @@ public class RXProtectionsPage extends RXBasePage {
 		return driver.findElement(By.xpath(String.format(xpath, param)));
 	}
 
+	public List<WebElement> getElementListByXpathWithParameter(String xpath, String param){
+		return driver.findElements(By.xpath(String.format(xpath, param)));
+	}
+
 	public LinkedHashMap<String,String> getProtectionsDetailsData() {
 		LinkedHashMap<String,String> result;
 		result = detailsCard.findElements(By.xpath("//div[@class='header']")).stream()
@@ -355,7 +403,57 @@ public class RXProtectionsPage extends RXBasePage {
 					driverWait().until(ExpectedConditions.elementToBeClickable(element));
 					return e.findElement(By.xpath("./..//span")).getText();
 				}, (e1, e2) -> e1, LinkedHashMap::new));
-		System.out.println(result);
+		System.out.println("Details>>>" + result);
 		return result;
+	}
+
+	public String putMouseOverItem(String targetingName, String itemName){
+		Actions actions = new Actions(driver);
+		String item = itemName;
+
+		//Check if panel is expanded,expand it if not
+		if(!privateAuctionsPage.targetingExpandPanel(targetingName).getAttribute("class").contains("active")) {
+			privateAuctionsPage.targetingExpandPanel(targetingName).click();
+			if(!targetingName.equalsIgnoreCase("Inventory")){
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(String.format(this.previousPanel,targetingName))));
+			}
+		}
+
+		//expand parent entity
+		if(itemName.contains(">")){
+			WebElement parentElement = this.getElementByXpathWithParameter(this.valueTrElmtInSelectTable,itemName.split(">")[0].trim());
+			driverWait().until(ExpectedConditions.visibilityOf(parentElement));
+			parentElement.click();
+
+			item = itemName.split(">")[1].trim();
+		}
+
+		//put mouse hover item
+		WebElement itemElemt = this.getElementByXpathWithParameter(this.valueTrElmtInSelectTable, item);
+		driverWait().until(ExpectedConditions.visibilityOf(itemElemt));
+		actions.moveToElement(itemElemt).build().perform();
+
+		return item;
+	}
+
+	public void verifyIncludeExcludeButtonsDisplayed(String itemName){
+		Assert.assertTrue(this.getElementByXpathWithParameter(this.includeBtn, itemName).isDisplayed());
+		Assert.assertTrue(this.getElementByXpathWithParameter(this.excludeBtn, itemName).isDisplayed());
+	}
+
+	public void includeOrExcludeItemInInventoryTargetingSection(String selectFlag, String targetingName, String itemName){
+		String selectStr;
+		String item;
+
+		if(selectFlag.equalsIgnoreCase("Include")){
+			selectStr = this.includeBtn;
+		}else{
+			selectStr = this.excludeBtn;
+		}
+
+		item = this.putMouseOverItem(targetingName, itemName);
+
+		this.getElementByXpathWithParameter(selectStr, item).click();
+		driverWait().until(ExpectedConditions.visibilityOf(this.getElementByXpathWithParameter(this.valueInIncludedTable, item)));
 	}
 }
