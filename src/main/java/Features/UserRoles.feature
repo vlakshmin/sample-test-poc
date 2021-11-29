@@ -22,11 +22,6 @@ Feature: User Roles
     Then Create deal menu is opened
     When Click on publisher input
     Then Verify all RX publishers are displayed in Publisher Name dropdown
-    When Click on Targeting option under Rules
-    Then User displayed with targeting page
-    When Click on the Create Rule button
-    When Click on publisher input
-    Then Verify all RX publishers are displayed in Publisher Name dropdown
     When Click on Media option under Inventory
     Then User displayed with media page
     When Click on Create Media button
@@ -82,11 +77,6 @@ Feature: User Roles
     Then Create deal menu is opened
     When Click on publisher input
     Then Verify all RX publishers are displayed in Publisher Name dropdown
-    When Click on Targeting option under Rules
-    Then User displayed with targeting page
-    When Click on the Create Rule button
-    When Click on publisher input
-    Then Verify all RX publishers are displayed in Publisher Name dropdown
     When Click on Media option under Inventory
     Then User displayed with media page
     When Click on Create Media button
@@ -125,10 +115,6 @@ Feature: User Roles
     And User displayed with Deals page
     And Click create a new deal
     Then Create deal menu is opened
-    Then Verify the Publisher Name input only display my publisher
-    When Click on Targeting option under Rules
-    Then User displayed with targeting page
-    When Click on the Create Rule button
     Then Verify the Publisher Name input only display my publisher
     When Click on Media option under Inventory
     Then User displayed with media page

@@ -47,7 +47,7 @@ Feature: Adspots page regression
     Then Verify the search functionality with the following names
       | Name       | ColumnName   |
       | zoo test   | Ad Spot Name |
-      | Top Banner | Ad Spot Name |
+      | uniqueAdSpot | Ad Spot Name |
 
 
   Scenario:  Verify enabling and disabling of an adspot from the overview page
@@ -56,7 +56,7 @@ Feature: Adspots page regression
     And User displayed with Adspots page
     Then Verify the search functionality with the following names
       | Name       | ColumnName   |
-      | Top Banner | Ad Spot Name |
+      | uniqueAdSpot | Ad Spot Name |
     Then Verify enabling and disabling of an adspot from the overview page
 
 
@@ -66,7 +66,7 @@ Feature: Adspots page regression
     And User displayed with Adspots page
     Then Verify the search functionality with the following names
       | Name       | ColumnName   |
-      | Top Banner | Ad Spot Name |
+      | uniqueAdSpot | Ad Spot Name |
     And Search for adspot
       | Name    |
       | Dynamic |
@@ -1032,7 +1032,7 @@ Feature: Adspots page regression
     When Click on the Adspot create button
     Then Enter the following data in the general card of adspot
       | FieldName           | Value       | ListValueIndex |
-      | Publisher Name      | Alena Grant |                |
+      | Publisher Name      | Viber |                |
     When "Enable" the banner card
     And "Expand" the banner card
     And Enter the following data in the banner card of adspot

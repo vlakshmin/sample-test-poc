@@ -275,7 +275,7 @@ Feature: Protections page regression
 #    Then tooltip "Block/whitelist advertisers" displays when mouse hovered on "Advertiser"
 #    Then tooltip "Block/whitelist ads content categories" displays when mouse hovered on "Ad Category"
 #    Then tooltip "Block all ads from serving" displays when mouse hovered on "All Ads"
-#
+
 #  Scenario: 80.Verify Protection Targeting can be selected All Ads or Advertsier/Ad Category
 #    Given admin user login to RX UI with valid username and password
 #    Then Protections is present in the left nav menu
@@ -302,7 +302,7 @@ Feature: Protections page regression
 #    And Select "All Ads" from Add Protections Targeting
 #    Then Verify that "Advertiser" is disabled
 #    Then Verify that "Ad Category" is disabled
-#
+
 #  Scenario: 81.Verify Protection Targeting section elements can be deleted
 #    Given admin user login to RX UI with valid username and password
 #    Then Protections is present in the left nav menu
@@ -333,7 +333,7 @@ Feature: Protections page regression
 #      | All Ads     |
 #    When Select "All Ads" from Add Protections Targeting
 #    Then Delete "All Ads" in Create Protections page
-#
+
 #  Scenario: 82.Verify Protection Targeting each card can be added only one at a time
 #    Given admin user login to RX UI with valid username and password
 #    Then Protections is present in the left nav menu
@@ -350,6 +350,7 @@ Feature: Protections page regression
 #      | All Ads     |
 #    When Select "Advertiser" from Add Protections Targeting
 #    Then Verify that each card can be added only one at a time
+
 
   Scenario: 100.Verify Protection entity page default values
     Given admin user login to RX UI with valid username and password
@@ -405,6 +406,7 @@ Feature: Protections page regression
     Then Verify that search with "R" works properly for Publisher dropdown
     And Click on the Create Protections button
     Then Verify that search with "Viki" works properly for Publisher dropdown
+
 
   Scenario: 103.Verify Protection entity page name input vorks properly
     Given admin user login to RX UI with valid username and password
@@ -541,6 +543,7 @@ Feature: Protections page regression
       | Activate   |
     When Click "Activate" button in Protections list page
     Then "Active" is displayed for the created Protections
+
 
   Scenario: 139.Verify that Publisher warning banned apears only if any forms were modified on Protections page
     Given admin user login to RX UI with valid username and password

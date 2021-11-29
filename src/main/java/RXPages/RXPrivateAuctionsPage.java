@@ -244,14 +244,14 @@ public class RXPrivateAuctionsPage extends RXBasePage {
 
     public void selectTargetingBlockListItem(String itemName) {
     	JavascriptExecutor js = (JavascriptExecutor) driver;
-    	js.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[@class= 'options selectable']")));
-    	wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[@class= 'options selectable included']"))));    	
+    	js.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[@class= 'options can-include']")));
+    	wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::table/tr/td[@class= 'options']"))));
     }
 
     public void unSelectTargetingBlockListItem(String itemName) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[@class= 'options selectable included']")));
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[@class= 'options selectable']"))));
+        js.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::table/tr/td[@class= 'options']/button")));
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[contains(text() , '" + itemName + "')]/ancestor::tbody/tr/td[@class= 'options can-include']"))));
     }
     
     public void clickTargetingBlockIncludedListItemClear(String itemName) {
