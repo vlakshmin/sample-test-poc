@@ -1603,3 +1603,62 @@ Feature: Protections page regression
     When "Exclude" targeting options items in Inventory Targeting section
       | Inventory | Viber Android App Prod > Viber Android Chat Ext 320x50 Prod |
     Then Verify that only item "Viber Android Chat Ext 320x50 Prod" is displayed as "Excluded" in right list in "Inventory" panel
+
+  Scenario: 348.Details popup display both included and excluded for Inventory
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
+    When Click on the Protection Type button
+    And Select "Supply Exclusions" from Protection Type dropdown
+    When "Include" targeting options items in Inventory Targeting section
+      | Inventory | Viber Android App Prod |
+    When "Exclude" targeting options items in Inventory Targeting section
+      | Inventory | Viber Android App Prod > Viber Android Chat Ext 320x50 Prod |
+    And Click on Save Protection button
+    Then Verify the created Protection data is matching with its overview list values
+    When Hover over the Details icon in Protections page
+    Then Verify that Details popup display below values for "Inventory"
+      | Viber Android App Prod             |
+      | Viber Android Chat Ext 320x50 Prod |
+
+  Scenario: 349.Selected Advertiser list shold show an error if it's above the limit
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
+    When Click on the Protection Type button
+    And Select "Advertiser" from Protection Type dropdown
+    And Add "advertisers" until validation error triggers
+    Then Verify that error "The selected advertiser list is too large. Please un-select some advertisers to continue." is displayed in Protection targeting section
+    When Unselect "advertisers" until validation error disapears
+    And Click on Save Protection button
+    Then Verify the created Protection data is matching with its overview list values
+
+  Scenario: 350.Selected Ad Category list shold show an error if it's above the limit
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+      | Name           | Test  |                |
+    When Click on the Protection Type button
+    And Select "Ad Categories" from Protection Type dropdown
+    And Add "Category" until validation error triggers
+    Then Verify that error "The selected category list is too large. Please un-select some categories to continue." is displayed in Protection targeting section
+    When Unselect "Category" until validation error disapears
+    And Click on Save Protection button
+    Then Verify the created Protection data is matching with its overview list values

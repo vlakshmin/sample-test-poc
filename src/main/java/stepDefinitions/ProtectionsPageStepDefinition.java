@@ -505,6 +505,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 
 	@Then("^Verify the protections details data is correct$")
 	public void VerifyTheProtectionsDetailsDataIsCorrect() {
+		System.out.println("enteredDataInCreateProtections.toString() >>> " + enteredDataInCreateProtections.toString());
 		Assert.assertTrue(areEqual(detailsData,enteredDataInCreateProtections));
 	}
 
@@ -837,5 +838,80 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	@When("^Remove item \"([^\"]*)\" from the right list$")
 	public void removeItemFromTheRightList(String arg0) {
 		protectionsPage.getElementByXpathWithParameter(protectionsPage.removeIconForValueInIncludedTable, arg0).click();
+	}
+
+	@Then("^Verify that Details popup display below values for \"([^\"]*)\"$")
+	public void verifyThatDetailsPopupDisplayBelowValuesFor(String arg0, List<String> expectedValueList) {
+		boolean flag = false;
+		for(String expectedValue : expectedValueList){
+			for(WebElement element : protectionsPage.getElementListByXpathWithParameter(protectionsPage.valuesInDetailsPopup, arg0)){
+				if(element.getText().trim().equals(expectedValue)){
+					flag = true;
+					break;
+				}
+			}
+			if(!flag){
+				Assert.fail("Details popup doesn't display " + expectedValue + " for " + arg0);
+			}
+		}
+	}
+
+	@When("^Add \"([^\"]*)\" until validation error triggers$")
+	public void addAdvertisersOrAdCategoriesUntilValidationErrorTriggers(String arg0) {
+		boolean flag = false;
+		WebElement itemElemt;
+		String cardName = "";
+		if(arg0.equalsIgnoreCase("advertisers")){
+			cardName = "Advertiser";
+		}else if(arg0.equalsIgnoreCase("category")){
+			cardName = "Ad Categories";
+			//expand all parent
+			for(WebElement vIcon : protectionsPage.allVIconInParentInAdCategories){
+				js.executeScript("arguments[0].scrollIntoView()", vIcon);
+				vIcon.click();
+			}
+		}
+		//select item
+		for(int i = 0; i <= protectionsPage.allItemsInSelectTableInProtectionTargeting.size()-1; i++){
+				itemElemt = protectionsPage.allItemsInSelectTableInProtectionTargeting.get(i);
+				js.executeScript("arguments[0].scrollIntoView()", itemElemt);
+				itemElemt.click();
+				wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath(String.format(protectionsPage.allItemsInIncludedTableInProtectionTargeting,cardName)), i+1));
+				flag = protectionsPage.tooLargeAlert.isDisplayed();
+				if(flag){
+					break;
+				}
+		}
+	}
+
+	@Then("^Verify that error \"([^\"]*)\" is displayed in Protection targeting section$")
+	public void verifyThatErrorIsDisplayedInProtectionTargetingSection(String arg0) {
+		Assert.assertEquals(protectionsPage.tooLargeAlert.getText().trim(), arg0);
+	}
+
+	@When("^Unselect \"([^\"]*)\" until validation error disapears$")
+	public void unselectAdvertisersUntilValidationErrorDisapears(String arg0) {
+		boolean flag = true;
+		String includedValue = "";
+		WebElement itemElemt;
+		int count = protectionsPage.allRemoveIconInIncludedTableInProtectionTargeting.size();
+		String cardName = "";
+		if(arg0.equalsIgnoreCase("advertisers")){
+			cardName = "Advertiser";
+		}else if(arg0.equalsIgnoreCase("category")) {
+			cardName = "Ad Categories";
+		}
+		//unselect item
+		for(int i = (count-1); i > 0; i--){
+			System.out.println("unselect count >>> " + i);
+			itemElemt = protectionsPage.allRemoveIconInIncludedTableInProtectionTargeting.get(i);
+			js.executeScript("arguments[0].scrollIntoView()", itemElemt);
+			itemElemt.click();
+			wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath(String.format(protectionsPage.allItemsInIncludedTableInProtectionTargeting,cardName)), i));
+			flag = protectionsPage.tooLargeAlert.isDisplayed();
+			if(!flag){
+				break;
+			}
+		}
 	}
 }
