@@ -104,12 +104,6 @@ public class RXProtectionsPage extends RXBasePage {
     @FindBy(xpath = "//div[@id='app']/div[@role='menu']")
 	public WebElement tableOptionsMenu;
     
-//    @FindBy(xpath = "//div[@class='v-tooltip__content menuable__content__active v-tooltip__content--fixed']")
-//	public WebElement tooltip;
-    
-//    @FindBy(xpath = "//span[contains(text(),'Add Protections Targeting')]/parent::button")
-//    public WebElement addProtectionsTargetingButton;
-    
     @FindBy(xpath = "//aside[@class='dialog']//div[@class='v-toolbar__content']/button")
 	public WebElement protectionsCloseSideDialog;
     
@@ -266,16 +260,6 @@ public class RXProtectionsPage extends RXBasePage {
 				.findElements(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr/td[" + columnIndex + "]"));
 		List<String> dataInEachColumn = new ArrayList<String>();
 		for (int j = 0; j < coulmnData.size(); j++) {
-//			if (columnName.contains("ID")) {
-//				dataInEachColumn.add(Integer.parseInt(coulmnData.get(j).getText()));
-//			}
-////   	 else if(columnName.contains("Date")) {
-////   		 DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-////   		 dataInEachColumn.add(dateFormatter.parse(coulmnData.get(j).getText()));
-////   	 }
-//			else {
-//				dataInEachColumn.add(coulmnData.get(j).getText().toLowerCase());
-//			}
 			dataInEachColumn.add(coulmnData.get(j).getText().toLowerCase());
 		}
 		return dataInEachColumn;
@@ -329,22 +313,6 @@ public class RXProtectionsPage extends RXBasePage {
 		}
 		return false;
 	}
-//
-//	public WebElement getMenuItemIcon(String item) {
-//		return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/i"));
-//	}
-
-//	public WebElement getMenuItem(String item) {
-//		return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/parent::div"));
-//	}
-//
-//	public WebElement getRemoveButton(String item) {
-//    	if(item.equals("All Ads")){
-//			return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/following-sibling::button"));
-//		}else {
-//			return driver.findElement(By.xpath("//div[contains(text(), '"+item+"')]/parent::div/following-sibling::span/div/div/button"));
-//		}
-//	}
 
 	public String isInventoryDisplayDefaultValue(String fieldName) {
 		return driver

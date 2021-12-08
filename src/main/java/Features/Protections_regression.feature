@@ -379,12 +379,6 @@ Feature: Protections page regression
       | Operating System | MacOSX            |
       | Geo              | Afghanistan       |
       | Ad Size          | 120x60            |
-#    And Click Add Protections Targeting button
-#    Then Verify that following items are present
-#      | Advertiser  |
-#      | Ad Category |
-#      | All Ads     |
-#    When Select "Advertiser" from Add Protections Targeting
     When Click on the Protection Type button
     And Select "Advertiser" from Protection Type dropdown
     And Select below Advertisers from list in Protection targeting section
@@ -698,13 +692,6 @@ Feature: Protections page regression
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viber |                |
       | Name           | Test  |                |
-#    And Click Add Protections Targeting button
-#    And Select "Advertiser" from Add Protections Targeting
-#    And Enable "Target away from the following advertiser (block)" radio button in Add Protections Targeting section
-#    And Select the following advertisers from left panel in Add Protections Targeting section
-#      | Advertiser                        |
-#      | Cosphera Nahrungsergänzungsmittel |
-#      | ICM                               |
     When Click on the Protection Type button
     And Select "Advertiser" from Protection Type dropdown
     And Enable "Target away from the following advertiser (block)" radio button in Protections Targeting section
@@ -726,13 +713,6 @@ Feature: Protections page regression
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viber |                |
       | Name           | Test  |                |
-#    And Click Add Protections Targeting button
-#    And Select "Advertiser" from Add Protections Targeting
-#    And Enable "Target towards the following advertiser (whitelist)" radio button in Add Protections Targeting section
-#    And Select the following advertisers from left panel in Add Protections Targeting section
-#      | Advertiser                        |
-#      | Cosphera Nahrungsergänzungsmittel |
-#      | ICM                               |
     When Click on the Protection Type button
     And Select "Advertiser" from Protection Type dropdown
     And Enable "Target towards the following advertiser (whitelist)" radio button in Protections Targeting section
