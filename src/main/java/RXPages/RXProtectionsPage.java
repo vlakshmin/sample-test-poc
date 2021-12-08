@@ -131,7 +131,7 @@ public class RXProtectionsPage extends RXBasePage {
 	@FindAll(@FindBy(xpath = "//div[contains(@class,'menuable__content__active')]/div/div/div/div[@class='v-list-item__title']"))
 	public List<WebElement> protectionTypeValuesList;
 
-	@FindBy(xpath = "//thead/tr/th[1]/div/i")
+	@FindBy(xpath = "//thead/tr/th[1]/div/div/i")
 	public WebElement checkbox_i_Column;
 
 	@FindBy(xpath = "//thead/tr/th[1]/div")
