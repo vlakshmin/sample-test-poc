@@ -520,8 +520,8 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	}
 
 	@Then("^Verify the error message \"([^\"]*)\" displays in Create Protections page$")
-	public void verifyTheErrorMessageDisplaysInCreateProtectionsPage(String arg0){
-		Assert.assertTrue(protectionsPage.getElementByXpathWithParameter(protectionsPage.errorMsg,arg0).isDisplayed());
+	public void verifyTheErrorMessageDisplaysInCreateProtectionsPage(String expectedMsg){
+		Assert.assertTrue(protectionsPage.getElementByXpathWithParameter(protectionsPage.errorMsg, expectedMsg).isDisplayed());
 	}
 
 	@When("^\"([^\"]*)\" targeting options items in Inventory Targeting section$")
@@ -549,26 +549,26 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	}
 
 	@Then("^Verify that Clear All link available in \"([^\"]*)\" panel$")
-	public void verifyThatClearAllLinkAvailableInPanel(String arg0) {
-		Assert.assertTrue(protectionsPage.getElementByXpathWithParameter(protectionsPage.clearAllBtn, arg0).isEnabled());
+	public void verifyThatClearAllLinkAvailableInPanel(String panel) {
+		Assert.assertTrue(protectionsPage.getElementByXpathWithParameter(protectionsPage.clearAllBtn, panel).isEnabled());
 	}
 
 	@When("^Click \"([^\"]*)\" button in \"([^\"]*)\" panel$")
-	public void clickIncludeAllButtonInPanel(String arg0, String arg1) {
+	public void clickIncludeAllButtonInPanel(String buttonName, String panel) {
 		String button = "";
-		if(arg0.equals("Include All")){
+		if(buttonName.equals("Include All")){
 			button = protectionsPage.includeAllBtn;
-		}else if(arg0.equals("Exclude All")){
+		}else if(buttonName.equals("Exclude All")){
 			button = protectionsPage.excludeAllBtn;
 		}
-		protectionsPage.getElementByXpathWithParameter(button, arg1).click();
+		protectionsPage.getElementByXpathWithParameter(button, panel).click();
 	}
 
 	@Then("^Verify that all items are displayed in \"([^\"]*)\" list in \"([^\"]*)\" panel$")
-	public void verifyThatAllItemsAreDisplayedInListInPanel(String arg0, String arg1) {
+	public void verifyThatAllItemsAreDisplayedInListInPanel(String status, String panel) {
 		boolean flag;
-		List<WebElement> itemsInSelectTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.allParentItemsInSelectTable, arg1);
-		List<WebElement> itemsInIncludedTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.allItemsInIncludedTable, arg1);
+		List<WebElement> itemsInSelectTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.allParentItemsInSelectTable, panel);
+		List<WebElement> itemsInIncludedTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.allItemsInIncludedTable, panel);
 		Assert.assertEquals(itemsInIncludedTable.size(), itemsInSelectTable.size());
 		for(WebElement element : itemsInSelectTable){
 			flag = false;
@@ -586,14 +586,14 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	}
 
 	@Then("^Verify that the \"([^\"]*)\" items in right list are sorted in the same order as in left list in \"([^\"]*)\" panel$")
-	public void verifyThatTheItemsInRightListAreSortedInTheSameOrderAsInLeftListInPanel(String arg0,String arg1) {
+	public void verifyThatTheItemsInRightListAreSortedInTheSameOrderAsInLeftListInPanel(String status,String panel) {
 		List<WebElement> selectedItemsInSelectTable = new ArrayList<WebElement>();
-		if(arg0.equalsIgnoreCase("included")){
-			selectedItemsInSelectTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.includedItemsInSelectTable, arg1);
-		}else if(arg0.equalsIgnoreCase("excluded")){
-			selectedItemsInSelectTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.excludedItemsInSelectTable, arg1);
+		if(status.equalsIgnoreCase("included")){
+			selectedItemsInSelectTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.includedItemsInSelectTable, panel);
+		}else if(status.equalsIgnoreCase("excluded")){
+			selectedItemsInSelectTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.excludedItemsInSelectTable, panel);
 		}
-		List<WebElement> itemsInIncludedTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.allItemsInIncludedTable, arg1);
+		List<WebElement> itemsInIncludedTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.allItemsInIncludedTable, panel);
 		Assert.assertEquals(itemsInIncludedTable.size(), selectedItemsInSelectTable.size());
 		for(int i = 0; i < itemsInIncludedTable.size(); i++){
 			Assert.assertEquals(itemsInIncludedTable.get(i).getText().trim(), selectedItemsInSelectTable.get(i).getText().trim());
@@ -601,9 +601,9 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	}
 
 	@Then("^Verify that the included items in right list are sorted in the same order as in left list in \"([^\"]*)\" panel$")
-	public void verifyThatTheIncludedItemsInRightListAreSortedInTheSameOrderAsInLeftListInPanel(String arg0) {
-		List<WebElement> selectedItemsInSelectTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.includedItemsInSelectTableInProtectionTargeting, arg0);
-		List<WebElement> itemsInIncludedTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.allItemsInIncludedTableInProtectionTargeting, arg0);
+	public void verifyThatTheIncludedItemsInRightListAreSortedInTheSameOrderAsInLeftListInPanel(String panel) {
+		List<WebElement> selectedItemsInSelectTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.includedItemsInSelectTableInProtectionTargeting, panel);
+		List<WebElement> itemsInIncludedTable = protectionsPage.getElementListByXpathWithParameter(protectionsPage.allItemsInIncludedTableInProtectionTargeting, panel);
 		Assert.assertEquals(itemsInIncludedTable.size(), selectedItemsInSelectTable.size());
 		for(int i = 0; i < itemsInIncludedTable.size(); i++){
 			Assert.assertEquals(itemsInIncludedTable.get(i).getText().trim(), selectedItemsInSelectTable.get(i).getText().trim());
@@ -611,29 +611,29 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	}
 
 	@Then("^Verify that \"([^\"]*)\" are displayed in \"([^\"]*)\" panel$")
-	public void verifyThatValueAreDisplayedInPanel(String arg0, String arg1) {
+	public void verifyThatValueAreDisplayedInPanel(String value, String panel) {
 		String xpathStr = "";
-		if(arg1.equalsIgnoreCase("Advertiser") || arg1.equalsIgnoreCase("Ad Categories")){
+		if(panel.equalsIgnoreCase("Advertiser") || panel.equalsIgnoreCase("Ad Categories")){
 			xpathStr = protectionsPage.cardValueProtectionsTargeting;
 		}else{
 			xpathStr = protectionsPage.cardValueInventoryTargeting;
 		}
-		Assert.assertEquals(protectionsPage.getElementByXpathWithParameter(xpathStr, arg1).getText().trim(), arg0);
+		Assert.assertEquals(protectionsPage.getElementByXpathWithParameter(xpathStr, panel).getText().trim(), value);
 	}
 
 	@Then("^Verify that objects can now be added as \"([^\"]*)\" and \"([^\"]*)\" is available in \"([^\"]*)\" panel$")
-	public void verifyThatObjectsCanNowBeAddedAsAndIsAvailableInPanel(String arg0, String arg1, String arg2) {
-		Assert.assertEquals(protectionsPage.getElementByXpathWithParameter(protectionsPage.bannerInIncludedTable, arg2).getText().trim(), arg0);
-		Assert.assertEquals(protectionsPage.getElementByXpathWithParameter(protectionsPage.includeOrExcludeAllBtnLabel, arg2).getText().trim(), arg1);
+	public void verifyThatObjectsCanNowBeAddedAsAndIsAvailableInPanel(String status, String button, String panel) {
+		Assert.assertEquals(protectionsPage.getElementByXpathWithParameter(protectionsPage.bannerInIncludedTable, panel).getText().trim(), status);
+		Assert.assertEquals(protectionsPage.getElementByXpathWithParameter(protectionsPage.includeOrExcludeAllBtnLabel, panel).getText().trim(), button);
 	}
 
 	@Then("^Verify that child object \"([^\"]*)\" is displayed properly with parent name \"([^\"]*)\" in right list$")
-	public void verifyThatChildObjectIsDisplayedProperlyWithParentNameInRightList(String arg0, String arg1) {
-		Assert.assertEquals(protectionsPage.getElementByXpathWithParameter(protectionsPage.parentLabelInRightPanel, arg0).getAttribute("title").trim(), arg1);
+	public void verifyThatChildObjectIsDisplayedProperlyWithParentNameInRightList(String child, String parent) {
+		Assert.assertEquals(protectionsPage.getElementByXpathWithParameter(protectionsPage.parentLabelInRightPanel, child).getAttribute("title").trim(), parent);
 	}
 
 	@Then("^Verify that \"([^\"]*)\" is displayed as \"([^\"]*)\" in right list in \"([^\"]*)\" panel$")
-	public void verifyThatIsDisplayedAsIncludedOrExcludedInRightListInPanel(String arg0, String arg1, String arg2) {
+	public void verifyThatIsDisplayedAsIncludedOrExcludedInRightListInPanel(String item, String status, String panel) {
 		int rownum = 0;
 		int begin = 0;
 		int end = 0;
@@ -646,10 +646,10 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 			}
 		}
 
-		if(arg1.equalsIgnoreCase("Included")){
+		if(status.equalsIgnoreCase("Included")){
 			begin = 1;
 			end = rownum;
-		}else if(arg1.equalsIgnoreCase("Excluded")){
+		}else if(status.equalsIgnoreCase("Excluded")){
 			begin = rownum + 1;
 			end = protectionsPage.trElmentListInIncludedTable.size();
 		}
@@ -658,28 +658,28 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 			//retrieve Included/Excluded items
 			flag = false;
 			for (int j = begin; j <= end; j++) {
-				if (protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTableByRowNum, String.valueOf(j)).getAttribute("title").equals(arg0)) {
+				if (protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTableByRowNum, String.valueOf(j)).getAttribute("title").equals(item)) {
 					flag = true;
 					break;
 				}
 			}
 			if(!flag){
-				Assert.fail(arg0 + " is not displayed as " + arg1 + " in right list.");
+				Assert.fail(item + " is not displayed as " + status + " in right list.");
 			}
 		}else{
-			Assert.fail("There only have the " + protectionsPage.getElementByXpathWithParameter(protectionsPage.bannerInIncludedTable, arg2).getText().trim() + " item in right list.");
+			Assert.fail("There only have the " + protectionsPage.getElementByXpathWithParameter(protectionsPage.bannerInIncludedTable, panel).getText().trim() + " item in right list.");
 		}
 	}
 
 	@Then("^Verify that all changes in left and right columns are reseted in \"([^\"]*)\" Panel$")
-	public void verifyThatAllChangesInLeftAndRightColumnsAreResetedInPanel(String arg0) {
+	public void verifyThatAllChangesInLeftAndRightColumnsAreResetedInPanel(String panel) {
 		//verify select table reset
 		String classAttr = "";
-		for(WebElement expandIcon : protectionsPage.getElementListByXpathWithParameter(protectionsPage.expandIconInSelectTable, arg0)){
+		for(WebElement expandIcon : protectionsPage.getElementListByXpathWithParameter(protectionsPage.expandIconInSelectTable, panel)){
 //			expandIcon.click(); //expand parent
 			js.executeScript("arguments[0].click()", expandIcon);
 		}
-		for(WebElement item : protectionsPage.getElementListByXpathWithParameter(protectionsPage.valueOptionsTdElmtInSelectTable, arg0)){
+		for(WebElement item : protectionsPage.getElementListByXpathWithParameter(protectionsPage.valueOptionsTdElmtInSelectTable, panel)){
 			classAttr = item.getAttribute("class");
 //			System.out.println("classAttr >>> " + classAttr);
 			Assert.assertFalse(classAttr.contains("excluded") && classAttr.contains("included"));
@@ -689,19 +689,19 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		Assert.assertEquals(protectionsPage.trElmentListInIncludedTable.size(), 0);
 
 		//verify selection info reset
-		Assert.assertTrue(Pattern.matches("All(.*)included", protectionsPage.isInventoryDisplayDefaultValue(arg0)));
+		Assert.assertTrue(Pattern.matches("All(.*)included", protectionsPage.isInventoryDisplayDefaultValue(panel)));
 	}
 
 	@Then("^Verify that only item \"([^\"]*)\" is displayed as \"([^\"]*)\" in right list in \"([^\"]*)\" panel$")
-	public void verifyThatOnlyItemIsDisplayedAsInRightListInPanel(String arg0, String arg1, String arg2) {
-		Assert.assertTrue(protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTable, arg0).isDisplayed());
-		Assert.assertEquals(protectionsPage.getElementByXpathWithParameter(protectionsPage.bannerInIncludedTable, arg2).getText().trim(), arg1);
-		Assert.assertEquals(protectionsPage.getElementListByXpathWithParameter(this.allItemsInIncludedTable, arg2).size(), 1);
+	public void verifyThatOnlyItemIsDisplayedAsInRightListInPanel(String item, String status, String panel) {
+		Assert.assertTrue(protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTable, item).isDisplayed());
+		Assert.assertEquals(protectionsPage.getElementByXpathWithParameter(protectionsPage.bannerInIncludedTable, panel).getText().trim(), status);
+		Assert.assertEquals(protectionsPage.getElementListByXpathWithParameter(this.allItemsInIncludedTable, panel).size(), 1);
 	}
 
 	@And("^Expand the \"([^\"]*)\" panel in Inventory Targeting section$")
-	public void expandThePanelInInventoryTargetingSection(String arg0) throws Throwable {
-		protectionsPage.expandPanelInInventoryTargetingSection(arg0);
+	public void expandThePanelInInventoryTargetingSection(String panel) throws Throwable {
+		protectionsPage.expandPanelInInventoryTargetingSection(panel);
 	}
 
 	@Then("^Verify that Include all link displayed under Show inactive toggle$")
@@ -710,38 +710,38 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	}
 
 	@Then("^Verify that Include All link changed to Exclude All in \"([^\"]*)\" panel$")
-	public void verifyThatIncludeAllLinkChangedToExcludeAllInPanel(String arg0) {
-		Assert.assertEquals(protectionsPage.getElementByXpathWithParameter(protectionsPage.includeOrExcludeAllBtnLabel, arg0).getText().trim(), "EXCLUDE ALL");
+	public void verifyThatIncludeAllLinkChangedToExcludeAllInPanel(String panel) {
+		Assert.assertEquals(protectionsPage.getElementByXpathWithParameter(protectionsPage.includeOrExcludeAllBtnLabel, panel).getText().trim(), "EXCLUDE ALL");
 	}
 
 	@Then("^Verify that Exclude All is disabled if more than 1000 items are displayed below in \"([^\"]*)\" panel$")
-	public void verifyThatExcludeAllIsDisabledIfMoreThan1000ItemsAreDisplayedBelowInPanel(String arg0) {
-		if(protectionsPage.getItemCountInSelectTable(arg0) > 1000){
-			Assert.assertFalse(protectionsPage.getElementByXpathWithParameter(protectionsPage.excludeAllBtn, arg0).isEnabled());
+	public void verifyThatExcludeAllIsDisabledIfMoreThan1000ItemsAreDisplayedBelowInPanel(String panel) {
+		if(protectionsPage.getItemCountInSelectTable(panel) > 1000){
+			Assert.assertFalse(protectionsPage.getElementByXpathWithParameter(protectionsPage.excludeAllBtn, panel).isEnabled());
 		}
 	}
 
 	@Then("^Verify that Exclude All is enabled if less than 1000 items are displayed below in \"([^\"]*)\" panel$")
-	public void verifyThatExcludeAllIsEnabledIfLessThan1000ItemsAreDisplayedBelowInPanel(String arg0) {
-		if(protectionsPage.getItemCountInSelectTable(arg0) <= 1000){
-			Assert.assertTrue(protectionsPage.getElementByXpathWithParameter(protectionsPage.excludeAllBtn, arg0).isEnabled());
+	public void verifyThatExcludeAllIsEnabledIfLessThan1000ItemsAreDisplayedBelowInPanel(String panel) {
+		if(protectionsPage.getItemCountInSelectTable(panel) <= 1000){
+			Assert.assertTrue(protectionsPage.getElementByXpathWithParameter(protectionsPage.excludeAllBtn, panel).isEnabled());
 		}
 	}
 
 	@Then("^Verify that child can be \"([^\"]*)\" while Parent \"([^\"]*)\" is included$")
-	public void verifyThatChildCanBeWhileParentIsIncluded(String arg0, String arg1){
+	public void verifyThatChildCanBeWhileParentIsIncluded(String status, String parent){
 		String childName;
 		//expand parent
-		this.getElementByXpathWithParameter(this.valueTrElmtInSelectTable,arg1).click();
+		this.getElementByXpathWithParameter(this.valueTrElmtInSelectTable,parent).click();
 
-		for (WebElement child: protectionsPage.getElementListByXpathWithParameter(protectionsPage.allChildForParent, arg1)){
+		for (WebElement child: protectionsPage.getElementListByXpathWithParameter(protectionsPage.allChildForParent, parent)){
 			childName = child.getAttribute("title").trim();
 //			System.out.println(" childName >>> " + childName);
 			protectionsPage.putMouseOverItem(childName);
-			if(arg0.equalsIgnoreCase("Excluded")){
+			if(status.equalsIgnoreCase("Excluded")){
 				Assert.assertFalse(this.getElementByXpathWithParameter(this.includeBtn, childName).isDisplayed());
 				Assert.assertTrue(this.getElementByXpathWithParameter(this.excludeBtn, childName).isDisplayed());
-			}else if(arg0.equalsIgnoreCase("Included")){
+			}else if(status.equalsIgnoreCase("Included")){
 				Assert.assertTrue(this.getElementByXpathWithParameter(this.includeBtn, childName).isDisplayed());
 				Assert.assertFalse(this.getElementByXpathWithParameter(this.excludeBtn, childName).isDisplayed());
 			}
@@ -750,12 +750,12 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	}
 
 	@Then("^Verify that no child can be selected while Parent \"([^\"]*)\" is excluded$")
-	public void verifyThatNoChildCanBeSelectedWhileParentIsExcluded(String arg0) {
+	public void verifyThatNoChildCanBeSelectedWhileParentIsExcluded(String parent) {
 		String childName;
 		//expand parent
-		this.getElementByXpathWithParameter(this.valueTrElmtInSelectTable,arg0).click();
+		this.getElementByXpathWithParameter(this.valueTrElmtInSelectTable,parent).click();
 
-		for (WebElement child: protectionsPage.getElementListByXpathWithParameter(protectionsPage.allChildForParent, arg0)){
+		for (WebElement child: protectionsPage.getElementListByXpathWithParameter(protectionsPage.allChildForParent, parent)){
 			childName = child.getAttribute("title").trim();
 //			System.out.println(" childName >>> " + childName);
 			protectionsPage.putMouseOverItem(childName);
@@ -765,34 +765,34 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	}
 
 	@When("^Remove item \"([^\"]*)\" from the right list$")
-	public void removeItemFromTheRightList(String arg0) {
-		protectionsPage.getElementByXpathWithParameter(protectionsPage.removeIconForValueInIncludedTable, arg0).click();
+	public void removeItemFromTheRightList(String includedValue) {
+		protectionsPage.getElementByXpathWithParameter(protectionsPage.removeIconForValueInIncludedTable, includedValue).click();
 	}
 
 	@Then("^Verify that Details popup display below values for \"([^\"]*)\"$")
-	public void verifyThatDetailsPopupDisplayBelowValuesFor(String arg0, List<String> expectedValueList) {
+	public void verifyThatDetailsPopupDisplayBelowValuesFor(String panel, List<String> expectedValueList) {
 		boolean flag = false;
 		for(String expectedValue : expectedValueList){
-			for(WebElement element : protectionsPage.getElementListByXpathWithParameter(protectionsPage.valuesInDetailsPopup, arg0)){
+			for(WebElement element : protectionsPage.getElementListByXpathWithParameter(protectionsPage.valuesInDetailsPopup, panel)){
 				if(element.getText().trim().equals(expectedValue)){
 					flag = true;
 					break;
 				}
 			}
 			if(!flag){
-				Assert.fail("Details popup doesn't display " + expectedValue + " for " + arg0);
+				Assert.fail("Details popup doesn't display " + expectedValue + " for " + panel);
 			}
 		}
 	}
 
 	@When("^Add \"([^\"]*)\" until validation error triggers$")
-	public void addAdvertisersOrAdCategoriesUntilValidationErrorTriggers(String arg0) {
+	public void addAdvertisersOrAdCategoriesUntilValidationErrorTriggers(String listname) {
 		boolean flag = false;
 		WebElement itemElemt;
 		String cardName = "";
-		if(arg0.equalsIgnoreCase("advertisers")){
+		if(listname.equalsIgnoreCase("advertisers")){
 			cardName = "Advertiser";
-		}else if(arg0.equalsIgnoreCase("category")){
+		}else if(listname.equalsIgnoreCase("category")){
 			cardName = "Ad Categories";
 			//expand all parent
 			for(WebElement vIcon : protectionsPage.allVIconInParentInAdCategories){
@@ -814,20 +814,20 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	}
 
 	@Then("^Verify that error \"([^\"]*)\" is displayed in Protection targeting section$")
-	public void verifyThatErrorIsDisplayedInProtectionTargetingSection(String arg0) {
-		Assert.assertEquals(protectionsPage.tooLargeAlert.getText().trim(), arg0);
+	public void verifyThatErrorIsDisplayedInProtectionTargetingSection(String expectedMsg) {
+		Assert.assertEquals(protectionsPage.tooLargeAlert.getText().trim(), expectedMsg);
 	}
 
 	@When("^Unselect \"([^\"]*)\" until validation error disapears$")
-	public void unselectAdvertisersUntilValidationErrorDisapears(String arg0) {
+	public void unselectAdvertisersOrAdCategoriesUntilValidationErrorDisapears(String listname) {
 		boolean flag = true;
 		String includedValue = "";
 		WebElement itemElemt;
 		int count = protectionsPage.allRemoveIconInIncludedTableInProtectionTargeting.size();
 		String cardName = "";
-		if(arg0.equalsIgnoreCase("advertisers")){
+		if(listname.equalsIgnoreCase("advertisers")){
 			cardName = "Advertiser";
-		}else if(arg0.equalsIgnoreCase("category")) {
+		}else if(listname.equalsIgnoreCase("category")) {
 			cardName = "Ad Categories";
 		}
 		//unselect item
