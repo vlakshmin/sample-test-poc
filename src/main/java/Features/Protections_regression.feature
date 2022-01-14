@@ -1642,3 +1642,42 @@ Feature: Protections page regression
     When Unselect "Category" until validation error disapears
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
+  @debug
+  Scenario: 359.Searching result for Protection -> Inventory is displayed correctly if "Show inactive" toggle is enabled
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+    And Expand the "Inventory" panel in Inventory Targeting section
+    And Set Show Inactive as "active" in the Inventory panel
+    Then Verify Active and Inactive media and ad spot are displayed
+  @debug
+  Scenario: 362.Active media and adspot should be displayed if "Show inactive" toggle is disabled for Protection targeting
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+    And Expand the "Inventory" panel in Inventory Targeting section
+    And Expand the parent item "Viber Desktop App" in select table
+    Then Verify Active media and adspot are displayed only
+
+  @debug-ing
+  Scenario: 363.Searching result for Protection targeting is displayed correctly
+    Given admin user login to RX UI with valid username and password
+    Then Protections is present in the left nav menu
+    When Click on Protections option in Menu
+    Then User displayed with Protections page
+    And Click on the Create Protections button
+    And Enter the following data in the Create Protections page
+      | FieldName      | Value | ListValueIndex |
+      | Publisher Name | Viber |                |
+    When Click on the Protection Type button
+    And Select "Ad Categories" from Protection Type dropdown

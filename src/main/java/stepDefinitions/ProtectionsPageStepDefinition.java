@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 import RXPages.*;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.log4j.Logger;
@@ -795,7 +796,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		}else if(listname.equalsIgnoreCase("category")){
 			cardName = "Ad Categories";
 			//expand all parent
-			for(WebElement vIcon : protectionsPage.allVIconInParentInAdCategories){
+			for(WebElement vIcon : protectionsPage.allVIconForParentInAdCategories){
 				js.executeScript("arguments[0].scrollIntoView()", vIcon);
 				vIcon.click();
 			}
@@ -842,5 +843,46 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 				break;
 			}
 		}
+	}
+
+	@When("^Set Show Inactive as \"([^\"]*)\" in the Inventory panel$")
+	public void setShowInactiveAsInTheInventoryPanel(String status) {
+//		wait.until(ExpectedConditions.visibilityOf(protectionsPage.showInactiveInput));
+		String actualStatus = protectionsPage.showInactiveInput.getAttribute("aria-checked");
+		if(status.equalsIgnoreCase("active")){
+			if(!actualStatus.equals("true")){
+				protectionsPage.showInactiveDiv.click();
+			}
+		}else if(status.equalsIgnoreCase("inactive")){
+			if(!actualStatus.equals("false")){
+				protectionsPage.showInactiveDiv.click();
+			}
+		}
+	}
+
+	@Then("^Verify Active and Inactive media and ad spot are displayed$")
+	public void verifyActiveAndInactiveMediaAndAdSpotAreDisplayed() {
+		List<WebElement> inactiveParentList = protectionsPage.getElementListByXpathWithParameter(protectionsPage.inactiveParentInSelectTable, "Inventory");
+		Assert.assertTrue(inactiveParentList.size() > 0);
+		//expand all parents in Inventory
+		List<WebElement> allParentList = protectionsPage.getElementListByXpathWithParameter(protectionsPage.vIconForAllParentInSelectTable, "Inventory");
+		for(WebElement vIcon : allParentList){
+			js.executeScript("arguments[0].scrollIntoView()", vIcon);
+			if(!vIcon.getAttribute("class").contains("flip")) {
+				vIcon.click();
+			}
+		}
+		List<WebElement> inactiveChildrenList = protectionsPage.getElementListByXpathWithParameter(protectionsPage.inactiveChildenInSelectTable, "Inventory");
+		Assert.assertTrue(inactiveChildrenList.size() > 0);
+	}
+
+	@When("^Expand the parent item \"([^\"]*)\" in select table$")
+	public void expandTheParentItemInSelectTable(String parent) {
+		protectionsPage.expandTheSpecifiedParentItemInSelectTable(parent);
+	}
+
+	@Then("^Verify Active media and adspot are displayed only$")
+	public void verifyActiveMediaAndAdspotAreDisplayedOnly() {
+		Assert.assertFalse(protectionsPage.IsElementPresent(String.format(protectionsPage.inactiveChildenInSelectTable, "Inventory")));
 	}
 }

@@ -56,8 +56,11 @@ public class RXProtectionsPage extends RXBasePage {
 	public String itemCountInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//button[contains(@class,'select-all')]/span/div[@class='item-count']";
 	public String allChildForParent = "//div[@title='%s']/ancestor::tbody/tr[contains(@class,'select-row children')]/td[@class='first']/div";
 	public String removeIconForValueInIncludedTable = "//table[contains(@class,'included-table')]//div[contains(text(),'%s') and not(@class='parent-label')]/parent::td/following-sibling::td[@class='options']/button";
-	public String vIconInParent = "//table[contains(@class,'select-table')]//div[@title='%s']/ancestor::tr/td[@class='nested']/i";
+	public String vIconForParent = "//table[contains(@class,'select-table')]//div[@title='%s']/ancestor::tr/td[@class='nested']/i";
 	public String valuesInDetailsPopup = "//div[@class='header' and contains(text(),'%s')]/following-sibling::div//span";
+	public String vIconForAllParentInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]//td[@class='nested']/i";
+	public String inactiveParentInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]/tbody/tr[@class='select-row']//span[@class='inactive-label']";
+	public String inactiveChildenInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]/tbody/tr[contains(@class,'select-row children')]//span[@class='inactive-label']";
 
 	@FindBy(xpath = "//div[text()='Protections ']")
     public WebElement protectionsLabel;
@@ -147,13 +150,19 @@ public class RXProtectionsPage extends RXBasePage {
 	public List<WebElement> allItemsInSelectTableInProtectionTargeting;
 
 	@FindAll(@FindBy(xpath = "//div[contains(@class,'cardPadding v-card')]/div[not(contains(@style,'none'))]//table[contains(@class,'select-table')]/tbody/tr/td[@class='nested']/i"))
-	public List<WebElement> allVIconInParentInAdCategories;
+	public List<WebElement> allVIconForParentInAdCategories;
 
 	@FindAll(@FindBy(xpath = "//div[contains(@class,'cardPadding v-card')]/div[not(contains(@style,'none'))]//table[contains(@class,'included-table')]/tr/td[@class='options']/button/span/i"))
 	public List<WebElement> allRemoveIconInIncludedTableInProtectionTargeting;
 
 	@FindBy(xpath = "//div[contains(@class,'cardPadding v-card')]/div[not(contains(@style,'none'))]//div[@class='multipane']/preceding-sibling::div[contains(@class,'v-alert')]/div/div[@class='v-alert__content']")
 	public WebElement tooLargeAlert;
+
+	@FindBy(xpath = "//label[text()='Show Inactive']/preceding-sibling::div/input")
+	public WebElement showInactiveInput;
+
+	@FindBy(xpath = "//label[text()='Show Inactive']/preceding-sibling::div")
+	public WebElement showInactiveDiv;
 
 	// Explicit Wait
     WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -410,11 +419,7 @@ public class RXProtectionsPage extends RXBasePage {
 		//expand parent entity
 		if(itemName.contains(">")){
 			String parent = itemName.split(">")[0].trim();
-			WebElement parentElement = this.getElementByXpathWithParameter(this.valueTrElmtInSelectTable, parent);
-			driverWait().until(ExpectedConditions.visibilityOf(parentElement));
-			if(!this.getElementByXpathWithParameter(this.vIconInParent, parent).getAttribute("class").contains("flip")){
-				parentElement.click();
-			}
+			this.expandTheSpecifiedParentItemInSelectTable(parent);
 
 			item = itemName.split(">")[1].trim();
 		}
@@ -425,6 +430,14 @@ public class RXProtectionsPage extends RXBasePage {
 		actions.moveToElement(itemElemt).build().perform();
 
 		return item;
+	}
+
+	public void expandTheSpecifiedParentItemInSelectTable(String parentName){
+		WebElement parentElement = this.getElementByXpathWithParameter(this.valueTrElmtInSelectTable, parentName);
+		driverWait().until(ExpectedConditions.visibilityOf(parentElement));
+		if(!this.getElementByXpathWithParameter(this.vIconForParent, parentName).getAttribute("class").contains("flip")){
+			parentElement.click();
+		}
 	}
 
 	public void verifyIncludeExcludeButtonsDisplayed(String itemName){
