@@ -532,10 +532,10 @@ Feature: Adspots page regression
     When Click on the Adspot create button
     Then Enter the following data in the general card of adspot
       | FieldName           | Value                | ListValueIndex |
-      | Publisher Name      | Mark Mceachran       |                |
+      | Publisher Name      | Viber       |                |
       | Active              | Inactive             |                |
       | Ad Spot Name        | Auto_Test            |                |
-      | Related Media       | Mark Mc Desktop Site |                |
+      | Related Media       | Viber Desktop App |                |
       | Categories          | ListValue            | 2              |
       | Position            | ListValue            | 2              |
       | Default Ad Sizes    | ListValue            | 1              |
