@@ -1020,7 +1020,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		And Select publisher by name: "Viber"
 		Then The Currency field is not null
 		When Click on DSP input
-		And Type "d" in DSP input
+		And Type "R" in DSP input
 		And Select 2nd value that below the highlighted dropdown value
 		Then Verify the following message is not displayed when select the second DSP value
 			|Message|
