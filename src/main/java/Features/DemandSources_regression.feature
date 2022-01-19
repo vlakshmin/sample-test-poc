@@ -67,8 +67,8 @@ Feature: Demand Sources page regression
     Given admin user login to RX UI with valid username and password
     And Click on Demand Sources option under Admin
     Then User displayed with Demand Sources page
-    When Search "DSP-Test-7" DSP item
-    And Click on Bidder column for "DSP-Test-7" DSP item
+    When Search "RTBHouse" DSP item
+    And Click on Bidder column for "RTBHouse" DSP item
     Then Edit DSP pop up is present
     When Click on Save DSP button
     Then DSP saved successfully without error message
@@ -77,8 +77,8 @@ Feature: Demand Sources page regression
     Given admin user login to RX UI with valid username and password
     And Click on Demand Sources option under Admin
     Then User displayed with Demand Sources page
-    When Search "DSP-Test-5" DSP item
-    And Click on Bidder column for "DSP-Test-5" DSP item
+    When Search "RTBHouse" DSP item
+    And Click on Bidder column for "RTBHouse" DSP item
     Then Edit DSP pop up is present
     And Enter the following data in the general card of DSP
       | FieldName |
