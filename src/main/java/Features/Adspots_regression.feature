@@ -492,10 +492,10 @@ Feature: Adspots page regression
     When Click on the Adspot create button
     Then Enter the following data in the general card of adspot
       | FieldName           | Value                | ListValueIndex |
-      | Publisher Name      | Mark Mceachran       |                |
+      | Publisher Name      | Viber                |                |
       | Active              | Inactive             |                |
       | Ad Spot Name        | Auto_Test            |                |
-      | Related Media       | Mark Mc Desktop Site |                |
+      | Related Media       |Viber Desktop App     |                |
       | Categories          | ListValue            | 2              |
       | Position            | ListValue            | 2              |
       | Default Ad Sizes    | ListValue            | 2              |
@@ -506,7 +506,7 @@ Feature: Adspots page regression
     Then User displayed with media page
     Then Verify the search functionality with the following names
       | Name                 | ColumnName |
-      | Mark Mc Desktop Site | Media Name |
+      | Viber Desktop App    | Media Name |
     Then "Disable" a media from the media overview page
     Then Click on Adspots sub menu
     And User displayed with Adspots page
@@ -521,7 +521,7 @@ Feature: Adspots page regression
     Then User displayed with media page
     Then Verify the search functionality with the following names
       | Name                 | ColumnName |
-      | Mark Mc Desktop Site | Media Name |
+      | Viber Desktop App    | Media Name |
     Then "Enable" a media from the media overview page
 
 
@@ -561,10 +561,10 @@ Feature: Adspots page regression
     When Click on the Adspot create button
     Then Enter the following data in the general card of adspot
       | FieldName           | Value                | ListValueIndex |
-      | Publisher Name      | Mark Mceachran       |                |
+      | Publisher Name      | Viber                |                |
       | Active              | Inactive             |                |
       | Ad Spot Name        | Auto_Test            |                |
-      | Related Media       | Mark Mc Desktop Site |                |
+      | Related Media       | Viber Desktop App    |                |
       | Categories          | ListValue            | 2              |
       | Position            | ListValue            | 2              |
       | Default Ad Sizes    | ListValue            | 1              |
