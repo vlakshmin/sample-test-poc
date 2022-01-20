@@ -147,7 +147,10 @@ public class RXProtectionsPage extends RXBasePage {
 	public WebElement btnLabelBelowShowInactive;
 
 	@FindAll(@FindBy(xpath = "//div[contains(@class,'cardPadding v-card')]/div[not(contains(@style,'none'))]//table[contains(@class,'select-table')]/tbody/tr/td[contains(@class,'options')]"))
-	public List<WebElement> allItemsInSelectTableInProtectionTargeting;
+	public List<WebElement> allItemsOptionInSelectTableInProtectionTargeting;
+
+	@FindAll(@FindBy(xpath = "//div[contains(@class,'cardPadding v-card')]/div[not(contains(@style,'none'))]//table[contains(@class,'select-table')]/tbody/tr/td[@class='first']/div[not(@class='parent-label')]"))
+	public List<WebElement> allItemsValueInSelectTableInProtectionTargeting;
 
 	@FindAll(@FindBy(xpath = "//div[contains(@class,'cardPadding v-card')]/div[not(contains(@style,'none'))]//table[contains(@class,'select-table')]/tbody/tr/td[@class='nested']/i"))
 	public List<WebElement> allVIconForParentInAdCategories;
@@ -163,6 +166,9 @@ public class RXProtectionsPage extends RXBasePage {
 
 	@FindBy(xpath = "//label[text()='Show Inactive']/preceding-sibling::div")
 	public WebElement showInactiveDiv;
+
+	@FindBy(xpath = "//div[contains(@class,'cardPadding')]/div[not(contains(@style,'none'))]//input[@placeholder='Search']")
+	public WebElement searchBoxInProtectionTargeting;
 
 	// Explicit Wait
     WebDriverWait wait = new WebDriverWait(driver, 10);

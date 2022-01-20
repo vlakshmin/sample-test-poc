@@ -798,12 +798,14 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 			//expand all parent
 			for(WebElement vIcon : protectionsPage.allVIconForParentInAdCategories){
 				js.executeScript("arguments[0].scrollIntoView()", vIcon);
-				vIcon.click();
+				if(!vIcon.getAttribute("class").contains("flip")) {
+					vIcon.click();
+				}
 			}
 		}
 		//select item
-		for(int i = 0; i <= protectionsPage.allItemsInSelectTableInProtectionTargeting.size()-1; i++){
-				itemElemt = protectionsPage.allItemsInSelectTableInProtectionTargeting.get(i);
+		for(int i = 0; i <= protectionsPage.allItemsOptionInSelectTableInProtectionTargeting.size()-1; i++){
+				itemElemt = protectionsPage.allItemsOptionInSelectTableInProtectionTargeting.get(i);
 				js.executeScript("arguments[0].scrollIntoView()", itemElemt);
 				itemElemt.click();
 				wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath(String.format(protectionsPage.allItemsInIncludedTableInProtectionTargeting,cardName)), i+1));
@@ -884,5 +886,19 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	@Then("^Verify Active media and adspot are displayed only$")
 	public void verifyActiveMediaAndAdspotAreDisplayedOnly() {
 		Assert.assertFalse(protectionsPage.IsElementPresent(String.format(protectionsPage.inactiveChildenInSelectTable, "Inventory")));
+	}
+
+	@When("^Types \"([^\"]*)\" in search box in Protection Targeting section$")
+	public void typesInSearchBoxInProtectionTargetingSection(String value) {
+		wait.until(ExpectedConditions.visibilityOf(protectionsPage.searchBoxInProtectionTargeting)).sendKeys(value);
+		wait.until(ExpectedConditions.attributeContains(protectionsPage.allVIconForParentInAdCategories.get(0), "class", "flip"));
+	}
+
+	@Then("^Verify Parent and childs including \"([^\"]*)\" are displayed$")
+	public void verifyParentAndChildsIncludingAreDisplayed(String value) {
+		for(WebElement itemElemt: protectionsPage.allItemsValueInSelectTableInProtectionTargeting){
+			js.executeScript("arguments[0].scrollIntoView()", itemElemt);
+			Assert.assertTrue(itemElemt.getText().toLowerCase().contains(value.toLowerCase()));
+		}
 	}
 }
