@@ -1025,9 +1025,9 @@ Feature: Protections page regression
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viber |                |
     When "Include" targeting options items in Inventory Targeting section
-      | Inventory | Viber Desktop App  |
-      | Inventory | Viber iOS App Prod |
-      | Inventory | Viber iOS App      |
+      | Inventory | Viber Desktop App      |
+      | Inventory | Viber iOS App Prod     |
+      | Inventory | Viber Android App Prod |
     Then Verify that the "included" items in right list are sorted in the same order as in left list in "Inventory" panel
     When "Include" targeting options items in Inventory Targeting section
       | Device | Set Top Box |
@@ -1066,9 +1066,9 @@ Feature: Protections page regression
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viber |                |
     When "Exclude" targeting options items in Inventory Targeting section
-      | Inventory | Viber Desktop App  |
-      | Inventory | Viber iOS App Prod |
-      | Inventory | Viber iOS App      |
+      | Inventory | Viber Desktop App      |
+      | Inventory | Viber iOS App Prod     |
+      | Inventory | Viber Android App Prod |
     Then Verify that the "excluded" items in right list are sorted in the same order as in left list in "Inventory" panel
     When "Exclude" targeting options items in Inventory Targeting section
       | Device | Set Top Box |
@@ -1109,9 +1109,9 @@ Feature: Protections page regression
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viber |                |
     When "Include" targeting options items in Inventory Targeting section
-      | Inventory | Viber Desktop App  |
-      | Inventory | Viber iOS App Prod |
-      | Inventory | Viber iOS App      |
+      | Inventory | Viber Desktop App      |
+      | Inventory | Viber iOS App Prod     |
+      | Inventory | Viber Android App Prod |
     Then Verify that "3 Media included" are displayed in "Inventory" panel
     When "Include" targeting options items in Inventory Targeting section
       | Device | Set Top Box |
@@ -1152,9 +1152,9 @@ Feature: Protections page regression
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viber |                |
     When "Exclude" targeting options items in Inventory Targeting section
-      | Inventory | Viber Desktop App  |
-      | Inventory | Viber iOS App Prod |
-      | Inventory | Viber iOS App      |
+      | Inventory | Viber Desktop App      |
+      | Inventory | Viber iOS App Prod     |
+      | Inventory | Viber Android App Prod |
     Then Verify that "3 Media excluded" are displayed in "Inventory" panel
     When "Exclude" targeting options items in Inventory Targeting section
       | Device | Set Top Box |
