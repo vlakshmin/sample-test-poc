@@ -596,4 +596,35 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 		Assert.assertEquals(num3,0,num3 +" Active Private Auctions is not selected.");
 	}
 
+	@When("^Open \"([^\"]*)\" under Targeting in Private Auctions page$")
+	public void open_under_Targeting_in_Private_Auctions_page(String targetingName) throws Throwable {
+		auctionPage.expandTargetingPanel(targetingName);
+	}
+
+	@Then("^Verify that only Active media and adspot are displayed$")
+	public void verify_that_only_Active_media_and_adspot_are_displayed() throws Throwable {
+		auctionPage.expand_All_Inventory_Media_Items();
+		auctionPage.verify_media_and_adspot_are_Active();
+	}
+
+	@When("^Type \"([^\"]*)\" in Inventory search box$")
+	public void type_in_Inventory_search_box(String arg1) throws Throwable {
+		auctionPage.targetingBlockSearchInput("Inventory").click();
+		wait.until(ExpectedConditions.visibilityOf(targetingBlockSearchInput("Inventory")));
+		auctionPage.targetingBlockSearchInput("Inventory").sendKeys(arg1);
+		wait.until(ExpectedConditions.textToBePresentInElement(listCounter("Inventory"), "1"));
+	}
+
+	@Then("^\"([^\"]*)\" App is displayed and opened with childs$")
+	public void app_is_displayed_and_opened_with_childs(String arg1) throws Throwable {
+		auctionPage.inventory_Media_is_displayed(arg1);
+		auctionPage.inventory_Media_are_opened_with_childs();
+	}
+
+	@Then("^Verify that Active/Inactive media and adspot are displayed$")
+	public void verify_that_Active_Inactive_media_and_adspot_are_displayed() throws Throwable {
+		auctionPage.expand_All_Inventory_Media_Items();
+		auctionPage.Active_Inactive_media_and_adspot_are_displayed();
+	}
+
 }

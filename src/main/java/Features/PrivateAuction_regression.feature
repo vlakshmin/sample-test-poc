@@ -656,3 +656,44 @@ Feature: Private Auctions page regression
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue |              2 |
       Then Verify that warning banner is under Publisher name
+
+  Scenario: 358.Active media and adspot should be displayed if "Show inactive" toggle is disabled
+    Given admin user login to RX UI with valid username and password
+    When Click on Private Auctions option under Sales
+    And User displayed with Private Auctions page
+    And Click on the Pricate Auction create button
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | Viber      |                |
+    And Open "Inventory" under Targeting in Private Auctions page
+    And "Disable" following toggle fields in create page
+      | FieldName |
+      | Show Inactive    |
+    Then Verify that only Active media and adspot are displayed
+
+  Scenario: 360.Active searching result for Private auctions -> Inventory should be displayed if "Show inactive" toggle is disabled
+    Given admin user login to RX UI with valid username and password
+    When Click on Private Auctions option under Sales
+    And User displayed with Private Auctions page
+    And Click on the Pricate Auction create button
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | Viber      |                |
+    And Open "Inventory" under Targeting in Private Auctions page
+    And Type "desktop" in Inventory search box
+    Then "Desktop" App is displayed and opened with childs
+
+  Scenario: 361.Active/Inactive searching result for Private auctions -> Inventory are displayed if "Show inactive" toggle is enabled
+    Given admin user login to RX UI with valid username and password
+    When Click on Private Auctions option under Sales
+    And User displayed with Private Auctions page
+    And Click on the Pricate Auction create button
+    And Enter the following data in the general card of private auction
+      | FieldName      | Value     | ListValueIndex |
+      | Publisher Name | Viber      |                |
+    And Open "Inventory" under Targeting in Private Auctions page
+    And "Enable" following toggle fields in create page
+      | FieldName |
+      | Show Inactive    |
+    And Type "desktop" in Inventory search box
+    Then Verify that Active/Inactive media and adspot are displayed
