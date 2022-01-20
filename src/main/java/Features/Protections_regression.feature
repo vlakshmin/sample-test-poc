@@ -762,7 +762,7 @@ Feature: Protections page regression
     And Select "Advertiser" from Protection Type dropdown
     And Select below Advertisers from list in Protection targeting section
       | Advertiser Name                |
-      | betclic.fr                     |
+      | Microlorge                     |
       | https                          |
       | Slotomania™ Vegas Casino Slots |
     And Click on Save Protection button
@@ -1025,9 +1025,9 @@ Feature: Protections page regression
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viber |                |
     When "Include" targeting options items in Inventory Targeting section
-      | Inventory | Viber Desktop App |
+      | Inventory | Viber Desktop App  |
       | Inventory | Viber iOS App Prod |
-      | Inventory | test for table 2 |
+      | Inventory | Viber iOS App      |
     Then Verify that the "included" items in right list are sorted in the same order as in left list in "Inventory" panel
     When "Include" targeting options items in Inventory Targeting section
       | Device | Set Top Box |
@@ -1053,8 +1053,8 @@ Feature: Protections page regression
     And Select "Advertiser" from Protection Type dropdown
     And Select below Advertisers from list in Protection targeting section
       | Advertiser Name                |
-      | ICM                           |
-      | betclic.fr                     |
+      | ICM                            |
+      | Microlorge                     |
       | Slotomania™ Vegas Casino Slots |
     Then Verify that the included items in right list are sorted in the same order as in left list in "Advertiser" panel
     When Click on Close button
@@ -1066,9 +1066,9 @@ Feature: Protections page regression
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viber |                |
     When "Exclude" targeting options items in Inventory Targeting section
-      | Inventory | Viber Desktop App |
+      | Inventory | Viber Desktop App  |
       | Inventory | Viber iOS App Prod |
-      | Inventory | test for table 2 |
+      | Inventory | Viber iOS App      |
     Then Verify that the "excluded" items in right list are sorted in the same order as in left list in "Inventory" panel
     When "Exclude" targeting options items in Inventory Targeting section
       | Device | Set Top Box |
@@ -1109,9 +1109,9 @@ Feature: Protections page regression
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viber |                |
     When "Include" targeting options items in Inventory Targeting section
-      | Inventory | Viber Desktop App |
+      | Inventory | Viber Desktop App  |
       | Inventory | Viber iOS App Prod |
-      | Inventory | test for table 2 |
+      | Inventory | Viber iOS App      |
     Then Verify that "3 Media included" are displayed in "Inventory" panel
     When "Include" targeting options items in Inventory Targeting section
       | Device | Set Top Box |
@@ -1138,7 +1138,7 @@ Feature: Protections page regression
     And Select below Advertisers from list in Protection targeting section
       | Advertiser Name                |
       | ICM                           |
-      | betclic.fr                     |
+      | Microlorge                     |
       | Slotomania™ Vegas Casino Slots |
     Then Verify that "Block 3 advertisers" are displayed in "Advertiser" panel
     When Enable "Target towards the following advertiser (whitelist)" radio button in Protections Targeting section
@@ -1152,9 +1152,9 @@ Feature: Protections page regression
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viber |                |
     When "Exclude" targeting options items in Inventory Targeting section
-      | Inventory | Viber Desktop App |
+      | Inventory | Viber Desktop App  |
       | Inventory | Viber iOS App Prod |
-      | Inventory | test for table 2 |
+      | Inventory | Viber iOS App      |
     Then Verify that "3 Media excluded" are displayed in "Inventory" panel
     When "Exclude" targeting options items in Inventory Targeting section
       | Device | Set Top Box |
