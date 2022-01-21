@@ -25,9 +25,10 @@ public class RXProtectionsPage extends RXBasePage {
 	public String loading = "//main//div[@class='container container--fluid']//table/tbody/tr";
 	public String targetAwayRadioBtn = "//label[text()='%s']/preceding-sibling::div";
 	public String targetAwayParentDiv = "//label[text()='%s']/parent::div";
-	public String valueInSelectTable = "//table[contains(@class,'select-table')]/tbody/tr/td/div[contains(text(),'%s')]/parent::td/following-sibling::td[contains(@class,'options')]";
+	public String valueInSelectTableInProtectionTargeting = "//table[contains(@class,'select-table')]/tbody/tr/td/div[contains(text(),'%s')]/parent::td/following-sibling::td[contains(@class,'options')]";
 	public String valueTrElmtInSelectTable = "//table[contains(@class,'select-table')]/tbody/tr/td/div[@title='%s']/ancestor::tr";
-	public String valueInIncludedTable = "//table[contains(@class,'included-table')]/tr/td/div[contains(text(),'%s') and not(@class='parent-label')]";
+	public String valueInIncludedTableInInventoryTargeting = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'included-table')]/tr/td/div[@title='%s' and not(@class='parent-label')]";
+	public String valueInIncludedTableInProtectionTargeting = "//table[contains(@class,'included-table')]/tr/td/div[contains(text(),'%s') and not(@class='parent-label')]";
 	public String valueInIncludedTableByRowNum = "//table[contains(@class,'included-table')]/tr[%s]/td[1]/div[not(@class='parent-label')]";
 	public String cardNameProtectionsTargeting = "//div[not(contains(@style,'none'))]/div/div[contains(@class,'v-card__title') and contains(text(),'%s')]";
 	public String cardValueProtectionsTargeting = "//div[not(contains(@style,'none'))]/div/div[contains(@class,'v-card__title') and contains(text(),'%s')]/following-sibling::span";
@@ -393,6 +394,10 @@ public class RXProtectionsPage extends RXBasePage {
 		return driver.findElement(By.xpath(String.format(xpath, param)));
 	}
 
+	public WebElement getElementByXpathWithParameter(String xpath, String param1, String param2){
+		return driver.findElement(By.xpath(String.format(xpath, param1, param2)));
+	}
+
 	public List<WebElement> getElementListByXpathWithParameter(String xpath, String param){
 		return driver.findElements(By.xpath(String.format(xpath, param)));
 	}
@@ -467,8 +472,7 @@ public class RXProtectionsPage extends RXBasePage {
 		item = this.putMouseOverItem(itemName);
 
 		this.getElementByXpathWithParameter(selectStr, item).click();
-		driverWait().until(ExpectedConditions.visibilityOf(this.getElementByXpathWithParameter(this.valueInIncludedTable, item)));
-
+		driverWait().until(ExpectedConditions.visibilityOf(this.getElementByXpathWithParameter(this.valueInIncludedTableInInventoryTargeting, targetingName, item)));
 	}
 
 	public int getItemCountInSelectTable(String targetName){

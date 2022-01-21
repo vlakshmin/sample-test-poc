@@ -6,7 +6,6 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 import RXPages.*;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.log4j.Logger;
@@ -111,7 +110,8 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	@Then("^Verify that all Protections items are displayed$")
 	public void verify_that_all_Protections_items_are_displayed() throws Throwable {
 		wait.until(ExpectedConditions.visibilityOf(protectionsPage.protectionsSearchProgress));
-		protectionsPage.waitAllProtectionsItemsLoading();
+//		protectionsPage.waitAllProtectionsItemsLoading();
+		protectionsPage.waitProtectionsTableLoading();
 		Assert.assertEquals(protectionsPage.getProtectionsTotalNum(),protectionsTotalNum);
 	}
 	
@@ -487,10 +487,10 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		for (Map<String, String> stringMap : list) {
 			String advName = stringMap.get("Advertiser Name");
 			advIncludedTable.add(advName);
-			WebElement advElemt = protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInSelectTable, advName);
+			WebElement advElemt = protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInSelectTableInProtectionTargeting, advName);
 			js.executeScript("arguments[0].scrollIntoView()", advElemt);
 			advElemt.click();
-			wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTable, advName)));
+			wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTableInProtectionTargeting, advName)));
 		}
 
 		String cardValue = protectionsPage.getElementByXpathWithParameter(protectionsPage.cardValueProtectionsTargeting, "Advertiser").getText().trim();
@@ -507,10 +507,10 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		for (Map<String, String> stringMap : list) {
 			String category = stringMap.get("Category");
 			advIncludedTable.add(category);
-			WebElement categoryElemt = protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInSelectTable, category);
+			WebElement categoryElemt = protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInSelectTableInProtectionTargeting, category);
 			js.executeScript("arguments[0].scrollIntoView()", categoryElemt);
 			categoryElemt.click();
-			wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTable, category)));
+			wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTableInProtectionTargeting, category)));
 		}
 
 		String cardValue = protectionsPage.getElementByXpathWithParameter(protectionsPage.cardValueProtectionsTargeting, "Ad Categories").getText().trim();
@@ -695,7 +695,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 
 	@Then("^Verify that only item \"([^\"]*)\" is displayed as \"([^\"]*)\" in right list in \"([^\"]*)\" panel$")
 	public void verifyThatOnlyItemIsDisplayedAsInRightListInPanel(String item, String status, String panel) {
-		Assert.assertTrue(protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTable, item).isDisplayed());
+		Assert.assertTrue(protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTableInInventoryTargeting, panel, item).isDisplayed());
 		Assert.assertEquals(protectionsPage.getElementByXpathWithParameter(protectionsPage.bannerInIncludedTable, panel).getText().trim(), status);
 		Assert.assertEquals(protectionsPage.getElementListByXpathWithParameter(this.allItemsInIncludedTable, panel).size(), 1);
 	}
