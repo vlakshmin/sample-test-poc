@@ -182,7 +182,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 	And enter the following DSP buyer details.
 		|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
 		|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|
- 	When change the DSP name to "TheTradeDesk"
+ 	When change the DSP name to "RTBHouse"
   	Then Verify the following message is displayed when the DSP changed for deal
 	|Message|
 	|By changing the DSP, the Buyers section will be reset and will not be saved.|
@@ -205,7 +205,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 	|DSP Domain Advertiser Passthrough String|
 #	|Related Proposal|
 	And Verify the buyer is "Enabled"
-	When change the DSP name to "TheTradeDesk"
+	When change the DSP name to "RTBHouse"
 	Then Verify the following message is displayed when the DSP changed for deal
 	|Message|
 	|By changing the DSP, the Buyers section will be reset and will not be saved.|
@@ -844,7 +844,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		And enter the following DSP buyer details.
 			|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
 			|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|
-		When change the DSP name to "TheTradeDesk"
+		When change the DSP name to "RTBHouse"
 		Then Verify the following message is displayed when the DSP changed for deal
 			|Message|
 			|By changing the DSP, the Buyers section will be reset and will not be saved.|
@@ -864,7 +864,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		And enter the following DSP buyer details.
 			|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
 			|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|
-		When change the DSP name to "TheTradeDesk"
+		When change the DSP name to "RTBHouse"
 		Then Verify the following message is displayed when the DSP changed for deal
 			|Message|
 			|By changing the DSP, the Buyers section will be reset and will not be saved.|
@@ -883,7 +883,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		And enter the following DSP buyer details.
 			|DSP Seat ID|DSP Seat Name|Advertiser ID|Advertiser Name|DSP Seat Passthrough String|DSP Domain Advertiser Passthrough String|
 			|TestAutoSeatID|TestAutodSPSeatName|TestAutoAdvertiserId|TestAutoadvertiserName|TestAutodSPSeatPassthroughString|TestAutodSPDomainAdvertiserPassthroughString|
-		When change the DSP name to "TheTradeDesk"
+		When change the DSP name to "RTBHouse"
 		Then Verify the following message is displayed when the DSP changed for deal
 			|Message|
 			|By changing the DSP, the Buyers section will be reset and will not be saved.|
@@ -1020,7 +1020,7 @@ Scenario: failing to GS-1963 Verify that the Alert message displayed for changin
 		And Select publisher by name: "Viber"
 		Then The Currency field is not null
 		When Click on DSP input
-		And Type "d" in DSP input
+		And Type "R" in DSP input
 		And Select 2nd value that below the highlighted dropdown value
 		Then Verify the following message is not displayed when select the second DSP value
 			|Message|

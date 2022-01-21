@@ -89,7 +89,8 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		}
 		enterSearchName =name;
 //		if (protectionsPage.protectionsSearchClearButton.getAttribute("disabled") == null) {
-		if (protectionsPage.IsElementPresent(protectionsPage.protectionsSearchClearButton)) {
+//		if (protectionsPage.IsElementPresent(protectionsPage.protectionsSearchClearButton)) {
+		if (protectionsPage.protectionsSearchClearButton.isDisplayed()) {
 			protectionsPage.protectionsSearchClearButton.click();
 		}
 		protectionsPage.protectionsSearchInput.sendKeys(name);
