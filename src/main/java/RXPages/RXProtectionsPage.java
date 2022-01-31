@@ -26,7 +26,8 @@ public class RXProtectionsPage extends RXBasePage {
 	public String targetAwayRadioBtn = "//label[text()='%s']/preceding-sibling::div";
 	public String targetAwayParentDiv = "//label[text()='%s']/parent::div";
 	public String valueInSelectTable = "//table[contains(@class,'select-table')]/tbody/tr/td/div[contains(text(),'%s')]/parent::td/following-sibling::td[contains(@class,'options')]";
-	public String valueTrElmtInSelectTable = "//table[contains(@class,'select-table')]/tbody/tr/td/div[@title='%s']/ancestor::tr";
+//	public String valueTrElmtInSelectTable = "//table[contains(@class,'select-table')]/tbody/tr/td/div[@title='%s']/ancestor::tr";
+	public String valueTrElmtInSelectTable = "//table[contains(@class,'select-table')]//div[normalize-space(.) ='%s']";
 	public String valueInIncludedTable = "//table[contains(@class,'included-table')]/tr/td/div[contains(text(),'%s') and not(@class='parent-label')]";
 	public String valueInIncludedTableByRowNum = "//table[contains(@class,'included-table')]/tr[%s]/td[1]/div[not(@class='parent-label')]";
 	public String cardNameProtectionsTargeting = "//div[not(contains(@style,'none'))]/div/div[contains(@class,'v-card__title') and contains(text(),'%s')]";
@@ -34,8 +35,8 @@ public class RXProtectionsPage extends RXBasePage {
 	public String cardValueInventoryTargeting = "//h3[text()='%s']/following-sibling::div[@class='selectionInfo']/span";
 	public String protectionTypeDropdownValue = "//div[@class='v-list-item__content']/div[contains(text(), '%s')]";
 	public String errorMsg = "//div[contains(@class,'validation-errors')]/div/div/div/ul/li[text()='%s']";
-	public String includeBtn = "//div[@title='%s']/parent::td/following-sibling::td[contains(@class,'options')]/div[contains(@class,'include')]/button[contains(@class,'unchecked')]";
-	public String excludeBtn = "//div[@title='%s']/parent::td/following-sibling::td[contains(@class,'options')]/div[contains(@class,'exclude')]/button[contains(@class,'unchecked')]";
+	public String includeBtn = "//div[normalize-space(.) ='%s']/parent::td/following-sibling::td[contains(@class,'options')]/div[contains(@class,'include')]/button[contains(@class,'unchecked')]";
+	public String excludeBtn = "//div[normalize-space(.) ='%s']/parent::td/following-sibling::td[contains(@class,'options')]/div[contains(@class,'exclude')]/button[contains(@class,'unchecked')]";
 	public String clearAllBtn = "//h3[text()='%s']/parent::button/following-sibling::div//span[text()='Clear All']/parent::button";
 	public String includeAllBtn = "//h3[text()='%s']/parent::button/following-sibling::div//div[contains(text(),'Include All')]/ancestor::button";
 	public String excludeAllBtn = "//h3[text()='%s']/parent::button/following-sibling::div//div[contains(text(),'Exclude All')]/ancestor::button";
