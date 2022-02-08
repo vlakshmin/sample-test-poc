@@ -60,8 +60,8 @@ public class RXProtectionsPage extends RXBasePage {
 	public String vIconForParent = "//table[contains(@class,'select-table')]//div[normalize-space(text())='%s']/ancestor::tr/td[@class='nested']/i";
 	public String valuesInDetailsPopup = "//div[@class='header' and contains(text(),'%s')]/following-sibling::div//span";
 	public String vIconForAllParentInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]//td[@class='nested']/i";
-	public String inactiveParentInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]/tbody/tr[@class='select-row']//span[@class='inactive-label']";
-	public String inactiveChildenInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]/tbody/tr[contains(@class,'select-row children')]//span[@class='inactive-label']";
+	public String inactiveParentInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]/tbody/tr[@class='select-row']//span[normalize-space(text())='(Inactive)']";
+	public String inactiveChildenInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]/tbody/tr[contains(@class,'select-row children')]//span[normalize-space(text())='(Inactive)']";
 
 	@FindBy(xpath = "//div[text()='Protections ']")
     public WebElement protectionsLabel;
