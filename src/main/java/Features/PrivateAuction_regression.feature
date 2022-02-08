@@ -71,14 +71,15 @@ Feature: Private Auctions page regression
     Then Verify following fields are mandatory for create page
       | FieldName      |
       | Publisher Name |
-      | Name       |
-      | Date Range |
+      | Name           |
+      | Date Range     |
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue |              2 |
     Then Click on Save Private Auction & Close button
     Then Verify following fields are mandatory for create page
       | FieldName  |
+      | Publisher Name |
       | Name       |
       | Date Range |
 
