@@ -6,6 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.util.List;
 
@@ -89,5 +90,43 @@ public class RXDemandSourcesPage extends RXBasePage{
     public WebElement demandItem(int i) {
         return driver
                 .findElement(By.xpath("//div[@class='v-data-table__wrapper']//tbody/tr["+i+"]"));
+    }
+
+    public WebElement getStatusRadioButton(String statusName) {
+        return driver.findElement(By.xpath("//label[text()='"+statusName+"']/preceding-sibling::div"));
+    }
+
+    public WebElement getToggle(String toggles) {
+        return driver.findElement(By.xpath("//label[text()='"+toggles+"']/preceding-sibling::div"));
+    }
+
+    public String Is_DSP_Toggle_active(String toggles) {
+        return driver.findElement(By.xpath("//label[text()='"+toggles+"']/preceding-sibling::div/input")).getAttribute("aria-checked");
+    }
+
+    public String Is_DSP_Toggle_disable(String toggles) {
+        return driver.findElement(By.xpath("//label[text()='"+toggles+"']/preceding-sibling::div/input")).getAttribute("disabled");
+    }
+
+    public String IsRadioButtonSelected(String statusName) {
+        return driver.findElement(By.xpath("//label[text()='"+statusName+"']/preceding-sibling::div/input")).getAttribute("aria-checked");
+    }
+
+    public WebElement tableOptionsCheckbox(String columnName){
+        return driver.findElement(By.xpath("//label[text()='"+columnName+"']/preceding-sibling::div"));
+    }
+
+    public void selectTableOptionsCheckbox(String e) {
+        if(!this.istableOptionsCheckboxSelected(e).equals("true")){
+            this.tableOptionsCheckbox(e).click();
+        }
+    }
+
+    public String istableOptionsCheckboxSelected(String columnName){
+        return driver.findElement(By.xpath("//label[text()='"+columnName+"']/preceding-sibling::div/input")).getAttribute("aria-checked");
+    }
+
+    public void is_columns_displayed_on_the_Demand_sources_page(String columnName) {
+        Assert.assertTrue(driver.findElement(By.xpath("//thead[@class='v-data-table-header']/tr/th/span[text()='"+columnName+"']")).isDisplayed());
     }
 }

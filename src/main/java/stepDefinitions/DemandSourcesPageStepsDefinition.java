@@ -219,4 +219,55 @@ public class DemandSourcesPageStepsDefinition extends RXDemandSourcesPage {
         Assert.assertEquals(demandSourcesPage.endpointURIError.getText(),arg1);
     }
 
+    @Then("^Verify following radio buttons displayed in the header Status$")
+    public void verify_following_radio_buttons_displayed_in_the_header_Status(DataTable dt) throws Throwable {
+        List<String> list = dt.asList(String.class);
+        list.forEach(e -> Assert.assertTrue(demandSourcesPage.getStatusRadioButton(e).isDisplayed()));
+    }
+
+    @Then("^Verify following DSP Toggles is displayed$")
+    public void verify_following_Toggles_is_displayed(DataTable dt) throws Throwable {
+        List<String> list = dt.asList(String.class);
+        list.forEach(e -> Assert.assertTrue(demandSourcesPage.getToggle(e).isDisplayed()));
+    }
+
+    @Then("^Verify following DSP Toggles is Inactive$")
+    public void verify_following_DSP_Toggles_is_Inactive(DataTable dt) throws Throwable {
+        List<String> list = dt.asList(String.class);
+        list.forEach(e -> Assert.assertEquals(demandSourcesPage.Is_DSP_Toggle_active(e),"false"));
+    }
+
+    @Then("^Verify following DSP Toggles is Disable$")
+    public void verify_following_DSP_Toggles_is_Disable(DataTable dt) throws Throwable {
+        List<String> list = dt.asList(String.class);
+        list.forEach(e -> Assert.assertEquals(demandSourcesPage.Is_DSP_Toggle_disable(e),"true"));
+    }
+
+    @When("^Set Status as \"([^\"]*)\" in Edit DSP page$")
+    public void set_Status_as(String arg1) throws Throwable {
+        demandSourcesPage.getStatusRadioButton(arg1).click();
+    }
+
+    @Then("^Status is set as \"([^\"]*)\" in Edit DSP page$")
+    public void status_is_set_as(String arg1) throws Throwable {
+        Assert.assertTrue(demandSourcesPage.IsRadioButtonSelected(arg1).equals("true"));
+    }
+
+    @Then("^Verify the following checkboxes are exist in DSP table options$")
+    public void verify_the_following_checkboxes_are_exist_in_DSP_table_options(DataTable dt) throws Throwable {
+        List<String> list = dt.asList(String.class);
+        list.forEach(e ->Assert.assertTrue(demandSourcesPage.tableOptionsCheckbox(e).isDisplayed()));
+    }
+
+    @When("^Select the following checkbox in DSP table options$")
+    public void select_the_following_checkbox_in_DSP_table_options(DataTable dt) throws Throwable {
+        List<String> list = dt.asList(String.class);
+        list.forEach(e ->demandSourcesPage.selectTableOptionsCheckbox(e));
+    }
+
+    @Then("^Check that the following columns are displayed on the Demand sources page$")
+    public void check_that_the_following_columns_are_displayed_on_the_Demand_sources_page(DataTable dt) throws Throwable {
+        List<String> list = dt.asList(String.class);
+        list.forEach(e -> demandSourcesPage.is_columns_displayed_on_the_Demand_sources_page(e));
+    }
 }

@@ -145,7 +145,7 @@ public class RXPrivateAuctionsPage extends RXBasePage {
     public List<WebElement> targetingBlockIncludedItemsList(String targetingName) {
         return driver.findElements(By.xpath("//h3[text() = '" + targetingName +
                 "']/ancestor::button[contains(@class, 'v-expansion-panel-header flex')]/ancestor::" +
-                "div[contains(@class, 'v-expansion-panel--active')]//table[@class = 'included-table fixed']//td[text()]"));
+                "div[contains(@class, 'v-expansion-panel--active')]//table[@class = 'included-table']//td[text()]"));
     }
     
     public String mandatorFieldIsDisabledForCreatePage(String fieldName) {
@@ -360,13 +360,16 @@ public class RXPrivateAuctionsPage extends RXBasePage {
         dateRangeContainer.click();
         driverWait().until(ExpectedConditions.visibilityOf(dashboardPage.previousMonthBtn));
     }
+
+    public  void expandTargetingPanel(String targetingName){
+        //Check if panel is expanded,expand it if not
+        if(!targetingExpandPanel(targetingName.replace(" Child", "")).getAttribute("class").contains("active")) {
+            targetingExpandPanel(targetingName.replace(" Child", "")).click();
+        }
+    }
     
     public void selectForBlock(String targetingName, String itemName) {
-    	//Check if panel is expanded,expand it if not
-    	if(!targetingExpandPanel(targetingName.replace(" Child", "")).getAttribute("class").contains("active")) {
-    		targetingExpandPanel(targetingName.replace(" Child", "")).click();
-    	}
-    	
+    	this.expandTargetingPanel(targetingName);
         if(targetingName.equals("Inventory")) {
         	 driverWait().until(ExpectedConditions.visibilityOf(targetingBlockListItem(itemName)));
         	selectTargetingInventoryItem(itemName);
@@ -473,4 +476,37 @@ public void selectTargetingInventoryChildItem(String itemName) {
 				.findElement(
 						By.xpath("//h3[text() = '" + fieldName +"']/parent::button/parent::div/div[@class='v-expansion-panel-content']"));
 	}
+
+    public void expand_All_Inventory_Media_Items(){
+         driver.findElements(By.xpath("//table[@class='select-table fixed']/tbody")).forEach(e -> e.click());
+    }
+
+    public void verify_media_and_adspot_are_Active() {
+        this.media_and_adspot_Name().forEach(c -> Assert.assertFalse(c.getText().contains("(Inactive)")));
+    }
+
+    public List<WebElement> media_and_adspot_Name(){
+        return driver.findElements(By.xpath("//table[@class='select-table fixed']/tbody/tr/td[@class='first']"));
+    }
+
+    public void inventory_Media_is_displayed(String arg1) {
+        Assert.assertTrue(driver.findElement(By.xpath("//table[@class='select-table fixed']/tbody/tr[@class='select-row']/td[@class='first']")).getText().contains(arg1));
+    }
+
+    public void inventory_Media_are_opened_with_childs() {
+        Assert.assertTrue(driver.findElement(By.xpath("//table[@class='select-table fixed']/tbody/tr[@class='select-row children can-include']/td[@class='first']")).isDisplayed());
+    }
+
+    public void Active_Inactive_media_and_adspot_are_displayed() {
+        boolean inactiveFound = false;
+        boolean activeFound = false;
+        for(WebElement e: this.media_and_adspot_Name()) {
+            if(e.getText().contains("(Inactive)")){
+                inactiveFound = true;
+            }else{
+                activeFound = true;
+            }
+        }
+        Assert.assertTrue(inactiveFound && activeFound,"Active Inventory displayed " + activeFound + ", Inactive Inventory displayed " + inactiveFound);
+    }
 }

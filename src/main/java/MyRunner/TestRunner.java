@@ -30,6 +30,7 @@ features = {
  "src/main/java/Features/RXPublishers.feature",
  "src/main/java/Features/UserRoles.feature",
    "src/main/java/Features/Protections_regression.feature"
+
 },
         glue = {"stepDefinitions"},
         tags = {"~@Ignore"},
