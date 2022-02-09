@@ -88,8 +88,8 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 			
 		}
 		enterSearchName =name;
-//		if (protectionsPage.protectionsSearchClearButton.getAttribute("disabled") == null) {
-		if (protectionsPage.IsElementPresent(protectionsPage.protectionsSearchClearButton)) {
+		if (!protectionsPage.protectionsSearchClearButton.getAttribute("class").contains("disabled")) {
+//		if (protectionsPage.IsElementPresent(protectionsPage.protectionsSearchClearButton)) {
 			protectionsPage.protectionsSearchClearButton.click();
 		}
 		protectionsPage.protectionsSearchInput.sendKeys(name);
@@ -110,7 +110,8 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	@Then("^Verify that all Protections items are displayed$")
 	public void verify_that_all_Protections_items_are_displayed() throws Throwable {
 		wait.until(ExpectedConditions.visibilityOf(protectionsPage.protectionsSearchProgress));
-		protectionsPage.waitAllProtectionsItemsLoading();
+//		protectionsPage.waitAllProtectionsItemsLoading();
+		protectionsPage.waitProtectionsTableLoading();
 		Assert.assertEquals(protectionsPage.getProtectionsTotalNum(),protectionsTotalNum);
 	}
 	
@@ -486,10 +487,10 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		for (Map<String, String> stringMap : list) {
 			String advName = stringMap.get("Advertiser Name");
 			advIncludedTable.add(advName);
-			WebElement advElemt = protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInSelectTable, advName);
+			WebElement advElemt = protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInSelectTableInProtectionTargeting, advName);
 			js.executeScript("arguments[0].scrollIntoView()", advElemt);
 			advElemt.click();
-			wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTable, advName)));
+			wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTableInProtectionTargeting, advName)));
 		}
 
 		String cardValue = protectionsPage.getElementByXpathWithParameter(protectionsPage.cardValueProtectionsTargeting, "Advertiser").getText().trim();
@@ -506,10 +507,10 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		for (Map<String, String> stringMap : list) {
 			String category = stringMap.get("Category");
 			advIncludedTable.add(category);
-			WebElement categoryElemt = protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInSelectTable, category);
+			WebElement categoryElemt = protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInSelectTableInProtectionTargeting, category);
 			js.executeScript("arguments[0].scrollIntoView()", categoryElemt);
 			categoryElemt.click();
-			wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTable, category)));
+			wait.until(ExpectedConditions.visibilityOf(protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTableInProtectionTargeting, category)));
 		}
 
 		String cardValue = protectionsPage.getElementByXpathWithParameter(protectionsPage.cardValueProtectionsTargeting, "Ad Categories").getText().trim();
@@ -694,7 +695,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 
 	@Then("^Verify that only item \"([^\"]*)\" is displayed as \"([^\"]*)\" in right list in \"([^\"]*)\" panel$")
 	public void verifyThatOnlyItemIsDisplayedAsInRightListInPanel(String item, String status, String panel) {
-		Assert.assertTrue(protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTable, item).isDisplayed());
+		Assert.assertTrue(protectionsPage.getElementByXpathWithParameter(protectionsPage.valueInIncludedTableInInventoryTargeting, panel, item).isDisplayed());
 		Assert.assertEquals(protectionsPage.getElementByXpathWithParameter(protectionsPage.bannerInIncludedTable, panel).getText().trim(), status);
 		Assert.assertEquals(protectionsPage.getElementListByXpathWithParameter(this.allItemsInIncludedTable, panel).size(), 1);
 	}
@@ -795,14 +796,16 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		}else if(listname.equalsIgnoreCase("category")){
 			cardName = "Ad Categories";
 			//expand all parent
-			for(WebElement vIcon : protectionsPage.allVIconInParentInAdCategories){
+			for(WebElement vIcon : protectionsPage.allVIconForParentInAdCategories){
 				js.executeScript("arguments[0].scrollIntoView()", vIcon);
-				vIcon.click();
+				if(!vIcon.getAttribute("class").contains("flip")) {
+					vIcon.click();
+				}
 			}
 		}
 		//select item
-		for(int i = 0; i <= protectionsPage.allItemsInSelectTableInProtectionTargeting.size()-1; i++){
-				itemElemt = protectionsPage.allItemsInSelectTableInProtectionTargeting.get(i);
+		for(int i = 0; i <= protectionsPage.allItemsOptionInSelectTableInProtectionTargeting.size()-1; i++){
+				itemElemt = protectionsPage.allItemsOptionInSelectTableInProtectionTargeting.get(i);
 				js.executeScript("arguments[0].scrollIntoView()", itemElemt);
 				itemElemt.click();
 				wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath(String.format(protectionsPage.allItemsInIncludedTableInProtectionTargeting,cardName)), i+1));
@@ -841,6 +844,61 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 			if(!flag){
 				break;
 			}
+		}
+	}
+
+	@When("^Set Show Inactive as \"([^\"]*)\" in the Inventory panel$")
+	public void setShowInactiveAsInTheInventoryPanel(String status) {
+//		wait.until(ExpectedConditions.visibilityOf(protectionsPage.showInactiveInput));
+		String actualStatus = protectionsPage.showInactiveInput.getAttribute("aria-checked");
+		if(status.equalsIgnoreCase("active")){
+			if(!actualStatus.equals("true")){
+				protectionsPage.showInactiveDiv.click();
+			}
+		}else if(status.equalsIgnoreCase("inactive")){
+			if(!actualStatus.equals("false")){
+				protectionsPage.showInactiveDiv.click();
+			}
+		}
+	}
+
+	@Then("^Verify Active and Inactive media and ad spot are displayed$")
+	public void verifyActiveAndInactiveMediaAndAdSpotAreDisplayed() {
+		List<WebElement> inactiveParentList = protectionsPage.getElementListByXpathWithParameter(protectionsPage.inactiveParentInSelectTable, "Inventory");
+		Assert.assertTrue(inactiveParentList.size() > 0);
+		//expand all parents in Inventory
+		List<WebElement> allParentList = protectionsPage.getElementListByXpathWithParameter(protectionsPage.vIconForAllParentInSelectTable, "Inventory");
+		for(WebElement vIcon : allParentList){
+			js.executeScript("arguments[0].scrollIntoView()", vIcon);
+			if(!vIcon.getAttribute("class").contains("flip")) {
+				vIcon.click();
+			}
+		}
+		List<WebElement> inactiveChildrenList = protectionsPage.getElementListByXpathWithParameter(protectionsPage.inactiveChildenInSelectTable, "Inventory");
+		Assert.assertTrue(inactiveChildrenList.size() > 0);
+	}
+
+	@When("^Expand the parent item \"([^\"]*)\" in select table$")
+	public void expandTheParentItemInSelectTable(String parent) {
+		protectionsPage.expandTheSpecifiedParentItemInSelectTable(parent);
+	}
+
+	@Then("^Verify Active media and adspot are displayed only$")
+	public void verifyActiveMediaAndAdspotAreDisplayedOnly() {
+		Assert.assertFalse(protectionsPage.IsElementPresent(String.format(protectionsPage.inactiveChildenInSelectTable, "Inventory")));
+	}
+
+	@When("^Types \"([^\"]*)\" in search box in Protection Targeting section$")
+	public void typesInSearchBoxInProtectionTargetingSection(String value) {
+		wait.until(ExpectedConditions.visibilityOf(protectionsPage.searchBoxInProtectionTargeting)).sendKeys(value);
+		wait.until(ExpectedConditions.attributeContains(protectionsPage.allVIconForParentInAdCategories.get(0), "class", "flip"));
+	}
+
+	@Then("^Verify Parent and childs including \"([^\"]*)\" are displayed$")
+	public void verifyParentAndChildsIncludingAreDisplayed(String value) {
+		for(WebElement itemElemt: protectionsPage.allItemsValueInSelectTableInProtectionTargeting){
+			js.executeScript("arguments[0].scrollIntoView()", itemElemt);
+			Assert.assertTrue(itemElemt.getText().toLowerCase().contains(value.toLowerCase()));
 		}
 	}
 }

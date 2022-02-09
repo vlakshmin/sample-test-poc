@@ -16,7 +16,7 @@ public class RXDemandSourcesPage extends RXBasePage{
     public WebElement demandPageHeader;
     @FindBy(xpath = "//label[text()='Request Adjustment Rate']/following-sibling::input")
     public WebElement requestAdjustmentRate;
-    @FindBy(xpath = "//button[@type='submit']")
+    @FindBy(xpath = "//button[@type='submit']/span")
     public WebElement saveButton;
 
     //Search text field
