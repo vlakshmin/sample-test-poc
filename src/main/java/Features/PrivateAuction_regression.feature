@@ -100,7 +100,7 @@ Feature: Private Auctions page regression
       | Geo              | Afghanistan |
       | Ad Format        |  Video       |
       | Ad Size          | 120x60      |
-
+  
   Scenario: 258.Verify select/unselect all for targeting options
     Given admin user login to RX UI with valid username and password
     When Click on Private Auctions option under Sales

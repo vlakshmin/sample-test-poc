@@ -145,7 +145,7 @@ public class RXPrivateAuctionsPage extends RXBasePage {
     public List<WebElement> targetingBlockIncludedItemsList(String targetingName) {
         return driver.findElements(By.xpath("//h3[text() = '" + targetingName +
                 "']/ancestor::button[contains(@class, 'v-expansion-panel-header flex')]/ancestor::" +
-                "div[contains(@class, 'v-expansion-panel--active')]//table[@class = 'included-table fixed']//td[text()]"));
+                "div[contains(@class, 'v-expansion-panel--active')]//table[@class = 'included-table']//td[text()]"));
     }
     
     public String mandatorFieldIsDisabledForCreatePage(String fieldName) {
