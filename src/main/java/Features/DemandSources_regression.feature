@@ -68,8 +68,8 @@ Feature: Demand Sources page regression
     Given admin user login to RX UI with valid username and password
     And Click on Demand Sources option under Admin
     Then User displayed with Demand Sources page
-    When Search "DSP-Test-7" DSP item
-    And Click on Bidder column for "DSP-Test-7" DSP item
+    When Search "DistrictM" DSP item
+    And Click on Bidder column for "DistrictM" DSP item
     Then Edit DSP pop up is present
     When Click on Save DSP button
     Then DSP saved successfully without error message
@@ -78,8 +78,8 @@ Feature: Demand Sources page regression
     Given admin user login to RX UI with valid username and password
     And Click on Demand Sources option under Admin
     Then User displayed with Demand Sources page
-    When Search "DSP-Test-5" DSP item
-    And Click on Bidder column for "DSP-Test-5" DSP item
+    When Search "Flurry" DSP item
+    And Click on Bidder column for "Flurry" DSP item
     Then Edit DSP pop up is present
     And Enter the following data in the general card of DSP
       | FieldName    |
@@ -91,15 +91,15 @@ Feature: Demand Sources page regression
     Given admin user login to RX UI with valid username and password
     And Click on Demand Sources option under Admin
     Then User displayed with Demand Sources page
-    When Search "DSP-Test-5" DSP item
-    And Click on Bidder column for "DSP-Test-5" DSP item
+    When Search "Criteo" DSP item
+    And Click on Bidder column for "Criteo" DSP item
     Then Edit DSP pop up is present
     And Erase data from endpoint input
     When Click on Save DSP button
     Then Verify following errors are displayed near save button
       | The Endpoint URI field is required |
     Then Verify error "The Endpoint URI field is required" is present for Endpoint URI
-
+  @Ignore
   Scenario:  353.Check required Status / PMPs / NonProgramatic
     Given admin user login to RX UI with valid username and password
     And Click on Demand Sources option under Admin
@@ -113,7 +113,7 @@ Feature: Demand Sources page regression
     Then Verify following DSP Toggles is displayed
       | PMP support      |
       | Non-Programmatic |
-
+  @Ignore
   Scenario:  354.Check option "Non Programatic" has status "read only"
     Given admin user login to RX UI with valid username and password
     And Click on Demand Sources option under Admin
@@ -124,7 +124,7 @@ Feature: Demand Sources page regression
     |Non-Programmatic|
     Then Verify following DSP Toggles is Disable
     |Non-Programmatic|
-
+  @Ignore
   Scenario:  355.Check statuses for demand source
     Given admin user login to RX UI with valid username and password
     And Click on Demand Sources option under Admin
@@ -149,7 +149,7 @@ Feature: Demand Sources page regression
     And Click on Bidder column for "DumbBidder" DSP item
     Then Edit DSP pop up is present
     Then Status is set as "Onboarding" in Edit DSP page
-
+  @Ignore
   Scenario:  356.Check Check that "Status" "PMPs" and "Non programatic" in the table options
     Given admin user login to RX UI with valid username and password
     And Click on Demand Sources option under Admin
@@ -159,7 +159,7 @@ Feature: Demand Sources page regression
     |Status|
     |PMP support|
     |Non-Programmatic|
-
+  @Ignore
   Scenario:  357.Check that columns "Status" "PMPs" and "Non programatic" are displayed on the Demand Source page
     Given admin user login to RX UI with valid username and password
     And Click on Demand Sources option under Admin

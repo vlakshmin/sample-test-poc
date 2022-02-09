@@ -623,7 +623,6 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 
 	@Then("^Verify that Active/Inactive media and adspot are displayed$")
 	public void verify_that_Active_Inactive_media_and_adspot_are_displayed() throws Throwable {
-		auctionPage.expand_All_Inventory_Media_Items();
 		auctionPage.Active_Inactive_media_and_adspot_are_displayed();
 	}
 
