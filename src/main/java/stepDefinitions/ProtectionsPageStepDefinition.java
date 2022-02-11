@@ -108,13 +108,12 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	public void click_on_Search_clear_button() {
 		wait.until(ExpectedConditions.visibilityOf(protectionsPage.protectionsSearchClearButton));
 		protectionsPage.protectionsSearchClearButton.click();
+		wait.until(ExpectedConditions.attributeContains(protectionsPage.protectionsSearchClearButton, "class", "disabled"));
 	}
 
 	@Then("^Verify that all Protections items are displayed$")
 	public void verify_that_all_Protections_items_are_displayed() throws Throwable {
-//		protectionsPage.waitAllProtectionsItemsLoading();
 		protectionsPage.waitProtectionsTableLoading();
-		wait.until(ExpectedConditions.attributeContains(protectionsPage.protectionsSearchClearButton, "class", "disabled"));
 		Assert.assertEquals(protectionsPage.getProtectionsTotalNum(),protectionsTotalNum);
 	}
 	
