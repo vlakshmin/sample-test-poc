@@ -224,7 +224,8 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 			String listValueIndex = list.get(i).get("ListValueIndex");
 			switch (fieldName) {
 			case "Publisher Name":
-				wait.until(ExpectedConditions.visibilityOf(adspotsPage.publisherNameDropDown));
+				wait.until(ExpectedConditions.elementToBeClickable(adspotsPage.publisherNameDropDown));
+				wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath(protectionsPage.changePubLoadingStr),1));//wait for loading disappear when change publishers many times
 				adspotsPage.publisherNameDropDown.click();
 				if (value.equalsIgnoreCase("ListValue")) {
 					wait.until(ExpectedConditions.visibilityOf(protectionsPage.dropDownPublisher(listValueIndex)));
@@ -238,6 +239,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 				enteredPublisherName = adspotsPage.publisherNameField.getText();
 //				System.out.println("publisher entered as :" + enteredPublisherName);
 //				protectionsPage.waitPublisherNameLoading();
+				wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath(protectionsPage.changePubLoadingStr),1));
 				wait.until(ExpectedConditions.attributeToBe(protectionsPage.nameLabel, "class", "v-label theme--light"));
 				break;
 			case "Name":

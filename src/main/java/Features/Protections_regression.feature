@@ -538,7 +538,6 @@ Feature: Protections page regression
     When Click "Activate" button in Protections list page
     Then "Active" is displayed for the created Protections
 
-
   Scenario: 139.Verify that Publisher warning banned apears only if any forms were modified on Protections page
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -571,7 +570,6 @@ Feature: Protections page regression
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
-    Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
@@ -583,7 +581,6 @@ Feature: Protections page regression
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
-    Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
@@ -597,7 +594,6 @@ Feature: Protections page regression
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
-    Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
@@ -610,7 +606,6 @@ Feature: Protections page regression
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
-    Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
@@ -623,7 +618,6 @@ Feature: Protections page regression
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
-    Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
@@ -636,7 +630,6 @@ Feature: Protections page regression
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
-    Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
@@ -649,7 +642,6 @@ Feature: Protections page regression
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
-    Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the general card of private auction
       | FieldName      | Value     | ListValueIndex |
@@ -826,7 +818,6 @@ Feature: Protections page regression
     Then Edit Protections pop up is present
     And Verify the Protection Type value is disabled
     When Click on Close button
-    Then User displayed with Protections page
     When Uncheck all protections items
     When Click on the Create Protections button
     And Enter the following data in the Create Protections page
@@ -1058,9 +1049,6 @@ Feature: Protections page regression
       | Slotomania™ Vegas Casino Slots |
     Then Verify that the included items in right list are sorted in the same order as in left list in "Advertiser" panel
     When Click on Close button
-    Then User displayed with Protections page
-    When Click on Protections option in Menu
-    Then User displayed with Protections page
     When Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value | ListValueIndex |
@@ -1144,7 +1132,6 @@ Feature: Protections page regression
     When Enable "Target towards the following advertiser (whitelist)" radio button in Protections Targeting section
     Then Verify that "Whitelist 3 advertisers" are displayed in "Advertiser" panel
     When Click on Close button
-    Then User displayed with Protections page
     When Click on Protections option in Menu
     Then User displayed with Protections page
     When Click on the Create Protections button

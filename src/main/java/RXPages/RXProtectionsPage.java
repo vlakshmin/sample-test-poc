@@ -66,6 +66,7 @@ public class RXProtectionsPage extends RXBasePage {
 	public String inactiveChildenInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]/tbody/tr[contains(@class,'select-row children')]//span[normalize-space(text())='(Inactive)']";
 	public String protectionsSearchProgressStr = "//main//div[@class='container container--fluid']//table//tr[@class='v-data-table__progress']";
 	public String protectionsSearchProgressTheadStr = "//main//div[@class='container container--fluid']//table/thead";
+	public String changePubLoadingStr = "//div[contains(@class,'v-overlay--absolute')]/div";
 
 	@FindBy(xpath = "//div[text()='Protections ']")
     public WebElement protectionsLabel;
