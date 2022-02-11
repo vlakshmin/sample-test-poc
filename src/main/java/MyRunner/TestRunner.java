@@ -33,8 +33,7 @@ features = {
 
 },
         glue = {"stepDefinitions"},
-        tags = {"@debug"},
-//        tags = {"~@Ignore"},
+        tags = {"~@Ignore"},
         plugin = {"com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html",
         		"json:target/cucumber-reports/CucumberTestReport.json",
                 "pretty",

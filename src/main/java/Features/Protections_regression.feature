@@ -1,5 +1,5 @@
 Feature: Protections page regression
-  @debug
+
   Scenario: 7.Verify left nav menu intem Protections for Single Publisher
     Given Single Publisher user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -44,7 +44,7 @@ Feature: Protections page regression
     Then Verify that default value is 20 items per page
     Then Verify that each items value displayes proper amount of items
     Then Verify that next page/prev page displays proper amount of items
-  @debug
+
   Scenario: 9.Verify Search on Protections page for Single Publisher
     Given Single Publisher user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -58,7 +58,7 @@ Feature: Protections page regression
     Then Verify that exicting Protections item is displayed via "single letter" search
     When Click on Search clear button
     Then Verify that all Protections items are displayed
-  @debug
+
   Scenario: 9.Verify Search on Protections page for admin
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -72,7 +72,7 @@ Feature: Protections page regression
     Then Verify that exicting Protections item is displayed via "single letter" search
     When Click on Search clear button
     Then Verify that all Protections items are displayed
-  @debug
+
   Scenario: 9.Verify Search on Protections page for cross Publisher
     Given Publisher user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -1583,7 +1583,7 @@ Feature: Protections page regression
     When "Exclude" targeting options items in Inventory Targeting section
       | Inventory | Viber Android App Prod > Viber Android Chat Ext 320x50 Prod |
     Then Verify that only item "Viber Android Chat Ext 320x50 Prod" is displayed as "Excluded" in right list in "Inventory" panel
-  @debug
+
   Scenario: 348.Details popup display both included and excluded for Inventory
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -1643,7 +1643,7 @@ Feature: Protections page regression
     When Unselect "Category" until validation error disapears
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
-  @debug
+
   Scenario: 359.Searching result for Protection -> Inventory is displayed correctly if "Show inactive" toggle is enabled
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -1656,7 +1656,7 @@ Feature: Protections page regression
     And Expand the "Inventory" panel in Inventory Targeting section
     And Set Show Inactive as "active" in the Inventory panel
     Then Verify Active and Inactive media and ad spot are displayed
-  @debug
+
   Scenario: 362.Active media and adspot should be displayed if "Show inactive" toggle is disabled for Protection targeting
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -1669,7 +1669,7 @@ Feature: Protections page regression
     And Expand the "Inventory" panel in Inventory Targeting section
     And Expand the parent item "Viber Desktop App" in select table
     Then Verify Active media and adspot are displayed only
-  @debug
+
   Scenario: 363.Searching result for Protection targeting is displayed correctly
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
