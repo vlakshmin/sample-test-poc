@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 import RXPages.*;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.log4j.Logger;
@@ -97,7 +98,8 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 
 	@Then("^Verify that exicting Protections item is displayed via \"([^\"]*)\" search$")
 	public void verify_that_exicting_Protections_item_is_displayed_via_search(String searchType) {
-		List<WebElement> nameData = driver.findElements(By.xpath("a[contains(@href,'protections')]"));
+		protectionsPage.waitProtectionsTableLoading();
+		List<WebElement> nameData = driver.findElements(By.xpath("//td/a[contains(@href,'protections')]"));
 		nameData.forEach(e -> Assert.assertTrue(protectionsPage.protectionsIsDisplayedViaSearch(e,enterSearchName)));
 	}
 
@@ -109,9 +111,9 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 
 	@Then("^Verify that all Protections items are displayed$")
 	public void verify_that_all_Protections_items_are_displayed() throws Throwable {
-		wait.until(ExpectedConditions.visibilityOf(protectionsPage.protectionsSearchProgress));
 //		protectionsPage.waitAllProtectionsItemsLoading();
 		protectionsPage.waitProtectionsTableLoading();
+		wait.until(ExpectedConditions.attributeContains(protectionsPage.protectionsSearchClearButton, "class", "disabled"));
 		Assert.assertEquals(protectionsPage.getProtectionsTotalNum(),protectionsTotalNum);
 	}
 	
@@ -229,14 +231,14 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 					js.executeScript("arguments[0].scrollIntoView()", protectionsPage.dropDownPublisher(listValueIndex));
 					protectionsPage.dropDownPublisher(listValueIndex).click();
 				} else {
-					protectionsPage.selectValueFromDropdown(value);
+//					protectionsPage.selectValueFromDropdown(value);
+					protectionsPage.selectValueFromDropdownWithSearch(value);
 				}
 
 				enteredPublisherName = adspotsPage.publisherNameField.getText();
 //				System.out.println("publisher entered as :" + enteredPublisherName);
-				protectionsPage.waitPublisherNameLoading();
-//				wait.until(ExpectedConditions.visibilityOf(auctionPage.auctionNameField));
-//				wait.until(ExpectedConditions.elementToBeClickable(auctionPage.auctionNameField));
+//				protectionsPage.waitPublisherNameLoading();
+				wait.until(ExpectedConditions.attributeToBe(protectionsPage.nameLabel, "class", "v-label theme--light"));
 				break;
 			case "Name":
 				while (!auctionPage.auctionNameField.getAttribute("value").equals("")) {
@@ -900,5 +902,10 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 			js.executeScript("arguments[0].scrollIntoView()", itemElemt);
 			Assert.assertTrue(itemElemt.getText().toLowerCase().contains(value.toLowerCase()));
 		}
+	}
+
+	@When("^Click on Include All button in Ad Categories section$")
+	public void clickOnIncludeAllButtonInAdCategoriesSection() {
+		protectionsPage.includeAllBtnInAdCategories.click();
 	}
 }
