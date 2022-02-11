@@ -69,9 +69,9 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 
 	@Then("^User displayed with Protections page$")
 	public void user_displayed_with_Protections_page() {
+		protectionsPage.waitProtectionsTableLoading();
 		Assert.assertEquals(protectionsPage.getPageHeading(), protectionsPage.protectionsHeaderStr);
 		log.info("Auction Page Header is asserted  and it is : " + protectionsPage.getPageHeading());
-		protectionsPage.waitProtectionsTableLoading();
 		protectionsTotalNum = protectionsPage.getProtectionsTotalNum();
 	}
 

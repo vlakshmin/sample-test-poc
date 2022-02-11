@@ -207,8 +207,8 @@ public class RXProtectionsPage extends RXBasePage {
 	}
 
 	public void waitProtectionsTableLoading() {
-		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(this.protectionsSearchProgressStr))));
-//		wait.until(ExpectedConditions.visibilityOf(this.protectionsSearchProgress));
+//		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(this.protectionsSearchProgressStr))));
+		wait.until(ExpectedConditions.visibilityOf(this.protectionsSearchProgress));
 //		wait.until(LoadingDisappear());
 //		wait.pollingEvery(Duration.ofMillis(250)).until(LoadingDisappear());
 //		this.waitAllProtectionsItemsLoading();
