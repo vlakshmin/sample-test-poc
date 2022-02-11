@@ -202,13 +202,13 @@ public class RXProtectionsPage extends RXBasePage {
 	}
 
 	public boolean protectionsIsDisplayedViaSearch(WebElement e, String enterSearchName) {
-		System.out.println("e.getText() >>> " + e.getText());
+//		System.out.println("e.getText() >>> " + e.getText());
 		return e.getText().toLowerCase().contains(enterSearchName.toLowerCase());
 	}
 
 	public void waitProtectionsTableLoading() {
-//		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(this.protectionsSearchProgressStr))));
-		wait.until(ExpectedConditions.visibilityOf(this.protectionsSearchProgress));
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(this.protectionsSearchProgressStr))));
+//		wait.until(ExpectedConditions.visibilityOf(this.protectionsSearchProgress));
 //		wait.until(LoadingDisappear());
 //		wait.pollingEvery(Duration.ofMillis(250)).until(LoadingDisappear());
 //		this.waitAllProtectionsItemsLoading();

@@ -94,6 +94,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 			protectionsPage.protectionsSearchClearButton.click();
 		}
 		protectionsPage.protectionsSearchInput.sendKeys(name);
+		wait.until(ExpectedConditions.elementToBeClickable(protectionsPage.protectionsSearchClearButton));
 	}
 
 	@Then("^Verify that exicting Protections item is displayed via \"([^\"]*)\" search$")
@@ -837,7 +838,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		}
 		//unselect item
 		for(int i = (count-1); i > 0; i--){
-			System.out.println("unselect count >>> " + i);
+//			System.out.println("unselect count >>> " + i);
 			itemElemt = protectionsPage.allRemoveIconInIncludedTableInProtectionTargeting.get(i);
 			js.executeScript("arguments[0].scrollIntoView()", itemElemt);
 			itemElemt.click();

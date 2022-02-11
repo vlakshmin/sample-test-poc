@@ -1583,7 +1583,7 @@ Feature: Protections page regression
     When "Exclude" targeting options items in Inventory Targeting section
       | Inventory | Viber Android App Prod > Viber Android Chat Ext 320x50 Prod |
     Then Verify that only item "Viber Android Chat Ext 320x50 Prod" is displayed as "Excluded" in right list in "Inventory" panel
-
+  @debug
   Scenario: 348.Details popup display both included and excluded for Inventory
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -1606,7 +1606,7 @@ Feature: Protections page regression
     Then Verify that Details popup display below values for "Inventory"
       | Viber Android App Prod             |
       | Viber Android Chat Ext 320x50 Prod |
-  @debug
+
   Scenario: 349.Selected Advertiser list shold show an error if it's above the limit
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -1624,7 +1624,7 @@ Feature: Protections page regression
     When Unselect "advertisers" until validation error disapears
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
-  @debug
+
   Scenario: 350.Selected Ad Category list shold show an error if it's above the limit
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
