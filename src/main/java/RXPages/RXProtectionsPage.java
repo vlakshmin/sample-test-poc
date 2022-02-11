@@ -55,7 +55,6 @@ public class RXProtectionsPage extends RXBasePage {
 	public String previousPanel = "//h3[text()='%s']/ancestor::div[contains(@class,'v-expansion-panel')]/preceding::div[contains(@class,'v-expansion-panel--next-active')]/button/following-sibling::div";
 	public String bannerInIncludedTable = "//h3[text()='%s']/parent::button/following-sibling::div//div[@class='results-header']/following-sibling::div[contains(@class,'banner')]";
 	public String expandIconInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]/tbody/tr/td[@class='nested']/i";
-	public String valueOptionsTdElmtInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]/tbody/tr/td[contains(@class,'options')]";
 	public String itemCountInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//button[contains(@class,'select-all')]/span/div[@class='item-count']";
 	public String allChildForParent = "//div[normalize-space(text())='%s']/ancestor::tbody/tr[contains(@class,'select-row children')]/td[@class='first']/div";
 	public String removeIconForValueInIncludedTable = "//table[contains(@class,'included-table')]//div[contains(text(),'%s') and not(@class='parent-label')]/parent::td/following-sibling::td[@class='options']/button";
@@ -208,13 +207,14 @@ public class RXProtectionsPage extends RXBasePage {
 	}
 
 	public void waitProtectionsTableLoading() {
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(this.protectionsSearchProgressStr)));
+		wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath(this.protectionsSearchProgressTheadStr), 2));//loading displays
+//		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(this.protectionsSearchProgressStr)));
 //		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(this.protectionsSearchProgressStr))));
 //		wait.until(ExpectedConditions.visibilityOf(this.protectionsSearchProgress));
 //		wait.until(LoadingDisappear());
 //		wait.pollingEvery(Duration.ofMillis(250)).until(LoadingDisappear());
 //		this.waitAllProtectionsItemsLoading();
-		wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath(this.protectionsSearchProgressTheadStr), 1));
+		wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath(this.protectionsSearchProgressTheadStr), 1));//loading disappears
 	}
 
 	private Function<? super WebDriver,Boolean> LoadingDisappear() {
@@ -486,7 +486,7 @@ public class RXProtectionsPage extends RXBasePage {
 
 		item = this.putMouseOverItem(itemName);
 
-		this.getElementByXpathWithParameter(selectStr, item).click();
+		driverWait().until(ExpectedConditions.elementToBeClickable(this.getElementByXpathWithParameter(selectStr, item))).click();
 		driverWait().until(ExpectedConditions.visibilityOf(this.getElementByXpathWithParameter(this.valueInIncludedTableInInventoryTargeting, targetingName, item)));
 	}
 

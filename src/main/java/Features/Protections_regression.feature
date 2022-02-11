@@ -564,7 +564,7 @@ Feature: Protections page regression
       | Operating System | MacOSX               |
       | Geo              | Afghanistan          |
       | Ad Size          | 120x60               |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 3              |
     Then Verify that warning banner is under Publisher name
@@ -575,80 +575,80 @@ Feature: Protections page regression
       | FieldName      | Value             | ListValueIndex |
       | Publisher Name | ListValue | 3              |
       | Name           | Test              |                |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 4              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
     And Click on the Create Protections button
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 4              |
     And "Disable" following toggle fields in create page
       | FieldName |
       | Active    |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 1              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
     And Click on the Create Protections button
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | Viber |                |
     And "Include" targeting options items in Inventory Targeting section
       | Inventory        | Viber Desktop App |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 2              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
     And Click on the Create Protections button
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 4              |
     And "Include" targeting options items in Inventory Targeting section
       | Device           | Phone                        |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 3              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
     And Click on the Create Protections button
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 4              |
     And "Include" targeting options items in Inventory Targeting section
       | Operating System | MacOSX |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 3              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
     And Click on the Create Protections button
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 4              |
     And "Include" targeting options items in Inventory Targeting section
       | Geo              | Afghanistan                  |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 1              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
     And Click on the Create Protections button
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 4              |
     And "Include" targeting options items in Inventory Targeting section
       | Ad Size          | 120x60                       |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 2              |
     Then Verify that warning banner is under Publisher name
@@ -1132,8 +1132,6 @@ Feature: Protections page regression
     When Enable "Target towards the following advertiser (whitelist)" radio button in Protections Targeting section
     Then Verify that "Whitelist 3 advertisers" are displayed in "Advertiser" panel
     When Click on Close button
-    When Click on Protections option in Menu
-    Then User displayed with Protections page
     When Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value | ListValueIndex |
@@ -1312,7 +1310,7 @@ Feature: Protections page regression
       | Inventory | Viber Android App Prod |
     And "Exclude" targeting options items in Inventory Targeting section
       | Inventory | Viber Android App Prod > Viber Android Calls Tab 320x50 Prod |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | Viki |               |
     Then Verify that warning banner is under Publisher name
@@ -1332,7 +1330,7 @@ Feature: Protections page regression
       | Inventory | Viber Desktop App |
     And "Include" targeting options items in Inventory Targeting section
       | Inventory | Viber Android App Prod > Viber Android Calls Tab 320x50 Prod |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viki  |                |
     Then Verify that warning banner is under Publisher name
@@ -1348,7 +1346,7 @@ Feature: Protections page regression
     Then Verify that all changes in left and right columns are reseted in "Device" Panel
     When "Include" targeting options items in Inventory Targeting section
       | Operating System | MacOSX |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viki  |                |
     Then Verify that warning banner is under Publisher name
@@ -1364,7 +1362,7 @@ Feature: Protections page regression
     Then Verify that all changes in left and right columns are reseted in "Geo" Panel
     When "Include" targeting options items in Inventory Targeting section
       | Ad Size | 160x600 |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viki  |                |
     Then Verify that warning banner is under Publisher name
@@ -1384,7 +1382,7 @@ Feature: Protections page regression
       | Inventory | Viber Desktop App |
     And "Exclude" targeting options items in Inventory Targeting section
       | Inventory | Viber Android App Prod > Viber Android Calls Tab 320x50 Prod |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viki  |                |
     Then Verify that warning banner is under Publisher name
@@ -1400,7 +1398,7 @@ Feature: Protections page regression
     Then Verify that all changes in left and right columns are reseted in "Device" Panel
     When "Exclude" targeting options items in Inventory Targeting section
       | Operating System | MacOSX |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viki  |                |
     Then Verify that warning banner is under Publisher name
@@ -1416,7 +1414,7 @@ Feature: Protections page regression
     Then Verify that all changes in left and right columns are reseted in "Geo" Panel
     When "Exclude" targeting options items in Inventory Targeting section
       | Ad Size | 160x600 |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viki  |                |
     Then Verify that warning banner is under Publisher name

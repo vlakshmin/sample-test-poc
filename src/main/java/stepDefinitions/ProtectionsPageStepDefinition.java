@@ -240,7 +240,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 //				System.out.println("publisher entered as :" + enteredPublisherName);
 //				protectionsPage.waitPublisherNameLoading();
 				wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath(protectionsPage.changePubLoadingStr),1));
-				wait.until(ExpectedConditions.attributeToBe(protectionsPage.nameLabel, "class", "v-label theme--light"));
+//				wait.until(ExpectedConditions.attributeToBe(protectionsPage.nameLabel, "class", "v-label theme--light"));
 				break;
 			case "Name":
 				while (!auctionPage.auctionNameField.getAttribute("value").equals("")) {
@@ -680,15 +680,16 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	public void verifyThatAllChangesInLeftAndRightColumnsAreResetedInPanel(String panel) {
 		//verify select table reset
 		String classAttr = "";
-		for(WebElement expandIcon : protectionsPage.getElementListByXpathWithParameter(protectionsPage.expandIconInSelectTable, panel)){
-//			expandIcon.click(); //expand parent
-			js.executeScript("arguments[0].click()", expandIcon);
+		System.out.println("time >>> " + new Date());
+		if(panel.equalsIgnoreCase("Inventory")){
+			for(WebElement expandIcon : protectionsPage.getElementListByXpathWithParameter(protectionsPage.expandIconInSelectTable, panel)){
+				js.executeScript("arguments[0].click()", expandIcon);
+			}
 		}
-		for(WebElement item : protectionsPage.getElementListByXpathWithParameter(protectionsPage.valueOptionsTdElmtInSelectTable, panel)){
-			classAttr = item.getAttribute("class");
-//			System.out.println("classAttr >>> " + classAttr);
-			Assert.assertFalse(classAttr.contains("excluded") && classAttr.contains("included"));
-		}
+
+		//verify select table reset
+		Assert.assertEquals(protectionsPage.getElementListByXpathWithParameter(protectionsPage.includedItemsInSelectTable, panel).size(), 0);
+		Assert.assertEquals(protectionsPage.getElementListByXpathWithParameter(protectionsPage.excludedItemsInSelectTable, panel).size(), 0);
 
 		//verify include table reset
 		Assert.assertEquals(protectionsPage.trElmentListInIncludedTable.size(), 0);
