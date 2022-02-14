@@ -6,14 +6,10 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 import RXPages.*;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -31,7 +27,8 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	RXDealsPage dealsPage;
 	Logger log = Logger.getLogger(PrivateAuctionPageStepDefinition.class);
 	String enterSearchName = "";
-	String protectionsTotalNum = "";
+	String paginationValue = "";
+	String paginationValue_original = "";
 	String enteredPublisherName = "";
 	String enteredProtectionsName = "";
 	List<String> enteredProtectionsNameList = new ArrayList<String>();
@@ -72,7 +69,6 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		protectionsPage.waitProtectionsTableLoading();
 		Assert.assertEquals(protectionsPage.getPageHeading(), protectionsPage.protectionsHeaderStr);
 		log.info("Auction Page Header is asserted  and it is : " + protectionsPage.getPageHeading());
-		protectionsTotalNum = protectionsPage.getProtectionsTotalNum();
 	}
 
 	@When("^Search Protections item with \"([^\"]*)\"$")
@@ -90,16 +86,17 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		}
 		enterSearchName =name;
 		if (!protectionsPage.protectionsSearchClearButton.getAttribute("class").contains("disabled")) {
-//		if (protectionsPage.IsElementPresent(protectionsPage.protectionsSearchClearButton)) {
 			protectionsPage.protectionsSearchClearButton.click();
 		}
+		this.paginationValue = protectionsPage.pagination.getText().trim();
 		protectionsPage.protectionsSearchInput.sendKeys(name);
 		wait.until(ExpectedConditions.elementToBeClickable(protectionsPage.protectionsSearchClearButton));
 	}
 
 	@Then("^Verify that exicting Protections item is displayed via \"([^\"]*)\" search$")
 	public void verify_that_exicting_Protections_item_is_displayed_via_search(String searchType) {
-		protectionsPage.waitProtectionsTableLoading();
+//		protectionsPage.waitProtectionsTableLoading();
+		wait.until(protectionsPage.checkPaginationChange(this.paginationValue));
 		List<WebElement> nameData = driver.findElements(By.xpath("//td/a[contains(@href,'protections')]"));
 		nameData.forEach(e -> Assert.assertTrue(protectionsPage.protectionsIsDisplayedViaSearch(e,enterSearchName)));
 	}
@@ -107,14 +104,16 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	@When("^Click on Search clear button$")
 	public void click_on_Search_clear_button() {
 		wait.until(ExpectedConditions.visibilityOf(protectionsPage.protectionsSearchClearButton));
+		this.paginationValue = protectionsPage.pagination.getText().trim();
 		protectionsPage.protectionsSearchClearButton.click();
 		wait.until(ExpectedConditions.attributeContains(protectionsPage.protectionsSearchClearButton, "class", "disabled"));
 	}
 
 	@Then("^Verify that all Protections items are displayed$")
 	public void verify_that_all_Protections_items_are_displayed() throws Throwable {
-		protectionsPage.waitProtectionsTableLoading();
-		Assert.assertEquals(protectionsPage.getProtectionsTotalNum(),protectionsTotalNum);
+//		protectionsPage.waitProtectionsTableLoading();
+		wait.until(protectionsPage.checkPaginationChange(this.paginationValue));
+		Assert.assertEquals(protectionsPage.pagination.getText().trim(), this.paginationValue_original);
 	}
 	
 	@Then("^Verify that default value is (\\d+) items per page$")
@@ -910,5 +909,10 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	@When("^Click on Include All button in Ad Categories section$")
 	public void clickOnIncludeAllButtonInAdCategoriesSection() {
 		protectionsPage.includeAllBtnInAdCategories.click();
+	}
+
+	@When("^Get pagination value in Protections page$")
+	public void getPaginationValueInProtectionsPage() {
+		this.paginationValue_original = protectionsPage.pagination.getText().trim();
 	}
 }

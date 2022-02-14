@@ -50,6 +50,7 @@ Feature: Protections page regression
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
     Then User displayed with Protections page
+    When Get pagination value in Protections page
     When Search Protections item with "full name"
     Then Verify that exicting Protections item is displayed via "full name" search
     When Search Protections item with "partly name"
@@ -64,6 +65,7 @@ Feature: Protections page regression
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
     Then User displayed with Protections page
+    When Get pagination value in Protections page
     When Search Protections item with "full name"
     Then Verify that exicting Protections item is displayed via "full name" search
     When Search Protections item with "partly name"
@@ -78,6 +80,7 @@ Feature: Protections page regression
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
     Then User displayed with Protections page
+    When Get pagination value in Protections page
     When Search Protections item with "full name"
     Then Verify that exicting Protections item is displayed via "full name" search
     When Search Protections item with "partly name"

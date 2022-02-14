@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -91,7 +90,7 @@ public class RXProtectionsPage extends RXBasePage {
     public WebElement protectionsSearchClearButton;
     
     @FindBy(xpath = "//div[@class='v-data-footer']/div[@class='v-data-footer__pagination']")
-    public WebElement protectionsPagination;
+    public WebElement pagination;
    
     // default value per page
     @FindBy(xpath = "//main//div[@class='v-select__selection v-select__selection--comma']")
@@ -217,6 +216,22 @@ public class RXProtectionsPage extends RXBasePage {
 		wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath(this.protectionsSearchProgressTheadStr), 1));//loading disappears
 	}
 
+	public Function<? super WebDriver,Object> checkPaginationChange(String paginationValue) {
+		class CheckPaginationFunction implements Function<WebDriver, Object> {
+			public String paginationValue;
+
+			@Override
+			public Object apply(WebDriver webDriver) {
+				String pageValue = pagination.getText().trim();
+				return !this.paginationValue.equalsIgnoreCase(pageValue);
+			}
+		};
+		CheckPaginationFunction checkPaginationFunction = new CheckPaginationFunction();
+		checkPaginationFunction.paginationValue = paginationValue;
+
+		return checkPaginationFunction;
+	}
+
 	private Function<? super WebDriver,Boolean> LoadingDisappear() {
       return new ExpectedCondition<Boolean>() {
     	  public Boolean apply(WebDriver driver) {
@@ -264,13 +279,13 @@ public class RXProtectionsPage extends RXBasePage {
         }
     }
 
-	public String getProtectionsTotalNum() {
-		return protectionsPagination.getText().split(" ")[2];
-	}
+//	public String getProtectionsTotalNum() {
+//		return protectionsPagination.getText().split(" ")[2];
+//	}
 	
 	public int getProtectionsPerPageNum() {
-		int start = Integer.parseInt(protectionsPagination.getText().split(" ")[0].split("-")[0]);
-		int end = Integer.parseInt(protectionsPagination.getText().split(" ")[0].split("-")[1]);
+		int start = Integer.parseInt(pagination.getText().split(" ")[0].split("-")[0]);
+		int end = Integer.parseInt(pagination.getText().split(" ")[0].split("-")[1]);
 		return end-start+1;
 	}
 	
