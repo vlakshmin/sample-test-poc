@@ -5,6 +5,7 @@ import RXPages.RXDemandSourcesPage;
 import RXPages.RXNavOptions;
 import RXUtitities.RXUtile;
 import cucumber.api.DataTable;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -201,6 +202,12 @@ public class DemandSourcesPageStepsDefinition extends RXDemandSourcesPage {
         demandSourcesPage.getBidder_column(arg1).click();
     }
 
+    @When("^Click on Bidder column for the first DSP item$")
+    public void clickOnBidderColumnForTheFirstDSPItem() {
+        wait.until(ExpectedConditions.visibilityOf(demandSourcesPage.theFirstItemOnBidderColumn));
+        demandSourcesPage.theFirstItemOnBidderColumn.click();
+    }
+
     @Then("^DSP saved successfully without error message$")
     public void dsp_saved_successfully_without_error_message() throws Throwable {
         wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//aside[@class='dialog']"))));
@@ -269,5 +276,89 @@ public class DemandSourcesPageStepsDefinition extends RXDemandSourcesPage {
     public void check_that_the_following_columns_are_displayed_on_the_Demand_sources_page(DataTable dt) throws Throwable {
         List<String> list = dt.asList(String.class);
         list.forEach(e -> demandSourcesPage.is_columns_displayed_on_the_Demand_sources_page(e));
+    }
+
+    @Then("^Verify that there are no country selector in Edit Demand page$")
+    public void verifyThatThereAreNoCountrySelectorInEditDemandPage() {
+        Assert.assertFalse(demandSourcesPage.IsElementPresent(demandSourcesPage.countrySelector));
+    }
+
+    @When("^Click on \"([^\"]*)\" button in Allowed Countries panel$")
+    public void clickOnButtonInAllowedCountriesPanel(String btnName) {
+        WebElement btnElement;
+        if(btnName.equalsIgnoreCase("Include All")){
+            btnElement = demandSourcesPage.includeAllBtn;
+        }else{
+            btnElement = demandSourcesPage.clearAllBtn;
+        }
+        if(!btnElement.isEnabled()){
+            Assert.fail(btnName + " button is disabled.");
+        }
+        js.executeScript("arguments[0].scrollIntoView()", btnElement);
+        btnElement.click();
+    }
+
+    @Then("^Verify that all countries are displayed in Included list in Allowed Countries panel$")
+    public void verifyThatAllCountriesAreDisplayedInIncludedListInAllowedCountriesPanel() {
+        boolean flag;
+        js.executeScript("arguments[0].scrollIntoView()", demandSourcesPage.includeAllBtn);
+        Assert.assertEquals(demandSourcesPage.allItemsListInIncludedTable.size(), demandSourcesPage.allItemsListInSelectTable.size());
+        for(WebElement itemSelect : demandSourcesPage.allItemsListInSelectTable){
+            flag = false;
+            String name = itemSelect.getText().trim();
+            for(WebElement itemIncluded : demandSourcesPage.allItemsListInIncludedTable){
+                if(itemIncluded.getText().trim().equals(name)){
+                    flag = true;
+                    break;
+                }
+            }
+            if(!flag){
+                Assert.fail(name + " is not displayed in Included table");
+            }
+        }
+    }
+
+    @Then("^Verify that no country is displayed in Included list in Allowed Countries panel$")
+    public void verifyThatNoCountryIsDisplayedInIncludedListInAllowedCountriesPanel() {
+        js.executeScript("arguments[0].scrollIntoView()", demandSourcesPage.includeAllBtn);
+        Assert.assertEquals(demandSourcesPage.allItemsListInIncludedTable.size(), 0);
+    }
+
+    @When("^Include the below countries in Allowed Countries panel$")
+    public void includeTheBelowCountriesInAllowedCountriesPanel(List<String> countriesList) {
+        WebElement valueSelect;
+        for(String country : countriesList){
+            valueSelect = driver.findElement(By.xpath(String.format(demandSourcesPage.valueInSelectTable, country)));
+            js.executeScript("arguments[0].scrollIntoView()", valueSelect);
+            valueSelect.click();
+            wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(String.format(demandSourcesPage.valueInIncludedTable, country)))));
+        }
+    }
+
+    @Then("^Verify the below countries are displayed in Included list in Allowed Countries panel$")
+    public void verifyTheBelowCountriesAreDisplayedInIncludedListInAllowedCountriesPanel(List<String> countriesList) {
+        boolean flag;
+        js.executeScript("arguments[0].scrollIntoView()", demandSourcesPage.includeAllBtn);
+        Assert.assertEquals(demandSourcesPage.allItemsListInIncludedTable.size(), countriesList.size());
+        for(String expectedCountry : countriesList) {
+            flag = false;
+            for (WebElement itemIncluded : demandSourcesPage.allItemsListInIncludedTable) {
+                if (itemIncluded.getText().trim().equals(expectedCountry)) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                Assert.fail(expectedCountry + " is not displayed in Included table");
+            }
+        }
+    }
+
+    @When("^Remove the below countries from Included list in Allowed Countries panel$")
+    public void removeTheBelowCountriesFromIncludedListInAllowedCountriesPanel(List<String> countriesList) {
+        js.executeScript("arguments[0].scrollIntoView()", demandSourcesPage.includeAllBtn);
+        for(String country : countriesList){
+            driver.findElement(By.xpath(String.format(demandSourcesPage.removeIconForValueInIncludedTable, country))).click();
+        }
     }
 }

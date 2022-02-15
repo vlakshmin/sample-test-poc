@@ -173,3 +173,75 @@ Feature: Demand Sources page regression
       |Status|
       |PMP support|
       |Non-Programmatic|
+
+  Scenario: 446. Check that there are no country selector for Demand
+    Given admin user login to RX UI with valid username and password
+    And Click on Demand Sources option under Admin
+    Then User displayed with Demand Sources page
+    When Click on Bidder column for the first DSP item
+    Then Edit DSP pop up is present
+    Then Verify that there are no country selector in Edit Demand page
+
+  Scenario: 447. Check Including "All countries"
+    Given admin user login to RX UI with valid username and password
+    And Click on Demand Sources option under Admin
+    Then User displayed with Demand Sources page
+    When Click on Bidder column for the first DSP item
+    Then Edit DSP pop up is present
+    When Click on "Include All" button in Allowed Countries panel
+    Then Verify that all countries are displayed in Included list in Allowed Countries panel
+    When Click on Save DSP button
+    Then DSP saved successfully without error message
+    When Click on Bidder column for the first DSP item
+    Then Edit DSP pop up is present
+    Then Verify that all countries are displayed in Included list in Allowed Countries panel
+
+  Scenario: 448. Check Clear "All countries"
+    Given admin user login to RX UI with valid username and password
+    And Click on Demand Sources option under Admin
+    Then User displayed with Demand Sources page
+    When Click on Bidder column for the first DSP item
+    Then Edit DSP pop up is present
+    When Click on "Clear All" button in Allowed Countries panel
+    Then Verify that no country is displayed in Included list in Allowed Countries panel
+    When Click on Save DSP button
+    Then DSP saved successfully without error message
+    When Click on Bidder column for the first DSP item
+    Then Edit DSP pop up is present
+    Then Verify that no country is displayed in Included list in Allowed Countries panel
+
+  Scenario: 449. Check some countries to the Geo list
+    Given admin user login to RX UI with valid username and password
+    And Click on Demand Sources option under Admin
+    Then User displayed with Demand Sources page
+    When Click on Bidder column for the first DSP item
+    Then Edit DSP pop up is present
+    When Click on "Clear All" button in Allowed Countries panel
+    When Include the below countries in Allowed Countries panel
+      | Canada  |
+      | Vanuatu |
+      | Russia  |
+    When Click on Save DSP button
+    Then DSP saved successfully without error message
+    When Click on Bidder column for the first DSP item
+    Then Edit DSP pop up is present
+    Then Verify the below countries are displayed in Included list in Allowed Countries panel
+      | Canada  |
+      | Vanuatu |
+      | Russia  |
+
+  Scenario: 450. Check some countries to the Geo list
+    Given admin user login to RX UI with valid username and password
+    And Click on Demand Sources option under Admin
+    Then User displayed with Demand Sources page
+    When Click on Bidder column for the first DSP item
+    Then Edit DSP pop up is present
+    When Remove the below countries from Included list in Allowed Countries panel
+      | Canada  |
+      | Vanuatu |
+    When Click on Save DSP button
+    Then DSP saved successfully without error message
+    When Click on Bidder column for the first DSP item
+    Then Edit DSP pop up is present
+    Then Verify the below countries are displayed in Included list in Allowed Countries panel
+      | Russia  |

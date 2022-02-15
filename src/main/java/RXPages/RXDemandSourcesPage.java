@@ -1,7 +1,9 @@
 package RXPages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -11,6 +13,10 @@ import org.testng.Assert;
 import java.util.List;
 
 public class RXDemandSourcesPage extends RXBasePage{
+    public String valueInSelectTable = "//table[contains(@class,'select-table')]/tbody/tr/td/div[normalize-space(text())='%s']/parent::td/following-sibling::td[contains(@class,'options')]";
+    public String valueInIncludedTable = "//table[contains(@class,'included-table')]/tr/td/div[contains(text(),'%s')]";
+    public String removeIconForValueInIncludedTable = "//table[contains(@class,'included-table')]//div[normalize-space(text())='%s']/parent::td/following-sibling::td[@class='options']/button";
+
     //Header of Demand Sources page
     @FindBy(xpath = "//h1[text()='Demand']")
     public WebElement demandPageHeader;
@@ -30,6 +36,24 @@ public class RXDemandSourcesPage extends RXBasePage{
     //Endpoint URI error
     @FindBy(xpath = "//div[@class='v-messages__message']")
     public WebElement endpointURIError;
+
+    @FindBy(xpath = "//label[text()='Country']/following-sibling::input")
+    public WebElement countrySelector;
+
+    @FindBy(xpath = "//button[contains(@class,'select-all')]")
+    public WebElement includeAllBtn;
+
+    @FindBy(xpath = "//span[text()='Clear All']/parent::button")
+    public WebElement clearAllBtn;
+
+    @FindAll(@FindBy(xpath = "//table[contains(@class,'select-table')]/tbody/tr[@class='select-row']/td[@class='first']/div"))
+    public List<WebElement> allItemsListInSelectTable;
+
+    @FindAll(@FindBy(xpath = "//table[contains(@class,'included-table')]/tr/td/div"))
+    public List<WebElement> allItemsListInIncludedTable;
+
+    @FindBy(xpath = "//div[@class='v-data-table__wrapper']//tbody/tr[1]/td[3]/a")
+    public WebElement theFirstItemOnBidderColumn;
 
     //Explicit Wait
     WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -128,5 +152,18 @@ public class RXDemandSourcesPage extends RXBasePage{
 
     public void is_columns_displayed_on_the_Demand_sources_page(String columnName) {
         Assert.assertTrue(driver.findElement(By.xpath("//thead[@class='v-data-table-header']/tr/th/span[text()='"+columnName+"']")).isDisplayed());
+    }
+
+    public boolean IsElementPresent(WebElement element)
+    {
+        try
+        {
+            element.isDisplayed();
+            return true;
+        }
+        catch (NoSuchElementException e)
+        {
+            return false;
+        }
     }
 }
