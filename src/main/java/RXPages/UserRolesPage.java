@@ -47,7 +47,7 @@ public class UserRolesPage extends RXBaseClass {
     @FindBy(xpath = "//label[text()='Demand Source']/following-sibling::div/input")
     public WebElement demandSourceInput;
 
-    public String closeBtnString = "//header/div[@class='v-toolbar__content']/button";
+    public String divInMainPageString = "//main/div/div[contains(@class,'container')]/div/div";
     public String radioBtnString = "//div[@role='radiogroup']//label/span[contains(text(),'%s')]";
     public String subMenuString = "//div[@class='v-list-item__title'][text()='%s']";
 
@@ -65,7 +65,7 @@ public class UserRolesPage extends RXBaseClass {
     public void clickCloseButton(){
 //        System.out.println("Close create page");
         this.closeBtn.click();
-        driverWait().until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(this.closeBtnString)));
+        driverWait().until(ExpectedConditions.numberOfElementsToBe(By.xpath(this.divInMainPageString), 2)); //wait create dialog to disappear
     }
 
     public void scrollDownInDropdown(){

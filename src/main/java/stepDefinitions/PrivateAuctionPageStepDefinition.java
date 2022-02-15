@@ -138,7 +138,8 @@ public class PrivateAuctionPageStepDefinition extends RXPrivateAuctionsPage {
 					js.executeScript("arguments[0].scrollIntoView()", dropDownPublisher);
 					dropDownPublisher.click();
 				} else {
-					dealsPage.selectPublisherByName(value);
+//					dealsPage.selectPublisherByName(value);
+					dealsPage.selectValueFromDropdownWithSearch(value);
 				}
 				Thread.sleep(5000);
 				enteredPublisherName = adspotsPage.publisherNameField.getText();

@@ -62,6 +62,20 @@ public class RXBasePage extends RXBaseClass {
         dropDownElementByName.click();
     }
 
+    public void selectValueFromDropdownWithSearch(String name){
+        Actions action = new Actions(driver);
+        action.sendKeys(name).perform();
+
+        // Get web element by name from the method parameter
+        WebElement dropDownElementByName = dropdownValues.stream()
+                .filter(i -> i.getText().equalsIgnoreCase(name))
+                .findFirst()
+                .orElseThrow(() -> new org.openqa.selenium.NoSuchElementException(String.format("Dropdown element by the name %s wasn't found.", name)));
+        js.executeScript("arguments[0].scrollIntoView({block: \"center\"})", dropDownElementByName);
+        driverWait().until(elementToBeClickable(dropDownElementByName));
+        dropDownElementByName.click();
+    }
+
     public void waitForPageLoaderToDisappear() {
 //        driverWait().until(ExpectedConditions.numberOfElementsToBe(By.className("v-progress-linear__buffer"), 0));
         driverWait().until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@class='v-progress-linear__buffer']")));

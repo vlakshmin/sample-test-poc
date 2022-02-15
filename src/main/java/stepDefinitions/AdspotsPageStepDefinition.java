@@ -376,9 +376,9 @@ public class AdspotsPageStepDefinition extends RXAdspotsPage {
 		} else if (action.equalsIgnoreCase("Accept")) {
 			driver.findElement(By.xpath("//div[@class='v-banner__actions']/button[2]")).click();
 		}
-		wait.until(
-				ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//div[@class='v-banner__actions']"))));
-
+//		wait.until(
+//				ExpectedConditions.invisibilityOf(driver.findElement(By.xpath("//div[@class='v-banner__actions']"))));
+		wait.until(ExpectedConditions.attributeContains(By.xpath("//div[contains(@class,'v-banner banner v-sheet')]"), "style", "display: none"));
 	}
 
 	@When("^Click on save button$")
