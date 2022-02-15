@@ -1,5 +1,6 @@
 package RXPages;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -53,7 +54,6 @@ public class RXProtectionsPage extends RXBasePage {
 	public String previousPanel = "//h3[text()='%s']/ancestor::div[contains(@class,'v-expansion-panel')]/preceding::div[contains(@class,'v-expansion-panel--next-active')]/button/following-sibling::div";
 	public String bannerInIncludedTable = "//h3[text()='%s']/parent::button/following-sibling::div//div[@class='results-header']/following-sibling::div[contains(@class,'banner')]";
 	public String expandIconInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]/tbody/tr/td[@class='nested']/i";
-	public String valueOptionsTdElmtInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]/tbody/tr/td[contains(@class,'options')]";
 	public String itemCountInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//button[contains(@class,'select-all')]/span/div[@class='item-count']";
 	public String allChildForParent = "//div[normalize-space(text())='%s']/ancestor::tbody/tr[contains(@class,'select-row children')]/td[@class='first']/div";
 	public String removeIconForValueInIncludedTable = "//table[contains(@class,'included-table')]//div[contains(text(),'%s') and not(@class='parent-label')]/parent::td/following-sibling::td[@class='options']/button";
@@ -62,6 +62,9 @@ public class RXProtectionsPage extends RXBasePage {
 	public String vIconForAllParentInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]//td[@class='nested']/i";
 	public String inactiveParentInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]/tbody/tr[@class='select-row']//span[normalize-space(text())='(Inactive)']";
 	public String inactiveChildenInSelectTable = "//h3[text()='%s']/parent::button/following-sibling::div//table[contains(@class,'select-table')]/tbody/tr[contains(@class,'select-row children')]//span[normalize-space(text())='(Inactive)']";
+	public String protectionsSearchProgressStr = "//main//div[@class='container container--fluid']//table//tr[@class='v-data-table__progress']";
+	public String protectionsSearchProgressTheadStr = "//main//div[@class='container container--fluid']//table/thead";
+	public String changePubLoadingStr = "//div[contains(@class,'v-overlay--absolute')]/div";
 
 	@FindBy(xpath = "//div[text()='Protections ']")
     public WebElement protectionsLabel;
@@ -87,7 +90,7 @@ public class RXProtectionsPage extends RXBasePage {
     public WebElement protectionsSearchClearButton;
     
     @FindBy(xpath = "//div[@class='v-data-footer']/div[@class='v-data-footer__pagination']")
-    public WebElement protectionsPagination;
+    public WebElement pagination;
    
     // default value per page
     @FindBy(xpath = "//main//div[@class='v-select__selection v-select__selection--comma']")
@@ -171,6 +174,12 @@ public class RXProtectionsPage extends RXBasePage {
 	@FindBy(xpath = "//div[contains(@class,'cardPadding')]/div[not(contains(@style,'none'))]//input[@placeholder='Search']")
 	public WebElement searchBoxInProtectionTargeting;
 
+	@FindBy(xpath = "//div[not(contains(@style,'none'))]/div/div[contains(@class,'v-card__title') and contains(text(),'Ad Categories')]/parent::div/following-sibling::span//button[contains(@class,'select-all')]")
+	public WebElement includeAllBtnInAdCategories;
+
+	@FindBy(xpath = "//label[text()='Name']")
+	public WebElement nameLabel;
+
 	// Explicit Wait
     WebDriverWait wait = new WebDriverWait(driver, 10);
     
@@ -192,27 +201,48 @@ public class RXProtectionsPage extends RXBasePage {
 	}
 
 	public boolean protectionsIsDisplayedViaSearch(WebElement e, String enterSearchName) {
-		return e.getText().contains(enterSearchName);
+//		System.out.println("e.getText() >>> " + e.getText());
+		return e.getText().toLowerCase().contains(enterSearchName.toLowerCase());
 	}
 
 	public void waitProtectionsTableLoading() {
-		wait.until(LoadingDisappear());
+		wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath(this.protectionsSearchProgressTheadStr), 2));//loading displays
+//		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(this.protectionsSearchProgressStr)));
+//		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(this.protectionsSearchProgressStr))));
+//		wait.until(ExpectedConditions.visibilityOf(this.protectionsSearchProgress));
+//		wait.until(LoadingDisappear());
 //		wait.pollingEvery(Duration.ofMillis(250)).until(LoadingDisappear());
+//		this.waitAllProtectionsItemsLoading();
+		wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath(this.protectionsSearchProgressTheadStr), 1));//loading disappears
+	}
+
+	public Function<? super WebDriver,Object> checkPaginationChange(String paginationValue) {
+		class CheckPaginationFunction implements Function<WebDriver, Object> {
+			public String paginationValue;
+
+			@Override
+			public Object apply(WebDriver webDriver) {
+				String pageValue = pagination.getText().trim();
+				return !this.paginationValue.equalsIgnoreCase(pageValue);
+			}
+		};
+		CheckPaginationFunction checkPaginationFunction = new CheckPaginationFunction();
+		checkPaginationFunction.paginationValue = paginationValue;
+
+		return checkPaginationFunction;
 	}
 
 	private Function<? super WebDriver,Boolean> LoadingDisappear() {
       return new ExpectedCondition<Boolean>() {
     	  public Boolean apply(WebDriver driver) {
-//    		  return !driver.findElement(By.xpath(loading)).getText().contains("Loading");
-			  return !protectionsLoading.getText().contains("Loading");
+    		  return !driver.findElement(By.xpath(loading)).getText().contains("Loading");
+//			  return !protectionsLoading.getText().contains("Loading");
     		  }
       };
 	}
 
 	public void waitAllProtectionsItemsLoading() {
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//main//div[@class='container container--fluid']//table//tr[@class='v-data-table__progress']")));
-//		wait.pollingEvery(Duration.ofMillis(250)).until(AllProtectionsItemsLoading());
-
+		wait.pollingEvery(Duration.ofMillis(250)).until(AllProtectionsItemsLoading());
 	}
 
 	private Function<? super WebDriver,Boolean> AllProtectionsItemsLoading() {
@@ -249,13 +279,13 @@ public class RXProtectionsPage extends RXBasePage {
         }
     }
 
-	public String getProtectionsTotalNum() {
-		return protectionsPagination.getText().split(" ")[2];
-	}
+//	public String getProtectionsTotalNum() {
+//		return protectionsPagination.getText().split(" ")[2];
+//	}
 	
 	public int getProtectionsPerPageNum() {
-		int start = Integer.parseInt(protectionsPagination.getText().split(" ")[0].split("-")[0]);
-		int end = Integer.parseInt(protectionsPagination.getText().split(" ")[0].split("-")[1]);
+		int start = Integer.parseInt(pagination.getText().split(" ")[0].split("-")[0]);
+		int end = Integer.parseInt(pagination.getText().split(" ")[0].split("-")[1]);
 		return end-start+1;
 	}
 	
@@ -471,7 +501,7 @@ public class RXProtectionsPage extends RXBasePage {
 
 		item = this.putMouseOverItem(itemName);
 
-		this.getElementByXpathWithParameter(selectStr, item).click();
+		driverWait().until(ExpectedConditions.elementToBeClickable(this.getElementByXpathWithParameter(selectStr, item))).click();
 		driverWait().until(ExpectedConditions.visibilityOf(this.getElementByXpathWithParameter(this.valueInIncludedTableInInventoryTargeting, targetingName, item)));
 	}
 

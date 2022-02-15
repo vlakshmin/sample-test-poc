@@ -9,10 +9,7 @@ import RXPages.*;
 import cucumber.api.java.en.And;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -30,7 +27,8 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	RXDealsPage dealsPage;
 	Logger log = Logger.getLogger(PrivateAuctionPageStepDefinition.class);
 	String enterSearchName = "";
-	String protectionsTotalNum = "";
+	String paginationValue = "";
+	String paginationValue_original = "";
 	String enteredPublisherName = "";
 	String enteredProtectionsName = "";
 	List<String> enteredProtectionsNameList = new ArrayList<String>();
@@ -68,10 +66,9 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 
 	@Then("^User displayed with Protections page$")
 	public void user_displayed_with_Protections_page() {
+		protectionsPage.waitProtectionsTableLoading();
 		Assert.assertEquals(protectionsPage.getPageHeading(), protectionsPage.protectionsHeaderStr);
 		log.info("Auction Page Header is asserted  and it is : " + protectionsPage.getPageHeading());
-		protectionsPage.waitProtectionsTableLoading();
-		protectionsTotalNum = protectionsPage.getProtectionsTotalNum();
 	}
 
 	@When("^Search Protections item with \"([^\"]*)\"$")
@@ -89,30 +86,34 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		}
 		enterSearchName =name;
 		if (!protectionsPage.protectionsSearchClearButton.getAttribute("class").contains("disabled")) {
-//		if (protectionsPage.IsElementPresent(protectionsPage.protectionsSearchClearButton)) {
 			protectionsPage.protectionsSearchClearButton.click();
 		}
+		this.paginationValue = protectionsPage.pagination.getText().trim();
 		protectionsPage.protectionsSearchInput.sendKeys(name);
+		wait.until(ExpectedConditions.elementToBeClickable(protectionsPage.protectionsSearchClearButton));
 	}
 
 	@Then("^Verify that exicting Protections item is displayed via \"([^\"]*)\" search$")
 	public void verify_that_exicting_Protections_item_is_displayed_via_search(String searchType) {
-		List<WebElement> nameData = driver.findElements(By.xpath("a[contains(@href,'protections')]"));
+//		protectionsPage.waitProtectionsTableLoading();
+		wait.until(protectionsPage.checkPaginationChange(this.paginationValue));
+		List<WebElement> nameData = driver.findElements(By.xpath("//td/a[contains(@href,'protections')]"));
 		nameData.forEach(e -> Assert.assertTrue(protectionsPage.protectionsIsDisplayedViaSearch(e,enterSearchName)));
 	}
 
 	@When("^Click on Search clear button$")
 	public void click_on_Search_clear_button() {
 		wait.until(ExpectedConditions.visibilityOf(protectionsPage.protectionsSearchClearButton));
+		this.paginationValue = protectionsPage.pagination.getText().trim();
 		protectionsPage.protectionsSearchClearButton.click();
+		wait.until(ExpectedConditions.attributeContains(protectionsPage.protectionsSearchClearButton, "class", "disabled"));
 	}
 
 	@Then("^Verify that all Protections items are displayed$")
 	public void verify_that_all_Protections_items_are_displayed() throws Throwable {
-		wait.until(ExpectedConditions.visibilityOf(protectionsPage.protectionsSearchProgress));
-//		protectionsPage.waitAllProtectionsItemsLoading();
-		protectionsPage.waitProtectionsTableLoading();
-		Assert.assertEquals(protectionsPage.getProtectionsTotalNum(),protectionsTotalNum);
+//		protectionsPage.waitProtectionsTableLoading();
+		wait.until(protectionsPage.checkPaginationChange(this.paginationValue));
+		Assert.assertEquals(protectionsPage.pagination.getText().trim(), this.paginationValue_original);
 	}
 	
 	@Then("^Verify that default value is (\\d+) items per page$")
@@ -222,21 +223,23 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 			String listValueIndex = list.get(i).get("ListValueIndex");
 			switch (fieldName) {
 			case "Publisher Name":
-				wait.until(ExpectedConditions.visibilityOf(adspotsPage.publisherNameDropDown));
+				wait.until(ExpectedConditions.elementToBeClickable(adspotsPage.publisherNameDropDown));
+				wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath(protectionsPage.changePubLoadingStr),1));//wait for loading disappear when change publishers many times
 				adspotsPage.publisherNameDropDown.click();
 				if (value.equalsIgnoreCase("ListValue")) {
 					wait.until(ExpectedConditions.visibilityOf(protectionsPage.dropDownPublisher(listValueIndex)));
 					js.executeScript("arguments[0].scrollIntoView()", protectionsPage.dropDownPublisher(listValueIndex));
 					protectionsPage.dropDownPublisher(listValueIndex).click();
 				} else {
-					protectionsPage.selectValueFromDropdown(value);
+//					protectionsPage.selectValueFromDropdown(value);
+					protectionsPage.selectValueFromDropdownWithSearch(value);
 				}
 
 				enteredPublisherName = adspotsPage.publisherNameField.getText();
 //				System.out.println("publisher entered as :" + enteredPublisherName);
-				protectionsPage.waitPublisherNameLoading();
-//				wait.until(ExpectedConditions.visibilityOf(auctionPage.auctionNameField));
-//				wait.until(ExpectedConditions.elementToBeClickable(auctionPage.auctionNameField));
+//				protectionsPage.waitPublisherNameLoading();
+				wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath(protectionsPage.changePubLoadingStr),1));
+//				wait.until(ExpectedConditions.attributeToBe(protectionsPage.nameLabel, "class", "v-label theme--light"));
 				break;
 			case "Name":
 				while (!auctionPage.auctionNameField.getAttribute("value").equals("")) {
@@ -676,15 +679,16 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 	public void verifyThatAllChangesInLeftAndRightColumnsAreResetedInPanel(String panel) {
 		//verify select table reset
 		String classAttr = "";
-		for(WebElement expandIcon : protectionsPage.getElementListByXpathWithParameter(protectionsPage.expandIconInSelectTable, panel)){
-//			expandIcon.click(); //expand parent
-			js.executeScript("arguments[0].click()", expandIcon);
+		System.out.println("time >>> " + new Date());
+		if(panel.equalsIgnoreCase("Inventory")){
+			for(WebElement expandIcon : protectionsPage.getElementListByXpathWithParameter(protectionsPage.expandIconInSelectTable, panel)){
+				js.executeScript("arguments[0].click()", expandIcon);
+			}
 		}
-		for(WebElement item : protectionsPage.getElementListByXpathWithParameter(protectionsPage.valueOptionsTdElmtInSelectTable, panel)){
-			classAttr = item.getAttribute("class");
-//			System.out.println("classAttr >>> " + classAttr);
-			Assert.assertFalse(classAttr.contains("excluded") && classAttr.contains("included"));
-		}
+
+		//verify select table reset
+		Assert.assertEquals(protectionsPage.getElementListByXpathWithParameter(protectionsPage.includedItemsInSelectTable, panel).size(), 0);
+		Assert.assertEquals(protectionsPage.getElementListByXpathWithParameter(protectionsPage.excludedItemsInSelectTable, panel).size(), 0);
 
 		//verify include table reset
 		Assert.assertEquals(protectionsPage.trElmentListInIncludedTable.size(), 0);
@@ -835,7 +839,7 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 		}
 		//unselect item
 		for(int i = (count-1); i > 0; i--){
-			System.out.println("unselect count >>> " + i);
+//			System.out.println("unselect count >>> " + i);
 			itemElemt = protectionsPage.allRemoveIconInIncludedTableInProtectionTargeting.get(i);
 			js.executeScript("arguments[0].scrollIntoView()", itemElemt);
 			itemElemt.click();
@@ -900,5 +904,15 @@ public class ProtectionsPageStepDefinition  extends RXProtectionsPage{
 			js.executeScript("arguments[0].scrollIntoView()", itemElemt);
 			Assert.assertTrue(itemElemt.getText().toLowerCase().contains(value.toLowerCase()));
 		}
+	}
+
+	@When("^Click on Include All button in Ad Categories section$")
+	public void clickOnIncludeAllButtonInAdCategoriesSection() {
+		protectionsPage.includeAllBtnInAdCategories.click();
+	}
+
+	@When("^Get pagination value in Protections page$")
+	public void getPaginationValueInProtectionsPage() {
+		this.paginationValue_original = protectionsPage.pagination.getText().trim();
 	}
 }

@@ -50,6 +50,7 @@ Feature: Protections page regression
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
     Then User displayed with Protections page
+    When Get pagination value in Protections page
     When Search Protections item with "full name"
     Then Verify that exicting Protections item is displayed via "full name" search
     When Search Protections item with "partly name"
@@ -64,6 +65,7 @@ Feature: Protections page regression
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
     Then User displayed with Protections page
+    When Get pagination value in Protections page
     When Search Protections item with "full name"
     Then Verify that exicting Protections item is displayed via "full name" search
     When Search Protections item with "partly name"
@@ -78,6 +80,7 @@ Feature: Protections page regression
     Then Protections is present in the left nav menu
     When Click on Protections option in Menu
     Then User displayed with Protections page
+    When Get pagination value in Protections page
     When Search Protections item with "full name"
     Then Verify that exicting Protections item is displayed via "full name" search
     When Search Protections item with "partly name"
@@ -538,7 +541,6 @@ Feature: Protections page regression
     When Click "Activate" button in Protections list page
     Then "Active" is displayed for the created Protections
 
-
   Scenario: 139.Verify that Publisher warning banned apears only if any forms were modified on Protections page
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -565,98 +567,91 @@ Feature: Protections page regression
       | Operating System | MacOSX               |
       | Geo              | Afghanistan          |
       | Ad Size          | 120x60               |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 3              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
-    Then User displayed with Protections page
     And Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value             | ListValueIndex |
       | Publisher Name | ListValue | 3              |
       | Name           | Test              |                |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 4              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
-    Then User displayed with Protections page
     And Click on the Create Protections button
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 4              |
     And "Disable" following toggle fields in create page
       | FieldName |
       | Active    |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 1              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
-    Then User displayed with Protections page
     And Click on the Create Protections button
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | Viber |                |
     And "Include" targeting options items in Inventory Targeting section
       | Inventory        | Viber Desktop App |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 2              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
-    Then User displayed with Protections page
     And Click on the Create Protections button
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 4              |
     And "Include" targeting options items in Inventory Targeting section
       | Device           | Phone                        |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 3              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
-    Then User displayed with Protections page
     And Click on the Create Protections button
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 4              |
     And "Include" targeting options items in Inventory Targeting section
       | Operating System | MacOSX |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 3              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
-    Then User displayed with Protections page
     And Click on the Create Protections button
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 4              |
     And "Include" targeting options items in Inventory Targeting section
       | Geo              | Afghanistan                  |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 1              |
     Then Verify that warning banner is under Publisher name
     And Select "Accept" on the publisher change banner
     When Click on Close button
-    Then User displayed with Protections page
     And Click on the Create Protections button
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 4              |
     And "Include" targeting options items in Inventory Targeting section
       | Ad Size          | 120x60                       |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | ListValue | 2              |
     Then Verify that warning banner is under Publisher name
@@ -826,7 +821,6 @@ Feature: Protections page regression
     Then Edit Protections pop up is present
     And Verify the Protection Type value is disabled
     When Click on Close button
-    Then User displayed with Protections page
     When Uncheck all protections items
     When Click on the Create Protections button
     And Enter the following data in the Create Protections page
@@ -1058,9 +1052,6 @@ Feature: Protections page regression
       | Slotomania™ Vegas Casino Slots |
     Then Verify that the included items in right list are sorted in the same order as in left list in "Advertiser" panel
     When Click on Close button
-    Then User displayed with Protections page
-    When Click on Protections option in Menu
-    Then User displayed with Protections page
     When Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value | ListValueIndex |
@@ -1144,9 +1135,6 @@ Feature: Protections page regression
     When Enable "Target towards the following advertiser (whitelist)" radio button in Protections Targeting section
     Then Verify that "Whitelist 3 advertisers" are displayed in "Advertiser" panel
     When Click on Close button
-    Then User displayed with Protections page
-    When Click on Protections option in Menu
-    Then User displayed with Protections page
     When Click on the Create Protections button
     And Enter the following data in the Create Protections page
       | FieldName      | Value | ListValueIndex |
@@ -1325,7 +1313,7 @@ Feature: Protections page regression
       | Inventory | Viber Android App Prod |
     And "Exclude" targeting options items in Inventory Targeting section
       | Inventory | Viber Android App Prod > Viber Android Calls Tab 320x50 Prod |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value     | ListValueIndex |
       | Publisher Name | Viki |               |
     Then Verify that warning banner is under Publisher name
@@ -1345,7 +1333,7 @@ Feature: Protections page regression
       | Inventory | Viber Desktop App |
     And "Include" targeting options items in Inventory Targeting section
       | Inventory | Viber Android App Prod > Viber Android Calls Tab 320x50 Prod |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viki  |                |
     Then Verify that warning banner is under Publisher name
@@ -1361,7 +1349,7 @@ Feature: Protections page regression
     Then Verify that all changes in left and right columns are reseted in "Device" Panel
     When "Include" targeting options items in Inventory Targeting section
       | Operating System | MacOSX |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viki  |                |
     Then Verify that warning banner is under Publisher name
@@ -1377,7 +1365,7 @@ Feature: Protections page regression
     Then Verify that all changes in left and right columns are reseted in "Geo" Panel
     When "Include" targeting options items in Inventory Targeting section
       | Ad Size | 160x600 |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viki  |                |
     Then Verify that warning banner is under Publisher name
@@ -1397,7 +1385,7 @@ Feature: Protections page regression
       | Inventory | Viber Desktop App |
     And "Exclude" targeting options items in Inventory Targeting section
       | Inventory | Viber Android App Prod > Viber Android Calls Tab 320x50 Prod |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viki  |                |
     Then Verify that warning banner is under Publisher name
@@ -1413,7 +1401,7 @@ Feature: Protections page regression
     Then Verify that all changes in left and right columns are reseted in "Device" Panel
     When "Exclude" targeting options items in Inventory Targeting section
       | Operating System | MacOSX |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viki  |                |
     Then Verify that warning banner is under Publisher name
@@ -1429,7 +1417,7 @@ Feature: Protections page regression
     Then Verify that all changes in left and right columns are reseted in "Geo" Panel
     When "Exclude" targeting options items in Inventory Targeting section
       | Ad Size | 160x600 |
-    And Enter the following data in the general card of private auction
+    And Enter the following data in the Create Protections page
       | FieldName      | Value | ListValueIndex |
       | Publisher Name | Viki  |                |
     Then Verify that warning banner is under Publisher name
@@ -1607,8 +1595,6 @@ Feature: Protections page regression
       | Viber Android App Prod             |
       | Viber Android Chat Ext 320x50 Prod |
 
-   #It should technically error when you add that many advertisers or categories but something is not working correctly in QA do we are not seeing that error
-  @Ignore
   Scenario: 349.Selected Advertiser list shold show an error if it's above the limit
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -1627,8 +1613,6 @@ Feature: Protections page regression
     And Click on Save Protection button
     Then Verify the created Protection data is matching with its overview list values
 
-  #It should technically error when you add that many advertisers or categories but something is not working correctly in QA do we are not seeing that error
-  @Ignore
   Scenario: 350.Selected Ad Category list shold show an error if it's above the limit
     Given admin user login to RX UI with valid username and password
     Then Protections is present in the left nav menu
@@ -1641,7 +1625,8 @@ Feature: Protections page regression
       | Name           | Test  |                |
     When Click on the Protection Type button
     And Select "Ad Categories" from Protection Type dropdown
-    And Add "Category" until validation error triggers
+#    And Add "Category" until validation error triggers
+    And Click on Include All button in Ad Categories section
     Then Verify that error "The selected category list is too large. Please un-select some categories to continue." is displayed in Protection targeting section
     When Unselect "Category" until validation error disapears
     And Click on Save Protection button
