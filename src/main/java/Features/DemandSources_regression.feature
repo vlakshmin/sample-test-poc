@@ -216,7 +216,6 @@ Feature: Demand Sources page regression
     Then User displayed with Demand Sources page
     When Click on Bidder column for the first DSP item
     Then Edit DSP pop up is present
-    When Click on "Clear All" button in Allowed Countries panel
     When Include the below countries in Allowed Countries panel
       | Canada  |
       | Vanuatu |

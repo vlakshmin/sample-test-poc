@@ -291,9 +291,6 @@ public class DemandSourcesPageStepsDefinition extends RXDemandSourcesPage {
         }else{
             btnElement = demandSourcesPage.clearAllBtn;
         }
-        if(!btnElement.isEnabled()){
-            Assert.fail(btnName + " button is disabled.");
-        }
         js.executeScript("arguments[0].scrollIntoView()", btnElement);
         btnElement.click();
     }
