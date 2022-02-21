@@ -92,7 +92,7 @@ public class RXAdspotsPage extends RXBasePage {
 
 	@FindBy(xpath = "//label[text()='Filter']/following-sibling::div[@class='v-select__selections']")
 	public WebElement filterDropDown;
-	@FindBy(xpath = "//label[text()='Filter']/following-sibling::div[@class='v-select__selections']/div")
+	@FindBy(xpath = "//label[text()='Filter']/following-sibling::div[@class='v-select__selections']/input")
 	public WebElement filterField;
 	@FindBy(xpath = "//label[text()='Position']/following-sibling::div[@class='v-select__selections']")
 	public WebElement positionDropDown;
