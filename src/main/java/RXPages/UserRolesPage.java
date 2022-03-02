@@ -65,7 +65,7 @@ public class UserRolesPage extends RXBaseClass {
     public void clickCloseButton(){
 //        System.out.println("Close create page");
         this.closeBtn.click();
-        driverWait().until(ExpectedConditions.numberOfElementsToBe(By.xpath(this.divInMainPageString), 2)); //wait create dialog to disappear
+        driverWait().until(ExpectedConditions.numberOfElementsToBe(By.xpath(this.divInMainPageString), 3)); //wait create dialog to disappear
     }
 
     public void scrollDownInDropdown(){
