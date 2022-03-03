@@ -1,6 +1,6 @@
 Feature: Adspots page regression
 
-  Scenario:  Verify the default column names in the adspots overview page
+  Scenario:  1.Verify the default column names in the adspots overview page
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
@@ -16,14 +16,14 @@ Feature: Adspots page regression
       | Default Floor Price |
 
 
-  Scenario:  Verify the pagination exists for the list in the adspots page for admin
+  Scenario:  2.Verify the pagination exists for the list in the adspots page for admin
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
     Then Verify the pagination of the listed rows in the Page with a selection of 50 rows per page with 8 columns
 
 
-  Scenario:  Verify hide/show columns from the table options for admin
+  Scenario:  3.Verify hide/show columns from the table options for admin
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     Then User displayed with Adspots page
@@ -31,7 +31,7 @@ Feature: Adspots page regression
     Then Verify that column "Ad Spot Name" can be hidden and shown
 
 
-  Scenario:  Verify onclicking relevant status from table options shows only that particular table rows with that status
+  Scenario:  4.Verify onclicking relevant status from table options shows only that particular table rows with that status
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
@@ -40,7 +40,7 @@ Feature: Adspots page regression
     And Verify that column "Active/Inactive" only shows relevant rows in the table with filter "Inactive"
 
 
-  Scenario:  Verify searching adspots with avaiable and non available adspot name
+  Scenario:  5.Verify searching adspots with avaiable and non available adspot name
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
@@ -50,7 +50,7 @@ Feature: Adspots page regression
       | uniqueAdSpot | Ad Spot Name |
 
 
-  Scenario:  Verify enabling and disabling of an adspot from the overview page
+  Scenario:  6.Verify enabling and disabling of an adspot from the overview page
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
@@ -60,7 +60,7 @@ Feature: Adspots page regression
     Then Verify enabling and disabling of an adspot from the overview page
 
 
-  Scenario:  Verify enabling and disabling of multiple adspots from the overview page
+  Scenario:  7.Verify enabling and disabling of multiple adspots from the overview page
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
@@ -74,7 +74,7 @@ Feature: Adspots page regression
     Then Verify Disable of multiple adspots from the overview page
 
 
-  Scenario:  Verify sorting of the table's columns of the adspots overview page
+  Scenario:  8.Verify sorting of the table's columns of the adspots overview page
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
@@ -86,7 +86,7 @@ Feature: Adspots page regression
 
   # It's a known bug in line 95
   @Ignore
-  Scenario:  Verify mandatory fields in the Create Adspot Page
+  Scenario:  9.Verify mandatory fields in the Create Adspot Page
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
@@ -112,7 +112,7 @@ Feature: Adspots page regression
       | Video Playback Methods |
 
 
-  Scenario:  Verify Changing publisher name alert the user and then on change every fields go to default state
+  Scenario:  10.Verify Changing publisher name alert the user and then on change every fields go to default state
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
@@ -170,7 +170,7 @@ Feature: Adspots page regression
     And Verify the in-banner video card is "Disabled"
 
 
-  Scenario: Verify with invalid value for floor price and adsizes>1 creation is unsuccessful
+  Scenario: 11.Verify with invalid value for floor price and adsizes>1 creation is unsuccessful
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
@@ -215,7 +215,7 @@ Feature: Adspots page regression
       | InBannerVideo | Video Ad Sizes must be 1 or less   | A valid price is between 0.00 and 999,999.99 |
 
 
-  Scenario: Verify successful creation and updation of an adspot
+  Scenario: 12.Verify successful creation and updation of an adspot
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
@@ -348,7 +348,7 @@ Feature: Adspots page regression
       | Video Placement Type   |
 
 
-  Scenario: Verify adspot can be created without any cards enabled when is inactive but for
+  Scenario: 13.Verify adspot can be created without any cards enabled when is inactive but for
   editing with activing the same adspot the edit is unsuccessful
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
@@ -389,7 +389,7 @@ Feature: Adspots page regression
     Then Verify the save is failed
 
 
-  Scenario: Verify without adding any card ,creation of adspot is unsuccessful when the adspot is active
+  Scenario: 14.Verify without adding any card ,creation of adspot is unsuccessful when the adspot is active
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
@@ -409,7 +409,7 @@ Feature: Adspots page regression
     Then Verify the save is failed
 
 
-  Scenario: Verify after creation of adspot if the publisher is disabled the editing of the adspot is unsuccessful
+  Scenario: 15.Verify after creation of adspot if the publisher is disabled the editing of the adspot is unsuccessful
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
@@ -454,7 +454,7 @@ Feature: Adspots page regression
     And Click on "Activate Publisher" button in Publisher page
 
 
-  Scenario: Verify creation of adspot is successful if the related media is disabled
+  Scenario: 16.Verify creation of adspot is successful if the related media is disabled
     Given admin user login to RX UI with valid username and password
     When Click on Media option under Inventory
     And User displayed with media page
@@ -485,7 +485,7 @@ Feature: Adspots page regression
     And "Enable" a media from the media overview page
 
 
-  Scenario: Verify after creation of adspot if the related media is disabled the editing of the adspot is successful
+  Scenario: 17.Verify after creation of adspot if the related media is disabled the editing of the adspot is successful
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
@@ -525,7 +525,7 @@ Feature: Adspots page regression
     Then "Enable" a media from the media overview page
 
 
-  Scenario: Verify adspot cannot be created with defalut sizeless adsize and banner as same as default
+  Scenario: 18.Verify adspot cannot be created with defalut sizeless adsize and banner as same as default
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
@@ -554,7 +554,7 @@ Feature: Adspots page regression
     Then Verify the save is failed
 
 
-  Scenario: Verify adspot cannot be created with defalut sizeless adsize and video as same as default
+  Scenario: 19.Verify adspot cannot be created with defalut sizeless adsize and video as same as default
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
@@ -587,7 +587,7 @@ Feature: Adspots page regression
     Then Verify the save is failed
 
 
-  Scenario: Verify successful creation and updation of an adspot for a default size of 1*1 with native as same as default
+  Scenario: 20.Verify successful creation and updation of an adspot for a default size of 1*1 with native as same as default
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page
@@ -671,7 +671,7 @@ Feature: Adspots page regression
       | Video Placement Type   |
 
 
-  Scenario: Verify successful creation and updation of an adspot for a default size along with 1*1 and in editing check with default size as 1*1 alone and a size alone
+  Scenario: 21.Verify successful creation and updation of an adspot for a default size along with 1*1 and in editing check with default size as 1*1 alone and a size alone
     Given admin user login to RX UI with valid username and password
     When Click on Adspots option under Inventory
     And User displayed with Adspots page

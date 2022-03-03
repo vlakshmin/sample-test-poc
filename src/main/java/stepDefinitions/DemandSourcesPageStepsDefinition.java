@@ -327,6 +327,7 @@ public class DemandSourcesPageStepsDefinition extends RXDemandSourcesPage {
         for(String country : countriesList){
             valueSelect = driver.findElement(By.xpath(String.format(demandSourcesPage.valueInSelectTable, country)));
             js.executeScript("arguments[0].scrollIntoView()", valueSelect);
+            wait.until(ExpectedConditions.visibilityOf(valueSelect));
             valueSelect.click();
             wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(String.format(demandSourcesPage.valueInIncludedTable, country)))));
         }
