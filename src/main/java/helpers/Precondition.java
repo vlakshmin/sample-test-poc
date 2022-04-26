@@ -79,7 +79,7 @@ public final class Precondition {
 
         public PreconditionBuilder clickOnText(String text) {
             log.info("Clicking on text '{}'", text);
-            $x(String.format(ELEMENT_BY_TEXT, text)).scrollTo().shouldBe(exist, visible).hover().click();
+            $x(String.format(ELEMENT_BY_TEXT, text)).shouldBe(exist).scrollTo().shouldBe(visible).hover().click();
 
             return this;
         }

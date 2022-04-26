@@ -1,4 +1,4 @@
-package api.entities;
+package api.entities.auth;
 
 import api.utils.ObjectMapperUtils;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserPayload {
+public class AuthRequest {
     private String mail;
     private String password;
 

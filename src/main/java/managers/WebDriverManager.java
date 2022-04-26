@@ -1,5 +1,6 @@
 package managers;
 
+import com.codeborne.selenide.Browser;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverProvider;
 import com.codeborne.selenide.WebDriverRunner;
@@ -46,20 +47,11 @@ public class WebDriverManager {
         Configuration.screenshots = config.getScreenshots();
         Configuration.timeout = config.getTimeout();
         Configuration.headless = config.getHeadless();
-        this.currentTestClassName = testDisplayName;
+        currentTestClassName = testDisplayName;
         setProxyEnabled(config.getEnableProxy());
-        setSelenoidEnabled(config.getEnableSelenoid());
-    }
-
-    private void setSelenoidEnabled(boolean enabled) {
-        if (enabled) {
-            Configuration.driverManagerEnabled = false;
-            getProvider();
-        } else {
-            Configuration.driverManagerEnabled = true;
-            Configuration.browser = config.getBrowser();
-            Configuration.startMaximized = true;
-        }
+        Configuration.startMaximized = true;
+        Configuration.driverManagerEnabled = true;
+        Configuration.browser = config.getBrowser();
     }
 
     private void setProxyEnabled(boolean enabled) {
@@ -68,76 +60,6 @@ public class WebDriverManager {
             Configuration.fileDownload = PROXY;
         } else {
             Configuration.proxyEnabled = false;
-        }
-    }
-
-    private void getProvider() {
-
-        String currentBrowser = config.getBrowser();
-        switch (currentBrowser) {
-            case "chrome":
-                Configuration.browser = CustomProvider.class.getName();
-                break;
-            case "edge":
-                Configuration.browser = CustomProviderEdge.class.getName();
-                break;
-            default:
-                Configuration.browser = CustomProvider.class.getName();
-        }
-    }
-
-    public static class CustomProvider implements WebDriverProvider {
-
-        @Override
-        public WebDriver createDriver(final DesiredCapabilities capabilities) {
-            final ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.setAcceptInsecureCerts(true);
-
-
-            chromeOptions.setCapability(TAKES_SCREENSHOT, true);
-            chromeOptions.setCapability("enableLog", true);
-            chromeOptions.setCapability("env", Collections.singletonList("VERBOSE=true"));
-            chromeOptions.setCapability("timeZone", "Europe/Kiev");
-
-            RemoteWebDriver driver;
-            try {
-                driver = new RemoteWebDriver(
-                        new URL(format("%s:%s/wd/hub", config.getSelenoidHost(), config.getSelenoidPort())), chromeOptions);
-                driver.setFileDetector(new LocalFileDetector());
-            } catch (final MalformedURLException e) {
-                throw new RuntimeException("Unable to create remote driver", e);
-            }
-            return driver;
-        }
-    }
-
-    public static class CustomProviderEdge implements WebDriverProvider {
-
-        @Override
-        public WebDriver createDriver(final DesiredCapabilities capabilities) {
-            final EdgeOptions edgeOptions = new EdgeOptions();
-            edgeOptions.merge(capabilities);
-            capabilities.setCapability("browserName", "MicrosoftEdge");
-            capabilities.setCapability("browserVersion", "89.0");
-            edgeOptions.setCapability("enableVNC", true);
-            edgeOptions.setCapability("enableLog", true);
-            edgeOptions.setCapability("timeZone", "Europe/Kiev");
-            edgeOptions.setCapability(TAKES_SCREENSHOT, true);
-            edgeOptions.setCapability("env", Collections.singletonList("VERBOSE=true"));
-            edgeOptions.setCapability("enableVideo", true);
-            edgeOptions.setCapability("videoName",
-                    format("%s-%s.mp4", currentTestClassName, Thread.currentThread().getId()));
-            edgeOptions.setCapability("name",
-                    format("%s-%s.mp4", currentTestClassName, Thread.currentThread().getId()));
-            RemoteWebDriver driver;
-            try {
-                driver = new RemoteWebDriver(
-                        new URL(format("%s:%s/wd/hub", config.getSelenoidHost(), config.getSelenoidPort())), edgeOptions);
-                driver.setFileDetector(new LocalFileDetector());
-            } catch (final MalformedURLException e) {
-                throw new RuntimeException("Unable to create remote driver", e);
-            }
-            return driver;
         }
     }
 
@@ -166,12 +88,6 @@ public class WebDriverManager {
                 .getAll().stream()
                 .map(LogEntry::toString)
                 .collect(Collectors.joining("\n"));
-    }
-
-    public void attachTheVideo() {
-        step("Video of test execution is available by link:");
-        step(format("%s:8080/video/%s-%s.mp4",
-                ConfigurationLoader.getConfig().getSelenoidHost(), currentTestClassName, Thread.currentThread().getId()));
     }
 
     public void attachTheBrowserConsoleLog() {

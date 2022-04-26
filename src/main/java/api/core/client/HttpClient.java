@@ -2,33 +2,24 @@ package api.core.client;
 
 import api.core.AuthApi;
 import api.core.RakutenExchangeApi;
-import api.entities.UserPayload;
+import api.entities.auth.AuthRequest;
 import api.entities.auth.AuthResponse;
 import configurations.User;
 import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.filter.Filter;
-import io.restassured.filter.FilterContext;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import io.restassured.specification.FilterableRequestSpecification;
-import io.restassured.specification.FilterableResponseSpecification;
 import io.restassured.specification.RequestSpecification;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Map;
 
 import static api.core.RakutenExchangeApi.CREATE_RULE;
 import static configurations.ConfigurationLoader.getConfig;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
-import static io.restassured.filter.log.LogDetail.STATUS;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.*;
 
@@ -162,9 +153,9 @@ public class HttpClient {
                 .header("Authorization", "Bearer " + token);
     }
 
-    private static UserPayload buildUserPayload(String username, String password) {
+    private static AuthRequest buildUserPayload(String username, String password) {
 
-        return UserPayload.builder()
+        return AuthRequest.builder()
                 .mail(username)
                 .password(password)
                 .build();

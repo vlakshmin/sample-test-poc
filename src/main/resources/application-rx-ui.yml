@@ -1,11 +1,7 @@
-# Base URL and Browser(CHROME or EDGE)
+# Base URL and Browser(Currently - CHROME)
 baseUrlAPI: https://qa-s-api.rmp.rakuten.com
 baseUrl: https://qa-publisher-portal.rmp.rakuten.com
 browser: chrome
-
-# Enable/Disabled Selenoid
-# Use "false" value to execute tests without selenoid on Chrome Browser
-enableSelenoid: false
 
 # WebDriver Settings
 pageLoadStrategy: normal
@@ -14,11 +10,6 @@ holdBrowserOpen: false
 reopenBrowserOnFail: true
 screenshots: true
 headless: false
-
-# Host of Selenoid images location
-# if you are using Selenoid locally please sel it to "localhost"
-selenoidHost: https://reg-ui-ic-selenoid.ndp.thetaraydev.com
-selenoidPort: 443
 
 #Proxy enabling
 enableProxy: false
