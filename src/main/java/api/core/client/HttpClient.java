@@ -275,8 +275,11 @@ public class HttpClient {
                 log.info("Response Code: {}", response.getStatusCode());
                 log.info("Response Body: {}", response.getBody().prettyPrint());
                 step(format(
-                        "Response Code: %s \nResponse Body: '%s'",
-                        response.getStatusCode(), response.getBody().prettyPrint()));
+                        "Response Code: %s ",
+                        response.getStatusCode()));
+                step(format(
+                        "\nResponse Body: '%s'",
+                        response.getBody().prettyPrint()));
                 break;
             default:
                 log.error("Response Code: {}", response.getStatusCode());

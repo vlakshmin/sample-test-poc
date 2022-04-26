@@ -70,7 +70,7 @@ public final class Precondition {
         }
 
         public PreconditionBuilder logIn(User user) {
-            $x(loginPage.getLoginInput()).should(exist, visible).setValue(user.getMail());
+            $x(loginPage.getLoginInput()).as("Get login field").should(exist, visible).setValue(user.getMail());
             $x(loginPage.getPasswordInput()).should(exist, visible).setValue(user.getPassword()).submit();
             $x(loginPage.getPasswordInput()).should(disappear);
 
