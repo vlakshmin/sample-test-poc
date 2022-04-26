@@ -1,0 +1,35 @@
+# Base URL and Browser(Currently - CHROME)
+baseUrlAPI: https://qa-s-api.rmp.rakuten.com
+baseUrl: https://qa-publisher-portal.rmp.rakuten.com
+browser: chrome
+
+# Enable/Disabled Selenoid
+# Use "false" value to execute tests without selenoid on Chrome Browser
+enableSelenoid: false
+
+# WebDriver Settings
+pageLoadStrategy: eager
+browserSize: 1920x1000
+holdBrowserOpen: false
+reopenBrowserOnFail: true
+screenshots: true
+headless: false
+
+# Host of Selenoid images location
+# if you are using Selenoid locally please sel it to "localhost"
+selenoidHost: http://localhost
+selenoidPort: 4444
+
+#Proxy enabling
+enableProxy: false
+
+# Selenide Explicit wait
+timeout: 5000
+
+##Sun May 10 15:47:41 IST 2020
+
+#password=Passwd22
+#DBNAME=rssp
+#DBUSERNAME=Chandra
+#DBHOST=35.245.192.83\:3306
+#username=zafar.zafar@rakuten.com

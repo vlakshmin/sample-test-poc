@@ -5,7 +5,7 @@
 	<test name="RXUI_Test_Automation" annotations="JDK"
 		preserve-order="true">
 		<classes>
-			<class name="MyRunner.TestRunner" />
+			<class name="old.MyRunner.TestRunner" />
 		</classes>
 	</test>
 </suite>
