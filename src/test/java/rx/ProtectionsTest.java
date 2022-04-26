@@ -10,7 +10,6 @@ import org.testng.annotations.Test;
 import pages.MainPage;
 
 import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.forward;
 import static configurations.User.TEST_USER;
 import static helpers.Precondition.testStart;
 
