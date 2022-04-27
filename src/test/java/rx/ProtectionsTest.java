@@ -38,12 +38,12 @@ public class ProtectionsTest extends BaseTest{
                 .given()
                 .openUrl()
                 .logIn(TEST_USER)
+                .validate(Condition.visible, $x(mainPage.getLogo()))
+                .validate(TEST_USER.getMail())
                 .then()
                 .clickOnText("Protections")
                 .waitAndValidate(Condition.visible, $x(String.format("//*[contains(text(),'%s')]", protectionResponse.getName())))
                 .clickOnText(protectionResponse.getName())
-                .validate(Condition.visible, $x(mainPage.getLogo()))
-                .validate(TEST_USER.getMail())
                 .testEnd();
 
         //allure serve
