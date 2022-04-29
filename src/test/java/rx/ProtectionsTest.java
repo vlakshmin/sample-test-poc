@@ -2,13 +2,14 @@ package rx;
 
 import api.entities.rx.protection.ProtectionResponse;
 import api.services.protections.ProtectionsPrecondition;
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.MainPage;
 
+import static com.codeborne.selenide.Condition.disappear;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
 import static configurations.User.TEST_USER;
 import static helpers.Precondition.testStart;
@@ -38,13 +39,23 @@ public class ProtectionsTest extends BaseTest{
                 .given()
                 .openUrl()
                 .logIn(TEST_USER)
-                .validate(Condition.visible, $x(mainPage.getLogo()))
+                .validate(visible, $x(mainPage.getLogo()))
                 .validate(TEST_USER.getMail())
+                .waitAndValidate(disappear, $x(mainPage.getNuxtPogress()))
                 .then()
                 .clickOnText("Protections")
-                .waitAndValidate(Condition.visible, $x(String.format("//*[contains(text(),'%s')]", protectionResponse.getName())))
+                .waitAndValidate(disappear, $x(mainPage.getTableProgressBar()))
+                .clickOnText("Rows per page:")
+                .clickOnWebElement( $x( "//div[text()='20']"))
+                .clickOnWebElement( $x( "//div[text()='10']"))
                 .clickOnText(protectionResponse.getName())
-                .testEnd();
+                .and()
+                .validate(visible, String.format("Edit Protections: %s", protectionResponse.getName()))
+                .validate(disappear, $x("//div[@class='v-progress-circular__info']"))
+                .validate(visible, $x("//input[@role='switch']"))
+                .clickOnWebElement($x("//input[@role='switch']"))
+                .validateAttribute($x("//input[@role='switch']"), "aria-checked", "false")
+        .testEnd();
 
         //allure serve
     }

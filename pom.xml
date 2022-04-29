@@ -23,7 +23,7 @@
 		<keycloak.version>12.0.4</keycloak.version>
 		<rest-assured.version>4.3.1</rest-assured.version>
 
-		<selenide.version>5.22.3</selenide.version>
+		<selenide.version>5.25.0</selenide.version>
 		<aspectj.version>1.9.4</aspectj.version>
 		<allure.version>2.14.0</allure.version>
 		<brovserup.version>2.0.1</brovserup.version>

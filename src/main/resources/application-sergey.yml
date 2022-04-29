@@ -15,12 +15,4 @@ headless: false
 enableProxy: false
 
 # Selenide Explicit wait
-timeout: 5000
-
-##Sun May 10 15:47:41 IST 2020
-
-#password=Passwd22
-#DBNAME=rssp
-#DBUSERNAME=Chandra
-#DBHOST=35.245.192.83\:3306
-#username=zafar.zafar@rakuten.com
+timeout: 10000

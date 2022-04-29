@@ -180,7 +180,8 @@ public final class Precondition {
 
         public PreconditionBuilder validate(Condition condition, String... texts) {
 
-            Stream.of(texts).forEach(text -> assertTrue($x(String.format(ELEMENT_BY_TEXT, text)).is(condition)
+            Stream.of(texts).forEach(text -> assertTrue(
+                    $x(String.format(ELEMENT_BY_TEXT, text)).shouldBe(visible).is(condition)
                     , String.format("/nText in '%s' has not met condition '%s'", text, condition)));
             return this;
         }
@@ -226,7 +227,7 @@ public final class Precondition {
 
         public PreconditionBuilder validate(Condition condition, SelenideElement... elements) {
 
-            Stream.of(elements).forEach(element -> assertTrue(element.is(condition)
+            Stream.of(elements).forEach(element -> assertTrue(element.shouldBe(condition).is(condition)
                     , String.format("\n'%s' with condition '%s'", element, condition)));
             return this;
         }
@@ -264,6 +265,13 @@ public final class Precondition {
             element.setValue(value);
             return this;
         }
+
+        public PreconditionBuilder scrollTo(SelenideElement element) {
+            element.should(exist, visible).scrollTo();
+
+            return this;
+        }
+
 
         public PreconditionBuilder clearField(SelenideElement element) {
 
