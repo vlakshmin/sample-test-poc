@@ -1,5 +1,6 @@
 package helpers;
 
+import api.core.client.HttpClient;
 import com.codeborne.selenide.*;
 import com.codeborne.selenide.ex.ElementNotFound;
 import com.codeborne.selenide.testng.ScreenShooter;
@@ -22,6 +23,8 @@ import java.util.NoSuchElementException;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import static api.core.client.HttpClient.getToken;
+import static api.core.client.HttpClient.setCredentials;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static java.lang.String.format;
@@ -74,6 +77,14 @@ public final class Precondition {
             $x(loginPage.getPasswordInput()).should(exist, visible).setValue(user.getPassword()).submit();
             $x(loginPage.getPasswordInput()).should(disappear);
 
+            return this;
+        }
+
+        public PreconditionBuilder loginWithCookie(User user){
+            setCredentials(user);
+            String token =  getToken();
+
+            //Code to set cookie here
             return this;
         }
 

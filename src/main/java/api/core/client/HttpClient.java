@@ -9,6 +9,7 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,6 +30,7 @@ public class HttpClient {
     private static String URL;
     private static String mail;
     private static String password;
+    @Getter
     private static String token;
 
     public static Response get(String url) {
@@ -107,6 +109,7 @@ public class HttpClient {
     public static void setCredentials(User user) {
         mail = user.getMail();
         password = user.getPassword();
+        setToken();
     }
 
     private static void setToken() {
