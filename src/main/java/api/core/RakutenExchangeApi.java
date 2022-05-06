@@ -7,11 +7,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum RakutenExchangeApi {
     //Rules
-    GET_RULE("/protections/targeting/%s"),
-    CREATE_RULE("/protections/targeting"),
+    GET_RULE("/v3/protections/targeting/%s"),
+    CREATE_RULE("/v3protections/targeting"),
 
     //Publisher
-    CREATE_PUBLISHER("/publishers");
+    CREATE_PUBLISHER("/v2/publishers");
 
     private String endpoint;
 

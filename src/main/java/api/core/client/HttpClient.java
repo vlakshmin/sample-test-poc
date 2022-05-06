@@ -30,7 +30,6 @@ public class HttpClient {
     private static String URL;
     private static String mail;
     private static String password;
-    @Getter
     private static String token;
 
     public static Response get(String url) {
@@ -112,6 +111,11 @@ public class HttpClient {
         setToken();
     }
 
+    public static String getToken(){
+
+        return token;
+    }
+
     private static void setToken() {
         URL = initURL(AuthApi.GET_TOKEN);
 
@@ -170,7 +174,7 @@ public class HttpClient {
         if (actionsEnum instanceof RakutenExchangeApi) {
             RakutenExchangeApi request = (RakutenExchangeApi) actionsEnum;
 
-            return format("%s%s%s", getConfig().getBaseUrlAPI(), "/v3", request.getEndpoint());
+            return format("%s%s", getConfig().getBaseUrlAPI(),  request.getEndpoint());
         } else if (actionsEnum instanceof AuthApi) {
             AuthApi request = (AuthApi) actionsEnum;
 
@@ -179,11 +183,6 @@ public class HttpClient {
 
             throw new IOException(format("init Url in %s must get it's own enum endpoint", actionsEnum.getClass().getName()));
         }
-    }
-
-    public static String initURL(String endpoint) {
-
-        return format("%s%s%s", getConfig().getBaseUrlAPI(), "/v3", endpoint);
     }
 
     private static Response executeGet(String token, String url) {

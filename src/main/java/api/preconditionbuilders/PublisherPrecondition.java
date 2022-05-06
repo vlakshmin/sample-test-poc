@@ -29,7 +29,7 @@ public class PublisherPrecondition {
         this.publisherResponseList = builder.publisherResponseList;
     }
 
-    public static PublisherPreconditionBuilder protection() {
+    public static PublisherPreconditionBuilder publisher() {
 
         return new PublisherPreconditionBuilder();
     }
