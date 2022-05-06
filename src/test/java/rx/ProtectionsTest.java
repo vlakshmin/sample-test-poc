@@ -1,6 +1,6 @@
 package rx;
 
-import api.entities.rx.protection.ProtectionResponse;
+import api.entities.rx.protection.Protection;
 import api.preconditionbuilders.ProtectionsPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ import static helpers.Precondition.testStart;
 public class ProtectionsTest extends BaseTest{
 
     private MainPage mainPage;
-    private ProtectionResponse protectionResponse;
+    private Protection protectionResponse;
 
     public ProtectionsTest(){
         mainPage = new MainPage();

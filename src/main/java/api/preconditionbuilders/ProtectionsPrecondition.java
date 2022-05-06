@@ -19,8 +19,8 @@ import static api.utils.FakerUtils.captionWithSuffix;
 public class ProtectionsPrecondition {
 
     private ProtectionRequest protectionsRequest;
-    private ProtectionResponse protectionsResponse;
-    private List<ProtectionResponse> protectionsResponseList;
+    private Protection protectionsResponse;
+    private List<Protection> protectionsResponseList;
 
     private ProtectionsPrecondition(ProtectionsPreconditionBuilder builder) {
 
@@ -36,9 +36,9 @@ public class ProtectionsPrecondition {
     public static class ProtectionsPreconditionBuilder {
 
         private Response response;
+        private Protection protectionsResponse;
         private ProtectionRequest protectionsRequest;
-        private ProtectionResponse protectionsResponse;
-        private List<ProtectionResponse> protectionsResponseList;
+        private List<Protection> protectionsResponseList;
         private ProtectionsService protectionsService = new ProtectionsService();
 
         public ProtectionsPreconditionBuilder createNewRandomProtection() {
@@ -105,7 +105,7 @@ public class ProtectionsPrecondition {
                             .build())
                     .build();
             this.response = protectionsService.createRule(protectionsRequest);
-            this.protectionsResponse = response.as(ProtectionResponse.class);
+            this.protectionsResponse = response.as(Protection.class);
 
             return this;
         }
@@ -121,9 +121,9 @@ public class ProtectionsPrecondition {
             return new ProtectionsPrecondition(this);
         }
 
-        private List<ProtectionResponse> getProtectionsResponseList() {
+        private List<Protection> getProtectionsResponseList() {
 
-            return Arrays.asList(response.as(ProtectionResponse[].class));
+            return Arrays.asList(response.as(Protection[].class));
         }
     }
 }

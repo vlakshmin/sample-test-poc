@@ -9,20 +9,16 @@ import java.util.Locale;
 
 public final class FakerUtils {
 
-    private static Faker faker = new Faker(new Locale("en-US"));
+    private static final Faker faker = new Faker(new Locale("en-US"));
 
     public static String notes() {
 
         return faker.lorem().paragraph();
     }
 
-    public static String randomName() {
+    public static String randomUrl() {
 
-        return faker.funnyName().name();
-    }
-    public static String shortCaption() {
-
-        return String.valueOf(faker.cat().name());
+        return faker.internet().url();
     }
 
     public static String captionWithSuffix(String root) {
@@ -30,19 +26,9 @@ public final class FakerUtils {
         return String.format("%s_%s", root, randomNumber());
     }
 
-    public static String lorem() {
-
-        return faker.lorem().paragraph();
-    }
-
     public static String randomNumber() {
 
         return faker.random().nextInt(0, 1000000).toString();
-    }
-
-    public static Integer randomInteger() {
-
-        return faker.random().nextInt(0, 1000000);
     }
 
     public static Integer randomInteger(int start, int end) {
@@ -55,9 +41,9 @@ public final class FakerUtils {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
     }
 
-    public static String randomAlphanumeric() {
+    public static String randomMail(){
 
-        return faker.cat().name() + randomNumber();
+        return faker.internet().emailAddress();
     }
 
     public static Boolean randomBoolean() {
