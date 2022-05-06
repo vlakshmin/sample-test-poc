@@ -1,7 +1,8 @@
-package api.services.protections;
+package api.preconditionbuilders;
 
 
 import api.entities.rx.protection.*;
+import api.services.ProtectionsService;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

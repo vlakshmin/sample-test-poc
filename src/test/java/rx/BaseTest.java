@@ -43,7 +43,7 @@ public abstract class BaseTest {
     }
 
     @AfterClass(alwaysRun = true)
-    @Step("Collect video and logs and close WebDriver session")
+    @Step("Attach browser Console log and close WebDriver session")
     public void closeSessionAndVideoAttach() {
         attachTheBrowserConsoleLog();
         closeTheSession();

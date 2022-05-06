@@ -1,7 +1,7 @@
 package rx;
 
 import api.entities.rx.protection.ProtectionResponse;
-import api.services.protections.ProtectionsPrecondition;
+import api.preconditionbuilders.ProtectionsPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Listeners;

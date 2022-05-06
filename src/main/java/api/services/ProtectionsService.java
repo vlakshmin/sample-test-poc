@@ -1,4 +1,4 @@
-package api.services.protections;
+package api.services;
 
 import api.entities.rx.protection.ProtectionRequest;
 import api.services.BaseService;
