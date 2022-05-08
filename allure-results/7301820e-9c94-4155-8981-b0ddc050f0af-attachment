@@ -1,3 +1,0 @@
-[2022-04-28T17:58:56+0300] [SEVERE] https://qa-publisher-portal.rmp.rakuten.com/_nuxt/pages/dashboard.77ea27d.js 0:223850 Uncaught TypeError: Cannot read properties of undefined (reading 'chart')
-[2022-04-28T17:58:57+0300] [SEVERE] https://qa-publisher-portal.rmp.rakuten.com/_nuxt/pages/dashboard.77ea27d.js 0:223850 Uncaught TypeError: Cannot read properties of undefined (reading 'chart')
-[2022-04-28T17:59:00+0300] [SEVERE] https://qa-publisher-portal.rmp.rakuten.com/_nuxt/pages/protections/_protection_id.abcef92.js 0:9038 Uncaught TypeError: Cannot read properties of undefined (reading 'advertiser')

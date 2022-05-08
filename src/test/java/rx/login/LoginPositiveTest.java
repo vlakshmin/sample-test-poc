@@ -31,7 +31,7 @@ public class LoginPositiveTest extends BaseTest {
                 .openUrl()
                 .logIn(TEST_USER)
                 .then()
-                .validate(Condition.visible, $x(mainPage.getLogo()))
+                .validate(Condition.visible, mainPage.getLogo())
                 .validate(TEST_USER.getMail())
         .testEnd();
     }

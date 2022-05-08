@@ -1,6 +1,5 @@
 package helpers;
 
-import api.core.client.HttpClient;
 import com.codeborne.selenide.*;
 import com.codeborne.selenide.ex.ElementNotFound;
 import com.codeborne.selenide.testng.ScreenShooter;
@@ -18,6 +17,7 @@ import pages.LoginPage;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.function.Supplier;
@@ -74,9 +74,9 @@ public final class Precondition {
         }
 
         public PreconditionBuilder logIn(User user) {
-            $x(loginPage.getLoginInput()).as("Get login field").should(exist, visible).setValue(user.getMail());
-            $x(loginPage.getPasswordInput()).should(exist, visible).setValue(user.getPassword()).submit();
-            $x(loginPage.getPasswordInput()).should(disappear);
+            loginPage.getLoginInput().should(exist, visible).setValue(user.getMail());
+            loginPage.getPasswordInput().should(exist, visible).setValue(user.getPassword()).submit();
+            loginPage.getPasswordInput().should(disappear);
 
             return this;
         }
@@ -91,30 +91,33 @@ public final class Precondition {
 
         public PreconditionBuilder clickOnText(String text) {
             log.info("Clicking on text '{}'", text);
-            $x(String.format(ELEMENT_BY_TEXT, text)).shouldBe(exist, visible).scrollTo().hover().click();
+            $x(String.format(ELEMENT_BY_TEXT, text))
+                    .as(format("'%s' Label", text)).shouldBe(exist, visible).scrollTo().hover().click();
 
             return this;
         }
 
         public PreconditionBuilder startsWithText(String text) {
             log.info("Clicking on label that starts with text '{}'", text);
-            $x(String.format("//*[starts-with(text(), '%s')]", text)).should(exist, visible).click();
+            $x(String.format("//*[starts-with(text(), '%s')]", text))
+                    .as(format("'%s' Label", text)).should(exist, visible).click();
 
             return this;
         }
 
         public PreconditionBuilder clickOnWebElement(SelenideElement element) {
-            log.info("Clicking on webElement '{}'", element.getAttribute("class"));
+            log.info("Clicking on webElement '{}' by Xpath: '{}'", element.getAlias(), element.getSearchCriteria());
             element.shouldBe(exist, visible).hover().click();
 
             return this;
         }
 
         public PreconditionBuilder clickOnWebElementIfPresent(SelenideElement element) {
-            log.info("Clicking on webElement '{}'", element.getAttribute("class"));
+            log.info("Clicking on webElement '{}' by Xpath: '{}'", element.getAlias(), element.getSearchCriteria());
             try {
                 element.shouldBe(visible, Duration.ofSeconds(5)).click();
             } catch (ElementNotFound | NoSuchElementException e) {
+                log.info("WebElement '{}' hasn't been found by Xpath: '{}'", element.getAlias(), element.getSearchCriteria());
                 e.printStackTrace();
             }
 
@@ -122,7 +125,7 @@ public final class Precondition {
         }
 
         public PreconditionBuilder hoverMouseOnWebElement(SelenideElement element) {
-            log.info("Hovering on webElement '{}'", element.getAttribute("class"));
+            log.info("Hovering mouse on webElement '{}' by Xpath: '{}'", element.getAlias(), element.getSearchCriteria());
             element.shouldBe(exist, visible).hover();
 
             return this;
@@ -130,68 +133,70 @@ public final class Precondition {
 
         public PreconditionBuilder clickOnOneOfWebWebElements(SelenideElement elementOne, SelenideElement elementTwo) {
             try {
-                log.info("Clicking on webElement '{}'", elementOne.getAttribute("class"));
+                log.info("Clicking on webElement '{}' by Xpath: '{}'",
+                        elementOne.getAlias(), elementOne.getSearchCriteria());
                 elementOne.shouldBe(exist, visible).hover().click();
             } catch (ElementNotFound | NoSuchElementException e) {
-                log.info("Clicking on webElement '{}'", elementTwo.getAttribute("class"));
+                log.info("Clicking on webElement '{}' by Xpath: '{}'",
+                        elementOne.getAlias(), elementOne.getSearchCriteria());
                 elementTwo.shouldBe(exist, visible).hover().click();
-            }
-
-            return this;
-        }
-
-        public PreconditionBuilder clickOnOneWebElementAfterAnother(SelenideElement elementOne, SelenideElement elementTwo) {
-            try {
-                log.info("Hovering on webElement '{}'", elementOne.getAttribute("class"));
-                elementOne.shouldBe(exist, visible).hover().click();
-            } catch (ElementNotFound | NoSuchElementException e) {
-                log.info("Hovering on webElement '{}'", elementTwo.getAttribute("class"));
-                elementTwo.shouldBe(exist, visible).hover().click();
-                elementOne.shouldBe(exist, visible).hover().click();
             }
 
             return this;
         }
 
         public PreconditionBuilder validate(String... texts) {
-            Stream.of(texts).forEach(text -> assertTrue($x(String.format(ELEMENT_BY_TEXT, text)).should(exist, visible).isDisplayed()
-                    , String.format("\nWeb element with text '%s' not visible", text)));
+            Stream.of(texts).forEach(text -> {
+                log.info("Validating Web element with text '{}' is visible on UI", text);
+                assertTrue($x(String.format(ELEMENT_BY_TEXT, text))
+                                .as(format("'%s' Label", text)).should(exist, visible).isDisplayed()
+                    , String.format("\nWeb element with text '%s' not visible on UI", text));
+            });
 
             return this;
         }
 
         public PreconditionBuilder validate(SelenideElement element, String text) {
-
+            log.info("Validating Web element '{}' by Xpath: '{}' has text '{}'",
+                    element.getAlias(), element.getSearchCriteria(), text);
             element.shouldBe(visible).shouldHave(exactText(text));
+
             return this;
         }
 
         public PreconditionBuilder validate(SelenideElement element, Map<String, String> attributes) {
+            attributes.forEach((attribute, value) -> {
+                log.info("Validating Web element '{}' by Xpath: '{}' has attribute '{}' with value '{}'",
+                        element.getAlias(), element.getSearchCriteria(), attribute, value);
+                element.shouldHave(Condition.attribute(attribute, value));
+            });
 
-            attributes.forEach((attribute, value) -> element.shouldHave(Condition.attribute(attribute, value)));
             return this;
         }
 
         public PreconditionBuilder validateContainsText(SelenideElement element, String text) {
-
+            log.info("Validating Web element '{}' by Xpath: '{}' contains text '{}'",
+                    element.getAlias(), element.getSearchCriteria(), text);
             element.shouldBe(visible).shouldHave(text(text));
+
             return this;
         }
 
-        public PreconditionBuilder validateHasValue(SelenideElement element, String value) {
+        public PreconditionBuilder validateList(ElementsCollection collection, String... texts) {
+            log.info("Validating List of Web elements '{}' by Xpath: '{}'",
+                    collection.first().getSearchCriteria(), collection.first().getSearchCriteria());
+            Stream.of(texts).forEach(elementText -> {
+                log.info("Validating Web element '{}' by Xpath: '{}' has text '{}'",
+                        collection.first().getAlias(), collection.first().getSearchCriteria(), elementText);
+                assertTrue(collection.findBy(text(elementText)).shouldBe(visible).isDisplayed());
+            });
 
-            element.shouldBe(visible).shouldHave(value(value));
-            return this;
-        }
-
-        public PreconditionBuilder validate(ElementsCollection collection, String... texts) {
-
-            Stream.of(texts).forEach(elementText -> assertTrue(collection.findBy(text(elementText)).isDisplayed()));
             return this;
         }
 
         public PreconditionBuilder validate(Condition condition, String... texts) {
-
+            log.info("Validating List of Labels '{}' are '{}'",
+                    Stream.of(texts).reduce("", String::concat), condition.getName());
             Stream.of(texts).forEach(text -> assertTrue(
                     $x(String.format(ELEMENT_BY_TEXT, text)).shouldBe(visible).is(condition)
                     , String.format("/nText in '%s' has not met condition '%s'", text, condition)));
@@ -203,15 +208,6 @@ public final class Precondition {
             Stream.of(elements).forEach(element -> assertTrue(element.exists() && element.isDisplayed()
                     , element.toString()));
 
-            return this;
-        }
-
-        public PreconditionBuilder validate(ElementsCollection elements) {
-            if (elements.isEmpty()) {
-                AssertJUnit.fail("Elements collection is empty");
-            } else {
-                elements.forEach(element -> assertTrue(element.exists()));
-            }
             return this;
         }
 
@@ -254,20 +250,6 @@ public final class Precondition {
         public PreconditionBuilder validateAttribute(SelenideElement element, String attributeName, String attributeValue) {
 
             element.shouldBe(exist, visible).hover().shouldHave(attribute(attributeName, attributeValue));
-            return this;
-        }
-
-        public PreconditionBuilder assertString(String actual, String expect) {
-
-            assertEquals(actual, expect);
-            return this;
-        }
-
-        public PreconditionBuilder validateAttribute(SelenideElement element, String attribute, String text, Boolean assertionMode) {
-            if (assertionMode)
-                assertTrue(element.shouldBe(visible).getAttribute(attribute).contains(text));
-            if (!assertionMode)
-                assertFalse(element.shouldBe(visible).getAttribute(attribute).contains(text));
             return this;
         }
 

@@ -1,4 +1,4 @@
-package helpers;
+package helpers.proxy;
 
 public enum HarCaptureTypes {
     REQUEST,

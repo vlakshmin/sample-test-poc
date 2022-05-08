@@ -1,4 +1,4 @@
-package helpers;
+package helpers.proxy;
 
 import com.browserup.bup.BrowserUpProxy;
 import com.browserup.bup.proxy.CaptureType;
@@ -6,20 +6,17 @@ import com.browserup.harreader.model.HarEntry;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
 import static com.browserup.bup.proxy.CaptureType.*;
-import static com.codeborne.selenide.Condition.*;
 import static java.time.Duration.ofSeconds;
 
 @Slf4j
+@NoArgsConstructor
 public class BrowserProxy {
-
-    private BrowserProxy() {
-
-    }
 
     public static BrowserProxyBuilder getProxy() {
         return new BrowserProxyBuilder();
@@ -47,10 +44,18 @@ public class BrowserProxy {
 
         private CaptureType[] setHarCaptureType(HarCaptureTypes type) {
             switch (type) {
-                case REQUEST: return new CaptureType[] {REQUEST_CONTENT};
-                case RESPONSE: return new CaptureType[] {RESPONSE_CONTENT};
-                case ALL: return new CaptureType[] {REQUEST_CONTENT, RESPONSE_CONTENT};
-                default: return null;
+                case REQUEST:
+
+                    return new CaptureType[] {REQUEST_CONTENT};
+                case RESPONSE:
+
+                    return new CaptureType[] {RESPONSE_CONTENT};
+                case ALL:
+
+                    return new CaptureType[] {REQUEST_CONTENT, RESPONSE_CONTENT};
+                default:
+
+                    return null;
             }
         }
     }
