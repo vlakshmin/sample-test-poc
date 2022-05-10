@@ -3,8 +3,8 @@
 <suite name="IC Smoke Paralleled" parallel="classes" thread-count="2">
     <test name="IC Paralleled Tests">
         <classes>
-            <class name="rx.BaseTest"/>
-            <class name="rx.BaseTest"/>
+            <class name="rx.ProtectionsTest"/>
+            <class name="rx.PublisherTest"/>
         </classes>
     </test>
 </suite>
