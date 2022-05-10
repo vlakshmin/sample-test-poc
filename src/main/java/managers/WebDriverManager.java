@@ -65,6 +65,7 @@ public class WebDriverManager {
 
     public void closeWebDriverSession() {
         log.info("Current test class {}", currentTestClassName);
+        //Todo add check if Selenide has been started
         if (!config.getHoldBrowserOpen()) {
             driver = WebDriverRunner.getWebDriver();
             try {
@@ -82,6 +83,7 @@ public class WebDriverManager {
     }
 
     public String getBrowserLogs() {
+        //Todo add check if Selenide has been started
         log.info("Collecting Browser Log");
 
         return WebDriverRunner.getWebDriver().manage().logs().get(LogType.BROWSER)

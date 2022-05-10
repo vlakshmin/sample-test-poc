@@ -1,0 +1,19 @@
+package widgets;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
+public enum EditPublisherSidebarElements {
+
+    DOMAIN("Publisher Domain", "//label[text()='Domain']/../input"),
+    MAIL("Publisher Mail", "//label[text()='Ad Ops Email']/../input"),
+    NAME( "Publisher Name", "//label[text()='Publisher Name']/../input"),
+    CURRENCY("Publisher Currency", "//label[text()='Currency']/../input"),
+    AD_OPS_PERSON( "Ad Ops Person", "//label[text()='Ad Ops Person']/../input"),
+    SAVE_BUTTON("Save Publisher Button",  "//button/span[contains(text(),'Save Publisher')]");
+
+    private String alias;
+    private String selector;
+}

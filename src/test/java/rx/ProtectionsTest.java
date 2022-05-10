@@ -45,16 +45,6 @@ public class ProtectionsTest extends BaseTest{
                 .then()
                 .clickOnText("Protections")
                 .waitAndValidate(disappear, mainPage.getTableProgressBar())
-                .clickOnText("Rows per page:")
-//                .clickOnWebElement( $x( "//div[text()='20']"))
-//                .clickOnWebElement( $x( "//div[text()='10']"))
-//                .clickOnText(protectionResponse.getName())
-//                .and()
-//                .validate(visible, String.format("Edit Protections: %s", protectionResponse.getName()))
-//                .validate(disappear, $x("//div[@class='v-progress-circular__info']"))
-//                .validate(visible, $x("//input[@role='switch']"))
-//                .clickOnWebElement($x("//input[@role='switch']"))
-//                .validateAttribute($x("//input[@role='switch']"), "aria-checked", "false")
         .testEnd();
 
         //allure serve

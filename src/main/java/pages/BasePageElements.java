@@ -9,6 +9,7 @@ public enum BasePageElements {
 
     SNACKBAR( "SnackBar", ""),
     LOGO( "Logo", "//div[@class='logo']/../.."),
+    SIDEBAR("Sidebar", "//div[@class='overlay']"),
     TABLE_PROGRESSBAR("Table ProgressBar", "//div[@role='progressbar']"),
     NUXT_PROGRESSBAR("Page Load Progressbar", "//div[@class='nuxt-progress']");
 

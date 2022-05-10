@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum RakutenExchangeApi {
     //Rules
     GET_RULE("/v3/protections/targeting/%s"),
-    CREATE_RULE("/v3protections/targeting"),
+    CREATE_RULE("/v3/protections/targeting"),
 
     //Publisher
     CREATE_PUBLISHER("/v2/publishers");

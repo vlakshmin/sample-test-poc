@@ -15,4 +15,4 @@ headless: false
 enableProxy: false
 
 # Selenide Explicit wait
-timeout: 10000
+timeout: 5000

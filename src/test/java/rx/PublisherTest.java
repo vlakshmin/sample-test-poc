@@ -2,17 +2,20 @@ package rx;
 
 import api.entities.rx.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
+import api.utils.FakerUtils;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.MainPage;
+import pages.PublishersPage;
 
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$x;
 import static configurations.User.TEST_USER;
 import static helpers.Precondition.testStart;
+import static java.lang.String.valueOf;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
@@ -20,19 +23,27 @@ public class PublisherTest extends BaseTest{
 
     private MainPage mainPage;
     private Publisher publisher;
+    private PublishersPage publishersPage;
+
+    private static final String PUBLISHER_NAME_EDITED = FakerUtils.captionWithSuffix("Pub_Edited");
+    private static final String PUBLISHER_AD_OPS_EDITED = FakerUtils.captionWithSuffix("Ad_Ops_Edited");
 
     public PublisherTest(){
         mainPage = new MainPage();
+        publishersPage = new PublishersPage();
     }
 
-    @Test
-    public void editPublisherTest(){
-
+    @BeforeClass
+    public void createNewPublisher(){
         //Creating publisher to edit Using API
         publisher = PublisherPrecondition.publisher()
                 .createNewPublisher()
                 .build()
                 .getPublisherResponse();
+    }
+
+    @Test
+    public void editPublisherTest(){
 
         //Opening Browser and Edit the protection created from Precondition
         testStart()
@@ -42,22 +53,43 @@ public class PublisherTest extends BaseTest{
                 .validate(visible, mainPage.getLogo())
                 .validate(TEST_USER.getMail())
                 .waitAndValidate(disappear, mainPage.getNuxtProgress())
-                .then()
+                .and()
                 .clickOnText("Admin")
                 .clickOnText("Publisher")
                 .waitAndValidate(disappear, mainPage.getTableProgressBar())
-//                .clickOnText("Rows per page:")
-//                .clickOnWebElement( $x( "//div[text()='20']"))
-//                .clickOnWebElement( $x( "//div[text()='10']"))
-//                .clickOnText(protectionResponse.getName())
-//                .and()
-//                .validate(visible, String.format("Edit Protections: %s", protectionResponse.getName()))
-//                .validate(disappear, $x("//div[@class='v-progress-circular__info']"))
-//                .validate(visible, $x("//input[@role='switch']"))
-//                .clickOnWebElement($x("//input[@role='switch']"))
-//                .validateAttribute($x("//input[@role='switch']"), "aria-checked", "false")
+                .clickOnWebElement(publishersPage.getPublisherItemByName(publisher.getName()).getPublisherName())
+                .waitSideBarOpened()
+                .then()
+                .validate(publisher.getName()
+                        , publisher.getMail()
+                        , publisher.getCurrency())
+                .validateAttribute(publishersPage.getEditPublisherSidebar().getCurrency(), "disabled", "true")
+                .and()
+                .setValueWithClean(publishersPage.getEditPublisherSidebar().getNameInput(), PUBLISHER_NAME_EDITED)
+                .setValueWithClean(publishersPage.getEditPublisherSidebar().getAdOpsInput(), PUBLISHER_AD_OPS_EDITED)
+                .clickOnWebElement(publishersPage.getEditPublisherSidebar().getSaveButton())
+                .waitSideBarClosed()
+                .and()
+                .validate(publishersPage.getPublisherItemByPositionInList(0).getPublisherName(), PUBLISHER_NAME_EDITED)
+                .validate(publishersPage.getPublisherItemByPositionInList(0).getPublisherAdOps(), PUBLISHER_AD_OPS_EDITED)
+                .validate(publishersPage.getPublisherItemByPositionInList(0).getPublisherId(), valueOf(publisher.getId()))
         .testEnd();
 
+//        testStart()
+//                .given()
+//                .openUrl()
+//                .logIn(TEST_USER)
+//                .validate(visible, mainPage.getLogo())
+//                .validate(TEST_USER.getMail())
+//                .waitAndValidate(disappear, mainPage.getNuxtProgress())
+//                .and()
+//                .clickOnText("Admin")
+//                .clickOnText("Publisher")
+//                .waitAndValidate(disappear, mainPage.getTableProgressBar())
+//                .clickOnWebElement(publishersPage.getPublisherItemByName(publisher.getName()).getPublisherName())
+//                .waitSideBarOpened()
+//                .setValueWithClean(publishersPage.getEditPublisherSidebar().getNameInput(), PUBLISHER_NAME_EDITED)
+//                .testEnd();
         //allure serve
     }
 

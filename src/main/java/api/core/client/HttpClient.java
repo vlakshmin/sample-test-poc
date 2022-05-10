@@ -266,7 +266,7 @@ public class HttpClient {
             case SC_ACCEPTED:
             case SC_NO_CONTENT:
                 log.info("Response Code: {}", response.getStatusCode());
-                log.info("Response Body: {}", response.getBody().prettyPrint());
+                //log.info("Response Body: {}", response.getBody().prettyPrint());
                 step(format(
                         "Response Code: %s ",
                         response.getStatusCode()));
@@ -276,7 +276,7 @@ public class HttpClient {
                 break;
             default:
                 log.error("Response Code: {}", response.getStatusCode());
-                log.error("Response Body: {}", response.getBody().prettyPrint());
+                //log.error("Response Body: {}", response.getBody().prettyPrint());
                 step(format(
                         "Response Code: %s \nResponse Body: '%s'",
                         response.getStatusCode(), response.getBody().prettyPrint()));

@@ -5,7 +5,9 @@ import com.codeborne.selenide.ex.ElementNotFound;
 import com.codeborne.selenide.testng.ScreenShooter;
 import configurations.ConfigurationLoader;
 import configurations.User;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.jsoup.Connection;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.Keys;
@@ -13,8 +15,11 @@ import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.AssertJUnit;
 import org.testng.annotations.Listeners;
+import pages.BasePage;
 import pages.LoginPage;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.time.Duration;
 import java.util.List;
@@ -45,6 +50,7 @@ public final class Precondition {
 
     public static class PreconditionBuilder {
 
+        private BasePage basePage = new BasePage();
         private LoginPage loginPage =  new LoginPage();
         private final String ELEMENT_BY_TEXT = "//*[contains(text(),'%s')]";
 
@@ -205,7 +211,8 @@ public final class Precondition {
 
         public PreconditionBuilder validate(SelenideElement... elements) {
 
-            Stream.of(elements).forEach(element -> assertTrue(element.exists() && element.isDisplayed()
+            Stream.of(elements).forEach(element ->
+                    assertTrue(element.shouldBe(exist).exists() && element.shouldBe(visible).isDisplayed()
                     , element.toString()));
 
             return this;
@@ -222,6 +229,20 @@ public final class Precondition {
             Stream.of(elements).forEach(element ->
                     assertTrue(element.shouldBe(condition, Duration.ofSeconds(seconds)).is(condition)
                             , String.format("\n'%s' with condition '%s'", element, condition)));
+
+            return this;
+        }
+
+        public PreconditionBuilder waitSideBarOpened() {
+            log.info("Waiting Sidebar by Xpath '{}' is opened and visible", basePage.getSidebar().getSearchCriteria());
+            basePage.getSidebar().shouldBe(exist, visible);
+
+            return this;
+        }
+
+        public PreconditionBuilder waitSideBarClosed() {
+            log.info("Waiting Sidebar by Xpath '{}' is closed", basePage.getSidebar().getSearchCriteria());
+            basePage.getSidebar().shouldNotBe(visible, exist);
 
             return this;
         }
@@ -266,7 +287,6 @@ public final class Precondition {
             return this;
         }
 
-
         public PreconditionBuilder clearField(SelenideElement element) {
 
             element.should(exist).hover().doubleClick().sendKeys(Keys.BACK_SPACE);
@@ -274,9 +294,16 @@ public final class Precondition {
         }
 
         public PreconditionBuilder setValueWithClean(SelenideElement element, String value) {
+            //Todo Add log.info
+            //element.should(exist,visible).hover().doubleClick().sendKeys(Keys.CONTROL, "A", Keys.BACK_SPACE);
+            element.should(exist,visible).hover().click();
+            int i = 0;
+            do {
+                element.sendKeys(Keys.BACK_SPACE);
+                i++;
+            } while (i<=30);
+            element.should(exist,visible).hover().sendKeys(value);
 
-            element.should(exist).hover().doubleClick().sendKeys(Keys.BACK_SPACE);
-            element.setValue(value);
             return this;
         }
 

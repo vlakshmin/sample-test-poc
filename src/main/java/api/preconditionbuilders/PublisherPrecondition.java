@@ -45,7 +45,7 @@ public class PublisherPrecondition {
         public PublisherPreconditionBuilder createNewPublisher() {
             this.publisherRequest = PublisherRequest.builder()
                     .name(captionWithSuffix("Publisher"))
-                    .salesAccountName("ops persoj")
+                    .salesAccountName("ops_persoj")
                     .mail(randomMail())
                     .isEnabled(true)
                     .domain(randomUrl())
