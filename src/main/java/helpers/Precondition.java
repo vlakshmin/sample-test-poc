@@ -269,8 +269,10 @@ public final class Precondition {
         }
 
         public PreconditionBuilder validateAttribute(SelenideElement element, String attributeName, String attributeValue) {
-
+            log.info("Validating element '{}' with xpath '{} has attribute '{}' with value '{}'",
+                    element.getAlias(), element.getSearchCriteria(), attributeName, attributeValue);
             element.shouldBe(exist, visible).hover().shouldHave(attribute(attributeName, attributeValue));
+
             return this;
         }
 
@@ -294,8 +296,10 @@ public final class Precondition {
         }
 
         public PreconditionBuilder setValueWithClean(SelenideElement element, String value) {
+            log.info("Setting value '{}' in field '{}' withXpath '{}'",
+                    value, element.getAlias(), element.getSearchCriteria());
             //Todo Add log.info
-            //element.should(exist,visible).hover().doubleClick().sendKeys(Keys.CONTROL, "A", Keys.BACK_SPACE);
+            //element.should(exist,visible).hover().doubleClick().sendKeys(Keys.CONTROL + "A", Keys.BACK_SPACE);
             element.should(exist,visible).hover().click();
             int i = 0;
             do {
