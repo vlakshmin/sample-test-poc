@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="IC Smoke Paralleled" parallel="classes" thread-count="2">
-    <test name="IC Paralleled Tests">
+<suite name="SSP-UI-Paralleled" parallel="classes" thread-count="2">
+    <test name="SSP-UI-Paralleled">
         <classes>
             <class name="rx.ProtectionsTest"/>
             <class name="rx.PublisherTest"/>
