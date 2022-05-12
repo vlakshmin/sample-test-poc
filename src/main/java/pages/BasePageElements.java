@@ -7,11 +7,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum BasePageElements {
 
-    SNACKBAR( "SnackBar", ""),
-    LOGO( "Logo", "//div[@class='logo']/../.."),
-    SIDEBAR("Sidebar", "//div[@class='overlay']"),
-    TABLE_PROGRESSBAR("Table ProgressBar", "//div[@role='progressbar']"),
-    NUXT_PROGRESSBAR("Page Load Progressbar", "//div[@class='nuxt-progress']");
+    SNACKBAR( "'SnackBar' element", ""),
+    LOGO( "'Logo' Icon", "//div[@class='logo']/../.."),
+    SIDEBAR("'Sidebar'", "//div[@class='overlay']"),
+    TABLE_PROGRESSBAR("'Table ProgressBar'", "//div[@role='progressbar']"),
+    NUXT_PROGRESSBAR("'Page Load Progressbar'", "//div[@class='nuxt-progress']");
 
     private String alias;
     private String selector;

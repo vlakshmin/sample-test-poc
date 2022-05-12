@@ -25,7 +25,7 @@ import static java.lang.String.format;
 @Getter
 public class PublishersPage extends BasePage{
 
-    //Todo move selectors to Enumerations
+
     private SelenideElement pageTitle = $x("//h1");
     @Getter(AccessLevel.NONE)
     private ElementsCollection publisherItems = $$x("//tbody/tr");

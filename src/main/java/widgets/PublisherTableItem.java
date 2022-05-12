@@ -6,7 +6,7 @@ import lombok.Getter;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 import static java.lang.String.format;
-import static widgets.PublisherTableItemEments.*;
+import static widgets.PublisherTableItemElements.*;
 
 @Getter
 public class PublisherTableItem {

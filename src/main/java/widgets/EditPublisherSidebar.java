@@ -9,8 +9,6 @@ import static widgets.EditPublisherSidebarElements.*;
 @Getter
 public class EditPublisherSidebar {
 
-    private int position;
-
     private SelenideElement mailInput = $x(MAIL.getSelector()).as(MAIL.getAlias());
     private SelenideElement nameInput = $x(NAME.getSelector()).as(NAME.getAlias());
     private SelenideElement domainInput = $x(DOMAIN.getSelector()).as(DOMAIN.getAlias());

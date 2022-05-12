@@ -5,6 +5,8 @@ import com.codeborne.selenide.ex.ElementNotFound;
 import com.codeborne.selenide.testng.ScreenShooter;
 import configurations.ConfigurationLoader;
 import configurations.User;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Connection;
@@ -33,6 +35,7 @@ import static api.core.client.HttpClient.getToken;
 import static api.core.client.HttpClient.setCredentials;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
+import static io.qameta.allure.Allure.step;
 import static java.lang.String.format;
 import static org.testng.Assert.*;
 
@@ -50,11 +53,14 @@ public final class Precondition {
 
     public static class PreconditionBuilder {
 
+        private String loggerString;
         private BasePage basePage = new BasePage();
         private LoginPage loginPage =  new LoginPage();
         private final String ELEMENT_BY_TEXT = "//*[contains(text(),'%s')]";
 
         public PreconditionBuilder openUrl() {
+            loggerString = format("Opening url '%s'", ConfigurationLoader.getConfig().getBaseUrl());
+            step(loggerString);
             open(ConfigurationLoader.getConfig().getBaseUrl());
 
             return this;
@@ -80,6 +86,9 @@ public final class Precondition {
         }
 
         public PreconditionBuilder logIn(User user) {
+            loggerString = format("Logging with user with mail '%s' and password '%s'", user.getMail(), user.getPassword());
+            log.info(loggerString);
+            step(loggerString);
             loginPage.getLoginInput().should(exist, visible).setValue(user.getMail());
             loginPage.getPasswordInput().should(exist, visible).setValue(user.getPassword()).submit();
             loginPage.getPasswordInput().should(disappear);
@@ -96,7 +105,10 @@ public final class Precondition {
         }
 
         public PreconditionBuilder clickOnText(String text) {
-            log.info("Clicking on text '{}'", text);
+            //ToDo Implement Logging Annotation
+            loggerString = format("Clicking on text '%s'", text);
+            log.info(loggerString);
+            step(loggerString);
             $x(String.format(ELEMENT_BY_TEXT, text))
                     .as(format("'%s' Label", text)).shouldBe(exist, visible).scrollTo().hover().click();
 
@@ -104,7 +116,9 @@ public final class Precondition {
         }
 
         public PreconditionBuilder startsWithText(String text) {
-            log.info("Clicking on label that starts with text '{}'", text);
+            loggerString = format("Clicking on label that starts with text '%s'", text);
+            log.info(loggerString);
+            step(loggerString);
             $x(String.format("//*[starts-with(text(), '%s')]", text))
                     .as(format("'%s' Label", text)).should(exist, visible).click();
 
@@ -112,18 +126,25 @@ public final class Precondition {
         }
 
         public PreconditionBuilder clickOnWebElement(SelenideElement element) {
-            log.info("Clicking on webElement '{}' by Xpath: '{}'", element.getAlias(), element.getSearchCriteria());
+            loggerString = format("Clicking on %s", element.getAlias());
+            log.info(loggerString);
+            step(loggerString);
             element.shouldBe(exist, visible).hover().click();
 
             return this;
         }
 
         public PreconditionBuilder clickOnWebElementIfPresent(SelenideElement element) {
-            log.info("Clicking on webElement '{}' by Xpath: '{}'", element.getAlias(), element.getSearchCriteria());
+            loggerString = format("Clicking on element %s", element.getAlias());
+            log.info(loggerString);
+            step(loggerString);
             try {
                 element.shouldBe(visible, Duration.ofSeconds(5)).click();
             } catch (ElementNotFound | NoSuchElementException e) {
-                log.info("WebElement '{}' hasn't been found by Xpath: '{}'", element.getAlias(), element.getSearchCriteria());
+                loggerString = format("WebElement %s hasn't been found by Xpath: '{}'",
+                        element.getAlias(), element.getSearchCriteria());
+                log.info(loggerString);
+                step(loggerString);
                 e.printStackTrace();
             }
 
@@ -131,7 +152,9 @@ public final class Precondition {
         }
 
         public PreconditionBuilder hoverMouseOnWebElement(SelenideElement element) {
-            log.info("Hovering mouse on webElement '{}' by Xpath: '{}'", element.getAlias(), element.getSearchCriteria());
+            loggerString = format("Hovering mouse on webElement %s", element.getAlias());
+            log.info(loggerString);
+            step(loggerString);
             element.shouldBe(exist, visible).hover();
 
             return this;
@@ -139,12 +162,15 @@ public final class Precondition {
 
         public PreconditionBuilder clickOnOneOfWebWebElements(SelenideElement elementOne, SelenideElement elementTwo) {
             try {
-                log.info("Clicking on webElement '{}' by Xpath: '{}'",
-                        elementOne.getAlias(), elementOne.getSearchCriteria());
+                loggerString = format("Clicking on webElement %s", elementOne.getAlias());
+                log.info(loggerString);
+                step(loggerString);
                 elementOne.shouldBe(exist, visible).hover().click();
             } catch (ElementNotFound | NoSuchElementException e) {
-                log.info("Clicking on webElement '{}' by Xpath: '{}'",
-                        elementOne.getAlias(), elementOne.getSearchCriteria());
+                loggerString = format("Web element %s hasn't been found.Clicking on webElement %s",
+                        elementOne.getAlias(), elementTwo.getAlias());
+                log.info(loggerString);
+                step(loggerString);
                 elementTwo.shouldBe(exist, visible).hover().click();
             }
 
@@ -153,7 +179,9 @@ public final class Precondition {
 
         public PreconditionBuilder validate(String... texts) {
             Stream.of(texts).forEach(text -> {
-                log.info("Validating Web element with text '{}' is visible on UI", text);
+                loggerString = format("Validating Web element with text %s is visible on UI", text);
+                log.info(loggerString);
+                step(loggerString);
                 assertTrue($x(String.format(ELEMENT_BY_TEXT, text))
                                 .as(format("'%s' Label", text)).should(exist, visible).isDisplayed()
                     , String.format("\nWeb element with text '%s' not visible on UI", text));
@@ -163,8 +191,9 @@ public final class Precondition {
         }
 
         public PreconditionBuilder validate(SelenideElement element, String text) {
-            log.info("Validating Web element '{}' by Xpath: '{}' has text '{}'",
-                    element.getAlias(), element.getSearchCriteria(), text);
+            loggerString = format("Validating Web element %s  has text '%s'", element.getAlias(), text);
+            log.info(loggerString);
+            step(loggerString);
             element.shouldBe(visible).shouldHave(exactText(text));
 
             return this;
@@ -172,8 +201,10 @@ public final class Precondition {
 
         public PreconditionBuilder validate(SelenideElement element, Map<String, String> attributes) {
             attributes.forEach((attribute, value) -> {
-                log.info("Validating Web element '{}' by Xpath: '{}' has attribute '{}' with value '{}'",
-                        element.getAlias(), element.getSearchCriteria(), attribute, value);
+                loggerString = format("Validating Web element %s has attribute '%s' with value '%s'",
+                        element.getAlias(), attribute, value);
+                log.info(loggerString);
+                step(loggerString);
                 element.shouldHave(Condition.attribute(attribute, value));
             });
 
@@ -181,19 +212,22 @@ public final class Precondition {
         }
 
         public PreconditionBuilder validateContainsText(SelenideElement element, String text) {
-            log.info("Validating Web element '{}' by Xpath: '{}' contains text '{}'",
-                    element.getAlias(), element.getSearchCriteria(), text);
+            loggerString = format("Validating %s contains text %s", element.getAlias(), text);
+            log.info(loggerString);
+            step(loggerString);
             element.shouldBe(visible).shouldHave(text(text));
 
             return this;
         }
 
         public PreconditionBuilder validateList(ElementsCollection collection, String... texts) {
-            log.info("Validating List of Web elements '{}' by Xpath: '{}'",
-                    collection.first().getSearchCriteria(), collection.first().getSearchCriteria());
+            loggerString = format("Validating List of %ss ", collection.first().getSearchCriteria());
+            log.info(loggerString);
+            step(loggerString);
             Stream.of(texts).forEach(elementText -> {
-                log.info("Validating Web element '{}' by Xpath: '{}' has text '{}'",
-                        collection.first().getAlias(), collection.first().getSearchCriteria(), elementText);
+                loggerString = format("Validating %s has text '%s'", collection.first().getAlias(), elementText);
+                log.info(loggerString);
+                step(loggerString);
                 assertTrue(collection.findBy(text(elementText)).shouldBe(visible).isDisplayed());
             });
 
@@ -298,7 +332,8 @@ public final class Precondition {
         public PreconditionBuilder setValueWithClean(SelenideElement element, String value) {
             log.info("Setting value '{}' in field '{}' withXpath '{}'",
                     value, element.getAlias(), element.getSearchCriteria());
-            //Todo Add log.info
+            step(format("Setting value '%s' in field '%s' withXpath '%s'",
+                    value, element.getAlias(), element.getSearchCriteria()));
             //element.should(exist,visible).hover().doubleClick().sendKeys(Keys.CONTROL + "A", Keys.BACK_SPACE);
             element.should(exist,visible).hover().click();
             int i = 0;

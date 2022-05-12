@@ -7,8 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum LoginPageElements {
 
-    LOGIN_INPUT( "login Input", "//*[@id = 'input-24']"),
-    PASSWORD_INPUT( "Password Input", "//input[@type='password']");
+    LOGIN_INPUT( "'Login' Input", "//*[@id = 'input-24']"),
+    PASSWORD_INPUT( "'Password' Input", "//input[@type='password']");
 
     private String alias;
     private String selector;

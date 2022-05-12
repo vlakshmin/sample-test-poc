@@ -33,7 +33,8 @@ public abstract class BaseTest {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
                 .screenshots(true)
                 .savePageSource(false)
-                .includeSelenideSteps(true)
+                .includeSelenideSteps(
+                        false)
         );
     }
 
