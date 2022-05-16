@@ -69,7 +69,7 @@ public class PublisherTest extends BaseTest{
                 .setValueWithClean(publishersPage.getEditPublisherSidebar().getAdOpsInput(), PUBLISHER_AD_OPS_EDITED)
                 .clickOnWebElement(publishersPage.getEditPublisherSidebar().getSaveButton())
                 .waitSideBarClosed()
-                .and()
+                .then()
                 .validate(publishersPage.getPublisherItemByPositionInList(0).getPublisherName(), PUBLISHER_NAME_EDITED)
                 .validate(publishersPage.getPublisherItemByPositionInList(0).getPublisherAdOps(), PUBLISHER_AD_OPS_EDITED)
                 .validate(publishersPage.getPublisherItemByPositionInList(0).getPublisherId(), valueOf(publisher.getId()))
@@ -77,5 +77,4 @@ public class PublisherTest extends BaseTest{
 
         //allure serve
     }
-
 }
