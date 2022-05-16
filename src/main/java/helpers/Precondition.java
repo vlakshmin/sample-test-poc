@@ -267,7 +267,7 @@ public final class Precondition {
         }
 
         public PreconditionBuilder validateTooltip(SelenideElement icon, String tooltip, String value) {
-            logEvent(format("Validating %s hss tooltip '%s'", icon.getAlias(), value);
+            logEvent(format("Validating %s has tooltip '%s'", icon.getAlias(), value));
             icon.shouldBe(exist, visible).hover();
             $x(tooltip + String.format("[text()='%s']", value)).should(appear);
 
