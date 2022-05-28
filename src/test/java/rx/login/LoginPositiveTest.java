@@ -10,9 +10,8 @@ import org.testng.annotations.Test;
 import pages.MainPage;
 import rx.BaseTest;
 
-import static com.codeborne.selenide.Selenide.$x;
 import static configurations.User.TEST_USER;
-import static helpers.Precondition.testStart;
+import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})

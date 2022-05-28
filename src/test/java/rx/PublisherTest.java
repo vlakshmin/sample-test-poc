@@ -1,8 +1,8 @@
 package rx;
 
-import api.entities.rx.publisher.Publisher;
+import api.dto.rx.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
-import api.utils.FakerUtils;
+import utils.FakerUtils;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
@@ -14,7 +14,7 @@ import pages.PublishersPage;
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
-import static helpers.Precondition.testStart;
+import static managers.TestManager.testStart;
 import static java.lang.String.valueOf;
 
 @Slf4j

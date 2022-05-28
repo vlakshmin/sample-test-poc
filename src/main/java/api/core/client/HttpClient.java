@@ -2,14 +2,13 @@ package api.core.client;
 
 import api.core.AuthApi;
 import api.core.RakutenExchangeApi;
-import api.entities.auth.AuthRequest;
-import api.entities.auth.AuthResponse;
+import api.dto.auth.AuthRequest;
+import api.dto.auth.AuthResponse;
 import configurations.User;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 

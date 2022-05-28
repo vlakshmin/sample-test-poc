@@ -1,6 +1,6 @@
 package rx;
 
-import api.entities.rx.protection.Protection;
+import api.dto.rx.protection.Protection;
 import api.preconditionbuilders.ProtectionsPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
@@ -10,9 +10,8 @@ import pages.MainPage;
 
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$x;
 import static configurations.User.TEST_USER;
-import static helpers.Precondition.testStart;
+import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})

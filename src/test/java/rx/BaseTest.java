@@ -1,6 +1,6 @@
 package rx;
 
-import api.utils.VariablesStore;
+import utils.VariablesStore;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.Step;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -44,7 +44,6 @@ public abstract class BaseTest {
     }
 
     @AfterClass(alwaysRun = true)
-    @Step("Attach browser Console log and close WebDriver session")
     public void closeSessionAndVideoAttach() {
         attachTheBrowserConsoleLog();
         closeTheSession();

@@ -1,7 +1,6 @@
 package api.services;
 
-import api.entities.rx.protection.ProtectionRequest;
-import api.services.BaseService;
+import api.dto.rx.protection.ProtectionRequest;
 import io.restassured.response.Response;
 
 import static api.core.RakutenExchangeApi.*;

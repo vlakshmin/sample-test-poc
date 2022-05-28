@@ -1,8 +1,8 @@
 package api.preconditionbuilders;
 
-import api.entities.rx.publisher.Currency;
-import api.entities.rx.publisher.Publisher;
-import api.entities.rx.publisher.PublisherRequest;
+import api.dto.rx.publisher.Currency;
+import api.dto.rx.publisher.Publisher;
+import api.dto.rx.publisher.PublisherRequest;
 import api.services.PublisherService;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Arrays;
 import java.util.List;
 
-import static api.utils.FakerUtils.*;
+import static utils.FakerUtils.*;
 
 @Slf4j
 @Getter
