@@ -3,16 +3,19 @@ package widgets.common.multipane;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selenide.$x;
-import static widgets.common.multipane.MultipaneComponentsElements.INCLUDE_ALL_BUTTON;
+import static widgets.common.multipane.MultipaneElements.INCLUDE_ALL_BUTTON;
 
-public class MultipaneComponent {
+/**
+ * Keep Selectors of UI elements in {@link MultipaneElements}
+ */
+public class Multipane {
 
 
     public SelenideElement getIncludeAllButton(String panelName) {
 
         return $x(String.format(INCLUDE_ALL_BUTTON.getSelector(), panelName)).as(INCLUDE_ALL_BUTTON.getAlias());
     }
-    // Todo refactor as getIncludeAllButton. Keep selectors in MultipaneComponentElements enumeration
+    // Todo refactor as getIncludeAllButton. Keep selectors in MultipaneElements enumeration
     /*
     public WebElement getClearAllButton(String panelName) {
         return driver.findElement

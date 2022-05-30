@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum MultipaneComponentsElements {
+public enum MultipaneElements {
 
     INCLUDE_ALL_BUTTON( "'Include All' button",
             "//button/h3[text()='%s']/../../..//span/div[contains(text(),'Include All')]/..");

@@ -3,9 +3,12 @@ package widgets.common.table;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selenide.$x;
-import static widgets.common.table.TableOptionsComponentsElements.TABLE_OPTIONS_COMPONENTS_BUTTON;
+import static widgets.common.table.TableOptionsElements.TABLE_OPTIONS_COMPONENTS_BUTTON;
 
-public class TableOptionsComponent{
+/**
+ * Keep Selectors of UI elements in {@link TableOptionsElements}
+ */
+public class TableOptions {
 
     public SelenideElement getTableOptionsButton() {
 

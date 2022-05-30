@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum TableOptionsComponentsElements {
+public enum TablePaginationElements {
 
-    TABLE_OPTIONS_COMPONENTS_BUTTON( "'Table Options' button", "//button/span[contains(text(),'Table Options')]");
+    PAGE_MENU( "Page Menu", "//*[@class='v-data-footer']//div[@class='v-input__slot']");
 
     private String alias;
     private String selector;

@@ -3,9 +3,12 @@ package widgets.common.table;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selenide.$x;
-import static widgets.common.table.TableComponentsElements.CHECKBOX;
+import static widgets.common.table.TableElements.CHECKBOX;
 
-public class TableComponent {
+/**
+ * Keep Selectors of UI elements in {@link TableElements}
+ */
+public class Table {
 
     public SelenideElement getCheckbox(int row) {
 

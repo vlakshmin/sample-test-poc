@@ -1,11 +1,21 @@
 package widgets.common.table;
 
-import RXBaseClass.RXBaseClass;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import com.codeborne.selenide.SelenideElement;
 
-public class PaginationComponent extends RXBaseClass {
+import static com.codeborne.selenide.Selenide.$x;
+import static widgets.common.table.TablePaginationElements.PAGE_MENU;
 
+/**
+ * Keep Selectors of UI elements in {@link TablePaginationElements}
+ */
+public class TablePagination {
+
+    public SelenideElement getPageMenu() {
+
+        return $x(PAGE_MENU.getSelector()).as(PAGE_MENU.getAlias());
+    }
+    // Todo refactor as getPageMenu. Keep selectors in PaginationElements enumeration
+    /*
     public WebElement getPaginationPanel() {
         return driver.findElement
                 (By.xpath("//*[@class='v-data-footer']/div[@class='v-data-footer__pagination']"));
@@ -33,9 +43,6 @@ public class PaginationComponent extends RXBaseClass {
                 + "//div[@class='v-list-item__title' and text()='" + rowNumbers + "']")).click();
     }
 
-    public WebElement getPageMenu() {
-        return driver.findElement(By.xpath("//*[@class='v-data-footer']//div[@class='v-input__slot']"));
-    }
 
     public WebElement getNext() {
         return driver.findElement
@@ -46,4 +53,6 @@ public class PaginationComponent extends RXBaseClass {
         return driver.findElement
                 (By.xpath("//div[@class='v-data-footer__icons-before']/button"));
     }
+
+     */
 }

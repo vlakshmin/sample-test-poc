@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum TableComponentsElements {
+public enum TableOptionsElements {
 
-    CHECKBOX( "Row Checkbox", "//table//tr[%s]/td[1]/div//div");
+    TABLE_OPTIONS_COMPONENTS_BUTTON( "'Table Options' button", "//button/span[contains(text(),'Table Options')]");
 
     private String alias;
     private String selector;
