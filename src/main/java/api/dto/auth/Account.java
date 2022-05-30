@@ -1,6 +1,6 @@
 package api.dto.auth;
 
-import utils.ObjectMapperUtils;
+import zutils.ObjectMapperUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Arrays;
 import java.util.List;
 
-import static utils.FakerUtils.*;
+import static zutils.FakerUtils.*;
 
 @Slf4j
 @Getter

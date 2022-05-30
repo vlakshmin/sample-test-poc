@@ -1,10 +1,10 @@
-package widgets;
+package widgets.publisher;
 
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 
 import static com.codeborne.selenide.Selenide.$x;
-import static widgets.EditPublisherSidebarElements.*;
+import static widgets.publisher.EditPublisherSidebarElements.*;
 
 @Getter
 public class EditPublisherSidebar {

@@ -2,7 +2,7 @@ package rx;
 
 import api.dto.rx.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
-import utils.FakerUtils;
+import zutils.FakerUtils;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;

@@ -1,4 +1,4 @@
-package utils;
+package zutils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;

@@ -2,13 +2,12 @@ package pages;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.openqa.selenium.WebElement;
-import widgets.EditPublisherSidebar;
-import widgets.PublisherTableItem;
+import widgets.publisher.EditPublisherSidebar;
+import widgets.publisher.PublisherTableItem;
 
 import java.util.ArrayList;
 import java.util.List;

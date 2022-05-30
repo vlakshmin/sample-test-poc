@@ -1,4 +1,4 @@
-package widgets;
+package widgets.publisher;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

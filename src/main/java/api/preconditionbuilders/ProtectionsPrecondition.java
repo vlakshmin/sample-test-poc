@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Arrays;
 import java.util.List;
 
-import static utils.FakerUtils.captionWithSuffix;
+import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Getter

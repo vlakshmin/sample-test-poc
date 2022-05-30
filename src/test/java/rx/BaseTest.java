@@ -1,6 +1,6 @@
 package rx;
 
-import utils.VariablesStore;
+import zutils.VariablesStore;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.Step;
 import io.qameta.allure.selenide.AllureSelenide;

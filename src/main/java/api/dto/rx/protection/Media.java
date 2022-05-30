@@ -1,6 +1,6 @@
 package api.dto.rx.protection;
 
-import utils.ObjectMapperUtils;
+import zutils.ObjectMapperUtils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

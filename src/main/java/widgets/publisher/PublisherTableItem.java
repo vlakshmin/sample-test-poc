@@ -1,4 +1,4 @@
-package widgets;
+package widgets.publisher;
 
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.Getter;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 import static java.lang.String.format;
-import static widgets.PublisherTableItemElements.*;
+import static widgets.publisher.PublisherTableItemElements.*;
 
 @Getter
 public class PublisherTableItem {
