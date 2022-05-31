@@ -1,4 +1,4 @@
 package widgets.dashboard;
 
-public class TrafficOverviewGraph {
+public class TrafficOverviewGraph{
 }

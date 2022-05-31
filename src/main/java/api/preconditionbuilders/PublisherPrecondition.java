@@ -68,14 +68,14 @@ public class PublisherPrecondition {
             return this;
         }
 
-        public PublisherPrecondition build() {
-
-            return new PublisherPrecondition(this);
-        }
-
         private List<Publisher> getPublisherResponseList() {
 
             return Arrays.asList(response.jsonPath().getObject("items", Publisher[].class));
+        }
+
+        public PublisherPrecondition build() {
+
+            return new PublisherPrecondition(this);
         }
     }
 }

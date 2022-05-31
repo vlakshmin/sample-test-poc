@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.dashbord.DashboardPage;
+import pages.protections.ProtectionsPage;
 
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
@@ -19,9 +20,11 @@ public class ProtectionsTest extends BaseTest{
 
     private DashboardPage dashboardPage;
     private Protection protectionResponse;
+    private ProtectionsPage protectionsPage;
 
     public ProtectionsTest(){
         dashboardPage = new DashboardPage();
+        protectionsPage = new ProtectionsPage();
     }
 
     @Test
@@ -43,7 +46,7 @@ public class ProtectionsTest extends BaseTest{
                 .waitAndValidate(disappear, dashboardPage.getNuxtProgress())
                 .then()
                 .clickOnText("Protections")
-                .waitAndValidate(disappear, dashboardPage.getTableProgressBar())
+                .waitAndValidate(disappear, protectionsPage.getTableProgressBar())
         .testEnd();
 
         //allure serve
