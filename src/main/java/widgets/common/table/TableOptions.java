@@ -3,7 +3,7 @@ package widgets.common.table;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selenide.$x;
-import static widgets.common.table.TableOptionsElements.TABLE_OPTIONS_COMPONENTS_BUTTON;
+import static widgets.common.table.TableOptionsElements.*;
 
 /**
  * Keep Selectors of UI elements in {@link TableOptionsElements}
@@ -15,36 +15,33 @@ public class TableOptions {
         return $x(TABLE_OPTIONS_COMPONENTS_BUTTON.getSelector()).as(TABLE_OPTIONS_COMPONENTS_BUTTON.getAlias());
     }
 
-    // Todo refactor as getTableOptionsButton. Keep selectors in TableOptionsComponentElements enumeration
+    public SelenideElement getMenuOptions() {
 
-    /*
-    public WebElement getMenuOptions() {
-        return driver.findElement(By.xpath("//*[@class='v-list v-sheet theme--light']"));
+        return $x(TABLE_OPTIONS_MENU.getSelector()).as(TABLE_OPTIONS_MENU.getAlias());
     }
 
-    public WebElement getMenuItemState(String menuItem) {
-        return driver.findElement
-                (By.xpath(String.format("//*[@class='v-list v-sheet theme--light']//*[@class='v-input__slot']/label[text()='%s']/../div/input", menuItem)));
+    public SelenideElement getMenuItemCheckbox(String menuItem) {
+
+        return $x(String.format(MENU_ITEM_CHECKBOX.getSelector(), menuItem)).as(MENU_ITEM_CHECKBOX.getAlias());
     }
 
-    public WebElement getMenuItem(String menuItem) {
-        return driver.findElement
-                (By.xpath(String.format("//*[@class='v-list v-sheet theme--light']//*[@class='v-input__slot']/label[text()='%s']/../div", menuItem)));
+    public SelenideElement getMenuItem(String menuItem) {
+
+        return $x(String.format(MENU_ITEM.getSelector(), menuItem)).as(MENU_ITEM.getAlias());
     }
 
-    public WebElement getStatusItem(String status) {
-        return driver.findElement
-                (By.xpath(String.format("//*[@class='v-radio radio theme--light']//label[text()='%s']/../div", status)));
+    public SelenideElement getStatusItemRadio(String status) {
+
+        return $x(String.format(ITEM_STATUS_RADIO.getSelector(), status)).as(ITEM_STATUS_RADIO.getAlias());
     }
 
-    public WebElement getSearchInput() {
-        return driver.findElement
-                (By.xpath("//*[@class='v-text-field__slot']/label[text()='Search']/../input"));
+    public SelenideElement getSearchInput() {
+        return $x(SEARCH.getSelector()).as(SEARCH.getAlias());
     }
 
-    public WebElement getClear() {
-        return driver.findElement
-                (By.xpath("//*[@class='v-input__icon v-input__icon--clear']/button"));
+    public SelenideElement getClear() {
+
+        return $x(CLEAR.getSelector()).as(CLEAR.getAlias());
     }
-     */
+
 }

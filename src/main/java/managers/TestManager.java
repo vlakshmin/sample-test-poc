@@ -15,9 +15,14 @@ import org.testng.annotations.Listeners;
 import pages.BasePage;
 import pages.LoginPage;
 import pages.Path;
+import widgets.common.table.Table;
+import widgets.common.table.TableOptions;
+import widgets.common.table.TablePagination;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.function.Supplier;
@@ -45,9 +50,12 @@ public final class TestManager {
 
     public static class TestManagerBuilder {
 
-        private BasePage basePage = new BasePage();
-        private LoginPage loginPage =  new LoginPage();
         private final String ELEMENT_BY_TEXT = "//*[contains(text(),'%s')]";
+        private final BasePage basePage = new BasePage();
+        private final LoginPage loginPage = new LoginPage();
+        private final Table table = new Table();
+        private final TableOptions tableOptions = new TableOptions();
+        private final TablePagination tablePagination = new TablePagination();
 
         public TestManagerBuilder openUrl() {
             logEvent(format("Opening url '%s'", ConfigurationLoader.getConfig().getBaseUrl()));
@@ -77,6 +85,7 @@ public final class TestManager {
 
             return this;
         }
+
         public TestManagerBuilder and() {
 
             return this;
@@ -91,10 +100,10 @@ public final class TestManager {
             return this;
         }
 
-        public TestManagerBuilder loginWithCookie(User user){
+        public TestManagerBuilder loginWithCookie(User user) {
             //Todo Implement login with cookie
             setCredentials(user);
-            String token =  getToken();
+            String token = getToken();
 
             //Code to set cookie here
             return this;
@@ -187,7 +196,7 @@ public final class TestManager {
             Stream.of(texts).forEach(text -> {
                 logEvent(format("Validating Web element with text '%s' is visible on UI", text));
                 assertTrue($x(String.format(ELEMENT_BY_TEXT, text)).should(exist, visible).isDisplayed()
-                    , String.format("\nWeb element with text '%s' not visible on UI", text));
+                        , String.format("\nWeb element with text '%s' not visible on UI", text));
             });
 
             return this;
@@ -238,9 +247,10 @@ public final class TestManager {
         public TestManagerBuilder validate(SelenideElement... elements) {
 
             Stream.of(elements).forEach(element -> {
-                logEvent(format("Validating %s is visible on UI", element.getAlias()));
-                assertTrue(element.shouldBe(exist).exists() && element.shouldBe(visible).isDisplayed()
-                    , element.toString());}
+                        logEvent(format("Validating %s is visible on UI", element.getAlias()));
+                        assertTrue(element.shouldBe(exist).exists() && element.shouldBe(visible).isDisplayed()
+                                , element.toString());
+                    }
             );
 
             return this;
@@ -250,7 +260,7 @@ public final class TestManager {
             Stream.of(elements).forEach(element -> {
                 logEvent(format("Validating %s is %s on UI", element.getAlias(), condition.getName()));
                 assertTrue(element.shouldBe(condition).is(condition)
-                    , String.format("\n'%s' with condition '%s'", element, condition));
+                        , String.format("\n'%s' with condition '%s'", element, condition));
             });
 
             return this;
@@ -296,7 +306,7 @@ public final class TestManager {
             Stream.of(elements).forEach(element -> {
                 logEvent(format("Validating %s is %s on UI", element.getAlias(), condition.getName()));
                 assertTrue(element.shouldBe(condition).is(condition)
-                    , String.format("\n'%s' with condition '%s'", element, condition));
+                        , String.format("\n'%s' with condition '%s'", element, condition));
             });
 
             return this;
@@ -345,13 +355,13 @@ public final class TestManager {
             step(format("Setting value '%s' in field '%s' withXpath '%s'",
                     value, element.getAlias(), element.getSearchCriteria()));
             //element.should(exist,visible).hover().doubleClick().sendKeys(Keys.CONTROL + "A", Keys.BACK_SPACE);
-            element.should(exist,visible).hover().click();
+            element.should(exist, visible).hover().click();
             int i = 0;
             do {
                 element.sendKeys(Keys.BACK_SPACE);
                 i++;
-            } while (i<=30);
-            element.should(exist,visible).hover().sendKeys(value);
+            } while (i <= 30);
+            element.should(exist, visible).hover().sendKeys(value);
 
             return this;
         }
@@ -412,7 +422,7 @@ public final class TestManager {
             return this;
         }
 
-        public TestManagerBuilder uploadFileFromDialog(String relativeFilePath){
+        public TestManagerBuilder uploadFileFromDialog(String relativeFilePath) {
             $("input[type='file']").uploadFile(new File(relativeFilePath));
 
             return this;
@@ -435,7 +445,7 @@ public final class TestManager {
             return this;
         }
 
-        private void logEvent(String loggerString){
+        private void logEvent(String loggerString) {
             //ToDo Implement custom Annotation to log info in Browser Console and in Allure Resport
             log.info(loggerString);
             step(loggerString);
@@ -444,6 +454,46 @@ public final class TestManager {
         public TestManager testEnd() {
 
             return new TestManager(this);
+        }
+
+        //Table steps
+        public List<String> getColumnsName() {
+            List<SelenideElement> columns = table.getColumns();
+            List<String> columnsName = new ArrayList<>();
+            for (SelenideElement element : columns) {
+                columnsName.add(element.getText());
+            }
+            return columnsName;
+        }
+
+        public List<SelenideElement> getCustomCells(String columnName) {
+            List<SelenideElement> columns = table.getColumns();
+            int columnId = getColumnsName().indexOf(columnName) + 2;
+            return $$x(String.format("//tbody/tr/td[%s]", columnId));
+        }
+
+        public List<String> getCustomCellsValues(String columnName) {
+            List<SelenideElement> values = getCustomCells(columnName);
+            List<String> columnsName = new ArrayList<>();
+            for (SelenideElement element : values) {
+                columnsName.add(element.getText());
+            }
+            return columnsName;
+        }
+
+        public List<SelenideElement> getCustomCellsLinks(String columnName) {
+            int columnId = getColumnsName().indexOf(columnName) + 2;
+            return $$x(String.format("//tbody/tr/td[%s]", columnId));
+        }
+
+        public String getPaginationPanelText() {
+            return tablePagination.getPaginationPanel().getText();
+        }
+
+        public String getPaginationTextTotalRows() {
+            String text = getPaginationPanelText();
+            int index = text.lastIndexOf("of");
+            return text.substring(index + 3, text.length());
         }
     }
 }

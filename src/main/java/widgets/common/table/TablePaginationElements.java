@@ -7,7 +7,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum TablePaginationElements {
 
-    PAGE_MENU( "Page Menu", "//*[@class='v-data-footer']//div[@class='v-input__slot']");
+    PAGE_MENU( "Page Menu", "//*[@class='v-data-footer']//div[@class='v-input__slot']"),
+    ROW_NUMBERS_LIST( "Row Numbers List", "//*[@class='v-data-footer']/div[@class='v-data-footer__select']//div[@class='v-select__selections']/div"),
+    NEXT( "Next", "//div[@class='v-data-footer__icons-after']/button"),
+    PREVIOUS( "Previous", "//div[@class='v-data-footer__icons-before']/button"),
+    PAGINATION_PANEL( "Pagination Panel", "//*[@class='v-data-footer']/div[@class='v-data-footer__pagination']");
 
     private String alias;
     private String selector;

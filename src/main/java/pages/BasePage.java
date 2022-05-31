@@ -18,4 +18,9 @@ public class BasePage {
     private SelenideElement snackBar = $x(SNACKBAR.getSelector()).as(SNACKBAR.getAlias());
     private SelenideElement nuxtProgress = $x(NUXT_PROGRESSBAR.getSelector()).as(NUXT_PROGRESSBAR.getAlias());
     private SelenideElement tableProgressBar = $x(TABLE_PROGRESSBAR.getSelector()).as(TABLE_PROGRESSBAR.getAlias());
+
+    public SelenideElement getButtonWithCaption(String caption){
+
+       return  $x(String.format(BUTTON.getSelector(),caption)).as(BUTTON.getAlias());
+    }
 }
