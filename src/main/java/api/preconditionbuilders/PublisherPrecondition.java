@@ -1,8 +1,8 @@
 package api.preconditionbuilders;
 
-import api.dto.rx.publisher.Currency;
-import api.dto.rx.publisher.Publisher;
-import api.dto.rx.publisher.PublisherRequest;
+import api.dto.rx.admin.publisher.Currency;
+import api.dto.rx.admin.publisher.Publisher;
+import api.dto.rx.admin.publisher.PublisherRequest;
 import api.services.PublisherService;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;

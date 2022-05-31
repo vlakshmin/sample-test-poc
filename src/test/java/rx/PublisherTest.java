@@ -1,6 +1,6 @@
 package rx;
 
-import api.dto.rx.publisher.Publisher;
+import api.dto.rx.admin.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
 import pages.Path;
 import zutils.FakerUtils;

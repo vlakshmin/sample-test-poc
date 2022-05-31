@@ -1,4 +1,4 @@
-package api.dto.rx.publisher;
+package api.dto.rx.admin.publisher;
 
 import zutils.ObjectMapperUtils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -14,16 +14,19 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PublisherRequest {
+public class Publisher {
 
+    private Integer id;
     private String name;
     private String mail;
     private String domain;
     private String currency;
-    private Boolean isEnabled;
-    private List<Integer> dspIds;
     private String salesAccountName;
     private List<Integer> categoryIds;
+    private List<Integer> dspIds;
+    private Boolean isEnabled;
+    private String createdAt;
+    private String updatedAt;
 
     public String toJson() {
 
