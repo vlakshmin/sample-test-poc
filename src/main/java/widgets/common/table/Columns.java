@@ -1,5 +1,10 @@
 package widgets.common.table;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum Columns {
 
     DSP_ID("DSP ID", "DSP ID", false),
@@ -20,23 +25,10 @@ public enum Columns {
     private String name;
     private Boolean sortable;
 
-    Columns(String locator, String name, Boolean sortable) {
-        this.locator = locator;
-        this.name = name;
-        this.sortable = sortable;
-    }
 
-    public String getLocator() {
-        return ".v-data-table-header tr th[aria-label^='"+locator+"']";
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Boolean getSortable() {
-        return sortable;
-    }
+//    public String getLocator() {
+//        return ".v-data-table-header tr th[aria-label^='"+locator+"']";
+//    }
 
     public static Columns findByAbbr(String abbr) {
         for (Columns v : values()) {

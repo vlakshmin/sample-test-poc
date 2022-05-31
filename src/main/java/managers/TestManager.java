@@ -14,6 +14,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Listeners;
 import pages.BasePage;
 import pages.LoginPage;
+import pages.Path;
 
 import java.io.File;
 import java.time.Duration;
@@ -51,6 +52,13 @@ public final class TestManager {
         public TestManagerBuilder openUrl() {
             logEvent(format("Opening url '%s'", ConfigurationLoader.getConfig().getBaseUrl()));
             open(ConfigurationLoader.getConfig().getBaseUrl());
+
+            return this;
+        }
+
+        public TestManagerBuilder openDirectPath(Path path) {
+            logEvent(format("Opening path '%s%s'", ConfigurationLoader.getConfig().getBaseUrl(), path.getPath()));
+            open(format("%s%s", ConfigurationLoader.getConfig().getBaseUrl(), path.getPath()));
 
             return this;
         }
@@ -112,6 +120,34 @@ public final class TestManager {
         public TestManagerBuilder clickOnWebElement(SelenideElement element) {
             logEvent(format("Clicking on %s", element.getAlias()));
             element.shouldBe(exist, visible).hover().click();
+
+            return this;
+        }
+
+        //Todo
+        public TestManagerBuilder selectCheckBox(SelenideElement checkBox) {
+            //Todo implement realisation
+
+            return this;
+        }
+
+        //Todo
+        public TestManagerBuilder unSelectCheckBox(SelenideElement checkBox) {
+            //Todo implement realisation
+
+            return this;
+        }
+
+        //Todo
+        public TestManagerBuilder turnToggleOn(SelenideElement toggle) {
+            //Todo implement realisation
+
+            return this;
+        }
+
+        //Todo
+        public TestManagerBuilder turnToggleOff(SelenideElement toggle) {
+            //Todo implement realisation
 
             return this;
         }
@@ -354,6 +390,7 @@ public final class TestManager {
                     .orElseThrow(() -> new NoSuchElementException(
                             format("Type with name '%s' haven't been found in the dropdown", value)))
                     .click();
+
             return this;
         }
 

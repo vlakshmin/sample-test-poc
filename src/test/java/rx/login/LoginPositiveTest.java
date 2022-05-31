@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import pages.MainPage;
+import pages.dashbord.DashboardPage;
 import rx.BaseTest;
 
 import static configurations.User.TEST_USER;
@@ -17,10 +17,10 @@ import static managers.TestManager.testStart;
 @Listeners({ScreenShooter.class})
 public class LoginPositiveTest extends BaseTest {
 
-    MainPage mainPage;
+    DashboardPage dashboardPage;
 
     public LoginPositiveTest(){
-        mainPage = new MainPage();
+        dashboardPage = new DashboardPage();
     }
 
     @Test
@@ -30,7 +30,7 @@ public class LoginPositiveTest extends BaseTest {
                 .openUrl()
                 .logIn(TEST_USER)
                 .then()
-                .validate(Condition.visible, mainPage.getLogo())
+                .validate(Condition.visible, dashboardPage.getLogo())
                 .validate(TEST_USER.getMail())
         .testEnd();
     }

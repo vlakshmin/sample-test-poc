@@ -2,10 +2,14 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
+import widgets.common.table.TableOptionsElements;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static pages.BasePageElements.*;
 
+/**
+ * Keep Selectors of UI elements in {@link BasePageElements}
+ */
 @Getter
 public class BasePage {
 

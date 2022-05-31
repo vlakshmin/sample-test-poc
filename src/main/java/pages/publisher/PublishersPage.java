@@ -1,4 +1,4 @@
-package pages;
+package pages.publisher;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
@@ -6,6 +6,8 @@ import com.codeborne.selenide.SelenideElement;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.openqa.selenium.WebElement;
+import pages.BasePage;
+import pages.BasePageElements;
 import widgets.publisher.EditPublisherSidebar;
 import widgets.publisher.PublisherTableItem;
 
@@ -20,15 +22,18 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 import static java.lang.String.format;
+import static pages.publisher.PublishersPageElements.*;
 
+/**
+ * Keep Selectors of UI elements in {@link PublishersPageElements}
+ */
 @Getter
-public class PublishersPage extends BasePage{
+public class PublishersPage extends BasePage {
 
-
-    private SelenideElement pageTitle = $x("//h1");
     @Getter(AccessLevel.NONE)
-    private ElementsCollection publisherItems = $$x("//tbody/tr");
-    private SelenideElement createPublisherButton = $x("//button//span[text()='Create Publisher']");
+    private ElementsCollection publisherItems = $$x(PUBLISHER_ITEMS.getSelector()).as(PUBLISHER_ITEMS.getAlias());
+    private SelenideElement pageTitle = $x(PUBLISHERS_PAGE_TITLE.getSelector()).as(PUBLISHERS_PAGE_TITLE.getAlias());
+    private SelenideElement createPublisherButton = $x(CREATE_PUBLISHER_BUTTON.getSelector()).as(CREATE_PUBLISHER_BUTTON.getAlias());
     @Getter(AccessLevel.NONE)
     private List<PublisherTableItem> publisherList = new ArrayList<>();
     private EditPublisherSidebar editPublisherSidebar = new EditPublisherSidebar();

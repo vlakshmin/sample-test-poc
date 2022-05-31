@@ -6,7 +6,7 @@ import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import pages.MainPage;
+import pages.dashbord.DashboardPage;
 
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
@@ -17,11 +17,11 @@ import static managers.TestManager.testStart;
 @Listeners({ScreenShooter.class})
 public class ProtectionsTest extends BaseTest{
 
-    private MainPage mainPage;
+    private DashboardPage dashboardPage;
     private Protection protectionResponse;
 
     public ProtectionsTest(){
-        mainPage = new MainPage();
+        dashboardPage = new DashboardPage();
     }
 
     @Test
@@ -38,12 +38,12 @@ public class ProtectionsTest extends BaseTest{
                 .given()
                 .openUrl()
                 .logIn(TEST_USER)
-                .validate(visible, mainPage.getLogo())
+                .validate(visible, dashboardPage.getLogo())
                 .validate(TEST_USER.getMail())
-                .waitAndValidate(disappear, mainPage.getNuxtProgress())
+                .waitAndValidate(disappear, dashboardPage.getNuxtProgress())
                 .then()
                 .clickOnText("Protections")
-                .waitAndValidate(disappear, mainPage.getTableProgressBar())
+                .waitAndValidate(disappear, dashboardPage.getTableProgressBar())
         .testEnd();
 
         //allure serve

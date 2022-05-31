@@ -2,14 +2,15 @@ package rx;
 
 import api.dto.rx.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
+import pages.Path;
 import zutils.FakerUtils;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import pages.MainPage;
-import pages.PublishersPage;
+import pages.dashbord.DashboardPage;
+import pages.publisher.PublishersPage;
 
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
@@ -21,15 +22,15 @@ import static java.lang.String.valueOf;
 @Listeners({ScreenShooter.class})
 public class PublisherTest extends BaseTest{
 
-    private MainPage mainPage;
     private Publisher publisher;
+    private DashboardPage dashboardsPage;
     private PublishersPage publishersPage;
 
     private static final String PUBLISHER_NAME_EDITED = FakerUtils.captionWithSuffix("Pub_Edited");
     private static final String PUBLISHER_AD_OPS_EDITED = FakerUtils.captionWithSuffix("Ad_Ops_Edited");
 
     public PublisherTest(){
-        mainPage = new MainPage();
+        dashboardsPage = new DashboardPage();
         publishersPage = new PublishersPage();
     }
 
@@ -48,15 +49,15 @@ public class PublisherTest extends BaseTest{
         //Opening Browser and Edit the protection created from Precondition
         testStart()
                 .given()
-                .openUrl()
+                .openDirectPath(Path.PUBLISHER)
                 .logIn(TEST_USER)
-                .validate(visible, mainPage.getLogo())
+                .validate(visible, dashboardsPage.getLogo())
                 .validate(TEST_USER.getMail())
-                .waitAndValidate(disappear, mainPage.getNuxtProgress())
+                .waitAndValidate(disappear, dashboardsPage.getNuxtProgress())
                 .and()
-                .clickOnText("Admin")
-                .clickOnText("Publisher")
-                .waitAndValidate(disappear, mainPage.getTableProgressBar())
+//                .clickOnText("Admin")
+//                .clickOnText("Publisher")
+                .waitAndValidate(disappear, dashboardsPage.getTableProgressBar())
                 .clickOnWebElement(publishersPage.getPublisherItemByName(publisher.getName()).getPublisherName())
                 .waitSideBarOpened()
                 .then()
