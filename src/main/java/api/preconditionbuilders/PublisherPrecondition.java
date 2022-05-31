@@ -61,6 +61,8 @@ public class PublisherPrecondition {
         }
 
         public PublisherPreconditionBuilder getPublishersList() {
+            this.response = publisherService.getAll();
+
             this.publisherResponseList = this.getPublisherResponseList();
 
             return this;
@@ -73,7 +75,7 @@ public class PublisherPrecondition {
 
         private List<Publisher> getPublisherResponseList() {
 
-            return Arrays.asList(response.as(Publisher[].class));
+            return Arrays.asList(response.jsonPath().getObject("items", Publisher[].class));
         }
     }
 }

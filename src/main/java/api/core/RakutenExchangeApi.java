@@ -11,6 +11,7 @@ public enum RakutenExchangeApi {
     CREATE_RULE("/v3/protections/targeting"),
 
     //Publisher
+    GET_PUBLISHERS("/v2/publishers"),
     CREATE_PUBLISHER("/v2/publishers");
 
     private String endpoint;

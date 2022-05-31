@@ -4,8 +4,8 @@ import api.dto.rx.publisher.PublisherRequest;
 import io.restassured.response.Response;
 
 import static api.core.RakutenExchangeApi.CREATE_PUBLISHER;
-import static api.core.client.HttpClient.initURL;
-import static api.core.client.HttpClient.post;
+import static api.core.RakutenExchangeApi.GET_PUBLISHERS;
+import static api.core.client.HttpClient.*;
 
 public class PublisherService extends BaseService {
 
@@ -13,5 +13,11 @@ public class PublisherService extends BaseService {
         URL = initURL(CREATE_PUBLISHER);
 
         return post(URL, body.toJson());
+    }
+
+    public Response getAll(){
+        URL = initURL(GET_PUBLISHERS);
+
+        return get(URL);
     }
 }
