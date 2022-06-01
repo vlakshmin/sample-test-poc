@@ -1,6 +1,7 @@
 package widgets.common.table;
 
 import com.codeborne.selenide.SelenideElement;
+import pages.BasePage;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import static widgets.common.table.TableElements.*;
 /**
  * Keep Selectors of UI elements in {@link TableElements}
  */
-public class Table {
+public class Table extends BasePage {
 
     public SelenideElement getCheckbox(int row) {
 

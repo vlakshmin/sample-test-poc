@@ -133,16 +133,17 @@ public final class TestManager {
             return this;
         }
 
-        //Todo
         public TestManagerBuilder selectCheckBox(SelenideElement checkBox) {
-            //Todo implement realisation
+            if (checkBox.getAttribute("aria-checked").equals("true"))
+                tableOptions.getMenuItem("Publisher").click();
 
             return this;
         }
 
-        //Todo
+
         public TestManagerBuilder unSelectCheckBox(SelenideElement checkBox) {
-            //Todo implement realisation
+           if (checkBox.getAttribute("aria-checked").equals("true"))
+                tableOptions.getMenuItem("Publisher").click();
 
             return this;
         }
