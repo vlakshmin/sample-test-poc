@@ -1,6 +1,6 @@
 package api.services;
 
-import api.dto.rx.publisher.PublisherRequest;
+import api.dto.rx.admin.publisher.PublisherRequest;
 import io.restassured.response.Response;
 
 import static api.core.RakutenExchangeApi.CREATE_PUBLISHER;

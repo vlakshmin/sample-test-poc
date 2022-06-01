@@ -1,8 +1,8 @@
 package api.preconditionbuilders;
 
-import api.dto.rx.publisher.Currency;
-import api.dto.rx.publisher.Publisher;
-import api.dto.rx.publisher.PublisherRequest;
+import api.dto.rx.admin.publisher.Currency;
+import api.dto.rx.admin.publisher.Publisher;
+import api.dto.rx.admin.publisher.PublisherRequest;
 import api.services.PublisherService;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
@@ -68,14 +68,14 @@ public class PublisherPrecondition {
             return this;
         }
 
-        public PublisherPrecondition build() {
-
-            return new PublisherPrecondition(this);
-        }
-
         private List<Publisher> getPublisherResponseList() {
 
             return Arrays.asList(response.jsonPath().getObject("items", Publisher[].class));
+        }
+
+        public PublisherPrecondition build() {
+
+            return new PublisherPrecondition(this);
         }
     }
 }
