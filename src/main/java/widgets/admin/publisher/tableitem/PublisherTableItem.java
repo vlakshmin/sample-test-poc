@@ -1,4 +1,4 @@
-package widgets.admin.publisher;
+package widgets.admin.publisher.tableitem;
 
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
@@ -6,8 +6,11 @@ import lombok.Getter;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 import static java.lang.String.format;
-import static widgets.admin.publisher.PublisherTableItemElements.*;
+import static widgets.admin.publisher.tableitem.PublisherTableItemElements.*;
 
+/**
+ * Keep Selectors of UI elements in {@link PublisherTableItemElements}
+ */
 @Getter
 public class PublisherTableItem {
 

@@ -7,8 +7,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import org.openqa.selenium.WebElement;
 import pages.BasePage;
-import widgets.admin.publisher.EditPublisherSidebar;
-import widgets.admin.publisher.PublisherTableItem;
+import widgets.admin.publisher.tableitem.PublisherTableItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,6 @@ public class PublishersPage extends BasePage {
     private SelenideElement createPublisherButton = $x(PublishersPageElements.CREATE_PUBLISHER_BUTTON.getSelector()).as(PublishersPageElements.CREATE_PUBLISHER_BUTTON.getAlias());
     @Getter(AccessLevel.NONE)
     private List<PublisherTableItem> publisherList = new ArrayList<>();
-    private EditPublisherSidebar editPublisherSidebar = new EditPublisherSidebar();
 
 
     public int countPublisherItems() {
