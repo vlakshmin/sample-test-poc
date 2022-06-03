@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum Path {
 
     PUBLISHER("/admin/publishers"),
-    USER("/admin/publishers");
+    USER("/admin/publishers"),
+    DEALS("/sales/deals");
 
     private String path;
 }
