@@ -104,13 +104,13 @@ public class TableTests extends BaseTest {
                 .selectRadioButton(tableOptions.getStatusItemRadio(Statuses.ACTIVE))
                 .clickOnWebElement(tableOptions.getTableOptionsBtn())
                 .selectFromDropdown(tablePagination.getPageMenu(), tablePagination.getRowNumbersList(), "10")
-                .waitAndValidate(visible, publishersPage.getTableProgressBar())
+           //     .waitAndValidate(visible, publishersPage.getTableProgressBar())
                 .waitAndValidate(not(visible), publishersPage.getTableProgressBar())
                 .validateList(table.getRows(), 10)
                 .validateListContainsTextOnly(table.getCustomCells(ColumnNames.ACTIVE),
                         Statuses.ACTIVE.getStatus())
                 .clickOnWebElement(tablePagination.getNext())
-                .waitAndValidate(visible, publishersPage.getTableProgressBar())
+            //    .waitAndValidate(visible, publishersPage.getTableProgressBar())
                 .waitAndValidate(not(visible), publishersPage.getTableProgressBar())
                 .validateListContainsTextOnly(table.getCustomCells(ColumnNames.ACTIVE),
                         Statuses.ACTIVE.getStatus())
