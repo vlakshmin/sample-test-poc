@@ -86,6 +86,7 @@ public class TableTests extends BaseTest {
                 .validate(not(visible), table.getColumnHeader(ColumnNames.AD_OPS_PERSON.getName()))
                 .validate(not(visible), table.getColumnHeader(ColumnNames.MAIL.getName()))
                 .validate(visible, table.getColumnHeader(ColumnNames.ID.getName()))
+                .logOut()
         .testEnd();
 
     }
@@ -112,6 +113,7 @@ public class TableTests extends BaseTest {
                 .waitAndValidate(not(visible), publishersPage.getTableProgressBar())
                 .validateListContainsTextOnly(table.getCustomCells(ColumnNames.ACTIVE),
                         Statuses.ACTIVE.getStatus())
+                .logOut()
         .testEnd();
 
     }
@@ -133,7 +135,9 @@ public class TableTests extends BaseTest {
                 //.clickOnWebElement(publishersPage.getPublisherItemByName(publisher.getName()).getPublisherName())
                 .clickOnTableCell(ColumnNames.PUBLISHER, publisher.getName())
                 .waitSideBarOpened()
-
+                .clickOnWebElement(publishersPage.getEditPublisherSidebar().getSaveButton())
+                .waitSideBarClosed()
+                .logOut()
         .testEnd();
 
     }
