@@ -1,30 +1,24 @@
 package rx;
 
-import api.dto.rx.publisher.Publisher;
+import api.dto.rx.admin.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
-import pages.dashbord.DashboardPage;
-import pages.publisher.PublishersPage;
-import widgets.common.table.Table;
-import widgets.common.table.TableOptions;
-import widgets.common.table.TableOptionsElements;
-import widgets.common.table.TablePagination;
-import zutils.FakerUtils;
+import pages.admin.publisher.PublishersPage;
+import widgets.common.table.*;
 
-import static com.codeborne.selenide.Condition.disappear;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
-import static java.lang.String.valueOf;
 import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class TableTests extends BaseTest{
+public class TableTests extends BaseTest {
 
     private Publisher publisher;
     private PublishersPage publishersPage;
@@ -32,14 +26,15 @@ public class TableTests extends BaseTest{
     private TablePagination tablePagination;
     private TableOptions tableOptions;
 
-    public TableTests(){
+    public TableTests() {
         publishersPage = new PublishersPage();
         table = new Table();
         tableOptions = new TableOptions();
+        tablePagination = new TablePagination();
     }
 
     @BeforeClass
-    public void createNewPublisher(){
+    public void createNewPublisher() {
         //Creating publisher to edit Using API
         publisher = PublisherPrecondition.publisher()
                 .createNewPublisher()
@@ -48,7 +43,7 @@ public class TableTests extends BaseTest{
     }
 
     @Test
-    public void checkColumns(){
+    public void checkColumns() {
         testStart()
                 .given()
                 .openDirectPath(Path.PUBLISHER)
@@ -56,8 +51,92 @@ public class TableTests extends BaseTest{
                 .waitAndValidate(disappear, publishersPage.getNuxtProgress())
                 .and()
                 .clickOnWebElement(tableOptions.getTableOptionsBtn())
-                .unSelectCheckBox(tableOptions.getMenuItemState("Publisher"))
-                .testEnd();
+                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PUBLISHER))
+                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CATEGORY))
+                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE))
+                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ID))
+                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DOMAIN))
+                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CURRENCY))
+                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.AD_OPS_PERSON))
+                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.MAIL))
+                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .validateList((ElementsCollection) table.getColumns(),
+                        ColumnNames.PUBLISHER.getName(),
+                        ColumnNames.CATEGORY.getName(),
+                        ColumnNames.ACTIVE.getName(),
+                        ColumnNames.ID.getName(),
+                        ColumnNames.DOMAIN.getName(),
+                        ColumnNames.CURRENCY.getName(),
+                        ColumnNames.AD_OPS_PERSON.getName(),
+                        ColumnNames.MAIL.getName())
+
+                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PUBLISHER))
+                .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CATEGORY))
+                .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE))
+                .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DOMAIN))
+                .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CURRENCY))
+                .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.AD_OPS_PERSON))
+                .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.MAIL))
+                .validate(not(visible), table.getColumnHeader(ColumnNames.PUBLISHER.getName()))
+                .validate(not(visible), table.getColumnHeader(ColumnNames.CATEGORY.getName()))
+                .validate(not(visible), table.getColumnHeader(ColumnNames.ACTIVE.getName()))
+                .validate(not(visible), table.getColumnHeader(ColumnNames.DOMAIN.getName()))
+                .validate(not(visible), table.getColumnHeader(ColumnNames.CURRENCY.getName()))
+                .validate(not(visible), table.getColumnHeader(ColumnNames.AD_OPS_PERSON.getName()))
+                .validate(not(visible), table.getColumnHeader(ColumnNames.MAIL.getName()))
+                .validate(visible, table.getColumnHeader(ColumnNames.ID.getName()))
+        .testEnd();
 
     }
+
+    @Test
+    public void checkPagenation() {
+        testStart()
+                .given()
+                .openDirectPath(Path.PUBLISHER)
+                .logIn(TEST_USER)
+                .waitAndValidate(disappear, publishersPage.getNuxtProgress())
+                .and()
+                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .selectRadioButton(tableOptions.getStatusItemRadio(Statuses.ACTIVE))
+                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .selectFromDropdown(tablePagination.getPageMenu(), tablePagination.getRowNumbersList(), "10")
+                .waitAndValidate(visible, publishersPage.getTableProgressBar())
+                .waitAndValidate(not(visible), publishersPage.getTableProgressBar())
+                .validateList(table.getRows(), 10)
+                .validateListContainsTextOnly(table.getCustomCells(ColumnNames.ACTIVE),
+                        Statuses.ACTIVE.getStatus())
+                .clickOnWebElement(tablePagination.getNext())
+                .waitAndValidate(visible, publishersPage.getTableProgressBar())
+                .waitAndValidate(not(visible), publishersPage.getTableProgressBar())
+                .validateListContainsTextOnly(table.getCustomCells(ColumnNames.ACTIVE),
+                        Statuses.ACTIVE.getStatus())
+        .testEnd();
+
+    }
+
+    @Test
+    public void checkSearch() {
+        testStart()
+                .given()
+                .openDirectPath(Path.PUBLISHER)
+                .logIn(TEST_USER)
+                .waitAndValidate(disappear, publishersPage.getNuxtProgress())
+                .and()
+                .setValueWithClean(table.getSearch(), publisher.getName())
+                .clickEnterButton(table.getSearch())
+                .waitAndValidate(visible, publishersPage.getTableProgressBar())
+                .waitAndValidate(not(visible), publishersPage.getTableProgressBar())
+                .validateListContainsTextOnly(table.getCustomCells(ColumnNames.PUBLISHER),
+                       publisher.getName())
+                //.clickOnWebElement(publishersPage.getPublisherItemByName(publisher.getName()).getPublisherName())
+                .clickOnTableCell(ColumnNames.PUBLISHER, publisher.getName())
+                .waitSideBarOpened()
+
+        .testEnd();
+
+    }
+
+
 }

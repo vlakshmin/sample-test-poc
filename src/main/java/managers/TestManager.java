@@ -15,14 +15,13 @@ import org.testng.annotations.Listeners;
 import pages.BasePage;
 import pages.LoginPage;
 import pages.Path;
+import widgets.common.table.ColumnNames;
 import widgets.common.table.Table;
 import widgets.common.table.TableOptions;
 import widgets.common.table.TablePagination;
 
 import java.io.File;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.function.Supplier;
@@ -133,17 +132,25 @@ public final class TestManager {
             return this;
         }
 
-        public TestManagerBuilder selectCheckBox(SelenideElement checkBox) {
-            if (checkBox.getAttribute("aria-checked").equals("true"))
-                tableOptions.getMenuItem("Publisher").click();
+        public TestManagerBuilder selectCheckBox(SelenideElement checkbox) {
+            if (checkbox.getAttribute("aria-checked").equals("false")) {
+                checkbox.parent().click();
+            }
 
             return this;
         }
 
+        public TestManagerBuilder unSelectCheckBox(SelenideElement checkbox) {
+            if (checkbox.getAttribute("aria-checked").equals("true"))
+                checkbox.parent().click();
 
-        public TestManagerBuilder unSelectCheckBox(SelenideElement checkBox) {
-           if (checkBox.getAttribute("aria-checked").equals("true"))
-                tableOptions.getMenuItem("Publisher").click();
+            return this;
+        }
+
+        public TestManagerBuilder selectRadioButton(SelenideElement radio) {
+            if (radio.getAttribute("aria-checked").equals("false")) {
+                radio.parent().click();
+            }
 
             return this;
         }
@@ -226,12 +233,31 @@ public final class TestManager {
             return this;
         }
 
+
         public TestManagerBuilder validateList(ElementsCollection collection, String... texts) {
             logEvent(format("Validating List of %ss ", collection.first().getSearchCriteria()));
             Stream.of(texts).forEach(elementText -> {
                 logEvent(format("Validating %s has text '%s'", collection.first().getAlias(), elementText));
                 assertTrue(collection.findBy(text(elementText)).shouldBe(visible).isDisplayed());
             });
+            collection.shouldHave(CollectionCondition.size(texts.length));
+
+            return this;
+        }
+
+        public TestManagerBuilder validateListContainsTextOnly(ElementsCollection collection, String suffix) {
+            logEvent(format("Validating List of %ss contains suffix '%s'", collection.first().getAlias(), suffix));
+            collection.forEach(elementCollection -> {
+                elementCollection.shouldBe(visible).shouldHave(Condition.text(suffix));
+            });
+            logEvent(format("All elements of List of %ss contains suffix '%s' ", collection.first().getAlias(), suffix));
+
+            return this;
+        }
+
+        public TestManagerBuilder validateList(ElementsCollection collection, int expectedSize) {
+            logEvent(format("Validating %s has size equals to %s", collection.first().getAlias(), expectedSize));
+            collection.shouldHave(CollectionCondition.size(expectedSize));
 
             return this;
         }
@@ -396,7 +422,7 @@ public final class TestManager {
             element1.shouldBe(exist, visible).hover().click();
             list.stream()
                     .filter(item -> item.shouldBe(visible).getText().equalsIgnoreCase(value) &&
-                            !item.shouldBe(visible).getText().equalsIgnoreCase("No records found"))
+                            !item.shouldBe(visible).getText().equalsIgnoreCase("No data available"))
                     .findFirst()
                     .orElseThrow(() -> new NoSuchElementException(
                             format("Type with name '%s' haven't been found in the dropdown", value)))
@@ -457,44 +483,25 @@ public final class TestManager {
             return new TestManager(this);
         }
 
-        //Table steps
-        public List<String> getColumnsName() {
-            List<SelenideElement> columns = table.getColumns();
-            List<String> columnsName = new ArrayList<>();
-            for (SelenideElement element : columns) {
-                columnsName.add(element.getText());
+        public void paginationFirstPage() {
+            SelenideElement privBtn = tablePagination.getPrevious();
+            while (privBtn.isEnabled()) {
+                privBtn.click();
             }
-            return columnsName;
         }
 
-        public List<SelenideElement> getCustomCells(String columnName) {
-            List<SelenideElement> columns = table.getColumns();
-            int columnId = getColumnsName().indexOf(columnName) + 2;
-            return $$x(String.format("//tbody/tr/td[%s]", columnId));
+        public TestManagerBuilder clickOnTableCell(ColumnNames column, String cellValue) {
+            table.getCustomCells(column)
+                    .stream()
+                    .filter(x -> x.getText().equals(cellValue))
+                    .findFirst()
+                    .orElseThrow(() -> new NoSuchElementException(
+                            format("The table cell with value '%s' isn't presented in the column '%s'", cellValue, column.getName())))
+                    .lastChild()
+                    .click();
+
+            return this;
         }
 
-        public List<String> getCustomCellsValues(String columnName) {
-            List<SelenideElement> values = getCustomCells(columnName);
-            List<String> columnsName = new ArrayList<>();
-            for (SelenideElement element : values) {
-                columnsName.add(element.getText());
-            }
-            return columnsName;
-        }
-
-        public List<SelenideElement> getCustomCellsLinks(String columnName) {
-            int columnId = getColumnsName().indexOf(columnName) + 2;
-            return $$x(String.format("//tbody/tr/td[%s]", columnId));
-        }
-
-        public String getPaginationPanelText() {
-            return tablePagination.getPaginationPanel().getText();
-        }
-
-        public String getPaginationTextTotalRows() {
-            String text = getPaginationPanelText();
-            int index = text.lastIndexOf("of");
-            return text.substring(index + 3, text.length());
-        }
     }
 }
