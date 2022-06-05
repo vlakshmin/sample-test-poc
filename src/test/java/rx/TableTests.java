@@ -86,6 +86,7 @@ public class TableTests extends BaseTest {
                 .validate(not(visible), table.getColumnHeader(ColumnNames.AD_OPS_PERSON.getName()))
                 .validate(not(visible), table.getColumnHeader(ColumnNames.MAIL.getName()))
                 .validate(visible, table.getColumnHeader(ColumnNames.ID.getName()))
+                .clickOnWebElement(tableOptions.getTableOptionsBtn())
                 .logOut()
         .testEnd();
 
