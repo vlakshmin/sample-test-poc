@@ -16,8 +16,7 @@ import pages.BasePage;
 import pages.LoginPage;
 import pages.Path;
 import widgets.common.table.ColumnNames;
-import widgets.common.table.Table;
-import widgets.common.table.TableOptions;
+import widgets.common.table.TableData;
 import widgets.common.table.TablePagination;
 
 import java.io.File;
@@ -52,8 +51,7 @@ public final class TestManager {
         private final String ELEMENT_BY_TEXT = "//*[contains(text(),'%s')]";
         private final BasePage basePage = new BasePage();
         private final LoginPage loginPage = new LoginPage();
-        private final Table table = new Table();
-        private final TableOptions tableOptions = new TableOptions();
+        private final TableData table = new TableData();
         private final TablePagination tablePagination = new TablePagination();
 
         public TestManagerBuilder openUrl() {
@@ -483,14 +481,7 @@ public final class TestManager {
             return new TestManager(this);
         }
 
-        public void paginationFirstPage() {
-            SelenideElement privBtn = tablePagination.getPrevious();
-            while (privBtn.isEnabled()) {
-                privBtn.click();
-            }
-        }
-
-        public TestManagerBuilder clickOnTableCellLink(ColumnNames column, String cellValue) {
+         public TestManagerBuilder clickOnTableCellLink(ColumnNames column, String cellValue) {
             table.getCustomCells(column)
                     .stream()
                     .filter(x -> x.getText().equals(cellValue))
