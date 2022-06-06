@@ -490,7 +490,7 @@ public final class TestManager {
             }
         }
 
-        public TestManagerBuilder clickOnTableCell(ColumnNames column, String cellValue) {
+        public TestManagerBuilder clickOnTableCellLink(ColumnNames column, String cellValue) {
             table.getCustomCells(column)
                     .stream()
                     .filter(x -> x.getText().equals(cellValue))
