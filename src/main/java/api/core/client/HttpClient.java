@@ -184,6 +184,11 @@ public class HttpClient {
         }
     }
 
+    public static String initURL(String endpoint) {
+
+        return format("%s%s", getConfig().getBaseUrlAPI(), endpoint);
+    }
+
     private static Response executeGet(String token, String url) {
         log.info("GET {}", url);
         step(format("GET %s", url));
@@ -281,9 +286,5 @@ public class HttpClient {
                         response.getStatusCode(), response.getBody().prettyPrint()));
                 break;
         }
-    }
-
-    public static void main(String[] args) {
-        HttpClient.get(initURL(CREATE_RULE));
     }
 }
