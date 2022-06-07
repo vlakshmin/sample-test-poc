@@ -104,14 +104,14 @@ public class TableDataTests extends BaseTest {
                 .selectRadioButton(table.getStatusItemRadio(Statuses.ACTIVE))
                 .clickOnWebElement(table.getTableOptionsBtn())
                 .selectFromDropdown(tablePagenation.getPageMenu(), tablePagenation.getRowNumbersList(), "10")
-                .waiter(visible,publishersPage.getTableProgressBar())
-                .waiter(disappear,publishersPage.getTableProgressBar())
+                .waitSpecifiedTimeAndValidate(visible,5,publishersPage.getTableProgressBar())
+                .waitSpecifiedTimeAndValidate(disappear,10,publishersPage.getTableProgressBar())
                 .validateList(tableData.getRows(), 10)
                 .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.ACTIVE),
                         Statuses.ACTIVE.getStatus())
                 .clickOnWebElement(tablePagenation.getNext())
-                .waiter(visible,publishersPage.getTableProgressBar())
-                .waiter(disappear,publishersPage.getTableProgressBar())
+                .waitSpecifiedTimeAndValidate(visible,5,publishersPage.getTableProgressBar())
+                .waitSpecifiedTimeAndValidate(disappear,10,publishersPage.getTableProgressBar())
                 .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.ACTIVE),
                         Statuses.ACTIVE.getStatus())
                 .logOut()
@@ -120,7 +120,7 @@ public class TableDataTests extends BaseTest {
     }
 
     @Test
-    public void checkSearch() {
+    public void che0ckSearch() {
         var table = publishersPage.getTable().getTableOptions();
         var tableData = publishersPage.getTable().getTableData();
         testStart()
