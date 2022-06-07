@@ -131,8 +131,8 @@ public class TableDataTests extends BaseTest {
                 .and()
                 .setValueWithClean(tableData.getSearch(), publisher.getName())
                 .clickEnterButton(tableData.getSearch())
-                .waiter(visible,publishersPage.getTableProgressBar())
-                .waiter(disappear,publishersPage.getTableProgressBar())
+                .waitSpecifiedTimeAndValidate(visible,5,publishersPage.getTableProgressBar())
+                .waitSpecifiedTimeAndValidate(disappear,10,publishersPage.getTableProgressBar())
                 .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.PUBLISHER),
                        publisher.getName())
                 .and()
