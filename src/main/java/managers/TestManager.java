@@ -415,6 +415,16 @@ public final class TestManager {
             return this;
         }
 
+        public TestManagerBuilder waitLoading(Condition condition, SelenideElement element) {
+            try {
+                element.shouldBe(condition);
+            } catch (ElementNotFound | NoSuchElementException e) {
+                e.printStackTrace();
+            }
+
+            return this;
+        }
+
         public TestManagerBuilder selectFromDropdown(SelenideElement element1, ElementsCollection list, String value) {
 
             element1.shouldBe(exist, visible).hover().click();
