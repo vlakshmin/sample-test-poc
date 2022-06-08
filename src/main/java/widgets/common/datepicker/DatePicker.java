@@ -2,11 +2,10 @@ package widgets.common.datepicker;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import lombok.AccessLevel;
 import lombok.Getter;
 
-import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
-import static java.lang.String.format;
 import static widgets.common.datepicker.DatePickerElements.*;
 
 
@@ -16,42 +15,25 @@ import static widgets.common.datepicker.DatePickerElements.*;
 @Getter
 public class DatePicker {
 
-    private int position = 0;
-    private SelenideElement activeCheckBox;
-    private SelenideElement deleteCardIcon;
-    private SelenideElement dspSeatIdCombo;
-    private SelenideElement dspSeatNameInput;
-    private SelenideElement advertiserIdInput;
-    private SelenideElement advertiserNameInput;
-    private SelenideElement expandCollapseButton;
-    private SelenideElement dspSeatPassthroughStringInput;
-    private SelenideElement dspDomainAdvertiserPassthroughStringInput;
+    private SelenideElement dateRangeInput = $x(DATE_RANGE_INPUT.getSelector()).as(DATE_RANGE_INPUT.getAlias());
+    private SelenideElement nextYearButton = $x(NEXT_YEAR_BUTTON.getSelector()).as(NEXT_YEAR_BUTTON.getAlias());
+    private SelenideElement nextMonthButton = $x(NEXT_MONTH_BUTTON.getSelector()).as(NEXT_MONTH_BUTTON.getAlias());
+    private SelenideElement previousYearButton = $x(PREVIOUS_YEAR_BUTTON.getSelector()).as(PREVIOUS_YEAR_BUTTON.getAlias());
+    private SelenideElement previousMonthButton = $x(PREVIOUS_MONTH_BUTTON.getSelector()).as(PREVIOUS_MONTH_BUTTON.getAlias());
+    private SelenideElement monthOrYearHeaderButton = $x(MONTH_YEAR_HEADER_BUTTON.getSelector()).as(MONTH_YEAR_HEADER_BUTTON.getAlias());
 
-    private ElementsCollection autocompleteItems;
+    public SelenideElement getYearButtonByValue(String year) {
 
-    private static final String BUYER_CARD = "div[@class='buyers-cards']/div";
-    ////descendant:://div[@class='buyers-cards']/div[2]/{{elementXpath}}
-
-    public DatePicker(int position) {
-        this.position = position;
-
-//        this.deleteCardIcon = $x(buildXpath(DELETE_CARD_ICON.getSelector())).as(DELETE_CARD_ICON.getAlias());
-//        this.activeCheckBox =  $x(buildXpath(ACTIVE_CHECK_BOX.getSelector())).as(ACTIVE_CHECK_BOX.getAlias());
-//        this.dspSeatIdCombo =  $x(buildXpath(DSP_SEAT_ID_COMBO.getSelector())).as(DSP_SEAT_ID_COMBO.getAlias());
-//        this.dspSeatNameInput = $x(buildXpath(DSP_SEAT_NAME_INPUT.getSelector())).as(DSP_SEAT_NAME_INPUT.getAlias());
-//        this.advertiserIdInput = $x(buildXpath(ADVERTISER_ID_INPUT.getSelector())).as(ADVERTISER_ID_INPUT.getAlias());
-//        this.advertiserNameInput = $x(buildXpath(ADVERTISER_NAME_INPUT.getSelector())).as(ADVERTISER_NAME_INPUT.getAlias());
-//        this.expandCollapseButton = $x(buildXpath(EXPAND_COLLAPSE_BUTTON.getSelector())).as(EXPAND_COLLAPSE_BUTTON.getAlias());
-//        this.dspSeatPassthroughStringInput = $x(buildXpath(DSP_SEAT_PASSTHROUGH_STRING_INPUT.getSelector()))
-//                .as(DSP_SEAT_PASSTHROUGH_STRING_INPUT.getAlias());
-//        this.dspDomainAdvertiserPassthroughStringInput = $x(buildXpath(DSP_DOMAIN_ADVERTISER_PASSTHROUGHT_STRING_INPUT.getSelector()))
-//                .as(DSP_DOMAIN_ADVERTISER_PASSTHROUGHT_STRING_INPUT.getAlias());
-//
-//        this.autocompleteItems = $$x(AUTOCOMPLETE_ITEMS.getSelector()).as(AUTOCOMPLETE_ITEMS.getAlias());
+        return $x(String.format(YEAR_BUTTON_BY_VALUE.getSelector(), year)).as(String.format(YEAR_BUTTON_BY_VALUE.getAlias(), year));
     }
 
-    public String buildXpath(String elementXpath) {
+    public SelenideElement getDayButtonByValue(String day) {
 
-        return (format("//descendant::%s[%s]%s", BUYER_CARD, position, elementXpath));
+        return $x(String.format(DAY_BUTTON_BY_VALUE.getSelector(), day)).as(String.format(DAY_BUTTON_BY_VALUE.getAlias(), day));
+    }
+
+    public SelenideElement getMonthButtonByValue(String month) {
+
+        return $x(String.format(MONTH_BUTTON_BY_VALUE.getSelector(), month)).as(String.format(MONTH_BUTTON_BY_VALUE.getAlias(), month));
     }
 }

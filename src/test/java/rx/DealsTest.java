@@ -68,4 +68,29 @@ public class DealsTest extends BaseTest {
 
         //allure serve
     }
+
+    @Test
+    public void datePickerTest(){
+
+        var dateRangeField = createDealSidebar.getDateRangeField();
+        //Opening Browser and Check Deals DatePicker
+        testStart()
+                .given()
+                .openDirectPath(Path.DEALS)
+                .logIn(TEST_USER)
+                .validate(visible, dashboardsPage.getLogo())
+                .validate(TEST_USER.getMail())
+                .waitAndValidate(disappear, dashboardsPage.getNuxtProgress())
+                .and()
+                .waitAndValidate(disappear, dashboardsPage.getTableProgressBar())
+                .clickOnWebElement(dealsPage.getCreateNewDealButton())
+                .waitSideBarOpened()
+                .and()
+                .selectFromDropdown(createDealSidebar.getPublisherDropdown(), createDealSidebar.getDropDownItems(), "Beryl Ryan")
+                .clickOnWebElement(dateRangeField.getDateRangeInput())
+                .clickOnWebElement(dateRangeField.getDayButtonByValue("12"))
+                .testEnd();
+
+        //allure serve
+    }
 }

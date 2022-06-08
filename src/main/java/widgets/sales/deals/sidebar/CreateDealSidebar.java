@@ -2,6 +2,7 @@ package widgets.sales.deals.sidebar;
 
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
+import widgets.common.datepicker.DatePicker;
 import widgets.sales.deals.warningbanner.ChangePublisherBanner;
 
 import static com.codeborne.selenide.Selenide.$x;
@@ -17,5 +18,6 @@ public class CreateDealSidebar extends AbstractDealSidebar {
     private SelenideElement copyToClipboardButton = $x(COPY_TO_CLIPBOARD_BUTTON.getSelector()).as(COPY_TO_CLIPBOARD_BUTTON.getAlias());
 
     private ChangePublisherBanner changePublisherBanner = new ChangePublisherBanner();
+    private DatePicker dateRangeField = new DatePicker();
 
 }
