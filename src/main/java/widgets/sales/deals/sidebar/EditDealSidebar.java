@@ -1,4 +1,4 @@
-package widgets.sales.deals;
+package widgets.sales.deals.sidebar;
 
 import lombok.Getter;
 

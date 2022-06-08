@@ -1,25 +1,26 @@
-import api.dto.rx.admin.publisher.Publisher;
-import api.preconditionbuilders.PublisherPrecondition;
+package rx;
+
 import com.codeborne.selenide.testng.ScreenShooter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
-import pages.admin.publisher.PublishersPage;
 import pages.dashbord.DashboardPage;
 import pages.sales.deals.DealsPage;
 import rx.BaseTest;
-import widgets.admin.publisher.sidebar.CreatePublisherSidebar;
-import widgets.admin.publisher.sidebar.EditPublisherSidebar;
-import widgets.sales.deals.CreateDealSidebar;
+import widgets.sales.deals.sidebar.CreateDealSidebar;
+import widgets.sales.deals.warningbanner.ChangePublisherBanner;
 import zutils.FakerUtils;
+
+import java.net.InetAddress;
 
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
 import static java.lang.String.valueOf;
 import static managers.TestManager.testStart;
+import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
@@ -34,6 +35,7 @@ public class DealsTest extends BaseTest {
         dashboardsPage = new DashboardPage();
         createDealSidebar = new CreateDealSidebar();
     }
+
     @Test
     public void createDealTest(){
 
@@ -50,10 +52,18 @@ public class DealsTest extends BaseTest {
                 .clickOnWebElement(dealsPage.getCreateNewDealButton())
                 .waitSideBarOpened()
                 .and()
-                .selectFromDropdown(
-                        createDealSidebar.getPublisherDropdown(),
+                .selectFromDropdownWithSearch(createDealSidebar.getPublisherDropdown(),
                         createDealSidebar.getDropDownItems(),
-                        "Beryl Ryan")
+                        "Viber")
+                .setValue(createDealSidebar.getNameInput(), captionWithSuffix("Deal"))
+                .selectFromDropdownByPosition(createDealSidebar.getPrivateAuctionDropdown(),
+                        createDealSidebar.getDropDownItems(), 0)
+                .selectFromDropdownByPosition(createDealSidebar.getCurrencyDropdown(),
+                        createDealSidebar.getDropDownItems(), 0)
+                .and()
+                .setValue(createDealSidebar.getBuyersCardByPositionInList(0).getAdvertiserNameInput(), captionWithSuffix("Seat"))
+                .and()
+                .clickOnWebElement(createDealSidebar.getAddMoreSeatsButton())
         .testEnd();
 
         //allure serve

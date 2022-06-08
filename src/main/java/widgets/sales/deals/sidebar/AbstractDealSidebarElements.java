@@ -1,4 +1,4 @@
-package widgets.sales.deals;
+package widgets.sales.deals.sidebar;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,13 +8,15 @@ import lombok.Getter;
 public enum AbstractDealSidebarElements {
 
     ACTIVE_TOGGLE("'Active' Toggle", ""),
-    PUBLISHER_DROPDOWN("'Publisher' dropdown", "//label[text()='Publisher Name']/../div"),
+    DSP_DROPDOWN("'Dsp' Dropdown","//label[text()='DSP']/../div"),
     NAME( "'Publisher Name' Input", "//label[text()='Name']/../input"),
-    PRIVATE_AUCTION_DROPDOWN("'Private Auction' Dropdown", "//label[text()='Private Auction']/../div"),
+    SAVE_DEAL_BUTTON("'Save Deal' button", "//span[text()='Save Deal']"),
+    BUYERS_CARD_ITEMS("'Buyers Card' Items","//div[@class='buyers-cards']/div"),
     CURRENCY_DROPDOWN( "'Currency' Dropdown", "//label[text()='Currency']/../div"),
     FLOOR_PRICE_INPUT("'Floor Price' Input",  "//label[text()='Floor Price']/../input"),
-    DSP_DROPDOWN("'Dsp' Dropdown","//label[text()='DSP']/../div"),
+    PUBLISHER_DROPDOWN("'Publisher' dropdown", "//label[text()='Publisher Name']/../div"),
     ADD_MORE_SEATS_BUTTON("'Add More Seats' Button", "//span[contains(text(),'Add More Seats')]/.."),
+    PRIVATE_AUCTION_DROPDOWN("'Private Auction' Dropdown", "//label[text()='Private Auction']/../div"),
 
     DROPDOWN_ITEMS("Dropdown Items", "//div[contains(@class,'menuable__content__activ')]//div[@class='v-list-item__title']");
 

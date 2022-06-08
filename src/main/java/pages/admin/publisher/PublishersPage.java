@@ -71,20 +71,4 @@ public class PublishersPage extends BasePage {
                 .orElseThrow(() -> new NoSuchElementException(
                         format("The Publisher with name '%s' isn't presented in the list of Publisher", name)));
     }
-
-    public SelenideElement getPageTitle() {
-        return this.pageTitle;
-    }
-
-    public List<PublisherTableItem> getPublisherList() {
-        return this.publisherList;
-    }
-
-    public SelenideElement getCreatePublisherButton() {
-        return this.createPublisherButton;
-    }
-
-    public ElementsCollection getPublisherItems() {
-        return this.publisherItems;
-    }
 }
