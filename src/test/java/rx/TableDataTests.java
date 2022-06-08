@@ -57,7 +57,7 @@ public class TableDataTests extends BaseTest {
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.AD_OPS_PERSON))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.MAIL))
                 .clickOnWebElement(table.getTableOptionsBtn())
-                .validateList((ElementsCollection) tableData.getColumns(),
+                .validateListSize((ElementsCollection) tableData.getColumns(),
                         ColumnNames.PUBLISHER.getName(),
                         ColumnNames.CATEGORY.getName(),
                         ColumnNames.ACTIVE.getName(),
@@ -106,7 +106,7 @@ public class TableDataTests extends BaseTest {
                 .selectFromDropdown(tablePagenation.getPageMenu(), tablePagenation.getRowNumbersList(), "10")
                 .waitLoading(visible,publishersPage.getTableProgressBar())
                 .waitLoading(disappear,publishersPage.getTableProgressBar())
-                .validateList(tableData.getRows(), 10)
+                .validateListSize(tableData.getRows(), 10)
                 .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.ACTIVE),
                         Statuses.ACTIVE.getStatus())
                 .clickOnWebElement(tablePagenation.getNext())
@@ -120,7 +120,7 @@ public class TableDataTests extends BaseTest {
     }
 
     @Test
-    public void che0ckSearch() {
+    public void checkSearch() {
         var table = publishersPage.getTable().getTableOptions();
         var tableData = publishersPage.getTable().getTableData();
         testStart()
@@ -136,7 +136,7 @@ public class TableDataTests extends BaseTest {
                 .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.PUBLISHER),
                        publisher.getName())
                 .and()
-                .clickOnTableCellLink(ColumnNames.PUBLISHER, publisher.getName())
+                .clickOnTableCellLink(tableData, ColumnNames.PUBLISHER, publisher.getName())
                 .waitSideBarOpened()
                 .clickOnWebElement(publishersPage.getEditPublisherSidebar().getSaveButton())
                 .waitSideBarClosed()

@@ -17,7 +17,6 @@ import pages.LoginPage;
 import pages.Path;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.TableData;
-import widgets.common.table.TablePagination;
 
 import java.io.File;
 import java.time.Duration;
@@ -51,8 +50,6 @@ public final class TestManager {
         private final String ELEMENT_BY_TEXT = "//*[contains(text(),'%s')]";
         private final BasePage basePage = new BasePage();
         private final LoginPage loginPage = new LoginPage();
-        private final TableData table = new TableData();
-        private final TablePagination tablePagination = new TablePagination();
 
         public TestManagerBuilder openUrl() {
             logEvent(format("Opening url '%s'", ConfigurationLoader.getConfig().getBaseUrl()));
@@ -131,6 +128,7 @@ public final class TestManager {
         }
 
         public TestManagerBuilder selectCheckBox(SelenideElement checkbox) {
+            logEvent(format("Select checkbox %s", checkbox.getAlias()));
             if (checkbox.getAttribute("aria-checked").equals("false")) {
                 checkbox.parent().click();
             }
@@ -139,6 +137,7 @@ public final class TestManager {
         }
 
         public TestManagerBuilder unSelectCheckBox(SelenideElement checkbox) {
+            logEvent(format("Unselect checkbox %s", checkbox.getAlias()));
             if (checkbox.getAttribute("aria-checked").equals("true"))
                 checkbox.parent().click();
 
@@ -146,6 +145,7 @@ public final class TestManager {
         }
 
         public TestManagerBuilder selectRadioButton(SelenideElement radio) {
+            logEvent(format("Select radio button %s", radio.getAlias()));
             if (radio.getAttribute("aria-checked").equals("false")) {
                 radio.parent().click();
             }
@@ -232,7 +232,7 @@ public final class TestManager {
         }
 
 
-        public TestManagerBuilder validateList(ElementsCollection collection, String... texts) {
+        public TestManagerBuilder validateListSize(ElementsCollection collection, String... texts) {
             logEvent(format("Validating List of %ss ", collection.first().getSearchCriteria()));
             Stream.of(texts).forEach(elementText -> {
                 logEvent(format("Validating %s has text '%s'", collection.first().getAlias(), elementText));
@@ -253,7 +253,7 @@ public final class TestManager {
             return this;
         }
 
-        public TestManagerBuilder validateList(ElementsCollection collection, int expectedSize) {
+        public TestManagerBuilder validateListSize(ElementsCollection collection, int expectedSize) {
             logEvent(format("Validating %s has size equals to %s", collection.first().getAlias(), expectedSize));
             collection.shouldHave(CollectionCondition.size(expectedSize));
 
@@ -416,6 +416,7 @@ public final class TestManager {
         }
 
         public TestManagerBuilder waitLoading(Condition condition, SelenideElement element) {
+            logEvent(format("Wait table data loading %s", element.getAlias()));
             try {
                 element.shouldBe(condition);
             } catch (ElementNotFound | NoSuchElementException e) {
@@ -491,7 +492,8 @@ public final class TestManager {
             return new TestManager(this);
         }
 
-         public TestManagerBuilder clickOnTableCellLink(ColumnNames column, String cellValue) {
+        public TestManagerBuilder clickOnTableCellLink(TableData table, ColumnNames column, String cellValue) {
+            logEvent(format("Click on cell in column %s with value %s", column.getName(), cellValue));
             table.getCustomCells(column)
                     .stream()
                     .filter(x -> x.getText().equals(cellValue))

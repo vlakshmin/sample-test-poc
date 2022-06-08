@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ColumnNames {
-    //contain more then 1 tables
+    //General for all tables
     ID("ID", true),
     PUBLISHER("Publisher", true),
     CREATED_DATE("Create Date", true),
@@ -69,15 +69,5 @@ public enum ColumnNames {
 
     private String name;
     private Boolean sortable;
-
-    public static ColumnNames findByAbbr(String abbr) {
-        for (ColumnNames v : values()) {
-            if (v.getName().equals(abbr)) {
-                return v;
-            }
-        }
-        return null;
-    }
-
 
 }

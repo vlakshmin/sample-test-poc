@@ -9,10 +9,4 @@ public class Table {
     TableData tableData = new TableData();
     TablePagination tablePagination = new TablePagination();
 
-    public void paginationFirstPage() {
-        SelenideElement privBtn = tablePagination.getPrevious();
-        while (privBtn.isEnabled()) {
-            privBtn.click();
-        }
-    }
 }

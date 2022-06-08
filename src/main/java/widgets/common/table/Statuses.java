@@ -14,6 +14,4 @@ public enum Statuses {
 
     private String status;
 
-
-
 }
