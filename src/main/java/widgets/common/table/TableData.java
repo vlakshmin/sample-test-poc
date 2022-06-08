@@ -35,6 +35,7 @@ public class TableData {
     }
 
     public SelenideElement getColumnHeader(String columnName) {
+
         return $x(String.format(COLUMN_HEADER.getSelector(), columnName)).as(COLUMN_HEADER.getAlias());
     }
 

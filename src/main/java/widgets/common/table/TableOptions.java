@@ -31,7 +31,7 @@ public class TableOptions {
 
     public SelenideElement getCheckboxParent(String param){
 
-        return $x(String.format("//label[text()='%s']/../div",param)).parent();
+        return $x(String.format(CHECKBOX_PARENT.getSelector(),param)).parent();
     }
 
     public SelenideElement getStatusItemRadio(Statuses status) {
