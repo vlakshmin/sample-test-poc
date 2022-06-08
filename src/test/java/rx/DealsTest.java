@@ -89,6 +89,8 @@ public class DealsTest extends BaseTest {
                 .selectFromDropdown(createDealSidebar.getPublisherDropdown(), createDealSidebar.getDropDownItems(), "Beryl Ryan")
                 .clickOnWebElement(dateRangeField.getDateRangeInput())
                 .clickOnWebElement(dateRangeField.getDayButtonByValue("12"))
+                .then()
+                .clickOnWebElement(dateRangeField.getDateRangeInput())
                 .testEnd();
 
         //allure serve
