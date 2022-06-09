@@ -1,6 +1,6 @@
 package api.preconditionbuilders;
 
-import api.dto.rx.admin.publisher.Currency;
+import api.dto.rx.common.Currency;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.admin.publisher.PublisherRequest;
 import api.services.PublisherService;

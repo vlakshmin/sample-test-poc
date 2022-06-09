@@ -1,20 +1,18 @@
 package rx;
 
+import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.adspot.AdSpot;
 import api.dto.rx.inventory.adspot.AdSpotRequest;
-import api.dto.rx.inventory.media.Media;
 import api.preconditionbuilders.AdSpotPrecondition;
-import api.preconditionbuilders.MediaPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
-import pages.dashbord.DashboardPage;
 import pages.inventory.adspots.AdspotsPage;
-import pages.inventory.media.MediaPage;
-import zutils.FakerUtils;
+
+import java.util.List;
 
 import static com.codeborne.selenide.Condition.disappear;
 import static configurations.User.TEST_USER;
@@ -58,8 +56,26 @@ public class AdSpotTest extends BaseTest{
         //allure serve
     }
 
-//    private AdSpotRequest createCustomAdSpot(){
-//        new AdSpotRequest() adSpot= new AdSpotRequest();
-//        return
-//    }
+    @Test
+    public void createCustomAdSpotTest(){
+        createCustomAdSpot();
+        //Opening Browser and Edit the media created from Precondition
+        testStart()
+                .given()
+                .openDirectPath(Path.AD_SPOT)
+                .logIn(TEST_USER)
+                .waitAndValidate(disappear, adspotsPage.getNuxtProgress())
+                .and()
+                .testEnd();
+
+        //allure serve
+    }
+
+    private AdSpotRequest createCustomAdSpot(){
+
+        AdSpotRequest adSpotRequest= new AdSpotRequest();
+        adSpotRequest.setCategoryIds(List.of(1,2));
+        adSpotRequest.setCurrency(Currency.EUR.name());
+        return  adSpotRequest;
+    }
 }

@@ -1,10 +1,9 @@
 package api.preconditionbuilders;
 
-import api.dto.rx.admin.publisher.Currency;
+import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.adspot.*;
 import api.dto.rx.inventory.media.Media;
 import api.services.AdSpotService;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -86,6 +85,15 @@ public class AdSpotPrecondition {
 
             return this;
         }
+
+        public AdSpotPrecondition.AdSpotPreconditionBuilder createNewAdSpot(AdSpotRequest adSpotRequest){
+
+            this.response = adSpotService.createAdSpot(adSpotRequest);
+            this.adSpotResponse = response.as(AdSpot.class);
+
+            return this;
+        }
+
 
         public AdSpotPrecondition.AdSpotPreconditionBuilder getAllAdSpotsList() {
             this.response = adSpotService.getAll();
