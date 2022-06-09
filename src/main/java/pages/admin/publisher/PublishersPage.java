@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import pages.BasePage;
 import widgets.admin.publisher.EditPublisherSidebar;
 import widgets.admin.publisher.PublisherTableItem;
+import widgets.common.table.Table;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class PublishersPage extends BasePage {
     @Getter(AccessLevel.NONE)
     private List<PublisherTableItem> publisherList = new ArrayList<>();
     private EditPublisherSidebar editPublisherSidebar = new EditPublisherSidebar();
-
+    private Table table = new Table();
 
     public int countPublisherItems() {
 
