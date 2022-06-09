@@ -7,6 +7,7 @@ import api.preconditionbuilders.AdSpotPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
@@ -56,6 +57,7 @@ public class AdSpotTest extends BaseTest{
         //allure serve
     }
 
+    @Ignore
     @Test
     public void createCustomAdSpotTest(){
         createCustomAdSpot();
