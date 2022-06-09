@@ -5,6 +5,7 @@ import com.codeborne.selenide.ex.ElementNotFound;
 import com.codeborne.selenide.testng.ScreenShooter;
 import configurations.ConfigurationLoader;
 import configurations.User;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ElementClickInterceptedException;
@@ -18,6 +19,7 @@ import pages.Path;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.TableData;
 
+import java.awt.*;
 import java.io.File;
 import java.time.Duration;
 import java.util.Map;
@@ -29,6 +31,7 @@ import static api.core.client.HttpClient.getToken;
 import static api.core.client.HttpClient.setCredentials;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.actions;
 import static io.qameta.allure.Allure.step;
 import static java.lang.String.format;
 import static org.testng.Assert.assertTrue;
@@ -47,9 +50,9 @@ public final class TestManager {
 
     public static class TestManagerBuilder {
 
+        private BasePage basePage = new BasePage();
+        private LoginPage loginPage =  new LoginPage();
         private final String ELEMENT_BY_TEXT = "//*[contains(text(),'%s')]";
-        private final BasePage basePage = new BasePage();
-        private final LoginPage loginPage = new LoginPage();
 
         public TestManagerBuilder openUrl() {
             logEvent(format("Opening url '%s'", ConfigurationLoader.getConfig().getBaseUrl()));
@@ -422,6 +425,44 @@ public final class TestManager {
             } catch (ElementNotFound | NoSuchElementException e) {
                 e.printStackTrace();
             }
+
+            return this;
+        }
+
+        public TestManagerBuilder selectFromAutocomplete(SelenideElement autocompleteInput, ElementsCollection list, String value) {
+            autocompleteInput.shouldBe(exist, visible).hover().click();
+            list.stream()
+                    .filter(item -> item.shouldBe(visible).getText().equalsIgnoreCase(value))
+                    .findFirst()
+                    .orElseThrow(() -> new NoSuchElementException(
+                            format("Value with name '%s' haven't been found in the autocomplete", value)))
+                    .click();
+
+            return this;
+        }
+
+        public TestManagerBuilder selectFromDropdownByPosition(SelenideElement dropdown, ElementsCollection list, int position) {
+            logEvent(format("Select %s value from %s ", position, dropdown.getAlias()));
+            dropdown.shouldBe(exist, visible).hover().click();
+            list.shouldBe(CollectionCondition.sizeGreaterThanOrEqual(position)).get(position).shouldBe(visible).click();
+
+            return this;
+        }
+
+        @SneakyThrows
+        public TestManagerBuilder selectFromDropdownWithSearch(SelenideElement element1, ElementsCollection list, String value) {
+
+            element1.shouldBe(exist, visible).hover().click();
+            list.shouldBe(CollectionCondition.size(list.size()));
+            //todo Performance issue do not forget to refactor and simplify it
+            new Actions(WebDriverRunner.getWebDriver()).sendKeys(value).perform();
+            list.stream()
+                    .filter(item -> item.shouldBe(visible).getText().equalsIgnoreCase(value) &&
+                            !item.shouldBe(visible).getText().equalsIgnoreCase("No records found"))
+                    .findFirst()
+                    .orElseThrow(() -> new NoSuchElementException(
+                            format("Type with name '%s' haven't been found in the dropdown", value)))
+                    .click();
 
             return this;
         }

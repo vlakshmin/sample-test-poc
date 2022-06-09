@@ -6,7 +6,7 @@ browser: chrome
 # WebDriver Settings
 pageLoadStrategy: normal
 browserSize: 1920x1000
-holdBrowserOpen: false
+holdBrowserOpen: true
 reopenBrowserOnFail: true
 screenshots: true
 headless: false

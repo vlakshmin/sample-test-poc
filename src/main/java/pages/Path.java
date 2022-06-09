@@ -7,7 +7,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Path {
 
-    PUBLISHER("/admin/publishers");
+    PUBLISHER("/admin/publishers"),
+    USER("/admin/publishers"),
+    DEALS("/sales/deals");
 
     private String path;
 }

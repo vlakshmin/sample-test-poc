@@ -7,7 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum DealsPageElements {
 
-    MEDIA_PAGE_TITLE( "'Deals' Page Title", "//h1");
+    MEDIA_PAGE_TITLE( "'Deals' Page Title", "//h1"),
+    CREATE_DEAL_BUTTON("'Create Deal' Button", "//button//span[text()='Create Deal']");
 
     private String alias;
     private String selector;
