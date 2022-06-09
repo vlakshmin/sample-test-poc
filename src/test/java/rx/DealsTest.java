@@ -1,25 +1,18 @@
 package rx;
 
 import com.codeborne.selenide.testng.ScreenShooter;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
 import pages.dashbord.DashboardPage;
 import pages.sales.deals.DealsPage;
-import rx.BaseTest;
 import widgets.sales.deals.sidebar.CreateDealSidebar;
-import widgets.sales.deals.warningbanner.ChangePublisherBanner;
-import zutils.FakerUtils;
-
-import java.net.InetAddress;
 
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
-import static java.lang.String.valueOf;
 import static managers.TestManager.testStart;
 import static zutils.FakerUtils.captionWithSuffix;
 
@@ -31,14 +24,14 @@ public class DealsTest extends BaseTest {
     private DealsPage dealsPage;
     private CreateDealSidebar createDealSidebar;
 
-    public DealsTest(){
+    public DealsTest() {
         dealsPage = new DealsPage();
         dashboardsPage = new DashboardPage();
         createDealSidebar = new CreateDealSidebar();
     }
 
     @Test
-    public void createDealTest(){
+    public void createDealTest() {
 
         //Opening Browser and Create Deal
         testStart()
@@ -65,13 +58,15 @@ public class DealsTest extends BaseTest {
                 .setValue(createDealSidebar.getBuyersCardByPositionInList(0).getAdvertiserNameInput(), captionWithSuffix("Seat"))
                 .and()
                 .clickOnWebElement(createDealSidebar.getAddMoreSeatsButton())
-        .testEnd();
+                .clickOnWebElement(createDealSidebar.getCloseSideBarButton())
+                .waitSideBarClosed()
+                .testEnd();
 
         //allure serve
     }
 
     @Test
-    public void datePickerTest(){
+    public void datePickerTest() {
 
         var dateRangeField = createDealSidebar.getDateRangeField();
         //Opening Browser and Check Deals DatePicker
@@ -92,13 +87,15 @@ public class DealsTest extends BaseTest {
                 .clickOnWebElement(dateRangeField.getDayButtonByValue("12"))
                 .then()
                 .clickOnWebElement(dateRangeField.getDateRangeInput())
+                .clickOnWebElement(createDealSidebar.getCloseSideBarButton())
+                .waitSideBarClosed()
                 .testEnd();
 
         //allure serve
     }
 
-    @AfterTest
-    public void logOut(){
+    @AfterMethod
+    public void logOut() {
         testStart()
                 .logOut()
                 .testEnd();

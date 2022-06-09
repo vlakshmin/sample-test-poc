@@ -35,6 +35,7 @@ public abstract class AbstractDealSidebar {
     private SelenideElement publisherDropdown = $x(PUBLISHER_DROPDOWN.getSelector()).as(PUBLISHER_DROPDOWN.getAlias());
     @Getter(AccessLevel.NONE)
     private ElementsCollection buyersCardItems =  $$x(BUYERS_CARD_ITEMS.getSelector()).as(BUYERS_CARD_ITEMS.getAlias());
+    private SelenideElement closeSideBarButton = $x(CLOSE_SIDEBAR_BUTTON.getSelector()).as(CLOSE_SIDEBAR_BUTTON.getAlias());
     private SelenideElement addMoreSeatsButton = $x(ADD_MORE_SEATS_BUTTON.getSelector()).as(ADD_MORE_SEATS_BUTTON.getAlias());
     private SelenideElement privateAuctionDropdown = $x(PRIVATE_AUCTION_DROPDOWN.getSelector()).as(PRIVATE_AUCTION_DROPDOWN.getAlias());
 

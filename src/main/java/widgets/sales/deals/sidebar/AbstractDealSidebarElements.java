@@ -11,6 +11,7 @@ public enum AbstractDealSidebarElements {
     DSP_DROPDOWN("'Dsp' Dropdown","//label[text()='DSP']/../div"),
     NAME( "'Publisher Name' Input", "//label[text()='Name']/../input"),
     SAVE_DEAL_BUTTON("'Save Deal' button", "//span[text()='Save Deal']"),
+    CLOSE_SIDEBAR_BUTTON( "'Close Sidebar' button", "//aside//button/span/i"),
     BUYERS_CARD_ITEMS("'Buyers Card' Items","//div[@class='buyers-cards']/div"),
     CURRENCY_DROPDOWN( "'Currency' Dropdown", "//label[text()='Currency']/../div"),
     FLOOR_PRICE_INPUT("'Floor Price' Input",  "//label[text()='Floor Price']/../input"),
