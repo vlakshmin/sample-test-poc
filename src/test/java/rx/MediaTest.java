@@ -60,4 +60,5 @@ public class MediaTest extends BaseTest{
 
         //allure serve
     }
+
 }

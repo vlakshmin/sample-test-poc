@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Rule {
 
-    public Adspot adspot;
+    public AdSpot adspot;
     public AdFormat adFormat;
     public AdSize adSize;
     public Media media;

@@ -25,19 +25,4 @@ public enum Columns {
     private String name;
     private Boolean sortable;
 
-
-//    public String getLocator() {
-//        return ".v-data-table-header tr th[aria-label^='"+locator+"']";
-//    }
-
-    public static Columns findByAbbr(String abbr) {
-        for (Columns v : values()) {
-            if (v.getName().equals(abbr)) {
-                return v;
-            }
-        }
-        return null;
-    }
-
-
 }

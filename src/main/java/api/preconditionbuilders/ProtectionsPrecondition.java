@@ -48,7 +48,7 @@ public class ProtectionsPrecondition {
                     .typeId(2)
                     .active(true)
                     .rule(Rule.builder()
-                            .adspot(Adspot.builder()
+                            .adspot(AdSpot.builder()
                                     .includedAdspots(List.of(58))
                                     .excludedAdspots(List.of())
                                     .build())

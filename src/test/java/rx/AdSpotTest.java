@@ -1,6 +1,7 @@
 package rx;
 
 import api.dto.rx.inventory.adspot.AdSpot;
+import api.dto.rx.inventory.adspot.AdSpotRequest;
 import api.dto.rx.inventory.media.Media;
 import api.preconditionbuilders.AdSpotPrecondition;
 import api.preconditionbuilders.MediaPrecondition;
@@ -38,6 +39,8 @@ public class AdSpotTest extends BaseTest{
                 .createNewAdSpot()
                 .build()
                 .getAdSpotResponse();
+
+
     }
 
     @Test
@@ -54,4 +57,9 @@ public class AdSpotTest extends BaseTest{
 
         //allure serve
     }
+
+//    private AdSpotRequest createCustomAdSpot(){
+//        new AdSpotRequest() adSpot= new AdSpotRequest();
+//        return
+//    }
 }

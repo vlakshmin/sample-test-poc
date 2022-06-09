@@ -1,6 +1,7 @@
 package api.dto.rx.inventory.adspot;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,8 +32,11 @@ public class AdSpot {
     private Integer positionId;
     private Integer prebidCacheEnabled;
     private Integer publisherId;
-    private Integer publisherName;
+    private String publisherName;
     private String currency;
+    private List<Integer> sizeIds;
+    @JsonProperty(value="native")
+    private Native anative;
 
     private List<Integer> categoryIds;
 

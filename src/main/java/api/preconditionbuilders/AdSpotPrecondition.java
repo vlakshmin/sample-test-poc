@@ -1,10 +1,10 @@
 package api.preconditionbuilders;
 
 import api.dto.rx.admin.publisher.Currency;
-import api.dto.rx.inventory.adspot.AdSpot;
-import api.dto.rx.inventory.adspot.AdSpotRequest;
+import api.dto.rx.inventory.adspot.*;
 import api.dto.rx.inventory.media.Media;
 import api.services.AdSpotService;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,6 +42,10 @@ public class AdSpotPrecondition {
         private AdSpotRequest adSpotRequest;
         private List<AdSpot> adSpotsResponseList;
         private AdSpotService adSpotService = new AdSpotService();
+        private Video video = new Video();
+        private NativeVideo nativeVideo= new NativeVideo();
+        private Native nativeObj = new Native();
+        private Banner banner = new Banner();
         private Media media;
 
         public AdSpotPrecondition.AdSpotPreconditionBuilder createNewAdSpot() {
@@ -50,6 +54,15 @@ public class AdSpotPrecondition {
                     .createNewMedia()
                     .build()
                     .getMediaResponse();
+
+            video = Video.builder()
+                    .floorPrice(23)
+                    .maxDuration(10)
+                    .enabled(true)
+                    .sizeIds(List.of(10))
+                    .playbackMethodIds(List.of(1))
+                    .build();
+
 
             this.adSpotRequest = adSpotRequest.builder()
                     .name(captionWithSuffix("ad spot"))
@@ -60,10 +73,11 @@ public class AdSpotPrecondition {
                     .mediaId(media.getId())
                     .positionId(1)
                     .coppa(true)
+                    .sizeIds(List.of(10))
                     .floorPriceAutomated(true)
                     .testMode(false)
                     .categoryIds(List.of(1, 9))
-
+                    .video(video)
 
                     .build();
 

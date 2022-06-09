@@ -30,13 +30,15 @@ public class AdSpotRequest {
     private Integer positionId;
     private Integer prebidCacheEnabled;
     private Integer publisherId;
-    private Integer publisherName;
+    private String publisherName;
     private String currency;
     private Video video;
     private Banner banner;
-    //private Native native;
+    @JsonIgnoreProperties("native")
+    private Native anative;
 
     private List<Integer> categoryIds;
+    private List<Integer> sizeIds;
 
 
     public String toJson() {

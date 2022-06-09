@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Adspot {
+public class AdSpot {
 
     private List<Integer> includedAdspots;
     private List<Integer> excludedAdspots;
