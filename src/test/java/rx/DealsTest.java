@@ -3,6 +3,7 @@ package rx;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
@@ -94,5 +95,12 @@ public class DealsTest extends BaseTest {
                 .testEnd();
 
         //allure serve
+    }
+
+    @AfterTest
+    public void logOut(){
+        testStart()
+                .logOut()
+                .testEnd();
     }
 }
