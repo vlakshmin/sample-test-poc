@@ -12,7 +12,13 @@ public enum RakutenExchangeApi {
 
     //Publisher
     GET_PUBLISHERS("/v2/publishers"),
-    CREATE_PUBLISHER("/v2/publishers");
+    CREATE_PUBLISHER("/v2/publishers"),
+
+    //Users
+    CREATE_USER("/v2/accounts"),
+    GET_USER("/v2/accounts/%s"),
+    GET_ALL_USERS("/v2/accounts"),
+    UPDATE_USER("/v2/accounts/%s");
 
     private String endpoint;
 
