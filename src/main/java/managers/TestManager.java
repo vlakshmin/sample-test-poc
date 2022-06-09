@@ -5,6 +5,7 @@ import com.codeborne.selenide.ex.ElementNotFound;
 import com.codeborne.selenide.testng.ScreenShooter;
 import configurations.ConfigurationLoader;
 import configurations.User;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ElementClickInterceptedException;
@@ -15,7 +16,10 @@ import org.testng.annotations.Listeners;
 import pages.BasePage;
 import pages.LoginPage;
 import pages.Path;
+import widgets.common.table.ColumnNames;
+import widgets.common.table.TableData;
 
+import java.awt.*;
 import java.io.File;
 import java.time.Duration;
 import java.util.Map;
@@ -27,6 +31,7 @@ import static api.core.client.HttpClient.getToken;
 import static api.core.client.HttpClient.setCredentials;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.actions;
 import static io.qameta.allure.Allure.step;
 import static java.lang.String.format;
 import static org.testng.Assert.assertTrue;
@@ -77,6 +82,7 @@ public final class TestManager {
 
             return this;
         }
+
         public TestManagerBuilder and() {
 
             return this;
@@ -91,10 +97,10 @@ public final class TestManager {
             return this;
         }
 
-        public TestManagerBuilder loginWithCookie(User user){
+        public TestManagerBuilder loginWithCookie(User user) {
             //Todo Implement login with cookie
             setCredentials(user);
-            String token =  getToken();
+            String token = getToken();
 
             //Code to set cookie here
             return this;
@@ -124,16 +130,28 @@ public final class TestManager {
             return this;
         }
 
-        //Todo
-        public TestManagerBuilder selectCheckBox(SelenideElement checkBox) {
-            //Todo implement realisation
+        public TestManagerBuilder selectCheckBox(SelenideElement checkbox) {
+            logEvent(format("Select checkbox %s", checkbox.getAlias()));
+            if (checkbox.getAttribute("aria-checked").equals("false")) {
+                checkbox.parent().click();
+            }
 
             return this;
         }
 
-        //Todo
-        public TestManagerBuilder unSelectCheckBox(SelenideElement checkBox) {
-            //Todo implement realisation
+        public TestManagerBuilder unSelectCheckBox(SelenideElement checkbox) {
+            logEvent(format("Unselect checkbox %s", checkbox.getAlias()));
+            if (checkbox.getAttribute("aria-checked").equals("true"))
+                checkbox.parent().click();
+
+            return this;
+        }
+
+        public TestManagerBuilder selectRadioButton(SelenideElement radio) {
+            logEvent(format("Select radio button %s", radio.getAlias()));
+            if (radio.getAttribute("aria-checked").equals("false")) {
+                radio.parent().click();
+            }
 
             return this;
         }
@@ -187,7 +205,7 @@ public final class TestManager {
             Stream.of(texts).forEach(text -> {
                 logEvent(format("Validating Web element with text '%s' is visible on UI", text));
                 assertTrue($x(String.format(ELEMENT_BY_TEXT, text)).should(exist, visible).isDisplayed()
-                    , String.format("\nWeb element with text '%s' not visible on UI", text));
+                        , String.format("\nWeb element with text '%s' not visible on UI", text));
             });
 
             return this;
@@ -216,12 +234,31 @@ public final class TestManager {
             return this;
         }
 
-        public TestManagerBuilder validateList(ElementsCollection collection, String... texts) {
+
+        public TestManagerBuilder validateListSize(ElementsCollection collection, String... texts) {
             logEvent(format("Validating List of %ss ", collection.first().getSearchCriteria()));
             Stream.of(texts).forEach(elementText -> {
                 logEvent(format("Validating %s has text '%s'", collection.first().getAlias(), elementText));
                 assertTrue(collection.findBy(text(elementText)).shouldBe(visible).isDisplayed());
             });
+            collection.shouldHave(CollectionCondition.size(texts.length));
+
+            return this;
+        }
+
+        public TestManagerBuilder validateListContainsTextOnly(ElementsCollection collection, String suffix) {
+            logEvent(format("Validating List of %ss contains suffix '%s'", collection.first().getAlias(), suffix));
+            collection.forEach(elementCollection -> {
+                elementCollection.shouldBe(visible).shouldHave(Condition.text(suffix));
+            });
+            logEvent(format("All elements of List of %ss contains suffix '%s' ", collection.first().getAlias(), suffix));
+
+            return this;
+        }
+
+        public TestManagerBuilder validateListSize(ElementsCollection collection, int expectedSize) {
+            logEvent(format("Validating %s has size equals to %s", collection.first().getAlias(), expectedSize));
+            collection.shouldHave(CollectionCondition.size(expectedSize));
 
             return this;
         }
@@ -238,9 +275,10 @@ public final class TestManager {
         public TestManagerBuilder validate(SelenideElement... elements) {
 
             Stream.of(elements).forEach(element -> {
-                logEvent(format("Validating %s is visible on UI", element.getAlias()));
-                assertTrue(element.shouldBe(exist).exists() && element.shouldBe(visible).isDisplayed()
-                    , element.toString());}
+                        logEvent(format("Validating %s is visible on UI", element.getAlias()));
+                        assertTrue(element.shouldBe(exist).exists() && element.shouldBe(visible).isDisplayed()
+                                , element.toString());
+                    }
             );
 
             return this;
@@ -250,7 +288,7 @@ public final class TestManager {
             Stream.of(elements).forEach(element -> {
                 logEvent(format("Validating %s is %s on UI", element.getAlias(), condition.getName()));
                 assertTrue(element.shouldBe(condition).is(condition)
-                    , String.format("\n'%s' with condition '%s'", element, condition));
+                        , String.format("\n'%s' with condition '%s'", element, condition));
             });
 
             return this;
@@ -296,7 +334,7 @@ public final class TestManager {
             Stream.of(elements).forEach(element -> {
                 logEvent(format("Validating %s is %s on UI", element.getAlias(), condition.getName()));
                 assertTrue(element.shouldBe(condition).is(condition)
-                    , String.format("\n'%s' with condition '%s'", element, condition));
+                        , String.format("\n'%s' with condition '%s'", element, condition));
             });
 
             return this;
@@ -345,13 +383,13 @@ public final class TestManager {
             step(format("Setting value '%s' in field '%s' withXpath '%s'",
                     value, element.getAlias(), element.getSearchCriteria()));
             //element.should(exist,visible).hover().doubleClick().sendKeys(Keys.CONTROL + "A", Keys.BACK_SPACE);
-            element.should(exist,visible).hover().click();
+            element.should(exist, visible).hover().click();
             int i = 0;
             do {
                 element.sendKeys(Keys.BACK_SPACE);
                 i++;
-            } while (i<=30);
-            element.should(exist,visible).hover().sendKeys(value);
+            } while (i <= 30);
+            element.should(exist, visible).hover().sendKeys(value);
 
             return this;
         }
@@ -380,12 +418,61 @@ public final class TestManager {
             return this;
         }
 
+        public TestManagerBuilder waitLoading(Condition condition, SelenideElement element) {
+            logEvent(format("Wait table data loading %s", element.getAlias()));
+            try {
+                element.shouldBe(condition);
+            } catch (ElementNotFound | NoSuchElementException e) {
+                e.printStackTrace();
+            }
+
+            return this;
+        }
+
+        public TestManagerBuilder selectFromAutocomplete(SelenideElement autocompleteInput, ElementsCollection list, String value) {
+            autocompleteInput.shouldBe(exist, visible).hover().click();
+            list.stream()
+                    .filter(item -> item.shouldBe(visible).getText().equalsIgnoreCase(value))
+                    .findFirst()
+                    .orElseThrow(() -> new NoSuchElementException(
+                            format("Value with name '%s' haven't been found in the autocomplete", value)))
+                    .click();
+
+            return this;
+        }
+
+        public TestManagerBuilder selectFromDropdownByPosition(SelenideElement dropdown, ElementsCollection list, int position) {
+            logEvent(format("Select %s value from %s ", position, dropdown.getAlias()));
+            dropdown.shouldBe(exist, visible).hover().click();
+            list.shouldBe(CollectionCondition.sizeGreaterThanOrEqual(position)).get(position).shouldBe(visible).click();
+
+            return this;
+        }
+
+        @SneakyThrows
+        public TestManagerBuilder selectFromDropdownWithSearch(SelenideElement element1, ElementsCollection list, String value) {
+
+            element1.shouldBe(exist, visible).hover().click();
+            list.shouldBe(CollectionCondition.size(list.size()));
+            //todo Performance issue do not forget to refactor and simplify it
+            new Actions(WebDriverRunner.getWebDriver()).sendKeys(value).perform();
+            list.stream()
+                    .filter(item -> item.shouldBe(visible).getText().equalsIgnoreCase(value) &&
+                            !item.shouldBe(visible).getText().equalsIgnoreCase("No records found"))
+                    .findFirst()
+                    .orElseThrow(() -> new NoSuchElementException(
+                            format("Type with name '%s' haven't been found in the dropdown", value)))
+                    .click();
+
+            return this;
+        }
+
         public TestManagerBuilder selectFromDropdown(SelenideElement element1, ElementsCollection list, String value) {
 
             element1.shouldBe(exist, visible).hover().click();
             list.stream()
                     .filter(item -> item.shouldBe(visible).getText().equalsIgnoreCase(value) &&
-                            !item.shouldBe(visible).getText().equalsIgnoreCase("No records found"))
+                            !item.shouldBe(visible).getText().equalsIgnoreCase("No data available"))
                     .findFirst()
                     .orElseThrow(() -> new NoSuchElementException(
                             format("Type with name '%s' haven't been found in the dropdown", value)))
@@ -412,7 +499,7 @@ public final class TestManager {
             return this;
         }
 
-        public TestManagerBuilder uploadFileFromDialog(String relativeFilePath){
+        public TestManagerBuilder uploadFileFromDialog(String relativeFilePath) {
             $("input[type='file']").uploadFile(new File(relativeFilePath));
 
             return this;
@@ -435,7 +522,7 @@ public final class TestManager {
             return this;
         }
 
-        private void logEvent(String loggerString){
+        private void logEvent(String loggerString) {
             //ToDo Implement custom Annotation to log info in Browser Console and in Allure Resport
             log.info(loggerString);
             step(loggerString);
@@ -445,5 +532,20 @@ public final class TestManager {
 
             return new TestManager(this);
         }
+
+        public TestManagerBuilder clickOnTableCellLink(TableData table, ColumnNames column, String cellValue) {
+            logEvent(format("Click on cell in column %s with value %s", column.getName(), cellValue));
+            table.getCustomCells(column)
+                    .stream()
+                    .filter(x -> x.getText().equals(cellValue))
+                    .findFirst()
+                    .orElseThrow(() -> new NoSuchElementException(
+                            format("The table cell with value '%s' isn't presented in the column '%s'", cellValue, column.getName())))
+                    .lastChild()
+                    .click();
+
+            return this;
+        }
+
     }
 }

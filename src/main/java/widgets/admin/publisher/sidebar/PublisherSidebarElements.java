@@ -1,11 +1,11 @@
-package widgets.admin.publisher;
+package widgets.admin.publisher.sidebar;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum EditPublisherSidebarElements {
+public enum PublisherSidebarElements {
 
     DOMAIN("'Publisher Domain' Input", "//label[text()='Domain']/../input"),
     MAIL("'Publisher Mail' Input", "//label[text()='Ad Ops Email']/../input"),

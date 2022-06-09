@@ -5,6 +5,7 @@ import lombok.Getter;
 import pages.BasePage;
 
 import static com.codeborne.selenide.Selenide.$x;
+import static pages.sales.deals.DealsPageElements.CREATE_DEAL_BUTTON;
 import static pages.sales.deals.DealsPageElements.MEDIA_PAGE_TITLE;
 
 /**
@@ -14,4 +15,5 @@ import static pages.sales.deals.DealsPageElements.MEDIA_PAGE_TITLE;
 public class DealsPage extends BasePage {
 
     private SelenideElement pageTitle = $x(MEDIA_PAGE_TITLE.getSelector()).as(MEDIA_PAGE_TITLE.getAlias());
+    private SelenideElement createNewDealButton = $x(CREATE_DEAL_BUTTON.getSelector()).as(CREATE_DEAL_BUTTON.getAlias());
 }

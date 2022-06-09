@@ -1,4 +1,4 @@
-package widgets.admin.publisher;
+package widgets.admin.publisher.tableitem;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
