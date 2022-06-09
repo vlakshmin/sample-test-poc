@@ -10,6 +10,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
 import pages.admin.publisher.PublishersPage;
+import widgets.admin.publisher.sidebar.EditPublisherSidebar;
 import widgets.common.table.*;
 
 import static com.codeborne.selenide.Condition.*;
@@ -22,9 +23,11 @@ public class TableDataTests extends BaseTest {
 
     private Publisher publisher;
     private PublishersPage publishersPage;
+    private EditPublisherSidebar editPublisherSidebar;
 
     public TableDataTests() {
         publishersPage = new PublishersPage();
+        editPublisherSidebar = new EditPublisherSidebar();
     }
 
     @BeforeClass
@@ -138,7 +141,7 @@ public class TableDataTests extends BaseTest {
                 .and()
                 .clickOnTableCellLink(tableData, ColumnNames.PUBLISHER, publisher.getName())
                 .waitSideBarOpened()
-                .clickOnWebElement(publishersPage.getEditPublisherSidebar().getSaveButton())
+                .clickOnWebElement(editPublisherSidebar.getSaveButton())
                 .waitSideBarClosed()
                 .logOut()
         .testEnd();

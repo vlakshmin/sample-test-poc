@@ -8,8 +8,6 @@ import lombok.Getter;
 import org.openqa.selenium.WebElement;
 import pages.BasePage;
 import widgets.admin.publisher.tableitem.PublisherTableItem;
-import widgets.admin.publisher.EditPublisherSidebar;
-import widgets.admin.publisher.PublisherTableItem;
 import widgets.common.table.Table;
 
 import java.util.ArrayList;
