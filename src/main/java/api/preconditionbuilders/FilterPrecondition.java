@@ -23,15 +23,15 @@ public class FilterPrecondition {
     private FilterRequest filterRequest;
     private List<Filter> filterResponseList;
 
-    private FilterPrecondition(FilterPrecondition.FilterPreconditionBuilder builder) {
+    private FilterPrecondition(FilterPreconditionBuilder builder) {
         this.filterRequest = builder.filterRequest;
         this.filterResponse = builder.filterResponse;
         this.filterResponseList = builder.filterResponseList;
     }
 
-    public static FilterPrecondition.FilterPreconditionBuilder filter() {
+    public static FilterPreconditionBuilder filter() {
 
-        return new FilterPrecondition.FilterPreconditionBuilder();
+        return new FilterPreconditionBuilder();
     }
 
     public static class FilterPreconditionBuilder {
@@ -43,7 +43,7 @@ public class FilterPrecondition {
         private FilterService filterService = new FilterService();
         private Publisher publisher;
 
-        public FilterPrecondition.FilterPreconditionBuilder createNewFilter() {
+        public FilterPreconditionBuilder createNewFilter() {
 
             publisher = PublisherPrecondition.publisher()
                     .createNewPublisher()
@@ -61,7 +61,7 @@ public class FilterPrecondition {
             return this;
         }
 
-        public FilterPrecondition.FilterPreconditionBuilder getAllFilterList() {
+        public FilterPreconditionBuilder getAllFilterList() {
             this.response = filterService.getAll();
 
             this.filterResponseList = this.getFilterResponseList();

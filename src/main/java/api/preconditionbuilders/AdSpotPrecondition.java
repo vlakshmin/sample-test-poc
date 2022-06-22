@@ -23,15 +23,15 @@ public class AdSpotPrecondition {
     private AdSpotRequest adSpotRequest;
     private List<AdSpot> adSpotsResponseList;
 
-    private AdSpotPrecondition(AdSpotPrecondition.AdSpotPreconditionBuilder builder) {
+    private AdSpotPrecondition(AdSpotPreconditionBuilder builder) {
         this.adSpotRequest = builder.adSpotRequest;
         this.adSpotResponse = builder.adSpotResponse;
         this.adSpotsResponseList = builder.adSpotsResponseList;
     }
 
-    public static AdSpotPrecondition.AdSpotPreconditionBuilder adSpot() {
+    public static AdSpotPreconditionBuilder adSpot() {
 
-        return new AdSpotPrecondition.AdSpotPreconditionBuilder();
+        return new AdSpotPreconditionBuilder();
     }
 
     public static class AdSpotPreconditionBuilder {
@@ -47,7 +47,7 @@ public class AdSpotPrecondition {
         private Banner banner = new Banner();
         private Media media;
 
-        public AdSpotPrecondition.AdSpotPreconditionBuilder createNewAdSpot() {
+        public AdSpotPreconditionBuilder createNewAdSpot() {
 
             media = MediaPrecondition.media()
                     .createNewMedia()
@@ -86,7 +86,7 @@ public class AdSpotPrecondition {
             return this;
         }
 
-        public AdSpotPrecondition.AdSpotPreconditionBuilder createNewAdSpot(AdSpotRequest adSpotRequest) {
+        public AdSpotPreconditionBuilder createNewAdSpot(AdSpotRequest adSpotRequest) {
 
             this.response = adSpotService.createAdSpot(adSpotRequest);
             this.adSpotResponse = response.as(AdSpot.class);
@@ -95,7 +95,7 @@ public class AdSpotPrecondition {
         }
 
 
-        public AdSpotPrecondition.AdSpotPreconditionBuilder getAllAdSpotsList() {
+        public AdSpotPreconditionBuilder getAllAdSpotsList() {
             this.response = adSpotService.getAll();
 
             this.adSpotsResponseList = this.getAdSpotsResponseList();

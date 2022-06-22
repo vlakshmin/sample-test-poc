@@ -23,15 +23,15 @@ public class MediaPrecondition {
     private MediaRequest mediaRequest;
     private List<Media> mediaResponseList;
 
-    private MediaPrecondition(MediaPrecondition.MediaPreconditionBuilder builder) {
+    private MediaPrecondition(MediaPreconditionBuilder builder) {
         this.mediaRequest = builder.mediaRequest;
         this.mediaResponse = builder.mediaResponse;
         this.mediaResponseList = builder.mediaResponseList;
     }
 
-    public static MediaPrecondition.MediaPreconditionBuilder media() {
+    public static MediaPreconditionBuilder media() {
 
-        return new MediaPrecondition.MediaPreconditionBuilder();
+        return new MediaPreconditionBuilder();
     }
 
     public static class MediaPreconditionBuilder {
@@ -43,7 +43,7 @@ public class MediaPrecondition {
         private MediaService mediaService = new MediaService();
         private Filter filter;
 
-        public MediaPrecondition.MediaPreconditionBuilder createNewMedia() {
+        public MediaPreconditionBuilder createNewMedia() {
 
             filter = FilterPrecondition.filter()
                     .createNewFilter()
@@ -68,7 +68,7 @@ public class MediaPrecondition {
             return this;
         }
 
-        public MediaPrecondition.MediaPreconditionBuilder getAllMediaList() {
+        public MediaPreconditionBuilder getAllMediaList() {
             this.response = mediaService.getAll();
 
             this.mediaResponseList = this.getMediaResponseList();
