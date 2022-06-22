@@ -25,8 +25,25 @@ public enum RakutenExchangeApi {
     UPDATE_OPEN_PRICING("/v3/pricing/open/%s"),
     GET_ALL_OPEN_PRICING("/v3/pricing/open"),
     GET_OPEN_PRICING("/v3/pricing/open/%s"),
-    DELETE_OPEN_PRICING("/v3/pricing/open/%s");
+    DELETE_OPEN_PRICING("/v3/pricing/open/%s"),
 
+    //Media
+    CREATE_MEDIA("/v2/media"),
+    GET_MEDIA("/v2/media/%s"),
+    GET_ALL_MEDIA("/v2/media"),
+    UPDATE_MEDIA("/v2/media/%s"),
+
+    //Ad Spot
+    CREATE_ADSPOT("/v2/adspots"),
+    GET_ADSPOT("/v2/adspots/%s"),
+    GET_ALL_ADSPOTS("/v2/adspots"),
+    UPDATE_ADSPOT("/v2/adspots/%s"),
+
+    //Filter
+    CREATE_FILTER("/v2/filters"),
+    GET_FILTER("/v2/filters/%s"),
+    GET_ALL_FILTERS("/v2/filters"),
+    UPDATE_FILTER("/v2/filters/%s");
 
     private String endpoint;
 

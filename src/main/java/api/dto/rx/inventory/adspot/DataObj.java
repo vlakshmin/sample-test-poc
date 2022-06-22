@@ -1,23 +1,20 @@
-package api.dto.rx.protection;
+package api.dto.rx.inventory.adspot;
 
-import zutils.ObjectMapperUtils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import zutils.ObjectMapperUtils;
 
-import java.util.List;
-
-@Data
+@lombok.Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Adspot {
+public class DataObj {
 
-    private List<Integer> includedAdspots;
-    private List<Integer> excludedAdspots;
+    private Integer len;
+    private Integer type;
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);

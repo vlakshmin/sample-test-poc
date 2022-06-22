@@ -10,6 +10,8 @@ public enum Path {
     PUBLISHER("/admin/publishers"),
     USER("/admin/publishers"),
     DEALS("/sales/deals"),
+    MEDIA("/media"),
+    AD_SPOT("/adspots"),
     OPEN_PRICING("/sales/deals");
 
     private String path;
