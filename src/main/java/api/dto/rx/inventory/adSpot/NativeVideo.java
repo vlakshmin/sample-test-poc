@@ -1,4 +1,4 @@
-package api.dto.rx.yield.openPricing;
+package api.dto.rx.inventory.adSpot;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -14,10 +14,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Media {
+public class NativeVideo {
 
-    private List<Integer> media;
-    private Boolean exclude;
+    private List<String> mimes;
+    private Integer maxDuration;
+    private Integer minDuration;
+
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);

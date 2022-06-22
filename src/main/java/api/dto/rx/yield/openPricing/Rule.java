@@ -14,10 +14,10 @@ import zutils.ObjectMapperUtils;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Rule {
 
-    public Adspot adspot;
+    public AdSpotRule adspot;
     public AdFormat adFormat;
     public AdSize adSize;
-    public Media media;
+    public MediaRule media;
     public DeviceType deviceType;
     public Geo geo;
     public DeviceOS deviceOS;

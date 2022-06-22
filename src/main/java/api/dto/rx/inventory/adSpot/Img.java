@@ -1,4 +1,4 @@
-package api.dto.rx.inventory.adspot;
+package api.dto.rx.inventory.adSpot;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -14,12 +14,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class NativeVideo {
+public class Img {
 
     private List<String> mimes;
-    private Integer maxDuration;
-    private Integer minDuration;
-
+    private Integer height;
+    private Integer imgType;
+    private Integer minHeight;
+    private Integer minWidth;
+    private Integer width;
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);

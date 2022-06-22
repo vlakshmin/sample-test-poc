@@ -1,4 +1,4 @@
-package api.dto.rx.inventory.adspot;
+package api.dto.rx.yield.openPricing;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -14,15 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Assets {
+public class MediaRule {
 
-    private List<Integer> playbackMethodIds;
-    private List<Integer> sizeIds;
-    private String assetType;
-    private Integer id;
-    private Img img;
-    private DataObj data;
-
+    private List<Integer> media;
+    private Boolean exclude;
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);

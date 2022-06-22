@@ -1,6 +1,10 @@
 package api.preconditionbuilders;
 
 import api.dto.rx.admin.publisher.Publisher;
+import api.dto.rx.inventory.media.Media;
+import api.dto.rx.inventory.adSpot.AdSpotRequest;
+import api.dto.rx.inventory.adSpot.Banner;
+import api.dto.rx.inventory.adSpot.AdSpot;
 import api.dto.rx.yield.openPricing.*;
 import api.services.OpenPricingService;
 import io.restassured.response.Response;
@@ -42,10 +46,32 @@ public class OpenPricingPrecondition {
         private OpenPricingService openPricingService = new OpenPricingService();
 
         public OpenPricingPreconditionBuilder createNewOpenPricing() {
-            Publisher publisher = PublisherPrecondition.publisher()
-                    .createNewPublisher()
+
+            Media media = MediaPrecondition.media()
+                    .createNewMedia()
                     .build()
-                    .getPublisherResponse();
+                    .getMediaResponse();
+
+            AdSpot adSpot = AdSpotPrecondition.adSpot()
+                    .createNewAdSpot(AdSpotRequest.builder()
+                            .name(captionWithSuffix("AdSpot"))
+                            .enabled(true)
+                            .publisherId(media.getPublisherId())
+                            .publisherName(media.getPublisherName())
+                            .filterId(media.getFilterId())
+                            .floorPrice(9.99)
+                            .mediaId(media.getId())
+                            .coppa(true)
+                            .categoryIds(List.of(1, 2))
+                            .sizeIds(List.of(10))
+                            .banner( Banner.builder()
+                                    .enabled(true)
+                                    .floorPrice(8.88)
+                                    .sizeIds(List.of(3))
+                                    .build())
+                            .build())
+                    .build()
+                    .getAdSpotResponse();
 
             this.openPricingRequest = OpenPricingRequest.builder()
                     .name(captionWithSuffix("OpenPricing"))
@@ -53,11 +79,11 @@ public class OpenPricingPrecondition {
                     .floorPrice(5.66)
                     .notes("autotest")
                     .priority(1)
-                    .publisherName(publisher.getName())
-                    .publisherId(publisher.getId())
+                    .publisherName(media.getPublisherName())
+                    .publisherId(media.getPublisherId())
                     .rule(Rule.builder()
-                            .adspot(Adspot.builder()
-                                    .includedAdspots(List.of(58))
+                            .adspot(AdSpotRule.builder()
+                                    .includedAdspots(List.of(adSpot.getId()))
                                     .excludedAdspots(List.of())
                                     .build())
                             .adFormat(AdFormat.builder()
@@ -68,8 +94,8 @@ public class OpenPricingPrecondition {
                                     .adSizes(List.of(10))
                                     .exclude(false)
                                     .build())
-                            .media(Media.builder()
-                                    .media(List.of(14))
+                            .media(MediaRule.builder()
+                                    .media(List.of(media.getId()))
                                     .exclude(false)
                                     .build())
                             .deviceType(DeviceType.builder()

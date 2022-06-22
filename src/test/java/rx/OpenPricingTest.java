@@ -1,41 +1,37 @@
 package rx;
 
-import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.yield.openPricing.OpenPricing;
 import api.preconditionbuilders.OpenPricingPrecondition;
-import api.preconditionbuilders.PublisherPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
-import pages.admin.publisher.PublishersPage;
-import pages.dashbord.DashboardPage;
 import pages.yield.openpricing.OpenPricingPage;
-import widgets.admin.publisher.sidebar.CreatePublisherSidebar;
-import widgets.admin.publisher.sidebar.EditPublisherSidebar;
-import widgets.yield.openPricing.sidebar.CreateOpenPricingSidebar;
+import widgets.common.table.ColumnNames;
 import widgets.yield.openPricing.sidebar.EditOpenPricingSidebar;
 
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
-import static java.lang.String.valueOf;
 import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class OpenPricingTest extends BaseTest{
+public class OpenPricingTest extends BaseTest {
 
     private OpenPricing openPricing;
     private OpenPricingPage openPricingPage;
     private EditOpenPricingSidebar editOpenPricingSidebar;
-    private CreateOpenPricingSidebar createOpenPricingSidebar;
 
+    public OpenPricingTest() {
+        openPricingPage = new OpenPricingPage();
+        editOpenPricingSidebar = new EditOpenPricingSidebar();
+    }
 
     @BeforeClass
-    public void createNewPublisher(){
+    public void createNewPublisher() {
         //Creating publisher to edit Using API
         openPricing = OpenPricingPrecondition.openPricing()
                 .createNewOpenPricing()
@@ -44,17 +40,35 @@ public class OpenPricingTest extends BaseTest{
     }
 
     @Test
-    public void editOpenPricingTest(){
+    public void editOpenPricingTest() {
+        var tableData = openPricingPage.getOpenPricingTable().getTableData();
 
-        //Opening Browser and Edit the protection created from Precondition
+        //Opening Browser and check Open pricing from precondition
         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
+                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
+                .setValueWithClean(tableData.getSearch(), openPricing.getName())
+                .waitLoading(visible, openPricingPage.getTableProgressBar())
+                .waitLoading(disappear, openPricingPage.getTableProgressBar())
+                .then()
+                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.NAME),
+                        openPricing.getName())
+                .and()
+                .clickOnTableCellLink(tableData, ColumnNames.NAME, openPricing.getName())
+                .waitSideBarOpened()
+                .validateAttribute(editOpenPricingSidebar.getNameInput(), "value", openPricing.getName())
+                .validate(editOpenPricingSidebar.getPublisherInput(), openPricing.getPublisherName())
+                .validateAttribute(editOpenPricingSidebar.getFloorPrice(), "value", openPricing.getFloorPrice().toString())
 
+                .clickOnWebElement(editOpenPricingSidebar.getSaveButton())
+                .waitSideBarClosed()
 
                 .testEnd();
 
         //allure serve
     }
+
+
 }

@@ -20,7 +20,7 @@ public enum ColumnNames {
     START_DATE("Start Date", true),
     END_DATE("End Date", true),
     STATUS("Status", true),
-
+    ACTIVE_INACTIVE("Active/Inactive", true),
 
     //Demand Source
     DSP_ID("DSP ID", false),
@@ -44,7 +44,7 @@ public enum ColumnNames {
     //Ad Spot Name
     AD_SPOT_NAME("Ad Spot Name", true),
     RELATED_MEDIA("Related Media", true),
-    ACTIVE_INACTIVE("Active/Inactive", true),
+
     PAGE_CATEGORY("Page Category", false),
     FILTER("Filter", false),
     TEST_MODE("Test Mode", false),
@@ -65,7 +65,11 @@ public enum ColumnNames {
     PRIVATE_AUCTION("Private Auction", true),
     DSP("DSP", false),
     PRICE_VALUE("Price | Value", true),
-    PRICE_CURRENCY("Price | Currency", true);
+    PRICE_CURRENCY("Price | Currency", true),
+
+    //Open Pricing
+    FLOOR_PRICE("Floor Price", true);
+
 
     private String name;
     private Boolean sortable;

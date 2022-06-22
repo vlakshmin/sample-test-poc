@@ -1,6 +1,6 @@
 package api.services;
 
-import api.dto.rx.inventory.adspot.AdSpotRequest;
+import api.dto.rx.inventory.adSpot.AdSpotRequest;
 import io.restassured.response.Response;
 
 import static api.core.RakutenExchangeApi.CREATE_ADSPOT;

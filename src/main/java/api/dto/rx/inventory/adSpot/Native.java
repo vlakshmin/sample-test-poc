@@ -1,4 +1,4 @@
-package api.dto.rx.yield.openPricing;
+package api.dto.rx.inventory.adSpot;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -7,17 +7,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import zutils.ObjectMapperUtils;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Adspot {
+public class Native {
 
-    private List<Integer> includedAdspots;
-    private List<Integer> excludedAdspots;
+    private Assets assets;
+    private NativeVideo video;
+    private Title title;
+
+    private Boolean required;
+
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);

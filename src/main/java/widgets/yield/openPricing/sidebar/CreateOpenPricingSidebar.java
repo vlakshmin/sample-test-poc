@@ -1,4 +1,11 @@
 package widgets.yield.openPricing.sidebar;
 
-public class CreateOpenPricingSidebar {
+import lombok.Getter;
+
+/**
+ * Keep Selectors of UI elements in {@link OpenPricingSidebarElements}
+ */
+@Getter
+public class CreateOpenPricingSidebar extends OpenPricingSidebar {
+
 }
