@@ -47,21 +47,6 @@ public class AdSpotTest extends BaseTest{
 
     }
 
-    @Test
-    public void editAdSpotTest(){
-
-        //Opening Browser and Edit the media created from Precondition
-        testStart()
-                .given()
-                .openDirectPath(Path.AD_SPOT)
-                .logIn(TEST_USER)
-                .waitAndValidate(disappear, adspotsPage.getNuxtProgress())
-                .and()
-         .testEnd();
-
-        //allure serve
-    }
-
 
     @Test
     public void createCustomAdSpotTest(){
