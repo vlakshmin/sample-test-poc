@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum OpenPricePageElements {
+public enum OpenPricingPageElements {
 
     OPEN_PRICE_PAGE_TITLE( "'Open Price' Page Title", "//h1");
 
