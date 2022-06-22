@@ -9,7 +9,8 @@ public enum Path {
 
     PUBLISHER("/admin/publishers"),
     USER("/admin/publishers"),
-    DEALS("/sales/deals");
+    DEALS("/sales/deals"),
+    OPEN_PRICING("/sales/deals");
 
     private String path;
 }

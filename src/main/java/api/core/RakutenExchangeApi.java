@@ -18,7 +18,15 @@ public enum RakutenExchangeApi {
     CREATE_USER("/v2/accounts"),
     GET_USER("/v2/accounts/%s"),
     GET_ALL_USERS("/v2/accounts"),
-    UPDATE_USER("/v2/accounts/%s");
+    UPDATE_USER("/v2/accounts/%s"),
+
+    //Open Pricing
+    CREATE_OPEN_PRICING("/v3/pricing/open"),
+    UPDATE_OPEN_PRICING("/v3/pricing/open/%s"),
+    GET_ALL_OPEN_PRICING("/v3/pricing/open"),
+    GET_OPEN_PRICING("/v3/pricing/open/%s"),
+    DELETE_OPEN_PRICING("/v3/pricing/open/%s");
+
 
     private String endpoint;
 
