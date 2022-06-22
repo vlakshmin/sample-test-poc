@@ -16,7 +16,7 @@ public class FilterRequest {
 
 
     private Integer publisherId;
-    private String publisherName;
+    private String name;
 
     public String toJson() {
 

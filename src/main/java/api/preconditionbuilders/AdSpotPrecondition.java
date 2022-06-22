@@ -42,7 +42,7 @@ public class AdSpotPrecondition {
         private List<AdSpot> adSpotsResponseList;
         private AdSpotService adSpotService = new AdSpotService();
         private Video video = new Video();
-        private NativeVideo nativeVideo= new NativeVideo();
+        private NativeVideo nativeVideo = new NativeVideo();
         private Native nativeObj = new Native();
         private Banner banner = new Banner();
         private Media media;
@@ -55,7 +55,7 @@ public class AdSpotPrecondition {
                     .getMediaResponse();
 
             video = Video.builder()
-                    .floorPrice(23)
+                    .floorPrice(23.00)
                     .maxDuration(10)
                     .enabled(true)
                     .sizeIds(List.of(10))
@@ -68,7 +68,7 @@ public class AdSpotPrecondition {
                     .filterId(media.getFilterId())
                     .publisherId(media.getPublisherId())
                     .currency(Currency.JPY.name())
-                    .floorPrice(11)
+                    .floorPrice(11.00)
                     .mediaId(media.getId())
                     .positionId(1)
                     .coppa(true)
@@ -86,7 +86,7 @@ public class AdSpotPrecondition {
             return this;
         }
 
-        public AdSpotPrecondition.AdSpotPreconditionBuilder createNewAdSpot(AdSpotRequest adSpotRequest){
+        public AdSpotPrecondition.AdSpotPreconditionBuilder createNewAdSpot(AdSpotRequest adSpotRequest) {
 
             this.response = adSpotService.createAdSpot(adSpotRequest);
             this.adSpotResponse = response.as(AdSpot.class);

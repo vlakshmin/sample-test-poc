@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Arrays;
 import java.util.List;
 
+import static zutils.FakerUtils.captionWithSuffix;
+
 @Slf4j
 @Getter
 @AllArgsConstructor
@@ -49,7 +51,7 @@ public class FilterPrecondition {
                     .getPublisherResponse();
 
             this.filterRequest = filterRequest.builder()
-                    .publisherName(publisher.getName())
+                    .name(captionWithSuffix("Filter"))
                     .publisherId(publisher.getId())
                     .build();
 

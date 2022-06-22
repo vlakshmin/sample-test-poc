@@ -19,7 +19,7 @@ public class Video {
     private List<Integer> playbackMethodIds;
     private List<Integer> sizeIds;
     private Boolean enabled;
-    private Integer floorPrice;
+    private Double floorPrice;
     private Integer maxDuration;
     private Integer minDuration;
     private Integer placementType;

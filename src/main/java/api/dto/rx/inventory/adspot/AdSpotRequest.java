@@ -25,7 +25,7 @@ public class AdSpotRequest {
     private Boolean floorPriceAutomated;
     private Boolean testMode;
     private Integer filterId;
-    private Integer floorPrice;
+    private Double floorPrice;
     private Integer ttl;
     private Integer positionId;
     private Integer prebidCacheEnabled;

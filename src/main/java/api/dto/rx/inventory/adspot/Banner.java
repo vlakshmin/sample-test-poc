@@ -18,7 +18,7 @@ public class Banner {
 
     private List<Integer> sizeIds;
     private Boolean enabled;
-    private Integer floorPrice;
+    private Double floorPrice;
 
 
     public String toJson() {
