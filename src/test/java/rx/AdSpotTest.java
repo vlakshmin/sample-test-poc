@@ -101,7 +101,11 @@ public class AdSpotTest extends BaseTest {
                 .coppa(true)
                 .categoryIds(List.of(1, 2))
                 .sizeIds(List.of(10))
-                .banner(new Banner(List.of(3), true, 8.88))
+                .banner( Banner.builder()
+                        .enabled(true)
+                        .floorPrice(8.88)
+                        .sizeIds(List.of(3))
+                        .build())
                 .build();
 
         return adSpotRequest;
