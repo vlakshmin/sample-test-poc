@@ -83,14 +83,14 @@ public class AdSpotTest extends BaseTest {
                 .testEnd();
     }
 
-    private AdSpotRequest createCustomAdSpot(String name) {
+    private  AdSpotRequest createCustomAdSpot(String name) {
 
         Media media = MediaPrecondition.media()
                 .createNewMedia()
                 .build()
                 .getMediaResponse();
 
-        AdSpotRequest adSpotRequest = AdSpotRequest.builder()
+        return AdSpotRequest.builder()
                 .name(name)
                 .enabled(true)
                 .publisherId(media.getPublisherId())
@@ -107,7 +107,5 @@ public class AdSpotTest extends BaseTest {
                         .sizeIds(List.of(3))
                         .build())
                 .build();
-
-        return adSpotRequest;
     }
 }
