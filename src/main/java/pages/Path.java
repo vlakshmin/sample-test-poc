@@ -10,7 +10,9 @@ public enum Path {
     CREATE_PROTECTION("/protections/create"),
     PUBLISHER("/admin/publishers"),
     USER("/admin/publishers"),
-    DEALS("/sales/deals");
+    DEALS("/sales/deals"),
+    MEDIA("/media"),
+    AD_SPOT("/adspots");
 
     private String path;
 }
