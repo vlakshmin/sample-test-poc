@@ -19,7 +19,6 @@ import pages.Path;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.TableData;
 
-import java.awt.*;
 import java.io.File;
 import java.time.Duration;
 import java.util.Map;
@@ -31,7 +30,6 @@ import static api.core.client.HttpClient.getToken;
 import static api.core.client.HttpClient.setCredentials;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Selenide.actions;
 import static io.qameta.allure.Allure.step;
 import static java.lang.String.format;
 import static org.testng.Assert.assertTrue;
@@ -125,7 +123,8 @@ public final class TestManager {
 
         public TestManagerBuilder clickOnWebElement(SelenideElement element) {
             logEvent(format("Clicking on %s", element.getAlias()));
-            element.shouldBe(exist, visible).hover().click();
+            logEvent(format("Clicking on %s", element.getSearchCriteria()));
+            element.scrollTo().shouldBe(exist, visible).hover().click();
 
             return this;
         }
@@ -364,9 +363,9 @@ public final class TestManager {
             return this;
         }
 
-        public TestManagerBuilder scrollTo(SelenideElement element) {
+        public TestManagerBuilder scrollIntoView(SelenideElement element) {
             logEvent(format("Scrolling to %s", element.getAlias()));
-            element.should(exist, visible).scrollTo();
+            element.shouldHave(exist).scrollIntoView(true).shouldBe(visible);
 
             return this;
         }
@@ -414,7 +413,7 @@ public final class TestManager {
 
         public TestManagerBuilder waiter(Condition condition, SelenideElement element) {
 
-            element.shouldBe(condition);
+            element.scrollTo().shouldBe(condition);
             return this;
         }
 
