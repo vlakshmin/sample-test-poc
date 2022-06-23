@@ -1,4 +1,4 @@
-package api.dto.rx.inventory.adspot;
+package api.dto.rx.inventory.adSpot;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -14,15 +14,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Video {
+public class Banner {
 
-    private List<Integer> playbackMethodIds;
     private List<Integer> sizeIds;
     private Boolean enabled;
     private Double floorPrice;
-    private Integer maxDuration;
-    private Integer minDuration;
-    private Integer placementType;
+
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);

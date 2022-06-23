@@ -1,8 +1,8 @@
 package rx;
 
-import api.dto.rx.inventory.adspot.AdSpot;
-import api.dto.rx.inventory.adspot.AdSpotRequest;
-import api.dto.rx.inventory.adspot.Banner;
+import api.dto.rx.inventory.adSpot.AdSpot;
+import api.dto.rx.inventory.adSpot.AdSpotRequest;
+import api.dto.rx.inventory.adSpot.Banner;
 import api.dto.rx.inventory.media.Media;
 import api.preconditionbuilders.AdSpotPrecondition;
 import api.preconditionbuilders.MediaPrecondition;

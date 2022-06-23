@@ -1,4 +1,4 @@
-package api.dto.rx.inventory.adspot;
+package api.dto.rx.yield.openPricing;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -14,12 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Banner {
+public class DeviceOS {
 
-    private List<Integer> sizeIds;
-    private Boolean enabled;
-    private Double floorPrice;
-
+    private List<Integer> deviceOSs;
+    private Boolean exclude;
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);
