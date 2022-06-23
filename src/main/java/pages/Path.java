@@ -12,7 +12,8 @@ public enum Path {
     USER("/admin/publishers"),
     DEALS("/sales/deals"),
     MEDIA("/media"),
-    AD_SPOT("/adspots");
+    AD_SPOT("/adspots"),
+    OPEN_PRICING("/yield/open-pricing");
 
     private String path;
 }

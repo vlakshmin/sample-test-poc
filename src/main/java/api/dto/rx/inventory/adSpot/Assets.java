@@ -1,4 +1,4 @@
-package api.dto.rx.inventory.adspot;
+package api.dto.rx.inventory.adSpot;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -14,14 +14,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Img {
+public class Assets {
 
-    private List<String> mimes;
-    private Integer height;
-    private Integer imgType;
-    private Integer minHeight;
-    private Integer minWidth;
-    private Integer width;
+    private List<Integer> playbackMethodIds;
+    private List<Integer> sizeIds;
+    private String assetType;
+    private Integer id;
+    private Img img;
+    private DataObj data;
+
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);

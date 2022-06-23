@@ -1,7 +1,6 @@
-package api.dto.rx.inventory.adspot;
+package api.dto.rx.inventory.adSpot;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,9 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AdSpot {
+public class AdSpotRequest {
 
-    private Integer id;
     private Integer mediaId;
     private String name;
     private String mediaName;
@@ -34,14 +32,14 @@ public class AdSpot {
     private Integer publisherId;
     private String publisherName;
     private String currency;
-    private List<Integer> sizeIds;
-    @JsonProperty(value="native")
+    private Video video;
+    private Banner banner;
+    @JsonIgnoreProperties("native")
     private Native anative;
 
     private List<Integer> categoryIds;
+    private List<Integer> sizeIds;
 
-    private String createdAt;
-    private String updatedAt;
 
     public String toJson() {
 
