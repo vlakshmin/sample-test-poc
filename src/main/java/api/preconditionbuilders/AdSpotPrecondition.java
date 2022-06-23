@@ -1,7 +1,7 @@
 package api.preconditionbuilders;
 
 import api.dto.rx.common.Currency;
-import api.dto.rx.inventory.adSpot.*;
+import api.dto.rx.inventory.adspot.*;
 import api.dto.rx.inventory.media.Media;
 import api.services.AdSpotService;
 import io.restassured.response.Response;

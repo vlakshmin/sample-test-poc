@@ -1,4 +1,4 @@
-package api.dto.rx.inventory.adSpot;
+package api.dto.rx.inventory.adspot;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

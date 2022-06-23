@@ -1,4 +1,4 @@
-package api.dto.rx.inventory.adSpot;
+package api.dto.rx.inventory.adspot;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import zutils.ObjectMapperUtils;
 
+import api.dto.rx.inventory.adspot.Banner;
+import api.dto.rx.inventory.adspot.Video;
 import java.util.List;
 
 @Data
