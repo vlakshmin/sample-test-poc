@@ -31,7 +31,7 @@ public class OpenPricingTest extends BaseTest {
     }
 
     @BeforeClass
-    public void createNewPublisher() {
+    public void createOpenPricing() {
         //Creating publisher to edit Using API
         openPricing = OpenPricingPrecondition.openPricing()
                 .createNewOpenPricing()

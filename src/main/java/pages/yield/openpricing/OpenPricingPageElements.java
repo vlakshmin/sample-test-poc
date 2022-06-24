@@ -12,6 +12,7 @@ public enum OpenPricingPageElements {
     CREATE_OPEN_PRICING_BUTTON("'Create Open Pricing Rule' Button", "//button//span[text()='Create Open Pricing Rule']"),
     EDIT_OPEN_PRICING_BUTTON("'Edit Open Pricing Rule' Button", "//button//span[text()='Edit Open Pricing Rule']");
 
+
     private String alias;
     private String selector;
 }

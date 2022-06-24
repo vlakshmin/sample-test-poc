@@ -113,6 +113,7 @@ public class TableDataTests extends BaseTest {
                 .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.ACTIVE),
                         Statuses.ACTIVE.getStatus())
                 .clickOnWebElement(tablePagenation.getNext())
+                .selectFromDropdown(tablePagenation.getPageMenu(), tablePagenation.getRowNumbersList(), "10")
                 .waitLoading(visible,publishersPage.getTableProgressBar())
                 .waitLoading(disappear,publishersPage.getTableProgressBar())
                 .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.ACTIVE),
