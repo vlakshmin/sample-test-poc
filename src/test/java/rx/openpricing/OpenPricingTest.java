@@ -16,22 +16,20 @@ import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
 import static managers.TestManager.testStart;
 
-
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class Pagination {
+public class OpenPricingTest {
     private OpenPricing openPricing;
     private OpenPricingPage openPricingPage;
     private EditOpenPricingSidebar editOpenPricingSidebar;
 
-    public Pagination() {
+    public OpenPricingTest() {
         openPricingPage = new OpenPricingPage();
         editOpenPricingSidebar = new EditOpenPricingSidebar();
     }
 
     @BeforeClass
     public void createOpenPricing() {
-        //Creating publisher to edit Using API
         openPricing = OpenPricingPrecondition.openPricing()
                 .createNewOpenPricing()
                 .build()
