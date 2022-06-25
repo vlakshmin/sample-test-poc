@@ -86,6 +86,13 @@ public class Pagination {
                 .validateListSize(tableData.getRows(), 100)
                 .logOut()
                 .testEnd();
+    }
+
+    @Test
+    public void verifyColumnOrder(){
 
     }
+
+
+
 }

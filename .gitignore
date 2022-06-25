@@ -144,6 +144,7 @@ application-prod.yml
 *.txt
 *.log
 .allure
+allure-results
 docker/docker-compose.yml
 target
 application.log
