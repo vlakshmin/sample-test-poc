@@ -1,6 +1,7 @@
 package configurations;
 
 import lombok.Getter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetAddress;
@@ -10,7 +11,7 @@ import java.net.UnknownHostException;
 public class ActiveSystemProfileResolver {
 
     private static final String user1 = "b";
-    private static final String user2 = "a";
+    private static final String user2 = "ashidlovskaya-pro13.local";
     private static final String user3 = "c";
     private static final String user4 = "d";
 

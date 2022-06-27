@@ -56,7 +56,7 @@ public class AdSpotTest extends BaseTest {
                 .createNewAdSpot(createCustomAdSpot(adSpotName))
                 .build()
                 .getAdSpotResponse();
-        ;
+
         //Opening Browser and check the ad spot created
         testStart()
                 .given()
@@ -83,7 +83,7 @@ public class AdSpotTest extends BaseTest {
                 .testEnd();
     }
 
-    private  AdSpotRequest createCustomAdSpot(String name) {
+    private AdSpotRequest createCustomAdSpot(String name) {
 
         Media media = MediaPrecondition.media()
                 .createNewMedia()
@@ -101,7 +101,7 @@ public class AdSpotTest extends BaseTest {
                 .coppa(true)
                 .categoryIds(List.of(1, 2))
                 .sizeIds(List.of(10))
-                .banner( Banner.builder()
+                .banner(Banner.builder()
                         .enabled(true)
                         .floorPrice(8.88)
                         .sizeIds(List.of(3))

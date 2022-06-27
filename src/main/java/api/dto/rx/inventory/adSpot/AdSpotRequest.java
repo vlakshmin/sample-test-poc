@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import zutils.ObjectMapperUtils;
 
+import api.dto.rx.inventory.adspot.Banner;
+import api.dto.rx.inventory.adspot.Video;
 import java.util.List;
 
 @Data
