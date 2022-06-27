@@ -69,7 +69,7 @@ public class MediaTest extends BaseTest{
                 .waitSideBarOpened()
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
                 .then()
-             //   .validateTooltip(editMediaSidebar.getHintCategories(),"")
+               // .validateTooltip(,editMediaSidebar.getHintCategories(),"test tooltip")
                 .waitSideBarClosed()
 
                 .and()
