@@ -1,12 +1,12 @@
-package pages.sales.deals;
+package pages.admin.sales.deals;
 
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import pages.BasePage;
 
 import static com.codeborne.selenide.Selenide.$x;
-import static pages.sales.deals.DealsPageElements.CREATE_DEAL_BUTTON;
-import static pages.sales.deals.DealsPageElements.MEDIA_PAGE_TITLE;
+import static pages.admin.sales.deals.DealsPageElements.CREATE_DEAL_BUTTON;
+import static pages.admin.sales.deals.DealsPageElements.MEDIA_PAGE_TITLE;
 
 /**
  * Keep Selectors of UI elements in {@link DealsPageElements}

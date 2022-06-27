@@ -5,7 +5,6 @@ import lombok.Getter;
 import pages.BasePage;
 
 import static com.codeborne.selenide.Selenide.$x;
-import static pages.sales.deals.DealsPageElements.MEDIA_PAGE_TITLE;
 import static pages.yield.openpricing.OpenPricePageElements.OPEN_PRICE_PAGE_TITLE;
 
 /**

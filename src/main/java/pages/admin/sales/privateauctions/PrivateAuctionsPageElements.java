@@ -1,4 +1,4 @@
-package pages.sales.privateauctions;
+package pages.admin.sales.privateauctions;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

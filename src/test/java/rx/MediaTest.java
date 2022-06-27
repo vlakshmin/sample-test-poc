@@ -13,6 +13,8 @@ import pages.Path;
 import pages.admin.publisher.PublishersPage;
 import pages.dashbord.DashboardPage;
 import pages.inventory.media.MediaPage;
+import widgets.common.table.ColumnNames;
+import widgets.inventory.media.sidebar.EditMediaSidebar;
 import zutils.FakerUtils;
 
 import static com.codeborne.selenide.Condition.disappear;
@@ -26,14 +28,11 @@ import static managers.TestManager.testStart;
 public class MediaTest extends BaseTest{
 
     private Media media;
-    private DashboardPage dashboardsPage;
     private MediaPage mediaPage;
-
-    private static final String PUBLISHER_NAME_EDITED = FakerUtils.captionWithSuffix("Pub_Edited");
-    private static final String PUBLISHER_AD_OPS_EDITED = FakerUtils.captionWithSuffix("Ad_Ops_Edited");
+    private EditMediaSidebar editMediaSidebar;
 
     public MediaTest(){
-        dashboardsPage = new DashboardPage();
+        editMediaSidebar = new EditMediaSidebar();
         mediaPage = new MediaPage();
     }
 
@@ -48,6 +47,8 @@ public class MediaTest extends BaseTest{
 
     @Test
     public void editMediaTest(){
+        var table = mediaPage.getMediaTable().getTableOptions();
+        var tableData = mediaPage.getMediaTable().getTableData();
 
         //Opening Browser and Edit the media created from Precondition
         testStart()
@@ -55,6 +56,22 @@ public class MediaTest extends BaseTest{
                 .openDirectPath(Path.MEDIA)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+                .and()
+                .setValueWithClean(tableData.getSearch(),media.getName())
+                .clickEnterButton(tableData.getSearch())
+                .waitLoading(visible,mediaPage.getTableProgressBar())
+                .waitLoading(disappear,mediaPage.getTableProgressBar())
+                .then()
+                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.MEDIA_NAME),
+                        media.getName())
+                .and()
+                .clickOnTableCellLink(tableData, ColumnNames.MEDIA_NAME, media.getName())
+                .waitSideBarOpened()
+                .clickOnWebElement(editMediaSidebar.getSaveButton())
+                .then()
+             //   .validateTooltip(editMediaSidebar.getHintCategories(),"")
+                .waitSideBarClosed()
+
                 .and()
          .testEnd();
 
