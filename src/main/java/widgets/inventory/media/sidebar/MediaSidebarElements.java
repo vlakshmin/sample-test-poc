@@ -11,7 +11,7 @@ public enum MediaSidebarElements {
     MEDIA_TYPE("'Media Type' Input", "//label[text()='Media Type']/../div"),
     PUBLISHER_NAME( "'Publisher Name' Input", "//label[text()='Publisher Name']/../div"),
     CATEGORIES("'Categories' Input", "//label[text()='Categories']/../input"),
-    HINT_CATEGORIES("'Hint Categories' Input", "//label[text()='Categories']/../../div[@class='v-input__append-inner']"),
+    HINT_CATEGORIES("'Hint Categories' Hint Icon", "//label[text()='Categories']/../div/span[@class='v-tooltip v-tooltip--bottom']/../i"),
     SITE_URL( "'Site URL' Input", "//label[text()='Site URL']/../input"),
     HINT_SITE_URL("Hint Site URL","//label[text()='Site URL']/../../div[@class='v-input__append-inner']"),
     APP_STORE_URL( "'App Store URL' Input", "//label[text()='App Store URL']/../input"),

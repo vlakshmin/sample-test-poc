@@ -41,19 +41,13 @@ public class MediaPrecondition {
         private MediaRequest mediaRequest;
         private List<Media> mediaResponseList;
         private MediaService mediaService = new MediaService();
-        private Filter filter;
+
 
         public MediaPreconditionBuilder createNewMedia() {
 
-            filter = FilterPrecondition.filter()
-                    .createNewFilter()
-                    .build()
-                    .getFilterResponse();
-
             this.mediaRequest = mediaRequest.builder()
                     .name(captionWithSuffix("Media"))
-                    .filterId(filter.getId())
-                    .publisherId(filter.getPublisherId())
+                 //   .publisherId(getPublisherId())
                     .platformId(2)
                     .url("http://localhost:5016")
                     .isEnabled(true)

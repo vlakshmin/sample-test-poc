@@ -18,7 +18,6 @@ public class MediaRequest {
 
 
     private String name;
-    private Integer filterId;
     private Integer platformId;
     private Integer publisherId;
     private String publisherName;

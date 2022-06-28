@@ -1,21 +1,18 @@
-package rx;
+package rx.media;
 
-import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.inventory.media.Media;
 import api.preconditionbuilders.MediaPrecondition;
-import api.preconditionbuilders.PublisherPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
-import pages.admin.publisher.PublishersPage;
-import pages.dashbord.DashboardPage;
 import pages.inventory.media.MediaPage;
+import rx.BaseTest;
 import widgets.common.table.ColumnNames;
+import widgets.common.tooltip.MediaTooltipText;
 import widgets.inventory.media.sidebar.EditMediaSidebar;
-import zutils.FakerUtils;
 
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
@@ -25,15 +22,17 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class MediaTest extends BaseTest{
+public class MediaTestExample extends BaseTest {
 
     private Media media;
     private MediaPage mediaPage;
     private EditMediaSidebar editMediaSidebar;
+    private MediaTooltipText tooltipText;
 
-    public MediaTest(){
+    public MediaTestExample(){
         editMediaSidebar = new EditMediaSidebar();
         mediaPage = new MediaPage();
+        tooltipText = new MediaTooltipText();
     }
 
     @BeforeClass
@@ -58,7 +57,9 @@ public class MediaTest extends BaseTest{
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .and()
                 .setValueWithClean(tableData.getSearch(),media.getName())
+                .and()
                 .clickEnterButton(tableData.getSearch())
+                .then()
                 .waitLoading(visible,mediaPage.getTableProgressBar())
                 .waitLoading(disappear,mediaPage.getTableProgressBar())
                 .then()
@@ -67,9 +68,16 @@ public class MediaTest extends BaseTest{
                 .and()
                 .clickOnTableCellLink(tableData, ColumnNames.MEDIA_NAME, media.getName())
                 .waitSideBarOpened()
+                .then()
+                .validateTooltip(editMediaSidebar.getHintCategories(),
+                        tooltipText.getTooltip().getText(), tooltipText.getTooltipText().getAlias())
+                .and()
+                .clickOnWebElement(editMediaSidebar.getSaveButton())
+                .and()
+                .setValueWithClean(editMediaSidebar.getSiteURL(),"https://test.com")
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
                 .then()
-               // .validateTooltip(,editMediaSidebar.getHintCategories(),"test tooltip")
+
                 .waitSideBarClosed()
 
                 .and()
