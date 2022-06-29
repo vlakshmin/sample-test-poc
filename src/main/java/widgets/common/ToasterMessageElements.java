@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ToasterMessageElements {
 
-    ERROR_MESSAGE( "'Error' Label", "");
+    ERROR_MESSAGE( "'Error' Label", " ");
 
     private String alias;
     private String selector;
