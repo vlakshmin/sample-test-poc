@@ -16,8 +16,8 @@ public abstract class OpenPricingSidebar {
     private SelenideElement nameInput = $x(OPEN_PRICING_NAME.getSelector()).as(OPEN_PRICING_NAME.getAlias());
     private SelenideElement floorPrice = $x(FLOOR_PRICE.getSelector()).as(FLOOR_PRICE.getAlias());
     private SelenideElement saveButton = $x(SAVE_BUTTON.getSelector()).as(SAVE_BUTTON.getAlias());
-    private SelenideElement publisherErrorLabel;
+    private SelenideElement publisherInputErrorLabel;
     private SelenideElement nameInputErrorLabel;
-    private SelenideElement floorPriceInputLabel;
+    private SelenideElement floorPriceInputErrorLabel;
 
 }
