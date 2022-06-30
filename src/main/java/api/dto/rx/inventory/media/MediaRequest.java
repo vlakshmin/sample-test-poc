@@ -16,15 +16,14 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MediaRequest {
 
-
+    private String url;
     private String name;
+    private Boolean isEnabled;
     private Integer platformId;
     private Integer publisherId;
     private String publisherName;
-    private String url;
-    private List<Integer> categoryIds;
-    private Boolean isEnabled;
 
+    private List<Integer> categoryIds;
 
     public String toJson() {
 

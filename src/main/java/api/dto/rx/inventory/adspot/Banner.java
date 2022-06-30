@@ -16,10 +16,9 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Banner {
 
-    private List<Integer> sizeIds;
     private Boolean enabled;
-    private Double floorPrice;
-
+    private Double  floorPrice;
+    private List<Integer> sizeIds;
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);

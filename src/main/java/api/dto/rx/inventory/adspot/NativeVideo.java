@@ -16,10 +16,9 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NativeVideo {
 
-    private List<String> mimes;
     private Integer maxDuration;
     private Integer minDuration;
-
+    private List<String> mimes;
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);

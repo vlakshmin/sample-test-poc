@@ -7,19 +7,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import zutils.ObjectMapperUtils;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Native {
+public class Video {
 
-    private Assets assets;
-    private NativeVideo video;
-    private Title title;
-
-    private Boolean required;
-
+    private Boolean enabled;
+    private Double  floorPrice;
+    private Integer maxDuration;
+    private Integer minDuration;
+    private Integer placementType;
+    private List<Integer> sizeIds;
+    private List<Integer> playbackMethodIds;
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);

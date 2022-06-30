@@ -1,6 +1,9 @@
 package api.preconditionbuilders;
 
-import api.dto.rx.inventory.filter.Filter;
+import api.core.client.HttpClient;
+import api.dto.GenericResponse;
+import api.dto.rx.admin.publisher.Publisher;
+
 import api.dto.rx.inventory.media.Media;
 import api.dto.rx.inventory.media.MediaRequest;
 import api.services.MediaService;
@@ -10,7 +13,9 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static zutils.FakerUtils.captionWithSuffix;
 
@@ -21,12 +26,13 @@ public class MediaPrecondition {
 
     private Media mediaResponse;
     private MediaRequest mediaRequest;
-    private List<Media> mediaResponseList;
+    private GenericResponse<Media> mediaGetAllResponse;
+
 
     private MediaPrecondition(MediaPreconditionBuilder builder) {
         this.mediaRequest = builder.mediaRequest;
         this.mediaResponse = builder.mediaResponse;
-        this.mediaResponseList = builder.mediaResponseList;
+        this.mediaGetAllResponse = builder.mediaGetAllResponse;
     }
 
     public static MediaPreconditionBuilder media() {
@@ -39,21 +45,24 @@ public class MediaPrecondition {
         private Response response;
         private Media mediaResponse;
         private MediaRequest mediaRequest;
-        private List<Media> mediaResponseList;
+        private GenericResponse mediaGetAllResponse;
         private MediaService mediaService = new MediaService();
 
 
         public MediaPreconditionBuilder createNewMedia() {
 
+            Publisher publisher = PublisherPrecondition.publisher()
+                    .createNewPublisher()
+                    .build()
+                    .getPublisherResponse();
+
             this.mediaRequest = mediaRequest.builder()
                     .name(captionWithSuffix("Media"))
-                 //   .publisherId(getPublisherId())
+                    .publisherId(publisher.getId())
                     .platformId(2)
                     .url("http://localhost:5016")
                     .isEnabled(true)
-
                     .categoryIds(List.of(1, 9))
-
                     .build();
 
             this.response = mediaService.createMedia(mediaRequest);
@@ -65,7 +74,15 @@ public class MediaPrecondition {
         public MediaPreconditionBuilder getAllMediaList() {
             this.response = mediaService.getAll();
 
-            this.mediaResponseList = this.getMediaResponseList();
+            this.mediaGetAllResponse = this.response.as(new GenericResponse<Media>().getClass());
+
+            return this;
+        }
+
+        public MediaPreconditionBuilder getMediaWithFilter(HashMap queryParams) {
+            this.response = mediaService.getMediaWithFilter(queryParams);
+
+            this.mediaGetAllResponse = this.response.as(new GenericResponse<Media>().getClass());
 
             return this;
         }
@@ -79,5 +96,6 @@ public class MediaPrecondition {
 
             return new MediaPrecondition(this);
         }
+
     }
 }

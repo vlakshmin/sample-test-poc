@@ -1,4 +1,4 @@
-package api.dto.rx.yield.openPricing;
+package api.dto.rx.yield.openpricing;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -12,19 +12,23 @@ import zutils.ObjectMapperUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OpenPricingRequest {
+public class OpenPricing {
 
     private Integer id;
+    private Rule  rule;
     private String name;
-    private Boolean active;
-    private Integer publisherId;
-    private String publisherName;
     private String notes;
-    private Double floorPrice;
+    private Boolean active;
     private Integer priority;
-    private Rule rule;
+    private String createdAt;
+    private String createdBy;
+    private String updatedAt;
+    private Double floorPrice;
+    private Integer publisherId;
+    private String  publisherName;
 
     public String toJson() {
+
         return ObjectMapperUtils.toJson(this);
     }
 }

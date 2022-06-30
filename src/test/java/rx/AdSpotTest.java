@@ -95,7 +95,6 @@ public class AdSpotTest extends BaseTest {
                 .enabled(true)
                 .publisherId(media.getPublisherId())
                 .publisherName(media.getPublisherName())
-                .filterId(media.getFilterId())
                 .floorPrice(9.99)
                 .mediaId(media.getId())
                 .coppa(true)

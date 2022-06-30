@@ -1,4 +1,4 @@
-package api.dto.rx.yield.openPricing;
+package api.dto.rx.yield.openpricing;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -14,10 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Dsp {
+public class MediaRule {
 
-    private List<Integer> dsps;
     private Boolean exclude;
+    private List<Integer> media;
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);

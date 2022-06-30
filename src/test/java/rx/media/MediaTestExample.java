@@ -12,12 +12,13 @@ import pages.inventory.media.MediaPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import widgets.common.tooltip.MediaTooltipText;
+import widgets.errormessages.ErrorMessages;
 import widgets.inventory.media.sidebar.EditMediaSidebar;
+import widgets.inventory.media.sidebar.MediaSidebarElements;
 
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
-import static java.lang.String.valueOf;
 import static managers.TestManager.testStart;
 
 @Slf4j
@@ -27,16 +28,14 @@ public class MediaTestExample extends BaseTest {
     private Media media;
     private MediaPage mediaPage;
     private EditMediaSidebar editMediaSidebar;
-    private MediaTooltipText tooltipText;
 
-    public MediaTestExample(){
+    public MediaTestExample() {
         editMediaSidebar = new EditMediaSidebar();
         mediaPage = new MediaPage();
-        tooltipText = new MediaTooltipText();
     }
 
     @BeforeClass
-    public void createNewMedia(){
+    public void createNewMedia() {
         //Creating media to edit Using API
         media = MediaPrecondition.media()
                 .createNewMedia()
@@ -45,9 +44,9 @@ public class MediaTestExample extends BaseTest {
     }
 
     @Test
-    public void editMediaTest(){
-        var table = mediaPage.getMediaTable().getTableOptions();
+    public void mediaTest() {
         var tableData = mediaPage.getMediaTable().getTableData();
+        var tablePagination = mediaPage.getMediaTable().getTablePagination();
 
         //Opening Browser and Edit the media created from Precondition
         testStart()
@@ -55,33 +54,37 @@ public class MediaTestExample extends BaseTest {
                 .openDirectPath(Path.MEDIA)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-                .and()
-                .setValueWithClean(tableData.getSearch(),media.getName())
-                .and()
+                .and(String.format("Search Media by name '%s'",media.getName()))
+                .setValueWithClean(tableData.getSearch(), media.getName())
                 .clickEnterButton(tableData.getSearch())
-                .then()
-                .waitLoading(visible,mediaPage.getTableProgressBar())
-                .waitLoading(disappear,mediaPage.getTableProgressBar())
-                .then()
+                .then("Wait table data loading")
+                .waitLoading(visible, mediaPage.getTableProgressBar())
+                .waitLoading(disappear, mediaPage.getTableProgressBar())
+                .then(String.format("Validate that table contains uniq Media with random name '%s'",media.getName()))
+                .validateContainsText(tablePagination.getPaginationPanel(), "1-1 of 1")
+                .then("Validate list values in 'Media Name' column")
                 .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.MEDIA_NAME),
                         media.getName())
                 .and()
                 .clickOnTableCellLink(tableData, ColumnNames.MEDIA_NAME, media.getName())
+                .and("Wait SideBar is opened")
                 .waitSideBarOpened()
-                .then()
-                .validateTooltip(editMediaSidebar.getHintCategories(),
-                        tooltipText.getTooltip().getText(), tooltipText.getTooltipText().getAlias())
-                .and()
+                .then("Validate Categories tooltip text")
+                .validateTooltip(editMediaSidebar.getTooltipIconByFieldName("Categories"),
+                        MediaSidebarElements.TOOLTIP_PLACEHOLDER.getSelector() ,
+                        MediaTooltipText.CATEGORY_TOOLTIP_TEXT.getText())
+                .and("Click on 'Save' button")
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
-                .and()
-                .setValueWithClean(editMediaSidebar.getSiteURL(),"https://test.com")
+                .then("Validate error message under the 'Site URL' field")
+                .validateContainsText(editMediaSidebar.getErrorAlertByFieldName("Site URL"),
+                        ErrorMessages.SITE_URL_ERROR_ALERT.getText())
+                .and("Set valid value 'Site URL' and click Save")
+                .setValueWithClean(editMediaSidebar.getSiteURL(), "https://test.com")
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
-                .then()
-
+                .then("Wait until SideBar closed")
                 .waitSideBarClosed()
-
-                .and()
-         .testEnd();
+                .and("End")
+                .testEnd();
 
         //allure serve
     }

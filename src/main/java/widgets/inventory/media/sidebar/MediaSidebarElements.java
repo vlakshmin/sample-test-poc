@@ -7,16 +7,20 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum MediaSidebarElements {
 
-    MEDIA_NAME("'Media Name' Input", "//label[text()='Media Name']/../input"),
-    MEDIA_TYPE("'Media Type' Input", "//label[text()='Media Type']/../div"),
-    PUBLISHER_NAME( "'Publisher Name' Input", "//label[text()='Publisher Name']/../div"),
-    CATEGORIES("'Categories' Input", "//label[text()='Categories']/../input"),
-    HINT_CATEGORIES("'Hint Categories' Hint Icon", "//label[text()='Categories']/../div/span[@class='v-tooltip v-tooltip--bottom']/../i"),
+    TOOLTIP_PLACEHOLDER("Tooltip Placeholder","//span"),
     SITE_URL( "'Site URL' Input", "//label[text()='Site URL']/../input"),
-    HINT_SITE_URL("Hint Site URL","//label[text()='Site URL']/../../div[@class='v-input__append-inner']"),
+    MEDIA_TYPE("'Media Type' Input", "//label[text()='Media Type']/../div"),
+    MEDIA_NAME("'Media Name' Input", "//label[text()='Media Name']/../input"),
+    CATEGORIES("'Categories' Input", "//label[text()='Categories']/../input"),
+    ERROR_ALERT_BY_FIELD_NAME("Error Alert under Field '%s'",
+            "//label[text()='%s']/../../..//child::div[@class='v-messages__message']"),
+    TOOLTIP_ICON_BY_FIELD_NAME("Tooltip '%s' Icon",
+            "//label[text()='%s']/../div/span[@class='v-tooltip v-tooltip--bottom']/../i"),
     APP_STORE_URL( "'App Store URL' Input", "//label[text()='App Store URL']/../input"),
-    HINT_APP_STORE_URL("Hint App Store URL","//label[text()='App Store URL']/../../div[@class='v-input__append-inner']"),
-    SAVE_BUTTON("'Save Media' Button",  "//button/span[contains(text(),'Save Media')]");
+    SAVE_BUTTON("'Save Media' Button",  "//button/span[contains(text(),'Save Media')]"),
+    PUBLISHER_NAME( "'Publisher Name' Input", "//label[text()='Publisher Name']/../div"),
+    ACTIVE_TOGGLE("'Active' Toggle",  "//label[text()='Active']/..//input[@role='switch']/..");
+
 
     private String alias;
     private String selector;

@@ -1,14 +1,13 @@
 package api.dto.rx.inventory.adspot;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import zutils.ObjectMapperUtils;
 
-import api.dto.rx.inventory.adspot.Banner;
-import api.dto.rx.inventory.adspot.Video;
 import java.util.List;
 
 @Data
@@ -16,32 +15,32 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AdSpotRequest {
+public class AdSpot {
 
-    private Integer mediaId;
-    private String name;
-    private String mediaName;
-    private Boolean coppa;
-    private Boolean customSizing;
-    private Boolean enabled;
-    private Boolean floorPriceAutomated;
-    private Boolean testMode;
-    private Integer filterId;
-    private Double floorPrice;
+    private Integer id;
     private Integer ttl;
+    private String  name;
+    private Boolean coppa;
+    private Integer mediaId;
+    private Boolean enabled;
+    private Native  anative;
+    private Boolean testMode;
+    private String  currency;
+    private String  mediaName;
+    private String  createdAt;
+    private String  updatedAt;
+    private Double  floorPrice;
     private Integer positionId;
-    private Integer prebidCacheEnabled;
     private Integer publisherId;
-    private String publisherName;
-    private String currency;
-    private Video video;
-    private Banner banner;
-    @JsonIgnoreProperties("native")
-    private Native anative;
+    private Boolean customSizing;
+    private String  publisherName;
 
-    private List<Integer> categoryIds;
     private List<Integer> sizeIds;
+    @JsonProperty(value="native")
+    private List<Integer> categoryIds;
 
+    private Integer prebidCacheEnabled;
+    private Boolean floorPriceAutomated;
 
     public String toJson() {
 

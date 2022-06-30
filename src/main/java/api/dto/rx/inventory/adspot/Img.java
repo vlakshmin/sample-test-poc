@@ -1,4 +1,4 @@
-package api.dto.rx.yield.openPricing;
+package api.dto.rx.inventory.adspot;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -14,10 +14,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AdSpotRule {
+public class Img {
 
-    private List<Integer> includedAdspots;
-    private List<Integer> excludedAdspots;
+    private Integer width;
+    private Integer height;
+    private Integer imgType;
+    private Integer minWidth;
+    private Integer minHeight;
+    private List<String> mimes;
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);
