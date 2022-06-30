@@ -83,9 +83,9 @@ public class OpenPricingTest extends BaseTest {
 //                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
 //                .and()
 //                .scrollIntoView(tableData.getCheckbox(1))
-//                .clickOnWebElement(tableData.getCheckbox(1))
+//                //.clickOnWebElement(tableData.getCheckbox(1))
 //                //.clickOnWebElement(openPricingPage.getDeactivateButton())
-//                .validateContainsText(tableData.getCustomCells(ColumnNames.STATUS).get(1),"Inactive")
+//                .validateContainsText(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0),"Active")
 //                .then()
 //                .testEnd();
 //
