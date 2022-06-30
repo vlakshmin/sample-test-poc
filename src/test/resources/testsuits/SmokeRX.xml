@@ -3,10 +3,6 @@
 <suite name="SmokeTest Suite" parallel="false">
     <test name="SmokeTest Suite">
         <classes>
- <!--           <class name="rx.ProtectionsTest"/>
-            <class name="rx.PublisherTest"/>
-            <class name="rx.AdSpotTest"/>
-            <class name="rx.OpenPricingTest"/>-->
             <class name="rx.media.MediaTableTests"/>
             <class name="rx.media.MediaTestExample"/>
         </classes>
