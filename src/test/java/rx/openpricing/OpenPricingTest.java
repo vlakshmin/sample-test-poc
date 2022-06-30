@@ -3,7 +3,6 @@ package rx.openpricing;
 import api.dto.rx.yield.openPricing.OpenPricing;
 import api.preconditionbuilders.OpenPricingPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
@@ -14,8 +13,6 @@ import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.Statuses;
 import widgets.yield.openPricing.sidebar.EditOpenPricingSidebar;
-
-import java.net.InetAddress;
 
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
