@@ -66,6 +66,7 @@ public class MediaTestExample extends BaseTest {
                 .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.MEDIA_NAME),
                         media.getName())
                 .and()
+                .waitLoading(disappear, mediaPage.getNuxtProgress())
                 .clickOnTableCellLink(tableData, ColumnNames.MEDIA_NAME, media.getName())
                 .and("Wait SideBar is opened")
                 .waitSideBarOpened()
