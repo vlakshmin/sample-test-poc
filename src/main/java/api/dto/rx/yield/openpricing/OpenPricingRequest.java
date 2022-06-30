@@ -1,4 +1,4 @@
-package api.dto.rx.inventory.media;
+package api.dto.rx.yield.openpricing;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -7,32 +7,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import zutils.ObjectMapperUtils;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Media {
+public class OpenPricingRequest {
 
+    private Rule rule;
     private Integer id;
-    private String  url;
-    private String  name;
-    private String  iconPath;
-    private Boolean isEnabled;
-    private String  createdAt;
-    private String  updatedAt;
-    private Integer platformId;
-    private String  identifier;
-    private String  appBundleId;
-    private Boolean appReleased;
+    private String name;
+    private String notes;
+    private Boolean active;
+    private Integer priority;
+    private Double floorPrice;
     private Integer publisherId;
     private String publisherName;
-    private List<Integer> categoryIds;
 
     public String toJson() {
-
         return ObjectMapperUtils.toJson(this);
     }
 }

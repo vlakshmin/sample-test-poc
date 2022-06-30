@@ -1,5 +1,6 @@
 package api.preconditionbuilders;
 
+import api.dto.GenericResponse;
 import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.adspot.*;
 import api.dto.rx.inventory.media.Media;
@@ -21,12 +22,12 @@ public class AdSpotPrecondition {
 
     private AdSpot adSpotResponse;
     private AdSpotRequest adSpotRequest;
-    private List<AdSpot> adSpotsResponseList;
+    private GenericResponse<AdSpot> adSpotsGetAllResponse;
 
     private AdSpotPrecondition(AdSpotPreconditionBuilder builder) {
         this.adSpotRequest = builder.adSpotRequest;
         this.adSpotResponse = builder.adSpotResponse;
-        this.adSpotsResponseList = builder.adSpotsResponseList;
+        this.adSpotsGetAllResponse = builder.adSpotsGetAllResponse;
     }
 
     public static AdSpotPreconditionBuilder adSpot() {
@@ -41,10 +42,12 @@ public class AdSpotPrecondition {
         private AdSpotRequest adSpotRequest;
         private List<AdSpot> adSpotsResponseList;
         private AdSpotService adSpotService = new AdSpotService();
+        private GenericResponse adSpotsGetAllResponse;
         private Video video = new Video();
-        private NativeVideo nativeVideo = new NativeVideo();
-        private Native nativeObj = new Native();
         private Banner banner = new Banner();
+        private Native nativeObj = new Native();
+        private NativeVideo nativeVideo = new NativeVideo();
+
         private Media media;
 
         public AdSpotPreconditionBuilder createNewAdSpot() {
@@ -65,7 +68,6 @@ public class AdSpotPrecondition {
 
             this.adSpotRequest = adSpotRequest.builder()
                     .name(captionWithSuffix("ad spot"))
-                    .filterId(media.getFilterId())
                     .publisherId(media.getPublisherId())
                     .currency(Currency.JPY.name())
                     .floorPrice(11.00)
@@ -94,14 +96,14 @@ public class AdSpotPrecondition {
             return this;
         }
 
-
         public AdSpotPreconditionBuilder getAllAdSpotsList() {
             this.response = adSpotService.getAll();
 
-            this.adSpotsResponseList = this.getAdSpotsResponseList();
+            this.adSpotsGetAllResponse = this.response.as(new GenericResponse<AdSpot>().getClass());
 
             return this;
         }
+
 
         private List<AdSpot> getAdSpotsResponseList() {
 
@@ -112,5 +114,14 @@ public class AdSpotPrecondition {
 
             return new AdSpotPrecondition(this);
         }
+    }
+    public static void main(String[] args) {
+
+        System.out.println(
+                AdSpotPrecondition.adSpot()
+                        .getAllAdSpotsList()
+                        .build()
+                        .getAdSpotsGetAllResponse().getTotal()
+        );
     }
 }

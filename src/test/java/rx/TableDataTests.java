@@ -60,6 +60,7 @@ public class TableDataTests extends BaseTest {
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.AD_OPS_PERSON))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.MAIL))
                 .clickOnWebElement(table.getTableOptionsBtn())
+                .then()
                 .validateListSize((ElementsCollection) tableData.getColumns(),
                         ColumnNames.PUBLISHER.getName(),
                         ColumnNames.CATEGORY.getName(),
@@ -78,6 +79,7 @@ public class TableDataTests extends BaseTest {
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.CURRENCY))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.AD_OPS_PERSON))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.MAIL))
+                .then()
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.CATEGORY.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.ACTIVE.getName()))
@@ -86,6 +88,7 @@ public class TableDataTests extends BaseTest {
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.AD_OPS_PERSON.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.MAIL.getName()))
                 .validate(visible, tableData.getColumnHeader(ColumnNames.ID.getName()))
+                .and()
                 .clickOnWebElement(table.getTableOptionsBtn())
                 .logOut()
         .testEnd();
@@ -132,10 +135,12 @@ public class TableDataTests extends BaseTest {
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, publishersPage.getNuxtProgress())
                 .and()
+                .clickOnWebElement(tableData.getCheckbox(1))
                 .setValueWithClean(tableData.getSearch(), publisher.getName())
                 .clickEnterButton(tableData.getSearch())
                 .waitLoading(visible,publishersPage.getTableProgressBar())
                 .waitLoading(disappear,publishersPage.getTableProgressBar())
+                .then()
                 .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.PUBLISHER),
                        publisher.getName())
                 .and()

@@ -1,4 +1,4 @@
-package api.dto.rx.inventory.media;
+package api.dto.rx.inventory.adspot;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -14,19 +14,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MediaRequest {
+public class NativeVideo {
 
-    private String url;
-    private String name;
-    private Boolean isEnabled;
-    private Integer platformId;
-    private Integer publisherId;
-    private String publisherName;
-
-    private List<Integer> categoryIds;
+    private Integer maxDuration;
+    private Integer minDuration;
+    private List<String> mimes;
 
     public String toJson() {
-
         return ObjectMapperUtils.toJson(this);
     }
 }

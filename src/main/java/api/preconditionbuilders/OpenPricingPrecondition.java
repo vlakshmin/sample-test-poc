@@ -1,10 +1,11 @@
 package api.preconditionbuilders;
 
+import api.dto.GenericResponse;
 import api.dto.rx.inventory.adspot.Banner;
 import api.dto.rx.inventory.adspot.AdSpot;
 import api.dto.rx.inventory.adspot.AdSpotRequest;
 import api.dto.rx.inventory.media.Media;
-import api.dto.rx.yield.openPricing.*;
+import api.dto.rx.yield.openpricing.*;
 import api.services.OpenPricingService;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
@@ -23,12 +24,12 @@ public class OpenPricingPrecondition {
 
     private OpenPricing openPricingResponse;
     private OpenPricingRequest openPricingRequest;
-    private List<OpenPricing> openPricingResponseList;
+    private GenericResponse<OpenPricing> openPricingGetAllResponse;
 
     private OpenPricingPrecondition(OpenPricingPreconditionBuilder builder) {
         this.openPricingRequest = builder.openPricingRequest;
         this.openPricingResponse = builder.openPricingResponse;
-        this.openPricingResponseList = builder.openPricingResponseList;
+        this.openPricingGetAllResponse = builder.openPricingGetAllResponse;
     }
 
     public static OpenPricingPreconditionBuilder openPricing() {
@@ -42,15 +43,74 @@ public class OpenPricingPrecondition {
         private OpenPricing openPricingResponse;
         private OpenPricingRequest openPricingRequest;
         private List<OpenPricing> openPricingResponseList;
+        private GenericResponse openPricingGetAllResponse;
         private OpenPricingService openPricingService = new OpenPricingService();
 
         public OpenPricingPreconditionBuilder createNewOpenPricing() {
 
             Media media = MediaPrecondition.media().createNewMedia().build().getMediaResponse();
 
-            AdSpot adSpot = AdSpotPrecondition.adSpot().createNewAdSpot(AdSpotRequest.builder().name(captionWithSuffix("AdSpot")).enabled(true).publisherId(media.getPublisherId()).publisherName(media.getPublisherName()).filterId(media.getFilterId()).floorPrice(9.99).mediaId(media.getId()).coppa(true).categoryIds(List.of(1, 2)).sizeIds(List.of(10)).banner(Banner.builder().enabled(true).floorPrice(8.88).sizeIds(List.of(3)).build()).build()).build().getAdSpotResponse();
+            AdSpot adSpot = AdSpotPrecondition.adSpot().
+                    createNewAdSpot(AdSpotRequest.builder()
+                            .name(captionWithSuffix("AdSpot"))
+                            .enabled(true)
+                            .publisherId(media.getPublisherId())
+                            .publisherName(media.getPublisherName())
+                            .floorPrice(9.99)
+                            .mediaId(media.getId())
+                            .coppa(true)
+                            .categoryIds(List.of(1, 2))
+                            .sizeIds(List.of(10))
+                            .banner(Banner.builder()
+                                    .enabled(true)
+                                    .floorPrice(8.88)
+                                    .sizeIds(List.of(3))
+                                    .build())
+                            .build())
+                    .build()
+                    .getAdSpotResponse();
 
-            this.openPricingRequest = OpenPricingRequest.builder().name(captionWithSuffix("OpenPricing")).active(true).floorPrice(5.66).notes("autotest").priority(1).publisherName(media.getPublisherName()).publisherId(media.getPublisherId()).rule(Rule.builder().adspot(AdSpotRule.builder().includedAdspots(List.of(adSpot.getId())).excludedAdspots(List.of()).build()).adFormat(AdFormat.builder().adFormats(List.of(2, 3)).exclude(false).build()).adSize(AdSize.builder().adSizes(List.of(10)).exclude(false).build()).media(MediaRule.builder().media(List.of(media.getId())).exclude(false).build()).deviceType(DeviceType.builder().deviceTypes(List.of(4)).exclude(false).build()).geo(Geo.builder().geos(List.of(221)).exclude(false).build()).deviceOS(DeviceOS.builder().deviceOSs(List.of(4)).exclude(false).build()).dsp(Dsp.builder().dsps(null).exclude(false).build()).build()).build();
+            this.openPricingRequest = OpenPricingRequest.builder()
+                    .name(captionWithSuffix("OpenPricing"))
+                    .active(true)
+                    .floorPrice(5.66)
+                    .notes("autotest")
+                    .priority(1)
+                    .publisherName(media.getPublisherName())
+                    .publisherId(media.getPublisherId())
+                    .rule(Rule.builder()
+                            .adspot(AdSpotRule.builder()
+                                    .includedAdspots(List.of(adSpot.getId()))
+                                    .excludedAdspots(List.of())
+                                    .build())
+                            .adFormat(AdFormat.builder()
+                                    .adFormats(List.of(2, 3))
+                                    .exclude(false)
+                                    .build())
+                            .adSize(AdSize.builder()
+                                    .adSizes(List.of(10))
+                                    .exclude(false).build())
+                            .media(MediaRule.builder()
+                                    .media(List.of(media.getId()))
+                                    .exclude(false).build())
+                            .deviceType(DeviceType.builder()
+                                    .deviceTypes(List.of(4))
+                                    .exclude(false)
+                                    .build())
+                            .geo(Geo.builder()
+                                    .geos(List.of(221))
+                                    .exclude(false)
+                                    .build())
+                            .deviceOS(DeviceOS.builder()
+                                    .deviceOSs(List.of(4))
+                                    .exclude(false)
+                                    .build())
+                            .dsp(Dsp.builder()
+                                    .dsps(null)
+                                    .exclude(false)
+                                    .build())
+                            .build())
+                    .build();
 
             this.response = openPricingService.createOpenPricing(openPricingRequest);
             this.openPricingResponse = response.as(OpenPricing.class);
@@ -61,7 +121,7 @@ public class OpenPricingPrecondition {
         public OpenPricingPreconditionBuilder getOpenPricingList() {
             this.response = openPricingService.getAll();
 
-            this.openPricingResponseList = this.getOpenPricingResponseList();
+            this.openPricingGetAllResponse = this.response.as(new GenericResponse<OpenPricing>().getClass());
 
             return this;
         }

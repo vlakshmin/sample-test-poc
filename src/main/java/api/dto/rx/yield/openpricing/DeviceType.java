@@ -1,4 +1,4 @@
-package api.dto.rx.inventory.media;
+package api.dto.rx.yield.openpricing;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -14,19 +14,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MediaRequest {
+public class DeviceType {
 
-    private String url;
-    private String name;
-    private Boolean isEnabled;
-    private Integer platformId;
-    private Integer publisherId;
-    private String publisherName;
-
-    private List<Integer> categoryIds;
+    private Boolean exclude;
+    private List<Integer> deviceTypes;
 
     public String toJson() {
-
         return ObjectMapperUtils.toJson(this);
     }
 }
