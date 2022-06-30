@@ -33,10 +33,10 @@ public class OpenPricingTest extends BaseTest {
     @BeforeClass
     public void createNewPublisher() {
         //Creating publisher to edit Using API
-        openPricing = OpenPricingPrecondition.openPricing()
-                .createNewOpenPricing()
-                .build()
-                .getOpenPricingResponse();
+//        openPricing = OpenPricingPrecondition.openPricing()
+//                .createNewOpenPricing()
+//                .build()
+//                .getOpenPricingResponse();
     }
 
     @Test
@@ -69,6 +69,28 @@ public class OpenPricingTest extends BaseTest {
 
         //allure serve
     }
+    //todo Uncomment it and delete this test
+//
+//    @Test
+//    public void verifySingleDeactivatePublisherActive() {
+//        var tableData = openPricingPage.getOpenPricingTable().getTableData();
+//        var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
+//        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+//        testStart()
+//                .given()
+//                .openDirectPath(Path.OPEN_PRICING)
+//                .logIn(TEST_USER)
+//                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
+//                .and()
+//                .scrollIntoView(tableData.getCheckbox(1))
+//                .clickOnWebElement(tableData.getCheckbox(1))
+//                //.clickOnWebElement(openPricingPage.getDeactivateButton())
+//                .validateContainsText(tableData.getCustomCells(ColumnNames.STATUS).get(1),"Inactive")
+//                .then()
+//                .testEnd();
+//
+//
+//    }
 
 
 }
