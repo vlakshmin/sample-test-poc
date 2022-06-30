@@ -69,7 +69,6 @@ public class TableDataTests extends BaseTest {
                         ColumnNames.CURRENCY.getName(),
                         ColumnNames.AD_OPS_PERSON.getName(),
                         ColumnNames.MAIL.getName())
-
                 .clickOnWebElement(table.getTableOptionsBtn())
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.PUBLISHER))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.CATEGORY))

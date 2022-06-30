@@ -1,8 +1,10 @@
 package widgets.common.table;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 
+import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 import static widgets.common.table.TableOptionsElements.*;
 
@@ -15,6 +17,7 @@ public class TableOptions {
     private SelenideElement tableOptionsBtn = $x(TABLE_OPTIONS_COMPONENTS_BUTTON.getSelector()).as(TABLE_OPTIONS_COMPONENTS_BUTTON.getAlias());
     private SelenideElement menuOptions = $x(TABLE_OPTIONS_MENU.getSelector()).as(TABLE_OPTIONS_MENU.getAlias());
     private SelenideElement optionsList = $x(OPTIONS_LIST.getSelector()).as(OPTIONS_LIST.getAlias());
+    private ElementsCollection optionItems = $$x(TABLE_OPTIONS_ELEMENTS.getSelector()).as(TABLE_OPTIONS_ELEMENTS.getAlias());
 
     public SelenideElement getMenuItemCheckbox(ColumnNames column) {
 
@@ -24,6 +27,10 @@ public class TableOptions {
     public SelenideElement getStatusItemRadio(Statuses status) {
 
         return $x(String.format(ITEM_STATUS_RADIO.getSelector(), status.getStatus())).as(ITEM_STATUS_RADIO.getAlias());
+    }
+
+    public ElementsCollection getTableOptionMenuItems(){
+        return optionItems;
     }
 
 }

@@ -30,6 +30,7 @@ public class DealsTest extends BaseTest {
         createDealSidebar = new CreateDealSidebar();
     }
 
+
     @Test
     public void createDealTest() {
 

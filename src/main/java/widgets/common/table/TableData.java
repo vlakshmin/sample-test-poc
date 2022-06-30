@@ -3,6 +3,7 @@ package widgets.common.table;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
+import org.openqa.selenium.By;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -47,5 +48,20 @@ public class TableData {
                 .indexOf(columnName.getName()) + 2;
 
         return $$x(String.format(CELL_BY_COLUMN.getSelector(), columnId)).as(CELL_BY_COLUMN.getAlias());
+    }
+
+    public SelenideElement getFirstActiveRow() {
+        for (SelenideElement element : rows) {
+            var tableCell = element.find(By.xpath("//td[6]"));
+            if (tableCell.getText().equalsIgnoreCase("Active")) {
+                return element;
+            }
+        }
+        return null;
+    }
+
+    public SelenideElement getFirstActiveRowBtn() {
+
+        return getFirstActiveRow().find(By.xpath("//td[6]"));
     }
 }

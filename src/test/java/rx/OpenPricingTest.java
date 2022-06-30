@@ -61,10 +61,8 @@ public class OpenPricingTest extends BaseTest {
                 .validateAttribute(editOpenPricingSidebar.getNameInput(), "value", openPricing.getName())
                 .validate(editOpenPricingSidebar.getPublisherInput(), openPricing.getPublisherName())
                 .validateAttribute(editOpenPricingSidebar.getFloorPrice(), "value", openPricing.getFloorPrice().toString())
-
                 .clickOnWebElement(editOpenPricingSidebar.getSaveButton())
                 .waitSideBarClosed()
-
                 .testEnd();
 
         //allure serve

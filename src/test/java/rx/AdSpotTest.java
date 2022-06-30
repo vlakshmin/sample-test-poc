@@ -75,10 +75,8 @@ public class AdSpotTest extends BaseTest {
                 .validate(editAdSpotSidebar.getPublisherInput(), adSpot.getPublisherName())
                 .validate(editAdSpotSidebar.getRelatedMediaInput(), adSpot.getMediaName())
                 .validateAttribute(editAdSpotSidebar.getDefaultFloorPrice(), "value", adSpot.getFloorPrice().toString())
-
                 .clickOnWebElement(editAdSpotSidebar.getSaveButton())
                 .waitSideBarClosed()
-
                 .and()
                 .testEnd();
     }

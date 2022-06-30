@@ -124,7 +124,8 @@ public final class TestManager {
         public TestManagerBuilder clickOnWebElement(SelenideElement element) {
             logEvent(format("Clicking on %s", element.getAlias()));
             logEvent(format("Clicking on %s", element.getSearchCriteria()));
-            element.scrollTo().shouldBe(exist, visible).hover().click();
+            element.shouldBe(exist, visible).hover().click();
+//            element.click();
 
             return this;
         }
