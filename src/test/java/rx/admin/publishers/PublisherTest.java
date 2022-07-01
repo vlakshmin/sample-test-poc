@@ -1,4 +1,4 @@
-package rx;
+package rx.admin.publishers;
 
 import api.dto.rx.admin.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 import pages.Path;
 import pages.admin.publisher.PublishersPage;
 import pages.dashbord.DashboardPage;
+import rx.BaseTest;
 import widgets.admin.publisher.sidebar.CreatePublisherSidebar;
 import widgets.admin.publisher.sidebar.EditPublisherSidebar;
 import zutils.FakerUtils;

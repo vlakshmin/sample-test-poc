@@ -1,4 +1,4 @@
-package rx;
+package rx.component.table;
 
 import api.dto.rx.admin.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
@@ -10,6 +10,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
 import pages.admin.publisher.PublishersPage;
+import rx.BaseTest;
 import widgets.admin.publisher.sidebar.EditPublisherSidebar;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.Statuses;

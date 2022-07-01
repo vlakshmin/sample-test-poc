@@ -1,4 +1,4 @@
-package rx;
+package rx.sales.deals;
 
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import pages.Path;
 import pages.dashbord.DashboardPage;
 import pages.sales.deals.DealsPage;
+import rx.BaseTest;
 import widgets.sales.deals.sidebar.CreateDealSidebar;
 
 import static com.codeborne.selenide.Condition.disappear;

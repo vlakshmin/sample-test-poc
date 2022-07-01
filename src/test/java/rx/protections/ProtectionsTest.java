@@ -1,4 +1,4 @@
-package rx;
+package rx.protections;
 
 import api.dto.rx.protection.Protection;
 import api.preconditionbuilders.ProtectionsPrecondition;
@@ -8,6 +8,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.dashbord.DashboardPage;
 import pages.protections.ProtectionsPage;
+import rx.BaseTest;
 
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;

@@ -1,4 +1,4 @@
-package rx.media;
+package rx.inventory.media;
 
 import api.dto.rx.inventory.media.Media;
 import api.preconditionbuilders.MediaPrecondition;

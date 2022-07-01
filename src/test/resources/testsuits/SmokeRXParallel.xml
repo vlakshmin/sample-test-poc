@@ -3,8 +3,8 @@
 <suite name="SSP-UI-Paralleled" parallel="classes" thread-count="2">
     <test name="SSP-UI-Paralleled">
         <classes>
-            <class name="rx.ProtectionsTest"/>
-            <class name="rx.PublisherTest"/>
+            <class name="rx.protections.ProtectionsTest"/>
+            <class name="rx.admin.publishers.PublisherTest"/>
         </classes>
     </test>
 </suite>
