@@ -1,5 +1,4 @@
 # Base URL and Browser(Currently - CHROME)
-baseUrlAPI: https://qa-s-api.rmp.rakuten.com
 baseUrl: https://qa-publisher-portal.rmp.rakuten.com
 browser: chrome
 
