@@ -1,4 +1,4 @@
-package pages.admin.sales.privateauctions;
+package pages.sales.privateauctions;
 
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;

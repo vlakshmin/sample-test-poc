@@ -1,4 +1,4 @@
-package rx;
+package rx.inventory.adspot;
 
 import api.dto.rx.inventory.adspot.AdSpot;
 import api.dto.rx.inventory.adspot.AdSpotRequest;
@@ -13,6 +13,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
 import pages.inventory.adspots.AdSpotsPage;
+import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import widgets.inventory.adSpots.sidebar.EditAdSpotSidebar;
 

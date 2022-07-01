@@ -1,4 +1,4 @@
-package rx;
+package rx.sales.deals;
 
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
@@ -7,7 +7,8 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
 import pages.dashbord.DashboardPage;
-import pages.admin.sales.deals.DealsPage;
+import pages.sales.deals.DealsPage;
+import rx.BaseTest;
 import widgets.sales.deals.sidebar.CreateDealSidebar;
 
 import static com.codeborne.selenide.Condition.disappear;
@@ -20,8 +21,8 @@ import static zutils.FakerUtils.captionWithSuffix;
 @Listeners({ScreenShooter.class})
 public class DealsTest extends BaseTest {
 
-    private DashboardPage dashboardsPage;
     private DealsPage dealsPage;
+    private DashboardPage dashboardsPage;
     private CreateDealSidebar createDealSidebar;
 
     public DealsTest() {

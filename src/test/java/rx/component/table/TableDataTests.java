@@ -1,4 +1,4 @@
-package rx;
+package rx.component.table;
 
 import api.dto.rx.admin.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
@@ -10,8 +10,10 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
 import pages.admin.publisher.PublishersPage;
+import rx.BaseTest;
 import widgets.admin.publisher.sidebar.EditPublisherSidebar;
-import widgets.common.table.*;
+import widgets.common.table.ColumnNames;
+import widgets.common.table.Statuses;
 
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
@@ -91,7 +93,7 @@ public class TableDataTests extends BaseTest {
                 .and()
                 .clickOnWebElement(table.getTableOptionsBtn())
                 .logOut()
-        .testEnd();
+                .testEnd();
 
     }
 
@@ -110,18 +112,18 @@ public class TableDataTests extends BaseTest {
                 .selectRadioButton(table.getStatusItemRadio(Statuses.ACTIVE))
                 .clickOnWebElement(table.getTableOptionsBtn())
                 .selectFromDropdown(tablePagenation.getPageMenu(), tablePagenation.getRowNumbersList(), "10")
-                .waitLoading(visible,publishersPage.getTableProgressBar())
-                .waitLoading(disappear,publishersPage.getTableProgressBar())
+                .waitLoading(visible, publishersPage.getTableProgressBar())
+                .waitLoading(disappear, publishersPage.getTableProgressBar())
                 .validateListSize(tableData.getRows(), 10)
                 .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.ACTIVE),
                         Statuses.ACTIVE.getStatus())
                 .clickOnWebElement(tablePagenation.getNext())
-                .waitLoading(visible,publishersPage.getTableProgressBar())
-                .waitLoading(disappear,publishersPage.getTableProgressBar())
+                .waitLoading(visible, publishersPage.getTableProgressBar())
+                .waitLoading(disappear, publishersPage.getTableProgressBar())
                 .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.ACTIVE),
                         Statuses.ACTIVE.getStatus())
                 .logOut()
-        .testEnd();
+                .testEnd();
 
     }
 
@@ -138,18 +140,18 @@ public class TableDataTests extends BaseTest {
                 .clickOnWebElement(tableData.getCheckbox(1))
                 .setValueWithClean(tableData.getSearch(), publisher.getName())
                 .clickEnterButton(tableData.getSearch())
-                .waitLoading(visible,publishersPage.getTableProgressBar())
-                .waitLoading(disappear,publishersPage.getTableProgressBar())
+                .waitLoading(visible, publishersPage.getTableProgressBar())
+                .waitLoading(disappear, publishersPage.getTableProgressBar())
                 .then()
                 .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.PUBLISHER),
-                       publisher.getName())
+                        publisher.getName())
                 .and()
                 .clickOnTableCellLink(tableData, ColumnNames.PUBLISHER, publisher.getName())
                 .waitSideBarOpened()
                 .clickOnWebElement(editPublisherSidebar.getSaveButton())
                 .waitSideBarClosed()
                 .logOut()
-        .testEnd();
+                .testEnd();
 
     }
 

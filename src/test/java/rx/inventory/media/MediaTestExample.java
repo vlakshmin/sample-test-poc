@@ -1,4 +1,4 @@
-package rx.media;
+package rx.inventory.media;
 
 import api.dto.rx.inventory.media.Media;
 import api.preconditionbuilders.MediaPrecondition;
@@ -54,13 +54,13 @@ public class MediaTestExample extends BaseTest {
                 .openDirectPath(Path.MEDIA)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-                .and(String.format("Search Media by name '%s'",media.getName()))
+                .and(String.format("Search Media by name '%s'", media.getName()))
                 .setValueWithClean(tableData.getSearch(), media.getName())
                 .clickEnterButton(tableData.getSearch())
                 .then("Wait table data loading")
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that table contains uniq Media with random name '%s'",media.getName()))
+                .then(String.format("Validate that table contains uniq Media with random name '%s'", media.getName()))
                 .validateContainsText(tablePagination.getPaginationPanel(), "1-1 of 1")
                 .then("Validate list values in 'Media Name' column")
                 .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.MEDIA_NAME),
@@ -72,7 +72,7 @@ public class MediaTestExample extends BaseTest {
                 .waitSideBarOpened()
                 .then("Validate Categories tooltip text")
                 .validateTooltip(editMediaSidebar.getTooltipIconByFieldName("Categories"),
-                        MediaSidebarElements.TOOLTIP_PLACEHOLDER.getSelector() ,
+                        MediaSidebarElements.TOOLTIP_PLACEHOLDER.getSelector(),
                         MediaTooltipText.CATEGORY_TOOLTIP_TEXT.getText())
                 .and("Click on 'Save' button")
                 .clickOnWebElement(editMediaSidebar.getSaveButton())

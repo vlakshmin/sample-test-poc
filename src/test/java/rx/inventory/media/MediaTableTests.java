@@ -1,4 +1,4 @@
-package rx.media;
+package rx.inventory.media;
 
 import api.dto.rx.inventory.media.Media;
 import api.preconditionbuilders.MediaPrecondition;
@@ -13,7 +13,8 @@ import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import widgets.inventory.media.sidebar.EditMediaSidebar;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
 
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
@@ -25,20 +26,19 @@ import static managers.TestManager.testStart;
 public class MediaTableTests extends BaseTest {
 
     private Media media;
-
-    private Integer totalMedia;
-    private Integer totalActiveMedia;
+    private int totalMedia;
     private List<String> ids;
     private MediaPage mediaPage;
+    private Integer totalActiveMedia;
     private EditMediaSidebar editMediaSidebar;
 
-    public MediaTableTests(){
-        editMediaSidebar = new EditMediaSidebar();
+    public MediaTableTests() {
         mediaPage = new MediaPage();
+        editMediaSidebar = new EditMediaSidebar();
     }
 
     @BeforeClass
-    public void createNewMedia(){
+    public void createNewMedia() {
 
         totalMedia = MediaPrecondition.media()
                 .getAllMediaList()
@@ -46,21 +46,20 @@ public class MediaTableTests extends BaseTest {
                 .getMediaGetAllResponse()
                 .getTotal();
 
-
-        HashMap<String,Object> queryParams = new HashMap();
-        queryParams.put("sort","id-asc");
+        HashMap<String, Object> queryParams = new HashMap();
+        queryParams.put("sort", "id-asc");
 
         List<Media> mediaList = MediaPrecondition.media()
                 .getMediaWithFilter(queryParams)
                 .build()
                 .getMediaGetAllResponse()
-                .getItems().subList(0,100);
+                .getItems().subList(0, 100);
 
 
     }
 
     @Test
-    public void mediaSorting(){
+    public void mediaSorting() {
         var tableData = mediaPage.getMediaTable().getTableData();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
 
@@ -79,10 +78,10 @@ public class MediaTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "100")
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'", String.format("1-100 of %s",totalMedia)))
-                .validateContainsText(tablePagination.getPaginationPanel(), String.format("1-100 of %s",totalMedia))
+                .then(String.format("Validate that text in table footer '%s'", String.format("1-100 of %s", totalMedia)))
+                .validateContainsText(tablePagination.getPaginationPanel(), String.format("1-100 of %s", totalMedia))
                 .then("Validate data in column 'ID' should be sorted by asc")
-              //  .validateListContent(tableData.getCustomCells(ColumnNames.ID), ids)
+                //  .validateListContent(tableData.getCustomCells(ColumnNames.ID), ids)
 
                 .and()
                 .testEnd();

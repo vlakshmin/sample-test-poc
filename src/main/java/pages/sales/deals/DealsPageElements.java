@@ -1,4 +1,4 @@
-package pages.admin.sales.deals;
+package pages.sales.deals;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

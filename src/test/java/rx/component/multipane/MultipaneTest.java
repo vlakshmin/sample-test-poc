@@ -1,4 +1,4 @@
-package rx.component;
+package rx.component.multipane;
 
 import api.dto.rx.admin.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
@@ -28,7 +28,6 @@ import static managers.TestManager.testStart;
 @Feature(value = "Checking Multipane Component in Device Tab")
 public class MultipaneTest extends BaseTest {
 
-    private Publisher publisher;
     private Multipane deviceMultipane;
 
     public static final String ONE_DEVICE_INCLUDED = "1 device(s) are included";
