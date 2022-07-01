@@ -1,9 +1,7 @@
 package api.preconditionbuilders;
 
-import api.core.client.HttpClient;
 import api.dto.GenericResponse;
 import api.dto.rx.admin.publisher.Publisher;
-
 import api.dto.rx.inventory.media.Media;
 import api.dto.rx.inventory.media.MediaRequest;
 import api.services.MediaService;
@@ -13,7 +11,6 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,8 +42,8 @@ public class MediaPrecondition {
         private Response response;
         private Media mediaResponse;
         private MediaRequest mediaRequest;
-        private GenericResponse mediaGetAllResponse;
-        private MediaService mediaService = new MediaService();
+        private GenericResponse<Media> mediaGetAllResponse;
+        private final MediaService mediaService = new MediaService();
 
 
         public MediaPreconditionBuilder createNewMedia() {
@@ -56,7 +53,7 @@ public class MediaPrecondition {
                     .build()
                     .getPublisherResponse();
 
-            this.mediaRequest = mediaRequest.builder()
+            this.mediaRequest = MediaRequest.builder()
                     .name(captionWithSuffix("Media"))
                     .publisherId(publisher.getId())
                     .platformId(2)
@@ -79,7 +76,7 @@ public class MediaPrecondition {
             return this;
         }
 
-        public MediaPreconditionBuilder getMediaWithFilter(HashMap queryParams) {
+        public MediaPreconditionBuilder getMediaWithFilter(Map<String, Object> queryParams) {
             this.response = mediaService.getMediaWithFilter(queryParams);
 
             this.mediaGetAllResponse = this.response.as(new GenericResponse<Media>().getClass());

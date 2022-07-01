@@ -22,7 +22,7 @@ public class MediaService extends BaseService {
         return get(URL);
     }
 
-    public Response getMediaWithFilter(Map queryParams) {
+    public Response getMediaWithFilter(Map<String, Object> queryParams) {
         URL = initURL(GET_ALL_MEDIA);
 
         return get(URL,queryParams);

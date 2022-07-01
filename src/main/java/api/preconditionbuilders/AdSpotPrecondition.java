@@ -2,8 +2,9 @@ package api.preconditionbuilders;
 
 import api.dto.GenericResponse;
 import api.dto.rx.common.Currency;
-import api.dto.rx.inventory.adspot.*;
-import api.dto.rx.inventory.media.Media;
+import api.dto.rx.inventory.adspot.AdSpot;
+import api.dto.rx.inventory.adspot.AdSpotRequest;
+import api.dto.rx.inventory.adspot.Video;
 import api.services.AdSpotService;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
@@ -41,23 +42,17 @@ public class AdSpotPrecondition {
         private AdSpot adSpotResponse;
         private AdSpotRequest adSpotRequest;
         private List<AdSpot> adSpotsResponseList;
-        private AdSpotService adSpotService = new AdSpotService();
-        private GenericResponse adSpotsGetAllResponse;
-        private Video video = new Video();
-        private Banner banner = new Banner();
-        private Native nativeObj = new Native();
-        private NativeVideo nativeVideo = new NativeVideo();
-
-        private Media media;
+        private final AdSpotService adSpotService = new AdSpotService();
+        private GenericResponse<AdSpot> adSpotsGetAllResponse;
 
         public AdSpotPreconditionBuilder createNewAdSpot() {
 
-            media = MediaPrecondition.media()
+            var media = MediaPrecondition.media()
                     .createNewMedia()
                     .build()
                     .getMediaResponse();
 
-            video = Video.builder()
+            var video = Video.builder()
                     .floorPrice(23.00)
                     .maxDuration(10)
                     .enabled(true)
@@ -66,7 +61,7 @@ public class AdSpotPrecondition {
                     .build();
 
 
-            this.adSpotRequest = adSpotRequest.builder()
+            this.adSpotRequest = AdSpotRequest.builder()
                     .name(captionWithSuffix("ad spot"))
                     .publisherId(media.getPublisherId())
                     .currency(Currency.JPY.name())
@@ -114,14 +109,5 @@ public class AdSpotPrecondition {
 
             return new AdSpotPrecondition(this);
         }
-    }
-    public static void main(String[] args) {
-
-        System.out.println(
-                AdSpotPrecondition.adSpot()
-                        .getAllAdSpotsList()
-                        .build()
-                        .getAdSpotsGetAllResponse().getTotal()
-        );
     }
 }
