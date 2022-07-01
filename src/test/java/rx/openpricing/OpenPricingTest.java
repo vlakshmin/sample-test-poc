@@ -229,7 +229,7 @@ public class OpenPricingTest extends BaseTest {
     }
 
     @Test(enabled = false)
-    public void verifyPublisher() {
+    public void verifySortingPublisher() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
         var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
@@ -242,7 +242,7 @@ public class OpenPricingTest extends BaseTest {
     }
 
     @Test(enabled = false)
-    public void verifyActiveInactive() {
+    public void verifySortingActiveInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
         var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
@@ -255,7 +255,7 @@ public class OpenPricingTest extends BaseTest {
     }
 
     @Test(enabled = false)
-    public void verifyFloorPrice() {
+    public void verifySortingFloorPrice() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
         var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
@@ -267,7 +267,7 @@ public class OpenPricingTest extends BaseTest {
                 .and();
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void verifyFilter() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
@@ -279,11 +279,8 @@ public class OpenPricingTest extends BaseTest {
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
                 .and()
                 .clickOnWebElement(tableOptions.getTableOptionsBtn())
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE))
-                .validate(Statuses.ACTIVE.getStatus())
-                .clickOnWebElement(tableOptions.getTableOptionsBtn());
-
-
+                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE));
+        ;
     }
 
     @Test(enabled = false)
@@ -381,15 +378,17 @@ public class OpenPricingTest extends BaseTest {
                 .clickOnWebElement(tableData.getCheckbox(1))
                 .clickOnWebElement(tableData.getCheckbox(2))
                 .clickOnWebElement(tableData.getCheckbox(3))
+                .clickOnWebElement(tableData.getCheckbox(4))
                 .clickOnWebElement(openPricingPage.getActivateButton())
                 .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
                 .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(1), "Active")
                 .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(2), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(3), "Active")
                 .then()
                 .testEnd();
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void verifySingleDeactivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
@@ -400,16 +399,18 @@ public class OpenPricingTest extends BaseTest {
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
                 .and()
+//                .scrollIntoView(tableData.getCheckbox(1))tableData.getCheckbox(1)
                 .waitAndValidate(appear, tableData.getCheckbox(1))
                 .clickOnWebElement(tableData.getCheckbox(1))
-                .clickOnWebElement(openPricingPage.getActivateButton())
-                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Active")
+//                .scrollIntoView(openPricingPage.getDeactivateButton())
+                .clickOnWebElement(openPricingPage.getDeactivateButton())
+                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Inactive")
                 .then()
                 .testEnd();
 
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void verifySingleActivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
@@ -422,13 +423,13 @@ public class OpenPricingTest extends BaseTest {
                 .and()
                 .waitAndValidate(appear, tableData.getCheckbox(1))
                 .clickOnWebElement(tableData.getCheckbox(1))
-                .clickOnWebElement(openPricingPage.getDeactivateButton())
-                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Inactive")
+                .clickOnWebElement(openPricingPage.getActivateButton())
+                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
                 .then()
                 .testEnd();
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void verifyBulkDeactivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
@@ -438,10 +439,28 @@ public class OpenPricingTest extends BaseTest {
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and();
+                .and()
+                .waitAndValidate(appear, tableData.getCheckbox(1))
+                .clickOnWebElement(tableData.getCheckbox(1))
+                .clickOnWebElement(tableData.getCheckbox(2))
+                .clickOnWebElement(tableData.getCheckbox(3))
+                .clickOnWebElement(tableData.getCheckbox(4))
+                .clickOnWebElement(tableData.getCheckbox(5))
+                .clickOnWebElement(tableData.getCheckbox(6))
+                .clickOnWebElement(tableData.getCheckbox(7))
+                .clickOnWebElement(openPricingPage.getDeactivateButton())
+                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(1), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(2), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(3), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(4), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(5), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(6), "Active")
+                .then()
+                .testEnd();
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void verifyBulkActivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
@@ -451,7 +470,25 @@ public class OpenPricingTest extends BaseTest {
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and();
+                .and()
+                .waitAndValidate(appear, tableData.getCheckbox(1))
+                .clickOnWebElement(tableData.getCheckbox(1))
+                .clickOnWebElement(tableData.getCheckbox(2))
+                .clickOnWebElement(tableData.getCheckbox(3))
+                .clickOnWebElement(tableData.getCheckbox(4))
+                .clickOnWebElement(tableData.getCheckbox(5))
+                .clickOnWebElement(tableData.getCheckbox(6))
+                .clickOnWebElement(tableData.getCheckbox(7))
+                .clickOnWebElement(openPricingPage.getActivateButton())
+                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(1), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(2), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(3), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(4), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(5), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(6), "Active")
+                .then()
+                .testEnd();
     }
 
     @Test(enabled = false)
