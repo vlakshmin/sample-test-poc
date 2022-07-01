@@ -504,8 +504,8 @@ public class OpenPricingTest extends BaseTest {
                 .and();
     }
 
-    @Test(enabled = true)
-    public void verifyetc() {
+    @Test(enabled = false)
+    public void verifyUserCreateOpenPricingRule() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
         var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
@@ -525,6 +525,7 @@ public class OpenPricingTest extends BaseTest {
 //                .waitSideBarClosed()
 //                .testEnd();
     }
+
 
 
 }
