@@ -7,7 +7,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
 import pages.dashbord.DashboardPage;
-import pages.admin.sales.deals.DealsPage;
+import pages.sales.deals.DealsPage;
 import widgets.sales.deals.sidebar.CreateDealSidebar;
 
 import static com.codeborne.selenide.Condition.disappear;
