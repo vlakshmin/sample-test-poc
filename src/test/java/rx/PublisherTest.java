@@ -22,7 +22,7 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class PublisherTest extends BaseTest{
+public class PublisherTest extends BaseTest {
 
     private Publisher publisher;
     private DashboardPage dashboardsPage;
@@ -33,7 +33,7 @@ public class PublisherTest extends BaseTest{
     private static final String PUBLISHER_NAME_EDITED = FakerUtils.captionWithSuffix("Pub_Edited");
     private static final String PUBLISHER_AD_OPS_EDITED = FakerUtils.captionWithSuffix("Ad_Ops_Edited");
 
-    public PublisherTest(){
+    public PublisherTest() {
         dashboardsPage = new DashboardPage();
         publishersPage = new PublishersPage();
         editPublisherSidebar = new EditPublisherSidebar();
@@ -41,7 +41,7 @@ public class PublisherTest extends BaseTest{
     }
 
     @BeforeClass
-    public void createNewPublisher(){
+    public void createNewPublisher() {
         //Creating publisher to edit Using API
         publisher = PublisherPrecondition.publisher()
                 .createNewPublisher()
@@ -50,7 +50,7 @@ public class PublisherTest extends BaseTest{
     }
 
     @Test
-    public void editPublisherTest(){
+    public void editPublisherTest() {
 
         //Opening Browser and Edit the protection created from Precondition
         testStart()
@@ -84,7 +84,7 @@ public class PublisherTest extends BaseTest{
                 .then()
                 .validateAttribute(editPublisherSidebar.getNameInput(), "value", PUBLISHER_NAME_EDITED)
                 .validateAttribute(editPublisherSidebar.getAdOpsInput(), "value", PUBLISHER_AD_OPS_EDITED)
-        .testEnd();
+                .testEnd();
 
         //allure serve
     }

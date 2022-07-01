@@ -5,6 +5,7 @@ import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.adspot.AdSpot;
 import api.dto.rx.inventory.adspot.AdSpotRequest;
 import api.dto.rx.inventory.adspot.Video;
+import api.dto.rx.inventory.media.Media;
 import api.services.AdSpotService;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
@@ -47,12 +48,12 @@ public class AdSpotPrecondition {
 
         public AdSpotPreconditionBuilder createNewAdSpot() {
 
-            var media = MediaPrecondition.media()
+            Media media = MediaPrecondition.media()
                     .createNewMedia()
                     .build()
                     .getMediaResponse();
 
-            var video = Video.builder()
+            Video video = Video.builder()
                     .floorPrice(23.00)
                     .maxDuration(10)
                     .enabled(true)

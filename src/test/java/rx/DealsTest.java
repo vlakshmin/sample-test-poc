@@ -20,8 +20,8 @@ import static zutils.FakerUtils.captionWithSuffix;
 @Listeners({ScreenShooter.class})
 public class DealsTest extends BaseTest {
 
-    private DashboardPage dashboardsPage;
     private DealsPage dealsPage;
+    private DashboardPage dashboardsPage;
     private CreateDealSidebar createDealSidebar;
 
     public DealsTest() {

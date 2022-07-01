@@ -16,19 +16,19 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class ProtectionsTest extends BaseTest{
+public class ProtectionsTest extends BaseTest {
 
     private DashboardPage dashboardPage;
     private Protection protectionResponse;
     private ProtectionsPage protectionsPage;
 
-    public ProtectionsTest(){
+    public ProtectionsTest() {
         dashboardPage = new DashboardPage();
         protectionsPage = new ProtectionsPage();
     }
 
     @Test
-    public void editProtectionTest(){
+    public void editProtectionTest() {
 
         //Creating protection to edit Using API
         protectionResponse = ProtectionsPrecondition.protection()
@@ -47,7 +47,7 @@ public class ProtectionsTest extends BaseTest{
                 .then()
                 .clickOnText("Protections")
                 .waitAndValidate(disappear, protectionsPage.getTableProgressBar())
-        .testEnd();
+                .testEnd();
 
         //allure serve
     }
