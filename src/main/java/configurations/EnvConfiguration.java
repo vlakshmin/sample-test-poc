@@ -4,15 +4,15 @@ import lombok.Data;
 
 @Data
 public  class EnvConfiguration {
-    private String baseUrlAPI;
+
     private String baseUrl;
     private String browser;
-    private String pageLoadStrategy;
-    private String browserSize;
-    private Boolean holdBrowserOpen;
-    private Boolean reopenBrowserOnFail;
-    private Boolean screenshots;
     private Integer timeout;
     private Boolean headless;
+    private String browserSize;
+    private Boolean screenshots;
     private Boolean enableProxy;
+    private String pageLoadStrategy;
+    private Boolean holdBrowserOpen;
+    private Boolean reopenBrowserOnFail;
 }
