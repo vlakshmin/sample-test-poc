@@ -83,7 +83,7 @@ public class DealsTest extends BaseTest {
                 .clickOnWebElement(dealsPage.getCreateNewDealButton())
                 .waitSideBarOpened()
                 .and()
-                .selectFromDropdown(createDealSidebar.getPublisherDropdown(), createDealSidebar.getDropDownItems(), "Beryl Ryan")
+                .selectFromDropdownByPosition(createDealSidebar.getPublisherDropdown(), createDealSidebar.getDropDownItems(), 1)
                 .clickOnWebElement(dateRangeField.getDateRangeInput())
                 .clickOnWebElement(dateRangeField.getDayButtonByValue("12"))
                 .then()
