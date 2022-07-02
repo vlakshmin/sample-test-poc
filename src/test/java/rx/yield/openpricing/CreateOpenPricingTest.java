@@ -1,7 +1,6 @@
-package rx;
+package rx.yield.openpricing;
 
 import api.dto.rx.yield.openpricing.OpenPricing;
-import api.preconditionbuilders.OpenPricingPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
@@ -10,59 +9,55 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
 import pages.yield.openpricing.OpenPricingPage;
+import rx.BaseTest;
 import widgets.common.table.ColumnNames;
-import widgets.yield.openPricing.sidebar.EditOpenPricingSidebar;
+import widgets.yield.openPricing.sidebar.CreateOpenPricingSidebar;
 
 import static com.codeborne.selenide.Condition.disappear;
-import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
 import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class OpenPricingTest extends BaseTest {
+public class CreateOpenPricingTest extends BaseTest {
 
     private OpenPricing openPricing;
     private OpenPricingPage openPricingPage;
-    private EditOpenPricingSidebar editOpenPricingSidebar;
+    private CreateOpenPricingSidebar createOpenPricingSidebar;
 
-    public OpenPricingTest() {
+    public CreateOpenPricingTest() {
         openPricingPage = new OpenPricingPage();
-        editOpenPricingSidebar = new EditOpenPricingSidebar();
+        createOpenPricingSidebar = new CreateOpenPricingSidebar();
     }
 
     @BeforeClass
-    @Step("Creating Open Pricing to edit Using API")
-    public void createNewPublisher() {
+    @Step("Login ToOpenPricing Page")
+    public void loginToOpenPricing() {
 
-        openPricing = OpenPricingPrecondition.openPricing()
-                .createNewOpenPricing()
-                .build()
-                .getOpenPricingResponse();
+        testStart()
+                .given("Logging Directly to Open Pricing Page")
+                .openDirectPath(Path.OPEN_PRICING)
+                .logIn(TEST_USER)
+                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
+                .waitAndValidate(disappear, openPricingPage.getTableProgressBar())
+                .testEnd();
     }
 
     @Test
     public void editOpenPricingTest() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
 
-        //Opening Browser and check Open pricing from precondition
         testStart()
-                .given()
-                .openDirectPath(Path.OPEN_PRICING)
-                .logIn(TEST_USER)
-                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .waitAndValidate(disappear, openPricingPage.getTableProgressBar())
-                .setValueWithClean(tableData.getSearch(), openPricing.getName())
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then()
-                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.NAME),
-                        openPricing.getName())
+                .given("Opening 'Create New Open Pricing sidebar'")
+                .openDirectPath(Path.CREATE_OPEN_PRICING)
+                .waitSideBarOpened()
+                .then("Enter data to all fields of sidebar")
+                .selectFromDropdownByPosition(createOpenPricingSidebar.getPublisherNameDropdown(), createOpenPricingSidebar.getPub1)
                 .and()
                 .clickOnTableCellLink(tableData, ColumnNames.NAME, openPricing.getName())
                 .waitSideBarOpened()
                 .validateAttribute(editOpenPricingSidebar.getNameInput(), "value", openPricing.getName())
-                .validate(editOpenPricingSidebar.getPublisherNameDropdown(), openPricing.getPublisherName())
+                .validate(editOpenPricingSidebar.getPublisherInput(), openPricing.getPublisherName())
                 .validateAttribute(editOpenPricingSidebar.getFloorPrice(), "value", openPricing.getFloorPrice().toString())
 
                 .clickOnWebElement(editOpenPricingSidebar.getSaveButton())

@@ -90,6 +90,11 @@ public final class TestManager {
 
             return this;
         }
+        public TestManagerBuilder given(String message) {
+            logEvent(message);
+
+            return this;
+        }
         public TestManagerBuilder when(String message) {
             logEvent(message);
 
@@ -476,7 +481,6 @@ public final class TestManager {
 
             element1.shouldBe(exist, visible).hover().click();
             list.shouldBe(CollectionCondition.size(list.size()));
-            //todo Performance issue do not forget to refactor and simplify it
             new Actions(WebDriverRunner.getWebDriver())
                     .sendKeys(value)
                     .perform();
@@ -523,6 +527,20 @@ public final class TestManager {
             return this;
         }
 
+        public TestManagerBuilder clickOnTableCellLink(TableData table, ColumnNames column, String cellValue) {
+            logEvent(format("Click on cell in column %s with value %s", column.getName(), cellValue));
+            table.getCustomCells(column)
+                    .stream()
+                    .filter(x -> x.getText().equals(cellValue))
+                    .findFirst()
+                    .orElseThrow(() -> new NoSuchElementException(
+                            format("The table cell with value '%s' isn't presented in the column '%s'", cellValue, column.getName())))
+                    .lastChild()
+                    .click();
+
+            return this;
+        }
+
         public TestManagerBuilder logOut() {
 
             try {
@@ -550,20 +568,5 @@ public final class TestManager {
 
             return new TestManager(this);
         }
-
-        public TestManagerBuilder clickOnTableCellLink(TableData table, ColumnNames column, String cellValue) {
-            logEvent(format("Click on cell in column %s with value %s", column.getName(), cellValue));
-            table.getCustomCells(column)
-                    .stream()
-                    .filter(x -> x.getText().equals(cellValue))
-                    .findFirst()
-                    .orElseThrow(() -> new NoSuchElementException(
-                            format("The table cell with value '%s' isn't presented in the column '%s'", cellValue, column.getName())))
-                    .lastChild()
-                    .click();
-
-            return this;
-        }
-
     }
 }

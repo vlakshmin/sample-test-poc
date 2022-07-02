@@ -8,15 +8,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum FloorPriceFieldElements {
 
-    YEAR_BUTTON_BY_VALUE("'%s' Year in Date Picker", "//ul/li[text()='%s']"),
-    DAY_BUTTON_BY_VALUE("'%s' Day in Date Picker", "//table//button/div[text()='%s']"),
-    DATE_RANGE_INPUT("'Date Range' Input Field", "//label[text()='Date Range']/../input"),
-    MONTH_BUTTON_BY_VALUE("'%s' Month in Date Picker", "//table//button/div[text()='%s']"),
-    NEXT_YEAR_BUTTON("'Next Year' button in Date Picker","//button[@aria-label='Next year']"),
-    NEXT_MONTH_BUTTON("'Next Month' button in Date Picker","//button[@aria-label='Next month']"),
-    PREVIOUS_YEAR_BUTTON("'Previous year' button in Date Picker","//button[@aria-label='Previous year']"),
-    PREVIOUS_MONTH_BUTTON("'Previous Month' button in Date Picker","//button[@aria-label='Previous month']"),
-    MONTH_YEAR_HEADER_BUTTON("'Month-Year' Header Button in Date Picker", "//div[@class='v-date-picker-header__value']//button");
+    //ToDo Add Selectors
+    FLOOR_PRICE_UP_BUTTON("'Floor Price Up' button","//todo add Selector"),
+    FLOOR_PRICE_DOWN_BUTTON("'Floor Price Down' button","//todo add Selector"),
+    FLOOR_PRICE_INPUT("'Floor Price' Input Field", "//label[text()='Floor Price']/../input"),
+    FLOOR_PRICE_PREFIX("''Floor Price' Field Prefix", "//label[text()='Floor Price']/../div");
 
     private String alias;
     private String selector;

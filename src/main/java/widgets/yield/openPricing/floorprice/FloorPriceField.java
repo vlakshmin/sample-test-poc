@@ -13,8 +13,9 @@ import static widgets.yield.openPricing.floorprice.FloorPriceFieldElements.*;
 @Getter
 public class FloorPriceField {
 
-    private SelenideElement floorPriceInput = $x(DATE_RANGE_INPUT.getSelector()).as(DATE_RANGE_INPUT.getAlias());
-    private SelenideElement nextYearButton = $x(NEXT_YEAR_BUTTON.getSelector()).as(NEXT_YEAR_BUTTON.getAlias());
-    private SelenideElement nextMonthButton = $x(NEXT_MONTH_BUTTON.getSelector()).as(NEXT_MONTH_BUTTON.getAlias());
+    private SelenideElement floorPriceInput = $x(FLOOR_PRICE_INPUT.getSelector()).as(FLOOR_PRICE_INPUT.getAlias());
+    private SelenideElement floorPricePrefix = $x(FLOOR_PRICE_PREFIX.getSelector()).as(FLOOR_PRICE_PREFIX.getAlias());
+    private SelenideElement florPriceUpButton = $x(FLOOR_PRICE_UP_BUTTON.getSelector()).as(FLOOR_PRICE_UP_BUTTON.getAlias());
+    private SelenideElement floorPriceDownButton = $x(FLOOR_PRICE_DOWN_BUTTON.getSelector()).as(FLOOR_PRICE_DOWN_BUTTON.getAlias());
 
 }
