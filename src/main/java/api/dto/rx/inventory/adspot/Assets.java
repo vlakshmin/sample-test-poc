@@ -16,13 +16,12 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Assets {
 
+    private Integer id;
+    private Img     img;
+    private DataObj data;
+    private String  assetType;
     private List<Integer> playbackMethodIds;
     private List<Integer> sizeIds;
-    private String assetType;
-    private Integer id;
-    private Img img;
-    private DataObj data;
-
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);

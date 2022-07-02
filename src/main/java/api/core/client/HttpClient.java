@@ -173,11 +173,13 @@ public class HttpClient {
         if (actionsEnum instanceof RakutenExchangeApi) {
             RakutenExchangeApi request = (RakutenExchangeApi) actionsEnum;
 
-            return format("%s%s", getConfig().getBaseUrlAPI(),  request.getEndpoint());
+            return format("%s%s", getConfig().getBaseUrl().replace("publisher-portal", "s-api"),
+                    request.getEndpoint());
         } else if (actionsEnum instanceof AuthApi) {
             AuthApi request = (AuthApi) actionsEnum;
 
-            return format("%s%s", getConfig().getBaseUrlAPI(), request.getEndpoint());
+            return format("%s%s", getConfig().getBaseUrl().replace("publisher-portal", "s-api"),
+                    request.getEndpoint());
         } else {
 
             throw new IOException(format("init Url in %s must get it's own enum endpoint", actionsEnum.getClass().getName()));
@@ -186,7 +188,7 @@ public class HttpClient {
 
     public static String initURL(String endpoint) {
 
-        return format("%s%s", getConfig().getBaseUrlAPI(), endpoint);
+        return format("%s%s", getConfig().getBaseUrl().replace("publisher-portal", "s-api"), endpoint);
     }
 
     private static Response executeGet(String token, String url) {

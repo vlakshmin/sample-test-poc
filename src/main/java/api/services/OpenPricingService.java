@@ -1,6 +1,6 @@
 package api.services;
 
-import api.dto.rx.yield.openPricing.OpenPricingRequest;
+import api.dto.rx.yield.openpricing.OpenPricingRequest;
 import io.restassured.response.Response;
 
 import static api.core.RakutenExchangeApi.*;

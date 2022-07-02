@@ -18,30 +18,29 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AdSpotRequest {
 
-    private Integer mediaId;
-    private String name;
-    private String mediaName;
-    private Boolean coppa;
-    private Boolean customSizing;
-    private Boolean enabled;
-    private Boolean floorPriceAutomated;
-    private Boolean testMode;
-    private Integer filterId;
-    private Double floorPrice;
     private Integer ttl;
+    private Boolean coppa;
+    private String  name;
+
+    private Video   video;
+    private Banner  banner;
+    private Integer mediaId;
+    private Boolean enabled;
+    private Boolean testMode;
+    private String  currency;
+    private String  mediaName;
+    private Double  floorPrice;
     private Integer positionId;
-    private Integer prebidCacheEnabled;
     private Integer publisherId;
-    private String publisherName;
-    private String currency;
-    private Video video;
-    private Banner banner;
+    private Boolean customSizing;
+    private String  publisherName;
+    private Integer prebidCacheEnabled;
+    private Boolean floorPriceAutomated;
+
     @JsonIgnoreProperties("native")
     private Native anative;
-
-    private List<Integer> categoryIds;
     private List<Integer> sizeIds;
-
+    private List<Integer> categoryIds;
 
     public String toJson() {
 

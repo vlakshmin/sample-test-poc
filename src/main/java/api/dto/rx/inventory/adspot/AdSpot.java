@@ -18,30 +18,29 @@ import java.util.List;
 public class AdSpot {
 
     private Integer id;
-    private Integer mediaId;
-    private String name;
-    private String mediaName;
-    private Boolean coppa;
-    private Boolean customSizing;
-    private Boolean enabled;
-    private Boolean floorPriceAutomated;
-    private Boolean testMode;
-    private Integer filterId;
-    private Double floorPrice;
     private Integer ttl;
+    private String  name;
+    private Boolean coppa;
+    private Integer mediaId;
+    private Boolean enabled;
+    private Native  anative;
+    private Boolean testMode;
+    private String  currency;
+    private String  mediaName;
+    private String  createdAt;
+    private String  updatedAt;
+    private Double  floorPrice;
     private Integer positionId;
-    private Integer prebidCacheEnabled;
     private Integer publisherId;
-    private String publisherName;
-    private String currency;
+    private Boolean customSizing;
+    private String  publisherName;
+
     private List<Integer> sizeIds;
     @JsonProperty(value="native")
-    private Native anative;
-
     private List<Integer> categoryIds;
 
-    private String createdAt;
-    private String updatedAt;
+    private Integer prebidCacheEnabled;
+    private Boolean floorPriceAutomated;
 
     public String toJson() {
 

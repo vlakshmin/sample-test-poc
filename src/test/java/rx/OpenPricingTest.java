@@ -1,6 +1,6 @@
 package rx;
 
-import api.dto.rx.yield.openPricing.OpenPricing;
+import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.OpenPricingPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;

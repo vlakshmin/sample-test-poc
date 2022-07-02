@@ -21,9 +21,12 @@ import widgets.common.table.TableData;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static api.core.client.HttpClient.getToken;
@@ -32,6 +35,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 import static java.lang.String.format;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 @Slf4j
@@ -48,9 +52,10 @@ public final class TestManager {
 
     public static class TestManagerBuilder {
 
-        private BasePage basePage = new BasePage();
-        private LoginPage loginPage =  new LoginPage();
+        private final BasePage basePage = new BasePage();
+        private final LoginPage loginPage =  new LoginPage();
         private final String ELEMENT_BY_TEXT = "//*[contains(text(),'%s')]";
+        private final String DIV_CONTAINS_TEXT = "//div[contains(text(),'%s')]";
 
         public TestManagerBuilder openUrl() {
             logEvent(format("Opening url '%s'", ConfigurationLoader.getConfig().getBaseUrl()));
@@ -82,6 +87,23 @@ public final class TestManager {
         }
 
         public TestManagerBuilder and() {
+
+            return this;
+        }
+        public TestManagerBuilder when(String message) {
+            logEvent(message);
+
+            return this;
+        }
+
+        public TestManagerBuilder then(String message) {
+            logEvent(message);
+
+            return this;
+        }
+
+        public TestManagerBuilder and(String message) {
+            logEvent(message);
 
             return this;
         }
@@ -261,6 +283,7 @@ public final class TestManager {
 
             return this;
         }
+
 
         public TestManagerBuilder validate(Condition condition, String... texts) {
             logEvent(format("Validating List of texts '%s' is %s",
@@ -454,14 +477,10 @@ public final class TestManager {
             element1.shouldBe(exist, visible).hover().click();
             list.shouldBe(CollectionCondition.size(list.size()));
             //todo Performance issue do not forget to refactor and simplify it
-            new Actions(WebDriverRunner.getWebDriver()).sendKeys(value).perform();
-            list.stream()
-                    .filter(item -> item.shouldBe(visible).getText().equalsIgnoreCase(value) &&
-                            !item.shouldBe(visible).getText().equalsIgnoreCase("No records found"))
-                    .findFirst()
-                    .orElseThrow(() -> new NoSuchElementException(
-                            format("Type with name '%s' haven't been found in the dropdown", value)))
-                    .click();
+            new Actions(WebDriverRunner.getWebDriver())
+                    .sendKeys(value)
+                    .perform();
+            $x(String.format(DIV_CONTAINS_TEXT, value)).shouldBe(exist, visible).click();
 
             return this;
         }

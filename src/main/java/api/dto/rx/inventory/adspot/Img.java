@@ -16,12 +16,12 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Img {
 
-    private List<String> mimes;
+    private Integer width;
     private Integer height;
     private Integer imgType;
-    private Integer minHeight;
     private Integer minWidth;
-    private Integer width;
+    private Integer minHeight;
+    private List<String> mimes;
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);

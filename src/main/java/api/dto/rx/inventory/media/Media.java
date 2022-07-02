@@ -17,22 +17,19 @@ import java.util.List;
 public class Media {
 
     private Integer id;
-    private String name;
-    private String appBundleId;
-    private String iconPath;
-    private String identifier;
-    private Integer filterId;
+    private String  url;
+    private String  name;
+    private String  iconPath;
+    private Boolean isEnabled;
+    private String  createdAt;
+    private String  updatedAt;
     private Integer platformId;
+    private String  identifier;
+    private String  appBundleId;
+    private Boolean appReleased;
     private Integer publisherId;
     private String publisherName;
-    private String url;
-
     private List<Integer> categoryIds;
-
-    private Boolean isEnabled;
-    private Boolean appReleased;
-    private String createdAt;
-    private String updatedAt;
 
     public String toJson() {
 

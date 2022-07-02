@@ -14,12 +14,10 @@ import zutils.ObjectMapperUtils;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Native {
 
-    private Assets assets;
-    private NativeVideo video;
     private Title title;
-
+    private Assets assets;
     private Boolean required;
-
+    private NativeVideo video;
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);

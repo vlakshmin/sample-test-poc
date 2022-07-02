@@ -16,13 +16,13 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Video {
 
-    private List<Integer> playbackMethodIds;
-    private List<Integer> sizeIds;
     private Boolean enabled;
-    private Double floorPrice;
+    private Double  floorPrice;
     private Integer maxDuration;
     private Integer minDuration;
     private Integer placementType;
+    private List<Integer> sizeIds;
+    private List<Integer> playbackMethodIds;
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);
