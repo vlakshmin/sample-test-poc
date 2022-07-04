@@ -63,7 +63,8 @@ public class OpenPricingTest extends BaseTest {
                 .waitSideBarOpened()
                 .validateAttribute(editOpenPricingSidebar.getNameInput(), "value", openPricing.getName())
                 .validate(editOpenPricingSidebar.getPublisherNameDropdown(), openPricing.getPublisherName())
-                .validateAttribute(editOpenPricingSidebar.getFloorPrice(), "value", openPricing.getFloorPrice().toString())
+                .validateAttribute(editOpenPricingSidebar.getFloorPriceField().getFloorPriceInput(),
+                        "value", openPricing.getFloorPrice().toString())
 
                 .clickOnWebElement(editOpenPricingSidebar.getSaveButton())
                 .waitSideBarClosed()

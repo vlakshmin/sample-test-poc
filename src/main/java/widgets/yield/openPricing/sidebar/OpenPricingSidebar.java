@@ -18,7 +18,6 @@ import static widgets.yield.openPricing.sidebar.OpenPricingSidebarElements.*;
 @Getter
 public abstract class OpenPricingSidebar {
 
-    private SelenideElement floorPrice = $x(FLOOR_PRICE.getSelector()).as(FLOOR_PRICE.getAlias());
     private SelenideElement saveButton = $x(SAVE_BUTTON.getSelector()).as(SAVE_BUTTON.getAlias());
     private SelenideElement nameInput = $x(OPEN_PRICING_NAME.getSelector()).as(OPEN_PRICING_NAME.getAlias());
     private ElementsCollection publisherNameDropdownItems = $$x(DROPDOWN_ITEMS.getSelector()).as(DROPDOWN_ITEMS.getAlias());
