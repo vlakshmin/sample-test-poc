@@ -52,9 +52,10 @@ public final class TestManager {
 
     public static class TestManagerBuilder {
 
-        private BasePage basePage = new BasePage();
-        private LoginPage loginPage =  new LoginPage();
+        private final BasePage basePage = new BasePage();
+        private final LoginPage loginPage =  new LoginPage();
         private final String ELEMENT_BY_TEXT = "//*[contains(text(),'%s')]";
+        private final String DIV_CONTAINS_TEXT = "//div[contains(text(),'%s')]";
 
         public TestManagerBuilder openUrl() {
             logEvent(format("Opening url '%s'", ConfigurationLoader.getConfig().getBaseUrl()));
@@ -476,14 +477,10 @@ public final class TestManager {
             element1.shouldBe(exist, visible).hover().click();
             list.shouldBe(CollectionCondition.size(list.size()));
             //todo Performance issue do not forget to refactor and simplify it
-            new Actions(WebDriverRunner.getWebDriver()).sendKeys(value).perform();
-            list.stream()
-                    .filter(item -> item.shouldBe(visible).getText().equalsIgnoreCase(value) &&
-                            !item.shouldBe(visible).getText().equalsIgnoreCase("No records found"))
-                    .findFirst()
-                    .orElseThrow(() -> new NoSuchElementException(
-                            format("Type with name '%s' haven't been found in the dropdown", value)))
-                    .click();
+            new Actions(WebDriverRunner.getWebDriver())
+                    .sendKeys(value)
+                    .perform();
+            $x(String.format(DIV_CONTAINS_TEXT, value)).shouldBe(exist, visible).click();
 
             return this;
         }
