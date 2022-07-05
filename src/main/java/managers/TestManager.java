@@ -7,21 +7,22 @@ import configurations.ConfigurationLoader;
 import configurations.User;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.ElementClickInterceptedException;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.UnhandledAlertException;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
 import org.testng.annotations.Listeners;
+import org.testng.asserts.SoftAssert;
 import pages.BasePage;
 import pages.LoginPage;
 import pages.Path;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.TableData;
+import widgets.common.table.TableHeader;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.Map;
+import java.util.*;
 import java.util.NoSuchElementException;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -32,6 +33,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 import static java.lang.String.format;
+import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertTrue;
 
 @Slf4j
@@ -49,7 +51,7 @@ public final class TestManager {
     public static class TestManagerBuilder {
 
         private BasePage basePage = new BasePage();
-        private LoginPage loginPage =  new LoginPage();
+        private LoginPage loginPage = new LoginPage();
         private final String ELEMENT_BY_TEXT = "//*[contains(text(),'%s')]";
 
         public TestManagerBuilder openUrl() {
@@ -211,6 +213,82 @@ public final class TestManager {
             return this;
         }
 
+        public TestManagerBuilder validateTableContainsOnlyFilteredData(int columnIndex, String expected, ElementsCollection rows) {
+            ArrayList<String> list = getStringsFromColumn(columnIndex, rows);
+            SoftAssert a = new SoftAssert();
+            for (String actual : list) {
+                a.assertEquals(actual, expected,
+                        String.format("Filtered value did not match, expected: %s, actual: %s", expected, actual));
+            }
+            a.assertAll();
+            return this;
+        }
+
+        public TestManagerBuilder validateTableHasSomeFilteredData(int columnIndex, ElementsCollection rows, String... expected) {
+            ArrayList<String> list = getStringsFromColumn(columnIndex, rows);
+            for (String actual : list) {
+                for (String expectedValue : expected) {
+                    if (actual.equals(expectedValue)) {
+                        return this;
+                    }
+                }
+
+            }
+            Assert.fail("Not able find any expected value in the table");
+            return this;
+        }
+
+
+        public TestManagerBuilder validateSortingOrderLabel(TableHeader.SortOrder actual, TableHeader.SortOrder expected) {
+            SoftAssert a = new SoftAssert();
+            a.assertEquals(actual, expected, "sorting order did not match");
+            a.assertAll();
+            return this;
+        }
+
+        private class IntegerComparator implements Comparator<String> {
+
+            @Override
+            public int compare(String o1, String o2) {
+                return new BigDecimal(o1).compareTo(new BigDecimal(o2));
+            }
+        }
+
+        public TestManagerBuilder validateSortingOrderTableRows(int columnIndex, TableHeader.SortOrder expected, ElementsCollection rows) {
+
+            ArrayList<String> list = getStringsFromColumn(columnIndex, rows);
+            ArrayList<String> listCopy = (ArrayList<String>) list.clone();
+            if (expected == TableHeader.SortOrder.ASCENDING) {
+                if (columnIndex == 1) {
+                    listCopy.sort(new IntegerComparator());
+                } else {
+                    Collections.sort(listCopy);
+                }
+            } else if (expected == TableHeader.SortOrder.DESCENDING) {
+                if (columnIndex == 1) {
+                    listCopy.sort(new IntegerComparator());
+                    Collections.reverse(listCopy);
+                } else {
+                    listCopy.sort(Collections.reverseOrder());
+                }
+            } else {
+                throw new IllegalArgumentException("Not supported sort order: " + expected.name());
+            }
+            for (int i = 0; i < list.size(); i++) {
+                assertSame(list.get(i), listCopy.get(i), "List did not properly sort");
+            }
+            return this;
+        }
+
+        private ArrayList<String> getStringsFromColumn(int columnIndex, ElementsCollection rows) {
+            ArrayList<String> list = new ArrayList<>();
+            for (SelenideElement row : rows) {
+                String text = row.findElements(By.tagName("td")).get(columnIndex).getText();
+                list.add(text);
+            }
+            return list;
+        }
+
         public TestManagerBuilder validate(SelenideElement element, String text) {
             logEvent(format("Validating %s has text '%s'", element.getAlias(), text));
             element.shouldBe(visible).shouldHave(exactText(text));
@@ -367,6 +445,13 @@ public final class TestManager {
         public TestManagerBuilder scrollIntoView(SelenideElement element) {
             logEvent(format("Scrolling to %s", element.getAlias()));
             element.shouldHave(exist).scrollIntoView(true).shouldBe(visible);
+
+            return this;
+        }
+
+        public TestManagerBuilder scrollToTop(SelenideElement element) {
+            logEvent(format("Scrolling to %s", element.getAlias()));
+            element.sendKeys(Keys.HOME);
 
             return this;
         }

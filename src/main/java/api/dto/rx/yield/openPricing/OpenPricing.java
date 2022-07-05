@@ -30,7 +30,6 @@ public class OpenPricing {
     private String updatedAt;
 
     public String toJson() {
-
         return ObjectMapperUtils.toJson(this);
     }
 }
