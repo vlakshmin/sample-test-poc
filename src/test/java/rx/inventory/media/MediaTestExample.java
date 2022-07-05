@@ -80,6 +80,7 @@ public class MediaTestExample extends BaseTest {
                 .validateContainsText(editMediaSidebar.getErrorAlert().getErrorsList(),
                         ErrorMessages.SITE_URL_ERROR_ALERT.getText())
                 .then("Validate error message under the 'Site URL' field")
+                .scrollIntoView(editMediaSidebar.getErrorAlert().getErrorPanel())
                 .validate(visible,editMediaSidebar.getErrorAlert().getErrorPanel())
                 .validate(visible,editMediaSidebar.getErrorAlert().getIconError())
                 .scrollIntoView(editMediaSidebar.getErrorAlertByFieldName("Site URL"))
