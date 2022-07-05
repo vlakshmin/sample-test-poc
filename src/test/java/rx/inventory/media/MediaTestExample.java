@@ -79,11 +79,13 @@ public class MediaTestExample extends BaseTest {
                 .and("Click on 'Save' button")
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
                 .then("Validate bottom panel with errors")
+                .scrollIntoView(errorAlert.getHeaderError())
                 .validateContainsText(errorAlert.getErrorsList(),
                         ErrorMessages.SITE_URL_ERROR_ALERT.getText())
                 .then("Validate error message under the 'Site URL' field")
                 .validate(visible,errorAlert.getErrorPanel())
                 .validate(visible,errorAlert.getIconError())
+                .scrollIntoView(editMediaSidebar.getErrorAlertByFieldName("Site URL"))
                 .validateContainsText(editMediaSidebar.getErrorAlertByFieldName("Site URL"),
                         ErrorMessages.SITE_URL_ERROR_ALERT.getText())
                 .and("Set valid value 'Site URL' and click Save")
