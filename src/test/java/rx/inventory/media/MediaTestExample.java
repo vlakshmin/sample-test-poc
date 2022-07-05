@@ -12,7 +12,6 @@ import pages.inventory.media.MediaPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import widgets.common.tooltip.MediaTooltipText;
-import widgets.common.validationalert.ValidationBottomAlert;
 import widgets.errormessages.ErrorMessages;
 import widgets.inventory.media.sidebar.EditMediaSidebar;
 import widgets.inventory.media.sidebar.MediaSidebarElements;
@@ -28,12 +27,10 @@ public class MediaTestExample extends BaseTest {
     private Media media;
     private MediaPage mediaPage;
     private EditMediaSidebar editMediaSidebar;
-    private ValidationBottomAlert errorAlert;
 
     public MediaTestExample() {
         editMediaSidebar = new EditMediaSidebar();
         mediaPage = new MediaPage();
-        errorAlert = new ValidationBottomAlert();
     }
 
     @BeforeClass
@@ -79,12 +76,12 @@ public class MediaTestExample extends BaseTest {
                 .and("Click on 'Save' button")
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
                 .then("Validate bottom panel with errors")
-                .scrollIntoView(errorAlert.getHeaderError())
-                .validateContainsText(errorAlert.getErrorsList(),
+                .scrollIntoView(editMediaSidebar.getErrorAlert().getHeaderError())
+                .validateContainsText(editMediaSidebar.getErrorAlert().getErrorsList(),
                         ErrorMessages.SITE_URL_ERROR_ALERT.getText())
                 .then("Validate error message under the 'Site URL' field")
-                .validate(visible,errorAlert.getErrorPanel())
-                .validate(visible,errorAlert.getIconError())
+                .validate(visible,editMediaSidebar.getErrorAlert().getErrorPanel())
+                .validate(visible,editMediaSidebar.getErrorAlert().getIconError())
                 .scrollIntoView(editMediaSidebar.getErrorAlertByFieldName("Site URL"))
                 .validateContainsText(editMediaSidebar.getErrorAlertByFieldName("Site URL"),
                         ErrorMessages.SITE_URL_ERROR_ALERT.getText())
@@ -92,7 +89,7 @@ public class MediaTestExample extends BaseTest {
                 .setValueWithClean(editMediaSidebar.getSiteURL(), "https://test.com")
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
                 .then("Errors should be disappeared")
-                .validate(disappear,errorAlert.getErrorPanel())
+                .validate(disappear,editMediaSidebar.getErrorAlert().getErrorPanel())
                 .then("Wait until SideBar closed")
                 .waitSideBarClosed()
                 .and("End")
