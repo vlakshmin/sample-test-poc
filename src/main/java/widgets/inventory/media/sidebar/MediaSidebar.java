@@ -21,7 +21,7 @@ public abstract class MediaSidebar {
     private SelenideElement appStoreURL = $x(APP_STORE_URL.getSelector()).as(APP_STORE_URL.getAlias());
     private SelenideElement publisherInput = $x(PUBLISHER_NAME.getSelector()).as(PUBLISHER_NAME.getAlias());
     private SelenideElement tooltipPlaceholder = $x(TOOLTIP_PLACEHOLDER.getSelector()).as(TOOLTIP_PLACEHOLDER.getAlias());
-    private ValidationBottomAlert errorAlert;
+    private ValidationBottomAlert errorAlert = new ValidationBottomAlert();
     public SelenideElement getTooltipIconByFieldName(String fieldName){
 
         return $x(String.format(TOOLTIP_ICON_BY_FIELD_NAME.getSelector(),fieldName))

@@ -76,7 +76,7 @@ public class MediaTestExample extends BaseTest {
                 .and("Click on 'Save' button")
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
                 .then("Validate bottom panel with errors")
-                .scrollIntoView(editMediaSidebar.getErrorAlert().getHeaderError())
+                .scrollIntoView(editMediaSidebar.getErrorAlert().getErrorPanel())
                 .validateContainsText(editMediaSidebar.getErrorAlert().getErrorsList(),
                         ErrorMessages.SITE_URL_ERROR_ALERT.getText())
                 .then("Validate error message under the 'Site URL' field")
