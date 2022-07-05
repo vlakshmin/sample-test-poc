@@ -13,8 +13,11 @@ import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import widgets.inventory.media.sidebar.EditMediaSidebar;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
@@ -53,9 +56,10 @@ public class MediaTableTests extends BaseTest {
                 .getMediaWithFilter(queryParams)
                 .build()
                 .getMediaGetAllResponse()
-                .getItems().subList(0, 100);
+                .getItems().subList(0,100).stream().collect(Collectors.toList());
 
 
+        int a=2;
     }
 
     @Test
