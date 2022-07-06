@@ -13,7 +13,8 @@ public enum Path {
     DEALS("/sales/deals"),
     MEDIA("/media"),
     AD_SPOT("/adspots"),
-    OPEN_PRICING("/yield/open-pricing");
+    OPEN_PRICING("/yield/open-pricing"),
+    CREATE_OPEN_PRICING("/yield/open-pricing/create");
 
     private String path;
 }

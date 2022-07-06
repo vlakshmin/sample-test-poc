@@ -7,8 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum IncludedTableItemElements {
 
-    PARENT_LABEL("'Parent' Label of row %s in 'Included/Excluded' list in Multipane","/tr/td[contains(@class,'can-exclude')]"),
-    REMOVE_BUTTON("'Remove' Button of row %s in 'Included/Excluded' list in Multipane","/tr/td[contains(@class,'can-include')]");
+    PARENT_LABEL("'Parent' Label of row %s in 'Included/Excluded' list in Multipane","/td/div[@class='parent-label']"),
+    REMOVE_BUTTON("'Remove' Button of row %s in 'Included/Excluded' list in Multipane","/td[contains(@class,'options')]//i");
 
     private String alias;
     private String selector;
