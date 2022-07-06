@@ -102,6 +102,5 @@ public class CreateOpenPricingTest extends BaseTest {
                 //.validateContainsText(deviceMultipane.getPanelNameLabel(), ONE_DEVICE_IS_INCLUDED)
                 .testEnd();
 
-        //allure serve
     }
 }
