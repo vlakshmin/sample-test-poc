@@ -5,6 +5,7 @@ import api.preconditionbuilders.MediaPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
@@ -43,6 +44,7 @@ public class MediaTestExample extends BaseTest {
     }
 
     @Test
+    @Ignore
     public void mediaTest() {
         var tableData = mediaPage.getMediaTable().getTableData();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
