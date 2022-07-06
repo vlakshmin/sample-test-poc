@@ -21,12 +21,10 @@ import widgets.common.table.TableData;
 
 import java.io.File;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static api.core.client.HttpClient.getToken;
@@ -35,7 +33,6 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 import static java.lang.String.format;
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 @Slf4j
@@ -255,7 +252,6 @@ public final class TestManager {
             return this;
         }
 
-
         public TestManagerBuilder validateListSize(ElementsCollection collection, String... texts) {
             logEvent(format("Validating List of %ss ", collection.first().getSearchCriteria()));
             Stream.of(texts).forEach(elementText -> {
@@ -263,6 +259,13 @@ public final class TestManager {
                 assertTrue(collection.findBy(text(elementText)).shouldBe(visible).isDisplayed());
             });
             collection.shouldHave(CollectionCondition.size(texts.length));
+
+            return this;
+        }
+
+        public TestManagerBuilder validateList(ElementsCollection collection, List<String> list) {
+            logEvent(format("Compare Lists of %ss ", collection.first().getSearchCriteria()));
+            collection.shouldBe(CollectionCondition.texts(list));
 
             return this;
         }

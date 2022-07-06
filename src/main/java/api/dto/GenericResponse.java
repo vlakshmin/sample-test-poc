@@ -1,5 +1,6 @@
 package api.dto;
 
+import api.dto.rx.inventory.media.Media;
 import lombok.*;
 
 import java.util.List;
