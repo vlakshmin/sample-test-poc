@@ -9,8 +9,8 @@ public enum ColumnNames {
     //General for all tables
     ID("ID", true),
     PUBLISHER("Publisher", true),
-    CREATED_DATE("Create Date", true),
-    CREATED_BY("Create By", true),
+    CREATED_DATE("Created Date", true),
+    CREATED_BY("Created By", true),
     UPDATED_DATE("Updated Date", true),
     UPDATED_BY("Updated By", true),
     DETAILS("Details", true),
