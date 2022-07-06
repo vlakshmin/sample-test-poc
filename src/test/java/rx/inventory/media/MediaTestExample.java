@@ -16,8 +16,7 @@ import widgets.errormessages.ErrorMessages;
 import widgets.inventory.media.sidebar.EditMediaSidebar;
 import widgets.inventory.media.sidebar.MediaSidebarElements;
 
-import static com.codeborne.selenide.Condition.disappear;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
 import static managers.TestManager.testStart;
 
@@ -76,17 +75,26 @@ public class MediaTestExample extends BaseTest {
                         MediaTooltipText.CATEGORY_TOOLTIP_TEXT.getText())
                 .and("Click on 'Save' button")
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
+                .then("Validate bottom panel with errors")
+                .scrollIntoView(editMediaSidebar.getErrorAlert().getErrorPanel())
+                .validateContainsText(editMediaSidebar.getErrorAlert().getErrorsList(),
+                        ErrorMessages.SITE_URL_ERROR_ALERT.getText())
                 .then("Validate error message under the 'Site URL' field")
+                .scrollIntoView(editMediaSidebar.getErrorAlert().getErrorPanel())
+                .validate(visible,editMediaSidebar.getErrorAlert().getErrorPanel())
+                .validate(visible,editMediaSidebar.getErrorAlert().getIconError())
+                .scrollIntoView(editMediaSidebar.getErrorAlertByFieldName("Site URL"))
                 .validateContainsText(editMediaSidebar.getErrorAlertByFieldName("Site URL"),
                         ErrorMessages.SITE_URL_ERROR_ALERT.getText())
                 .and("Set valid value 'Site URL' and click Save")
                 .setValueWithClean(editMediaSidebar.getSiteURL(), "https://test.com")
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
+                .then("Errors should be disappeared")
+                .validate(disappear,editMediaSidebar.getErrorAlert().getErrorPanel())
                 .then("Wait until SideBar closed")
                 .waitSideBarClosed()
                 .and("End")
                 .testEnd();
-
         //allure serve
     }
 
