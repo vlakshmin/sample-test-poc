@@ -269,15 +269,20 @@ public final class TestManager {
         }
 
 //        public TestManagerBuilder validateList(ElementsCollection collection, List<String> list) {
-//            logEvent(format("Validating List of %ss ", collection.first().getSearchCriteria()));
-//            Stream.of(texts).forEach(elementText -> {
-//                logEvent(format("Validating %s has text '%s'", collection.first().getAlias(), elementText));
-//                assertTrue(collection.findBy(text(elementText)).shouldBe(visible).isDisplayed());
-//            });
-//            collection.shouldHave(CollectionCondition.size(texts.length));
+//            logEvent(format("Compare Lists of %ss ", collection.first().getSearchCriteria()));
+//            List<String> elementsText = collection.texts();
+//
+//            assertEquals(elementsText,list);
 //
 //            return this;
 //        }
+
+        public TestManagerBuilder validateList(ElementsCollection collection, List<String> list) {
+            logEvent(format("Compare Lists of %ss ", collection.first().getSearchCriteria()));
+            collection.shouldBe(CollectionCondition.texts(list));
+
+            return this;
+        }
 
         public TestManagerBuilder validateListContainsTextOnly(ElementsCollection collection, String suffix) {
             logEvent(format("Validating List of %ss contains suffix '%s'", collection.first().getAlias(), suffix));
