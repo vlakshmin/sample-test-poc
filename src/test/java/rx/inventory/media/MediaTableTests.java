@@ -56,8 +56,8 @@ public class MediaTableTests extends BaseTest {
                 .getMediaWithFilter(queryParams)
                 .build()
                 .getMediaGetAllResponse()
-                .getItems().subList(0,100).stream().collect(Collectors.toList());
-
+                .getItems().subList(0,100);
+        mediaList.stream().forEach(System.out::println);
 
         int a=2;
     }
