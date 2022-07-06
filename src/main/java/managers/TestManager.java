@@ -33,8 +33,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 import static java.lang.String.format;
-import static org.testng.Assert.assertSame;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
@@ -215,12 +214,11 @@ public final class TestManager {
 
         public TestManagerBuilder validateTableContainsOnlyFilteredData(int columnIndex, String expected, ElementsCollection rows) {
             ArrayList<String> list = getStringsFromColumn(columnIndex, rows);
-            SoftAssert a = new SoftAssert();
             for (String actual : list) {
-                a.assertEquals(actual, expected,
+                assertEquals(actual, expected,
                         String.format("Filtered value did not match, expected: %s, actual: %s", expected, actual));
             }
-            a.assertAll();
+
             return this;
         }
 
@@ -240,9 +238,8 @@ public final class TestManager {
 
 
         public TestManagerBuilder validateSortingOrderLabel(TableHeader.SortOrder actual, TableHeader.SortOrder expected) {
-            SoftAssert a = new SoftAssert();
-            a.assertEquals(actual, expected, "sorting order did not match");
-            a.assertAll();
+            assertEquals(actual, expected, "sorting order did not match");
+
             return this;
         }
 
