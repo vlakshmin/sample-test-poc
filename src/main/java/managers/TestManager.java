@@ -3,6 +3,7 @@ package managers;
 import com.codeborne.selenide.*;
 import com.codeborne.selenide.ex.ElementNotFound;
 import com.codeborne.selenide.testng.ScreenShooter;
+import com.sun.xml.bind.v2.TODO;
 import configurations.ConfigurationLoader;
 import configurations.User;
 import lombok.SneakyThrows;
@@ -255,7 +256,7 @@ public final class TestManager {
             return this;
         }
 
-
+        //TODO: performance issue
         public TestManagerBuilder validateListSize(ElementsCollection collection, String... texts) {
             logEvent(format("Validating List of %ss ", collection.first().getSearchCriteria()));
             Stream.of(texts).forEach(elementText -> {
@@ -266,6 +267,17 @@ public final class TestManager {
 
             return this;
         }
+
+//        public TestManagerBuilder validateList(ElementsCollection collection, List<String> list) {
+//            logEvent(format("Validating List of %ss ", collection.first().getSearchCriteria()));
+//            Stream.of(texts).forEach(elementText -> {
+//                logEvent(format("Validating %s has text '%s'", collection.first().getAlias(), elementText));
+//                assertTrue(collection.findBy(text(elementText)).shouldBe(visible).isDisplayed());
+//            });
+//            collection.shouldHave(CollectionCondition.size(texts.length));
+//
+//            return this;
+//        }
 
         public TestManagerBuilder validateListContainsTextOnly(ElementsCollection collection, String suffix) {
             logEvent(format("Validating List of %ss contains suffix '%s'", collection.first().getAlias(), suffix));

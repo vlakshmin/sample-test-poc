@@ -1,8 +1,12 @@
 package rx.inventory.media;
 
+import aj.org.objectweb.asm.TypeReference;
+import api.dto.GenericResponse;
 import api.dto.rx.inventory.media.Media;
 import api.preconditionbuilders.MediaPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import com.fasterxml.jackson.databind.type.CollectionType;
+import io.restassured.mapper.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
@@ -12,7 +16,9 @@ import pages.inventory.media.MediaPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import widgets.inventory.media.sidebar.EditMediaSidebar;
+import zutils.ObjectMapperUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -30,7 +36,7 @@ public class MediaTableTests extends BaseTest {
 
     private Media media;
     private int totalMedia;
-    private List<String> ids;
+    private String[] sortIds;
     private MediaPage mediaPage;
     private Integer totalActiveMedia;
     private EditMediaSidebar editMediaSidebar;
@@ -41,7 +47,7 @@ public class MediaTableTests extends BaseTest {
     }
 
     @BeforeClass
-    public void createNewMedia() {
+    public void createNewMedia() throws IOException {
 
         totalMedia = MediaPrecondition.media()
                 .getAllMediaList()
@@ -50,16 +56,24 @@ public class MediaTableTests extends BaseTest {
                 .getTotal();
 
         HashMap<String, Object> queryParams = new HashMap();
-        queryParams.put("sort", "id-asc");
+        queryParams.put("sort", "name-asc");
 
         List<Media> mediaList = MediaPrecondition.media()
                 .getMediaWithFilter(queryParams)
                 .build()
                 .getMediaGetAllResponse()
-                .getItems().subList(0,100);
-        mediaList.stream().forEach(System.out::println);
+                .getItems().subList(0,50);
 
-        int a=2;
+        String jsonString = ObjectMapperUtils.toJson(mediaList);
+
+        //TODO ObjectMapperUtils.fromJson
+        List<Media> media1 = ObjectMapperUtils.getCollectionType(jsonString,Media.class);
+    //    List<Media> m1 = (List<Media>)ObjectMapperUtils.fromJson(jsonString,Media.class);
+        sortIds  = media1.stream()
+                .map(Media::getId)
+                .collect(Collectors.toList())
+                .stream()
+                .map(String::valueOf).toArray(String[]::new);
     }
 
     @Test
@@ -74,18 +88,18 @@ public class MediaTableTests extends BaseTest {
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .and("Sort column 'ID'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ID.getName()))
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ID.getName()))
+                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
+                //.clickOnWebElement(tableData.getColumnHeader(ColumnNames.ID.getName()))
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-                .and("Select 100 row per page")
+                .and("Select 50 row per page")
                 .selectFromDropdown(tablePagination.getPageMenu(),
-                        tablePagination.getRowNumbersList(), "100")
+                        tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'", String.format("1-100 of %s", totalMedia)))
-                .validateContainsText(tablePagination.getPaginationPanel(), String.format("1-100 of %s", totalMedia))
+                .then(String.format("Validate that text in table footer '%s'", String.format("1-50 of %s", totalMedia)))
+                .validateContainsText(tablePagination.getPaginationPanel(), String.format("1-50 of %s", totalMedia))
                 .then("Validate data in column 'ID' should be sorted by asc")
-                //  .validateListContent(tableData.getCustomCells(ColumnNames.ID), ids)
+                .validateListSize(tableData.getCustomCells(ColumnNames.MEDIA_NAME), sortIds)
 
                 .and()
                 .testEnd();
