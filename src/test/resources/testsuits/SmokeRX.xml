@@ -3,9 +3,15 @@
 <suite name="SmokeTest Suite" parallel="false">
     <test name="SmokeTest Suite">
         <classes>
-            <class name="rx.ProtectionsTest"/>
-            <class name="rx.PublisherTest"/>
-            <class name="rx.AdSpotTest"/>
+            <class name="rx.admin.publishers.PublisherTest"/>
+            <class name="rx.component.multipane.MultipaneTest"/>
+            <class name="rx.component.table.TableDataTests"/>
+            <class name="rx.inventory.adspot.AdSpotTest"/>
+            <class name="rx.inventory.media.MediaSortingTableTests"/>
+            <class name="rx.inventory.media.MediaTestExample"/>
+            <class name="rx.login.LoginPositiveTest"/>
+            <class name="rx.protections.ProtectionsTest"/>
+            <class name="rx.sales.deals.DealsTest"/>
             <class name="rx.OpenPricingTest"/>
         </classes>
     </test>

@@ -7,22 +7,23 @@ import configurations.ConfigurationLoader;
 import configurations.User;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.*;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.interactions.Actions;
-import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import pages.BasePage;
 import pages.LoginPage;
 import pages.Path;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.TableData;
-import widgets.common.table.TableHeader;
 
 import java.io.File;
-import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -32,7 +33,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 import static java.lang.String.format;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertTrue;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
@@ -48,9 +49,10 @@ public final class TestManager {
 
     public static class TestManagerBuilder {
 
-        private BasePage basePage = new BasePage();
-        private LoginPage loginPage = new LoginPage();
+        private final BasePage basePage = new BasePage();
+        private final LoginPage loginPage =  new LoginPage();
         private final String ELEMENT_BY_TEXT = "//*[contains(text(),'%s')]";
+        private final String DIV_CONTAINS_TEXT = "//div[contains(text(),'%s')]";
 
         public TestManagerBuilder openUrl() {
             logEvent(format("Opening url '%s'", ConfigurationLoader.getConfig().getBaseUrl()));
@@ -82,6 +84,28 @@ public final class TestManager {
         }
 
         public TestManagerBuilder and() {
+
+            return this;
+        }
+        public TestManagerBuilder given(String message) {
+            logEvent(message);
+
+            return this;
+        }
+        public TestManagerBuilder when(String message) {
+            logEvent(message);
+
+            return this;
+        }
+
+        public TestManagerBuilder then(String message) {
+            logEvent(message);
+
+            return this;
+        }
+
+        public TestManagerBuilder and(String message) {
+            logEvent(message);
 
             return this;
         }
@@ -124,8 +148,7 @@ public final class TestManager {
         public TestManagerBuilder clickOnWebElement(SelenideElement element) {
             logEvent(format("Clicking on %s", element.getAlias()));
             logEvent(format("Clicking on %s", element.getSearchCriteria()));
-            element.shouldBe(exist, visible).hover().click();
-//            element.click();
+            element.scrollTo().shouldBe(exist, visible).hover().click();
 
             return this;
         }
@@ -211,80 +234,6 @@ public final class TestManager {
             return this;
         }
 
-        public TestManagerBuilder validateTableContainsOnlyFilteredData(int columnIndex, String expected, ElementsCollection rows) {
-            ArrayList<String> list = getStringsFromColumn(columnIndex, rows);
-            for (String actual : list) {
-                assertEquals(actual, expected,
-                        String.format("Filtered value did not match, expected: %s, actual: %s", expected, actual));
-            }
-
-            return this;
-        }
-
-        public TestManagerBuilder validateTableHasSomeFilteredData(int columnIndex, ElementsCollection rows, String... expected) {
-            ArrayList<String> list = getStringsFromColumn(columnIndex, rows);
-            for (String actual : list) {
-                for (String expectedValue : expected) {
-                    if (actual.equals(expectedValue)) {
-                        return this;
-                    }
-                }
-
-            }
-            Assert.fail("Not able find any expected value in the table");
-            return this;
-        }
-
-
-        public TestManagerBuilder validateSortingOrderLabel(TableHeader.SortOrder actual, TableHeader.SortOrder expected) {
-            assertEquals(actual, expected, "sorting order did not match");
-
-            return this;
-        }
-
-        private class IntegerComparator implements Comparator<String> {
-
-            @Override
-            public int compare(String o1, String o2) {
-                return new BigDecimal(o1).compareTo(new BigDecimal(o2));
-            }
-        }
-
-        public TestManagerBuilder validateSortingOrderTableRows(int columnIndex, TableHeader.SortOrder expected, ElementsCollection rows) {
-
-            ArrayList<String> list = getStringsFromColumn(columnIndex, rows);
-            ArrayList<String> listCopy = (ArrayList<String>) list.clone();
-            if (expected == TableHeader.SortOrder.ASCENDING) {
-                if (columnIndex == 1) {
-                    listCopy.sort(new IntegerComparator());
-                } else {
-                    Collections.sort(listCopy);
-                }
-            } else if (expected == TableHeader.SortOrder.DESCENDING) {
-                if (columnIndex == 1) {
-                    listCopy.sort(new IntegerComparator());
-                    Collections.reverse(listCopy);
-                } else {
-                    listCopy.sort(Collections.reverseOrder());
-                }
-            } else {
-                throw new IllegalArgumentException("Not supported sort order: " + expected.name());
-            }
-            for (int i = 0; i < list.size(); i++) {
-                assertSame(list.get(i), listCopy.get(i), "List did not properly sort");
-            }
-            return this;
-        }
-
-        private ArrayList<String> getStringsFromColumn(int columnIndex, ElementsCollection rows) {
-            ArrayList<String> list = new ArrayList<>();
-            for (SelenideElement row : rows) {
-                String text = row.findElements(By.tagName("td")).get(columnIndex).getText();
-                list.add(text);
-            }
-            return list;
-        }
-
         public TestManagerBuilder validate(SelenideElement element, String text) {
             logEvent(format("Validating %s has text '%s'", element.getAlias(), text));
             element.shouldBe(visible).shouldHave(exactText(text));
@@ -308,7 +257,6 @@ public final class TestManager {
             return this;
         }
 
-
         public TestManagerBuilder validateListSize(ElementsCollection collection, String... texts) {
             logEvent(format("Validating List of %ss ", collection.first().getSearchCriteria()));
             Stream.of(texts).forEach(elementText -> {
@@ -316,6 +264,13 @@ public final class TestManager {
                 assertTrue(collection.findBy(text(elementText)).shouldBe(visible).isDisplayed());
             });
             collection.shouldHave(CollectionCondition.size(texts.length));
+
+            return this;
+        }
+
+        public TestManagerBuilder validateList(ElementsCollection collection, List<String> list) {
+            logEvent(format("Compare Lists of %ss ", collection.first().getSearchCriteria()));
+            collection.shouldBe(CollectionCondition.texts(list));
 
             return this;
         }
@@ -336,6 +291,7 @@ public final class TestManager {
 
             return this;
         }
+
 
         public TestManagerBuilder validate(Condition condition, String... texts) {
             logEvent(format("Validating List of texts '%s' is %s",
@@ -445,13 +401,6 @@ public final class TestManager {
             return this;
         }
 
-        public TestManagerBuilder scrollToTop(SelenideElement element) {
-            logEvent(format("Scrolling to %s", element.getAlias()));
-            element.sendKeys(Keys.HOME);
-
-            return this;
-        }
-
         public TestManagerBuilder clearField(SelenideElement element) {
 
             element.should(exist).hover().doubleClick().sendKeys(Keys.BACK_SPACE);
@@ -535,15 +484,10 @@ public final class TestManager {
 
             element1.shouldBe(exist, visible).hover().click();
             list.shouldBe(CollectionCondition.size(list.size()));
-            //todo Performance issue do not forget to refactor and simplify it
-            new Actions(WebDriverRunner.getWebDriver()).sendKeys(value).perform();
-            list.stream()
-                    .filter(item -> item.shouldBe(visible).getText().equalsIgnoreCase(value) &&
-                            !item.shouldBe(visible).getText().equalsIgnoreCase("No records found"))
-                    .findFirst()
-                    .orElseThrow(() -> new NoSuchElementException(
-                            format("Type with name '%s' haven't been found in the dropdown", value)))
-                    .click();
+            new Actions(WebDriverRunner.getWebDriver())
+                    .sendKeys(value)
+                    .perform();
+            $x(String.format(DIV_CONTAINS_TEXT, value)).shouldBe(exist, visible).click();
 
             return this;
         }
@@ -586,6 +530,20 @@ public final class TestManager {
             return this;
         }
 
+        public TestManagerBuilder clickOnTableCellLink(TableData table, ColumnNames column, String cellValue) {
+            logEvent(format("Click on cell in column %s with value %s", column.getName(), cellValue));
+            table.getCustomCells(column)
+                    .stream()
+                    .filter(x -> x.getText().equals(cellValue))
+                    .findFirst()
+                    .orElseThrow(() -> new NoSuchElementException(
+                            format("The table cell with value '%s' isn't presented in the column '%s'", cellValue, column.getName())))
+                    .lastChild()
+                    .click();
+
+            return this;
+        }
+
         public TestManagerBuilder logOut() {
 
             try {
@@ -613,20 +571,5 @@ public final class TestManager {
 
             return new TestManager(this);
         }
-
-        public TestManagerBuilder clickOnTableCellLink(TableData table, ColumnNames column, String cellValue) {
-            logEvent(format("Click on cell in column %s with value %s", column.getName(), cellValue));
-            table.getCustomCells(column)
-                    .stream()
-                    .filter(x -> x.getText().equals(cellValue))
-                    .findFirst()
-                    .orElseThrow(() -> new NoSuchElementException(
-                            format("The table cell with value '%s' isn't presented in the column '%s'", cellValue, column.getName())))
-                    .lastChild()
-                    .click();
-
-            return this;
-        }
-
     }
 }

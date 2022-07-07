@@ -217,7 +217,7 @@ public class Multipane {
 
     /** End of IncludedExcludedTableItems Section */
 
-    public String buildXpath(String elementXpath) {
+    protected String buildXpath(String elementXpath) {
 
         return (format("%s%s", format(MULTIPANE_ROOT, multipaneName.getName()), elementXpath));
     }

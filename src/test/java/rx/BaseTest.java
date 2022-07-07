@@ -44,7 +44,7 @@ public abstract class BaseTest {
     }
 
     @AfterClass(alwaysRun = true)
-    public void closeSessionAndVideoAttach() {
+    public void closeSessionAndConsoleLogAttach() {
         attachTheBrowserConsoleLog();
         closeTheSession();
     }

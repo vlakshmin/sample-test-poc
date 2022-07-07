@@ -1,7 +1,10 @@
 package api.preconditionbuilders;
 
+import api.dto.GenericResponse;
 import api.dto.rx.common.Currency;
-import api.dto.rx.inventory.adSpot.*;
+import api.dto.rx.inventory.adspot.AdSpot;
+import api.dto.rx.inventory.adspot.AdSpotRequest;
+import api.dto.rx.inventory.adspot.Video;
 import api.dto.rx.inventory.media.Media;
 import api.services.AdSpotService;
 import io.restassured.response.Response;
@@ -21,12 +24,12 @@ public class AdSpotPrecondition {
 
     private AdSpot adSpotResponse;
     private AdSpotRequest adSpotRequest;
-    private List<AdSpot> adSpotsResponseList;
+    private GenericResponse<AdSpot> adSpotsGetAllResponse;
 
     private AdSpotPrecondition(AdSpotPreconditionBuilder builder) {
         this.adSpotRequest = builder.adSpotRequest;
         this.adSpotResponse = builder.adSpotResponse;
-        this.adSpotsResponseList = builder.adSpotsResponseList;
+        this.adSpotsGetAllResponse = builder.adSpotsGetAllResponse;
     }
 
     public static AdSpotPreconditionBuilder adSpot() {
@@ -40,21 +43,17 @@ public class AdSpotPrecondition {
         private AdSpot adSpotResponse;
         private AdSpotRequest adSpotRequest;
         private List<AdSpot> adSpotsResponseList;
-        private AdSpotService adSpotService = new AdSpotService();
-        private Video video = new Video();
-        private NativeVideo nativeVideo = new NativeVideo();
-        private Native nativeObj = new Native();
-        private Banner banner = new Banner();
-        private Media media;
+        private final AdSpotService adSpotService = new AdSpotService();
+        private GenericResponse<AdSpot> adSpotsGetAllResponse;
 
         public AdSpotPreconditionBuilder createNewAdSpot() {
 
-            media = MediaPrecondition.media()
+            Media media = MediaPrecondition.media()
                     .createNewMedia()
                     .build()
                     .getMediaResponse();
 
-            video = Video.builder()
+            Video video = Video.builder()
                     .floorPrice(23.00)
                     .maxDuration(10)
                     .enabled(true)
@@ -63,9 +62,8 @@ public class AdSpotPrecondition {
                     .build();
 
 
-            this.adSpotRequest = adSpotRequest.builder()
+            this.adSpotRequest = AdSpotRequest.builder()
                     .name(captionWithSuffix("ad spot"))
-                    .filterId(media.getFilterId())
                     .publisherId(media.getPublisherId())
                     .currency(Currency.JPY.name())
                     .floorPrice(11.00)
@@ -94,14 +92,14 @@ public class AdSpotPrecondition {
             return this;
         }
 
-
         public AdSpotPreconditionBuilder getAllAdSpotsList() {
             this.response = adSpotService.getAll();
 
-            this.adSpotsResponseList = this.getAdSpotsResponseList();
+            this.adSpotsGetAllResponse = this.response.as(new GenericResponse<AdSpot>().getClass());
 
             return this;
         }
+
 
         private List<AdSpot> getAdSpotsResponseList() {
 

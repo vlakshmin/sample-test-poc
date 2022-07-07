@@ -1,0 +1,17 @@
+# Base URL and Browser(Currently - CHROME)
+baseUrl: https://qa-publisher-portal.rmp.rakuten.com
+browser: chrome
+
+# WebDriver Settings
+pageLoadStrategy: normal
+browserSize: 1920x1000
+holdBrowserOpen: false
+reopenBrowserOnFail: true
+screenshots: true
+headless: false
+
+#Proxy enabling
+enableProxy: false
+
+# Selenide Explicit wait
+timeout: 5000

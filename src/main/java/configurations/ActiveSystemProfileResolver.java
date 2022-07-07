@@ -1,7 +1,5 @@
 package configurations;
 
-import lombok.Getter;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetAddress;
@@ -10,38 +8,35 @@ import java.net.UnknownHostException;
 @Slf4j
 public class ActiveSystemProfileResolver {
 
-    private static final String user1 = "b";
-    private static final String user2 = "ashidlovskaya-pro13.local";
-    private static final String user3 = "c";
-    private static final String user4 = "d";
+    private static String osHostName;
+    private static String profileName;
 
-    @Getter
-    private static String profile;
+    private static final String USER_1 = "US17010293";
+    private static final String USER_2 = "ODS01L0000003";
+    private static final String USER_3 = "ODS01L0000005";
+    private static final String USER_4 = "ashidlovskaya-pro13.local";
 
-    public static String resolveCurrentProfile(){
+    public static String resolveCurrentProfile() {
         try {
-            String osHostName = InetAddress.getLocalHost().getHostName();
+            osHostName = InetAddress.getLocalHost().getHostName();
 
-            switch (osHostName){
-                case user1 :
-                    profile = "rx-ui";
-                    break;
-                case user2 :
-                    profile = "Sergey";
-                    break;
-                case user3:
-                    profile = "Yullia";
-                    break;
-                case user4:
-                    profile = "SergeyM";
+            switch (osHostName) {
+                case USER_1:
+                case USER_2:
+                case USER_3:
+                case USER_4:
+
+                    profileName = "local";
                     break;
                 default:
-                    profile = "rx-ui";
+
+                    profileName = "rx-ci";
+                    break;
             }
         } catch (UnknownHostException e) {
+            log.error(String.format("An Exception has occur for host '%s'. Please see stacktrace below", osHostName));
             e.printStackTrace();
         }
-
-        return profile;
+        return profileName;
     }
 }

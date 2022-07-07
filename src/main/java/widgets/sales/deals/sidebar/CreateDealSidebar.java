@@ -3,7 +3,7 @@ package widgets.sales.deals.sidebar;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import widgets.common.datepicker.DatePicker;
-import widgets.sales.deals.warningbanner.ChangePublisherBanner;
+import widgets.common.warningbanner.ChangePublisherBanner;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static widgets.sales.deals.sidebar.CreateDealSidebarElements.*;

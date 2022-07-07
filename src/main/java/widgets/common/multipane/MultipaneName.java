@@ -7,11 +7,13 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum MultipaneName {
 
+    GEO("Geo"),
     DEVICE("Device"),
     AD_SIZE("Ad Size"),
+    AD_FORMAT("Ad Format"),
     INVENTORY("Inventory"),
-    DEMAND_SOURCES("Demand Sources");
-
+    DEMAND_SOURCES("Demand Sources"),
+    OPERATING_SYSTEM("Operating System");
 
     private String name;
 }

@@ -1,11 +1,11 @@
 package api.preconditionbuilders;
 
-import api.dto.rx.admin.publisher.Publisher;
+import api.dto.GenericResponse;
+import api.dto.rx.inventory.adspot.Banner;
+import api.dto.rx.inventory.adspot.AdSpot;
+import api.dto.rx.inventory.adspot.AdSpotRequest;
 import api.dto.rx.inventory.media.Media;
-import api.dto.rx.inventory.adSpot.AdSpotRequest;
-import api.dto.rx.inventory.adSpot.Banner;
-import api.dto.rx.inventory.adSpot.AdSpot;
-import api.dto.rx.yield.openPricing.*;
+import api.dto.rx.yield.openpricing.*;
 import api.services.OpenPricingService;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
@@ -24,12 +24,12 @@ public class OpenPricingPrecondition {
 
     private OpenPricing openPricingResponse;
     private OpenPricingRequest openPricingRequest;
-    private List<OpenPricing> openPricingResponseList;
+    private GenericResponse<OpenPricing> openPricingGetAllResponse;
 
     private OpenPricingPrecondition(OpenPricingPreconditionBuilder builder) {
         this.openPricingRequest = builder.openPricingRequest;
         this.openPricingResponse = builder.openPricingResponse;
-        this.openPricingResponseList = builder.openPricingResponseList;
+        this.openPricingGetAllResponse = builder.openPricingGetAllResponse;
     }
 
     public static OpenPricingPreconditionBuilder openPricing() {
@@ -43,28 +43,25 @@ public class OpenPricingPrecondition {
         private OpenPricing openPricingResponse;
         private OpenPricingRequest openPricingRequest;
         private List<OpenPricing> openPricingResponseList;
+        private GenericResponse openPricingGetAllResponse;
         private OpenPricingService openPricingService = new OpenPricingService();
 
         public OpenPricingPreconditionBuilder createNewOpenPricing() {
 
-            Media media = MediaPrecondition.media()
-                    .createNewMedia()
-                    .build()
-                    .getMediaResponse();
+            Media media = MediaPrecondition.media().createNewMedia().build().getMediaResponse();
 
-            AdSpot adSpot = AdSpotPrecondition.adSpot()
-                    .createNewAdSpot(AdSpotRequest.builder()
+            AdSpot adSpot = AdSpotPrecondition.adSpot().
+                    createNewAdSpot(AdSpotRequest.builder()
                             .name(captionWithSuffix("AdSpot"))
                             .enabled(true)
                             .publisherId(media.getPublisherId())
                             .publisherName(media.getPublisherName())
-                            .filterId(media.getFilterId())
                             .floorPrice(9.99)
                             .mediaId(media.getId())
                             .coppa(true)
                             .categoryIds(List.of(1, 2))
                             .sizeIds(List.of(10))
-                            .banner( Banner.builder()
+                            .banner(Banner.builder()
                                     .enabled(true)
                                     .floorPrice(8.88)
                                     .sizeIds(List.of(3))
@@ -87,17 +84,15 @@ public class OpenPricingPrecondition {
                                     .excludedAdspots(List.of())
                                     .build())
                             .adFormat(AdFormat.builder()
-                                    .adFormats(List.of(2,3))
+                                    .adFormats(List.of(2, 3))
                                     .exclude(false)
                                     .build())
                             .adSize(AdSize.builder()
                                     .adSizes(List.of(10))
-                                    .exclude(false)
-                                    .build())
+                                    .exclude(false).build())
                             .media(MediaRule.builder()
                                     .media(List.of(media.getId()))
-                                    .exclude(false)
-                                    .build())
+                                    .exclude(false).build())
                             .deviceType(DeviceType.builder()
                                     .deviceTypes(List.of(4))
                                     .exclude(false)
@@ -126,7 +121,7 @@ public class OpenPricingPrecondition {
         public OpenPricingPreconditionBuilder getOpenPricingList() {
             this.response = openPricingService.getAll();
 
-            this.openPricingResponseList = this.getOpenPricingResponseList();
+            this.openPricingGetAllResponse = this.response.as(new GenericResponse<OpenPricing>().getClass());
 
             return this;
         }

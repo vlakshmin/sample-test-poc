@@ -71,7 +71,7 @@ jobs:
       - run:
           name: Run Tests
           command:
-            mvn clean test
+            mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testsuits/SmokeRX.xml
 
       # store artifacts and results
       - store_artifacts:

@@ -42,8 +42,7 @@ local.properties
 # CDT-specific
 .cproject
 
-# JDT-specific (Eclipse Java Development Tools)
-.classpath
+
 
 # Java annotation processor (APT)
 .factorypath
@@ -57,11 +56,6 @@ local.properties
 # TeXlipse plugin
 .texlipse
 
-
-### Intellij ###
-# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio
-
-*.iml
 
 ## Directory-based project format:
 .idea/
@@ -121,6 +115,7 @@ buildNumber.properties
 ### Gulp ###
 node_modules
 build
+allure-results
 
 
 ### Gulp ###
@@ -147,7 +142,5 @@ application-prod.yml
 allure-results
 docker/docker-compose.yml
 target
-application.log
-application.log.1
-application.log.2
-application.log.3
+
+src/main/resources/application-local.yml
