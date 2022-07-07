@@ -50,7 +50,7 @@ public final class TestManager {
     public static class TestManagerBuilder {
 
         private final BasePage basePage = new BasePage();
-        private final LoginPage loginPage =  new LoginPage();
+        private final LoginPage loginPage = new LoginPage();
         private final String ELEMENT_BY_TEXT = "//*[contains(text(),'%s')]";
         private final String DIV_CONTAINS_TEXT = "//div[contains(text(),'%s')]";
 
@@ -87,11 +87,13 @@ public final class TestManager {
 
             return this;
         }
+
         public TestManagerBuilder given(String message) {
             logEvent(message);
 
             return this;
         }
+
         public TestManagerBuilder when(String message) {
             logEvent(message);
 

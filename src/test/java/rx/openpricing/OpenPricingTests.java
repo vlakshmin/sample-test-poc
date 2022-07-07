@@ -1,6 +1,6 @@
 package rx.openpricing;
 
-import api.dto.rx.yield.openPricing.OpenPricing;
+import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.OpenPricingPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
@@ -11,9 +11,7 @@ import pages.Path;
 import pages.yield.openpricing.OpenPricingPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
-import widgets.common.table.TableHeader;
 import widgets.yield.openPricing.sidebar.EditOpenPricingSidebar;
-import widgets.yield.openPricing.sidebar.OpenPricingSidebarElements;
 
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
@@ -21,12 +19,12 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class OpenPricingTest extends BaseTest {
+public class OpenPricingTests extends BaseTest {
     private OpenPricing openPricing;
     private OpenPricingPage openPricingPage;
     private EditOpenPricingSidebar editOpenPricingSidebar;
 
-    public OpenPricingTest() {
+    public OpenPricingTests() {
         openPricingPage = new OpenPricingPage();
         editOpenPricingSidebar = new EditOpenPricingSidebar();
     }
@@ -204,221 +202,221 @@ public class OpenPricingTest extends BaseTest {
                 .testEnd();
     }
 
-    @Test(enabled = true)
-    public void verifySortingID() {
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-        var tableHeader = openPricingPage.getOpenPricingTable().getTableHeader();
-        testStart()
-                .given()
-                .openDirectPath(Path.OPEN_PRICING)
-                .logIn(TEST_USER)
-                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and()
-                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.ID, TableHeader.SortOrder.DESCENDING),
-                        TableHeader.SortOrder.DESCENDING)
-                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ID), TableHeader.SortOrder.DESCENDING, tableData.getRows())
-                .scrollIntoView(tablePagination.getNext())
-                .clickOnWebElement(tablePagination.getNext())
-                .scrollToTop(tablePagination.getNext())
-                .and()
-                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ID), TableHeader.SortOrder.DESCENDING, tableData.getRows())
-                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.ID, TableHeader.SortOrder.ASCENDING),
-                        TableHeader.SortOrder.ASCENDING)
-                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ID), TableHeader.SortOrder.ASCENDING, tableData.getRows())
-                .scrollIntoView(tablePagination.getNext())
-                .clickOnWebElement(tablePagination.getNext())
-                .scrollToTop(tablePagination.getNext())
-                .and()
-                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ID), TableHeader.SortOrder.ASCENDING, tableData.getRows())
-                .then()
-                .testEnd();
-    }
+//    @Test(enabled = true)
+//    public void verifySortingID() {
+//        var tableData = openPricingPage.getOpenPricingTable().getTableData();
+//        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+//        var tableHeader = openPricingPage.getOpenPricingTable().getTableHeader();
+//        testStart()
+//                .given()
+//                .openDirectPath(Path.OPEN_PRICING)
+//                .logIn(TEST_USER)
+//                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
+//                .and()
+//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.ID, TableHeader.SortOrder.DESCENDING),
+//                        TableHeader.SortOrder.DESCENDING)
+//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ID), TableHeader.SortOrder.DESCENDING, tableData.getRows())
+//                .scrollIntoView(tablePagination.getNext())
+//                .clickOnWebElement(tablePagination.getNext())
+//                .scrollToTop(tablePagination.getNext())
+//                .and()
+//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ID), TableHeader.SortOrder.DESCENDING, tableData.getRows())
+//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.ID, TableHeader.SortOrder.ASCENDING),
+//                        TableHeader.SortOrder.ASCENDING)
+//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ID), TableHeader.SortOrder.ASCENDING, tableData.getRows())
+//                .scrollIntoView(tablePagination.getNext())
+//                .clickOnWebElement(tablePagination.getNext())
+//                .scrollToTop(tablePagination.getNext())
+//                .and()
+//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ID), TableHeader.SortOrder.ASCENDING, tableData.getRows())
+//                .then()
+//                .testEnd();
+//    }
 
-    @Test(enabled = true)
-    public void verifySortingName() {
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-        var tableHeader = openPricingPage.getOpenPricingTable().getTableHeader();
-        testStart()
-                .given()
-                .openDirectPath(Path.OPEN_PRICING)
-                .logIn(TEST_USER)
-                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and()
-                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.NAME, TableHeader.SortOrder.DESCENDING),
-                        TableHeader.SortOrder.DESCENDING)
-                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.NAME), TableHeader.SortOrder.DESCENDING, tableData.getRows())
-                .scrollIntoView(tablePagination.getNext())
-                .clickOnWebElement(tablePagination.getNext())
-                .scrollToTop(tablePagination.getNext())
-                .and()
-                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.NAME), TableHeader.SortOrder.DESCENDING, tableData.getRows())
-                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.NAME, TableHeader.SortOrder.ASCENDING),
-                        TableHeader.SortOrder.ASCENDING)
-                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.NAME), TableHeader.SortOrder.ASCENDING, tableData.getRows())
-                .scrollIntoView(tablePagination.getNext())
-                .clickOnWebElement(tablePagination.getNext())
-                .scrollToTop(tablePagination.getNext())
-                .and()
-                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.NAME), TableHeader.SortOrder.ASCENDING, tableData.getRows())
-                .then()
-                .testEnd();
-    }
+//    @Test(enabled = true)
+//    public void verifySortingName() {
+//        var tableData = openPricingPage.getOpenPricingTable().getTableData();
+//        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+//        var tableHeader = openPricingPage.getOpenPricingTable().getTableHeader();
+//        testStart()
+//                .given()
+//                .openDirectPath(Path.OPEN_PRICING)
+//                .logIn(TEST_USER)
+//                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
+//                .and()
+//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.NAME, TableHeader.SortOrder.DESCENDING),
+//                        TableHeader.SortOrder.DESCENDING)
+//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.NAME), TableHeader.SortOrder.DESCENDING, tableData.getRows())
+//                .scrollIntoView(tablePagination.getNext())
+//                .clickOnWebElement(tablePagination.getNext())
+//                .scrollToTop(tablePagination.getNext())
+//                .and()
+//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.NAME), TableHeader.SortOrder.DESCENDING, tableData.getRows())
+//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.NAME, TableHeader.SortOrder.ASCENDING),
+//                        TableHeader.SortOrder.ASCENDING)
+//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.NAME), TableHeader.SortOrder.ASCENDING, tableData.getRows())
+//                .scrollIntoView(tablePagination.getNext())
+//                .clickOnWebElement(tablePagination.getNext())
+//                .scrollToTop(tablePagination.getNext())
+//                .and()
+//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.NAME), TableHeader.SortOrder.ASCENDING, tableData.getRows())
+//                .then()
+//                .testEnd();
+//    }
 
-    @Test(enabled = true)
-    public void verifySortingPublisher() {
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-        var tableHeader = openPricingPage.getOpenPricingTable().getTableHeader();
-        testStart()
-                .given()
-                .openDirectPath(Path.OPEN_PRICING)
-                .logIn(TEST_USER)
-                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and()
-                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.PUBLISHER, TableHeader.SortOrder.DESCENDING),
-                        TableHeader.SortOrder.DESCENDING)
-                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.PUBLISHER), TableHeader.SortOrder.DESCENDING, tableData.getRows())
-                .scrollIntoView(tablePagination.getNext())
-                .clickOnWebElement(tablePagination.getNext())
-                .scrollToTop(tablePagination.getNext())
-                .and()
-                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.PUBLISHER), TableHeader.SortOrder.DESCENDING, tableData.getRows())
-                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.PUBLISHER, TableHeader.SortOrder.ASCENDING),
-                        TableHeader.SortOrder.ASCENDING)
-                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.PUBLISHER), TableHeader.SortOrder.ASCENDING, tableData.getRows())
-                .scrollIntoView(tablePagination.getNext())
-                .clickOnWebElement(tablePagination.getNext())
-                .scrollToTop(tablePagination.getNext())
-                .and()
-                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.PUBLISHER), TableHeader.SortOrder.ASCENDING, tableData.getRows())
-                .then()
-                .testEnd();
-    }
+//    @Test(enabled = true)
+//    public void verifySortingPublisher() {
+//        var tableData = openPricingPage.getOpenPricingTable().getTableData();
+//        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+//        var tableHeader = openPricingPage.getOpenPricingTable().getTableHeader();
+//        testStart()
+//                .given()
+//                .openDirectPath(Path.OPEN_PRICING)
+//                .logIn(TEST_USER)
+//                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
+//                .and()
+//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.PUBLISHER, TableHeader.SortOrder.DESCENDING),
+//                        TableHeader.SortOrder.DESCENDING)
+//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.PUBLISHER), TableHeader.SortOrder.DESCENDING, tableData.getRows())
+//                .scrollIntoView(tablePagination.getNext())
+//                .clickOnWebElement(tablePagination.getNext())
+//                .scrollToTop(tablePagination.getNext())
+//                .and()
+//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.PUBLISHER), TableHeader.SortOrder.DESCENDING, tableData.getRows())
+//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.PUBLISHER, TableHeader.SortOrder.ASCENDING),
+//                        TableHeader.SortOrder.ASCENDING)
+//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.PUBLISHER), TableHeader.SortOrder.ASCENDING, tableData.getRows())
+//                .scrollIntoView(tablePagination.getNext())
+//                .clickOnWebElement(tablePagination.getNext())
+//                .scrollToTop(tablePagination.getNext())
+//                .and()
+//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.PUBLISHER), TableHeader.SortOrder.ASCENDING, tableData.getRows())
+//                .then()
+//                .testEnd();
+//    }
 
-    @Test(enabled = true)
-    public void verifySortingActiveInactive() {
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-        var tableHeader = openPricingPage.getOpenPricingTable().getTableHeader();
-        testStart()
-                .given()
-                .openDirectPath(Path.OPEN_PRICING)
-                .logIn(TEST_USER)
-                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and()
-                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.ACTIVE_INACTIVE, TableHeader.SortOrder.DESCENDING),
-                        TableHeader.SortOrder.DESCENDING)
-                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE), TableHeader.SortOrder.DESCENDING, tableData.getRows())
-                .scrollIntoView(tablePagination.getNext())
-                .clickOnWebElement(tablePagination.getNext())
-                .scrollToTop(tablePagination.getNext())
-                .and()
-                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE), TableHeader.SortOrder.DESCENDING, tableData.getRows())
-                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.ACTIVE_INACTIVE, TableHeader.SortOrder.ASCENDING),
-                        TableHeader.SortOrder.ASCENDING)
-                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE), TableHeader.SortOrder.ASCENDING, tableData.getRows())
-                .scrollIntoView(tablePagination.getNext())
-                .clickOnWebElement(tablePagination.getNext())
-                .scrollToTop(tablePagination.getNext())
-                .and()
-                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE), TableHeader.SortOrder.ASCENDING, tableData.getRows())
-                .then()
-                .testEnd();
-    }
+//    @Test(enabled = true)
+//    public void verifySortingActiveInactive() {
+//        var tableData = openPricingPage.getOpenPricingTable().getTableData();
+//        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+//        var tableHeader = openPricingPage.getOpenPricingTable().getTableHeader();
+//        testStart()
+//                .given()
+//                .openDirectPath(Path.OPEN_PRICING)
+//                .logIn(TEST_USER)
+//                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
+//                .and()
+//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.ACTIVE_INACTIVE, TableHeader.SortOrder.DESCENDING),
+//                        TableHeader.SortOrder.DESCENDING)
+//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE), TableHeader.SortOrder.DESCENDING, tableData.getRows())
+//                .scrollIntoView(tablePagination.getNext())
+//                .clickOnWebElement(tablePagination.getNext())
+//                .scrollToTop(tablePagination.getNext())
+//                .and()
+//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE), TableHeader.SortOrder.DESCENDING, tableData.getRows())
+//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.ACTIVE_INACTIVE, TableHeader.SortOrder.ASCENDING),
+//                        TableHeader.SortOrder.ASCENDING)
+//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE), TableHeader.SortOrder.ASCENDING, tableData.getRows())
+//                .scrollIntoView(tablePagination.getNext())
+//                .clickOnWebElement(tablePagination.getNext())
+//                .scrollToTop(tablePagination.getNext())
+//                .and()
+//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE), TableHeader.SortOrder.ASCENDING, tableData.getRows())
+//                .then()
+//                .testEnd();
+//    }
 
-    @Test(enabled = true)
-    public void verifySortingFloorPrice() {
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-        var tableHeader = openPricingPage.getOpenPricingTable().getTableHeader();
+//    @Test(enabled = true)
+//    public void verifySortingFloorPrice() {
+//        var tableData = openPricingPage.getOpenPricingTable().getTableData();
+//        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+//        var tableHeader = openPricingPage.getOpenPricingTable().getTableHeader();
+//
+//        testStart()
+//                .given()
+//                .openDirectPath(Path.OPEN_PRICING)
+//                .logIn(TEST_USER)
+//                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
+//                .and()
+//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.FLOOR_PRICE, TableHeader.SortOrder.ASCENDING),
+//                        TableHeader.SortOrder.ASCENDING)
+//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.FLOOR_PRICE, TableHeader.SortOrder.DESCENDING),
+//                        TableHeader.SortOrder.DESCENDING)
+//                .then()
+//                .scrollIntoView(tablePagination.getNext())
+//                .clickOnWebElement(tablePagination.getNext())
+//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.FLOOR_PRICE, TableHeader.SortOrder.ASCENDING),
+//                        TableHeader.SortOrder.ASCENDING)
+//                .then()
+//                .scrollIntoView(tablePagination.getNext())
+//                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.FLOOR_PRICE.getName()))
+//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.FLOOR_PRICE, TableHeader.SortOrder.ASCENDING),
+//                        TableHeader.SortOrder.ASCENDING)
+//                .then()
+//                .testEnd();
+//    }
 
-        testStart()
-                .given()
-                .openDirectPath(Path.OPEN_PRICING)
-                .logIn(TEST_USER)
-                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and()
-                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.FLOOR_PRICE, TableHeader.SortOrder.ASCENDING),
-                        TableHeader.SortOrder.ASCENDING)
-                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.FLOOR_PRICE, TableHeader.SortOrder.DESCENDING),
-                        TableHeader.SortOrder.DESCENDING)
-                .then()
-                .scrollIntoView(tablePagination.getNext())
-                .clickOnWebElement(tablePagination.getNext())
-                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.FLOOR_PRICE, TableHeader.SortOrder.ASCENDING),
-                        TableHeader.SortOrder.ASCENDING)
-                .then()
-                .scrollIntoView(tablePagination.getNext())
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.FLOOR_PRICE.getName()))
-                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.FLOOR_PRICE, TableHeader.SortOrder.ASCENDING),
-                        TableHeader.SortOrder.ASCENDING)
-                .then()
-                .testEnd();
-    }
-
-    @Test(enabled = true)
-    public void verifyFilter() {
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-        var tableHeader = openPricingPage.getOpenPricingTable().getTableHeader();
-        testStart()
-                .given()
-                .openDirectPath(Path.OPEN_PRICING)
-                .logIn(TEST_USER)
-                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and()
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE))
-                .then()
-                .validateTableContainsOnlyFilteredData(
-                        tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
-                        ColumnNames.ACTIVE.getName(),
-                        tableData.getRows())
-                .and()
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.INACTIVE))
-                .validateTableContainsOnlyFilteredData(
-                        tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
-                        ColumnNames.INACTIVE.getName(),
-                        tableData.getRows())
-                .then()
-                .scrollIntoView(tablePagination.getNext())
-                .clickOnWebElement(tablePagination.getNext())
-                .validateTableContainsOnlyFilteredData(
-                        tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
-                        ColumnNames.INACTIVE.getName(),
-                        tableData.getRows())
-                .then()
-                .scrollIntoView(tableOptions.getTableOptionsBtn())
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE))
-                .validateTableContainsOnlyFilteredData(
-                        tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
-                        ColumnNames.ACTIVE.getName(),
-                        tableData.getRows())
-                .then()
-                .scrollIntoView(tablePagination.getPrevious())
-                .clickOnWebElement(tablePagination.getNext())
-                .clickOnWebElement(tablePagination.getPrevious())
-                .validateTableContainsOnlyFilteredData(
-                        tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
-                        ColumnNames.ACTIVE.getName(),
-                        tableData.getRows())
-                .then()
-                .scrollToTop(tablePagination.getNext())
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.BOTH))
-                .validateTableHasSomeFilteredData(
-                        tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
-                        tableData.getRows(),
-                        ColumnNames.ACTIVE.getName(), ColumnNames.INACTIVE.getName())
-                .then()
-                .testEnd()
-        ;
-
-    }
+//    @Test(enabled = true)
+//    public void verifyFilter() {
+//        var tableData = openPricingPage.getOpenPricingTable().getTableData();
+//        var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
+//        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+//        var tableHeader = openPricingPage.getOpenPricingTable().getTableHeader();
+//        testStart()
+//                .given()
+//                .openDirectPath(Path.OPEN_PRICING)
+//                .logIn(TEST_USER)
+//                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
+//                .and()
+//                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+//                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE))
+//                .then()
+//                .validateTableContainsOnlyFilteredData(
+//                        tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
+//                        ColumnNames.ACTIVE.getName(),
+//                        tableData.getRows())
+//                .and()
+//                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.INACTIVE))
+//                .validateTableContainsOnlyFilteredData(
+//                        tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
+//                        ColumnNames.INACTIVE.getName(),
+//                        tableData.getRows())
+//                .then()
+//                .scrollIntoView(tablePagination.getNext())
+//                .clickOnWebElement(tablePagination.getNext())
+//                .validateTableContainsOnlyFilteredData(
+//                        tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
+//                        ColumnNames.INACTIVE.getName(),
+//                        tableData.getRows())
+//                .then()
+//                .scrollIntoView(tableOptions.getTableOptionsBtn())
+//                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+//                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE))
+//                .validateTableContainsOnlyFilteredData(
+//                        tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
+//                        ColumnNames.ACTIVE.getName(),
+//                        tableData.getRows())
+//                .then()
+//                .scrollIntoView(tablePagination.getPrevious())
+//                .clickOnWebElement(tablePagination.getNext())
+//                .clickOnWebElement(tablePagination.getPrevious())
+//                .validateTableContainsOnlyFilteredData(
+//                        tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
+//                        ColumnNames.ACTIVE.getName(),
+//                        tableData.getRows())
+//                .then()
+//                .scrollToTop(tablePagination.getNext())
+//                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+//                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.BOTH))
+//                .validateTableHasSomeFilteredData(
+//                        tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
+//                        tableData.getRows(),
+//                        ColumnNames.ACTIVE.getName(), ColumnNames.INACTIVE.getName())
+//                .then()
+//                .testEnd()
+//        ;
+//
+//    }
 
     @Test(enabled = false)
     public void verifySearch(){

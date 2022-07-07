@@ -1,6 +1,6 @@
 package rx;
 
-import api.dto.rx.yield.openPricing.OpenPricing;
+import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.OpenPricingPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
@@ -39,34 +39,34 @@ public class OpenPricingTest extends BaseTest {
                 .getOpenPricingResponse();
     }
 
-    @Test
-    public void editOpenPricingTest() {
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-
-        //Opening Browser and check Open pricing from precondition
-        testStart()
-                .given()
-                .openDirectPath(Path.OPEN_PRICING)
-                .logIn(TEST_USER)
-                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .setValueWithClean(tableData.getSearch(), openPricing.getName())
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then()
-                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.NAME),
-                        openPricing.getName())
-                .and()
-                .clickOnTableCellLink(tableData, ColumnNames.NAME, openPricing.getName())
-                .waitSideBarOpened()
-                .validateAttribute(editOpenPricingSidebar.getNameInput(), "value", openPricing.getName())
-                .validate(editOpenPricingSidebar.getPublisherInput(), openPricing.getPublisherName())
-                .validateAttribute(editOpenPricingSidebar.getFloorPrice(), "value", openPricing.getFloorPrice().toString())
-                .clickOnWebElement(editOpenPricingSidebar.getSaveButton())
-                .waitSideBarClosed()
-                .testEnd();
-
-        //allure serve
-    }
+//    @Test
+//    public void editOpenPricingTest() {
+//        var tableData = openPricingPage.getOpenPricingTable().getTableData();
+//
+//        //Opening Browser and check Open pricing from precondition
+//        testStart()
+//                .given()
+//                .openDirectPath(Path.OPEN_PRICING)
+//                .logIn(TEST_USER)
+//                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
+//                .setValueWithClean(tableData.getSearch(), openPricing.getName())
+//                .waitLoading(visible, openPricingPage.getTableProgressBar())
+//                .waitLoading(disappear, openPricingPage.getTableProgressBar())
+//                .then()
+//                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.NAME),
+//                        openPricing.getName())
+//                .and()
+//                .clickOnTableCellLink(tableData, ColumnNames.NAME, openPricing.getName())
+//                .waitSideBarOpened()
+//                .validateAttribute(editOpenPricingSidebar.getNameInput(), "value", openPricing.getName())
+//                .validate(editOpenPricingSidebar.getPublisherInput(), openPricing.getPublisherName())
+//                .validateAttribute(editOpenPricingSidebar.getFloorPrice(), "value", openPricing.getFloorPrice().toString())
+//                .clickOnWebElement(editOpenPricingSidebar.getSaveButton())
+//                .waitSideBarClosed()
+//                .testEnd();
+//
+//        //allure serve
+//    }
 
 
 }

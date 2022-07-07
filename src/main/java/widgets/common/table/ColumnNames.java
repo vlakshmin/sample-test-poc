@@ -74,6 +74,7 @@ public enum ColumnNames {
     FLOOR_PRICE("Floor Price", true);
 
 
+
     private String name;
     private Boolean sortable;
 
