@@ -11,7 +11,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
-import org.testng.asserts.SoftAssert;
 import pages.BasePage;
 import pages.LoginPage;
 import pages.Path;
@@ -22,8 +21,8 @@ import widgets.common.table.TableHeader;
 import java.io.File;
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.*;
 import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 

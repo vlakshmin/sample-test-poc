@@ -13,6 +13,7 @@ import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.TableHeader;
 import widgets.yield.openPricing.sidebar.EditOpenPricingSidebar;
+import widgets.yield.openPricing.sidebar.OpenPricingSidebarElements;
 
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
@@ -108,6 +109,7 @@ public class OpenPricingTest extends BaseTest {
                 .selectFromDropdown(tablePagination.getPageMenu(), tablePagination.getRowNumbersList(), "10")
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
+                .and()
                 .validateContainsText(tablePagination.getPaginationPanel(), "1-10 of ")
                 .validateListSize(tableData.getColumns(),
                         ColumnNames.ID.getName(),
@@ -122,8 +124,10 @@ public class OpenPricingTest extends BaseTest {
                 .validate((tableData.getColumns()).get(3), ColumnNames.PUBLISHER.getName())
                 .validate((tableData.getColumns()).get(4), ColumnNames.ACTIVE_INACTIVE.getName())
                 .validate((tableData.getColumns()).get(5), ColumnNames.FLOOR_PRICE.getName())
+                .and()
                 .scrollIntoView(tableOptions.getTableOptionsBtn())
                 .clickOnWebElement(tableOptions.getTableOptionsBtn())//
+                .and()
                 .validateListSize(tableOptions.getTableOptionMenuItems(),
                         ColumnNames.ID.getName(),
                         ColumnNames.DETAILS.getName(),
@@ -338,15 +342,14 @@ public class OpenPricingTest extends BaseTest {
                 .and()
                 .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.FLOOR_PRICE, TableHeader.SortOrder.ASCENDING),
                         TableHeader.SortOrder.ASCENDING)
-//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.FLOOR_PRICE), TableHeader.SortOrder.ASCENDING, tableData.getRows())
                 .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.FLOOR_PRICE, TableHeader.SortOrder.DESCENDING),
                         TableHeader.SortOrder.DESCENDING)
-//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.FLOOR_PRICE), TableHeader.SortOrder.DESCENDING, tableData.getRows())
+                .then()
                 .scrollIntoView(tablePagination.getNext())
                 .clickOnWebElement(tablePagination.getNext())
                 .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.FLOOR_PRICE, TableHeader.SortOrder.ASCENDING),
                         TableHeader.SortOrder.ASCENDING)
-                //validate descending
+                .then()
                 .scrollIntoView(tablePagination.getNext())
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.FLOOR_PRICE.getName()))
                 .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.FLOOR_PRICE, TableHeader.SortOrder.ASCENDING),
@@ -369,23 +372,25 @@ public class OpenPricingTest extends BaseTest {
                 .and()
                 .clickOnWebElement(tableOptions.getTableOptionsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE))
+                .then()
                 .validateTableContainsOnlyFilteredData(
                         tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
                         ColumnNames.ACTIVE.getName(),
                         tableData.getRows())
+                .and()
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.INACTIVE))
                 .validateTableContainsOnlyFilteredData(
                         tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
                         ColumnNames.INACTIVE.getName(),
                         tableData.getRows())
-//                .scrollIntoView(tablePagination.getNext())
-//                .clickOnWebElement(tablePagination.getNext())
+                .then()
                 .scrollIntoView(tablePagination.getNext())
                 .clickOnWebElement(tablePagination.getNext())
                 .validateTableContainsOnlyFilteredData(
                         tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
                         ColumnNames.INACTIVE.getName(),
                         tableData.getRows())
+                .then()
                 .scrollIntoView(tableOptions.getTableOptionsBtn())
                 .clickOnWebElement(tableOptions.getTableOptionsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE))
@@ -393,6 +398,7 @@ public class OpenPricingTest extends BaseTest {
                         tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
                         ColumnNames.ACTIVE.getName(),
                         tableData.getRows())
+                .then()
                 .scrollIntoView(tablePagination.getPrevious())
                 .clickOnWebElement(tablePagination.getNext())
                 .clickOnWebElement(tablePagination.getPrevious())
@@ -400,6 +406,7 @@ public class OpenPricingTest extends BaseTest {
                         tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
                         ColumnNames.ACTIVE.getName(),
                         tableData.getRows())
+                .then()
                 .scrollToTop(tablePagination.getNext())
                 .clickOnWebElement(tableOptions.getTableOptionsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.BOTH))
@@ -414,7 +421,7 @@ public class OpenPricingTest extends BaseTest {
     }
 
     @Test(enabled = false)
-    public void verifySearch() {
+    public void verifySearch(){
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
         var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
@@ -437,10 +444,8 @@ public class OpenPricingTest extends BaseTest {
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
                 .and()
-//                .scrollIntoView(tableData.getCheckbox(1))tableData.getCheckbox(1)
                 .waitAndValidate(appear, tableData.getCheckbox(1))
                 .clickOnWebElement(tableData.getCheckbox(1))
-//                .scrollIntoView(openPricingPage.getDeactivateButton())
                 .clickOnWebElement(openPricingPage.getDeactivateButton())
                 .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Inactive")
                 .then()
@@ -567,6 +572,7 @@ public class OpenPricingTest extends BaseTest {
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
                 .and()
                 .waitAndValidate(appear, tableData.getCheckbox(1))
+                .then()
                 .clickOnWebElement(tableData.getCheckbox(1))
                 .clickOnWebElement(tableData.getCheckbox(2))
                 .clickOnWebElement(tableData.getCheckbox(3))
@@ -574,7 +580,9 @@ public class OpenPricingTest extends BaseTest {
                 .clickOnWebElement(tableData.getCheckbox(5))
                 .clickOnWebElement(tableData.getCheckbox(6))
                 .clickOnWebElement(tableData.getCheckbox(7))
+                .and()
                 .clickOnWebElement(openPricingPage.getDeactivateButton())
+                .then()
                 .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
                 .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(1), "Active")
                 .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(2), "Active")
@@ -598,6 +606,7 @@ public class OpenPricingTest extends BaseTest {
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
                 .and()
                 .waitAndValidate(appear, tableData.getCheckbox(1))
+                .then()
                 .clickOnWebElement(tableData.getCheckbox(1))
                 .clickOnWebElement(tableData.getCheckbox(2))
                 .clickOnWebElement(tableData.getCheckbox(3))
@@ -606,6 +615,7 @@ public class OpenPricingTest extends BaseTest {
                 .clickOnWebElement(tableData.getCheckbox(6))
                 .clickOnWebElement(tableData.getCheckbox(7))
                 .clickOnWebElement(openPricingPage.getActivateButton())
+                .then()
                 .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
                 .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(1), "Active")
                 .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(2), "Active")
@@ -630,7 +640,7 @@ public class OpenPricingTest extends BaseTest {
                 .and();
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void verifyUserCreateOpenPricingRule() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
@@ -642,14 +652,12 @@ public class OpenPricingTest extends BaseTest {
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
                 .and()
                 .waitAndValidate(appear, openPricingPage.getCreateOpenPricingButton())
-                .clickOnWebElement(openPricingPage.getCreateOpenPricingButton());
+                .clickOnWebElement(openPricingPage.getCreateOpenPricingButton())
+                .and()
+                .waitAndValidate(appear,openPricingPage.getSidebar())
+                .then();
 
-//                .validateAttribute(editOpenPricingSidebar.getNameInput(), "value", openPricing.getName())
-//                .validate(editOpenPricingSidebar.getPublisherInput(), openPricing.getPublisherName())
-//                .validateAttribute(editOpenPricingSidebar.getFloorPrice(), "value", openPricing.getFloorPrice().toString())
-//                .clickOnWebElement(editOpenPricingSidebar.getSaveButton())
-//                .waitSideBarClosed()
-//                .testEnd();
+
     }
 
 }
