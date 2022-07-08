@@ -80,7 +80,7 @@ public class OpenPricingPrecondition {
                     .priority(1)
                     .publisherName(media.getPublisherName())
                     .publisherId(media.getPublisherId())
-                    .rule(api.dto.rx.yield.openpricing.Rule.builder()
+                    .rule(Rule.builder()
                             .adspot(AdSpotRule.builder()
                                     .includedAdspots(List.of(adSpot.getId()))
                                     .excludedAdspots(List.of())
@@ -140,7 +140,7 @@ public class OpenPricingPrecondition {
         public OpenPricingPreconditionBuilder getOpenPricingWithFilter(Map<String, Object> queryParams) {
             this.response = openPricingService.getOpenPricingWithFilter(queryParams);
 
-            this.openPricingGetAllResponse = this.response.as(new GenericResponse<Media>().getClass());
+            this.openPricingGetAllResponse = this.response.as(GenericResponse.class);
 
             return this;
         }

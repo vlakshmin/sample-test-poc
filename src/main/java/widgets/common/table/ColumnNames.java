@@ -15,8 +15,8 @@ public enum ColumnNames {
     UPDATED_BY("Updated By", true),
     DETAILS("Details", true),
     ACTIVE("Active", true),
-    INACTIVE("Inactive", false),
-    BOTH("Both", false),
+//    INACTIVE("Inactive", false),
+//    BOTH("Both", false),
 
     NAME("Name", true),
     ALWAYS_ON("Always on", true),
