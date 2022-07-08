@@ -425,7 +425,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("51-100 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalOpenPricing))
-                .then("Validate data in column 'ID' should be sorted by desc")
+                .then("Validate data in column 'Active/Inactive' should be sorted by desc")
                 .validateList(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE),
                         sortActiveInactiveByDesc.subList(50, 100))
                 .and()
