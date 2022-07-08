@@ -82,7 +82,7 @@ public class MediaTestExample extends BaseTest {
                 .scrollIntoView(editMediaSidebar.getErrorAlert().getErrorPanel())
                 .validate(visible,editMediaSidebar.getErrorAlert().getErrorPanel())
                 .validate(visible,editMediaSidebar.getErrorAlert().getIconError())
-                .scrollIntoView(editMediaSidebar.getErrorAlertByFieldName("Site URL"))
+                .scrollIntoView(editMediaSidebar.getSiteURL())
                 .validateContainsText(editMediaSidebar.getErrorAlertByFieldName("Site URL"),
                         ErrorMessages.SITE_URL_ERROR_ALERT.getText())
                 .and("Set valid value 'Site URL' and click Save")
