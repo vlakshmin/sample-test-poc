@@ -4,17 +4,13 @@ import api.dto.rx.inventory.media.Media;
 import api.preconditionbuilders.MediaPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.Path;
 import pages.inventory.media.MediaPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
-import widgets.inventory.media.sidebar.EditMediaSidebar;
 import zutils.ObjectMapperUtils;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,7 +23,6 @@ import static managers.TestManager.testStart;
 @Listeners({ScreenShooter.class})
 public class MediaSortingTableTests extends BaseTest {
 
-    private Media media;
     private int totalMedia;
     private List<String> sortIdsByAsc;
     private List<String> sortIdsByDesc;
@@ -41,73 +36,47 @@ public class MediaSortingTableTests extends BaseTest {
     private List<String> sortURLByAsc;
 
     private MediaPage mediaPage;
-    private Integer totalActiveMedia;
-    private EditMediaSidebar editMediaSidebar;
 
     public MediaSortingTableTests() {
         mediaPage = new MediaPage();
-        editMediaSidebar = new EditMediaSidebar();
     }
 
     @BeforeClass
-    public void loginAndCreateExpectedResuts() throws IOException {
-
-        totalMedia = MediaPrecondition.media()
-                .getAllMediaList()
-                .build()
-                .getMediaGetAllResponse()
-                .getTotal();
+    public void loginAndCreateExpectedResuts() {
+        totalMedia = getTotalMedia();
 
         //expected results for Media Name column
-        sortNamesByDesc  = getAllItemsByParams("name-desc").stream()
-                .map(Media::getName)
-                .collect(Collectors.toList());
-
-        sortNamesByAsc  = getAllItemsByParams("name-asc").stream()
-                .map(Media::getName)
-                .collect(Collectors.toList());
+        sortNamesByDesc  = getNamesByDesc();
+        sortNamesByAsc  = getNamesByAsc();
 
         //Expected result for ID column
-        sortIdsByAsc  = getAllItemsByParams("id-asc").stream()
-                .map(Media::getId)
-                .map(x->x.toString())
-                .collect(Collectors.toList());
-
-        sortIdsByDesc  = getAllItemsByParams("id-desc").stream()
-                .map(Media::getId)
-                .map(x->x.toString())
-                .collect(Collectors.toList());
+        sortIdsByAsc  = getIdsByAsc();
+        sortIdsByDesc  = getIdsByDesc();
 
         //Expected result for  Publisher Name column
-        sortPublisherNameByAsc  = getAllItemsByParams("publisher_name-asc").stream()
-                .map(Media::getPublisherName)
-                .collect(Collectors.toList());
-
-        sortPublisherNameByDesc  = getAllItemsByParams("publisher_name-desc").stream()
-                .map(Media::getPublisherName)
-                .collect(Collectors.toList());
+        sortPublisherNameByAsc  = getPublisherNameByAsc();
+        sortPublisherNameByDesc  = getPublisherNameByDesc();
 
         //Expected result for URL column
-        sortURLByAsc  = getAllItemsByParams("url-asc").stream()
-                .map(Media::getUrl)
-                .collect(Collectors.toList());
-
-        sortURLByDesc  = getAllItemsByParams("url-desc").stream()
-                .map(Media::getUrl)
-                .collect(Collectors.toList());
+        sortURLByAsc  = getUrlByAsc();
+        sortURLByDesc  = getUrlByDesc();
     }
 
-    private List<Media> getAllItemsByParams(String strParams) throws IOException {
-        HashMap<String, Object> queryParams = new HashMap();
-        queryParams.put("sort", strParams);
-        List<Media> mediaList = MediaPrecondition.media()
-                .getMediaWithFilter(queryParams)
-                .build()
-                .getMediaGetAllResponse()
-                .getItems();
-        String jsonString = ObjectMapperUtils.toJson(mediaList);
-
-       return ObjectMapperUtils.getCollectionType(jsonString,Media.class);
+    @BeforeMethod
+    private void login(){
+        testStart()
+                .given()
+                .openDirectPath(Path.MEDIA)
+                .logIn(TEST_USER)
+                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+        .testEnd();
+    }
+    @AfterMethod
+    private void logOut(){
+        testStart()
+                .given()
+                .logOut()
+        .testEnd();
     }
 
     @Test(testName = "Sorting 'Media Name' column by descending")
@@ -117,9 +86,6 @@ public class MediaSortingTableTests extends BaseTest {
 
         testStart()
                 .given()
-                .openDirectPath(Path.MEDIA)
-                .logIn(TEST_USER)
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .and("Sort column 'Media Name'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
                 .then("Ensure that sort by descending: validate column attribute value")
@@ -152,8 +118,6 @@ public class MediaSortingTableTests extends BaseTest {
                 .then("Validate data in column 'Media Name' should be sorted by desc")
                 .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME),
                         sortNamesByDesc.subList(50,100))
-                .and()
-                .logOut()
         .testEnd();
     }
 
@@ -164,9 +128,6 @@ public class MediaSortingTableTests extends BaseTest {
 
         testStart()
                 .given()
-                .openDirectPath(Path.MEDIA)
-                .logIn(TEST_USER)
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .and("Sort column 'Media Name'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
                 .then("Ensure that sort by ascending: validate column attribute value")
@@ -196,8 +157,6 @@ public class MediaSortingTableTests extends BaseTest {
                 .then("Validate data in column 'Media Name' should be sorted by asc")
                 .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME),
                         sortNamesByAsc.subList(50,100))
-                .and()
-                .logOut()
         .testEnd();
     }
 
@@ -208,9 +167,6 @@ public class MediaSortingTableTests extends BaseTest {
 
         testStart()
                 .given()
-                .openDirectPath(Path.MEDIA)
-                .logIn(TEST_USER)
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .and("Sort column 'Publisher'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()))
                 .then("Ensure that sort by ascending: validate column attribute value")
@@ -240,8 +196,6 @@ public class MediaSortingTableTests extends BaseTest {
                 .then("Validate data in column 'Publisher' should be sorted by asc")
                 .validateList(tableData.getCustomCells(ColumnNames.PUBLISHER),
                         sortPublisherNameByAsc.subList(50,100))
-                .and()
-                .logOut()
         .testEnd();
     }
 
@@ -252,9 +206,6 @@ public class MediaSortingTableTests extends BaseTest {
 
         testStart()
                 .given()
-                .openDirectPath(Path.MEDIA)
-                .logIn(TEST_USER)
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .and("Sort column 'Publisher'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()))
                 .then("Ensure that sort by descending: validate column attribute value")
@@ -287,8 +238,6 @@ public class MediaSortingTableTests extends BaseTest {
                 .then("Validate data in column 'Publisher' should be sorted by desc")
                 .validateList(tableData.getCustomCells(ColumnNames.PUBLISHER),
                         sortPublisherNameByDesc.subList(50,100))
-                .and()
-                .logOut()
         .testEnd();
     }
 
@@ -299,9 +248,6 @@ public class MediaSortingTableTests extends BaseTest {
 
         testStart()
                 .given()
-                .openDirectPath(Path.MEDIA)
-                .logIn(TEST_USER)
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .and("Sort column 'ID'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ID.getName()))
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ID.getName()))
@@ -335,8 +281,6 @@ public class MediaSortingTableTests extends BaseTest {
                 .then("Validate data in column 'ID' should be sorted by desc")
                 .validateList(tableData.getCustomCells(ColumnNames.ID),
                         sortIdsByDesc.subList(50,100))
-                .and()
-                .logOut()
         .testEnd();
     }
 
@@ -347,9 +291,6 @@ public class MediaSortingTableTests extends BaseTest {
 
         testStart()
                 .given()
-                .openDirectPath(Path.MEDIA)
-                .logIn(TEST_USER)
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .and("Sort column 'ID'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ID.getName()))
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ID.getName()))
@@ -380,8 +321,6 @@ public class MediaSortingTableTests extends BaseTest {
                 .then("Validate data in column 'ID' should be sorted by asc")
                 .validateList(tableData.getCustomCells(ColumnNames.ID),
                         sortIdsByAsc.subList(50,100))
-                .and()
-                .logOut()
         .testEnd();
     }
 
@@ -393,9 +332,6 @@ public class MediaSortingTableTests extends BaseTest {
 
         testStart()
                 .given()
-                .openDirectPath(Path.MEDIA)
-                .logIn(TEST_USER)
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .and("Show column 'Site/App Store URL'")
                 .clickOnWebElement(tableOptions.getTableOptionsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))
@@ -432,8 +368,6 @@ public class MediaSortingTableTests extends BaseTest {
                 .then("Validate data in column 'Site/App store URL' should be sorted by desc")
                 .validateList(tableData.getCustomCells(ColumnNames.SITE_APP_STORE_URL),
                         sortURLByDesc.subList(50,100))
-                .and()
-               .logOut()
         .testEnd();
     }
 
@@ -445,9 +379,6 @@ public class MediaSortingTableTests extends BaseTest {
 
         testStart()
                 .given()
-                .openDirectPath(Path.MEDIA)
-                .logIn(TEST_USER)
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .and("Show column 'Site/App Store URL'")
                 .clickOnWebElement(tableOptions.getTableOptionsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))
@@ -481,8 +412,85 @@ public class MediaSortingTableTests extends BaseTest {
                 .then("Validate data in column 'Site/App store URL' should be sorted by asc")
                 .validateList(tableData.getCustomCells(ColumnNames.SITE_APP_STORE_URL),
                         sortURLByAsc.subList(50,100))
-                .and()
-                .logOut()
         .testEnd();
     }
+
+    private int getTotalMedia(){
+
+       return MediaPrecondition.media()
+                .getAllMediaList()
+                .build()
+                .getMediaGetAllResponse()
+                .getTotal();
+    }
+
+    private List<String> getNamesByDesc(){
+
+        return   getAllItemsByParams("name-desc").stream()
+                .map(Media::getName)
+                .collect(Collectors.toList());
+    }
+
+    private List<String> getNamesByAsc(){
+
+        return  getAllItemsByParams("name-asc").stream()
+                .map(Media::getName)
+                .collect(Collectors.toList());
+    }
+
+    private List<String> getIdsByAsc(){
+
+        return   getAllItemsByParams("id-asc").stream()
+                .map(Media::getId)
+                .map(x->x.toString())
+                .collect(Collectors.toList());
+    }
+
+    private List<String> getIdsByDesc(){
+
+        return   getAllItemsByParams("id-desc").stream()
+                .map(Media::getId)
+                .map(x->x.toString())
+                .collect(Collectors.toList());
+    }
+
+    private List<String> getPublisherNameByAsc(){
+
+        return   getAllItemsByParams("publisher_name-asc").stream()
+                .map(Media::getPublisherName)
+                .collect(Collectors.toList());
+    }
+
+    private List<String> getPublisherNameByDesc(){
+
+        return   getAllItemsByParams("publisher_name-desc").stream()
+                .map(Media::getPublisherName)
+                .collect(Collectors.toList());
+    }
+
+    private List<String> getUrlByAsc(){
+
+        return   getAllItemsByParams("url-asc").stream()
+                .map(Media::getUrl)
+                .collect(Collectors.toList());
+    }
+
+    private List<String> getUrlByDesc(){
+
+        return   getAllItemsByParams("url-desc").stream()
+                .map(Media::getUrl)
+                .collect(Collectors.toList());
+    }
+    private List<Media> getAllItemsByParams(String strParams) {
+        HashMap<String, Object> queryParams = new HashMap();
+        queryParams.put("sort", strParams);
+        Object mediaList = MediaPrecondition.media()
+                .getMediaWithFilter(queryParams)
+                .build()
+                .getMediaGetAllResponse()
+                .getItems();
+
+        return ObjectMapperUtils.getCollectionType(mediaList,Media.class);
+    }
+
 }

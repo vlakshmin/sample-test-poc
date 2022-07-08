@@ -4,10 +4,7 @@ import api.dto.rx.inventory.media.Media;
 import api.preconditionbuilders.MediaPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Ignore;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.Path;
 import pages.inventory.media.MediaPage;
 import rx.BaseTest;
@@ -20,6 +17,7 @@ import widgets.inventory.media.sidebar.MediaSidebarElements;
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
 import static managers.TestManager.testStart;
+
 
 @Slf4j
 @Listeners({ScreenShooter.class})
@@ -38,13 +36,12 @@ public class MediaTestExample extends BaseTest {
     public void createNewMedia() {
         //Creating media to edit Using API
         media = MediaPrecondition.media()
+
                 .createNewMedia()
-                .build()
-                .getMediaResponse();
+                .build().getMediaResponse();
     }
 
     @Test
-    @Ignore
     public void mediaTest() {
         var tableData = mediaPage.getMediaTable().getTableData();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
@@ -95,9 +92,17 @@ public class MediaTestExample extends BaseTest {
                 .validate(disappear,editMediaSidebar.getErrorAlert().getErrorPanel())
                 .then("Wait until SideBar closed")
                 .waitSideBarClosed()
+                .and("Logout")
+                .logOut()
                 .and("End")
-                .testEnd();
-        //allure serve
+        .testEnd();
+    }
+
+    @AfterTest
+    public void deleteMedia() {
+
+        MediaPrecondition.media().
+                deleteMedia(media.getId());
     }
 
 }
