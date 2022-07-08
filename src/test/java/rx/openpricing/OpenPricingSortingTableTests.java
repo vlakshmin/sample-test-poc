@@ -28,7 +28,7 @@ import static managers.TestManager.testStart;
 @Listeners({ScreenShooter.class})
 public class OpenPricingSortingTableTests extends BaseTest {
 
-    private OpenPricing openPricing;
+//    private OpenPricing openPricing;
     private int totalOpenPricing;
     private List<String> sortIdsByAsc;
     private List<String> sortIdsByDesc;
@@ -95,12 +95,12 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .map(OpenPricing::getPublisherName)
                 .collect(Collectors.toList());
 
-        sortActiveInactiveByAsc = getAllItemsByParams("active_inactive-asc").stream()
+        sortActiveInactiveByAsc = getAllItemsByParams("active-asc").stream()
                 .map(OpenPricing::getActive)
                 .map(Object::toString)
                 .collect(Collectors.toList());
 
-        sortActiveInactiveByDesc = getAllItemsByParams("active_inactive-desc").stream()
+        sortActiveInactiveByDesc = getAllItemsByParams("active-desc").stream()
                 .map(OpenPricing::getActive)
                 .map(Object::toString)
                 .collect(Collectors.toList());
@@ -114,39 +114,6 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .map(OpenPricing::getFloorPrice)
                 .map(Object::toString)
                 .collect(Collectors.toList());
-
-        sortCreatedByAsc = getAllItemsByParams("created_by-asc").stream()
-                .map(OpenPricing::getCreatedBy)
-                .collect(Collectors.toList());
-
-        sortCreatedByDesc = getAllItemsByParams("created_by-desc").stream()
-                .map(OpenPricing::getCreatedBy)
-                .collect(Collectors.toList());
-
-        sortCreatedDateAsc = getAllItemsByParams("created_date-asc").stream()
-                .map(OpenPricing::getCreatedAt)
-                .collect(Collectors.toList());
-
-        sortCreatedDateDesc = getAllItemsByParams("created_date-desc").stream()
-                .map(OpenPricing::getCreatedAt)
-                .collect(Collectors.toList());
-
-        sortUpdatedDateAsc = getAllItemsByParams("updated_date-asc").stream()
-                .map(OpenPricing::getUpdatedAt)
-                .collect(Collectors.toList());
-
-        sortUpdatedDateDesc = getAllItemsByParams("updated_date-desc").stream()
-                .map(OpenPricing::getUpdatedAt)
-                .collect(Collectors.toList());
-
-        sortUpdatedByAsc = getAllItemsByParams("updated_by-desc").stream()
-                .map(OpenPricing::getUpdatedBy)
-                .collect(Collectors.toList());
-
-        sortUpdatedByDesc = getAllItemsByParams("updated_by-desc").stream()
-                .map(OpenPricing::getUpdatedBy)
-                .collect(Collectors.toList());
-
     }
 
     private List<OpenPricing> getAllItemsByParams(String strParams) throws IOException {
@@ -201,7 +168,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("26-50 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("26-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Media Name' should be sorted by desc")
+                .then("Validate data in column 'Name' should be sorted by desc")
                 .validateList(tableData.getCustomCells(ColumnNames.NAME),
                         sortNamesByDesc.subList(25, 50))
                 .and("Test Finished")
@@ -219,7 +186,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Sort column 'Media Name'")
+                .and("Sort column 'Name'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.NAME.getName()))
                 .then("Ensure that sort by ascending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(ColumnNames.NAME.getName()),
@@ -234,7 +201,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("1-50 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Media Name' should be sorted by asc")
+                .then("Validate data in column 'Name' should be sorted by asc")
                 .validateList(tableData.getCustomCells(ColumnNames.NAME),
                         sortNamesByAsc.subList(0, 50))
                 .and("Check next page")
@@ -245,7 +212,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("51-100 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalOpenPricing))
-                .then("Validate data in column 'Media Name' should be sorted by asc")
+                .then("Validate data in column 'Name' should be sorted by asc")
                 .validateList(tableData.getCustomCells(ColumnNames.NAME),
                         sortNamesByAsc.subList(50, 100))
                 .and("Test Finished")
@@ -494,10 +461,10 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Sort column 'ID'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ID.getName()))
+                .and("Sort column 'Active Inactive'")
+                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ACTIVE_INACTIVE.getName()))
                 .then("Ensure that sort by descending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.ID.getName()),
+                .validateAttribute(tableData.getColumnHeader(ColumnNames.ACTIVE_INACTIVE.getName()),
                         "aria-sort", "ascending")
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
                 .and("Select 50 row per page")
@@ -509,8 +476,8 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("1-50 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'ID' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.ID),
+                .then("Validate data in column 'Active Inactive' should be sorted by asc")
+                .validateList(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE),
                         sortActiveInactiveByAsc.subList(0, 50))
                 .and("Check next page")
                 .clickOnWebElement(tablePagination.getNext())
@@ -520,8 +487,8 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("51-100 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalOpenPricing))
-                .then("Validate data in column 'ID' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.ID),
+                .then("Validate data in column 'Active Inactive' should be sorted by asc")
+                .validateList(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE),
                         sortActiveInactiveByAsc.subList(50, 100))
                 .and()
                 .logOut()
@@ -538,7 +505,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Sort column 'Media Name'")
+                .and("Sort column 'Floor Price'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.FLOOR_PRICE.getName()))
                 .then("Ensure that sort by descending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(ColumnNames.FLOOR_PRICE.getName()),
@@ -556,7 +523,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("1-50 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Media Name' should be sorted by desc")
+                .then("Validate data in column 'Floor Price' should be sorted by desc")
                 .validateList(tableData.getCustomCells(ColumnNames.FLOOR_PRICE),
                         sortFloorPriceDesc.subList(0, 50))
                 .and("Check next page")
@@ -567,7 +534,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("51-100 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalOpenPricing))
-                .then("Validate data in column 'Media Name' should be sorted by desc")
+                .then("Validate data in column 'Floor Price' should be sorted by desc")
                 .validateList(tableData.getCustomCells(ColumnNames.FLOOR_PRICE),
                         sortFloorPriceDesc.subList(50, 100))
                 .and("Test Finished")
@@ -585,7 +552,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Sort column 'Media Name'")
+                .and("Sort column 'Floor price'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.FLOOR_PRICE.getName()))
                 .then("Ensure that sort by ascending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(ColumnNames.FLOOR_PRICE.getName()),
@@ -600,7 +567,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("1-50 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Media Name' should be sorted by asc")
+                .then("Validate data in column 'Floor Price' should be sorted by asc")
                 .validateList(tableData.getCustomCells(ColumnNames.FLOOR_PRICE),
                         sortFloorPriceAsc.subList(0, 50))
                 .and("Check next page")
@@ -611,7 +578,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("51-100 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalOpenPricing))
-                .then("Validate data in column 'Media Name' should be sorted by asc")
+                .then("Validate data in column 'Floor Price' should be sorted by asc")
                 .validateList(tableData.getCustomCells(ColumnNames.FLOOR_PRICE),
                         sortFloorPriceAsc.subList(50, 100))
                 .and("Test Finished")
@@ -629,7 +596,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Sort column 'Name'")
+                .and("Sort column 'Created By'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.CREATED_BY.getName()))
                 .then("Ensure that sort by descending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(ColumnNames.CREATED_BY.getName()),
@@ -647,7 +614,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("1-25 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-25 of %s", totalOpenPricing))
-                .then("Validate data in column 'Name' should be sorted by desc")
+                .then("Validate data in column 'Created By' should be sorted by desc")
                 .validateList(tableData.getCustomCells(ColumnNames.CREATED_BY),
                         sortCreatedByDesc.subList(0, 25))
                 .and("Check next page")
@@ -658,7 +625,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("26-50 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("26-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Media Name' should be sorted by desc")
+                .then("Validate data in column 'Created By' should be sorted by desc")
                 .validateList(tableData.getCustomCells(ColumnNames.CREATED_BY),
                         sortCreatedByDesc.subList(25, 50))
                 .and("Test Finished")
@@ -676,7 +643,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Sort column 'Media Name'")
+                .and("Sort column 'Created By'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.CREATED_BY.getName()))
                 .then("Ensure that sort by ascending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(ColumnNames.CREATED_BY.getName()),
@@ -691,7 +658,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("1-50 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Media Name' should be sorted by asc")
+                .then("Validate data in column 'Created By' should be sorted by asc")
                 .validateList(tableData.getCustomCells(ColumnNames.CREATED_BY),
                         sortCreatedByAsc.subList(0, 50))
                 .and("Check next page")
@@ -702,7 +669,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("51-100 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalOpenPricing))
-                .then("Validate data in column 'Media Name' should be sorted by asc")
+                .then("Validate data in column 'Created By' should be sorted by asc")
                 .validateList(tableData.getCustomCells(ColumnNames.CREATED_BY),
                         sortCreatedByAsc.subList(50, 100))
                 .and("Test Finished")
@@ -720,7 +687,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Sort column 'Name'")
+                .and("Sort column 'Created Date'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.CREATED_DATE.getName()))
                 .then("Ensure that sort by descending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(ColumnNames.CREATED_DATE.getName()),
@@ -738,7 +705,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("1-25 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-25 of %s", totalOpenPricing))
-                .then("Validate data in column 'Name' should be sorted by desc")
+                .then("Validate data in column 'Created Date' should be sorted by desc")
                 .validateList(tableData.getCustomCells(ColumnNames.CREATED_DATE),
                         sortCreatedDateDesc.subList(0, 25))
                 .and("Check next page")
@@ -749,7 +716,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("26-50 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("26-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Media Name' should be sorted by desc")
+                .then("Validate data in column 'Created Date' should be sorted by desc")
                 .validateList(tableData.getCustomCells(ColumnNames.CREATED_DATE),
                         sortCreatedDateDesc.subList(25, 50))
                 .and("Test Finished")
@@ -767,7 +734,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Sort column 'Media Name'")
+                .and("Sort column 'Created Date'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.CREATED_DATE.getName()))
                 .then("Ensure that sort by ascending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(ColumnNames.CREATED_DATE.getName()),
@@ -782,7 +749,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("1-50 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Media Name' should be sorted by asc")
+                .then("Validate data in column 'Created Date' should be sorted by asc")
                 .validateList(tableData.getCustomCells(ColumnNames.CREATED_DATE),
                         sortCreatedDateAsc.subList(0, 50))
                 .and("Check next page")
@@ -793,7 +760,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("51-100 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalOpenPricing))
-                .then("Validate data in column 'Media Name' should be sorted by asc")
+                .then("Validate data in column 'Created Date' should be sorted by asc")
                 .validateList(tableData.getCustomCells(ColumnNames.CREATED_DATE),
                         sortCreatedDateAsc.subList(50, 100))
                 .and("Test Finished")
@@ -811,7 +778,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Sort column 'Name'")
+                .and("Sort column 'Updated Date'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.UPDATED_DATE.getName()))
                 .then("Ensure that sort by descending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(ColumnNames.UPDATED_DATE.getName()),
@@ -829,7 +796,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("1-25 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-25 of %s", totalOpenPricing))
-                .then("Validate data in column 'Name' should be sorted by desc")
+                .then("Validate data in column 'Updated Date' should be sorted by desc")
                 .validateList(tableData.getCustomCells(ColumnNames.UPDATED_DATE),
                         sortUpdatedDateDesc.subList(0, 25))
                 .and("Check next page")
@@ -840,7 +807,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("26-50 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("26-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Media Name' should be sorted by desc")
+                .then("Validate data in column 'Updated Date' should be sorted by desc")
                 .validateList(tableData.getCustomCells(ColumnNames.UPDATED_DATE),
                         sortUpdatedDateDesc.subList(25, 50))
                 .and("Test Finished")
@@ -858,7 +825,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Sort column 'Media Name'")
+                .and("Sort column 'Updated Date'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.UPDATED_DATE.getName()))
                 .then("Ensure that sort by ascending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(ColumnNames.UPDATED_DATE.getName()),
@@ -873,7 +840,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("1-50 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Media Name' should be sorted by asc")
+                .then("Validate data in column 'Updated Date' should be sorted by asc")
                 .validateList(tableData.getCustomCells(ColumnNames.UPDATED_DATE),
                         sortUpdatedDateAsc.subList(0, 50))
                 .and("Check next page")
@@ -884,7 +851,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("51-100 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalOpenPricing))
-                .then("Validate data in column 'Media Name' should be sorted by asc")
+                .then("Validate data in column 'Updated Date' should be sorted by asc")
                 .validateList(tableData.getCustomCells(ColumnNames.UPDATED_DATE),
                         sortUpdatedDateAsc.subList(50, 100))
                 .and("Test Finished")
@@ -902,7 +869,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Sort column 'Name'")
+                .and("Sort column 'Updated By'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.UPDATED_BY.getName()))
                 .then("Ensure that sort by descending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(ColumnNames.UPDATED_BY.getName()),
@@ -920,7 +887,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("1-25 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-25 of %s", totalOpenPricing))
-                .then("Validate data in column 'Name' should be sorted by desc")
+                .then("Validate data in column 'Updated By' should be sorted by desc")
                 .validateList(tableData.getCustomCells(ColumnNames.UPDATED_BY),
                         sortUpdatedByDesc.subList(0, 25))
                 .and("Check next page")
@@ -931,7 +898,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("26-50 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("26-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Media Name' should be sorted by desc")
+                .then("Validate data in column 'Updated By' should be sorted by desc")
                 .validateList(tableData.getCustomCells(ColumnNames.UPDATED_BY),
                         sortUpdatedByDesc.subList(25, 50))
                 .and("Test Finished")
@@ -949,7 +916,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Sort column 'Media Name'")
+                .and("Sort column 'Updated By'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.UPDATED_BY.getName()))
                 .then("Ensure that sort by ascending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(ColumnNames.UPDATED_BY.getName()),
@@ -964,7 +931,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("1-50 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Media Name' should be sorted by asc")
+                .then("Validate data in column 'Updated By' should be sorted by asc")
                 .validateList(tableData.getCustomCells(ColumnNames.UPDATED_BY),
                         sortUpdatedByAsc.subList(0, 50))
                 .and("Check next page")
@@ -975,7 +942,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         String.format("51-100 of %s", totalOpenPricing)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalOpenPricing))
-                .then("Validate data in column 'Media Name' should be sorted by asc")
+                .then("Validate data in column 'Updated By' should be sorted by asc")
                 .validateList(tableData.getCustomCells(ColumnNames.UPDATED_BY),
                         sortUpdatedByAsc.subList(50, 100))
                 .and("Test Finished")
