@@ -32,6 +32,7 @@ public enum RakutenExchangeApi {
     GET_MEDIA("/v2/media/%s"),
     GET_ALL_MEDIA("/v2/media"),
     UPDATE_MEDIA("/v2/media/%s"),
+    DELETE_MEDIA("/v2/media/%s"),
 
     //Ad Spot
     CREATE_ADSPOT("/v2/adspots"),
