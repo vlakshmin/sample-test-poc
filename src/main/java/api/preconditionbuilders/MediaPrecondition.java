@@ -114,8 +114,4 @@ public class MediaPrecondition {
         }
 
     }
-
-    public static void main(String[] args) {
-        MediaPrecondition.media().setCredentials(User.USER_FOR_DELETION).deleteMedia(2638);
-    }
 }

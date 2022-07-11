@@ -16,6 +16,7 @@ import widgets.inventory.media.sidebar.MediaSidebarElements;
 
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
+import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
 
 
@@ -103,6 +104,7 @@ public class MediaTestExample extends BaseTest {
     public void deleteMedia() {
 
         MediaPrecondition.media().
+                setCredentials(USER_FOR_DELETION).
                 deleteMedia(media.getId());
     }
 

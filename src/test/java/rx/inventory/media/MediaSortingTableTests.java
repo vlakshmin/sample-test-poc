@@ -484,7 +484,7 @@ public class MediaSortingTableTests extends BaseTest {
     private List<Media> getAllItemsByParams(String strParams) {
         HashMap<String, Object> queryParams = new HashMap();
         queryParams.put("sort", strParams);
-        Object mediaList = MediaPrecondition.media()
+        var mediaList = MediaPrecondition.media()
                 .getMediaWithFilter(queryParams)
                 .build()
                 .getMediaGetAllResponse()
