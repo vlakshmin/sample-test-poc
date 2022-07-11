@@ -9,10 +9,7 @@ import api.preconditionbuilders.MediaPrecondition;
 import api.preconditionbuilders.PublisherPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.Path;
 import pages.inventory.media.MediaPage;
 import rx.BaseTest;
@@ -85,14 +82,29 @@ public class SearchTableTests extends BaseTest {
                 .collect(Collectors.toList());
     }
 
+    @BeforeMethod
+    private void login(){
+        testStart()
+                .given()
+                .openDirectPath(Path.MEDIA)
+                .logIn(TEST_USER)
+                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+                .testEnd();
+    }
+    @AfterMethod
+    private void logOut(){
+        testStart()
+                .given()
+                .logOut()
+                .testEnd();
+    }
+
     @Test(testName = "Search by 'Media Name'")
     public void mediaSearchByMediaNameDesc() {
         var tableData = mediaPage.getMediaTable().getTableData();
 
         testStart()
                 .given()
-                .openDirectPath(Path.MEDIA)
-                .logIn(TEST_USER)
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .setValueWithClean(tableData.getSearch(), mediaName)
                 .clickEnterButton(tableData.getSearch())
@@ -109,8 +121,7 @@ public class SearchTableTests extends BaseTest {
                 .waitAndValidate(disappear, mediaPage.getTableProgressBar())
                 .then(String.format("Ensure that column 'Publisher' contains values with string '%s'",pubName))
                 .validateList(tableData.getCustomCells(ColumnNames.PUBLISHER),publishersByAsc)
-                .and()
-                .logOut()
+                .and("End Test")
         .testEnd();
     }
 
