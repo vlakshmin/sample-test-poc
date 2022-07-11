@@ -1,12 +1,15 @@
 package rx.inventory.media;
 
 import api.dto.rx.admin.publisher.Publisher;
+import api.dto.rx.admin.publisher.PublisherRequest;
+import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.media.Media;
 import api.dto.rx.inventory.media.MediaRequest;
 import api.preconditionbuilders.MediaPrecondition;
 import api.preconditionbuilders.PublisherPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -23,8 +26,9 @@ import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Condition.disappear;
 import static configurations.User.TEST_USER;
+import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
-import static zutils.FakerUtils.captionWithSuffix;
+import static zutils.FakerUtils.*;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
@@ -35,6 +39,7 @@ public class SearchTableTests extends BaseTest {
     private String pubName;
     private List<String> mediaNamesByAsc;
     private List<String> publishersByAsc;
+    private List<String> searchByA;
 
     private MediaPage mediaPage;
 
@@ -74,26 +79,15 @@ public class SearchTableTests extends BaseTest {
         publishersByAsc = getAllItemsByParams(pubName).stream()
                 .map(Media::getPublisherName)
                 .collect(Collectors.toList());
+
+        searchByA  = getAllItemsByParams(mediaName).stream()
+                .map(Media::getName)
+                .collect(Collectors.toList());
     }
 
-    private List<Media> getAllItemsByParams(String strParams) {
-        HashMap<String, Object> queryParams = new HashMap();
-        queryParams.put("search", strParams);
-        queryParams.put("sort", "name-asc");
-        List<Media> mediaList = MediaPrecondition.media()
-                .getMediaWithFilter(queryParams)
-                .build()
-                .getMediaGetAllResponse()
-                .getItems();
-        String jsonString = ObjectMapperUtils.toJson(mediaList);
-
-       return ObjectMapperUtils.getCollectionType(jsonString,Media.class);
-    }
-
-    @Test(testName = "Sorting 'Media Name' column by descending")
+    @Test(testName = "Search by 'Media Name'")
     public void mediaSearchByMediaNameDesc() {
         var tableData = mediaPage.getMediaTable().getTableData();
-        var tablePagination = mediaPage.getMediaTable().getTablePagination();
 
         testStart()
                 .given()
@@ -105,24 +99,40 @@ public class SearchTableTests extends BaseTest {
                 .waitAndValidate(disappear, mediaPage.getTableProgressBar())
                 .and("Sort column 'Media Name'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
-                .then("Ensure that sort by descending: validate column attribute value")
+                .then(String.format("Ensure that column 'Media Name' contains values with string '%s'",mediaName))
                 .validateAttribute(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()),
                         "aria-sort","ascending")
                 .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME),mediaNamesByAsc)
+                .and(String.format("Ensure that column 'Media Name' contains values with string '%s'",pubName))
                 .setValueWithClean(tableData.getSearch(), pubName)
                 .clickEnterButton(tableData.getSearch())
                 .waitAndValidate(disappear, mediaPage.getTableProgressBar())
-                .and("Sort column 'Media Name'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
+                .then(String.format("Ensure that column 'Publisher' contains values with string '%s'",pubName))
+                .validateList(tableData.getCustomCells(ColumnNames.PUBLISHER),publishersByAsc)
                 .and()
                 .logOut()
         .testEnd();
     }
 
+    @AfterTest
+    private void deleteEntities() {
+        for (Integer mediaId : mediaIds) {
+              MediaPrecondition.media().
+                setCredentials(USER_FOR_DELETION).
+                deleteMedia(mediaId);
+        };
+
+        for (Integer publisherId : publishersIds) {
+            PublisherPrecondition.publisher().
+                    setCredentials(USER_FOR_DELETION).
+                    deletePublisher(publisherId);
+        };
+    }
+
     private MediaRequest createCustomMedia(String name, String publisherName) {
 
         publisher =  PublisherPrecondition.publisher()
-                .createNewPublisher()
+                .createNewPublisher(createCustomPublisher(publisherName))
                 .build()
                 .getPublisherResponse();
 
@@ -134,6 +144,33 @@ public class SearchTableTests extends BaseTest {
                 .isEnabled(true)
                 .categoryIds(List.of(1, 9))
                 .build();
+    }
+
+    private PublisherRequest createCustomPublisher(String publisherName) {
+
+        return PublisherRequest.builder()
+                .name(captionWithSuffix(publisherName))
+                .salesAccountName("ops_persoj")
+                .mail(randomMail())
+                .isEnabled(true)
+                .domain(randomUrl())
+                .currency(Currency.JPY.name())
+                .categoryIds(List.of(1,9))
+                .dspIds(List.of(7))
+                .build();
+    }
+
+    private List<Media> getAllItemsByParams(String strParams) {
+        HashMap<String, Object> queryParams = new HashMap();
+        queryParams.put("search", strParams);
+        queryParams.put("sort", "name-asc");
+        List<Media> mediaList = MediaPrecondition.media()
+                .getMediaWithFilter(queryParams)
+                .build()
+                .getMediaGetAllResponse()
+                .getItems();
+
+        return ObjectMapperUtils.getCollectionType(mediaList,Media.class);
     }
 
 }
