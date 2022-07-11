@@ -18,6 +18,7 @@ import zutils.FakerUtils;
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
+import static configurations.User.USER_FOR_DELETION;
 import static java.lang.String.valueOf;
 import static managers.TestManager.testStart;
 
