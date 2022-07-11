@@ -5,8 +5,7 @@ import io.restassured.response.Response;
 
 import java.util.Map;
 
-import static api.core.RakutenExchangeApi.CREATE_MEDIA;
-import static api.core.RakutenExchangeApi.GET_ALL_MEDIA;
+import static api.core.RakutenExchangeApi.*;
 import static api.core.client.HttpClient.*;
 
 public class MediaService extends BaseService {
@@ -27,5 +26,12 @@ public class MediaService extends BaseService {
 
         return get(URL,queryParams);
     }
+
+    public Response deleteMedia(int id) {
+        URL = initURL(DELETE_MEDIA.setParameters(id));
+
+        return delete(URL);
+    }
+
 
 }

@@ -122,6 +122,8 @@ public class HttpClient {
             log.warn("Login or password for request is 'null'. User 'developer' will be used for building request credentials'");
             mail = User.TEST_USER.getMail();
             password = User.TEST_USER.getPassword();
+        } else {
+            log.info(String.format("User '%s' with password '%s' will be used for building request credentials'", mail, password));
         }
         log.info("Post to get token POST {}", URL);
 

@@ -4,10 +4,7 @@ import api.dto.rx.inventory.media.Media;
 import api.preconditionbuilders.MediaPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Ignore;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.Path;
 import pages.inventory.media.MediaPage;
 import rx.BaseTest;
@@ -19,7 +16,9 @@ import widgets.inventory.media.sidebar.MediaSidebarElements;
 
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
+import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
+
 
 @Slf4j
 @Listeners({ScreenShooter.class})
@@ -38,9 +37,9 @@ public class MediaTestExample extends BaseTest {
     public void createNewMedia() {
         //Creating media to edit Using API
         media = MediaPrecondition.media()
+
                 .createNewMedia()
-                .build()
-                .getMediaResponse();
+                .build().getMediaResponse();
     }
 
     @Test
@@ -85,7 +84,7 @@ public class MediaTestExample extends BaseTest {
                 .scrollIntoView(editMediaSidebar.getErrorAlert().getErrorPanel())
                 .validate(visible,editMediaSidebar.getErrorAlert().getErrorPanel())
                 .validate(visible,editMediaSidebar.getErrorAlert().getIconError())
-                .scrollIntoView(editMediaSidebar.getErrorAlertByFieldName("Site URL"))
+                .scrollIntoView(editMediaSidebar.getSiteURL())
                 .validateContainsText(editMediaSidebar.getErrorAlertByFieldName("Site URL"),
                         ErrorMessages.SITE_URL_ERROR_ALERT.getText())
                 .and("Set valid value 'Site URL' and click Save")
@@ -95,9 +94,18 @@ public class MediaTestExample extends BaseTest {
                 .validate(disappear,editMediaSidebar.getErrorAlert().getErrorPanel())
                 .then("Wait until SideBar closed")
                 .waitSideBarClosed()
+                .and("Logout")
+                .logOut()
                 .and("End")
-                .testEnd();
-        //allure serve
+        .testEnd();
+    }
+
+    @AfterTest
+    public void deleteMedia() {
+
+        MediaPrecondition.media().
+                setCredentials(USER_FOR_DELETION).
+                deleteMedia(media.getId());
     }
 
 }
