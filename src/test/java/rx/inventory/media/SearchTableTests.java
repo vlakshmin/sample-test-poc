@@ -14,10 +14,9 @@ import pages.Path;
 import pages.inventory.media.MediaPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
-import widgets.inventory.media.sidebar.EditMediaSidebar;
 import zutils.ObjectMapperUtils;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,10 +33,13 @@ public class SearchTableTests extends BaseTest {
     private Publisher publisher;
     private String mediaName;
     private String pubName;
-    private List<String> sortNamesByAsc;
+    private List<String> mediaNamesByAsc;
+    private List<String> publishersByAsc;
 
     private MediaPage mediaPage;
 
+    private List<Integer> mediaIds;
+    private List<Integer> publishersIds;
 
     public SearchTableTests() {
         mediaPage = new MediaPage();
@@ -47,16 +49,30 @@ public class SearchTableTests extends BaseTest {
     public void loginAndCreateExpectedResuts() {
         mediaName = "mediaSS1";
         pubName = "pubSSS2";
-
+        mediaIds = new ArrayList<>();
+        publishersIds = new ArrayList<>();
 
        Media media = MediaPrecondition.media()
-                .createNewMedia(createCustomMedia(mediaName,"pub"))
+                .createNewMedia(createCustomMedia("media","pub"))
                 .build()
                 .getMediaResponse();
+        mediaIds.add(media.getId());
+        publishersIds.add(media.getPublisherId());
+
+        media = MediaPrecondition.media()
+                .createNewMedia(createCustomMedia(mediaName,pubName))
+                .build()
+                .getMediaResponse();
+        mediaIds.add(media.getId());
+        publishersIds.add(media.getPublisherId());
 
         //expected results for Media Name column
-        sortNamesByAsc  = getAllItemsByParams(mediaName).stream()
+        mediaNamesByAsc  = getAllItemsByParams(mediaName).stream()
                 .map(Media::getName)
+                .collect(Collectors.toList());
+
+        publishersByAsc = getAllItemsByParams(pubName).stream()
+                .map(Media::getPublisherName)
                 .collect(Collectors.toList());
     }
 
@@ -92,7 +108,12 @@ public class SearchTableTests extends BaseTest {
                 .then("Ensure that sort by descending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()),
                         "aria-sort","ascending")
-                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME),sortNamesByAsc)
+                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME),mediaNamesByAsc)
+                .setValueWithClean(tableData.getSearch(), pubName)
+                .clickEnterButton(tableData.getSearch())
+                .waitAndValidate(disappear, mediaPage.getTableProgressBar())
+                .and("Sort column 'Media Name'")
+                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
                 .and()
                 .logOut()
         .testEnd();

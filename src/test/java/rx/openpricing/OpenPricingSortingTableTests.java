@@ -111,7 +111,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
         HashMap<String, Object> queryParams = new HashMap();
         queryParams.put("sort", strParams);
         List<OpenPricing> openPricingList = OpenPricingPrecondition.openPricing()
-                .getOpenPricingWithFilter(queryParams)
+         //       .getOpenPricingWithFilter(queryParams)
                 .build()
                 .getOpenPricingGetAllResponse()
                 .getItems();
