@@ -8,6 +8,7 @@ import lombok.SneakyThrows;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class ObjectMapperUtils {
@@ -34,13 +35,17 @@ public class ObjectMapperUtils {
         }
     }
 
-    public static List getCollectionType(String jsonString, Class T) throws IOException {
+    public static List getCollectionType(Object list, Class T) {
+        String jsonString = ObjectMapperUtils.toJson(list);
+
         CollectionType listType =
                 objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, T);
 
-        List list = objectMapper.readValue(jsonString, listType);
-
-        return list;
+        try {
+            return objectMapper.readValue(jsonString, listType);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

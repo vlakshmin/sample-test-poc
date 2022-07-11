@@ -1,10 +1,12 @@
 package api.preconditionbuilders;
 
+import api.core.client.HttpClient;
 import api.dto.GenericResponse;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.inventory.media.Media;
 import api.dto.rx.inventory.media.MediaRequest;
 import api.services.MediaService;
+import configurations.User;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -89,7 +91,19 @@ public class MediaPrecondition {
             return Arrays.asList(response.jsonPath().getObject("items", Media[].class));
         }
 
+        public MediaPreconditionBuilder deleteMedia(int id) {
+            this.response = mediaService.deleteMedia(id);
+
+            return this;
+        }
+
+        public MediaPreconditionBuilder setCredentials(User user){
+            HttpClient.setCredentials(user);
+
+            return this;
+        }
         public MediaPrecondition build() {
+            HttpClient.setCredentials(User.TEST_USER);
 
             return new MediaPrecondition(this);
         }
