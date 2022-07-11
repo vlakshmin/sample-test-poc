@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Condition.disappear;
+import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
 import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
@@ -34,6 +35,7 @@ public class SearchTableTests extends BaseTest {
     private Publisher publisher;
     private String mediaName;
     private String pubName;
+    private Integer totalMedia;
     private List<String> mediaNamesByAsc;
     private List<String> publishersByAsc;
     private List<String> searchByA;
@@ -77,7 +79,7 @@ public class SearchTableTests extends BaseTest {
                 .map(Media::getPublisherName)
                 .collect(Collectors.toList());
 
-        searchByA  = getAllItemsByParams(mediaName).stream()
+        searchByA  = getAllItemsByParams("A").stream()
                 .map(Media::getName)
                 .collect(Collectors.toList());
     }
@@ -100,7 +102,7 @@ public class SearchTableTests extends BaseTest {
     }
 
     @Test(testName = "Search by 'Media Name'")
-    public void mediaSearchByMediaNameDesc() {
+    public void mediaSearchByMediaName() {
         var tableData = mediaPage.getMediaTable().getTableData();
 
         testStart()
@@ -115,16 +117,70 @@ public class SearchTableTests extends BaseTest {
                 .validateAttribute(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()),
                         "aria-sort","ascending")
                 .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME),mediaNamesByAsc)
-                .and(String.format("Ensure that column 'Media Name' contains values with string '%s'",pubName))
-                .setValueWithClean(tableData.getSearch(), pubName)
-                .clickEnterButton(tableData.getSearch())
-                .waitAndValidate(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Ensure that column 'Publisher' contains values with string '%s'",pubName))
-                .validateList(tableData.getCustomCells(ColumnNames.PUBLISHER),publishersByAsc)
                 .and("End Test")
         .testEnd();
     }
 
+    @Test(testName = "Search by 'Publisher'")
+    public void mediaSearchByPublisher() {
+        var tableData = mediaPage.getMediaTable().getTableData();
+
+        testStart()
+                .given()
+                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+                .setValueWithClean(tableData.getSearch(), pubName)
+                .clickEnterButton(tableData.getSearch())
+                .waitAndValidate(disappear, mediaPage.getTableProgressBar())
+                .and("Sort column 'Media Name'")
+                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
+                .then(String.format("Ensure that column 'Media Name' contains values with string '%s'",mediaName))
+                .validateAttribute(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()),
+                        "aria-sort","ascending")
+                .waitAndValidate(disappear, mediaPage.getTableProgressBar())
+                .then(String.format("Ensure that column 'Publisher' contains values with string '%s'",pubName))
+                .validateList(tableData.getCustomCells(ColumnNames.PUBLISHER),publishersByAsc)
+                .and("End Test")
+                .testEnd();
+    }
+
+    @Test(testName = "Search by 'A'")
+    public void mediaSearchByA() {
+        var tableData = mediaPage.getMediaTable().getTableData();
+        var tablePagination = mediaPage.getMediaTable().getTablePagination();
+
+        testStart()
+                .given()
+                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+                .and("Set value 'A' in search field")
+                .setValueWithClean(tableData.getSearch(), "A")
+                .clickEnterButton(tableData.getSearch())
+                .and("Select 10 row per page")
+                .selectFromDropdown(tablePagination.getPageMenu(),
+                        tablePagination.getRowNumbersList(), "10")
+                .waitLoading(visible, mediaPage.getTableProgressBar())
+                .waitLoading(disappear, mediaPage.getTableProgressBar())
+                .then(String.format("Validate that text in table footer '%s'",
+                        String.format("1-10 of %s", searchByA)))
+                .and("Sort column 'Media Name'")
+                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
+                .then(String.format("Validate data in column 'Media Name' should contain 'A'"))
+                .validateAttribute(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()),
+                        "aria-sort","ascending")
+                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME),searchByA.subList(0,10))
+                .and("Check next page")
+                .clickOnWebElement(tablePagination.getNext())
+                .waitLoading(visible, mediaPage.getTableProgressBar())
+                .waitLoading(disappear, mediaPage.getTableProgressBar())
+                .then(String.format("Validate that text in table footer '%s'",
+                        String.format("11-20 of %s", searchByA.size())))
+                .validateContainsText(tablePagination.getPaginationPanel(),
+                        String.format("11-20 of %s", searchByA.size()))
+                .then("Validate data in column 'Media Name' should contain 'A'")
+                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME),
+                        searchByA.subList(10,20))
+                .and("End Test")
+                .testEnd();
+    }
     @AfterTest
     private void deleteEntities() {
         for (Integer mediaId : mediaIds) {
