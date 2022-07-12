@@ -9,10 +9,9 @@ import pages.Path;
 import pages.yield.openpricing.OpenPricingPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
-import widgets.yield.openPricing.sidebar.EditOpenPricingSidebar;
 import zutils.ObjectMapperUtils;
 
-import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,9 +23,7 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class OpenPricingSortingTableTests extends BaseTest {
-
-    //    private OpenPricing openPricing;
+public class SortingTableTests extends BaseTest {
     private int totalOpenPricing;
     private List<String> sortIdsByAsc;
     private List<String> sortIdsByDesc;
@@ -38,18 +35,14 @@ public class OpenPricingSortingTableTests extends BaseTest {
     private List<String> sortActiveInactiveByAsc;
     private List<String> sortFloorPriceDesc;
     private List<String> sortFloorPriceAsc;
-
-
     private OpenPricingPage openPricingPage;
-    private EditOpenPricingSidebar editOpenPricingSidebar;
 
-    public OpenPricingSortingTableTests() {
+    public SortingTableTests() {
         openPricingPage = new OpenPricingPage();
-        editOpenPricingSidebar = new EditOpenPricingSidebar();
     }
 
     @BeforeClass
-    public void loginAndCreateExpectedResults() throws IOException {
+    public void loginAndCreateExpectedResults() {
 
         totalOpenPricing = OpenPricingPrecondition.openPricing()
                 .getOpenPricingList()
@@ -57,7 +50,6 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .getOpenPricingGetAllResponse()
                 .getTotal();
 
-        //expected results for Media Name column
         sortNamesByDesc = getAllItemsByParams("name-desc").stream()
                 .map(OpenPricing::getName)
                 .collect(Collectors.toList());
@@ -66,7 +58,6 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .map(OpenPricing::getName)
                 .collect(Collectors.toList());
 
-        //Expected result for ID column
         sortIdsByAsc = getAllItemsByParams("id-asc").stream()
                 .map(OpenPricing::getId)
                 .map(Object::toString)
@@ -77,7 +68,6 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .map(Object::toString)
                 .collect(Collectors.toList());
 
-        //Expected result for  Publisher Name column
         sortPublisherNameByAsc = getAllItemsByParams("publisher_name-asc").stream()
                 .map(OpenPricing::getPublisherName)
                 .collect(Collectors.toList());
@@ -87,37 +77,26 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .collect(Collectors.toList());
 
         sortActiveInactiveByAsc = getAllItemsByParams("active-asc").stream()
-                .map(OpenPricing::getActive)
+                .map(OpenPricing::getId)
                 .map(Object::toString)
                 .collect(Collectors.toList());
 
         sortActiveInactiveByDesc = getAllItemsByParams("active-desc").stream()
-                .map(OpenPricing::getActive)
+                .map(OpenPricing::getId)
                 .map(Object::toString)
                 .collect(Collectors.toList());
 
         sortFloorPriceAsc = getAllItemsByParams("floor_price-asc").stream()
                 .map(OpenPricing::getFloorPrice)
+                .map(this::customFormat)
                 .map(Object::toString)
                 .collect(Collectors.toList());
 
         sortFloorPriceDesc = getAllItemsByParams("floor_price-desc").stream()
                 .map(OpenPricing::getFloorPrice)
+                .map(this::customFormat)
                 .map(Object::toString)
                 .collect(Collectors.toList());
-    }
-
-    private List<OpenPricing> getAllItemsByParams(String strParams) throws IOException {
-        HashMap<String, Object> queryParams = new HashMap();
-        queryParams.put("sort", strParams);
-        List<OpenPricing> openPricingList = OpenPricingPrecondition.openPricing()
-                .getOpenPricingWithFilter(queryParams)
-                .build()
-                .getOpenPricingGetAllResponse()
-                .getItems();
-        String jsonString = ObjectMapperUtils.toJson(openPricingList);
-
-        return ObjectMapperUtils.getCollectionType(jsonString, OpenPricing.class);
     }
 
     @BeforeMethod
@@ -137,7 +116,6 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .logOut()
                 .testEnd();
     }
-
 
     @Test(testName = "Sorting 'Name' column by descending")
     public void OpenPricingSortingByNameDesc() {
@@ -349,7 +327,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
     }
 
     @Test(testName = "Sorting 'ID' column by ascending")
-    public void mediaSortingByIdAsc() {
+    public void OpenPricingSortingByIdAsc() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
 
@@ -433,7 +411,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
     }
 
     @Test(testName = "Sorting 'Active/Inactive' column by ascending")
-    public void mediaSortingByActiveInactiveAsc() {
+    public void OpenPricingSortingByActiveInactiveAsc() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
 
@@ -473,7 +451,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
     }
 
     @Test(testName = "Sorting 'Floor Price' column by descending")
-    public void mediaSortingByFloorPriceDesc() {
+    public void OpenPricingSortingByFloorPriceDesc() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
 
@@ -512,12 +490,11 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .validateList(tableData.getCustomCells(ColumnNames.FLOOR_PRICE),
                         sortFloorPriceDesc.subList(50, 100))
                 .and("Test Finished")
-                .logOut()
                 .testEnd();
     }
 
     @Test(testName = "Sorting 'Floor Price' column by ascending")
-    public void mediaSortingByFloorPriceAsc() {
+    public void OpenPricingSortingByFloorPriceAsc() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
 
@@ -556,5 +533,25 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .testEnd();
     }
 
+    private List<OpenPricing> getAllItemsByParams(String strParams) {
+        HashMap<String, Object> queryParams = new HashMap();
+        queryParams.put("sort", strParams);
+        List<OpenPricing> openPricingList = OpenPricingPrecondition.openPricing()
+                .getOpenPricingWithFilter(queryParams)
+                .build()
+                .getOpenPricingGetAllResponse()
+                .getItems();
+        String jsonString = ObjectMapperUtils.toJson(openPricingList);
+
+        return ObjectMapperUtils.getCollectionType(jsonString, OpenPricing.class);
+    }
+
+    private String customFormat(Double value) {
+        String pattern = "###,###.###";
+        DecimalFormat myFormatter = new DecimalFormat(pattern);
+        String output = myFormatter.format(value);
+
+        return output;
+    }
 
 }
