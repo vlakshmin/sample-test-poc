@@ -34,6 +34,7 @@ public class MediaTestExample extends BaseTest {
     }
 
     @BeforeClass
+    @Ignore
     public void createNewMedia() {
         //Creating media to edit Using API
         media = MediaPrecondition.media()
@@ -101,6 +102,7 @@ public class MediaTestExample extends BaseTest {
     }
 
     @AfterTest
+    @Ignore
     public void deleteMedia() {
 
         MediaPrecondition.media().
