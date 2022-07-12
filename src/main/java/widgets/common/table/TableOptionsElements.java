@@ -19,5 +19,4 @@ public enum TableOptionsElements {
 
     private String alias;
     private String selector;
-
 }

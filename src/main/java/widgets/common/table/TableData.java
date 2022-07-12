@@ -5,15 +5,10 @@ import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import org.openqa.selenium.By;
 
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
-import static java.lang.String.format;
 import static widgets.common.table.TableElements.*;
 
 /**
@@ -48,20 +43,5 @@ public class TableData {
                 .indexOf(columnName.getName()) + 2;
 
         return $$x(String.format(CELL_BY_COLUMN.getSelector(), columnId)).as(CELL_BY_COLUMN.getAlias());
-    }
-
-    public SelenideElement getFirstActiveRow() {
-        for (SelenideElement element : rows) {
-            var tableCell = element.find(By.xpath("//td[6]"));
-            if (tableCell.getText().equalsIgnoreCase("Active")) {
-                return element;
-            }
-        }
-        return null;
-    }
-
-    public SelenideElement getFirstActiveRowBtn() {
-
-        return getFirstActiveRow().find(By.xpath("//td[6]"));
     }
 }

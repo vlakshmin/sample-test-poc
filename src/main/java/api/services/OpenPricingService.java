@@ -15,6 +15,7 @@ public class OpenPricingService extends BaseService{
 
         return post(URL, body.toJson());
     }
+
     public Response getOpenPricingWithFilter(Map<String, Object> queryParams) {
         URL = initURL(GET_ALL_OPEN_PRICING);
 

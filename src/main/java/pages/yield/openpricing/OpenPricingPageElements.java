@@ -14,8 +14,6 @@ public enum OpenPricingPageElements {
     ACTIVATE_OPEN_PRICING_BUTTON("'Activate OpenPricing' Button", "//button//span[text()='Activate']"),
     DEACTIVATE_OPEN_PRICING_BUTTON("'Deactivate OpenPricing' Button", "//button//span[text()='Deactivate']");
 
-
-
     private String alias;
     private String selector;
 }

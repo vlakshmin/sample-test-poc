@@ -15,8 +15,6 @@ public enum ColumnNames {
     UPDATED_BY("Updated By", true),
     DETAILS("Details", true),
     ACTIVE("Active", true),
-//    INACTIVE("Inactive", false),
-//    BOTH("Both", false),
 
     NAME("Name", true),
     ALWAYS_ON("Always on", true),
@@ -74,8 +72,6 @@ public enum ColumnNames {
     FLOOR_PRICE("Floor Price", true);
 
 
-
     private String name;
     private Boolean sortable;
-
 }

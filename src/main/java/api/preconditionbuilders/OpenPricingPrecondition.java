@@ -137,6 +137,7 @@ public class OpenPricingPrecondition {
 
             return new OpenPricingPrecondition(this);
         }
+
         public OpenPricingPreconditionBuilder getOpenPricingWithFilter(Map<String, Object> queryParams) {
             this.response = openPricingService.getOpenPricingWithFilter(queryParams);
 

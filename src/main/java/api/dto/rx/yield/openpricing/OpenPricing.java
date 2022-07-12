@@ -29,6 +29,7 @@ public class OpenPricing {
     private String  publisherName;
 
     public String toJson() {
+
         return ObjectMapperUtils.toJson(this);
     }
 }

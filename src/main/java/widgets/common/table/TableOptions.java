@@ -28,9 +28,4 @@ public class TableOptions {
 
         return $x(String.format(ITEM_STATUS_RADIO.getSelector(), status.getStatus())).as(ITEM_STATUS_RADIO.getAlias());
     }
-
-    public ElementsCollection getTableOptionMenuItems(){
-        return optionItems;
-    }
-
 }

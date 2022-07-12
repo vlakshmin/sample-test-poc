@@ -24,5 +24,4 @@ public class OpenPricingPage extends BasePage {
     private SelenideElement activateButton = $x(ACTIVATE_OPEN_PRICING_BUTTON.getSelector()).as(ACTIVATE_OPEN_PRICING_BUTTON.getAlias());
     private SelenideElement deactivateButton = $x(DEACTIVATE_OPEN_PRICING_BUTTON.getSelector()).as(DEACTIVATE_OPEN_PRICING_BUTTON.getAlias());
     private Table openPricingTable = new Table();
-
 }
