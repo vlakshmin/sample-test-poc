@@ -47,7 +47,7 @@ public class Multipane {
     private SelenideElement itemsQuantityString;
 
     private static final String MULTIPANE_ROOT = "//h3[text()='%s']/../..";
-    //button/h3[text()='%s']/../../..
+    //h3[text()='%s']/../..
 
     @Getter(AccessLevel.NONE)
     private ElementsCollection selectTableItems;

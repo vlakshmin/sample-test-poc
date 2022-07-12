@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum MultipaneElements {
 
-    PANEL_NAME_LABEL("'Panel Name' Label in Multipane", ""),
+    PANEL_NAME_LABEL("'Panel Name' Label in Multipane", "/button"),
     SEARCH_INPUT("'Search' Input in Multipane", "//input[@placeholder='Search']"),
     EXCLUDED_ICON("'Excluded' Icon in Multipane", "//div[@class='excluded-banner']/i"),
     INCLUDED_ICON("'Included' Icon in Multipane", "//div[@class='included-banner']/i"),
