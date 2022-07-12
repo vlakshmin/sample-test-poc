@@ -100,8 +100,8 @@ public class MediaSortingTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("1-50 of %s", totalMedia)))
+                .then(String.format("Validate that text in table footer '1-50 of %s'",
+                       totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalMedia))
                 .then("Validate data in column 'Media Name' should be sorted by desc")
@@ -111,8 +111,8 @@ public class MediaSortingTableTests extends BaseTest {
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("51-100 of %s", totalMedia)))
+                .then(String.format("Validate that text in table footer '51-100 of %s'",
+                     totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalMedia))
                 .then("Validate data in column 'Media Name' should be sorted by desc")
@@ -139,8 +139,8 @@ public class MediaSortingTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("1-50 of %s", totalMedia)))
+                .then(String.format("Validate that text in table footer '1-50 of %s'",
+                        totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalMedia))
                 .then("Validate data in column 'Media Name' should be sorted by asc")
@@ -150,8 +150,8 @@ public class MediaSortingTableTests extends BaseTest {
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("51-100 of %s", totalMedia)))
+                .then(String.format("Validate that text in table footer '51-100 of %s'",
+                        totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalMedia))
                 .then("Validate data in column 'Media Name' should be sorted by asc")
@@ -178,8 +178,8 @@ public class MediaSortingTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("1-50 of %s", totalMedia)))
+                .then(String.format("Validate that text in table footer '1-50 of %s'",
+                         totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalMedia))
                 .then("Validate data in column 'Publisher' should be sorted by asc")
@@ -189,8 +189,8 @@ public class MediaSortingTableTests extends BaseTest {
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("51-100 of %s", totalMedia)))
+                .then(String.format("Validate that text in table footer '51-100 of %s'",
+                        totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalMedia))
                 .then("Validate data in column 'Publisher' should be sorted by asc")
@@ -220,8 +220,8 @@ public class MediaSortingTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("1-50 of %s", totalMedia)))
+                .then(String.format("Validate that text in table footer '1-50 of %s'",
+                        totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalMedia))
                 .then("Validate data in column 'Publisher' should be sorted by desc")
@@ -231,8 +231,8 @@ public class MediaSortingTableTests extends BaseTest {
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("51-100 of %s", totalMedia)))
+                .then(String.format("Validate that text in table footer '51-100 %s'",
+                        totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalMedia))
                 .then("Validate data in column 'Publisher' should be sorted by desc")
@@ -263,8 +263,8 @@ public class MediaSortingTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("1-50 of %s", totalMedia)))
+                .then(String.format("Validate that text in table footer '1-50 of %s'",
+                       totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalMedia))
                 .then("Validate data in column 'ID' should be sorted by desc")
@@ -274,8 +274,8 @@ public class MediaSortingTableTests extends BaseTest {
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("51-100 of %s", totalMedia)))
+                .then(String.format("Validate that text in table footer '51-100 of %s'",
+                        totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalMedia))
                 .then("Validate data in column 'ID' should be sorted by desc")
@@ -303,8 +303,8 @@ public class MediaSortingTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("1-50 of %s", totalMedia)))
+                .then(String.format("Validate that text in table footer '1-50 of %s'",
+                        totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalMedia))
                 .then("Validate data in column 'ID' should be sorted by asc")
@@ -314,8 +314,8 @@ public class MediaSortingTableTests extends BaseTest {
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("51-100 of %s", totalMedia)))
+                .then(String.format("Validate that text in table footer '51-100 %s'",
+                        totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalMedia))
                 .then("Validate data in column 'ID' should be sorted by asc")
@@ -350,8 +350,8 @@ public class MediaSortingTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("1-50 of %s", totalMedia)))
+                .then(String.format("Validate that text in table footer '1-50 of %s'",
+                        totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalMedia))
                 .then("Validate data in column 'Site/App store URL' should be sorted by desc")
@@ -361,8 +361,8 @@ public class MediaSortingTableTests extends BaseTest {
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("51-100 of %s", totalMedia)))
+                .then(String.format("Validate that text in table footer '51-100 of %s'",
+                        totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalMedia))
                 .then("Validate data in column 'Site/App store URL' should be sorted by desc")
@@ -394,8 +394,8 @@ public class MediaSortingTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("1-50 of %s", totalMedia)))
+                .then(String.format("Validate that text in table footer '1-50 of %s'",
+                        totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalMedia))
                 .then("Validate data in column 'Site/App store URL' should be sorted by asc")
@@ -405,8 +405,8 @@ public class MediaSortingTableTests extends BaseTest {
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("51-100 of %s", totalMedia)))
+                .then(String.format("Validate that text in table footer '51-100 of %s'",
+                        totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalMedia))
                 .then("Validate data in column 'Site/App store URL' should be sorted by asc")
