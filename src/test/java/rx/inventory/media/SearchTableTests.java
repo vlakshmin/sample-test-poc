@@ -34,9 +34,9 @@ import static zutils.FakerUtils.*;
 public class SearchTableTests extends BaseTest {
 
     private Publisher publisher;
-    private String mediaName;
-    private String pubName;
-    private String filterSearch;
+    private static final String mediaName = "SS1";
+    private static final String pubName = "SSS2";
+    private static final String filterSearch = "RpT5";
     private List<String> mediaNamesByAsc;
     private List<String> publishersByAsc;
     private List<String> searchByA;
@@ -55,9 +55,6 @@ public class SearchTableTests extends BaseTest {
 
     @BeforeClass
     public void loginAndCreateExpectedResuts() {
-        mediaName = "SS1";
-        pubName = "SSS2";
-        filterSearch = "RpT4";
         mediaIds = new ArrayList<>();
         publishersIds = new ArrayList<>();
 
@@ -273,14 +270,12 @@ public class SearchTableTests extends BaseTest {
                     setCredentials(USER_FOR_DELETION).
                     deleteMedia(mediaId);
         }
-        ;
 
         for (Integer publisherId : publishersIds) {
             PublisherPrecondition.publisher().
                     setCredentials(USER_FOR_DELETION).
                     deletePublisher(publisherId);
         }
-        ;
     }
 
     private MediaRequest createCustomMedia(String name, Boolean isEnabled, String publisherName) {

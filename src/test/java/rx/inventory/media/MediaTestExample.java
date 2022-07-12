@@ -34,7 +34,6 @@ public class MediaTestExample extends BaseTest {
     }
 
     @BeforeClass
-    @Ignore
     public void createNewMedia() {
         //Creating media to edit Using API
         media = MediaPrecondition.media()
@@ -44,7 +43,6 @@ public class MediaTestExample extends BaseTest {
     }
 
     @Test
-    @Ignore
     public void mediaTest() {
         var tableData = mediaPage.getMediaTable().getTableData();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
@@ -102,7 +100,6 @@ public class MediaTestExample extends BaseTest {
     }
 
     @AfterTest
-    @Ignore
     public void deleteMedia() {
 
         MediaPrecondition.media().
