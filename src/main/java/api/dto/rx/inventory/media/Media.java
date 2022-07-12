@@ -31,6 +31,7 @@ public class Media {
     private String publisherName;
     private List<Integer> categoryIds;
 
+
     public String toJson() {
 
         return ObjectMapperUtils.toJson(this);

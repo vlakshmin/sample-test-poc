@@ -43,7 +43,6 @@ public class MediaTestExample extends BaseTest {
     }
 
     @Test
-    @Ignore
     public void mediaTest() {
         var tableData = mediaPage.getMediaTable().getTableData();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
