@@ -1,5 +1,5 @@
 # Base URL and Browser(Currently - CHROME)
-baseUrl: https://stg-publisher-portal.rmp.rakuten.com
+baseUrl: https://qa-publisher-portal.rmp.rakuten.com
 browser: chrome
 
 # WebDriver Settings

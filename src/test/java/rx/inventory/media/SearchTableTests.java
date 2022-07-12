@@ -14,6 +14,7 @@ import pages.Path;
 import pages.inventory.media.MediaPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
+import widgets.common.table.Statuses;
 import zutils.ObjectMapperUtils;
 
 import java.util.ArrayList;
@@ -35,10 +36,13 @@ public class SearchTableTests extends BaseTest {
     private Publisher publisher;
     private String mediaName;
     private String pubName;
-    private Integer totalMedia;
+    private String filterSearch;
     private List<String> mediaNamesByAsc;
     private List<String> publishersByAsc;
     private List<String> searchByA;
+    private List<String> searchActive;
+    private List<String> searchInactive;
+    private List<String> searchBoth;
 
     private MediaPage mediaPage;
 
@@ -51,41 +55,83 @@ public class SearchTableTests extends BaseTest {
 
     @BeforeClass
     public void loginAndCreateExpectedResuts() {
-        mediaName = "mediaSS1";
-        pubName = "pubSSS2";
+        mediaName = "SS1";
+        pubName = "SSS2";
+        filterSearch = "RpT4";
         mediaIds = new ArrayList<>();
         publishersIds = new ArrayList<>();
 
-       Media media = MediaPrecondition.media()
-                .createNewMedia(createCustomMedia("media","pub"))
+        Media media = MediaPrecondition.media()
+                .createNewMedia(createCustomMedia("media", true, "pub"))
                 .build()
                 .getMediaResponse();
         mediaIds.add(media.getId());
         publishersIds.add(media.getPublisherId());
 
         media = MediaPrecondition.media()
-                .createNewMedia(createCustomMedia(mediaName,pubName))
+                .createNewMedia(createCustomMedia(mediaName, true, pubName))
+                .build()
+                .getMediaResponse();
+        mediaIds.add(media.getId());
+        publishersIds.add(media.getPublisherId());
+
+        media = MediaPrecondition.media()
+                .createNewMedia(createCustomMedia(filterSearch + "2", true, filterSearch + "2"))
+                .build()
+                .getMediaResponse();
+        mediaIds.add(media.getId());
+        publishersIds.add(media.getPublisherId());
+
+        media = MediaPrecondition.media()
+                .createNewMedia(createCustomMedia(filterSearch + "3", true, filterSearch + "3"))
+                .build()
+                .getMediaResponse();
+        mediaIds.add(media.getId());
+        publishersIds.add(media.getPublisherId());
+
+        media = MediaPrecondition.media()
+                .createNewMedia(createCustomMedia(filterSearch + "4", false, filterSearch + "5"))
+                .build()
+                .getMediaResponse();
+        mediaIds.add(media.getId());
+        publishersIds.add(media.getPublisherId());
+
+        media = MediaPrecondition.media()
+                .createNewMedia(createCustomMedia(filterSearch + "5", false, filterSearch + "5"))
                 .build()
                 .getMediaResponse();
         mediaIds.add(media.getId());
         publishersIds.add(media.getPublisherId());
 
         //expected results for Media Name column
-        mediaNamesByAsc  = getAllItemsByParams(mediaName).stream()
+        mediaNamesByAsc = getAllItemsByParams(mediaName, null).stream()
                 .map(Media::getName)
                 .collect(Collectors.toList());
 
-        publishersByAsc = getAllItemsByParams(pubName).stream()
+        publishersByAsc = getAllItemsByParams(pubName, null).stream()
                 .map(Media::getPublisherName)
                 .collect(Collectors.toList());
 
-        searchByA  = getAllItemsByParams("A").stream()
+        searchByA = getAllItemsByParams("A", null).stream()
                 .map(Media::getName)
                 .collect(Collectors.toList());
+
+        searchActive = getAllItemsByParams(filterSearch, true).stream()
+                .map(Media::getName)
+                .collect(Collectors.toList());
+
+        searchInactive = getAllItemsByParams(filterSearch, false).stream()
+                .map(Media::getName)
+                .collect(Collectors.toList());
+
+        searchBoth = getAllItemsByParams(filterSearch, null).stream()
+                .map(Media::getName)
+                .collect(Collectors.toList());
+
     }
 
     @BeforeMethod
-    private void login(){
+    private void login() {
         testStart()
                 .given()
                 .openDirectPath(Path.MEDIA)
@@ -93,8 +139,9 @@ public class SearchTableTests extends BaseTest {
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .testEnd();
     }
+
     @AfterMethod
-    private void logOut(){
+    private void logOut() {
         testStart()
                 .given()
                 .logOut()
@@ -113,12 +160,12 @@ public class SearchTableTests extends BaseTest {
                 .waitAndValidate(disappear, mediaPage.getTableProgressBar())
                 .and("Sort column 'Media Name'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
-                .then(String.format("Ensure that column 'Media Name' contains values with string '%s'",mediaName))
+                .then(String.format("Validate data in column 'Media Name' should contain '%s'", mediaName))
                 .validateAttribute(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()),
-                        "aria-sort","ascending")
-                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME),mediaNamesByAsc)
+                        "aria-sort", "ascending")
+                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME), mediaNamesByAsc)
                 .and("End Test")
-        .testEnd();
+                .testEnd();
     }
 
     @Test(testName = "Search by 'Publisher'")
@@ -133,18 +180,18 @@ public class SearchTableTests extends BaseTest {
                 .waitAndValidate(disappear, mediaPage.getTableProgressBar())
                 .and("Sort column 'Media Name'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
-                .then(String.format("Ensure that column 'Media Name' contains values with string '%s'",mediaName))
+                .then(String.format("Validate data in column 'Media Name' should contain '%s'", mediaName))
                 .validateAttribute(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()),
-                        "aria-sort","ascending")
+                        "aria-sort", "ascending")
                 .waitAndValidate(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Ensure that column 'Publisher' contains values with string '%s'",pubName))
-                .validateList(tableData.getCustomCells(ColumnNames.PUBLISHER),publishersByAsc)
+                .then(String.format("Validate data in column 'Publisher' should contain '%s'", pubName))
+                .validateList(tableData.getCustomCells(ColumnNames.PUBLISHER), publishersByAsc)
                 .and("End Test")
                 .testEnd();
     }
 
     @Test(testName = "Search by 'A'")
-    public void mediaSearchByA() {
+    public void mediaSearchWithPaginatinaton() {
         var tableData = mediaPage.getMediaTable().getTableData();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
 
@@ -159,56 +206,96 @@ public class SearchTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "10")
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("1-10 of %s", searchByA)))
+                .then(String.format("Validate that text in table footer '1-10 of %s'", searchByA.size()))
                 .and("Sort column 'Media Name'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
                 .then(String.format("Validate data in column 'Media Name' should contain 'A'"))
                 .validateAttribute(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()),
-                        "aria-sort","ascending")
-                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME),searchByA.subList(0,10))
+                        "aria-sort", "ascending")
+                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME), searchByA.subList(0, 10))
                 .and("Check next page")
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("11-20 of %s", searchByA.size())))
+                .then(String.format("Validate that text in table footer '11-20 of %s'", searchByA.size()))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("11-20 of %s", searchByA.size()))
                 .then("Validate data in column 'Media Name' should contain 'A'")
                 .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME),
-                        searchByA.subList(10,20))
+                        searchByA.subList(10, 20))
                 .and("End Test")
                 .testEnd();
     }
+
+    @Test(testName = "Search with filter by status")
+    public void mediaSearchWithFilterByStatus() {
+        var tableData = mediaPage.getMediaTable().getTableData();
+        var tableOptions = mediaPage.getMediaTable().getTableOptions();
+        var tablePagination = mediaPage.getMediaTable().getTablePagination();
+
+        testStart()
+                .given()
+                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+                .setValueWithClean(tableData.getSearch(), filterSearch)
+                .clickEnterButton(tableData.getSearch())
+                .waitAndValidate(disappear, mediaPage.getTableProgressBar())
+                .and("Sort column 'Media Name'")
+                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
+                .then(String.format("Validate data in column 'Media Name' should contain '%s'", filterSearch))
+                .validateAttribute(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()),
+                        "aria-sort", "ascending")
+                .waitAndValidate(disappear, mediaPage.getTableProgressBar())
+                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME), searchBoth)
+                .and("Set filter 'Active'")
+                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .selectRadioButton(tableOptions.getStatusItemRadio(Statuses.ACTIVE))
+                .scrollIntoView(tableData.getSearch())
+                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .waitAndValidate(disappear, mediaPage.getTableProgressBar())
+                .then(String.format("Validate data in column 'Media Name' should contain '%s'", filterSearch))
+                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME), searchActive)
+                .and("Set filter 'Inactive'")
+                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .selectRadioButton(tableOptions.getStatusItemRadio(Statuses.INACTIVE))
+                .scrollIntoView(tableData.getSearch())
+                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .waitAndValidate(disappear, mediaPage.getTableProgressBar())
+                .then(String.format("Validate data in column 'Media Name' should contain '%s'", filterSearch))
+                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME), searchInactive)
+                .and("End Test")
+                .testEnd();
+    }
+
     @AfterTest
     private void deleteEntities() {
         for (Integer mediaId : mediaIds) {
-              MediaPrecondition.media().
-                setCredentials(USER_FOR_DELETION).
-                deleteMedia(mediaId);
-        };
+            MediaPrecondition.media().
+                    setCredentials(USER_FOR_DELETION).
+                    deleteMedia(mediaId);
+        }
+        ;
 
         for (Integer publisherId : publishersIds) {
             PublisherPrecondition.publisher().
                     setCredentials(USER_FOR_DELETION).
                     deletePublisher(publisherId);
-        };
+        }
+        ;
     }
 
-    private MediaRequest createCustomMedia(String name, String publisherName) {
+    private MediaRequest createCustomMedia(String name, Boolean isEnabled, String publisherName) {
 
-        publisher =  PublisherPrecondition.publisher()
+        publisher = PublisherPrecondition.publisher()
                 .createNewPublisher(createCustomPublisher(publisherName))
                 .build()
                 .getPublisherResponse();
 
-        return  MediaRequest.builder()
+        return MediaRequest.builder()
                 .name(captionWithSuffix(name))
                 .publisherId(publisher.getId())
                 .platformId(2)
                 .url("http://testsearch.com")
-                .isEnabled(true)
+                .isEnabled(isEnabled)
                 .categoryIds(List.of(1, 9))
                 .build();
     }
@@ -222,22 +309,23 @@ public class SearchTableTests extends BaseTest {
                 .isEnabled(true)
                 .domain(randomUrl())
                 .currency(Currency.JPY.name())
-                .categoryIds(List.of(1,9))
+                .categoryIds(List.of(1, 9))
                 .dspIds(List.of(7))
                 .build();
     }
 
-    private List<Media> getAllItemsByParams(String strParams) {
+    private List<Media> getAllItemsByParams(String strParams, Boolean isEnabled) {
         HashMap<String, Object> queryParams = new HashMap();
         queryParams.put("search", strParams);
         queryParams.put("sort", "name-asc");
+        if (isEnabled != null) queryParams.put("enabled", isEnabled);
         List<Media> mediaList = MediaPrecondition.media()
                 .getMediaWithFilter(queryParams)
                 .build()
                 .getMediaGetAllResponse()
                 .getItems();
 
-        return ObjectMapperUtils.getCollectionType(mediaList,Media.class);
+        return ObjectMapperUtils.getCollectionType(mediaList, Media.class);
     }
 
 }
