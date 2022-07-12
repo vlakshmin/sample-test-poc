@@ -14,7 +14,8 @@ import zutils.ObjectMapperUtils;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.disappear;
+import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
 import static managers.TestManager.testStart;
 
@@ -86,12 +87,12 @@ public class MediaSortingTableTests extends BaseTest {
         testStart()
                 .given()
                 .and("Sort column 'Media Name'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.NAME.getName()))
+                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
                 .then("Ensure that sort by descending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.NAME.getName()),
+                .validateAttribute(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()),
                         "aria-sort","ascending")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.NAME.getName()))
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.NAME.getName()),
+                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
+                .validateAttribute(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()),
                         "aria-sort","descending")
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .and("Select 50 row per page")
@@ -104,7 +105,7 @@ public class MediaSortingTableTests extends BaseTest {
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalMedia))
                 .then("Validate data in column 'Media Name' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.NAME),
+                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME),
                         sortNamesByDesc.subList(0,50))
                 .and("Check next page")
                 .clickOnWebElement(tablePagination.getNext())
@@ -115,7 +116,7 @@ public class MediaSortingTableTests extends BaseTest {
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalMedia))
                 .then("Validate data in column 'Media Name' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.NAME),
+                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME),
                         sortNamesByDesc.subList(50,100))
         .testEnd();
     }
