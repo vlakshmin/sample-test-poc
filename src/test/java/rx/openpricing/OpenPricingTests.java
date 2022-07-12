@@ -5,6 +5,7 @@ import api.preconditionbuilders.OpenPricingPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
@@ -38,6 +39,7 @@ public class OpenPricingTests extends BaseTest {
     }
 
     @Test(enabled = true)
+    @Ignore
     public void checkPagination() {
         var table = openPricingPage.getOpenPricingTable().getTableOptions();
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
@@ -94,6 +96,7 @@ public class OpenPricingTests extends BaseTest {
     }
 
     @Test(enabled = true)
+    @Ignore
     public void verifyColumnOrder() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
@@ -126,7 +129,7 @@ public class OpenPricingTests extends BaseTest {
                 .scrollIntoView(tableOptions.getTableOptionsBtn())
                 .clickOnWebElement(tableOptions.getTableOptionsBtn())//
                 .and()
-                .validateListSize(tableOptions.getTableOptionMenuItems(),
+                .validateListSize(tableOptions.getOptionItems(),
                         ColumnNames.ID.getName(),
                         ColumnNames.DETAILS.getName(),
                         ColumnNames.NAME.getName(),
@@ -142,6 +145,7 @@ public class OpenPricingTests extends BaseTest {
     }
 
     @Test(enabled = true)
+    @Ignore
     public void checkColumns() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
@@ -187,7 +191,7 @@ public class OpenPricingTests extends BaseTest {
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_BY))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.UPDATED_BY.getName()))
                 .then()
-                .validateListSize(tableOptions.getTableOptionMenuItems(),
+                .validateListSize(tableOptions.getOptionItems(),
                         ColumnNames.ID.getName(),
                         ColumnNames.DETAILS.getName(),
                         ColumnNames.NAME.getName(),
@@ -419,6 +423,7 @@ public class OpenPricingTests extends BaseTest {
 //    }
 
     @Test(enabled = false)
+    @Ignore
     public void verifySearch(){
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
@@ -432,6 +437,7 @@ public class OpenPricingTests extends BaseTest {
     }
 
     @Test(enabled = true)
+    @Ignore
     public void verifySingleDeactivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
@@ -453,6 +459,7 @@ public class OpenPricingTests extends BaseTest {
     }
 
     @Test(enabled = true)
+    @Ignore
     public void verifySingleActivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
@@ -472,6 +479,7 @@ public class OpenPricingTests extends BaseTest {
     }
 
     @Test(enabled = true)
+    @Ignore
     public void verifyBulkDeactivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         testStart()
@@ -493,6 +501,7 @@ public class OpenPricingTests extends BaseTest {
     }
 
     @Test(enabled = true)
+    @Ignore
     public void verifyBulkActivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
@@ -518,6 +527,7 @@ public class OpenPricingTests extends BaseTest {
     }
 
     @Test(enabled = true)
+    @Ignore
     public void verifySingleDeactivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
@@ -540,6 +550,7 @@ public class OpenPricingTests extends BaseTest {
     }
 
     @Test(enabled = true)
+    @Ignore
     public void verifySingleActivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
@@ -559,6 +570,7 @@ public class OpenPricingTests extends BaseTest {
     }
 
     @Test(enabled = true)
+    @Ignore
     public void verifyBulkDeactivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
@@ -593,6 +605,7 @@ public class OpenPricingTests extends BaseTest {
     }
 
     @Test(enabled = true)
+    @Ignore
     public void verifyBulkActivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
@@ -626,6 +639,7 @@ public class OpenPricingTests extends BaseTest {
     }
 
     @Test(enabled = false)
+    @Ignore
     public void verifyRuleExpand() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
@@ -639,6 +653,7 @@ public class OpenPricingTests extends BaseTest {
     }
 
     @Test(enabled = true)
+    @Ignore
     public void verifyUserCreateOpenPricingRule() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
