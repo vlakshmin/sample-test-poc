@@ -23,7 +23,7 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class SortingTableTests extends BaseTest {
+public class OpenPricingSortingTableTests extends BaseTest {
     private int totalOpenPricing;
     private List<String> sortIdsByAsc;
     private List<String> sortIdsByDesc;
@@ -37,7 +37,7 @@ public class SortingTableTests extends BaseTest {
     private List<String> sortFloorPriceAsc;
     private OpenPricingPage openPricingPage;
 
-    public SortingTableTests() {
+    public OpenPricingSortingTableTests() {
         openPricingPage = new OpenPricingPage();
     }
 
@@ -138,8 +138,8 @@ public class SortingTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "25")
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("1-25 of %s", totalOpenPricing)))
+                .then(String.format("Validate that text in table footer '1-25 of %s'",
+                        totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-25 of %s", totalOpenPricing))
                 .then("Validate data in column 'Name' should be sorted by desc")
@@ -149,8 +149,8 @@ public class SortingTableTests extends BaseTest {
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("26-50 of %s", totalOpenPricing)))
+                .then(String.format("Validate that text in table footer '26-50 of %s'",
+                        totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("26-50 of %s", totalOpenPricing))
                 .then("Validate data in column 'Name' should be sorted by desc")
@@ -177,8 +177,8 @@ public class SortingTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("1-50 of %s", totalOpenPricing)))
+                .then(String.format("Validate that text in table footer '1-50 of %s'",
+                        totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalOpenPricing))
                 .then("Validate data in column 'Name' should be sorted by asc")
@@ -188,8 +188,8 @@ public class SortingTableTests extends BaseTest {
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("51-100 of %s", totalOpenPricing)))
+                .then(String.format("Validate that text in table footer '51-100 of %s'",
+                        totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalOpenPricing))
                 .then("Validate data in column 'Name' should be sorted by asc")
@@ -220,8 +220,8 @@ public class SortingTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("1-50 of %s", totalOpenPricing)))
+                .then(String.format("Validate that text in table footer '1-50 of %s'",
+                        totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalOpenPricing))
                 .then("Validate data in column 'Publisher' should be sorted by desc")
@@ -231,8 +231,8 @@ public class SortingTableTests extends BaseTest {
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("51-100 of %s", totalOpenPricing)))
+                .then(String.format("Validate that text in table footer '51-100 of %s'",
+                        totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalOpenPricing))
                 .then("Validate data in column 'Publisher' should be sorted by desc")
@@ -260,8 +260,8 @@ public class SortingTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("1-50 of %s", totalOpenPricing)))
+                .then(String.format("Validate that text in table footer '1-50 of %s'",
+                        totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalOpenPricing))
                 .then("Validate data in column 'Publisher' should be sorted by asc")
@@ -271,8 +271,8 @@ public class SortingTableTests extends BaseTest {
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("51-100 of %s", totalOpenPricing)))
+                .then(String.format("Validate that text in table footer '51-100 of %s'",
+                        totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalOpenPricing))
                 .then("Validate data in column 'Publisher' should be sorted by asc")
@@ -304,8 +304,8 @@ public class SortingTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("1-50 of %s", totalOpenPricing)))
+                .then(String.format("Validate that text in table footer '1-50 of %s'",
+                        totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalOpenPricing))
                 .then("Validate data in column 'ID' should be sorted by desc")
@@ -315,8 +315,8 @@ public class SortingTableTests extends BaseTest {
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("51-100 of %s", totalOpenPricing)))
+                .then(String.format("Validate that text in table footer '51-100 of %s'",
+                        totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalOpenPricing))
                 .then("Validate data in column 'ID' should be sorted by desc")
@@ -345,8 +345,8 @@ public class SortingTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("1-50 of %s", totalOpenPricing)))
+                .then(String.format("Validate that text in table footer '1-50 of %s'",
+                        totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalOpenPricing))
                 .then("Validate data in column 'ID' should be sorted by asc")
@@ -356,8 +356,8 @@ public class SortingTableTests extends BaseTest {
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("51-100 of %s", totalOpenPricing)))
+                .then(String.format("Validate that text in table footer '51-100 of %s'",
+                        totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalOpenPricing))
                 .then("Validate data in column 'ID' should be sorted by asc")
@@ -393,18 +393,18 @@ public class SortingTableTests extends BaseTest {
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalOpenPricing))
                 .then("Validate data in column 'Active/Inactive' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE),
+                .validateList(tableData.getCustomCells(ColumnNames.ID),
                         sortActiveInactiveByDesc.subList(0, 50))
                 .and("Check next page")
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("51-100 of %s", totalOpenPricing)))
+                .then(String.format("Validate that text in table footer '51-100 of %s'",
+                        totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalOpenPricing))
                 .then("Validate data in column 'Active/Inactive' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE),
+                .validateList(tableData.getCustomCells(ColumnNames.ID),
                         sortActiveInactiveByDesc.subList(50, 100))
                 .and()
                 .testEnd();
@@ -428,23 +428,23 @@ public class SortingTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("1-50 of %s", totalOpenPricing)))
+                .then(String.format("Validate that text in table footer '1-50 of %s'",
+                        totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalOpenPricing))
                 .then("Validate data in column 'Active Inactive' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE),
+                .validateList(tableData.getCustomCells(ColumnNames.ID),
                         sortActiveInactiveByAsc.subList(0, 50))
                 .and("Check next page")
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("51-100 of %s", totalOpenPricing)))
+                .then(String.format("Validate that text in table footer '51-100 of %s'",
+                        totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalOpenPricing))
                 .then("Validate data in column 'Active Inactive' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE),
+                .validateList(tableData.getCustomCells(ColumnNames.ID),
                         sortActiveInactiveByAsc.subList(50, 100))
                 .and()
                 .testEnd();
@@ -471,8 +471,8 @@ public class SortingTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("1-50 of %s", totalOpenPricing)))
+                .then(String.format("Validate that text in table footer '1-50 of %s'",
+                        totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalOpenPricing))
                 .then("Validate data in column 'Floor Price' should be sorted by desc")
@@ -482,8 +482,8 @@ public class SortingTableTests extends BaseTest {
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("51-100 of %s", totalOpenPricing)))
+                .then(String.format("Validate that text in table footer '51-100 of %s'",
+                        totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalOpenPricing))
                 .then("Validate data in column 'Floor Price' should be sorted by desc")
@@ -511,8 +511,8 @@ public class SortingTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("1-50 of %s", totalOpenPricing)))
+                .then(String.format("Validate that text in table footer 1-50 of '%s'",
+                        totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalOpenPricing))
                 .then("Validate data in column 'Floor Price' should be sorted by asc")
@@ -522,8 +522,8 @@ public class SortingTableTests extends BaseTest {
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("51-100 of %s", totalOpenPricing)))
+                .then(String.format("Validate that text in table footer '51-100 of %s'",
+                        totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("51-100 of %s", totalOpenPricing))
                 .then("Validate data in column 'Floor Price' should be sorted by asc")
@@ -541,9 +541,8 @@ public class SortingTableTests extends BaseTest {
                 .build()
                 .getOpenPricingGetAllResponse()
                 .getItems();
-        String jsonString = ObjectMapperUtils.toJson(openPricingList);
 
-        return ObjectMapperUtils.getCollectionType(jsonString, OpenPricing.class);
+        return ObjectMapperUtils.getCollectionType(openPricingList, OpenPricing.class);
     }
 
     private String customFormat(Double value) {

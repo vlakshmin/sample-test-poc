@@ -12,7 +12,7 @@
             <class name="rx.login.LoginPositiveTest"/>
             <class name="rx.protections.ProtectionsTest"/>
             <class name="rx.sales.deals.DealsTest"/>
-            <class name="rx.OpenPricingTest"/>
+            <class name="rx.openpricing.OpenPricingSortingTableTests"/>
         </classes>
     </test>
 </suite>
