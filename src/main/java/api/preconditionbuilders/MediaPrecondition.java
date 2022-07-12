@@ -70,6 +70,13 @@ public class MediaPrecondition {
             return this;
         }
 
+        public MediaPreconditionBuilder createNewMedia(MediaRequest mediaRequest) {
+
+            this.response = mediaService.createMedia(mediaRequest);
+            this.mediaResponse = response.as(Media.class);
+
+            return this;
+        }
         public MediaPreconditionBuilder getAllMediaList() {
             this.response = mediaService.getAll();
 

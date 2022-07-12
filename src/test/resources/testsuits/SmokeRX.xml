@@ -7,6 +7,7 @@
             <class name="rx.component.multipane.MultipaneTest"/>
             <class name="rx.component.table.TableDataTests"/>
             <class name="rx.inventory.adspot.AdSpotTest"/>
+            <class name="rx.inventory.media.MediaSortingTableTests"/>
             <class name="rx.login.LoginPositiveTest"/>
             <class name="rx.protections.ProtectionsTest"/>
             <class name="rx.sales.deals.DealsTest"/>
