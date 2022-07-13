@@ -1,11 +1,12 @@
 package api.preconditionbuilders;
 
+import api.dto.rx.yield.openpricing.OpenPricingRequest;
+import api.dto.rx.yield.openpricing.*;
 import api.dto.GenericResponse;
 import api.dto.rx.inventory.adspot.Banner;
 import api.dto.rx.inventory.adspot.AdSpot;
 import api.dto.rx.inventory.adspot.AdSpotRequest;
 import api.dto.rx.inventory.media.Media;
-import api.dto.rx.yield.openpricing.*;
 import api.services.OpenPricingService;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static zutils.FakerUtils.captionWithSuffix;
 
@@ -134,6 +136,14 @@ public class OpenPricingPrecondition {
         public OpenPricingPrecondition build() {
 
             return new OpenPricingPrecondition(this);
+        }
+
+        public OpenPricingPreconditionBuilder getOpenPricingWithFilter(Map<String, Object> queryParams) {
+            this.response = openPricingService.getOpenPricingWithFilter(queryParams);
+
+            this.openPricingGetAllResponse = this.response.as(GenericResponse.class);
+
+            return this;
         }
     }
 }

@@ -19,3 +19,4 @@ public class BasePage {
     private SelenideElement nuxtProgress = $x(NUXT_PROGRESSBAR.getSelector()).as(NUXT_PROGRESSBAR.getAlias());
     private SelenideElement tableProgressBar = $x(TABLE_PROGRESSBAR.getSelector()).as(TABLE_PROGRESSBAR.getAlias());
 }
+

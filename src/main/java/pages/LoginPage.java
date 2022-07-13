@@ -16,5 +16,4 @@ public class LoginPage {
     private SelenideElement loginInput = $x(LOGIN_INPUT.getSelector()).as(LOGIN_INPUT.getAlias());
     private SelenideElement passwordInput = $x(PASSWORD_INPUT.getSelector()).as(PASSWORD_INPUT.getAlias());
     private SelenideElement logInButton;
-
 }

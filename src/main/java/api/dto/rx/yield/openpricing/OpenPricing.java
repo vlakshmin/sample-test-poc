@@ -23,6 +23,7 @@ public class OpenPricing {
     private String createdAt;
     private String createdBy;
     private String updatedAt;
+    private String updatedBy;
     private Double floorPrice;
     private Integer publisherId;
     private String  publisherName;

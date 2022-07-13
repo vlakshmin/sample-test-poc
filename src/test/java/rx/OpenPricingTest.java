@@ -3,7 +3,6 @@ package rx;
 import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.OpenPricingPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
-import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
@@ -32,9 +31,8 @@ public class OpenPricingTest extends BaseTest {
     }
 
     @BeforeClass
-    @Step("Creating Open Pricing to edit Using API")
-    public void createNewPublisher() {
-
+    public void createOpenPricing() {
+        //Creating publisher to edit Using API
         openPricing = OpenPricingPrecondition.openPricing()
                 .createNewOpenPricing()
                 .build()
@@ -73,28 +71,4 @@ public class OpenPricingTest extends BaseTest {
 
         //allure serve
     }
-    //todo Uncomment it and delete this test
-//
-//    @Test
-//    public void verifySingleDeactivatePublisherActive() {
-//        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-//        var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
-//        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-//        testStart()
-//                .given()
-//                .openDirectPath(Path.OPEN_PRICING)
-//                .logIn(TEST_USER)
-//                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-//                .and()
-//                .scrollIntoView(tableData.getCheckbox(1))
-//                //.clickOnWebElement(tableData.getCheckbox(1))
-//                //.clickOnWebElement(openPricingPage.getDeactivateButton())
-//                .validateContainsText(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0),"Active")
-//                .then()
-//                .testEnd();
-//
-//
-//    }
-
-
 }

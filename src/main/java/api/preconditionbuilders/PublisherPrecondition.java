@@ -1,9 +1,12 @@
 package api.preconditionbuilders;
 
+import api.core.client.HttpClient;
 import api.dto.rx.common.Currency;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.admin.publisher.PublisherRequest;
+import api.dto.rx.inventory.media.Media;
 import api.services.PublisherService;
+import configurations.User;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -60,6 +63,13 @@ public class PublisherPrecondition {
             return this;
         }
 
+        public PublisherPreconditionBuilder createNewPublisher(PublisherRequest publisherRequest) {
+            this.response = publisherService.createPublisher(publisherRequest);
+            this.publisherResponse = response.as(Publisher.class);
+
+            return this;
+        }
+
         public PublisherPreconditionBuilder getPublishersList() {
             this.response = publisherService.getAll();
 
@@ -73,7 +83,19 @@ public class PublisherPrecondition {
             return Arrays.asList(response.jsonPath().getObject("items", Publisher[].class));
         }
 
+        public PublisherPrecondition.PublisherPreconditionBuilder deletePublisher(int id) {
+            this.response = publisherService.deletePublisher(id);
+
+            return this;
+        }
+
+        public PublisherPrecondition.PublisherPreconditionBuilder setCredentials(User user){
+            HttpClient.setCredentials(user);
+
+            return this;
+        }
         public PublisherPrecondition build() {
+            HttpClient.setCredentials(User.TEST_USER);
 
             return new PublisherPrecondition(this);
         }
