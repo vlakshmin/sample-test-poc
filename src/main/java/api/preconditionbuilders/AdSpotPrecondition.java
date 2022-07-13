@@ -1,5 +1,6 @@
 package api.preconditionbuilders;
 
+import api.core.client.HttpClient;
 import api.dto.GenericResponse;
 import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.adspot.AdSpot;
@@ -7,6 +8,7 @@ import api.dto.rx.inventory.adspot.AdSpotRequest;
 import api.dto.rx.inventory.adspot.Video;
 import api.dto.rx.inventory.media.Media;
 import api.services.AdSpotService;
+import configurations.User;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static zutils.FakerUtils.captionWithSuffix;
 
@@ -100,12 +103,30 @@ public class AdSpotPrecondition {
             return this;
         }
 
-
         private List<AdSpot> getAdSpotsResponseList() {
 
             return Arrays.asList(response.jsonPath().getObject("items", AdSpot[].class));
         }
 
+        public AdSpotPreconditionBuilder getAdSpotsWithFilter(Map<String, Object> queryParams) {
+            this.response = adSpotService.getAdSpotsWithFilter(queryParams);
+
+            this.adSpotsGetAllResponse = this.response.as(new GenericResponse<AdSpot>().getClass());
+
+            return this;
+        }
+
+        public AdSpotPreconditionBuilder deleteAdSpot(int id) {
+            this.response = adSpotService.deleteAdSpot(id);
+
+            return this;
+        }
+
+        public AdSpotPreconditionBuilder setCredentials(User user){
+            HttpClient.setCredentials(user);
+
+            return this;
+        }
         public AdSpotPrecondition build() {
 
             return new AdSpotPrecondition(this);

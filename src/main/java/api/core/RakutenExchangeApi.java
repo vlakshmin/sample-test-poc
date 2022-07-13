@@ -39,7 +39,8 @@ public enum RakutenExchangeApi {
     CREATE_ADSPOT("/v2/adspots"),
     GET_ADSPOT("/v2/adspots/%s"),
     GET_ALL_ADSPOTS("/v2/adspots"),
-    UPDATE_ADSPOT("/v2/adspots/%s");
+    UPDATE_ADSPOT("/v2/adspots/%s"),
+    DELETE_ADSPOT("/v2/adspots/%s");
 
     private String endpoint;
 

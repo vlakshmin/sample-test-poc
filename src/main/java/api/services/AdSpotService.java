@@ -3,8 +3,9 @@ package api.services;
 import api.dto.rx.inventory.adspot.AdSpotRequest;
 import io.restassured.response.Response;
 
-import static api.core.RakutenExchangeApi.CREATE_ADSPOT;
-import static api.core.RakutenExchangeApi.GET_ALL_ADSPOTS;
+import java.util.Map;
+
+import static api.core.RakutenExchangeApi.*;
 import static api.core.client.HttpClient.*;
 
 public class AdSpotService extends BaseService {
@@ -20,4 +21,15 @@ public class AdSpotService extends BaseService {
         return get(URL);
     }
 
+    public Response deleteAdSpot(int id) {
+        URL = initURL(DELETE_ADSPOT.setParameters(id));
+
+        return delete(URL);
+    }
+
+    public Response getAdSpotsWithFilter(Map<String, Object> queryParams) {
+        URL = initURL(GET_ALL_ADSPOTS);
+
+        return get(URL,queryParams);
+    }
 }
