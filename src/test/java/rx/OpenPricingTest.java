@@ -39,34 +39,36 @@ public class OpenPricingTest extends BaseTest {
                 .getOpenPricingResponse();
     }
 
-//    @Test
-//    public void editOpenPricingTest() {
-//        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-//
-//        //Opening Browser and check Open pricing from precondition
-//        testStart()
-//                .given()
-//                .openDirectPath(Path.OPEN_PRICING)
-//                .logIn(TEST_USER)
-//                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-//                .setValueWithClean(tableData.getSearch(), openPricing.getName())
-//                .waitLoading(visible, openPricingPage.getTableProgressBar())
-//                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-//                .then()
-//                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.NAME),
-//                        openPricing.getName())
-//                .and()
-//                .clickOnTableCellLink(tableData, ColumnNames.NAME, openPricing.getName())
-//                .waitSideBarOpened()
-//                .validateAttribute(editOpenPricingSidebar.getNameInput(), "value", openPricing.getName())
-//                .validate(editOpenPricingSidebar.getPublisherInput(), openPricing.getPublisherName())
-//                .validateAttribute(editOpenPricingSidebar.getFloorPrice(), "value", openPricing.getFloorPrice().toString())
-//                .clickOnWebElement(editOpenPricingSidebar.getSaveButton())
-//                .waitSideBarClosed()
-//                .testEnd();
-//
-//        //allure serve
-//    }
+    @Test
+    public void editOpenPricingTest() {
+        var tableData = openPricingPage.getOpenPricingTable().getTableData();
 
+        //Opening Browser and check Open pricing from precondition
+        testStart()
+                .given()
+                .openDirectPath(Path.OPEN_PRICING)
+                .logIn(TEST_USER)
+                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
+                .waitAndValidate(disappear, openPricingPage.getTableProgressBar())
+                .setValueWithClean(tableData.getSearch(), openPricing.getName())
+                .waitLoading(visible, openPricingPage.getTableProgressBar())
+                .waitLoading(disappear, openPricingPage.getTableProgressBar())
+                .then()
+                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.NAME),
+                        openPricing.getName())
+                .and()
+                .clickOnTableCellLink(tableData, ColumnNames.NAME, openPricing.getName())
+                .waitSideBarOpened()
+                .validateAttribute(editOpenPricingSidebar.getNameInput(), "value", openPricing.getName())
+                .validate(editOpenPricingSidebar.getPublisherNameDropdown(), openPricing.getPublisherName())
+                .validateAttribute(editOpenPricingSidebar.getFloorPriceField().getFloorPriceInput(),
+                        "value", openPricing.getFloorPrice().toString())
 
+                .clickOnWebElement(editOpenPricingSidebar.getSaveButton())
+                .waitSideBarClosed()
+
+                .testEnd();
+
+        //allure serve
+    }
 }
