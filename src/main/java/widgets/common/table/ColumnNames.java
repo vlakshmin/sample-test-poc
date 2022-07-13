@@ -15,6 +15,7 @@ public enum ColumnNames {
     UPDATED_BY("Updated By", true),
     DETAILS("Details", true),
     ACTIVE("Active", true),
+
     NAME("Name", true),
     ALWAYS_ON("Always on", true),
     START_DATE("Start Date", true),
@@ -73,5 +74,4 @@ public enum ColumnNames {
 
     private String name;
     private Boolean sortable;
-
 }
