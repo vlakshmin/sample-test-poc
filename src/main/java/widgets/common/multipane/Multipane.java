@@ -29,7 +29,6 @@ import static widgets.common.multipane.MultipaneElements.*;
 @Getter
 public class Multipane {
 
-    @Getter(AccessLevel.NONE)
     private MultipaneName multipaneName;
 
     private SelenideElement searchInput;
