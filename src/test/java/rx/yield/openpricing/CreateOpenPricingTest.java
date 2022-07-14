@@ -10,6 +10,7 @@ import pages.Path;
 import pages.yield.openpricing.OpenPricingPage;
 import rx.BaseTest;
 import widgets.common.multipane.Multipane;
+import widgets.common.multipane.MultipaneName;
 import widgets.yield.openPricing.sidebar.CreateOpenPricingSidebar;
 
 import static com.codeborne.selenide.Condition.*;
@@ -62,30 +63,37 @@ public class CreateOpenPricingTest extends BaseTest {
 
     @Test
     public void addOneDeviceToPricingTest() {
-        var deviceMultipane = createOpenPricingSidebar.getDeviceMultipane();
-
-        verifyItemSelectionInMultipane(deviceMultipane, ONE_DEVICE_IS_INCLUDED);
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getDeviceMultipane(), ONE_DEVICE_IS_INCLUDED);
     }
 
     @Test
     public void addOneInventoryToPricingTest() {
-        var inventoryMultipane = createOpenPricingSidebar.getInventoryMultipane();
-
-        verifyItemSelectionInMultipane(inventoryMultipane, ONE_MEDIA_IS_INCLUDED);
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getInventoryMultipane(), ONE_MEDIA_IS_INCLUDED);
     }
 
     @Test
     public void addOneOperatingSystemToPricingTest() {
-        var osMultipane = createOpenPricingSidebar.getOperatingSystemMultipane();
-
-        verifyItemSelectionInMultipane(osMultipane, ONE_OPERATING_SYSTEM_IS_INCLUDED);
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getOperatingSystemMultipane(), ONE_OPERATING_SYSTEM_IS_INCLUDED);
     }
 
     @Test
     public void addOneGeoToPricingTest() {
-        var osMultipane = createOpenPricingSidebar.getGeoMultipane();
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getGeoMultipane(), ONE_GEO_IS_INCLUDED);
+    }
 
-        verifyItemSelectionInMultipane(osMultipane, ONE_GEO_IS_INCLUDED);
+    @Test
+    public void addOneAdSizeToPricingTest() {
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getAdSizeMultipane(), ONE_AD_SIZE_IS_INCLUDED);
+    }
+
+    @Test
+    public void addOneAdFormatToPricingTest() {
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getAdFormatMultipane(), ONE_AD_FORMAT_IS_INCLUDED);
+    }
+
+    @Test
+    public void addOneDemandSourceToPricingTest() {
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getDemandSourcesMultipane(), ONE_DEMAND_SOURCE_IS_INCLUDED);
     }
 
     private void verifyItemSelectionInMultipane(Multipane multipane, String expectedPanelNameLabel) {
@@ -95,15 +103,18 @@ public class CreateOpenPricingTest extends BaseTest {
                 .testEnd();
 
         var firstItemToSelect = multipane.getSelectTableItemByPositionInList(0);
+        var demandSourceRelatedOnlyCondition =
+                multipane.getMultipaneName().equals(MultipaneName.DEMAND_SOURCES) ? visible : not(visible);
 
         testStart()
                 .then(format("Validate initial state of Items to select in '%s' Multipane", multipane.getMultipaneName()))
+                .scrollIntoView(firstItemToSelect.getName())
                 .hoverMouseOnWebElement(firstItemToSelect.getName())
                 .validate(not(visible), firstItemToSelect.getExcludedIcon())
                 .validate(not(visible), firstItemToSelect.getIncludedIcon())
-                .validate(not(visible), firstItemToSelect.getActiveIcon())
+                .validate(demandSourceRelatedOnlyCondition, firstItemToSelect.getActiveIcon())
                 .validate(not(visible), firstItemToSelect.getInactiveIcon())
-                .validate(not(visible), firstItemToSelect.getAssociatedWithPublisherIcon())
+                .validate(demandSourceRelatedOnlyCondition, firstItemToSelect.getAssociatedWithPublisherIcon())
                 .validate(visible, firstItemToSelect.getIncludeButton())
                 .validate(not(visible), firstItemToSelect.getExcludeButton())
                 .and()
@@ -111,9 +122,9 @@ public class CreateOpenPricingTest extends BaseTest {
                 .then(format("Verify available %s' list", multipane.getMultipaneName()))
                 .validate(visible, firstItemToSelect.getIncludedIcon())
                 .validate(not(visible), firstItemToSelect.getExcludedIcon())
-                .validate(not(visible), firstItemToSelect.getActiveIcon())
+                .validate(demandSourceRelatedOnlyCondition, firstItemToSelect.getActiveIcon())
                 .validate(not(visible), firstItemToSelect.getInactiveIcon())
-                .validate(not(visible), firstItemToSelect.getAssociatedWithPublisherIcon())
+                .validate(demandSourceRelatedOnlyCondition, firstItemToSelect.getAssociatedWithPublisherIcon())
                 .validate(not(visible), firstItemToSelect.getIncludeButton())
                 .validate(not(visible), firstItemToSelect.getExcludeButton())
                 .testEnd();
@@ -123,6 +134,7 @@ public class CreateOpenPricingTest extends BaseTest {
         testStart()
                 .then(format("Verify added %s' List", multipane.getMultipaneName()))
                 .validate(visible, firstSelectedItem.getName())
+                //Todo enable after refactor
                 //.validate(not(visible), firstSelectedItem.getType())
                 .validate(not(visible), firstSelectedItem.getParentLabel())
                 .validate(visible, firstSelectedItem.getRemoveButton())
