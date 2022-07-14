@@ -25,9 +25,10 @@ public class CreateOpenPricingTest extends BaseTest {
     private OpenPricingPage openPricingPage;
     private CreateOpenPricingSidebar createOpenPricingSidebar;
 
+    private static final String ONE_GEO_IS_INCLUDED = "1 geo(s) are included";
+    private static final String ONE_MEDIA_IS_INCLUDED = "1 media are included";
     private static final String PRICING_NAME = captionWithSuffix("Pricing");
     private static final String ONE_DEVICE_IS_INCLUDED = "1 device(s) are included";
-    private static final String ONE_MEDIA_IS_INCLUDED = "1 media are included";
     private static final String ONE_OPERATING_SYSTEM_IS_INCLUDED = "1 operating system(s) are included";
 
     public CreateOpenPricingTest() {
@@ -57,24 +58,31 @@ public class CreateOpenPricingTest extends BaseTest {
     }
 
     @Test
-    public void createOpenPricingWithOneDeviceIncludedTest() {
+    public void addOneDeviceToPricingTest() {
         var deviceMultipane = createOpenPricingSidebar.getDeviceMultipane();
 
         verifyItemSelectionInMultipane(deviceMultipane, ONE_DEVICE_IS_INCLUDED);
     }
 
     @Test
-    public void createOpenPricingTestWithOneInventoryIncludedTest() {
+    public void addOneInventoryToPricingTest() {
         var inventoryMultipane = createOpenPricingSidebar.getInventoryMultipane();
 
         verifyItemSelectionInMultipane(inventoryMultipane, ONE_MEDIA_IS_INCLUDED);
     }
 
     @Test
-    public void createOpenPricingWithOneOsIncludedDTest() {
-        var osMultipane = createOpenPricingSidebar.getInventoryMultipane();
+    public void addOneOperatingSystemToPricingTest() {
+        var osMultipane = createOpenPricingSidebar.getOperatingSystemMultipane();
 
-       // verifyItemSelectionInMultipane(osMultipane, ONE_OPERATING_SYSTEM_IS_INCLUDED);
+        verifyItemSelectionInMultipane(osMultipane, ONE_OPERATING_SYSTEM_IS_INCLUDED);
+    }
+
+    @Test
+    public void addOneGeoToPricingTest() {
+        var osMultipane = createOpenPricingSidebar.getOperatingSystemMultipane();
+
+        verifyItemSelectionInMultipane(osMultipane, ONE_OPERATING_SYSTEM_IS_INCLUDED);
     }
 
     private void verifyItemSelectionInMultipane(Multipane multipane, String expectedPanelNameLabel) {
@@ -83,28 +91,28 @@ public class CreateOpenPricingTest extends BaseTest {
                 .clickOnWebElement(multipane.getPanelNameLabel())
                 .testEnd();
 
-        var firstInventoryToSelect = multipane.getSelectTableItemByPositionInList(0);
+        var firstItemToSelect = multipane.getSelectTableItemByPositionInList(0);
 
         testStart()
                 .then(format("Validate initial state of Items to select in '%s' Multipane", multipane.getMultipaneName()))
-                .hoverMouseOnWebElement(firstInventoryToSelect.getName())
-                .validate(not(visible), firstInventoryToSelect.getExcludedIcon())
-                .validate(not(visible), firstInventoryToSelect.getIncludedIcon())
-                .validate(not(visible), firstInventoryToSelect.getActiveIcon())
-                .validate(not(visible), firstInventoryToSelect.getInactiveIcon())
-                .validate(not(visible), firstInventoryToSelect.getAssociatedWithPublisherIcon())
-                .validate(visible, firstInventoryToSelect.getIncludeButton())
-                .validate(not(visible), firstInventoryToSelect.getExcludeButton())
+                .hoverMouseOnWebElement(firstItemToSelect.getName())
+                .validate(not(visible), firstItemToSelect.getExcludedIcon())
+                .validate(not(visible), firstItemToSelect.getIncludedIcon())
+                .validate(not(visible), firstItemToSelect.getActiveIcon())
+                .validate(not(visible), firstItemToSelect.getInactiveIcon())
+                .validate(not(visible), firstItemToSelect.getAssociatedWithPublisherIcon())
+                .validate(visible, firstItemToSelect.getIncludeButton())
+                .validate(not(visible), firstItemToSelect.getExcludeButton())
                 .and()
-                .clickOnWebElement(firstInventoryToSelect.getIncludeButton())
+                .clickOnWebElement(firstItemToSelect.getIncludeButton())
                 .then(format("Verify available %s' list", multipane.getMultipaneName()))
-                .validate(visible, firstInventoryToSelect.getIncludedIcon())
-                .validate(not(visible), firstInventoryToSelect.getExcludedIcon())
-                .validate(not(visible), firstInventoryToSelect.getActiveIcon())
-                .validate(not(visible), firstInventoryToSelect.getInactiveIcon())
-                .validate(not(visible), firstInventoryToSelect.getAssociatedWithPublisherIcon())
-                .validate(not(visible), firstInventoryToSelect.getIncludeButton())
-                .validate(not(visible), firstInventoryToSelect.getExcludeButton())
+                .validate(visible, firstItemToSelect.getIncludedIcon())
+                .validate(not(visible), firstItemToSelect.getExcludedIcon())
+                .validate(not(visible), firstItemToSelect.getActiveIcon())
+                .validate(not(visible), firstItemToSelect.getInactiveIcon())
+                .validate(not(visible), firstItemToSelect.getAssociatedWithPublisherIcon())
+                .validate(not(visible), firstItemToSelect.getIncludeButton())
+                .validate(not(visible), firstItemToSelect.getExcludeButton())
                 .testEnd();
 
         var firstSelectedItem = multipane.getIncludedExcludedTableItemByPositionInList(0);
