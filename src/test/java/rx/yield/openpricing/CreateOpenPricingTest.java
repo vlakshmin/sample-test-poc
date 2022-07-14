@@ -28,7 +28,10 @@ public class CreateOpenPricingTest extends BaseTest {
     private static final String ONE_GEO_IS_INCLUDED = "1 geo(s) are included";
     private static final String ONE_MEDIA_IS_INCLUDED = "1 media are included";
     private static final String PRICING_NAME = captionWithSuffix("Pricing");
+    private static final String ONE_AD_SIZE_IS_INCLUDED = "1 size(s) are included";
     private static final String ONE_DEVICE_IS_INCLUDED = "1 device(s) are included";
+    private static final String ONE_AD_FORMAT_IS_INCLUDED = "1 format(s) are included";
+    private static final String ONE_DEMAND_SOURCE_IS_INCLUDED = "1 demand source(s) are included";
     private static final String ONE_OPERATING_SYSTEM_IS_INCLUDED = "1 operating system(s) are included";
 
     public CreateOpenPricingTest() {
@@ -82,7 +85,7 @@ public class CreateOpenPricingTest extends BaseTest {
     public void addOneGeoToPricingTest() {
         var osMultipane = createOpenPricingSidebar.getOperatingSystemMultipane();
 
-        verifyItemSelectionInMultipane(osMultipane, ONE_OPERATING_SYSTEM_IS_INCLUDED);
+        verifyItemSelectionInMultipane(osMultipane, ONE_GEO_IS_INCLUDED);
     }
 
     private void verifyItemSelectionInMultipane(Multipane multipane, String expectedPanelNameLabel) {
