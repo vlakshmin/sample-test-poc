@@ -83,7 +83,7 @@ public class CreateOpenPricingTest extends BaseTest {
 
     @Test
     public void addOneGeoToPricingTest() {
-        var osMultipane = createOpenPricingSidebar.getOperatingSystemMultipane();
+        var osMultipane = createOpenPricingSidebar.getGeoMultipane();
 
         verifyItemSelectionInMultipane(osMultipane, ONE_GEO_IS_INCLUDED);
     }
