@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Protection extends ProtectionRequest{
-
     private Integer id;
     private String createdAt;
     private String updatedAt;
+
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);

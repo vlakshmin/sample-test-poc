@@ -39,7 +39,7 @@ public class AdSpot {
     private List<Integer> sizeIds;
     private List<Integer> categoryIds;
 
-    private Integer prebidCacheEnabled;
+    private Boolean prebidCacheEnabled;
     private Boolean floorPriceAutomated;
 
     public String toJson() {

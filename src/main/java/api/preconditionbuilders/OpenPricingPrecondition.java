@@ -1,5 +1,6 @@
 package api.preconditionbuilders;
 
+import api.core.client.HttpClient;
 import api.dto.rx.yield.openpricing.OpenPricingRequest;
 import api.dto.rx.yield.openpricing.*;
 import api.dto.GenericResponse;
@@ -8,6 +9,7 @@ import api.dto.rx.inventory.adspot.AdSpot;
 import api.dto.rx.inventory.adspot.AdSpotRequest;
 import api.dto.rx.inventory.media.Media;
 import api.services.OpenPricingService;
+import configurations.User;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -131,6 +133,18 @@ public class OpenPricingPrecondition {
         private List<OpenPricing> getOpenPricingResponseList() {
 
             return Arrays.asList(response.jsonPath().getObject("items", OpenPricing[].class));
+        }
+
+        public OpenPricingPreconditionBuilder deleteOpenPricing(int id) {
+            this.response = openPricingService.deleteOpenPricing(id);
+
+            return this;
+        }
+
+        public OpenPricingPreconditionBuilder setCredentials(User user) {
+            HttpClient.setCredentials(user);
+
+            return this;
         }
 
         public OpenPricingPrecondition build() {

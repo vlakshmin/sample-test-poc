@@ -1,10 +1,13 @@
 package api.preconditionbuilders;
 
 
+import api.core.client.HttpClient;
+import api.dto.GenericResponse;
 import api.dto.rx.admin.user.UserDto;
 import api.dto.rx.admin.user.UserRequest;
 import api.dto.rx.admin.user.UserRole;
 import api.services.UserService;
+import configurations.User;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static zutils.FakerUtils.captionWithSuffix;
 import static zutils.FakerUtils.randomMail;
@@ -23,12 +27,12 @@ public class UsersPrecondition {
 
     private UserDto userResponse;
     private UserRequest userRequest;
-    private List<UserDto> userDtoList;
+    private GenericResponse<UserDto> userGetAllResponse;
 
     private UsersPrecondition(UsersPreconditionBuilder builder) {
 
         this.userRequest = builder.userRequest;
-        this.userDtoList = builder.userDtoList;
+        this.userGetAllResponse = builder.userGetAllResponse;
         this.userResponse = builder.userResponse;
     }
 
@@ -42,7 +46,7 @@ public class UsersPrecondition {
         private Response response;
         private UserDto userResponse;
         private UserRequest userRequest;
-        private List<UserDto> userDtoList;
+        private GenericResponse<UserDto> userGetAllResponse;
         private UserService userService = new UserService();
 
         public UsersPreconditionBuilder createNewUser(UserRole role) {
@@ -90,7 +94,7 @@ public class UsersPrecondition {
 
         public UsersPreconditionBuilder getAllUsers() {
             this.response = userService.getAll();
-            this.userDtoList = this.getUserResponseList();
+            this.userGetAllResponse = this.response.as(new GenericResponse<UserDto>().getClass());
 
             return this;
         }
@@ -103,6 +107,26 @@ public class UsersPrecondition {
         private List<UserDto> getUserResponseList() {
 
             return Arrays.asList(response.jsonPath().getObject("items", UserDto[].class));
+        }
+
+        public UsersPreconditionBuilder deleteUser(int id) {
+            this.response = userService.deleteUser(id);
+
+            return this;
+        }
+
+        public UsersPreconditionBuilder setCredentials(User user) {
+            HttpClient.setCredentials(user);
+
+            return this;
+        }
+
+        public UsersPreconditionBuilder getUsersWithFilter(Map<String, Object> queryParams) {
+            this.response = userService.getUsersWithFilter(queryParams);
+
+            this.userGetAllResponse = this.response.as(new GenericResponse<UserDto>().getClass());
+
+            return this;
         }
     }
 }

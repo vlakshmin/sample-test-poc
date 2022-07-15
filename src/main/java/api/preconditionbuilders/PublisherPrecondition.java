@@ -1,10 +1,10 @@
 package api.preconditionbuilders;
 
 import api.core.client.HttpClient;
+import api.dto.GenericResponse;
 import api.dto.rx.common.Currency;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.admin.publisher.PublisherRequest;
-import api.dto.rx.inventory.media.Media;
 import api.services.PublisherService;
 import configurations.User;
 import io.restassured.response.Response;
@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static zutils.FakerUtils.*;
 
@@ -24,12 +25,12 @@ public class PublisherPrecondition {
 
     private Publisher publisherResponse;
     private PublisherRequest publisherRequest;
-    private List<Publisher> publisherResponseList;
+    private GenericResponse<Publisher> publisherGetAllResponse;
 
     private PublisherPrecondition(PublisherPreconditionBuilder builder) {
         this.publisherRequest = builder.publisherRequest;
         this.publisherResponse = builder.publisherResponse;
-        this.publisherResponseList = builder.publisherResponseList;
+        this.publisherGetAllResponse = builder.publisherGetAllResponse;
     }
 
     public static PublisherPreconditionBuilder publisher() {
@@ -42,7 +43,7 @@ public class PublisherPrecondition {
         private Response response;
         private Publisher publisherResponse;
         private PublisherRequest publisherRequest;
-        private List<Publisher> publisherResponseList;
+        private GenericResponse<Publisher> publisherGetAllResponse;
         private PublisherService publisherService = new PublisherService();
 
         public PublisherPreconditionBuilder createNewPublisher() {
@@ -53,7 +54,7 @@ public class PublisherPrecondition {
                     .isEnabled(true)
                     .domain(randomUrl())
                     .currency(Currency.JPY.name())
-                    .categoryIds(List.of(1,9))
+                    .categoryIds(List.of(1, 9))
                     .dspIds(List.of(7))
                     .build();
 
@@ -73,7 +74,8 @@ public class PublisherPrecondition {
         public PublisherPreconditionBuilder getPublishersList() {
             this.response = publisherService.getAll();
 
-            this.publisherResponseList = this.getPublisherResponseList();
+            this.publisherGetAllResponse = this.response.as(new GenericResponse<Publisher>().getClass());
+            ;
 
             return this;
         }
@@ -83,21 +85,30 @@ public class PublisherPrecondition {
             return Arrays.asList(response.jsonPath().getObject("items", Publisher[].class));
         }
 
-        public PublisherPrecondition.PublisherPreconditionBuilder deletePublisher(int id) {
+        public PublisherPreconditionBuilder deletePublisher(int id) {
             this.response = publisherService.deletePublisher(id);
 
             return this;
         }
 
-        public PublisherPrecondition.PublisherPreconditionBuilder setCredentials(User user){
+        public PublisherPreconditionBuilder setCredentials(User user) {
             HttpClient.setCredentials(user);
 
             return this;
         }
+
         public PublisherPrecondition build() {
             HttpClient.setCredentials(User.TEST_USER);
 
             return new PublisherPrecondition(this);
+        }
+
+        public PublisherPreconditionBuilder getPublisherWithFilter(Map<String, Object> queryParams) {
+            this.response = publisherService.getPublisherWithFilter(queryParams);
+
+            this.publisherGetAllResponse = this.response.as(GenericResponse.class);
+
+            return this;
         }
     }
 }

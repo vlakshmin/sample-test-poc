@@ -8,7 +8,7 @@ import java.util.Map;
 import static api.core.RakutenExchangeApi.*;
 import static api.core.client.HttpClient.*;
 
-public class OpenPricingService extends BaseService{
+public class OpenPricingService extends BaseService {
 
     public Response createOpenPricing(OpenPricingRequest body) {
         URL = initURL(CREATE_OPEN_PRICING);
@@ -19,12 +19,18 @@ public class OpenPricingService extends BaseService{
     public Response getOpenPricingWithFilter(Map<String, Object> queryParams) {
         URL = initURL(GET_ALL_OPEN_PRICING);
 
-        return get(URL,queryParams);
+        return get(URL, queryParams);
     }
 
-    public Response getAll(){
+    public Response getAll() {
         URL = initURL(GET_ALL_OPEN_PRICING);
 
         return get(URL);
+    }
+
+    public Response deleteOpenPricing(Integer id) {
+        URL = initURL(DELETE_OPEN_PRICING.setParameters(id));
+
+        return delete(URL);
     }
 }
