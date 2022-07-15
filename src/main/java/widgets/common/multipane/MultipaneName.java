@@ -15,5 +15,5 @@ public enum MultipaneName {
     DEMAND_SOURCES("Demand Sources"),
     OPERATING_SYSTEM("Operating System");
 
-    private String name;
+    private final String name;
 }

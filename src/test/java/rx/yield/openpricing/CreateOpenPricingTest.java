@@ -1,6 +1,5 @@
 package rx.yield.openpricing;
 
-import api.dto.rx.yield.openpricing.OpenPricing;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
@@ -10,14 +9,15 @@ import org.testng.annotations.Test;
 import pages.Path;
 import pages.yield.openpricing.OpenPricingPage;
 import rx.BaseTest;
-import widgets.common.table.ColumnNames;
+import widgets.common.multipane.Multipane;
+import widgets.common.multipane.MultipaneName;
 import widgets.yield.openPricing.sidebar.CreateOpenPricingSidebar;
-import zutils.FakerUtils;
 
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
+import static java.lang.String.format;
 import static managers.TestManager.testStart;
-import static zutils.FakerUtils.*;
+import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
@@ -26,8 +26,14 @@ public class CreateOpenPricingTest extends BaseTest {
     private OpenPricingPage openPricingPage;
     private CreateOpenPricingSidebar createOpenPricingSidebar;
 
+    private static final String ONE_GEO_IS_INCLUDED = "1 geo(s) are included";
+    private static final String ONE_MEDIA_IS_INCLUDED = "1 media are included";
     private static final String PRICING_NAME = captionWithSuffix("Pricing");
+    private static final String ONE_AD_SIZE_IS_INCLUDED = "1 size(s) are included";
     private static final String ONE_DEVICE_IS_INCLUDED = "1 device(s) are included";
+    private static final String ONE_AD_FORMAT_IS_INCLUDED = "1 format(s) are included";
+    private static final String ONE_DEMAND_SOURCE_IS_INCLUDED = "1 demand source(s) are included";
+    private static final String ONE_OPERATING_SYSTEM_IS_INCLUDED = "1 operating system(s) are included";
 
     public CreateOpenPricingTest() {
         openPricingPage = new OpenPricingPage();
@@ -36,7 +42,7 @@ public class CreateOpenPricingTest extends BaseTest {
 
     @BeforeClass
     @Step("Login ToOpenPricing Page")
-    public void loginToOpenPricing() {
+    public void loginToCreateOpenPricingSidebar() {
 
         testStart()
                 .given("Logging Directly to Open Pricing Page")
@@ -44,63 +50,118 @@ public class CreateOpenPricingTest extends BaseTest {
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
                 .waitAndValidate(disappear, openPricingPage.getTableProgressBar())
+                .when("Opening 'Create New Open Pricing sidebar'")
+                .openDirectPath(Path.CREATE_OPEN_PRICING)
+                .waitSideBarOpened()
+                .and("Enter data to all fields of sidebar")
+                .selectFromDropdownWithSearch(createOpenPricingSidebar.getPublisherNameDropdown(),
+                        createOpenPricingSidebar.getPublisherNameDropdownItems(), "Viber")
+                .setValue(createOpenPricingSidebar.getNameInput(), PRICING_NAME)
+                .setValue(createOpenPricingSidebar.getFloorPriceField().getFloorPriceInput(), "22")
                 .testEnd();
     }
 
     @Test
-    public void createOpenPricingTestWithOneIncludedDevice() {
-        var deviceMultipane  = createOpenPricingSidebar.getDeviceMultipane();
-
-        testStart()
-                .given("Opening 'Create New Open Pricing sidebar'")
-                .openDirectPath(Path.CREATE_OPEN_PRICING)
-                .waitSideBarOpened()
-                .when("Enter data to all fields of sidebar")
-                .selectFromDropdownWithSearch(createOpenPricingSidebar.getPublisherNameDropdown(),
-                        createOpenPricingSidebar.getPublisherNameDropdownItems(), "Viber")
-                .setValue(createOpenPricingSidebar.getNameInput(),PRICING_NAME)
-                .setValue(createOpenPricingSidebar.getFloorPriceField().getFloorPriceInput(), "22")
-                .clickOnWebElement(deviceMultipane.getPanelNameLabel())
-                .testEnd();
-
-        var firstDeviceToSelect = deviceMultipane.getSelectTableItemByPositionInList(0);
-
-        testStart()
-                .then("Validate initial state of Items to select in Multipane")
-                .hoverMouseOnWebElement(firstDeviceToSelect.getName())
-                .validate(not(visible), firstDeviceToSelect.getExcludedIcon())
-                .validate(not(visible), firstDeviceToSelect.getIncludedIcon())
-                .validate(not(visible), firstDeviceToSelect.getActiveIcon())
-                .validate(not(visible), firstDeviceToSelect.getInactiveIcon())
-                .validate(not(visible), firstDeviceToSelect.getAssociatedWithPublisherIcon())
-                .validate(visible, firstDeviceToSelect.getIncludeButton())
-                .validate(not(visible), firstDeviceToSelect.getExcludeButton())
-                .and()
-                .clickOnWebElement(firstDeviceToSelect.getIncludeButton())
-                .then("Verify available devices' list")
-                .validate(visible, firstDeviceToSelect.getIncludedIcon())
-                .validate(not(visible), firstDeviceToSelect.getExcludedIcon())
-                .validate(not(visible), firstDeviceToSelect.getActiveIcon())
-                .validate(not(visible), firstDeviceToSelect.getInactiveIcon())
-                .validate(not(visible), firstDeviceToSelect.getAssociatedWithPublisherIcon())
-                .validate(not(visible), firstDeviceToSelect.getIncludeButton())
-                .validate(not(visible), firstDeviceToSelect.getExcludeButton())
-                .testEnd();
-
-        var firstSelectedDevice = deviceMultipane.getIncludedExcludedTableItemByPositionInList(0);
-
-        testStart()
-                .then("Verify added devices List")
-                .validate(visible, firstSelectedDevice.getName())
-                //.validate(not(visible), firstSelectedDevice.getType())
-                .validate(not(visible), firstSelectedDevice.getParentLabel())
-                .validate(visible, firstSelectedDevice.getRemoveButton())
-                .validate(enabled, deviceMultipane.getClearAllButton())
-                .and("Collups Device Multipane")
-                .clickOnWebElement(deviceMultipane.getPanelNameLabel())
-                .then("Validate Multipane Panel Strings")
-                //.validateContainsText(deviceMultipane.getPanelNameLabel(), ONE_DEVICE_IS_INCLUDED)
-                .testEnd();
-
+    @Step("Add one device to new Pricing")
+    public void addOneDeviceToPricingTest() {
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getDeviceMultipane(), ONE_DEVICE_IS_INCLUDED);
     }
+
+    @Test
+    @Step("Add one inventory to new Pricing")
+    public void addOneInventoryToPricingTest() {
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getInventoryMultipane(), ONE_MEDIA_IS_INCLUDED);
+    }
+
+    @Test
+    @Step("Add one operating system to new Pricing")
+    public void addOneOperatingSystemToPricingTest() {
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getOperatingSystemMultipane(), ONE_OPERATING_SYSTEM_IS_INCLUDED);
+    }
+
+    @Test
+    @Step("Add one geo to new Pricing")
+    public void addOneGeoToPricingTest() {
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getGeoMultipane(), ONE_GEO_IS_INCLUDED);
+    }
+
+    @Test
+    @Step("Add one adSize to new Pricing")
+    public void addOneAdSizeToPricingTest() {
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getAdSizeMultipane(), ONE_AD_SIZE_IS_INCLUDED);
+    }
+
+    @Test
+    @Step("Add one adFormat to new Pricing")
+    public void addOneAdFormatToPricingTest() {
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getAdFormatMultipane(), ONE_AD_FORMAT_IS_INCLUDED);
+    }
+
+    @Test
+    @Step("Add one demand Source to new Pricing")
+    public void addOneDemandSourceToPricingTest() {
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getDemandSourcesMultipane(), ONE_DEMAND_SOURCE_IS_INCLUDED);
+    }
+
+    @Test
+    @Step("Click on 'Save' button  open Pricing")
+    public void saveOpenPricing() {
+        testStart()
+                .clickOnWebElement(createOpenPricingSidebar.getSaveButton())
+                .validate(not(visible),createOpenPricingSidebar.getSaveButton())
+                .validate(visible, "Updated!")
+                .waitSideBarClosed()
+                .testEnd();
+    }
+
+    private void verifyItemSelectionInMultipane(Multipane multipane, String expectedPanelNameLabel) {
+
+        testStart()
+                .clickOnWebElement(multipane.getPanelNameLabel())
+                .testEnd();
+
+        var firstItemToSelect = multipane.getSelectTableItemByPositionInList(0);
+        var demandSourceRelatedOnlyCondition =
+                multipane.getMultipaneName().equals(MultipaneName.DEMAND_SOURCES) ? visible : not(visible);
+
+        testStart()
+                .then(format("Validate initial state of Items to select in '%s' Multipane", multipane.getMultipaneName()))
+                .scrollIntoView(firstItemToSelect.getName())
+                .hoverMouseOnWebElement(firstItemToSelect.getName())
+                .validate(not(visible), firstItemToSelect.getExcludedIcon())
+                .validate(not(visible), firstItemToSelect.getIncludedIcon())
+                .validate(demandSourceRelatedOnlyCondition, firstItemToSelect.getActiveIcon())
+                .validate(not(visible), firstItemToSelect.getInactiveIcon())
+                .validate(demandSourceRelatedOnlyCondition, firstItemToSelect.getAssociatedWithPublisherIcon())
+                .validate(visible, firstItemToSelect.getIncludeButton())
+                .validate(not(visible), firstItemToSelect.getExcludeButton())
+                .and()
+                .clickOnWebElement(firstItemToSelect.getIncludeButton())
+                .then(format("Verify available %s' list", multipane.getMultipaneName()))
+                .validate(visible, firstItemToSelect.getIncludedIcon())
+                .validate(not(visible), firstItemToSelect.getExcludedIcon())
+                .validate(demandSourceRelatedOnlyCondition, firstItemToSelect.getActiveIcon())
+                .validate(not(visible), firstItemToSelect.getInactiveIcon())
+                .validate(demandSourceRelatedOnlyCondition, firstItemToSelect.getAssociatedWithPublisherIcon())
+                .validate(not(visible), firstItemToSelect.getIncludeButton())
+                .validate(not(visible), firstItemToSelect.getExcludeButton())
+                .testEnd();
+
+        var firstSelectedItem = multipane.getIncludedExcludedTableItemByPositionInList(0);
+
+        testStart()
+                .then(format("Verify added %s' List", multipane.getMultipaneName()))
+                .validate(visible, firstSelectedItem.getName())
+                //Todo enable after refactor
+                //.validate(not(visible), firstSelectedItem.getType())
+                .validate(not(visible), firstSelectedItem.getParentLabel())
+                .validate(visible, firstSelectedItem.getRemoveButton())
+                .validate(enabled, multipane.getClearAllButton())
+                .and(format("Collups '%s' Multipane", multipane.getMultipaneName()))
+                .clickOnWebElement(multipane.getPanelNameLabel())
+                .then(format("Validate '%s' Multipane Panel Strings", multipane.getMultipaneName()))
+                .validateContainsText(multipane.getPanelNameLabel(), expectedPanelNameLabel)
+                .testEnd();
+    }
+
 }
