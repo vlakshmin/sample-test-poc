@@ -29,7 +29,6 @@ import static widgets.common.multipane.MultipaneElements.*;
 @Getter
 public class Multipane {
 
-    @Getter(AccessLevel.NONE)
     private MultipaneName multipaneName;
 
     private SelenideElement searchInput;
@@ -47,7 +46,7 @@ public class Multipane {
     private SelenideElement itemsQuantityString;
 
     private static final String MULTIPANE_ROOT = "//h3[text()='%s']/../..";
-    //button/h3[text()='%s']/../../..
+    //h3[text()='%s']/../..
 
     @Getter(AccessLevel.NONE)
     private ElementsCollection selectTableItems;

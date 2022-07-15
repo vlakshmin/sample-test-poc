@@ -31,7 +31,7 @@ public abstract class OpenPricingSidebar {
     private Multipane adFormatMultipane = new Multipane(MultipaneName.AD_FORMAT);
     private Multipane inventoryMultipane = new Multipane(MultipaneName.INVENTORY);
     private Multipane demandSourcesMultipane = new Multipane(MultipaneName.DEMAND_SOURCES);
-    private Multipane operatingSystemMultipane = new Multipane(MultipaneName.DEMAND_SOURCES);
+    private Multipane operatingSystemMultipane = new Multipane(MultipaneName.OPERATING_SYSTEM);
 
     public SelenideElement getErrorLabelByFieldName(OpenPricingField field) {
 

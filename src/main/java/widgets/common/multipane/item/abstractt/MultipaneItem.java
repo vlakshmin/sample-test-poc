@@ -37,12 +37,14 @@ public abstract class MultipaneItem {
             case INVENTORY:
                 this.name = $x(buildXpath(INVENTORY_NAME.getSelector())).as(format("%s%s", INVENTORY_NAME.getAlias(), position));
                 this.type = $x(buildXpath(INVENTORY_TYPE.getSelector())).as(format("%s%s", INVENTORY_TYPE.getAlias(), position));
+                break;
 
             case DEMAND_SOURCES:
                 this.name = $x(buildXpath(DEMAND_SOURCES_NAME.getSelector())).as(format("%s%s", DEMAND_SOURCES_NAME.getAlias(), position));
+                break;
 
             default:
-                this.name = $x(buildXpath(NAME.getSelector())).as(format("%s%s", INVENTORY_NAME.getAlias(), position));
+                this.name = $x(buildXpath(NAME.getSelector())).as(format("%s%s", NAME.getAlias(), position));
         }
     }
 
