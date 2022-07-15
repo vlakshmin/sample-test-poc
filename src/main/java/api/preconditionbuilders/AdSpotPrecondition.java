@@ -131,5 +131,11 @@ public class AdSpotPrecondition {
 
             return new AdSpotPrecondition(this);
         }
+
+        public Response getResponse(){
+
+            return this.response;
+        }
+
     }
 }

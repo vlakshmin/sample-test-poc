@@ -143,5 +143,10 @@ public class ProtectionsPrecondition {
 
             return this;
         }
+
+        public Response getResponse(){
+
+            return this.response;
+        }
     }
 }

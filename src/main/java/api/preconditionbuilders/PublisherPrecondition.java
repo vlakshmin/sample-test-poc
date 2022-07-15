@@ -110,5 +110,10 @@ public class PublisherPrecondition {
 
             return this;
         }
+
+        public Response getResponse(){
+
+            return this.getResponse();
+        }
     }
 }

@@ -36,81 +36,85 @@ public class DeleteTestData {
     @Test(priority = 1)
     public void deleteProtections() {
         protections = getAllProtectionsByParams();
+        int deleted = 0;
         for (Protection pr : protections) {
-            ProtectionsPrecondition.protection().
-                    setCredentials(USER_FOR_DELETION).
-                    deleteProtection(pr.getId());
+            if (ProtectionsPrecondition.protection()
+                    .setCredentials(USER_FOR_DELETION)
+                    .deleteProtection(pr.getId())
+                    .getResponse().getStatusCode() == 204)
+                deleted++;
         }
-        log.info("");
-
+        log.info(String.format("Deleted protections %s of %s", deleted, protections.size()));
     }
 
     @Test(priority = 2)
     public void deleteAdSpots() {
         adSpots = getAllAdSpotsByParams();
+        int deleted = 0;
         for (AdSpot as : adSpots) {
-            AdSpotPrecondition.adSpot().
-                    setCredentials(USER_FOR_DELETION).
-                    deleteAdSpot(as.getId());
-            System.out.println(String.format("Ad Spot: id %s %s", as.getId(), as.getName()));
-
+            if (AdSpotPrecondition.adSpot()
+                    .setCredentials(USER_FOR_DELETION)
+                    .deleteAdSpot(as.getId())
+                    .getResponse().getStatusCode() == 204)
+                deleted++;
         }
-        System.out.println(String.format("Total ad spots: %s", adSpots.size()));
-
+        log.info(String.format("Deleted ad spots %s of %s", deleted, adSpots.size()));
     }
 
     @Test(priority = 3)
     public void deleteMedia() {
         media = getAllMediaByParams();
+        int deleted = 0;
         for (Media m : media) {
-            MediaPrecondition.media().
+            if (MediaPrecondition.media().
                     setCredentials(USER_FOR_DELETION).
-                    deleteMedia(m.getId());
-
-            System.out.println(String.format("Media: id %s %s", m.getId(), m.getName()));
-
+                    deleteMedia(m.getId()).
+                    getResponse().getStatusCode() == 204)
+                deleted++;
         }
-        System.out.println(String.format("Total media: %s", media.size()));
-
+        log.info(String.format("Deleted media %s of %s", deleted, media.size()));
     }
 
     @Test(priority = 4)
     public void deleteOpenPricing() {
         openPricing = getAllPricingByParams();
+        int deleted = 0;
         for (OpenPricing p : openPricing) {
-            OpenPricingPrecondition.openPricing().
-                    setCredentials(USER_FOR_DELETION).
-                    deleteOpenPricing(p.getId());
-            System.out.println(String.format("Open Pricing: id %s %s", p.getId(), p.getName()));
+            if (OpenPricingPrecondition.openPricing()
+                    .setCredentials(USER_FOR_DELETION)
+                    .deleteOpenPricing(p.getId())
+                    .getResponse().getStatusCode() == 204)
+                deleted++;
         }
-        System.out.println(String.format("Total open pricing: %s", openPricing.size()));
-
+        log.info(String.format("Deleted open pricing %s of %s", deleted, openPricing.size()));
     }
 
     @Test(priority = 5)
     public void deletePublishers() {
         publishers = getAllPublishersByParams();
+        int deleted = 0;
         for (Publisher p : publishers) {
-            PublisherPrecondition.publisher().
-                    setCredentials(USER_FOR_DELETION).
-                    deletePublisher(p.getId());
-            System.out.println(String.format("Publisher: id %s %s", p.getId(), p.getName()));
+            if (PublisherPrecondition.publisher()
+                    .setCredentials(USER_FOR_DELETION)
+                    .deletePublisher(p.getId())
+                    .getResponse().getStatusCode() == 204)
+                deleted++;
         }
-        System.out.println(String.format("Total publishers: %s", publishers.size()));
-
+        log.info(String.format("Deleted publishers %s of %s", deleted, publishers.size()));
     }
 
     @Test(priority = 6)
     public void deleteUsers() {
         users = getAllUsersByParams();
+        int deleted = 0;
         for (UserDto user : users) {
-            UsersPrecondition.user().
-                    setCredentials(USER_FOR_DELETION).
-                    deleteUser(user.getId());
-            System.out.println(String.format("User: id %s %s", user.getId(), user.getName()));
+            if (UsersPrecondition.user()
+                    .setCredentials(USER_FOR_DELETION)
+                    .deleteUser(user.getId())
+                    .getResponse().getStatusCode() == 204)
+                deleted++;
         }
-        System.out.println(String.format("Total users: %s", users.size()));
-
+        log.info(String.format("Deleted users %s of %s", deleted, users.size()));
     }
 
     private List<Media> getAllMediaByParams() {

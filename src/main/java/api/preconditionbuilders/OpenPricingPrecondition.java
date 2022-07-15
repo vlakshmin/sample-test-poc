@@ -159,5 +159,10 @@ public class OpenPricingPrecondition {
 
             return this;
         }
+
+        public Response getResponse(){
+
+            return this.response;
+        }
     }
 }

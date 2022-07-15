@@ -115,5 +115,10 @@ public class MediaPrecondition {
             return new MediaPrecondition(this);
         }
 
+        public Response getResponse(){
+
+            return this.response;
+        }
+
     }
 }

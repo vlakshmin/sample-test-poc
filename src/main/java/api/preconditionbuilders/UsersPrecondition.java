@@ -128,5 +128,10 @@ public class UsersPrecondition {
 
             return this;
         }
+
+        public Response getResponse(){
+
+            return this.response;
+        }
     }
 }
