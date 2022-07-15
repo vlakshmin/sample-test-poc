@@ -62,38 +62,56 @@ public class CreateOpenPricingTest extends BaseTest {
     }
 
     @Test
+    @Step("Add one device to new Pricing")
     public void addOneDeviceToPricingTest() {
         verifyItemSelectionInMultipane(createOpenPricingSidebar.getDeviceMultipane(), ONE_DEVICE_IS_INCLUDED);
     }
 
     @Test
+    @Step("Add one inventory to new Pricing")
     public void addOneInventoryToPricingTest() {
         verifyItemSelectionInMultipane(createOpenPricingSidebar.getInventoryMultipane(), ONE_MEDIA_IS_INCLUDED);
     }
 
     @Test
+    @Step("Add one operating system to new Pricing")
     public void addOneOperatingSystemToPricingTest() {
         verifyItemSelectionInMultipane(createOpenPricingSidebar.getOperatingSystemMultipane(), ONE_OPERATING_SYSTEM_IS_INCLUDED);
     }
 
     @Test
+    @Step("Add one geo to new Pricing")
     public void addOneGeoToPricingTest() {
         verifyItemSelectionInMultipane(createOpenPricingSidebar.getGeoMultipane(), ONE_GEO_IS_INCLUDED);
     }
 
     @Test
+    @Step("Add one adSize to new Pricing")
     public void addOneAdSizeToPricingTest() {
         verifyItemSelectionInMultipane(createOpenPricingSidebar.getAdSizeMultipane(), ONE_AD_SIZE_IS_INCLUDED);
     }
 
     @Test
+    @Step("Add one adFormat to new Pricing")
     public void addOneAdFormatToPricingTest() {
         verifyItemSelectionInMultipane(createOpenPricingSidebar.getAdFormatMultipane(), ONE_AD_FORMAT_IS_INCLUDED);
     }
 
     @Test
+    @Step("Add one demand Source to new Pricing")
     public void addOneDemandSourceToPricingTest() {
         verifyItemSelectionInMultipane(createOpenPricingSidebar.getDemandSourcesMultipane(), ONE_DEMAND_SOURCE_IS_INCLUDED);
+    }
+
+    @Test
+    @Step("Click on 'Save' button  open Pricing")
+    public void saveOpenPricing() {
+        testStart()
+                .clickOnWebElement(createOpenPricingSidebar.getSaveButton())
+                .validate(not(visible),createOpenPricingSidebar.getSaveButton())
+                .validate(visible, "Updated!")
+                .waitSideBarClosed()
+                .testEnd();
     }
 
     private void verifyItemSelectionInMultipane(Multipane multipane, String expectedPanelNameLabel) {
