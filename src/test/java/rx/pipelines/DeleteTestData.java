@@ -22,8 +22,8 @@ import static configurations.User.USER_FOR_DELETION;
 @Slf4j
 public class DeleteTestData {
     private List<Media> media;
-    private List<AdSpot> adSpots;
     private List<UserDto> users;
+    private List<AdSpot> adSpots;
     private List<Publisher> publishers;
     private List<Protection> protections;
     private List<OpenPricing> openPricing;
@@ -32,8 +32,8 @@ public class DeleteTestData {
     private static final String PREFIX_ADSPOTS = "auto";
     private static final String PREFIX_PUBLISHERS = "auto";
     private static final String PREFIX_OPEN_PRICING = "auto";
-    private static final String PREFIX_PROTECTIONS = "API Protection";
     private static final String PREFIX_USERS = "Test Account";
+    private static final String PREFIX_PROTECTIONS = "API Protection";
 
 
     @Test(priority = 1)
