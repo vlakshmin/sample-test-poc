@@ -26,6 +26,7 @@ public class CreateOpenPricingTest extends BaseTest {
     private OpenPricingPage openPricingPage;
     private CreateOpenPricingSidebar createOpenPricingSidebar;
 
+    //Todo move to Emun
     private static final String ONE_GEO_IS_INCLUDED = "1 geo(s) are included";
     private static final String ONE_MEDIA_IS_INCLUDED = "1 media are included";
     private static final String PRICING_NAME = captionWithSuffix("Pricing");
