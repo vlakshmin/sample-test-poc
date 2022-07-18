@@ -24,11 +24,12 @@ import static zutils.FakerUtils.captionWithSuffix;
 public class MediaPrecondition {
 
     private Media mediaResponse;
+    private Integer responseCode;
     private MediaRequest mediaRequest;
     private GenericResponse<Media> mediaGetAllResponse;
 
-
     private MediaPrecondition(MediaPreconditionBuilder builder) {
+        this.responseCode = builder.responseCode;
         this.mediaRequest = builder.mediaRequest;
         this.mediaResponse = builder.mediaResponse;
         this.mediaGetAllResponse = builder.mediaGetAllResponse;
@@ -43,10 +44,10 @@ public class MediaPrecondition {
 
         private Response response;
         private Media mediaResponse;
+        private Integer responseCode;
         private MediaRequest mediaRequest;
         private GenericResponse<Media> mediaGetAllResponse;
         private final MediaService mediaService = new MediaService();
-
 
         public MediaPreconditionBuilder createNewMedia() {
 
@@ -66,6 +67,7 @@ public class MediaPrecondition {
 
             this.response = mediaService.createMedia(mediaRequest);
             this.mediaResponse = response.as(Media.class);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -74,6 +76,7 @@ public class MediaPrecondition {
 
             this.response = mediaService.createMedia(mediaRequest);
             this.mediaResponse = response.as(Media.class);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -81,6 +84,7 @@ public class MediaPrecondition {
             this.response = mediaService.getAll();
 
             this.mediaGetAllResponse = this.response.as(new GenericResponse<Media>().getClass());
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -89,6 +93,7 @@ public class MediaPrecondition {
             this.response = mediaService.getMediaWithFilter(queryParams);
 
             this.mediaGetAllResponse = this.response.as(new GenericResponse<Media>().getClass());
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -100,6 +105,7 @@ public class MediaPrecondition {
 
         public MediaPreconditionBuilder deleteMedia(int id) {
             this.response = mediaService.deleteMedia(id);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -114,11 +120,5 @@ public class MediaPrecondition {
 
             return new MediaPrecondition(this);
         }
-
-        public Response getResponse(){
-
-            return this.response;
-        }
-
     }
 }

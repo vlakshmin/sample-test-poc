@@ -1,5 +1,6 @@
 package rx.pipelines;
 
+import api.core.client.HttpClient;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.admin.user.UserDto;
 import api.dto.rx.inventory.adspot.AdSpot;
@@ -8,6 +9,7 @@ import api.dto.rx.protection.Protection;
 import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
 import zutils.ObjectMapperUtils;
 
@@ -19,19 +21,20 @@ import static configurations.User.USER_FOR_DELETION;
 
 @Slf4j
 public class DeleteTestData {
-    private final static String PREFIX_MEDIA = "auto";
-    private final static String PREFIX_ADSPOTS = "auto";
-    private final static String PREFIX_PUBLISHERS = "auto";
-    private final static String PREFIX_OPEN_PRICING = "auto";
-    private final static String PREFIX_PROTECTIONS = "API Protection";
-    private final static String PREFIX_USERS = "Test Account";
-
     private List<Media> media;
     private List<AdSpot> adSpots;
     private List<UserDto> users;
     private List<Publisher> publishers;
     private List<Protection> protections;
     private List<OpenPricing> openPricing;
+
+    private static final String PREFIX_MEDIA = "auto";
+    private static final String PREFIX_ADSPOTS = "auto";
+    private static final String PREFIX_PUBLISHERS = "auto";
+    private static final String PREFIX_OPEN_PRICING = "auto";
+    private static final String PREFIX_PROTECTIONS = "API Protection";
+    private static final String PREFIX_USERS = "Test Account";
+
 
     @Test(priority = 1)
     public void deleteProtections() {
@@ -41,10 +44,11 @@ public class DeleteTestData {
             if (ProtectionsPrecondition.protection()
                     .setCredentials(USER_FOR_DELETION)
                     .deleteProtection(pr.getId())
-                    .getResponse().getStatusCode() == 204)
+                    .build()
+                    .getResponseCode() == HttpStatus.SC_NO_CONTENT)
                 deleted++;
         }
-        log.info(String.format("Deleted protections %s of %s", deleted, protections.size()));
+        log.info(String.format("Deleted protections items %s of %s", deleted, protections.size()));
     }
 
     @Test(priority = 2)
@@ -52,13 +56,14 @@ public class DeleteTestData {
         adSpots = getAllAdSpotsByParams();
         int deleted = 0;
         for (AdSpot as : adSpots) {
-            if (AdSpotPrecondition.adSpot()
+            if ( AdSpotPrecondition.adSpot()
                     .setCredentials(USER_FOR_DELETION)
                     .deleteAdSpot(as.getId())
-                    .getResponse().getStatusCode() == 204)
+                    .build()
+                    .getResponseCode() == HttpStatus.SC_NO_CONTENT)
                 deleted++;
         }
-        log.info(String.format("Deleted ad spots %s of %s", deleted, adSpots.size()));
+        log.info(String.format("Deleted ad spots items %s of %s", deleted, adSpots.size()));
     }
 
     @Test(priority = 3)
@@ -68,11 +73,12 @@ public class DeleteTestData {
         for (Media m : media) {
             if (MediaPrecondition.media().
                     setCredentials(USER_FOR_DELETION).
-                    deleteMedia(m.getId()).
-                    getResponse().getStatusCode() == 204)
+                    deleteMedia(m.getId())
+                    .build()
+                    .getResponseCode() == HttpStatus.SC_NO_CONTENT)
                 deleted++;
         }
-        log.info(String.format("Deleted media %s of %s", deleted, media.size()));
+        log.info(String.format("Deleted media items %s of %s", deleted, media.size()));
     }
 
     @Test(priority = 4)
@@ -83,10 +89,11 @@ public class DeleteTestData {
             if (OpenPricingPrecondition.openPricing()
                     .setCredentials(USER_FOR_DELETION)
                     .deleteOpenPricing(p.getId())
-                    .getResponse().getStatusCode() == 204)
+                    .build()
+                    .getResponseCode() == HttpStatus.SC_NO_CONTENT)
                 deleted++;
         }
-        log.info(String.format("Deleted open pricing %s of %s", deleted, openPricing.size()));
+        log.info(String.format("Deleted open pricing items %s of %s", deleted, openPricing.size()));
     }
 
     @Test(priority = 5)
@@ -96,11 +103,11 @@ public class DeleteTestData {
         for (Publisher p : publishers) {
             if (PublisherPrecondition.publisher()
                     .setCredentials(USER_FOR_DELETION)
-                    .deletePublisher(p.getId())
-                    .getResponse().getStatusCode() == 204)
+                    .build()
+                    .getResponseCode() == HttpStatus.SC_NO_CONTENT)
                 deleted++;
         }
-        log.info(String.format("Deleted publishers %s of %s", deleted, publishers.size()));
+        log.info(String.format("Deleted publishers items %s of %s", deleted, publishers.size()));
     }
 
     @Test(priority = 6)
@@ -111,10 +118,11 @@ public class DeleteTestData {
             if (UsersPrecondition.user()
                     .setCredentials(USER_FOR_DELETION)
                     .deleteUser(user.getId())
-                    .getResponse().getStatusCode() == 204)
+                    .build()
+                    .getResponseCode() == HttpStatus.SC_NO_CONTENT)
                 deleted++;
         }
-        log.info(String.format("Deleted users %s of %s", deleted, users.size()));
+        log.info(String.format("Deleted users items %s of %s", deleted, users.size()));
     }
 
     private List<Media> getAllMediaByParams() {

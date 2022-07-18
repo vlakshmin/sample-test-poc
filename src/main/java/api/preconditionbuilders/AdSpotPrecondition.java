@@ -25,11 +25,13 @@ import static zutils.FakerUtils.captionWithSuffix;
 @AllArgsConstructor
 public class AdSpotPrecondition {
 
+    private Integer responseCode;
     private AdSpot adSpotResponse;
     private AdSpotRequest adSpotRequest;
     private GenericResponse<AdSpot> adSpotsGetAllResponse;
 
     private AdSpotPrecondition(AdSpotPreconditionBuilder builder) {
+        this.responseCode = builder.responseCode;
         this.adSpotRequest = builder.adSpotRequest;
         this.adSpotResponse = builder.adSpotResponse;
         this.adSpotsGetAllResponse = builder.adSpotsGetAllResponse;
@@ -39,13 +41,12 @@ public class AdSpotPrecondition {
 
         return new AdSpotPreconditionBuilder();
     }
-
     public static class AdSpotPreconditionBuilder {
 
         private Response response;
+        private Integer responseCode;
         private AdSpot adSpotResponse;
         private AdSpotRequest adSpotRequest;
-        private List<AdSpot> adSpotsResponseList;
         private final AdSpotService adSpotService = new AdSpotService();
         private GenericResponse<AdSpot> adSpotsGetAllResponse;
 
@@ -83,6 +84,7 @@ public class AdSpotPrecondition {
 
             this.response = adSpotService.createAdSpot(adSpotRequest);
             this.adSpotResponse = response.as(AdSpot.class);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -91,6 +93,7 @@ public class AdSpotPrecondition {
 
             this.response = adSpotService.createAdSpot(adSpotRequest);
             this.adSpotResponse = response.as(AdSpot.class);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -99,6 +102,7 @@ public class AdSpotPrecondition {
             this.response = adSpotService.getAll();
 
             this.adSpotsGetAllResponse = this.response.as(new GenericResponse<AdSpot>().getClass());
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -112,12 +116,14 @@ public class AdSpotPrecondition {
             this.response = adSpotService.getAdSpotsWithFilter(queryParams);
 
             this.adSpotsGetAllResponse = this.response.as(new GenericResponse<AdSpot>().getClass());
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
 
         public AdSpotPreconditionBuilder deleteAdSpot(int id) {
             this.response = adSpotService.deleteAdSpot(id);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -131,11 +137,5 @@ public class AdSpotPrecondition {
 
             return new AdSpotPrecondition(this);
         }
-
-        public Response getResponse(){
-
-            return this.response;
-        }
-
     }
 }

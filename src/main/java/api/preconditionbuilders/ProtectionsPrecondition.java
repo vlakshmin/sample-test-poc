@@ -22,12 +22,14 @@ import static zutils.FakerUtils.captionWithSuffix;
 @AllArgsConstructor
 public class ProtectionsPrecondition {
 
-    private ProtectionRequest protectionsRequest;
+    private Integer responseCode;
     private Protection protectionsResponse;
+    private ProtectionRequest protectionsRequest;
     private GenericResponse<Protection> protectionsGetAllResponse;
 
     private ProtectionsPrecondition(ProtectionsPreconditionBuilder builder) {
 
+        this.responseCode = builder.responseCode;
         this.protectionsRequest = builder.protectionsRequest;
         this.protectionsResponse = builder.protectionsResponse;
         this.protectionsGetAllResponse = builder.protectionsGetAllResponse;
@@ -40,6 +42,7 @@ public class ProtectionsPrecondition {
     public static class ProtectionsPreconditionBuilder {
 
         private Response response;
+        private Integer responseCode;
         private Protection protectionsResponse;
         private ProtectionRequest protectionsRequest;
         private GenericResponse protectionsGetAllResponse;
@@ -110,12 +113,14 @@ public class ProtectionsPrecondition {
                     .build();
             this.response = protectionsService.createProtection(protectionsRequest);
             this.protectionsResponse = response.as(Protection.class);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
 
         public ProtectionsPreconditionBuilder deleteProtection(int id) {
             this.response = protectionsService.deleteProtection(id);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -140,13 +145,9 @@ public class ProtectionsPrecondition {
             this.response = protectionsService.getProtectionsWithFilter(queryParams);
 
             this.protectionsGetAllResponse = this.response.as(GenericResponse.class);
+            this.responseCode = response.getStatusCode();
 
             return this;
-        }
-
-        public Response getResponse(){
-
-            return this.response;
         }
     }
 }

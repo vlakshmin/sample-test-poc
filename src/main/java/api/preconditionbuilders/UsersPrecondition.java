@@ -25,6 +25,7 @@ import static zutils.FakerUtils.randomMail;
 @AllArgsConstructor
 public class UsersPrecondition {
 
+    private Integer responseCode;
     private UserDto userResponse;
     private UserRequest userRequest;
     private GenericResponse<UserDto> userGetAllResponse;
@@ -32,8 +33,9 @@ public class UsersPrecondition {
     private UsersPrecondition(UsersPreconditionBuilder builder) {
 
         this.userRequest = builder.userRequest;
-        this.userGetAllResponse = builder.userGetAllResponse;
+        this.responseCode = builder.responseCode;
         this.userResponse = builder.userResponse;
+        this.userGetAllResponse = builder.userGetAllResponse;
     }
 
     public static UsersPreconditionBuilder user() {
@@ -44,6 +46,7 @@ public class UsersPrecondition {
     public static class UsersPreconditionBuilder {
 
         private Response response;
+        private Integer responseCode;
         private UserDto userResponse;
         private UserRequest userRequest;
         private GenericResponse<UserDto> userGetAllResponse;
@@ -61,6 +64,7 @@ public class UsersPrecondition {
 
             this.response = userService.createUser(userRequest);
             this.userResponse = response.as(UserDto.class);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -80,7 +84,7 @@ public class UsersPrecondition {
                     .build();
 
             this.response = userService.updateUser(userResponse);
-            //this.userResponse = response.as(UserDto.class);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -88,6 +92,7 @@ public class UsersPrecondition {
         public UsersPreconditionBuilder getUserById(int id) {
             this.response = userService.getUserById(id);
             this.userResponse = response.as(UserDto.class);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -95,6 +100,7 @@ public class UsersPrecondition {
         public UsersPreconditionBuilder getAllUsers() {
             this.response = userService.getAll();
             this.userGetAllResponse = this.response.as(new GenericResponse<UserDto>().getClass());
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -111,6 +117,7 @@ public class UsersPrecondition {
 
         public UsersPreconditionBuilder deleteUser(int id) {
             this.response = userService.deleteUser(id);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -125,13 +132,9 @@ public class UsersPrecondition {
             this.response = userService.getUsersWithFilter(queryParams);
 
             this.userGetAllResponse = this.response.as(new GenericResponse<UserDto>().getClass());
+            this.responseCode = response.getStatusCode();
 
             return this;
-        }
-
-        public Response getResponse(){
-
-            return this.response;
         }
     }
 }

@@ -26,11 +26,13 @@ import static zutils.FakerUtils.captionWithSuffix;
 @AllArgsConstructor
 public class OpenPricingPrecondition {
 
+    private Integer responseCode;
     private OpenPricing openPricingResponse;
     private OpenPricingRequest openPricingRequest;
     private GenericResponse<OpenPricing> openPricingGetAllResponse;
 
     private OpenPricingPrecondition(OpenPricingPreconditionBuilder builder) {
+        this.responseCode = builder.responseCode;
         this.openPricingRequest = builder.openPricingRequest;
         this.openPricingResponse = builder.openPricingResponse;
         this.openPricingGetAllResponse = builder.openPricingGetAllResponse;
@@ -44,9 +46,9 @@ public class OpenPricingPrecondition {
     public static class OpenPricingPreconditionBuilder {
 
         private Response response;
+        private Integer responseCode;
         private OpenPricing openPricingResponse;
         private OpenPricingRequest openPricingRequest;
-        private List<OpenPricing> openPricingResponseList;
         private GenericResponse openPricingGetAllResponse;
         private OpenPricingService openPricingService = new OpenPricingService();
 
@@ -118,6 +120,7 @@ public class OpenPricingPrecondition {
 
             this.response = openPricingService.createOpenPricing(openPricingRequest);
             this.openPricingResponse = response.as(OpenPricing.class);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -126,6 +129,7 @@ public class OpenPricingPrecondition {
             this.response = openPricingService.getAll();
 
             this.openPricingGetAllResponse = this.response.as(new GenericResponse<OpenPricing>().getClass());
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -137,6 +141,7 @@ public class OpenPricingPrecondition {
 
         public OpenPricingPreconditionBuilder deleteOpenPricing(int id) {
             this.response = openPricingService.deleteOpenPricing(id);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -156,13 +161,9 @@ public class OpenPricingPrecondition {
             this.response = openPricingService.getOpenPricingWithFilter(queryParams);
 
             this.openPricingGetAllResponse = this.response.as(GenericResponse.class);
+            this.responseCode = response.getStatusCode();
 
             return this;
-        }
-
-        public Response getResponse(){
-
-            return this.response;
         }
     }
 }

@@ -23,11 +23,13 @@ import static zutils.FakerUtils.*;
 @AllArgsConstructor
 public class PublisherPrecondition {
 
+    private Integer responseCode;
     private Publisher publisherResponse;
     private PublisherRequest publisherRequest;
     private GenericResponse<Publisher> publisherGetAllResponse;
 
     private PublisherPrecondition(PublisherPreconditionBuilder builder) {
+        this.responseCode = builder.responseCode;
         this.publisherRequest = builder.publisherRequest;
         this.publisherResponse = builder.publisherResponse;
         this.publisherGetAllResponse = builder.publisherGetAllResponse;
@@ -41,6 +43,7 @@ public class PublisherPrecondition {
     public static class PublisherPreconditionBuilder {
 
         private Response response;
+        private Integer responseCode;
         private Publisher publisherResponse;
         private PublisherRequest publisherRequest;
         private GenericResponse<Publisher> publisherGetAllResponse;
@@ -60,6 +63,7 @@ public class PublisherPrecondition {
 
             this.response = publisherService.createPublisher(publisherRequest);
             this.publisherResponse = response.as(Publisher.class);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -67,6 +71,7 @@ public class PublisherPrecondition {
         public PublisherPreconditionBuilder createNewPublisher(PublisherRequest publisherRequest) {
             this.response = publisherService.createPublisher(publisherRequest);
             this.publisherResponse = response.as(Publisher.class);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -75,7 +80,7 @@ public class PublisherPrecondition {
             this.response = publisherService.getAll();
 
             this.publisherGetAllResponse = this.response.as(new GenericResponse<Publisher>().getClass());
-            ;
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -87,6 +92,7 @@ public class PublisherPrecondition {
 
         public PublisherPreconditionBuilder deletePublisher(int id) {
             this.response = publisherService.deletePublisher(id);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -107,13 +113,9 @@ public class PublisherPrecondition {
             this.response = publisherService.getPublisherWithFilter(queryParams);
 
             this.publisherGetAllResponse = this.response.as(GenericResponse.class);
+            this.responseCode = response.getStatusCode();
 
             return this;
-        }
-
-        public Response getResponse(){
-
-            return this.getResponse();
         }
     }
 }
