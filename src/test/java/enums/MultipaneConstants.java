@@ -1,6 +1,10 @@
 package enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
+@AllArgsConstructor
 public enum MultipaneConstants {
 
     ONE_GEO_IS_INCLUDED("1 geo(s) are included"),
@@ -11,6 +15,5 @@ public enum MultipaneConstants {
     ONE_DEMAND_SOURCE_IS_INCLUDED("1 demand source(s) are included"),
     ONE_OPERATING_SYSTEM_IS_INCLUDED("1 operating system(s) are included");
 
-    MultipaneConstants(String s) {
-    }
+    private final String value;
 }

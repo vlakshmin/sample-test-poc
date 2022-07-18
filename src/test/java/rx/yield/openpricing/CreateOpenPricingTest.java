@@ -1,6 +1,7 @@
 package rx.yield.openpricing;
 
 import com.codeborne.selenide.testng.ScreenShooter;
+import enums.MultipaneConstants;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
@@ -15,6 +16,7 @@ import widgets.yield.openPricing.sidebar.CreateOpenPricingSidebar;
 
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
+import static enums.MultipaneConstants.*;
 import static java.lang.String.format;
 import static managers.TestManager.testStart;
 import static zutils.FakerUtils.captionWithSuffix;
@@ -26,15 +28,7 @@ public class CreateOpenPricingTest extends BaseTest {
     private OpenPricingPage openPricingPage;
     private CreateOpenPricingSidebar createOpenPricingSidebar;
 
-    //Todo move to Emun
-    private static final String ONE_GEO_IS_INCLUDED = "1 geo(s) are included";
-    private static final String ONE_MEDIA_IS_INCLUDED = "1 media are included";
     private static final String PRICING_NAME = captionWithSuffix("Pricing");
-    private static final String ONE_AD_SIZE_IS_INCLUDED = "1 size(s) are included";
-    private static final String ONE_DEVICE_IS_INCLUDED = "1 device(s) are included";
-    private static final String ONE_AD_FORMAT_IS_INCLUDED = "1 format(s) are included";
-    private static final String ONE_DEMAND_SOURCE_IS_INCLUDED = "1 demand source(s) are included";
-    private static final String ONE_OPERATING_SYSTEM_IS_INCLUDED = "1 operating system(s) are included";
 
     public CreateOpenPricingTest() {
         openPricingPage = new OpenPricingPage();
@@ -65,43 +59,43 @@ public class CreateOpenPricingTest extends BaseTest {
     @Test
     @Step("Add one device to new Pricing")
     public void addOneDeviceToPricingTest() {
-        verifyItemSelectionInMultipane(createOpenPricingSidebar.getDeviceMultipane(), ONE_DEVICE_IS_INCLUDED);
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getDeviceMultipane(), ONE_DEVICE_IS_INCLUDED.getValue());
     }
 
     @Test
     @Step("Add one inventory to new Pricing")
     public void addOneInventoryToPricingTest() {
-        verifyItemSelectionInMultipane(createOpenPricingSidebar.getInventoryMultipane(), ONE_MEDIA_IS_INCLUDED);
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getInventoryMultipane(), ONE_MEDIA_IS_INCLUDED.getValue());
     }
 
     @Test
     @Step("Add one operating system to new Pricing")
     public void addOneOperatingSystemToPricingTest() {
-        verifyItemSelectionInMultipane(createOpenPricingSidebar.getOperatingSystemMultipane(), ONE_OPERATING_SYSTEM_IS_INCLUDED);
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getOperatingSystemMultipane(), ONE_OPERATING_SYSTEM_IS_INCLUDED.getValue());
     }
 
     @Test
     @Step("Add one geo to new Pricing")
     public void addOneGeoToPricingTest() {
-        verifyItemSelectionInMultipane(createOpenPricingSidebar.getGeoMultipane(), ONE_GEO_IS_INCLUDED);
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getGeoMultipane(), ONE_GEO_IS_INCLUDED.getValue());
     }
 
     @Test
     @Step("Add one adSize to new Pricing")
     public void addOneAdSizeToPricingTest() {
-        verifyItemSelectionInMultipane(createOpenPricingSidebar.getAdSizeMultipane(), ONE_AD_SIZE_IS_INCLUDED);
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getAdSizeMultipane(), ONE_AD_SIZE_IS_INCLUDED.getValue());
     }
 
     @Test
     @Step("Add one adFormat to new Pricing")
     public void addOneAdFormatToPricingTest() {
-        verifyItemSelectionInMultipane(createOpenPricingSidebar.getAdFormatMultipane(), ONE_AD_FORMAT_IS_INCLUDED);
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getAdFormatMultipane(), ONE_AD_FORMAT_IS_INCLUDED.getValue());
     }
 
     @Test
     @Step("Add one demand Source to new Pricing")
     public void addOneDemandSourceToPricingTest() {
-        verifyItemSelectionInMultipane(createOpenPricingSidebar.getDemandSourcesMultipane(), ONE_DEMAND_SOURCE_IS_INCLUDED);
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getDemandSourcesMultipane(), ONE_DEMAND_SOURCE_IS_INCLUDED.getValue());
     }
 
     @Test
