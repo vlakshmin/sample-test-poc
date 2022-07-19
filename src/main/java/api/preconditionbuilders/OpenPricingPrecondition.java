@@ -1,5 +1,6 @@
 package api.preconditionbuilders;
 
+import api.core.client.HttpClient;
 import api.dto.rx.yield.openpricing.OpenPricingRequest;
 import api.dto.rx.yield.openpricing.*;
 import api.dto.GenericResponse;
@@ -8,6 +9,7 @@ import api.dto.rx.inventory.adspot.AdSpot;
 import api.dto.rx.inventory.adspot.AdSpotRequest;
 import api.dto.rx.inventory.media.Media;
 import api.services.OpenPricingService;
+import configurations.User;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,11 +26,13 @@ import static zutils.FakerUtils.captionWithSuffix;
 @AllArgsConstructor
 public class OpenPricingPrecondition {
 
+    private Integer responseCode;
     private OpenPricing openPricingResponse;
     private OpenPricingRequest openPricingRequest;
     private GenericResponse<OpenPricing> openPricingGetAllResponse;
 
     private OpenPricingPrecondition(OpenPricingPreconditionBuilder builder) {
+        this.responseCode = builder.responseCode;
         this.openPricingRequest = builder.openPricingRequest;
         this.openPricingResponse = builder.openPricingResponse;
         this.openPricingGetAllResponse = builder.openPricingGetAllResponse;
@@ -42,9 +46,9 @@ public class OpenPricingPrecondition {
     public static class OpenPricingPreconditionBuilder {
 
         private Response response;
+        private Integer responseCode;
         private OpenPricing openPricingResponse;
         private OpenPricingRequest openPricingRequest;
-        private List<OpenPricing> openPricingResponseList;
         private GenericResponse openPricingGetAllResponse;
         private OpenPricingService openPricingService = new OpenPricingService();
 
@@ -116,6 +120,7 @@ public class OpenPricingPrecondition {
 
             this.response = openPricingService.createOpenPricing(openPricingRequest);
             this.openPricingResponse = response.as(OpenPricing.class);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -124,6 +129,7 @@ public class OpenPricingPrecondition {
             this.response = openPricingService.getAll();
 
             this.openPricingGetAllResponse = this.response.as(new GenericResponse<OpenPricing>().getClass());
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
@@ -131,6 +137,19 @@ public class OpenPricingPrecondition {
         private List<OpenPricing> getOpenPricingResponseList() {
 
             return Arrays.asList(response.jsonPath().getObject("items", OpenPricing[].class));
+        }
+
+        public OpenPricingPreconditionBuilder deleteOpenPricing(int id) {
+            this.response = openPricingService.deleteOpenPricing(id);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
+        public OpenPricingPreconditionBuilder setCredentials(User user) {
+            HttpClient.setCredentials(user);
+
+            return this;
         }
 
         public OpenPricingPrecondition build() {
@@ -142,6 +161,7 @@ public class OpenPricingPrecondition {
             this.response = openPricingService.getOpenPricingWithFilter(queryParams);
 
             this.openPricingGetAllResponse = this.response.as(GenericResponse.class);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }

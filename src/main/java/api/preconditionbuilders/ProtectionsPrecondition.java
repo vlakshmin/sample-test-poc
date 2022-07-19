@@ -1,8 +1,11 @@
 package api.preconditionbuilders;
 
 
+import api.core.client.HttpClient;
+import api.dto.GenericResponse;
 import api.dto.rx.protection.*;
 import api.services.ProtectionsService;
+import configurations.User;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static zutils.FakerUtils.captionWithSuffix;
 
@@ -18,15 +22,17 @@ import static zutils.FakerUtils.captionWithSuffix;
 @AllArgsConstructor
 public class ProtectionsPrecondition {
 
-    private ProtectionRequest protectionsRequest;
+    private Integer responseCode;
     private Protection protectionsResponse;
-    private List<Protection> protectionsResponseList;
+    private ProtectionRequest protectionsRequest;
+    private GenericResponse<Protection> protectionsGetAllResponse;
 
     private ProtectionsPrecondition(ProtectionsPreconditionBuilder builder) {
 
+        this.responseCode = builder.responseCode;
         this.protectionsRequest = builder.protectionsRequest;
         this.protectionsResponse = builder.protectionsResponse;
-        this.protectionsResponseList = builder.protectionsResponseList;
+        this.protectionsGetAllResponse = builder.protectionsGetAllResponse;
     }
 
     public static ProtectionsPreconditionBuilder protection() {
@@ -36,9 +42,10 @@ public class ProtectionsPrecondition {
     public static class ProtectionsPreconditionBuilder {
 
         private Response response;
+        private Integer responseCode;
         private Protection protectionsResponse;
         private ProtectionRequest protectionsRequest;
-        private List<Protection> protectionsResponseList;
+        private GenericResponse protectionsGetAllResponse;
         private ProtectionsService protectionsService = new ProtectionsService();
 
         public ProtectionsPreconditionBuilder createNewRandomProtection() {
@@ -53,7 +60,7 @@ public class ProtectionsPrecondition {
                                     .excludedAdspots(List.of())
                                     .build())
                             .adFormat(AdFormat.builder()
-                                    .adFormats(List.of(2,3))
+                                    .adFormats(List.of(2, 3))
                                     .exclude(false)
                                     .build())
                             .adSize(AdSize.builder()
@@ -98,20 +105,28 @@ public class ProtectionsPrecondition {
                                             "- 72 ANS: Test d'éligibilité gratuit en 1 clic"))
                                     .category(Category.builder()
                                             .blockUnknownCategories(false)
-                                            .categories(List.of(2,4,6,8))
+                                            .categories(List.of(2, 4, 6, 8))
                                             .exclude(false)
                                             .build())
                                     .build())
                             .build())
                     .build();
-            this.response = protectionsService.createRule(protectionsRequest);
+            this.response = protectionsService.createProtection(protectionsRequest);
             this.protectionsResponse = response.as(Protection.class);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
 
-        public ProtectionsPreconditionBuilder getDataContainerList() {
-            this.protectionsResponseList = this.getProtectionsResponseList();
+        public ProtectionsPreconditionBuilder deleteProtection(int id) {
+            this.response = protectionsService.deleteProtection(id);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
+        public ProtectionsPreconditionBuilder setCredentials(User user) {
+            HttpClient.setCredentials(user);
 
             return this;
         }
@@ -123,7 +138,16 @@ public class ProtectionsPrecondition {
 
         private List<Protection> getProtectionsResponseList() {
 
-            return Arrays.asList(response.as(Protection[].class));
+            return Arrays.asList(response.jsonPath().getObject("items", Protection.class));
+        }
+
+        public ProtectionsPreconditionBuilder getProtectionsWithFilter(Map<String, Object> queryParams) {
+            this.response = protectionsService.getProtectionsWithFilter(queryParams);
+
+            this.protectionsGetAllResponse = this.response.as(GenericResponse.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
         }
     }
 }
