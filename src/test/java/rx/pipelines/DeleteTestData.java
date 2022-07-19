@@ -1,6 +1,5 @@
 package rx.pipelines;
 
-import api.core.client.HttpClient;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.admin.user.UserDto;
 import api.dto.rx.inventory.adspot.AdSpot;
@@ -33,7 +32,7 @@ public class DeleteTestData {
     private static final String PREFIX_PUBLISHERS = "auto";
     private static final String PREFIX_OPEN_PRICING = "auto";
     private static final String PREFIX_USERS = "Test Account";
-    private static final String PREFIX_PROTECTIONS = "API Protection";
+    private static final String PREFIX_PROTECTIONS = "rule";
 
 
     @Test(priority = 1)
@@ -103,6 +102,7 @@ public class DeleteTestData {
         for (Publisher p : publishers) {
             if (PublisherPrecondition.publisher()
                     .setCredentials(USER_FOR_DELETION)
+                    .deletePublisher(p.getId())
                     .build()
                     .getResponseCode() == HttpStatus.SC_NO_CONTENT)
                 deleted++;
