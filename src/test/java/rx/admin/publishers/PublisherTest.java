@@ -32,7 +32,7 @@ public class PublisherTest extends BaseTest {
     private EditPublisherSidebar editPublisherSidebar;
     private CreatePublisherSidebar createPublisherSidebar;
 
-    private static final String PUBLISHER_NAME_EDITED = FakerUtils.captionWithSuffix("Pub_Edited");
+    private static final String PUBLISHER_NAME_EDITED = FakerUtils.captionWithSuffix("Pub_auto_Edited");
     private static final String PUBLISHER_AD_OPS_EDITED = FakerUtils.captionWithSuffix("Ad_Ops_Edited");
 
     public PublisherTest() {
