@@ -18,6 +18,10 @@ public class ProtectionRequest {
     private Boolean active;
     private Integer typeId;
     private Rule rule;
+    private Boolean adminOnly;
+    private String publisherName;
+    private String createdBy;
+    private String updatedBy;
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);

@@ -16,7 +16,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
-import static api.core.RakutenExchangeApi.CREATE_RULE;
 import static configurations.ConfigurationLoader.getConfig;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;

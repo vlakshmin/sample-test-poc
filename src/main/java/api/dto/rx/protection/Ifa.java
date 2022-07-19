@@ -16,7 +16,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Ifa {
 
-    private List<Integer> ifas;
+    private List<String> ifas;
     private Boolean exclude;
 
     public String toJson() {

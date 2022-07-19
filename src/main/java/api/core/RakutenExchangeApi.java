@@ -7,8 +7,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum RakutenExchangeApi {
     //Rules
-    GET_RULE("/v3/protections/targeting/%s"),
-    CREATE_RULE("/v3/protections/targeting"),
+    GET_PROTECTION("/v3/protections/targeting/%s"),
+    CREATE_PROTECTION("/v3/protections/targeting"),
+    GET_ALL_PROTECTIONS("/v3/protections/targeting"),
+    DELETE_PROTECTION("/v3/protections/targeting/%s"),
+    UPDATE_PROTECTION("/v3/protections/targeting/%s"),
 
     //Publisher
     GET_PUBLISHERS("/v2/publishers"),
@@ -20,6 +23,7 @@ public enum RakutenExchangeApi {
     GET_USER("/v2/accounts/%s"),
     GET_ALL_USERS("/v2/accounts"),
     UPDATE_USER("/v2/accounts/%s"),
+    DELETE_USER("/v2/accounts/%s"),
 
     //Open Pricing
     CREATE_OPEN_PRICING("/v3/pricing/open"),
@@ -39,7 +43,8 @@ public enum RakutenExchangeApi {
     CREATE_ADSPOT("/v2/adspots"),
     GET_ADSPOT("/v2/adspots/%s"),
     GET_ALL_ADSPOTS("/v2/adspots"),
-    UPDATE_ADSPOT("/v2/adspots/%s");
+    UPDATE_ADSPOT("/v2/adspots/%s"),
+    DELETE_ADSPOT("/v2/adspots/%s");
 
     private String endpoint;
 

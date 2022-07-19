@@ -38,13 +38,13 @@ public class MultipaneTest extends BaseTest {
     private String publisherDropdownItems = "//div[contains(@class,'menuable__content__activ')]//div[@class='v-list-item__title']";
 
 
-    public MultipaneTest(){
+    public MultipaneTest() {
         deviceMultipane = new Multipane(MultipaneName.DEVICE);
     }
 
     @BeforeClass
     @Step("Getting info about 'Viber' publisher and logging in SSP")
-    public void getPublisherInfo(){
+    public void getPublisherInfo() {
         //publisher = getPublisher();
 
         testStart()
@@ -53,7 +53,7 @@ public class MultipaneTest extends BaseTest {
                 .logIn(TEST_USER)
                 .and()
                 .waitSideBarOpened()
-        .testEnd();
+                .testEnd();
     }
 
     @Test
@@ -95,12 +95,12 @@ public class MultipaneTest extends BaseTest {
                 .then()
                 .validate(visible, firstDeviceToSelect.getIncludedIcon())
                 .validate(not(visible), firstDeviceToSelect.getExcludedIcon())
-        .testEnd();
+                .testEnd();
     }
 
     @Test(dependsOnMethods = "deviceSelectionTest")
     @Step("Select Device from Multipane Component")
-    public void checkIncludedItemTest(){
+    public void checkIncludedItemTest() {
         var firstIncludedDevice = deviceMultipane.getIncludedExcludedTableItemByPositionInList(0);
 
         //Check Device Selection
@@ -111,12 +111,12 @@ public class MultipaneTest extends BaseTest {
                 .validate(not(visible), firstIncludedDevice.getParentLabel())
                 //.validate(visible, firstIncludedDevice.getRemoveButton())
                 //Todo add more checks with icons
-        .testEnd();
+                .testEnd();
     }
 
     @Test(dependsOnMethods = "checkIncludedItemTest")
     @Step("Select Device from Multipane Component")
-    public void checkSelectionInfoTextTest(){
+    public void checkSelectionInfoTextTest() {
 
         //Check Selection Info Text
         testStart()
@@ -127,17 +127,18 @@ public class MultipaneTest extends BaseTest {
                 .clickOnWebElement(deviceMultipane.getIncludeAllButton())
                 .then()
                 .validateContainsText(deviceMultipane.getSelectionInfoLabel(), ALL_DEVICES_INCLUDED)
-        .testEnd();
+                .testEnd();
     }
 
     @Step("Getting 'Viber' publisher")
-    private Publisher getPublisher(){
+    private Publisher getPublisher() {
 
         return PublisherPrecondition.publisher()
                 .getPublishersList()
-                .build()
-                .getPublisherResponseList().stream()
-                .filter(pub ->pub.getName().equalsIgnoreCase("Viber"))
+                .build().getPublisherGetAllResponse()
+                .getItems()
+                .stream()
+                .filter(pub -> pub.getName().equalsIgnoreCase("Viber"))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("Can't find  publisher with name 'Viber'"));
     }

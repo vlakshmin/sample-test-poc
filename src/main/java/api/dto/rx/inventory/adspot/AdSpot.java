@@ -23,6 +23,7 @@ public class AdSpot {
     private Boolean coppa;
     private Integer mediaId;
     private Boolean enabled;
+    @JsonProperty(value="native")
     private Native  anative;
     private Boolean testMode;
     private String  currency;
@@ -36,10 +37,9 @@ public class AdSpot {
     private String  publisherName;
 
     private List<Integer> sizeIds;
-    @JsonProperty(value="native")
     private List<Integer> categoryIds;
 
-    private Integer prebidCacheEnabled;
+    private Boolean prebidCacheEnabled;
     private Boolean floorPriceAutomated;
 
     public String toJson() {
