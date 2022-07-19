@@ -32,7 +32,7 @@ public class DeleteTestData {
     private static final String PREFIX_PUBLISHERS = "auto";
     private static final String PREFIX_OPEN_PRICING = "auto";
     private static final String PREFIX_USERS = "Test Account";
-    private static final String PREFIX_PROTECTIONS = "rule";
+    private static final String PREFIX_PROTECTIONS = "api protection";
 
 
     @Test(priority = 1)
