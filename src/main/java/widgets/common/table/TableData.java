@@ -38,7 +38,7 @@ public class TableData {
     public ElementsCollection getCustomCells(ColumnNames columnName) {
         int columnId = getColumns()
                 .stream()
-                .map(x -> x.getText())
+                .map(SelenideElement::getText)
                 .collect(Collectors.toList())
                 .indexOf(columnName.getName()) + 2;
 
