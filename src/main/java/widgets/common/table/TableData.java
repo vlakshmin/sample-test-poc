@@ -52,7 +52,7 @@ public class TableData {
 
         return getColumns()
                 .stream()
-                .map(x -> x.getText())
+                .map(SelenideElement::getText)
                 .collect(Collectors.toList())
                 .indexOf(columnName.getName()) + 2;
     }

@@ -24,6 +24,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -412,17 +413,12 @@ public final class TestManager {
         }
 
         public TestManagerBuilder setValueWithClean(SelenideElement element, String value) {
-            log.info("Setting value '{}' in field '{}' withXpath '{}'",
-                    value, element.getAlias(), element.getSearchCriteria());
-            step(format("Setting value '%s' in field '%s' withXpath '%s'",
-                    value, element.getAlias(), element.getSearchCriteria()));
-            //element.should(exist,visible).hover().doubleClick().sendKeys(Keys.CONTROL + "A", Keys.BACK_SPACE);
-            element.should(exist, visible).hover().click();
-            int i = 0;
-            do {
+            logEvent(format("Setting value '%s' in field '%s' withXpath '%s'", value, element.getAlias(),
+                    element.getSearchCriteria()));
+
+            for (char currentChar : Objects.requireNonNull(element.getValue()).toCharArray()) {
                 element.sendKeys(Keys.BACK_SPACE);
-                i++;
-            } while (i <= 30);
+            }
             element.should(exist, visible).hover().sendKeys(value);
 
             return this;
