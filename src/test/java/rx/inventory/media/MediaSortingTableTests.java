@@ -137,6 +137,7 @@ public class MediaSortingTableTests extends BaseTest {
                 .clickOnWebElement(table.getTableOptionsBtn())
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))
                 .validate(visible,tableData.getColumnHeader(ColumnNames.SITE_APP_STORE_URL.getName()))
+                .clickOnWebElement(table.getTableOptionsBtn())
                 .testEnd();
     }
 
