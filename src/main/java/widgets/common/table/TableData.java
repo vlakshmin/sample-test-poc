@@ -40,7 +40,7 @@ public class TableData {
         return $$x(String.format(CELL_BY_COLUMN.getSelector(), columnId)).as(CELL_BY_COLUMN.getAlias());
     }
 
-    public SelenideElement getCellByRowValue(ColumnNames columnName,ColumnNames columnNameByRow, String rowValue) {
+    public SelenideElement getCellByRowValue(ColumnNames columnName, ColumnNames columnNameByRow, String rowValue) {
         int columnId = getColumnId(columnName);
         int rowNumber = getRowNumber(columnNameByRow, rowValue);
 
@@ -48,7 +48,7 @@ public class TableData {
                 .as(CELL_BY_COLUMN_ROW.getAlias());
     }
 
-    private Integer getColumnId(ColumnNames columnName){
+    private Integer getColumnId(ColumnNames columnName) {
 
         return getColumns()
                 .stream()
@@ -57,12 +57,12 @@ public class TableData {
                 .indexOf(columnName.getName()) + 2;
     }
 
-    private Integer getRowNumber(ColumnNames columnNameByRow, String rowValue){
+    private Integer getRowNumber(ColumnNames columnNameByRow, String rowValue) {
 
         return getCustomCells(columnNameByRow)
                 .stream()
                 .map(x -> x.getText())
                 .collect(Collectors.toList())
-                .indexOf(rowValue)+1;
+                .indexOf(rowValue) + 1;
     }
 }

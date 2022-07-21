@@ -33,14 +33,15 @@ public class MediaSortingTableTests extends BaseTest {
     private int totalMedia;
     private List<String> sortIdsByAsc;
     private List<String> sortIdsByDesc;
-    private List<String> sortNamesByDesc;
     private List<String> sortNamesByAsc;
+    private List<String> sortNamesByDesc;
+
+
+    private List<String> sortURLByAsc;
+    private List<String> sortURLByDesc;
 
     private List<String> sortPublisherNameByDesc;
     private List<String> sortPublisherNameByAsc;
-
-    private List<String> sortURLByDesc;
-    private List<String> sortURLByAsc;
 
     private MediaPage mediaPage;
 

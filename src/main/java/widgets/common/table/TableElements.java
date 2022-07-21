@@ -7,15 +7,15 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum TableElements {
 
-    SEARCH( "Search Textbox", "//*[@class='v-text-field__slot']/label[text()='Search']/../input"),
-    CLEAR( "Clear Icon", "//*[@class='v-input__icon v-input__icon--clear']/button"),
-    CHECKBOX( "Row Checkbox", "//table//tr[%s]/td[1]/div/div[1]/i"),
     ROWS( "Table Rows", "//tbody/tr"),
+    BODY( "Table Body", "//body//table[1]"),
+    COLUMNS( "Table Columns", "//thead/tr/th/span"),
     CELL_BY_COLUMN( "Cell By Column", "//tbody/tr/td[%s]"),
     CELL_BY_COLUMN_ROW( "Cell By Column", "//tbody/tr[%s]/td[%s]"),
-    COLUMNS( "Table Columns", "//thead/tr/th/span"),
-    COLUMN_HEADER( "Column Header", "//div[@class='v-data-table__wrapper']//thead//th/span[text()='%s']/parent::th"),
-    BODY( "Table Body", "//body//table[1]");
+    CHECKBOX( "Row Checkbox", "//table//tr[%s]/td[1]/div/div[1]/i"),
+    CLEAR( "Clear Icon", "//*[@class='v-input__icon v-input__icon--clear']/button"),
+    SEARCH( "Search Textbox", "//*[@class='v-text-field__slot']/label[text()='Search']/../input"),
+    COLUMN_HEADER( "Column Header", "//div[@class='v-data-table__wrapper']//thead//th/span[text()='%s']/parent::th");
 
     private String alias;
     private String selector;

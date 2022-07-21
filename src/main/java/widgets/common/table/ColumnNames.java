@@ -8,48 +8,47 @@ import lombok.Getter;
 public enum ColumnNames {
     //General for all tables
     ID("ID", true),
-    PUBLISHER("Publisher", true),
-    CREATED_DATE("Created Date", true),
-    CREATED_BY("Created By", true),
-    UPDATED_DATE("Updated Date", true),
-    UPDATED_BY("Updated By", true),
-    DETAILS("Details", true),
     ACTIVE("Active", true),
+    DETAILS("Details", true),
+    PUBLISHER("Publisher", true),
+    CREATED_BY("Created By", true),
+    UPDATED_BY("Updated By", true),
+    UPDATED_DATE("Updated Date", true),
+    CREATED_DATE("Created Date", true),
 
     NAME("Name", true),
+    STATUS("Status", true),
+    END_DATE("End Date", true),
     ALWAYS_ON("Always on", true),
     START_DATE("Start Date", true),
-    END_DATE("End Date", true),
-    STATUS("Status", true),
     ACTIVE_INACTIVE("Active/Inactive", true),
 
     //Demand Source
-    DSP_ID("DSP ID", false),
-
     BIDDER("Bidder", true),
+    DSP_ID("DSP ID", false),
 
 
     //Publisher
-    CATEGORY("Category", true),
+    MAIL("Mail", true),
     DOMAIN("Domain", true),
     CURRENCY("Currency", true),
+    CATEGORY("Category", true),
     AD_OPS_PERSON("Ad Ops Person", true),
-    MAIL("Mail", true),
 
 
     //Media
-    MEDIA_NAME("Media Name", true),
     PLATFORM("Platform", true),
+    MEDIA_NAME("Media Name", true),
     SITE_APP_STORE_URL("Site / App Store URL", true),
 
     //Ad Spot Name
     AD_SPOT_NAME("Ad Spot Name", true),
     RELATED_MEDIA("Related Media", true),
 
-    PAGE_CATEGORY("Page Category", false),
     FILTER("Filter", false),
     TEST_MODE("Test Mode", false),
     DEFAULT_SIZES("Default Sizes", false),
+    PAGE_CATEGORY("Page Category", false),
     DEFAULT_FLOOR_PRICE("Default Floor Price", true),
 
     //Private Auction
@@ -59,13 +58,13 @@ public enum ColumnNames {
     MANAGE_BY_SYSTEM_ADMIN("Manage by system admin", false),
 
     //Users
-    EMAIL("Email", true),
     ROLE("Role", false),
+    EMAIL("Email", true),
 
     //Deals
-    PRIVATE_AUCTION("Private Auction", true),
     DSP("DSP", false),
     PRICE_VALUE("Price | Value", true),
+    PRIVATE_AUCTION("Private Auction", true),
     PRICE_CURRENCY("Price | Currency", true),
 
     //Open Pricing

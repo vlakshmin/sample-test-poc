@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class Table {
 
-    TableOptions tableOptions = new TableOptions();
     TableData tableData = new TableData();
+    TableOptions tableOptions = new TableOptions();
     TablePagination tablePagination = new TablePagination();
 }
