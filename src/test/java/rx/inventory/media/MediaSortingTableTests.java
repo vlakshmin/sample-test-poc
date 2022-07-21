@@ -128,6 +128,7 @@ public class MediaSortingTableTests extends BaseTest {
     @BeforeMethod
     private void login() {
         var table = mediaPage.getMediaTable().getTableOptions();
+        var tableData = mediaPage.getMediaTable().getTableData();
         testStart()
                 .given()
                 .openDirectPath(Path.MEDIA)
@@ -135,6 +136,7 @@ public class MediaSortingTableTests extends BaseTest {
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .clickOnWebElement(table.getTableOptionsBtn())
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))
+                .validate(visible,tableData.getColumnHeader(ColumnNames.SITE_APP_STORE_URL.getName()))
                 .testEnd();
     }
 

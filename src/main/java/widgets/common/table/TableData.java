@@ -16,12 +16,12 @@ import static widgets.common.table.TableElements.*;
 @Getter
 public class TableData {
 
-    private final SelenideElement search = $x(SEARCH.getSelector()).as(SEARCH.getAlias());
     private final SelenideElement clear = $x(CLEAR.getSelector()).as(CLEAR.getAlias());
     private final ElementsCollection rows = $$x(ROWS.getSelector()).as(ROWS.getAlias());
-    private final ElementsCollection cellByColumn = $$x(CELL_BY_COLUMN.getSelector()).as(CELL_BY_COLUMN.getAlias());
-    private final ElementsCollection columns = $$x(COLUMNS.getSelector()).as(COLUMNS.getAlias());
     private final SelenideElement tableBody = $x(BODY.getSelector()).as(BODY.getAlias());
+    private final SelenideElement search = $x(SEARCH.getSelector()).as(SEARCH.getAlias());
+    private final ElementsCollection columns = $$x(COLUMNS.getSelector()).as(COLUMNS.getAlias());
+    private final ElementsCollection cellByColumn = $$x(CELL_BY_COLUMN.getSelector()).as(CELL_BY_COLUMN.getAlias());
 
 
     public SelenideElement getCheckbox(int row) {
