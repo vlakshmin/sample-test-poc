@@ -11,10 +11,12 @@ import pages.yield.openpricing.OpenPricingPage;
 import rx.BaseTest;
 import widgets.common.multipane.Multipane;
 import widgets.common.multipane.MultipaneName;
+import widgets.common.table.ColumnNames;
 import widgets.yield.openPricing.sidebar.CreateOpenPricingSidebar;
 
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
+import static rx.enums.MultipaneConstants.*;
 import static java.lang.String.format;
 import static managers.TestManager.testStart;
 import static zutils.FakerUtils.captionWithSuffix;
@@ -26,14 +28,8 @@ public class CreateOpenPricingTest extends BaseTest {
     private OpenPricingPage openPricingPage;
     private CreateOpenPricingSidebar createOpenPricingSidebar;
 
-    private static final String ONE_GEO_IS_INCLUDED = "1 geo(s) are included";
-    private static final String ONE_MEDIA_IS_INCLUDED = "1 media are included";
+    private static final String EMPTY_STRING = "";
     private static final String PRICING_NAME = captionWithSuffix("Pricing");
-    private static final String ONE_AD_SIZE_IS_INCLUDED = "1 size(s) are included";
-    private static final String ONE_DEVICE_IS_INCLUDED = "1 device(s) are included";
-    private static final String ONE_AD_FORMAT_IS_INCLUDED = "1 format(s) are included";
-    private static final String ONE_DEMAND_SOURCE_IS_INCLUDED = "1 demand source(s) are included";
-    private static final String ONE_OPERATING_SYSTEM_IS_INCLUDED = "1 operating system(s) are included";
 
     public CreateOpenPricingTest() {
         openPricingPage = new OpenPricingPage();
@@ -61,56 +57,103 @@ public class CreateOpenPricingTest extends BaseTest {
                 .testEnd();
     }
 
-    @Test
+    @Test(priority = 0)
     @Step("Add one device to new Pricing")
     public void addOneDeviceToPricingTest() {
-        verifyItemSelectionInMultipane(createOpenPricingSidebar.getDeviceMultipane(), ONE_DEVICE_IS_INCLUDED);
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getDeviceMultipane(), ONE_DEVICE_IS_INCLUDED.setQuantity(1));
     }
 
-    @Test
+    @Test(priority = 1)
     @Step("Add one inventory to new Pricing")
     public void addOneInventoryToPricingTest() {
-        verifyItemSelectionInMultipane(createOpenPricingSidebar.getInventoryMultipane(), ONE_MEDIA_IS_INCLUDED);
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getInventoryMultipane(), ONE_MEDIA_IS_INCLUDED.setQuantity(1));
     }
 
-    @Test
+    @Test(priority = 2)
     @Step("Add one operating system to new Pricing")
     public void addOneOperatingSystemToPricingTest() {
-        verifyItemSelectionInMultipane(createOpenPricingSidebar.getOperatingSystemMultipane(), ONE_OPERATING_SYSTEM_IS_INCLUDED);
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getOperatingSystemMultipane(), ONE_OPERATING_SYSTEM_IS_INCLUDED.setQuantity(1));
     }
 
-    @Test
+    @Test(priority = 3)
     @Step("Add one geo to new Pricing")
     public void addOneGeoToPricingTest() {
-        verifyItemSelectionInMultipane(createOpenPricingSidebar.getGeoMultipane(), ONE_GEO_IS_INCLUDED);
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getGeoMultipane(), ONE_GEO_IS_INCLUDED.setQuantity(1));
     }
 
-    @Test
+    @Test(priority = 4)
     @Step("Add one adSize to new Pricing")
     public void addOneAdSizeToPricingTest() {
-        verifyItemSelectionInMultipane(createOpenPricingSidebar.getAdSizeMultipane(), ONE_AD_SIZE_IS_INCLUDED);
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getAdSizeMultipane(), ONE_AD_SIZE_IS_INCLUDED.setQuantity(1));
     }
 
-    @Test
+    @Test(priority = 5)
     @Step("Add one adFormat to new Pricing")
     public void addOneAdFormatToPricingTest() {
-        verifyItemSelectionInMultipane(createOpenPricingSidebar.getAdFormatMultipane(), ONE_AD_FORMAT_IS_INCLUDED);
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getAdFormatMultipane(), ONE_AD_FORMAT_IS_INCLUDED.setQuantity(1));
     }
 
-    @Test
+    @Test(priority = 6)
     @Step("Add one demand Source to new Pricing")
     public void addOneDemandSourceToPricingTest() {
-        verifyItemSelectionInMultipane(createOpenPricingSidebar.getDemandSourcesMultipane(), ONE_DEMAND_SOURCE_IS_INCLUDED);
+        verifyItemSelectionInMultipane(createOpenPricingSidebar.getDemandSourcesMultipane(), ONE_DEMAND_SOURCE_IS_INCLUDED.setQuantity(1));
     }
 
-    @Test
+    @Test(priority = 7)
     @Step("Click on 'Save' button  open Pricing")
-    public void saveOpenPricing() {
+    public void saveOpenPricingTest() {
         testStart()
+                .and("Checking functionality of 'Save' button")
                 .clickOnWebElement(createOpenPricingSidebar.getSaveButton())
                 .validate(not(visible),createOpenPricingSidebar.getSaveButton())
                 .validate(visible, "Updated!")
                 .waitSideBarClosed()
+                .testEnd();
+    }
+
+    @Test(priority = 8, dependsOnMethods = "saveOpenPricingTest")
+    @Step("Verify new Pricing in table")
+    public void checkOpenPricingTableTest() {
+        var tableData = openPricingPage.getOpenPricingTable().getTableData();
+
+        testStart()
+                .then("Checking data of newly created pricing in Table")
+                .validate(tableData.getCustomCells(ColumnNames.NAME).get(0), PRICING_NAME)
+                .validate(tableData.getCustomCells(ColumnNames.PUBLISHER).get(0), "Viber")
+                .validate(tableData.getCustomCells(ColumnNames.FLOOR_PRICE).get(0), "22.00 USD")
+                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
+                .testEnd();
+    }
+
+    @Test(priority = 9, dependsOnMethods = "saveOpenPricingTest")
+    @Step("Verify 'createdBy' column in  Pricing in table")
+    public void checkCreatedByTest() {
+        var pricingTable = openPricingPage.getOpenPricingTable();
+        var tableData = pricingTable.getTableData();
+
+        testStart()
+                .and("Adding 'createdBy' column in to Pricing  Table")
+                .clickOnWebElement(pricingTable.getTableOptions().getTableOptionsBtn())
+                .selectCheckBox(pricingTable.getTableOptions().getMenuItemCheckbox(ColumnNames.CREATED_BY))
+                .clickOnWebElement(pricingTable.getTableOptions().getTableOptionsBtn())
+                .then("Check that user under testing is presented in table")
+                .validate(tableData.getCustomCells(ColumnNames.CREATED_BY).get(0), TEST_USER.getMail())
+                .testEnd();
+    }
+
+    @Test(priority = 10, dependsOnMethods = "saveOpenPricingTest")
+    @Step("Verify 'updatedBy' column  Pricing in table")
+    public void checkUpdatedByTest() {
+        var pricingTable = openPricingPage.getOpenPricingTable();
+        var tableData = pricingTable.getTableData();
+
+        testStart()
+                .and("Adding 'updatedBy' column in to Pricing  Table")
+                .clickOnWebElement(pricingTable.getTableOptions().getTableOptionsBtn())
+                .selectCheckBox(pricingTable.getTableOptions().getMenuItemCheckbox(ColumnNames.UPDATED_BY))
+                .clickOnWebElement(pricingTable.getTableOptions().getTableOptionsBtn())
+                .then("Check that user under testing is not presented in table")
+                .validate(tableData.getCustomCells(ColumnNames.UPDATED_BY).get(0), EMPTY_STRING)
                 .testEnd();
     }
 

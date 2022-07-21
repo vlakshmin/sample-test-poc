@@ -1,4 +1,4 @@
-package rx.openpricing;
+package rx.yield.openpricing;
 
 import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.OpenPricingPrecondition;
