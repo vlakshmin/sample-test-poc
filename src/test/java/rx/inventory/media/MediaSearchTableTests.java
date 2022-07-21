@@ -31,7 +31,7 @@ import static zutils.FakerUtils.*;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class SearchTableTests extends BaseTest {
+public class MediaSearchTableTests extends BaseTest {
 
     private Publisher publisher;
     private static final String MEDIA_NAME = "SS1";
@@ -49,7 +49,7 @@ public class SearchTableTests extends BaseTest {
     private List<Integer> mediaIds;
     private List<Integer> publishersIds;
 
-    public SearchTableTests() {
+    public MediaSearchTableTests() {
         mediaPage = new MediaPage();
     }
 

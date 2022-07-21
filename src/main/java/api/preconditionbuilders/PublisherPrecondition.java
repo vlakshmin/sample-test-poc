@@ -76,6 +76,13 @@ public class PublisherPrecondition {
             return this;
         }
 
+        public PublisherPreconditionBuilder updatePublisher(PublisherRequest publisherRequest, int id) {
+            this.response = publisherService.updatePublisher(publisherRequest, id);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
         public PublisherPreconditionBuilder getPublishersList() {
             this.response = publisherService.getAll();
 

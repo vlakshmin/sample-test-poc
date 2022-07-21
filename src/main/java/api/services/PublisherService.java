@@ -16,6 +16,12 @@ public class PublisherService extends BaseService {
         return post(URL, body.toJson());
     }
 
+    public Response updatePublisher(PublisherRequest body, int id) {
+        URL = initURL(UPDATE_PUBLISHER.setParameters(id));
+
+        return put(URL, body.toJson());
+    }
+
     public Response getAll() {
         URL = initURL(GET_PUBLISHERS);
 

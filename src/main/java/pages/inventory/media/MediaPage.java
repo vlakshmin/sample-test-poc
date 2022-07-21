@@ -5,6 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import lombok.AccessLevel;
 import lombok.Getter;
 import pages.BasePage;
+import widgets.common.ToasterMessage;
 import widgets.common.table.Table;
 
 import static com.codeborne.selenide.Selenide.$$x;
@@ -18,6 +19,7 @@ import static pages.inventory.media.MediaPageElements.*;
 public class MediaPage extends BasePage {
 
     private Table mediaTable = new Table();
+    private ToasterMessage toasterMessage = new ToasterMessage();
     private ElementsCollection mediaItems = $$x(MEDIA_ITEMS.getSelector()).as(MEDIA_ITEMS.getAlias());
     @Getter(AccessLevel.NONE)
     private SelenideElement pageTitle = $x(MEDIA_PAGE_TITLE.getSelector()).as(MEDIA_PAGE_TITLE.getAlias());

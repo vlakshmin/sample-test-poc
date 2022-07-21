@@ -10,6 +10,8 @@
             <class name="rx.login.LoginPositiveTest"/>
             <class name="rx.protections.ProtectionsTest"/>
             <class name="rx.sales.deals.DealsTest"/>
+            <class name="rx.inventory.media.MediaActivateDeactivateTableTests"/>
+            <class name="rx.inventory.media.MediaSearchTableTests"/>
         </classes>
     </test>
 </suite>

@@ -157,7 +157,8 @@ public final class TestManager {
 
         public TestManagerBuilder selectCheckBox(SelenideElement checkbox) {
             logEvent(format("Select checkbox %s", checkbox.getAlias()));
-            if (checkbox.getAttribute("aria-checked").equals("false")) {
+            if (checkbox.getAttribute("class")
+                    .contains("blank-outline")) {
                 checkbox.parent().click();
             }
 
@@ -166,7 +167,8 @@ public final class TestManager {
 
         public TestManagerBuilder unSelectCheckBox(SelenideElement checkbox) {
             logEvent(format("Unselect checkbox %s", checkbox.getAlias()));
-            if (checkbox.getAttribute("aria-checked").equals("true"))
+            if (checkbox.getAttribute("class")
+                    .contains("mdi-checkbox-marked"))
                 checkbox.parent().click();
 
             return this;
@@ -542,6 +544,18 @@ public final class TestManager {
                             format("The table cell with value '%s' isn't presented in the column '%s'", cellValue, column.getName())))
                     .lastChild()
                     .click();
+
+            return this;
+        }
+
+        public TestManagerBuilder selectAllRowsByColumnCellValue(TableData table, ColumnNames column, String cellValue) {
+            logEvent(format("Select row in column %s with value %s", column.getName(), cellValue));
+            ElementsCollection rows = table.getCustomCells(column);
+            for (int i=0; i<rows.size(); i++) {
+                if(rows.get(i).getText().contains(cellValue)){
+                    selectCheckBox(table.getCheckbox(i+1));
+                }
+            }
 
             return this;
         }
