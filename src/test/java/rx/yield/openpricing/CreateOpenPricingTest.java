@@ -113,7 +113,7 @@ public class CreateOpenPricingTest extends BaseTest {
 
     @Test(priority = 8, dependsOnMethods = "saveOpenPricingTest")
     @Step("Verify new Pricing in table")
-    public void checkOpenPricingTaleTest() {
+    public void checkOpenPricingTableTest() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
 
         testStart()
