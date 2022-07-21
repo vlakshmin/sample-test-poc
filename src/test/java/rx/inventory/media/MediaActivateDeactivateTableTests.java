@@ -32,19 +32,23 @@ import static zutils.FakerUtils.*;
 @Listeners({ScreenShooter.class})
 public class MediaActivateDeactivateTableTests extends BaseTest {
 
-    private int totalMedia;
-    private List<Media> mediaList;
     private List<Publisher> publishersList;
 
     private Media mediaActive1;
     private Media mediaInActive1;
-    private Media mediaActiveBulk1;
-    private Media mediaActiveBulk2;
-    private Media mediaActiveBulk3;
+    private Media mediaActiveBulkA1;
+    private Media mediaActiveBulkA2;
+    private Media mediaActiveBulkA3;
+    private Media mediaActiveBulkD1;
+    private Media mediaActiveBulkD2;
+    private Media mediaActiveBulkD3;
 
-    private Media mediaInActiveBulk1;
-    private Media mediaInActiveBulk2;
-    private Media mediaInActiveBulk3;
+    private Media mediaInActiveBulkA1;
+    private Media mediaInActiveBulkA2;
+    private Media mediaInActiveBulkA3;
+    private Media mediaInActiveBulkD1;
+    private Media mediaInActiveBulkD2;
+    private Media mediaInActiveBulkD3;
 
     private Media mediaActiveWithInactivePublisher;
     private Media mediaInActiveWithInactivePublisher;
@@ -52,7 +56,9 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
     private MediaPage mediaPage;
 
     private static final String PREFIX_MEDIA = "autoMediaSingle";
-    private static final String PREFIX_MEDIA_BULK = "autoMediaBulk";
+    private static final String PREFIX_MEDIA_INACTIVE_PUBLISHER = "autoMediaInactivePub";
+    private static final String PREFIX_MEDIA_BULK_1 = "autoMediaBulk1";
+    private static final String PREFIX_MEDIA_BULK_2 = "autoMediaBulk2";
     private static final String CHECKBOX_CLASS = "v-icon notranslate mdi mdi-checkbox-blank-outline theme--light";
 
     public MediaActivateDeactivateTableTests() {
@@ -67,21 +73,27 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
         mediaActive1 = createMedia(PREFIX_MEDIA,true);
         mediaInActive1 = createMedia(PREFIX_MEDIA,false);
 
-        mediaActiveWithInactivePublisher = createMedia(PREFIX_MEDIA,true);
+
+        mediaActiveBulkA1 = createMedia(PREFIX_MEDIA_BULK_1,true);
+        mediaActiveBulkA2 = createMedia(PREFIX_MEDIA_BULK_1,true);
+        mediaActiveBulkA3 = createMedia(PREFIX_MEDIA_BULK_1,true);
+        mediaInActiveBulkA1 = createMedia(PREFIX_MEDIA_BULK_1,false);
+        mediaInActiveBulkA2 = createMedia(PREFIX_MEDIA_BULK_1,false);
+        mediaInActiveBulkA3 = createMedia(PREFIX_MEDIA_BULK_1,false);
+
+        mediaActiveBulkD1 = createMedia(PREFIX_MEDIA_BULK_2,true);
+        mediaActiveBulkD2 = createMedia(PREFIX_MEDIA_BULK_2,true);
+        mediaActiveBulkD3 = createMedia(PREFIX_MEDIA_BULK_2,true);
+        mediaInActiveBulkD1 = createMedia(PREFIX_MEDIA_BULK_2,false);
+        mediaInActiveBulkD2 = createMedia(PREFIX_MEDIA_BULK_2,false);
+        mediaInActiveBulkD3 = createMedia(PREFIX_MEDIA_BULK_2,false);
+
+        mediaActiveWithInactivePublisher = createMedia(PREFIX_MEDIA_INACTIVE_PUBLISHER,true);
         deactivatePublisher(mediaActiveWithInactivePublisher.getPublisherName(),
                 mediaActiveWithInactivePublisher.getPublisherId());
-        mediaInActiveWithInactivePublisher = createMedia(PREFIX_MEDIA, false);
+        mediaInActiveWithInactivePublisher = createMedia(PREFIX_MEDIA_INACTIVE_PUBLISHER, false);
         deactivatePublisher(mediaInActiveWithInactivePublisher.getPublisherName(),
                 mediaInActiveWithInactivePublisher.getPublisherId());
-
-        mediaActiveBulk1 = createMedia(PREFIX_MEDIA_BULK,true);
-        mediaActiveBulk2 = createMedia(PREFIX_MEDIA_BULK,true);
-        mediaActiveBulk3 = createMedia(PREFIX_MEDIA_BULK,true);
-        mediaInActiveBulk1 = createMedia(PREFIX_MEDIA_BULK,false);
-        mediaInActiveBulk2 = createMedia(PREFIX_MEDIA_BULK,false);
-        mediaInActiveBulk3 = createMedia(PREFIX_MEDIA_BULK,false);
-
-        totalMedia = getTotalMedia();
     }
 
     @BeforeMethod
@@ -101,11 +113,10 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
 
         testStart()
                 .given()
-                .and(String.format("Search media by name '%s'", mediaActive1))
-                .setValueWithClean(tableData.getSearch(), PREFIX_MEDIA)
+                .and(String.format("Search media by name '%s'", mediaActive1.getName()))
+                .setValueWithClean(tableData.getSearch(), mediaActive1.getName())
                 .clickEnterButton(tableData.getSearch())
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-20 of %s",totalMedia))
+                .validateContainsText(tablePagination.getPaginationPanel(), "1-1 of 1")
                 .selectAllRowsByColumnCellValue(tableData,ColumnNames.MEDIA_NAME,mediaActive1.getName())
                 .and("Click 'Deactivate' button")
                 .clickOnWebElement(mediaPage.getDeactivateMediaButton())
@@ -124,20 +135,22 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
 
         testStart()
                 .given()
-                .and(String.format("Search media by name '%s'", mediaActiveWithInactivePublisher))
-                .setValueWithClean(tableData.getSearch(), PREFIX_MEDIA)
+                .and(String.format("Search media by name '%s'", mediaActiveWithInactivePublisher.getName()))
+                .setValueWithClean(tableData.getSearch(), mediaActiveWithInactivePublisher.getName())
                 .clickEnterButton(tableData.getSearch())
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-20 of %s",totalMedia))
-                .selectAllRowsByColumnCellValue(tableData,ColumnNames.MEDIA_NAME,mediaActiveWithInactivePublisher.getName())
+                .validateContainsText(tablePagination.getPaginationPanel(), "1-1 of 1")
+                .selectAllRowsByColumnCellValue(tableData,ColumnNames.MEDIA_NAME,
+                        mediaActiveWithInactivePublisher.getName())
                 .and("Click 'Deactivate' button")
                 .clickOnWebElement(mediaPage.getDeactivateMediaButton())
                 .validate(visible, toasterPanel.getPanelError())
                 .and("Click on the link 'View More' on toaster message")
                 .clickOnWebElement(toasterPanel.getViewErrorDetails())
                 .then("Validate error message")
-                .validateContainsText(toasterPanel.getMessageStatus(),ErrorMessages.BAD_REQUEST.getText())
-                .validateContainsText(toasterPanel.getMessageError(), ErrorMessages.PUBLISHER_IS_DISABLED.getText())
+                .validateContainsText(toasterPanel.getMessageStatus(),
+                        ErrorMessages.BAD_REQUEST.getText())
+                .validateContainsText(toasterPanel.getMessageError(),
+                        ErrorMessages.PUBLISHER_IS_DISABLED.getText())
                 .and("Close toaster message")
                 .clickOnWebElement(toasterPanel.getRemoveIcon())
                 .then("Validate media status should not be changed on 'Inactive'")
@@ -155,11 +168,10 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
 
         testStart()
                 .given()
-                .and(String.format("Search media by name '%s'", mediaInActiveWithInactivePublisher))
-                .setValueWithClean(tableData.getSearch(), PREFIX_MEDIA)
+                .and(String.format("Search media by name '%s'", mediaInActiveWithInactivePublisher.getName()))
+                .setValueWithClean(tableData.getSearch(), mediaInActiveWithInactivePublisher.getName())
                 .clickEnterButton(tableData.getSearch())
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-20 of %s",totalMedia))
+                .validateContainsText(tablePagination.getPaginationPanel(), "1-1 of 1")
                 .selectAllRowsByColumnCellValue(tableData,ColumnNames.MEDIA_NAME,
                         mediaInActiveWithInactivePublisher.getName())
                 .and("Click 'Deactivate' button")
@@ -187,7 +199,7 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
 
         testStart()
                 .given()
-                .and(String.format("Search media by name '%s'", mediaInActive1))
+                .and(String.format("Search media by name '%s'", mediaInActive1.getName()))
                 .setValueWithClean(tableData.getSearch(), mediaInActive1.getName())
                 .clickEnterButton(tableData.getSearch())
                 .validateContainsText(tablePagination.getPaginationPanel(),
@@ -212,35 +224,76 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
 
         testStart()
                 .given()
-                .and(String.format("Search media by name '%s'", PREFIX_MEDIA_BULK))
-                .setValueWithClean(tableData.getSearch(),PREFIX_MEDIA_BULK)
+                .and(String.format("Search media by name '%s'", PREFIX_MEDIA_BULK_1))
+                .setValueWithClean(tableData.getSearch(),PREFIX_MEDIA_BULK_1)
                 .clickEnterButton(tableData.getSearch())
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         "1-6 of 6")
                 .selectAllRowsByColumnCellValue(tableData,ColumnNames.MEDIA_NAME,
-                        PREFIX_MEDIA_BULK)
+                        PREFIX_MEDIA_BULK_1)
                 .and("Click 'Activate' button")
                 .clickOnWebElement(mediaPage.getActivateMediaButton())
                 .then("Validate media status should be changed on 'Active'")
                 .waitAndValidate(visible,tableData.getCheckbox(1)
                         .shouldHave(attributeMatching("class",CHECKBOX_CLASS)))
                 .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
-                                ColumnNames.MEDIA_NAME, mediaInActiveBulk1.getName()),
+                                ColumnNames.MEDIA_NAME, mediaInActiveBulkA1.getName()),
                         Statuses.ACTIVE.getStatus())
                 .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
-                                ColumnNames.MEDIA_NAME, mediaInActiveBulk2.getName()),
+                                ColumnNames.MEDIA_NAME, mediaInActiveBulkA2.getName()),
                         Statuses.ACTIVE.getStatus())
                 .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
-                                ColumnNames.MEDIA_NAME, mediaInActiveBulk3.getName()),
+                                ColumnNames.MEDIA_NAME, mediaInActiveBulkA3.getName()),
                         Statuses.ACTIVE.getStatus())
                 .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
-                                ColumnNames.MEDIA_NAME, mediaActiveBulk1.getName()),
+                                ColumnNames.MEDIA_NAME, mediaActiveBulkA1.getName()),
                         Statuses.ACTIVE.getStatus())
                 .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
-                                ColumnNames.MEDIA_NAME, mediaActiveBulk2.getName()),
+                                ColumnNames.MEDIA_NAME, mediaActiveBulkA2.getName()),
                         Statuses.ACTIVE.getStatus())
                 .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
-                                ColumnNames.MEDIA_NAME, mediaActiveBulk3.getName()),
+                                ColumnNames.MEDIA_NAME, mediaActiveBulkA3.getName()),
+                        Statuses.ACTIVE.getStatus())
+                .validate(not(exist),mediaPage.getToasterMessage().getPanelError())
+                .testEnd();
+    }
+
+    @Test(testName = "Deactivate bulk media")
+    public void deactivateBulkMedia() {
+        var tableData = mediaPage.getMediaTable().getTableData();
+        var tablePagination = mediaPage.getMediaTable().getTablePagination();
+
+        testStart()
+                .given()
+                .and(String.format("Search media by name '%s'", PREFIX_MEDIA_BULK_2))
+                .setValueWithClean(tableData.getSearch(),PREFIX_MEDIA_BULK_2)
+                .clickEnterButton(tableData.getSearch())
+                .validateContainsText(tablePagination.getPaginationPanel(),
+                        "1-6 of 6")
+                .selectAllRowsByColumnCellValue(tableData,ColumnNames.MEDIA_NAME,
+                        PREFIX_MEDIA_BULK_2)
+                .and("Click 'Activate' button")
+                .clickOnWebElement(mediaPage.getActivateMediaButton())
+                .then("Validate media status should be changed on 'Inactive'")
+                .waitAndValidate(visible,tableData.getCheckbox(1)
+                        .shouldHave(attributeMatching("class",CHECKBOX_CLASS)))
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                                ColumnNames.MEDIA_NAME, mediaInActiveBulkD1.getName()),
+                        Statuses.ACTIVE.getStatus())
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                                ColumnNames.MEDIA_NAME, mediaInActiveBulkD2.getName()),
+                        Statuses.ACTIVE.getStatus())
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                                ColumnNames.MEDIA_NAME, mediaInActiveBulkD3.getName()),
+                        Statuses.ACTIVE.getStatus())
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                                ColumnNames.MEDIA_NAME, mediaActiveBulkD1.getName()),
+                        Statuses.ACTIVE.getStatus())
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                                ColumnNames.MEDIA_NAME, mediaActiveBulkD2.getName()),
+                        Statuses.ACTIVE.getStatus())
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                                ColumnNames.MEDIA_NAME, mediaActiveBulkD3.getName()),
                         Statuses.ACTIVE.getStatus())
                 .validate(not(exist),mediaPage.getToasterMessage().getPanelError())
                 .testEnd();
@@ -281,7 +334,6 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
         return ObjectMapperUtils.getCollectionType(publisherList, Publisher.class);
     }
 
-
     @AfterMethod
     private void logOut() {
         testStart()
@@ -297,14 +349,20 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
     }
 
     private void deleteMedia(){
-        mediaList  = getAllItemsByParams(PREFIX_MEDIA_BULK);
+
+        deleteMedia(getAllItemsByParams(PREFIX_MEDIA));
+        deleteMedia(getAllItemsByParams(PREFIX_MEDIA_BULK_1));
+        deleteMedia(getAllItemsByParams(PREFIX_MEDIA_BULK_2));
+        deleteMedia(getAllItemsByParams(PREFIX_MEDIA_INACTIVE_PUBLISHER));
+    }
+
+    private void deleteMedia(List<Media> mediaList){
 
         for (Media media : mediaList) {
             media().
                     setCredentials(USER_FOR_DELETION).
                     deleteMedia(media.getId());
         }
-
     }
 
     private void deletePublishers(){
