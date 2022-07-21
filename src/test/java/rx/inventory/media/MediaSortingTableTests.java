@@ -1,8 +1,13 @@
 package rx.inventory.media;
 
+import api.dto.rx.admin.publisher.Publisher;
+import api.dto.rx.admin.publisher.PublisherRequest;
+import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.media.Media;
+import api.dto.rx.inventory.media.MediaRequest;
 import api.preconditionbuilders.MediaPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
 import pages.Path;
@@ -14,10 +19,12 @@ import zutils.ObjectMapperUtils;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
 import static managers.TestManager.testStart;
+import static zutils.FakerUtils.*;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
@@ -37,183 +44,178 @@ public class MediaSortingTableTests extends BaseTest {
 
     private MediaPage mediaPage;
 
+    private static final String ASC = "ascending";
+    private static final String DESC = "descending";
+
     public MediaSortingTableTests() {
         mediaPage = new MediaPage();
     }
 
     @BeforeClass
-    public void loginAndCreateExpectedResuts() {
+    private void loginAndCreateExpectedResuts() {
+
+        if (getTotalMedia() < 60) createMedia();
+
         totalMedia = getTotalMedia();
 
         //expected results for Media Name column
-        sortNamesByDesc  = getNamesByDesc();
-        sortNamesByAsc  = getNamesByAsc();
+        sortNamesByDesc = getNamesByDesc();
+        sortNamesByAsc = getNamesByAsc();
 
         //Expected result for ID column
-        sortIdsByAsc  = getIdsByAsc();
-        sortIdsByDesc  = getIdsByDesc();
+        sortIdsByAsc = getIdsByAsc();
+        sortIdsByDesc = getIdsByDesc();
 
         //Expected result for  Publisher Name column
-        sortPublisherNameByAsc  = getPublisherNameByAsc();
-        sortPublisherNameByDesc  = getPublisherNameByDesc();
+        sortPublisherNameByAsc = getPublisherNameByAsc();
+        sortPublisherNameByDesc = getPublisherNameByDesc();
 
         //Expected result for URL column
-        sortURLByAsc  = getUrlByAsc();
-        sortURLByDesc  = getUrlByDesc();
+        sortURLByAsc = getUrlByAsc();
+        sortURLByDesc = getUrlByDesc();
+    }
+
+    @Test(testName = "Sorting 'Media Name' column by descending")
+    public void mediaSortingByMediaNameDesc() {
+        sortByDescColumnByName(ColumnNames.MEDIA_NAME);
+        validateSortData(ColumnNames.MEDIA_NAME, DESC, sortNamesByDesc);
+    }
+
+    @Test(testName = "Sorting 'Media Name' column by ascending")
+    public void mediaSortingByMediaNameAsc() {
+        sortByAscColumnByName(ColumnNames.MEDIA_NAME);
+        validateSortData(ColumnNames.MEDIA_NAME, ASC, sortNamesByAsc);
+    }
+
+    @Test(testName = "Sorting 'Publisher' column by ascending")
+    public void mediaSortingByPublisherNameAsc() {
+        sortByAscColumnByName(ColumnNames.PUBLISHER);
+        validateSortData(ColumnNames.PUBLISHER, ASC, sortPublisherNameByAsc);
+    }
+
+    @Test(testName = "Sorting 'Publisher' column by descending")
+    public void mediaSortingByPublisherNameDesc() {
+        sortByDescColumnByName(ColumnNames.PUBLISHER);
+        validateSortData(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
+    }
+
+    @Test(testName = "Sorting 'ID' column by descending")
+    public void mediaSortingByIdDesc() {
+        sortByDescColumnByName(ColumnNames.ID);
+        validateSortData(ColumnNames.ID, DESC, sortIdsByDesc);
+    }
+
+    @Test(testName = "Sorting 'ID' column by ascending")
+    public void mediaSortingByIdAsc() {
+
+        sortByAscColumnByName(ColumnNames.ID);
+        validateSortData(ColumnNames.ID, ASC, sortIdsByAsc);
+    }
+
+    @Test(testName = "Sorting 'Site/App Store URL' column by descending")
+    public void mediaSortingByUrlDesc() {
+        sortByDescColumnByName(ColumnNames.SITE_APP_STORE_URL);
+        validateSortData(ColumnNames.SITE_APP_STORE_URL, DESC, sortURLByDesc);
+    }
+
+    @Test(testName = "Sorting 'Site/App Store URL' column by ascending")
+    public void mediaSortingByUrlAsc() {
+        sortByAscColumnByName(ColumnNames.SITE_APP_STORE_URL);
+        validateSortData(ColumnNames.SITE_APP_STORE_URL, ASC, sortURLByAsc);
     }
 
     @BeforeMethod
-    private void login(){
+    private void login() {
+        var table = mediaPage.getMediaTable().getTableOptions();
         testStart()
                 .given()
                 .openDirectPath(Path.MEDIA)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-        .testEnd();
+                .clickOnWebElement(table.getTableOptionsBtn())
+                .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))
+                .testEnd();
     }
+
     @AfterMethod
-    private void logOut(){
+    private void logOut() {
         testStart()
                 .given()
                 .logOut()
-        .testEnd();
+                .testEnd();
     }
 
-    @Test(testName = "Sorting 'Media Name' column by descending")
-    public void mediaSortingByMediaNameDesc() {
+    @Step("Sort column {0} by DESC")
+    private void sortByDescColumnByName(ColumnNames columnName) {
+        var tableData = mediaPage.getMediaTable().getTableData();
+        switch (columnName.getName()) {
+            case "ID":
+                testStart()
+                        .given()
+                        .and(String.format("Sort column '%s'", columnName))
+                        .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
+                        .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
+                        .then("Ensure that sort by descending: validate column attribute value")
+                        .validateAttribute(tableData.getColumnHeader(columnName.getName()),
+                                "aria-sort", ASC)
+                        .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
+                        .validateAttribute(tableData.getColumnHeader(columnName.getName()),
+                                "aria-sort", DESC)
+                        .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+                        .testEnd();
+                break;
+            default:
+                testStart()
+                        .given()
+                        .and(String.format("Sort column '%s'", columnName))
+                        .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
+                        .then("Ensure that sort by descending: validate column attribute value")
+                        .validateAttribute(tableData.getColumnHeader(columnName.getName()),
+                                "aria-sort", ASC)
+                        .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
+                        .validateAttribute(tableData.getColumnHeader(columnName.getName()),
+                                "aria-sort", DESC)
+                        .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+                        .testEnd();
+        }
+    }
+
+    @Step("Sort column {0} by ASC")
+    private void sortByAscColumnByName(ColumnNames columnName) {
+        var tableData = mediaPage.getMediaTable().getTableData();
+        switch (columnName.getName()) {
+            case "ID":
+                testStart()
+                        .given()
+                        .and(String.format("Sort column '%s'", columnName))
+                        .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
+                        .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
+                        .then("Ensure that sort by ascending: validate column attribute value")
+                        .validateAttribute(tableData.getColumnHeader(columnName.getName()),
+                                "aria-sort", ASC)
+                        .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+                        .testEnd();
+                break;
+            default:
+                testStart()
+                        .given()
+                        .and(String.format("Sort column '%s'", columnName))
+                        .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
+                        .then("Ensure that sort by ascending: validate column attribute value")
+                        .validateAttribute(tableData.getColumnHeader(columnName.getName()),
+                                "aria-sort", ASC)
+                        .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+                        .testEnd();
+        }
+    }
+
+    @Step("Validate data in column {0} sorted by {1}")
+    private void validateSortData(ColumnNames columnName, String sortType, List<String> expectedResult) {
         var tableData = mediaPage.getMediaTable().getTableData();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
 
         testStart()
                 .given()
-                .and("Sort column 'Media Name'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
-                .then("Ensure that sort by descending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()),
-                        "aria-sort","ascending")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()),
-                        "aria-sort","descending")
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-                .and("Select 50 row per page")
-                .selectFromDropdown(tablePagination.getPageMenu(),
-                        tablePagination.getRowNumbersList(), "50")
-                .waitLoading(visible, mediaPage.getTableProgressBar())
-                .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '1-50 of %s'",
-                       totalMedia))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-50 of %s", totalMedia))
-                .then("Validate data in column 'Media Name' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME),
-                        sortNamesByDesc.subList(0,50))
-                .and("Check next page")
-                .clickOnWebElement(tablePagination.getNext())
-                .waitLoading(visible, mediaPage.getTableProgressBar())
-                .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '51-100 of %s'",
-                     totalMedia))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-100 of %s", totalMedia))
-                .then("Validate data in column 'Media Name' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME),
-                        sortNamesByDesc.subList(50,100))
-        .testEnd();
-    }
-
-    @Test(testName = "Sorting 'Media Name' column by ascending")
-    public void mediaSortingByMediaNameAsc() {
-        var tableData = mediaPage.getMediaTable().getTableData();
-        var tablePagination = mediaPage.getMediaTable().getTablePagination();
-
-        testStart()
-                .given()
-                .and("Sort column 'Media Name'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
-                .then("Ensure that sort by ascending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()),
-                        "aria-sort","ascending")
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-                .and("Select 50 row per page")
-                .selectFromDropdown(tablePagination.getPageMenu(),
-                        tablePagination.getRowNumbersList(), "50")
-                .waitLoading(visible, mediaPage.getTableProgressBar())
-                .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '1-50 of %s'",
-                        totalMedia))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-50 of %s", totalMedia))
-                .then("Validate data in column 'Media Name' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME),
-                        sortNamesByAsc.subList(0,50))
-                .and("Check next page")
-                .clickOnWebElement(tablePagination.getNext())
-                .waitLoading(visible, mediaPage.getTableProgressBar())
-                .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '51-100 of %s'",
-                        totalMedia))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-100 of %s", totalMedia))
-                .then("Validate data in column 'Media Name' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME),
-                        sortNamesByAsc.subList(50,100))
-        .testEnd();
-    }
-
-    @Test(testName = "Sorting 'Publisher' column by ascending")
-    public void mediaSortingByPublisherNameAsc() {
-        var tableData = mediaPage.getMediaTable().getTableData();
-        var tablePagination = mediaPage.getMediaTable().getTablePagination();
-
-        testStart()
-                .given()
-                .and("Sort column 'Publisher'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()))
-                .then("Ensure that sort by ascending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()),
-                        "aria-sort","ascending")
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-                .and("Select 50 row per page")
-                .selectFromDropdown(tablePagination.getPageMenu(),
-                        tablePagination.getRowNumbersList(), "50")
-                .waitLoading(visible, mediaPage.getTableProgressBar())
-                .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '1-50 of %s'",
-                         totalMedia))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-50 of %s", totalMedia))
-                .then("Validate data in column 'Publisher' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.PUBLISHER),
-                        sortPublisherNameByAsc.subList(0,50))
-                .and("Check next page")
-                .clickOnWebElement(tablePagination.getNext())
-                .waitLoading(visible, mediaPage.getTableProgressBar())
-                .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '51-100 of %s'",
-                        totalMedia))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-100 of %s", totalMedia))
-                .then("Validate data in column 'Publisher' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.PUBLISHER),
-                        sortPublisherNameByAsc.subList(50,100))
-        .testEnd();
-    }
-
-    @Test(testName = "Sorting 'Publisher' column by descending")
-    public void mediaSortingByPublisherNameDesc() {
-        var tableData = mediaPage.getMediaTable().getTableData();
-        var tablePagination = mediaPage.getMediaTable().getTablePagination();
-
-        testStart()
-                .given()
-                .and("Sort column 'Publisher'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()))
-                .then("Ensure that sort by descending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()),
-                        "aria-sort","ascending")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()))
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()),
-                        "aria-sort","descending")
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .and("Select 50 row per page")
                 .selectFromDropdown(tablePagination.getPageMenu(),
@@ -224,263 +226,93 @@ public class MediaSortingTableTests extends BaseTest {
                         totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalMedia))
-                .then("Validate data in column 'Publisher' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.PUBLISHER),
-                        sortPublisherNameByDesc.subList(0,50))
+                .then(String.format("Validate data in column '%s' should be sorted by $s",
+                        columnName.getName(), sortType))
+                .validateList(tableData.getCustomCells(columnName),
+                        expectedResult.subList(0, 50))
                 .and("Check next page")
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '51-100 %s'",
-                        totalMedia))
+                .then(String.format("Validate that text in table footer '51-%s of %s'",
+                        Math.min(100, totalMedia), totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-100 of %s", totalMedia))
-                .then("Validate data in column 'Publisher' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.PUBLISHER),
-                        sortPublisherNameByDesc.subList(50,100))
-        .testEnd();
+                        String.format("51-%s of %s", Math.min(100, totalMedia), totalMedia))
+                .then(String.format("Validate data in column '%s' should be sorted by %s", columnName.getName(), sortType))
+                .validateList(tableData.getCustomCells(columnName),
+                        expectedResult.subList(50, Math.min(100, totalMedia)))
+
+                .testEnd();
     }
 
-    @Test(testName = "Sorting 'ID' column by descending")
-    public void mediaSortingByIdDesc() {
-        var tableData = mediaPage.getMediaTable().getTableData();
-        var tablePagination = mediaPage.getMediaTable().getTablePagination();
 
-        testStart()
-                .given()
-                .and("Sort column 'ID'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ID.getName()))
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ID.getName()))
-                .then("Ensure that sort by descending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.ID.getName()),
-                        "aria-sort","ascending")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ID.getName()))
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.ID.getName()),
-                        "aria-sort","descending")
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-                .and("Select 50 row per page")
-                .selectFromDropdown(tablePagination.getPageMenu(),
-                        tablePagination.getRowNumbersList(), "50")
-                .waitLoading(visible, mediaPage.getTableProgressBar())
-                .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '1-50 of %s'",
-                       totalMedia))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-50 of %s", totalMedia))
-                .then("Validate data in column 'ID' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.ID),
-                        sortIdsByDesc.subList(0,50))
-                .and("Check next page")
-                .clickOnWebElement(tablePagination.getNext())
-                .waitLoading(visible, mediaPage.getTableProgressBar())
-                .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '51-100 of %s'",
-                        totalMedia))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-100 of %s", totalMedia))
-                .then("Validate data in column 'ID' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.ID),
-                        sortIdsByDesc.subList(50,100))
-        .testEnd();
-    }
+    private int getTotalMedia() {
 
-    @Test(testName = "Sorting 'ID' column by ascending")
-    public void mediaSortingByIdAsc() {
-        var tableData = mediaPage.getMediaTable().getTableData();
-        var tablePagination = mediaPage.getMediaTable().getTablePagination();
-
-        testStart()
-                .given()
-                .and("Sort column 'ID'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ID.getName()))
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ID.getName()))
-                .then("Ensure that sort by descending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.ID.getName()),
-                        "aria-sort","ascending")
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-                .and("Select 50 row per page")
-                .selectFromDropdown(tablePagination.getPageMenu(),
-                        tablePagination.getRowNumbersList(), "50")
-                .waitLoading(visible, mediaPage.getTableProgressBar())
-                .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '1-50 of %s'",
-                        totalMedia))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-50 of %s", totalMedia))
-                .then("Validate data in column 'ID' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.ID),
-                        sortIdsByAsc.subList(0,50))
-                .and("Check next page")
-                .clickOnWebElement(tablePagination.getNext())
-                .waitLoading(visible, mediaPage.getTableProgressBar())
-                .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '51-100 %s'",
-                        totalMedia))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-100 of %s", totalMedia))
-                .then("Validate data in column 'ID' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.ID),
-                        sortIdsByAsc.subList(50,100))
-        .testEnd();
-    }
-
-    @Test(testName = "Sorting 'Site/App Store URL' column by descending")
-    public void mediaSortingByUrlDesc() {
-        var tableData = mediaPage.getMediaTable().getTableData();
-        var tablePagination = mediaPage.getMediaTable().getTablePagination();
-        var tableOptions = mediaPage.getMediaTable().getTableOptions();
-
-        testStart()
-                .given()
-                .and("Show column 'Site/App Store URL'")
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
-                .and("Sort column 'Site/App Store URL'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.SITE_APP_STORE_URL.getName()))
-                .then("Ensure that sort by descending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.SITE_APP_STORE_URL.getName()),
-                        "aria-sort","ascending")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.SITE_APP_STORE_URL.getName()))
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.SITE_APP_STORE_URL.getName()),
-                        "aria-sort","descending")
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-                .and("Select 50 row per page")
-                .selectFromDropdown(tablePagination.getPageMenu(),
-                        tablePagination.getRowNumbersList(), "50")
-                .waitLoading(visible, mediaPage.getTableProgressBar())
-                .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '1-50 of %s'",
-                        totalMedia))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-50 of %s", totalMedia))
-                .then("Validate data in column 'Site/App store URL' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.SITE_APP_STORE_URL),
-                        sortURLByDesc.subList(0,50))
-                .and("Check next page")
-                .clickOnWebElement(tablePagination.getNext())
-                .waitLoading(visible, mediaPage.getTableProgressBar())
-                .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '51-100 of %s'",
-                        totalMedia))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-100 of %s", totalMedia))
-                .then("Validate data in column 'Site/App store URL' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.SITE_APP_STORE_URL),
-                        sortURLByDesc.subList(50,100))
-        .testEnd();
-    }
-
-    @Test(testName = "Sorting 'Site/App Store URL' column by ascending")
-    public void mediaSortingByUrlAsc() {
-        var tableData = mediaPage.getMediaTable().getTableData();
-        var tablePagination = mediaPage.getMediaTable().getTablePagination();
-        var tableOptions = mediaPage.getMediaTable().getTableOptions();
-
-        testStart()
-                .given()
-                .and("Show column 'Site/App Store URL'")
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
-                .and("Sort column 'Site/App store URL'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.SITE_APP_STORE_URL.getName()))
-                .then("Ensure that sort by ascending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.SITE_APP_STORE_URL.getName()),
-                        "aria-sort","ascending")
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-                .and("Select 50 row per page")
-                .selectFromDropdown(tablePagination.getPageMenu(),
-                        tablePagination.getRowNumbersList(), "50")
-                .waitLoading(visible, mediaPage.getTableProgressBar())
-                .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '1-50 of %s'",
-                        totalMedia))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-50 of %s", totalMedia))
-                .then("Validate data in column 'Site/App store URL' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.SITE_APP_STORE_URL),
-                        sortURLByAsc.subList(0,50))
-                .and("Check next page")
-                .clickOnWebElement(tablePagination.getNext())
-                .waitLoading(visible, mediaPage.getTableProgressBar())
-                .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '51-100 of %s'",
-                        totalMedia))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-100 of %s", totalMedia))
-                .then("Validate data in column 'Site/App store URL' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.SITE_APP_STORE_URL),
-                        sortURLByAsc.subList(50,100))
-        .testEnd();
-    }
-
-    private int getTotalMedia(){
-
-       return MediaPrecondition.media()
+        return MediaPrecondition.media()
                 .getAllMediaList()
                 .build()
                 .getMediaGetAllResponse()
                 .getTotal();
     }
 
-    private List<String> getNamesByDesc(){
+    private List<String> getNamesByDesc() {
 
-        return   getAllItemsByParams("name-desc").stream()
+        return getAllItemsByParams("name-desc").stream()
                 .map(Media::getName)
                 .collect(Collectors.toList());
     }
 
-    private List<String> getNamesByAsc(){
+    private List<String> getNamesByAsc() {
 
-        return  getAllItemsByParams("name-asc").stream()
+        return getAllItemsByParams("name-asc").stream()
                 .map(Media::getName)
                 .collect(Collectors.toList());
     }
 
-    private List<String> getIdsByAsc(){
+    private List<String> getIdsByAsc() {
 
-        return   getAllItemsByParams("id-asc").stream()
+        return getAllItemsByParams("id-asc").stream()
                 .map(Media::getId)
-                .map(x->x.toString())
+                .map(x -> x.toString())
                 .collect(Collectors.toList());
     }
 
-    private List<String> getIdsByDesc(){
+    private List<String> getIdsByDesc() {
 
-        return   getAllItemsByParams("id-desc").stream()
+        return getAllItemsByParams("id-desc").stream()
                 .map(Media::getId)
-                .map(x->x.toString())
+                .map(x -> x.toString())
                 .collect(Collectors.toList());
     }
 
-    private List<String> getPublisherNameByAsc(){
+    private List<String> getPublisherNameByAsc() {
 
-        return   getAllItemsByParams("publisher_name-asc").stream()
+        return getAllItemsByParams("publisher_name-asc").stream()
                 .map(Media::getPublisherName)
                 .collect(Collectors.toList());
     }
 
-    private List<String> getPublisherNameByDesc(){
+    private List<String> getPublisherNameByDesc() {
 
-        return   getAllItemsByParams("publisher_name-desc").stream()
+        return getAllItemsByParams("publisher_name-desc").stream()
                 .map(Media::getPublisherName)
                 .collect(Collectors.toList());
     }
 
-    private List<String> getUrlByAsc(){
+    private List<String> getUrlByAsc() {
 
-        return   getAllItemsByParams("url-asc").stream()
+        return getAllItemsByParams("url-asc").stream()
                 .map(Media::getUrl)
                 .collect(Collectors.toList());
     }
 
-    private List<String> getUrlByDesc(){
+    private List<String> getUrlByDesc() {
 
-        return   getAllItemsByParams("url-desc").stream()
+        return getAllItemsByParams("url-desc").stream()
                 .map(Media::getUrl)
                 .collect(Collectors.toList());
     }
+
     private List<Media> getAllItemsByParams(String strParams) {
         HashMap<String, Object> queryParams = new HashMap();
         queryParams.put("sort", strParams);
@@ -490,7 +322,44 @@ public class MediaSortingTableTests extends BaseTest {
                 .getMediaGetAllResponse()
                 .getItems();
 
-        return ObjectMapperUtils.getCollectionType(mediaList,Media.class);
+        return ObjectMapperUtils.getCollectionType(mediaList, Media.class);
+    }
+
+    private void createMedia() {
+
+        while (getTotalMedia() < 60) {
+
+            PublisherRequest publisherRequest = PublisherRequest.builder()
+                    .name(captionWithSuffix("autoPublisher"))
+                    .salesAccountName("person_auto")
+                    .mail(randomMail())
+                    .isEnabled(true)
+                    .domain(randomUrl())
+                    .currency(Currency.JPY.name())
+                    .categoryIds(List.of(1, 9))
+                    .dspIds(List.of(7))
+                    .build();
+
+            Publisher publisher = publisher()
+                    .createNewPublisher(publisherRequest)
+                    .build()
+                    .getPublisherResponse();
+
+            MediaRequest request = MediaRequest.builder()
+                    .name(captionWithSuffix("auto"))
+                    .publisherId(publisher.getId())
+                    .platformId(2)
+                    .url("http://localhost:5016")
+                    .isEnabled(true)
+                    .categoryIds(List.of(1, 9))
+                    .build();
+
+            MediaPrecondition.media()
+                    .createNewMedia(request)
+                    .build()
+                    .getMediaResponse();
+        }
+
     }
 
 }

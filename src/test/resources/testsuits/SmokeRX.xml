@@ -12,6 +12,7 @@
             <class name="rx.sales.deals.DealsTest"/>
             <class name="rx.inventory.media.MediaActivateDeactivateTableTests"/>
             <class name="rx.inventory.media.MediaSearchTableTests"/>
+            <class name="rx.inventory.media.MediaSortingTableTests"/>
         </classes>
     </test>
 </suite>
