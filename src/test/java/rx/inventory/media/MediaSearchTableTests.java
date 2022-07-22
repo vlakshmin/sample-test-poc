@@ -20,6 +20,7 @@ import zutils.ObjectMapperUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Condition.disappear;
@@ -31,7 +32,7 @@ import static zutils.FakerUtils.*;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class SearchTableTests extends BaseTest {
+public class MediaSearchTableTests extends BaseTest {
 
     private Publisher publisher;
     private static final String MEDIA_NAME = "SS1";
@@ -49,7 +50,7 @@ public class SearchTableTests extends BaseTest {
     private List<Integer> mediaIds;
     private List<Integer> publishersIds;
 
-    public SearchTableTests() {
+    public MediaSearchTableTests() {
         mediaPage = new MediaPage();
     }
 
@@ -58,45 +59,27 @@ public class SearchTableTests extends BaseTest {
         mediaIds = new ArrayList<>();
         publishersIds = new ArrayList<>();
 
-        Media media = MediaPrecondition.media()
-                .createNewMedia(createCustomMedia("media", true, "pub"))
-                .build()
-                .getMediaResponse();
+        Media media = createCustomMedia("media",true,"pub");
         mediaIds.add(media.getId());
         publishersIds.add(media.getPublisherId());
 
-        media = MediaPrecondition.media()
-                .createNewMedia(createCustomMedia(MEDIA_NAME, true, PUB_NAME))
-                .build()
-                .getMediaResponse();
+        media =createCustomMedia(MEDIA_NAME, true, PUB_NAME);
         mediaIds.add(media.getId());
         publishersIds.add(media.getPublisherId());
 
-        media = MediaPrecondition.media()
-                .createNewMedia(createCustomMedia(FILTER_SEARCH + "2", true, FILTER_SEARCH + "2"))
-                .build()
-                .getMediaResponse();
+        media = createCustomMedia(FILTER_SEARCH + "2",true,FILTER_SEARCH + "2");
         mediaIds.add(media.getId());
         publishersIds.add(media.getPublisherId());
 
-        media = MediaPrecondition.media()
-                .createNewMedia(createCustomMedia(FILTER_SEARCH + "3", true, FILTER_SEARCH + "3"))
-                .build()
-                .getMediaResponse();
+        media = createCustomMedia(FILTER_SEARCH + "3",true,FILTER_SEARCH + "3");
         mediaIds.add(media.getId());
         publishersIds.add(media.getPublisherId());
 
-        media = MediaPrecondition.media()
-                .createNewMedia(createCustomMedia(FILTER_SEARCH + "4", false, FILTER_SEARCH + "5"))
-                .build()
-                .getMediaResponse();
+        media = createCustomMedia(FILTER_SEARCH + "4",false,FILTER_SEARCH + "5");
         mediaIds.add(media.getId());
         publishersIds.add(media.getPublisherId());
 
-        media = MediaPrecondition.media()
-                .createNewMedia(createCustomMedia(FILTER_SEARCH + "5", false, FILTER_SEARCH + "5"))
-                .build()
-                .getMediaResponse();
+        media = createCustomMedia(FILTER_SEARCH + "5", false, FILTER_SEARCH + "5");
         mediaIds.add(media.getId());
         publishersIds.add(media.getPublisherId());
 
@@ -278,39 +261,25 @@ public class SearchTableTests extends BaseTest {
         }
     }
 
-    private MediaRequest createCustomMedia(String name, Boolean isEnabled, String publisherName) {
+    private Media createCustomMedia(String name, Boolean isEnabled, String publisherName) {
+        Publisher publisher = createCustomPublisher(publisherName);
 
-        publisher = PublisherPrecondition.publisher()
-                .createNewPublisher(createCustomPublisher(publisherName))
+        return MediaPrecondition.media()
+                .createNewMedia(name, publisher.getId(), isEnabled)
                 .build()
-                .getPublisherResponse();
-
-        return MediaRequest.builder()
-                .name(captionWithSuffix(name))
-                .publisherId(publisher.getId())
-                .platformId(2)
-                .url("http://testsearch.com")
-                .isEnabled(isEnabled)
-                .categoryIds(List.of(1, 9))
-                .build();
+                .getMediaResponse();
     }
 
-    private PublisherRequest createCustomPublisher(String publisherName) {
+    private Publisher createCustomPublisher(String publisherName) {
 
-        return PublisherRequest.builder()
-                .name(captionWithSuffix(publisherName))
-                .salesAccountName("ops_persoj")
-                .mail(randomMail())
-                .isEnabled(true)
-                .domain(randomUrl())
-                .currency(Currency.JPY.name())
-                .categoryIds(List.of(1, 9))
-                .dspIds(List.of(7))
-                .build();
+        return PublisherPrecondition.publisher()
+                .createNewPublisher(publisherName)
+                .build()
+                .getPublisherResponse();
     }
 
     private List<Media> getAllItemsByParams(String strParams, Boolean isEnabled) {
-        HashMap<String, Object> queryParams = new HashMap();
+        Map<String, Object> queryParams = new HashMap();
         queryParams.put("search", strParams);
         queryParams.put("sort", "name-asc");
         if (isEnabled != null) queryParams.put("enabled", isEnabled);

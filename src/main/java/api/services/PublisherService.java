@@ -1,5 +1,6 @@
 package api.services;
 
+import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.admin.publisher.PublisherRequest;
 import io.restassured.response.Response;
 
@@ -16,6 +17,12 @@ public class PublisherService extends BaseService {
         return post(URL, body.toJson());
     }
 
+    public Response updatePublisher(Publisher publisher) {
+        URL = initURL(UPDATE_PUBLISHER.setParameters(publisher.getId()));
+
+        return put(URL, publisher.toJson());
+    }
+
     public Response getAll() {
         URL = initURL(GET_PUBLISHERS);
 
@@ -26,6 +33,13 @@ public class PublisherService extends BaseService {
         URL = initURL(DELETE_PUBLISHER.setParameters(id));
 
         return delete(URL);
+    }
+
+    public Response getPublisher(int id){
+        URL = initURL(GET_PUBLISHER.setParameters(id));
+
+        return get(URL);
+
     }
 
     public Response getPublisherWithFilter(Map<String, Object> queryParams) {

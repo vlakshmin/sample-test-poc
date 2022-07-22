@@ -7,9 +7,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Statuses {
 
+    BOTH("Both"),
     ACTIVE("Active"),
     INACTIVE("Inactive"),
-    BOTH("Both"),
     ONBOARDING("Onboarding");
 
     private String status;

@@ -5,6 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import lombok.AccessLevel;
 import lombok.Getter;
 import pages.BasePage;
+import widgets.common.ToasterMessage;
 import widgets.common.table.Table;
 
 import static com.codeborne.selenide.Selenide.$$x;
