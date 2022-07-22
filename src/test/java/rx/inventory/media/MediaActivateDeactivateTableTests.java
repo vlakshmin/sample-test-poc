@@ -307,7 +307,7 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
     }
 
     private List<Media> getAllMediaItemsByParams(String strParams) {
-        HashMap<String, Object> queryParams = new HashMap();
+        Map<String, Object> queryParams = new HashMap();
         queryParams.put("search", strParams);
         var mediaList = media()
                 .getMediaWithFilter(queryParams)
