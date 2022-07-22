@@ -3,6 +3,7 @@ package managers;
 import com.codeborne.selenide.*;
 import com.codeborne.selenide.ex.ElementNotFound;
 import com.codeborne.selenide.testng.ScreenShooter;
+import com.sun.xml.bind.v2.TODO;
 import configurations.ConfigurationLoader;
 import configurations.User;
 import lombok.SneakyThrows;
@@ -544,12 +545,13 @@ public final class TestManager {
             return this;
         }
 
+        //TODO: use stream instead for
         public TestManagerBuilder selectAllRowsByColumnCellValue(TableData table, ColumnNames column, String cellValue) {
             logEvent(format("Select row in column %s with value %s", column.getName(), cellValue));
             ElementsCollection rows = table.getCustomCells(column);
-            for (int i=0; i<rows.size(); i++) {
-                if(rows.get(i).getText().contains(cellValue)){
-                    selectCheckBox(table.getCheckbox(i+1));
+            for (int i = 0; i < rows.size(); i++) {
+                if (rows.get(i).getText().contains(cellValue)) {
+                    selectCheckBox(table.getCheckbox(i + 1));
                 }
             }
 

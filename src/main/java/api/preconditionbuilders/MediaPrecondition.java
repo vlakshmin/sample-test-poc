@@ -51,20 +51,7 @@ public class MediaPrecondition {
 
         public MediaPreconditionBuilder createNewMedia() {
 
-            Publisher publisher = PublisherPrecondition.publisher()
-                    .createNewPublisher()
-                    .build()
-                    .getPublisherResponse();
-
-            this.mediaRequest = MediaRequest.builder()
-                    .name(captionWithSuffix("Media"))
-                    .publisherId(publisher.getId())
-                    .platformId(2)
-                    .url("http://localhost:5016")
-                    .isEnabled(true)
-                    .categoryIds(List.of(1, 9))
-                    .build();
-
+            this.mediaRequest = createMediaRequest("MediaAuto");
             this.response = mediaService.createMedia(mediaRequest);
             this.mediaResponse = response.as(Media.class);
             this.responseCode = response.getStatusCode();
@@ -80,6 +67,18 @@ public class MediaPrecondition {
 
             return this;
         }
+
+        public MediaPreconditionBuilder createNewMedia(String name, Boolean isEnabled) {
+
+            this.mediaRequest = createMediaRequest(name, isEnabled);
+
+            this.response = mediaService.createMedia(mediaRequest);
+            this.mediaResponse = response.as(Media.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
         public MediaPreconditionBuilder getAllMediaList() {
             this.response = mediaService.getAll();
 
@@ -98,11 +97,6 @@ public class MediaPrecondition {
             return this;
         }
 
-        private List<Media> getMediaResponseList() {
-
-            return Arrays.asList(response.jsonPath().getObject("items", Media[].class));
-        }
-
         public MediaPreconditionBuilder deleteMedia(int id) {
             this.response = mediaService.deleteMedia(id);
             this.responseCode = response.getStatusCode();
@@ -110,15 +104,57 @@ public class MediaPrecondition {
             return this;
         }
 
-        public MediaPreconditionBuilder setCredentials(User user){
+        public MediaPreconditionBuilder setCredentials(User user) {
             HttpClient.setCredentials(user);
 
             return this;
         }
+
         public MediaPrecondition build() {
             HttpClient.setCredentials(User.TEST_USER);
 
             return new MediaPrecondition(this);
+        }
+
+        private List<Media> getMediaResponseList() {
+
+            return Arrays.asList(response.jsonPath().getObject("items", Media[].class));
+        }
+
+        private Publisher createPublisher() {
+
+            return PublisherPrecondition.publisher()
+                    .createNewPublisher()
+                    .build()
+                    .getPublisherResponse();
+        }
+
+        private MediaRequest createMediaRequest(String name) {
+
+            Publisher publisher = createPublisher();
+
+            return MediaRequest.builder()
+                    .name(captionWithSuffix(name))
+                    .publisherId(publisher.getId())
+                    .platformId(2)
+                    .url("http://localhost:5016")
+                    .isEnabled(true)
+                    .categoryIds(List.of(1, 9))
+                    .build();
+        }
+
+        private MediaRequest createMediaRequest(String name, Boolean isEnabled) {
+
+            Publisher publisher = createPublisher();
+
+            return MediaRequest.builder()
+                    .name(captionWithSuffix(name))
+                    .publisherId(publisher.getId())
+                    .platformId(2)
+                    .url("http://localhost:5016")
+                    .isEnabled(isEnabled)
+                    .categoryIds(List.of(1, 9))
+                    .build();
         }
     }
 }

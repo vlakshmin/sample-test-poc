@@ -136,7 +136,7 @@ public class MediaSortingTableTests extends BaseTest {
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .clickOnWebElement(table.getTableOptionsBtn())
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))
-                .validate(visible,tableData.getColumnHeader(ColumnNames.SITE_APP_STORE_URL.getName()))
+                .validate(visible, tableData.getColumnHeader(ColumnNames.SITE_APP_STORE_URL.getName()))
                 .clickOnWebElement(table.getTableOptionsBtn())
                 .testEnd();
     }
@@ -214,7 +214,7 @@ public class MediaSortingTableTests extends BaseTest {
     }
 
     @Step("Validate data in column {0} sorted by {1}")
-    private void validateSortData(ColumnNames columnName, String sortType, List<String> expectedResult) {
+    private void validateSortData(ColumnNames columnName, String sortType, List<String> expectedResultList) {
         var tableData = mediaPage.getMediaTable().getTableData();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
 
@@ -233,7 +233,7 @@ public class MediaSortingTableTests extends BaseTest {
                 .then(String.format("Validate data in column '%s' should be sorted by $s",
                         columnName.getName(), sortType))
                 .validateList(tableData.getCustomCells(columnName),
-                        expectedResult.subList(0, 50))
+                        expectedResultList.subList(0, 50))
                 .and("Check next page")
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, mediaPage.getTableProgressBar())
@@ -244,7 +244,7 @@ public class MediaSortingTableTests extends BaseTest {
                         String.format("51-%s of %s", Math.min(100, totalMedia), totalMedia))
                 .then(String.format("Validate data in column '%s' should be sorted by %s", columnName.getName(), sortType))
                 .validateList(tableData.getCustomCells(columnName),
-                        expectedResult.subList(50, Math.min(100, totalMedia)))
+                        expectedResultList.subList(50, Math.min(100, totalMedia)))
 
                 .testEnd();
     }
@@ -318,7 +318,7 @@ public class MediaSortingTableTests extends BaseTest {
     }
 
     private List<Media> getAllItemsByParams(String strParams) {
-        HashMap<String, Object> queryParams = new HashMap();
+        Map<String, Object> queryParams = new HashMap();
         queryParams.put("sort", strParams);
         var mediaList = MediaPrecondition.media()
                 .getMediaWithFilter(queryParams)

@@ -92,6 +92,31 @@ public class PublisherPrecondition {
             return this;
         }
 
+        private PublisherRequest getPublisherRequest(String name, Boolean isEnabled){
+
+            return PublisherRequest.builder()
+                    .name(name)
+                    .salesAccountName("person_auto")
+                    .mail(randomMail())
+                    .isEnabled(isEnabled)
+                    .domain(randomUrl())
+                    .currency(Currency.JPY.name())
+                    .categoryIds(List.of(1, 9))
+                    .dspIds(List.of(7))
+                    .build();
+        }
+        public PublisherPreconditionBuilder deactivatePublisher(String name, Integer id){
+
+            PublisherRequest publisherRequest = getPublisherRequest(name,false);
+
+            PublisherPrecondition.publisher()
+                    .updatePublisher(publisherRequest,id)
+                    .build()
+                    .getPublisherResponse();
+
+            return this;
+        }
+
         private List<Publisher> getPublisherResponseList() {
 
             return Arrays.asList(response.jsonPath().getObject("items", Publisher[].class));
