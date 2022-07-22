@@ -60,7 +60,7 @@ public class MediaPrecondition {
         }
 
         public MediaPreconditionBuilder createNewMedia(MediaRequest mediaRequest) {
-
+            this.mediaRequest = mediaRequest;
             this.response = mediaService.createMedia(mediaRequest);
             this.mediaResponse = response.as(Media.class);
             this.responseCode = response.getStatusCode();
@@ -69,9 +69,25 @@ public class MediaPrecondition {
         }
 
         public MediaPreconditionBuilder createNewMedia(String name, Boolean isEnabled) {
-
             this.mediaRequest = createMediaRequest(name, isEnabled);
+            this.response = mediaService.createMedia(mediaRequest);
+            this.mediaResponse = response.as(Media.class);
+            this.responseCode = response.getStatusCode();
 
+            return this;
+        }
+
+        public MediaPreconditionBuilder createNewMedia(String name, Integer id, Boolean isEnabled) {
+            this.mediaRequest = createMediaRequest(name, id, isEnabled);
+            this.response = mediaService.createMedia(mediaRequest);
+            this.mediaResponse = response.as(Media.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
+        public MediaPreconditionBuilder createNewMedia(String name) {
+            this.mediaRequest = createMediaRequest(name);
             this.response = mediaService.createMedia(mediaRequest);
             this.mediaResponse = response.as(Media.class);
             this.responseCode = response.getStatusCode();
@@ -81,7 +97,6 @@ public class MediaPrecondition {
 
         public MediaPreconditionBuilder getAllMediaList() {
             this.response = mediaService.getAll();
-
             this.mediaGetAllResponse = this.response.as(new GenericResponse<Media>().getClass());
             this.responseCode = response.getStatusCode();
 
@@ -90,7 +105,6 @@ public class MediaPrecondition {
 
         public MediaPreconditionBuilder getMediaWithFilter(Map<String, Object> queryParams) {
             this.response = mediaService.getMediaWithFilter(queryParams);
-
             this.mediaGetAllResponse = this.response.as(new GenericResponse<Media>().getClass());
             this.responseCode = response.getStatusCode();
 
@@ -150,6 +164,18 @@ public class MediaPrecondition {
             return MediaRequest.builder()
                     .name(captionWithSuffix(name))
                     .publisherId(publisher.getId())
+                    .platformId(2)
+                    .url("http://localhost:5016")
+                    .isEnabled(isEnabled)
+                    .categoryIds(List.of(1, 9))
+                    .build();
+        }
+
+        private MediaRequest createMediaRequest(String name, int id, Boolean isEnabled) {
+
+            return MediaRequest.builder()
+                    .name(captionWithSuffix(name))
+                    .publisherId(id)
                     .platformId(2)
                     .url("http://localhost:5016")
                     .isEnabled(isEnabled)

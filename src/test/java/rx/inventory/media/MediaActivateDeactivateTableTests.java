@@ -87,11 +87,9 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
         mediaInActiveBulkD3 = createMedia(PREFIX_MEDIA_BULK_2, false);
 
         mediaActiveWithInactivePublisher = createMedia(PREFIX_MEDIA_INACTIVE_PUBLISHER, true);
-        deactivatePublisher(mediaActiveWithInactivePublisher.getPublisherName(),
-                mediaActiveWithInactivePublisher.getPublisherId());
+        deactivatePublisher(mediaActiveWithInactivePublisher.getPublisherId());
         mediaInActiveWithInactivePublisher = createMedia(PREFIX_MEDIA_INACTIVE_PUBLISHER, false);
-        deactivatePublisher(mediaInActiveWithInactivePublisher.getPublisherName(),
-                mediaInActiveWithInactivePublisher.getPublisherId());
+        deactivatePublisher(mediaInActiveWithInactivePublisher.getPublisherId());
     }
 
     @BeforeMethod
@@ -365,8 +363,8 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
         }
     }
 
-    private void deactivatePublisher(String name, Integer id) {
-        publisher().deactivatePublisher(name, id);
+    private void deactivatePublisher(Integer id) {
+        publisher().changePublisherStatus(id, false);
     }
 
     private void deletePublishers() {

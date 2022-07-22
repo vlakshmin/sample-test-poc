@@ -55,7 +55,7 @@ public class MediaSortingTableTests extends BaseTest {
     @BeforeClass
     private void loginAndCreateExpectedResuts() {
 
-        if (getTotalMedia() < 60) createMedia();
+        if (getTotalMedia() < 60) generateMedia();
 
         totalMedia = getTotalMedia();
 
@@ -152,65 +152,53 @@ public class MediaSortingTableTests extends BaseTest {
     @Step("Sort column {0} by DESC")
     private void sortByDescColumnByName(ColumnNames columnName) {
         var tableData = mediaPage.getMediaTable().getTableData();
-        switch (columnName.getName()) {
-            case "ID":
-                testStart()
-                        .given()
-                        .and(String.format("Sort column '%s'", columnName))
-                        .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                        .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                        .then("Ensure that sort by descending: validate column attribute value")
-                        .validateAttribute(tableData.getColumnHeader(columnName.getName()),
-                                "aria-sort", ASC)
-                        .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                        .validateAttribute(tableData.getColumnHeader(columnName.getName()),
-                                "aria-sort", DESC)
-                        .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-                        .testEnd();
-                break;
-            default:
-                testStart()
-                        .given()
-                        .and(String.format("Sort column '%s'", columnName))
-                        .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                        .then("Ensure that sort by descending: validate column attribute value")
-                        .validateAttribute(tableData.getColumnHeader(columnName.getName()),
-                                "aria-sort", ASC)
-                        .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                        .validateAttribute(tableData.getColumnHeader(columnName.getName()),
-                                "aria-sort", DESC)
-                        .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-                        .testEnd();
+
+        testStart()
+                .given()
+                .and(String.format("Sort column '%s'", columnName))
+                .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
+                .testEnd();
+
+        if (columnName.getName().equals("ID")) {
+            testStart()
+                    .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
+                    .testEnd();
         }
+
+        testStart()
+                .then("Ensure that sort by descending: validate column attribute value")
+                .validateAttribute(tableData.getColumnHeader(columnName.getName()),
+                        "aria-sort", ASC)
+                .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
+                .validateAttribute(tableData.getColumnHeader(columnName.getName()),
+                        "aria-sort", DESC)
+                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+                .testEnd();
+
     }
 
     @Step("Sort column {0} by ASC")
     private void sortByAscColumnByName(ColumnNames columnName) {
         var tableData = mediaPage.getMediaTable().getTableData();
-        switch (columnName.getName()) {
-            case "ID":
-                testStart()
-                        .given()
-                        .and(String.format("Sort column '%s'", columnName))
-                        .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                        .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                        .then("Ensure that sort by ascending: validate column attribute value")
-                        .validateAttribute(tableData.getColumnHeader(columnName.getName()),
-                                "aria-sort", ASC)
-                        .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-                        .testEnd();
-                break;
-            default:
-                testStart()
-                        .given()
-                        .and(String.format("Sort column '%s'", columnName))
-                        .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                        .then("Ensure that sort by ascending: validate column attribute value")
-                        .validateAttribute(tableData.getColumnHeader(columnName.getName()),
-                                "aria-sort", ASC)
-                        .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-                        .testEnd();
+        testStart()
+                .given()
+                .and(String.format("Sort column '%s'", columnName))
+                .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
+                .testEnd();
+
+        if (columnName.getName().equals("ID")) {
+            testStart()
+                    .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
+                    .testEnd();
         }
+
+        testStart()
+                .then("Ensure that sort by ascending: validate column attribute value")
+                .validateAttribute(tableData.getColumnHeader(columnName.getName()),
+                        "aria-sort", ASC)
+                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+                .testEnd();
+
     }
 
     @Step("Validate data in column {0} sorted by {1}")
@@ -329,41 +317,11 @@ public class MediaSortingTableTests extends BaseTest {
         return ObjectMapperUtils.getCollectionType(mediaList, Media.class);
     }
 
-    private void createMedia() {
-
+    private void generateMedia() {
         while (getTotalMedia() < 60) {
-
-            PublisherRequest publisherRequest = PublisherRequest.builder()
-                    .name(captionWithSuffix("autoPublisher"))
-                    .salesAccountName("person_auto")
-                    .mail(randomMail())
-                    .isEnabled(true)
-                    .domain(randomUrl())
-                    .currency(Currency.JPY.name())
-                    .categoryIds(List.of(1, 9))
-                    .dspIds(List.of(7))
-                    .build();
-
-            Publisher publisher = publisher()
-                    .createNewPublisher(publisherRequest)
-                    .build()
-                    .getPublisherResponse();
-
-            MediaRequest request = MediaRequest.builder()
-                    .name(captionWithSuffix("auto"))
-                    .publisherId(publisher.getId())
-                    .platformId(2)
-                    .url("http://localhost:5016")
-                    .isEnabled(true)
-                    .categoryIds(List.of(1, 9))
-                    .build();
-
             MediaPrecondition.media()
-                    .createNewMedia(request)
-                    .build()
-                    .getMediaResponse();
+                    .createNewMedia(captionWithSuffix("auto"))
+                    .build();
         }
-
     }
-
 }
