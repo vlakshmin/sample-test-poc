@@ -1,5 +1,6 @@
 package rx.yield.openpricing;
 
+import api.dto.rx.admin.publisher.Publisher;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 @Listeners({ScreenShooter.class})
 public class CreateOpenPricingTest extends BaseTest {
 
+    private Publisher newlyCreatedPublisher;
     private OpenPricingPage openPricingPage;
     private TableItemDetailsMenu pricingTableDetailsMenu;
     private CreateOpenPricingSidebar createOpenPricingSidebar;
@@ -157,6 +159,23 @@ public class CreateOpenPricingTest extends BaseTest {
                 .clickOnWebElement(pricingTable.getTableOptions().getTableOptionsBtn())
                 .then("Check that user under testing is not presented in table")
                 .validate(tableData.getCustomCells(ColumnNames.UPDATED_BY).get(0), EMPTY_STRING)
+                .testEnd();
+    }
+
+    @Test(priority = 11, dependsOnMethods = "saveOpenPricingTest")
+    @Step("Verify 'Inventory' Items in Details' menu in Pricing in table")
+    public void checkInventoryMenuDetailsTest() {
+        var tableData = openPricingPage.getOpenPricingTable().getTableData();
+        var inventoryDetailsSection = pricingTableDetailsMenu.getInventoryDetailsSection();
+
+        testStart()
+                .and("Hovering mouse cursor on 'Details' column in Pricing  Table")
+                //ToDo think to refactor method clickOnTableCellLink from TestManager and move it PageObject
+                .hoverMouseOnWebElement(tableData.getCustomCells(ColumnNames.DETAILS).get(0))
+                .then("Check that Selected inventory is presented in Details Menu")
+                .validate(visible,inventoryDetailsSection.getPublisherItemByPositionInList(0).getName())
+                .validate(visible,inventoryDetailsSection.getPublisherItemByPositionInList(0).getIncludedIcon())
+                .validate(not(visible),inventoryDetailsSection.getPublisherItemByPositionInList(0).getExcludedIcon())
                 .testEnd();
     }
 
