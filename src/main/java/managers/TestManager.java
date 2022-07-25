@@ -210,6 +210,7 @@ public final class TestManager {
 
         public TestManagerBuilder hoverMouseOnWebElement(SelenideElement element) {
             logEvent(format("Hovering mouse on %s", element.getAlias()));
+            logEvent(format("Hovering mouse on %s", element.getSearchCriteria()));
             element.shouldBe(exist, visible).hover();
 
             return this;
