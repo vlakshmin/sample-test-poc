@@ -165,7 +165,7 @@ public class DeleteTestData {
     }
 
     private List<Protection> getAllProtectionsByParams() {
-        HashMap<String, Object> queryParams = new HashMap();
+        Map<String, Object> queryParams = new HashMap();
         queryParams.put("search", PREFIX_PROTECTIONS);
         queryParams.put("sort", "id-desc");
         var protectionsList = ProtectionsPrecondition.protection()

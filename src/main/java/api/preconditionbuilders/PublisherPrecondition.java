@@ -50,8 +50,19 @@ public class PublisherPrecondition {
         private PublisherService publisherService = new PublisherService();
 
         public PublisherPreconditionBuilder createNewPublisher() {
+            performPublisherCreation(captionWithSuffix("Publisher_Auto"));
+            return this;
+        }
+
+        public PublisherPreconditionBuilder createNewPublisher(String name) {
+            performPublisherCreation(name);
+
+            return this;
+        }
+
+        private void performPublisherCreation(String name) {
             this.publisherRequest = PublisherRequest.builder()
-                    .name(captionWithSuffix("Publisher_Auto"))
+                    .name(name)
                     .salesAccountName("ops_persoj")
                     .mail(randomMail())
                     .isEnabled(true)
@@ -64,14 +75,33 @@ public class PublisherPrecondition {
             this.response = publisherService.createPublisher(publisherRequest);
             this.publisherResponse = response.as(Publisher.class);
             this.responseCode = response.getStatusCode();
+        }
+
+        public PublisherPreconditionBuilder createNewPublisher(PublisherRequest publisherRequest) {
+            this.publisherRequest = publisherRequest;
+            this.response = publisherService.createPublisher(publisherRequest);
+            this.publisherResponse = response.as(Publisher.class);
+            this.responseCode = response.getStatusCode();
 
             return this;
         }
 
-        public PublisherPreconditionBuilder createNewPublisher(PublisherRequest publisherRequest) {
-            this.response = publisherService.createPublisher(publisherRequest);
-            this.publisherResponse = response.as(Publisher.class);
+        public PublisherPreconditionBuilder updatePublisher(Publisher publisher) {
+
+            var updatePublisherRequest = Publisher.builder()
+                    .id(publisher.getId())
+                    .name(publisher.getName())
+                    .salesAccountName(publisher.getSalesAccountName())
+                    .mail(publisher.getMail())
+                    .isEnabled(publisher.getIsEnabled())
+                    .domain(publisher.getDomain())
+                    .currency(publisher.getCurrency())
+                    .categoryIds(publisher.getCategoryIds())
+                    .dspIds(publisher.getDspIds())
+                    .build();
+            this.response = publisherService.updatePublisher(updatePublisherRequest);
             this.responseCode = response.getStatusCode();
+            this.publisherResponse = response.as(Publisher.class);
 
             return this;
         }
@@ -80,6 +110,32 @@ public class PublisherPrecondition {
             this.response = publisherService.getAll();
 
             this.publisherGetAllResponse = this.response.as(new GenericResponse<Publisher>().getClass());
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
+        private PublisherRequest getPublisherRequest(String name, Boolean isEnabled) {
+
+            return PublisherRequest.builder()
+                    .name(name)
+                    .salesAccountName("person_auto")
+                    .mail(randomMail())
+                    .isEnabled(isEnabled)
+                    .domain(randomUrl())
+                    .currency(Currency.JPY.name())
+                    .categoryIds(List.of(1, 9))
+                    .dspIds(List.of(7))
+                    .build();
+        }
+
+        public PublisherPreconditionBuilder changePublisherStatus(int id, Boolean isEnabled) {
+            this.response = publisherService.getPublisher(id);
+            this.publisherResponse = this.response.as(Publisher.class);
+
+            this.publisherResponse.setIsEnabled(isEnabled);
+
+            this.response = publisherService.updatePublisher(this.publisherResponse);
             this.responseCode = response.getStatusCode();
 
             return this;

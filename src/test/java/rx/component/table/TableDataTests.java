@@ -137,7 +137,7 @@ public class TableDataTests extends BaseTest {
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, publishersPage.getNuxtProgress())
                 .and()
-                .clickOnWebElement(tableData.getCheckbox(1))
+                .selectCheckBox(tableData.getCheckbox(1))
                 .setValueWithClean(tableData.getSearch(), publisher.getName())
                 .clickEnterButton(tableData.getSearch())
                 .waitLoading(visible, publishersPage.getTableProgressBar())

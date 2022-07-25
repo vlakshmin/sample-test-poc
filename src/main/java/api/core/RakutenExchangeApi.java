@@ -17,6 +17,8 @@ public enum RakutenExchangeApi {
     GET_PUBLISHERS("/v2/publishers"),
     CREATE_PUBLISHER("/v2/publishers"),
     DELETE_PUBLISHER("/v2/publishers/%s"),
+    UPDATE_PUBLISHER("/v2/publishers/%s"),
+    GET_PUBLISHER("/v2/publishers/%s"),
 
     //Users
     CREATE_USER("/v2/accounts"),
