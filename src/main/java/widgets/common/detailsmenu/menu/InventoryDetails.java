@@ -1,4 +1,4 @@
-package widgets.common.detailsmenu.menu.inventory;
+package widgets.common.detailsmenu.menu;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
@@ -16,7 +16,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$x;
 import static java.lang.String.format;
 import static widgets.common.detailsmenu.item.DetailsSectionName.INVENTORY;
-import static widgets.common.detailsmenu.menu.inventory.SectionDetailsElements.*;
+import static widgets.common.detailsmenu.menu.SectionDetailsElements.*;
 
 /**
  * Keep Selectors of UI elements in {@link SectionDetailsElements}
@@ -49,19 +49,19 @@ public class InventoryDetails {
                 .collect(Collectors.toList()));
     }
 
-    public DetailsMenuItem getPublisherItemByPositionInList(int position) {
+    public DetailsMenuItem getMenuInventoryItemByPositionInList(int position) {
         countMenuInventoryItemsOnPage();
 
         return menuInventoryList.get(position);
     }
 
-    public DetailsMenuItem getPublisherItemByName(String name) {
+    public DetailsMenuItem getMenuInventoryItemByName(String name) {
         countMenuInventoryItemsOnPage();
 
         return menuInventoryList.stream()
                 .filter(pub -> pub.getName().shouldBe(visible).getText().equalsIgnoreCase(name))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException(
-                        format("The Publisher with name '%s' isn't presented in the list of Publisher", name)));
+                        format("The Menu Inventory item with name '%s' isn't presented in the list", name)));
     }
 }

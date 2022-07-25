@@ -1,7 +1,6 @@
 package widgets.common.detailsmenu.menu;
 
 import lombok.Getter;
-import widgets.common.detailsmenu.menu.inventory.InventoryDetails;
 
 @Getter
 public class TableItemDetailsMenu {

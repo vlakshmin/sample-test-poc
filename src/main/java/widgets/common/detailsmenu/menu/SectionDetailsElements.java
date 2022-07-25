@@ -1,4 +1,4 @@
-package widgets.common.detailsmenu.menu.inventory;
+package widgets.common.detailsmenu.menu;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
