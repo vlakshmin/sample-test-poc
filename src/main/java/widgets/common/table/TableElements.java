@@ -7,6 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum TableElements {
 
+    BUTTON_SUFFIX("Button Suffix","/button"),
     SEARCH( "Search Textbox", "//*[@class='v-text-field__slot']/label[text()='Search']/../input"),
     CLEAR( "Clear Icon", "//*[@class='v-input__icon v-input__icon--clear']/button"),
     CHECKBOX( "Row Checkbox", "//table//tr[%s]/td[1]/div//div"),

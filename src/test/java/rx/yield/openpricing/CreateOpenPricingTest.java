@@ -51,14 +51,14 @@ public class CreateOpenPricingTest extends BaseTest {
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
                 .waitAndValidate(disappear, openPricingPage.getTableProgressBar())
-//                .when("Opening 'Create New Open Pricing sidebar'")
-//                .openDirectPath(Path.CREATE_OPEN_PRICING)
-//                .waitSideBarOpened()
-//                .and("Enter data to all fields of sidebar")
-//                .selectFromDropdownWithSearch(createOpenPricingSidebar.getPublisherNameDropdown(),
-//                        createOpenPricingSidebar.getPublisherNameDropdownItems(), "Viber")
-//                .setValue(createOpenPricingSidebar.getNameInput(), PRICING_NAME)
-//                .setValue(createOpenPricingSidebar.getFloorPriceField().getFloorPriceInput(), "22")
+                .when("Opening 'Create New Open Pricing sidebar'")
+                .openDirectPath(Path.CREATE_OPEN_PRICING)
+                .waitSideBarOpened()
+                .and("Enter data to all fields of sidebar")
+                .selectFromDropdownWithSearch(createOpenPricingSidebar.getPublisherNameDropdown(),
+                        createOpenPricingSidebar.getPublisherNameDropdownItems(), "Viber")
+                .setValue(createOpenPricingSidebar.getNameInput(), PRICING_NAME)
+                .setValue(createOpenPricingSidebar.getFloorPriceField().getFloorPriceInput(), "22")
                 .testEnd();
     }
 
@@ -162,17 +162,14 @@ public class CreateOpenPricingTest extends BaseTest {
                 .testEnd();
     }
 
-    //@Test(priority = 11, dependsOnMethods = "saveOpenPricingTest")
-    @Test
+    @Test(priority = 11, dependsOnMethods = "saveOpenPricingTest")
     @Step("Verify 'Inventory' Items in Details' menu in Pricing in table")
     public void checkInventoryMenuDetailsTest() {
-        //pricingTableDetailsMenu = new TableItemDetailsMenu();
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var inventoryDetailsSection = pricingTableDetailsMenu.getInventoryDetailsSection();
 
         testStart()
                 .and("Hovering mouse cursor on 'Details' column in Pricing  Table")
-                //ToDo think to refactor method clickOnTableCellLink from TestManager and move it PageObject
                 .hoverMouseOnWebElement(tableData.getCellByPositionInTable(ColumnNames.DETAILS, 0 ))
                 .then("Check that Selected inventory is presented in Details Menu")
                 .validate(visible,inventoryDetailsSection.getPublisherItemByPositionInList(0).getName())

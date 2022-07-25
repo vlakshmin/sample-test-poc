@@ -3,15 +3,13 @@ package widgets.common.table;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
-import managers.TestManager;
-import org.openqa.selenium.By;
 
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 import static java.lang.String.format;
+import static widgets.common.table.ColumnNames.DETAILS;
 import static widgets.common.table.TableElements.*;
 
 /**
@@ -45,7 +43,9 @@ public class TableData {
                 .collect(Collectors.toList())
                 .indexOf(columnName.getName()) + 2;
 
-        return $$x(String.format(CELL_BY_COLUMN.getSelector(), columnId)).as(CELL_BY_COLUMN.getAlias());
+        return !columnName.equals(DETAILS) ?
+                $$x(String.format(CELL_BY_COLUMN.getSelector(), columnId, columnId)) :
+                $$x(format("%s%s", format(CELL_BY_COLUMN.getSelector(), columnId, columnId), BUTTON_SUFFIX.getSelector()));
     }
 
     public SelenideElement getCellByPositionInTable(ColumnNames column, int position) {

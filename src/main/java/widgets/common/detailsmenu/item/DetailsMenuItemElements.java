@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum DetailsMenuItemElements {
 
-    NAME( "'Name' Label", "/td[5]"),
+    NAME( "'Name' Label", "//span"),
     EXCLUDED_ICON( "'Excluded' Icon", "//i[contains(@style,'red')]"),
     INCLUDED_ICON( "'Included' Icon", "//i[contains(@style,'green')]");
 

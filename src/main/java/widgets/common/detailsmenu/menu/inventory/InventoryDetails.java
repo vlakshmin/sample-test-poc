@@ -16,15 +16,15 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$x;
 import static java.lang.String.format;
 import static widgets.common.detailsmenu.item.DetailsSectionName.INVENTORY;
+import static widgets.common.detailsmenu.menu.inventory.SectionDetailsElements.*;
 
 /**
  * Keep Selectors of UI elements in {@link SectionDetailsElements}
  */
 public class InventoryDetails {
 
-    private ElementsCollection menuInventoryItems =
-            $$x(format(SectionDetailsElements.DETAILS_MENU_ITEMS.getSelector(), INVENTORY.getName()))
-                    .as(format(SectionDetailsElements.DETAILS_MENU_ITEMS.getAlias(), INVENTORY.getName()));
+    private ElementsCollection menuInventoryItems = $$x(format(DETAILS_MENU_ITEMS.getSelector(), INVENTORY.getName()))
+                    .as(format(DETAILS_MENU_ITEMS.getAlias(), INVENTORY.getName()));
 
     private List<DetailsMenuItem> menuInventoryList = new ArrayList<>();
 

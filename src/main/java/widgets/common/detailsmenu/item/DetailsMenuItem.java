@@ -38,6 +38,6 @@ public class DetailsMenuItem {
 
     public String buildXpath(String elementXpath) {
 
-        return (format("//descendant::%s[%s]%s", DETAILS_MENU_ITEM, position, elementXpath));
+        return format(format("//descendant::%s[%s]%s", DETAILS_MENU_ITEM, position, elementXpath), detailsSectionName);
     }
 }
