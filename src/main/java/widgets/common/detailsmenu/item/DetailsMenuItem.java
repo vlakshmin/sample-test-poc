@@ -3,6 +3,7 @@ package widgets.common.detailsmenu.item;
 import com.codeborne.selenide.SelenideElement;
 import lombok.AccessLevel;
 import lombok.Getter;
+import widgets.common.detailsmenu.DetailsSectionName;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static java.lang.String.format;
