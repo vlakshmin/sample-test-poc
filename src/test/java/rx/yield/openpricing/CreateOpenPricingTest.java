@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import pages.Path;
 import pages.yield.openpricing.OpenPricingPage;
 import rx.BaseTest;
+import widgets.common.detailsmenu.menu.TableItemDetailsMenu;
 import widgets.common.multipane.Multipane;
 import widgets.common.multipane.MultipaneName;
 import widgets.common.table.ColumnNames;
@@ -26,6 +27,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 public class CreateOpenPricingTest extends BaseTest {
 
     private OpenPricingPage openPricingPage;
+    private TableItemDetailsMenu pricingTableDetailsMenu;
     private CreateOpenPricingSidebar createOpenPricingSidebar;
 
     private static final String EMPTY_STRING = "";
@@ -33,6 +35,7 @@ public class CreateOpenPricingTest extends BaseTest {
 
     public CreateOpenPricingTest() {
         openPricingPage = new OpenPricingPage();
+        pricingTableDetailsMenu = new TableItemDetailsMenu();
         createOpenPricingSidebar = new CreateOpenPricingSidebar();
     }
 
@@ -143,7 +146,7 @@ public class CreateOpenPricingTest extends BaseTest {
 
     @Test(priority = 10, dependsOnMethods = "saveOpenPricingTest")
     @Step("Verify 'updatedBy' column  Pricing in table")
-    public void checkUpdatedByTest() {
+    public void chechUpdatedByTest() {
         var pricingTable = openPricingPage.getOpenPricingTable();
         var tableData = pricingTable.getTableData();
 
