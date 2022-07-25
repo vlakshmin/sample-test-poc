@@ -39,7 +39,9 @@ public class TableData {
     public ElementsCollection getCustomCells(ColumnNames columnName) {
         int columnId = getColumnId(columnName);
 
-        return $$x(String.format(CELL_BY_COLUMN.getSelector(), columnId)).as(CELL_BY_COLUMN.getAlias());
+        return !columnName.equals(DETAILS) ?
+                $$x(String.format(CELL_BY_COLUMN.getSelector(), columnId, columnId)) :
+                $$x(format("%s%s", format(CELL_BY_COLUMN.getSelector(), columnId, columnId), BUTTON_SUFFIX.getSelector()));
     }
 
     public SelenideElement getCellByRowValue(ColumnNames columnName, ColumnNames columnNameByRow, String rowValue) {
@@ -50,6 +52,11 @@ public class TableData {
                 .as(CELL_BY_COLUMN_ROW.getAlias());
     }
 
+    public SelenideElement getCellByPositionInTable(ColumnNames column, int position) {
+
+        return getCustomCells(column).get(position);
+    }
+
     private Integer getColumnId(ColumnNames columnName) {
 
         return getColumns()
@@ -57,6 +64,7 @@ public class TableData {
                 .map(SelenideElement::getText)
                 .collect(Collectors.toList())
                 .indexOf(columnName.getName()) + 2;
+    }
 
     private Integer getRowNumber(ColumnNames columnNameByRow, String rowValue) {
 
