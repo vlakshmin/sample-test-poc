@@ -1,9 +1,10 @@
-package widgets.common.detailsmenu.menu;
+package widgets.common.detailsmenu.menu.sections;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import org.openqa.selenium.WebElement;
 import widgets.common.detailsmenu.item.DetailsMenuItem;
+import widgets.common.detailsmenu.menu.SectionDetailsElements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,53 +16,54 @@ import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$x;
 import static java.lang.String.format;
+import static widgets.common.detailsmenu.DetailsSectionName.DEVICE;
 import static widgets.common.detailsmenu.DetailsSectionName.INVENTORY;
-import static widgets.common.detailsmenu.menu.SectionDetailsElements.*;
+import static widgets.common.detailsmenu.menu.SectionDetailsElements.DETAILS_MENU_ITEMS;
 
 /**
  * Keep Selectors of UI elements in {@link SectionDetailsElements}
  */
-public class InventoryDetails {
+public class DeviceDetailsSection {
 
-    private ElementsCollection menuInventoryItems = $$x(format(DETAILS_MENU_ITEMS.getSelector(), INVENTORY.getName()))
+    private ElementsCollection menuDeviceItems = $$x(format(DETAILS_MENU_ITEMS.getSelector(), DEVICE.getName()))
                     .as(format(DETAILS_MENU_ITEMS.getAlias(), INVENTORY.getName()));
 
-    private List<DetailsMenuItem> menuInventoryList = new ArrayList<>();
+    private List<DetailsMenuItem> menuDeviceList = new ArrayList<>();
 
 
-    public int countMenuInventoryItems() {
+    public int countMenuDeviceItems() {
 
-        return (int) menuInventoryItems.shouldBe(
+        return (int) menuDeviceItems.shouldBe(
                 CollectionCondition.allMatch("Wait to collection element to be visible", WebElement::isDisplayed))
                 .stream()
                 .map(se -> se.shouldBe(exist,visible))
                 .count();
     }
 
-    private void countMenuInventoryItemsOnPage() {
-        countMenuInventoryItems();
+    private void countMenuDeviceItemsOnPage() {
+        countMenuDeviceItems();
         var position = new AtomicInteger(1);
-        if (menuInventoryList.size() != 0) {
-            menuInventoryList.clear();
+        if (menuDeviceList.size() != 0) {
+            menuDeviceList.clear();
         }
-        menuInventoryList.addAll(menuInventoryItems.stream()
-                .map(publisher -> new DetailsMenuItem(position.getAndIncrement(), INVENTORY))
+        menuDeviceList.addAll(menuDeviceItems.stream()
+                .map(publisher -> new DetailsMenuItem(position.getAndIncrement(), DEVICE))
                 .collect(Collectors.toList()));
     }
 
-    public DetailsMenuItem getMenuInventoryItemByPositionInList(int position) {
-        countMenuInventoryItemsOnPage();
+    public DetailsMenuItem getMenuDeviceItemByPositionInList(int position) {
+        countMenuDeviceItemsOnPage();
 
-        return menuInventoryList.get(position);
+        return menuDeviceList.get(position);
     }
 
-    public DetailsMenuItem getMenuInventoryItemByName(String name) {
-        countMenuInventoryItemsOnPage();
+    public DetailsMenuItem getMenuDeviceItemByName(String name) {
+        countMenuDeviceItemsOnPage();
 
-        return menuInventoryList.stream()
+        return menuDeviceList.stream()
                 .filter(pub -> pub.getName().shouldBe(visible).getText().equalsIgnoreCase(name))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException(
-                        format("The Menu Inventory item with name '%s' isn't presented in the list", name)));
+                        format("The Menu Device item with name '%s' isn't presented in the list", name)));
     }
 }
