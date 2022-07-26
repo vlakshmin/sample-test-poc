@@ -1,9 +1,10 @@
-package widgets.common.detailsmenu.menu;
+package widgets.common.detailsmenu.menu.sections;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import org.openqa.selenium.WebElement;
 import widgets.common.detailsmenu.item.DetailsMenuItem;
+import widgets.common.detailsmenu.menu.SectionDetailsElements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import static widgets.common.detailsmenu.menu.SectionDetailsElements.*;
 /**
  * Keep Selectors of UI elements in {@link SectionDetailsElements}
  */
-public class InventoryDetails {
+public class InventoryDetailsSection {
 
     private ElementsCollection menuInventoryItems = $$x(format(DETAILS_MENU_ITEMS.getSelector(), INVENTORY.getName()))
                     .as(format(DETAILS_MENU_ITEMS.getAlias(), INVENTORY.getName()));

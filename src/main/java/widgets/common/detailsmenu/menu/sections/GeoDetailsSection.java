@@ -1,9 +1,10 @@
-package widgets.common.detailsmenu.menu;
+package widgets.common.detailsmenu.menu.sections;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import org.openqa.selenium.WebElement;
 import widgets.common.detailsmenu.item.DetailsMenuItem;
+import widgets.common.detailsmenu.menu.SectionDetailsElements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +17,12 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$x;
 import static java.lang.String.format;
 import static widgets.common.detailsmenu.DetailsSectionName.GEO;
-import static widgets.common.detailsmenu.DetailsSectionName.INVENTORY;
 import static widgets.common.detailsmenu.menu.SectionDetailsElements.DETAILS_MENU_ITEMS;
 
 /**
  * Keep Selectors of UI elements in {@link SectionDetailsElements}
  */
-public class GeoDetails {
+public class GeoDetailsSection {
 
     private ElementsCollection menuGeoItems = $$x(format(DETAILS_MENU_ITEMS.getSelector(), GEO.getName()))
                     .as(format(DETAILS_MENU_ITEMS.getAlias(), GEO.getName()));

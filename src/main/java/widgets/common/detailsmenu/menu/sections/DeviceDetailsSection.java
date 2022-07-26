@@ -1,9 +1,10 @@
-package widgets.common.detailsmenu.menu;
+package widgets.common.detailsmenu.menu.sections;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import org.openqa.selenium.WebElement;
 import widgets.common.detailsmenu.item.DetailsMenuItem;
+import widgets.common.detailsmenu.menu.SectionDetailsElements;
 
 import java.util.ArrayList;
 import java.util.List;

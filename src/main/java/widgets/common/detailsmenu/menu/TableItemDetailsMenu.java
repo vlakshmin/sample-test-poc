@@ -1,17 +1,21 @@
 package widgets.common.detailsmenu.menu;
 
 import lombok.Getter;
+import widgets.common.detailsmenu.menu.sections.AdSizeDetailsSection;
+import widgets.common.detailsmenu.menu.sections.GeoDetailsSection;
+import widgets.common.detailsmenu.menu.sections.InventoryDetailsSection;
 
 @Getter
 public class TableItemDetailsMenu {
 
-    private GeoDetails geoDetailsSection = new GeoDetails();
-    private InventoryDetails inventoryDetailsSection = new InventoryDetails();
+    private GeoDetailsSection geoDetailsSection = new GeoDetailsSection();
+    private AdSizeDetailsSection adSizeDetailsSection = new AdSizeDetailsSection();
+    private InventoryDetailsSection inventoryDetailsSection = new InventoryDetailsSection();
 
 
 
-    //    DEVICE("Device"),
-    //    AD_SIZE("Ad Size"),
+
+
     //    AD_FORMAT("Ad Format"),
     //    INVENTORY("Inventory"),
     //    DEMAND_SOURCES("Demand Sources"),
