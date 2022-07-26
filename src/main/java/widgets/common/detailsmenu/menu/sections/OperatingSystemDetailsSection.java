@@ -16,54 +16,53 @@ import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$x;
 import static java.lang.String.format;
-import static widgets.common.detailsmenu.DetailsSectionName.AD_SIZE;
-import static widgets.common.detailsmenu.DetailsSectionName.GEO;
+import static widgets.common.detailsmenu.DetailsSectionName.*;
 import static widgets.common.detailsmenu.menu.SectionDetailsElements.DETAILS_MENU_ITEMS;
 
 /**
  * Keep Selectors of UI elements in {@link SectionDetailsElements}
  */
-public class AdSizeDetailsSection {
+public class OperatingSystemDetailsSection {
 
-    private ElementsCollection menuAdSizeItems = $$x(format(DETAILS_MENU_ITEMS.getSelector(), AD_SIZE.getName()))
-                    .as(format(DETAILS_MENU_ITEMS.getAlias(), AD_SIZE.getName()));
+    private ElementsCollection menuOperatingSystemItems = $$x(format(DETAILS_MENU_ITEMS.getSelector(), OPERATING_SYSTEM.getName()))
+                    .as(format(DETAILS_MENU_ITEMS.getAlias(), OPERATING_SYSTEM.getName()));
 
-    private List<DetailsMenuItem> menuAdSizeList = new ArrayList<>();
+    private List<DetailsMenuItem> menuOperatingSystemList = new ArrayList<>();
 
 
-    public int countMenuAdSizeItems() {
+    public int countMenuOperatingSystemItems() {
 
-        return (int) menuAdSizeItems.shouldBe(
+        return (int) menuOperatingSystemItems.shouldBe(
                 CollectionCondition.allMatch("Wait to collection element to be visible", WebElement::isDisplayed))
                 .stream()
                 .map(se -> se.shouldBe(exist,visible))
                 .count();
     }
 
-    private void countMenuAdSizeItemsOnPage() {
-        countMenuAdSizeItems();
+    private void countMenuOperatingSystemItemsOnPage() {
+        countMenuOperatingSystemItems();
         var position = new AtomicInteger(1);
-        if (menuAdSizeList.size() != 0) {
-            menuAdSizeList.clear();
+        if (menuOperatingSystemList.size() != 0) {
+            menuOperatingSystemList.clear();
         }
-        menuAdSizeList.addAll(menuAdSizeItems.stream()
-                .map(publisher -> new DetailsMenuItem(position.getAndIncrement(), AD_SIZE))
+        menuOperatingSystemList.addAll(menuOperatingSystemItems.stream()
+                .map(publisher -> new DetailsMenuItem(position.getAndIncrement(), OPERATING_SYSTEM))
                 .collect(Collectors.toList()));
     }
 
-    public DetailsMenuItem getMenuAdSizeItemByPositionInList(int position) {
-        countMenuAdSizeItemsOnPage();
+    public DetailsMenuItem getMenuOperatingSystemItemByPositionInList(int position) {
+        countMenuOperatingSystemItemsOnPage();
 
-        return menuAdSizeList.get(position);
+        return menuOperatingSystemList.get(position);
     }
 
-    public DetailsMenuItem getMenuAdSizeItemByName(String name) {
-        countMenuAdSizeItemsOnPage();
+    public DetailsMenuItem getMenuOperatingSystemItemByName(String name) {
+        countMenuOperatingSystemItemsOnPage();
 
-        return menuAdSizeList.stream()
+        return menuOperatingSystemList.stream()
                 .filter(pub -> pub.getName().shouldBe(visible).getText().equalsIgnoreCase(name))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException(
-                        format("The Menu AdSize item with name '%s' isn't presented in the list", name)));
+                        format("The Menu AdFormat item with name '%s' isn't presented in the list", name)));
     }
 }

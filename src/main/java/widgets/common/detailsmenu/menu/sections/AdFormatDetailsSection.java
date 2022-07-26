@@ -46,7 +46,7 @@ public class AdFormatDetailsSection {
             menuAdFormatList.clear();
         }
         menuAdFormatList.addAll(menuAdFormatItems.stream()
-                .map(publisher -> new DetailsMenuItem(position.getAndIncrement(), GEO))
+                .map(publisher -> new DetailsMenuItem(position.getAndIncrement(), AD_FORMAT))
                 .collect(Collectors.toList()));
     }
 

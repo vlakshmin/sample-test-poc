@@ -46,7 +46,7 @@ public class DemandSourcesDetailsSection {
             menuDemandSourcesList.clear();
         }
         menuDemandSourcesList.addAll(menuDemandSourcesItems.stream()
-                .map(publisher -> new DetailsMenuItem(position.getAndIncrement(), GEO))
+                .map(publisher -> new DetailsMenuItem(position.getAndIncrement(), DEMAND_SOURCES))
                 .collect(Collectors.toList()));
     }
 

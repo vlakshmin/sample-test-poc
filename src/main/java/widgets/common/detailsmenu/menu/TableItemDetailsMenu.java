@@ -11,10 +11,6 @@ public class TableItemDetailsMenu {
     private AdFormatDetailsSection adFormatDetailsSection = new AdFormatDetailsSection();
     private InventoryDetailsSection inventoryDetailsSection = new InventoryDetailsSection();
     private DemandSourcesDetailsSection demandSourcesDetailsSection = new DemandSourcesDetailsSection();
+    private OperatingSystemDetailsSection operatingSystemDetailsSection = new OperatingSystemDetailsSection();
 
-
-
-
-
-    //    OPERATING_SYSTEM("Operating System");
 }
