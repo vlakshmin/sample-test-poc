@@ -13,6 +13,7 @@
             <class name="rx.inventory.media.MediaActivateDeactivateTableTests"/>
             <class name="rx.inventory.media.MediaSearchTableTests"/>
             <class name="rx.inventory.media.MediaSortingTableTests"/>
+            <class name="rx.inventory.adspot.AdSpotSortingTableTests"/>
         </classes>
     </test>
 </suite>
