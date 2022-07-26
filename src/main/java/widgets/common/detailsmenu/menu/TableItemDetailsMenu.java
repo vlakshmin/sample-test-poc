@@ -12,5 +12,4 @@ public class TableItemDetailsMenu {
     private InventoryDetailsSection inventoryDetailsSection = new InventoryDetailsSection();
     private DemandSourcesDetailsSection demandSourcesDetailsSection = new DemandSourcesDetailsSection();
     private OperatingSystemDetailsSection operatingSystemDetailsSection = new OperatingSystemDetailsSection();
-
 }
