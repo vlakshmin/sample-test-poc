@@ -9,6 +9,7 @@ public enum TableElements {
 
     ROWS( "Table Rows", "//tbody/tr"),
     BODY( "Table Body", "//body//table[1]"),
+    BUTTON_SUFFIX("Button Suffix","/button"),
     COLUMNS( "Table Columns", "//thead/tr/th/span"),
     CELL_BY_COLUMN( "Cell By Column", "//tbody/tr/td[%s]"),
     CELL_BY_COLUMN_ROW( "Cell By Column", "//tbody/tr[%s]/td[%s]"),

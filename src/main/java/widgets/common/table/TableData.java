@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
+import static java.lang.String.format;
+import static widgets.common.table.ColumnNames.DETAILS;
 import static widgets.common.table.TableElements.*;
 
 /**
@@ -37,7 +39,9 @@ public class TableData {
     public ElementsCollection getCustomCells(ColumnNames columnName) {
         int columnId = getColumnId(columnName);
 
-        return $$x(String.format(CELL_BY_COLUMN.getSelector(), columnId)).as(CELL_BY_COLUMN.getAlias());
+        return !columnName.equals(DETAILS) ?
+                $$x(String.format(CELL_BY_COLUMN.getSelector(), columnId, columnId)) :
+                $$x(format("%s%s", format(CELL_BY_COLUMN.getSelector(), columnId, columnId), BUTTON_SUFFIX.getSelector()));
     }
 
     public SelenideElement getCellByRowValue(ColumnNames columnName, ColumnNames columnNameByRow, String rowValue) {
@@ -46,6 +50,11 @@ public class TableData {
 
         return $x(String.format(CELL_BY_COLUMN_ROW.getSelector(), rowNumber, columnId))
                 .as(CELL_BY_COLUMN_ROW.getAlias());
+    }
+
+    public SelenideElement getCellByPositionInTable(ColumnNames column, int position) {
+
+        return getCustomCells(column).get(position);
     }
 
     private Integer getColumnId(ColumnNames columnName) {
