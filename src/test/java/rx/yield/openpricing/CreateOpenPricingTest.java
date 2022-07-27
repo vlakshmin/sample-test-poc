@@ -192,10 +192,10 @@ public class CreateOpenPricingTest extends BaseTest {
                 .and("Hovering mouse cursor on 'Details' column in Pricing  Table")
                 .hoverMouseOnWebElement(tableData.getCellByPositionInTable(ColumnNames.DETAILS, 0))
                 .then("Check that Selected inventory is presented in Details Menu")
-                .validate(visible, inventoryDetailsSection.getMenuInventoryItemByPositionInList(0).getName())
-                .validate(inventoryDetailsSection.getMenuInventoryItemByPositionInList(0).getName(), expectedMedia.getName())
-                .validate(visible, inventoryDetailsSection.getMenuInventoryItemByPositionInList(0).getIncludedIcon())
-                .validate(not(visible), inventoryDetailsSection.getMenuInventoryItemByPositionInList(0).getExcludedIcon())
+                .validate(visible, inventoryDetailsSection.getMenuItemByPositionInList(0).getName())
+                .validate(inventoryDetailsSection.getMenuItemByPositionInList(0).getName(), expectedMedia.getName())
+                .validate(visible, inventoryDetailsSection.getMenuItemByPositionInList(0).getIncludedIcon())
+                .validate(not(visible), inventoryDetailsSection.getMenuItemByPositionInList(0).getExcludedIcon())
                 .testEnd();
     }
 
