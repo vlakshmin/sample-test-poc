@@ -49,6 +49,14 @@ public class MediaPrecondition {
         private GenericResponse<Media> mediaGetAllResponse;
         private final MediaService mediaService = new MediaService();
 
+        public MediaPreconditionBuilder getMediaById(int id) {
+            this.response = mediaService.getMediaById(id);
+            this.responseCode = response.getStatusCode();
+            this.mediaResponse = response.as(Media.class);
+
+            return this;
+        }
+
         public MediaPreconditionBuilder createNewMedia() {
 
             this.mediaRequest = createMediaRequest("MediaAuto");

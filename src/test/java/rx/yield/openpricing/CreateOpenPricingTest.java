@@ -1,6 +1,9 @@
 package rx.yield.openpricing;
 
-import api.dto.rx.admin.publisher.Publisher;
+import api.dto.rx.inventory.media.Media;
+import api.dto.rx.yield.openpricing.OpenPricing;
+import api.preconditionbuilders.MediaPrecondition;
+import api.preconditionbuilders.OpenPricingPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
@@ -16,18 +19,20 @@ import widgets.common.multipane.MultipaneName;
 import widgets.common.table.ColumnNames;
 import widgets.yield.openPricing.sidebar.CreateOpenPricingSidebar;
 
+import java.util.NoSuchElementException;
+
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
-import static rx.enums.MultipaneConstants.*;
 import static java.lang.String.format;
 import static managers.TestManager.testStart;
+import static rx.enums.MultipaneConstants.*;
 import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
 public class CreateOpenPricingTest extends BaseTest {
 
-    private Publisher newlyCreatedPublisher;
+    private OpenPricing newlyCreatedPricing;
     private OpenPricingPage openPricingPage;
     private TableItemDetailsMenu pricingTableDetailsMenu;
     private CreateOpenPricingSidebar createOpenPricingSidebar;
@@ -110,7 +115,7 @@ public class CreateOpenPricingTest extends BaseTest {
         testStart()
                 .and("Checking functionality of 'Save' button")
                 .clickOnWebElement(createOpenPricingSidebar.getSaveButton())
-                .validate(not(visible),createOpenPricingSidebar.getSaveButton())
+                .validate(not(visible), createOpenPricingSidebar.getSaveButton())
                 .validate(visible, "Updated!")
                 .waitSideBarClosed()
                 .testEnd();
@@ -163,18 +168,34 @@ public class CreateOpenPricingTest extends BaseTest {
     }
 
     @Test(priority = 11, dependsOnMethods = "saveOpenPricingTest")
+    @Step("Get info about newly created Open Pricing by API")
+    public void getNewlyCreatedPricingByApi() {
+        newlyCreatedPricing = OpenPricingPrecondition.openPricing()
+                .getOpenPricingList()
+                .build()
+                .getOpenPricingGetAllResponse().getItems().stream()
+                .filter(op -> op.getName().equals(PRICING_NAME))
+                .findFirst()
+                .orElseThrow(() ->
+                        new NoSuchElementException(format("The Open Pricing with name '%s' wasn't found", PRICING_NAME)));
+    }
+
+    @Test(priority = 12, dependsOnMethods = {"saveOpenPricingTest", "getNewlyCreatedPricingByApi"} )
     @Step("Verify 'Inventory' Items in Details' menu in Pricing in table")
     public void checkInventoryMenuDetailsTest() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var inventoryDetailsSection = pricingTableDetailsMenu.getInventoryDetailsSection();
 
+        var expectedMedia = getMediaById(newlyCreatedPricing.getRule().getMedia().getMedia().get(0));
+
         testStart()
                 .and("Hovering mouse cursor on 'Details' column in Pricing  Table")
-                .hoverMouseOnWebElement(tableData.getCellByPositionInTable(ColumnNames.DETAILS, 0 ))
+                .hoverMouseOnWebElement(tableData.getCellByPositionInTable(ColumnNames.DETAILS, 0))
                 .then("Check that Selected inventory is presented in Details Menu")
-                .validate(visible,inventoryDetailsSection.getMenuInventoryItemByPositionInList(0).getName())
-                .validate(visible,inventoryDetailsSection.getMenuInventoryItemByPositionInList(0).getIncludedIcon())
-                .validate(not(visible),inventoryDetailsSection.getMenuInventoryItemByPositionInList(0).getExcludedIcon())
+                .validate(visible, inventoryDetailsSection.getMenuInventoryItemByPositionInList(0).getName())
+                .validate(inventoryDetailsSection.getMenuInventoryItemByPositionInList(0).getName(), expectedMedia.getName())
+                .validate(visible, inventoryDetailsSection.getMenuInventoryItemByPositionInList(0).getIncludedIcon())
+                .validate(not(visible), inventoryDetailsSection.getMenuInventoryItemByPositionInList(0).getExcludedIcon())
                 .testEnd();
     }
 
@@ -228,4 +249,11 @@ public class CreateOpenPricingTest extends BaseTest {
                 .testEnd();
     }
 
+    private Media getMediaById(int mediaId) {
+
+        return MediaPrecondition.media()
+                .getMediaById(mediaId)
+                .build()
+                .getMediaResponse();
+    }
 }
