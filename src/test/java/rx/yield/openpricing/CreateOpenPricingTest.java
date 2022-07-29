@@ -14,6 +14,7 @@ import pages.Path;
 import pages.yield.openpricing.OpenPricingPage;
 import rx.BaseTest;
 import widgets.common.detailsmenu.menu.TableItemDetailsMenu;
+import widgets.common.detailsmenu.menu.sections.DetailsSection;
 import widgets.common.multipane.Multipane;
 import widgets.common.multipane.MultipaneName;
 import widgets.common.table.ColumnNames;
@@ -186,16 +187,24 @@ public class CreateOpenPricingTest extends BaseTest {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var inventoryDetailsSection = pricingTableDetailsMenu.getInventoryDetailsSection();
 
-        var expectedMedia = getMediaById(newlyCreatedPricing.getRule().getMedia().getMedia().get(0));
-
         testStart()
                 .and("Hovering mouse cursor on 'Details' column in Pricing  Table")
                 .hoverMouseOnWebElement(tableData.getCellByPositionInTable(ColumnNames.DETAILS, 0))
+                .testEnd();
+
+        var expectedMedia = getMediaById(newlyCreatedPricing.getRule().getMedia().getMedia().get(0)).getName();
+
+        verifySelectionInDetailsMenuForTableItem(inventoryDetailsSection, expectedMedia);
+    }
+
+    private void verifySelectionInDetailsMenuForTableItem(DetailsSection detailsSection, String ... expectedItemNames){
+
+        testStart()
                 .then("Check that Selected inventory is presented in Details Menu")
-                .validate(visible, inventoryDetailsSection.getMenuItemByPositionInList(0).getName())
-                .validate(inventoryDetailsSection.getMenuItemByPositionInList(0).getName(), expectedMedia.getName())
-                .validate(visible, inventoryDetailsSection.getMenuItemByPositionInList(0).getIncludedIcon())
-                .validate(not(visible), inventoryDetailsSection.getMenuItemByPositionInList(0).getExcludedIcon())
+                .validate(visible, detailsSection.getMenuItemByPositionInList(0).getName())
+                .validate(detailsSection.getMenuItemByPositionInList(0).getName(), expectedItemNames[0])
+                .validate(visible, detailsSection.getMenuItemByPositionInList(0).getIncludedIcon())
+                .validate(not(visible), detailsSection.getMenuItemByPositionInList(0).getExcludedIcon())
                 .testEnd();
     }
 
