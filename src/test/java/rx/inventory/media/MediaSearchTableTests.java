@@ -182,6 +182,7 @@ public class MediaSearchTableTests extends BaseTest {
                 .setValueWithClean(tableData.getSearch(), "A")
                 .clickEnterButton(tableData.getSearch())
                 .and("Select 10 row per page")
+                .scrollIntoView(tablePagination.getPageMenu())
                 .selectFromDropdown(tablePagination.getPageMenu(),
                         tablePagination.getRowNumbersList(), "10")
                 .waitLoading(visible, mediaPage.getTableProgressBar())

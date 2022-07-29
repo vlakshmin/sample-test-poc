@@ -139,8 +139,8 @@ public class AdSpotSortingTableTests extends BaseTest {
 
     @BeforeMethod
     private void login() {
-        var table = adSpotsPage.getAdSpotTable().getTableOptions();
-        var tableData = adSpotsPage.getAdSpotTable().getTableData();
+        var table = adSpotsPage.getAdSpotsTable().getTableOptions();
+        var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         testStart()
                 .given()
                 .openDirectPath(Path.AD_SPOT)
@@ -159,7 +159,7 @@ public class AdSpotSortingTableTests extends BaseTest {
 
     @Step("Sort column {0} by DESC")
     private void sortByDescColumnByName(ColumnNames columnName) {
-        var tableData = adSpotsPage.getAdSpotTable().getTableData();
+        var tableData = adSpotsPage.getAdSpotsTable().getTableData();
 
         testStart()
                 .given()
@@ -187,7 +187,7 @@ public class AdSpotSortingTableTests extends BaseTest {
 
     @Step("Sort column {0} by ASC")
     private void sortByAscColumnByName(ColumnNames columnName) {
-        var tableData = adSpotsPage.getAdSpotTable().getTableData();
+        var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         testStart()
                 .given()
                 .and(String.format("Sort column '%s'", columnName))
@@ -211,8 +211,8 @@ public class AdSpotSortingTableTests extends BaseTest {
 
     @Step("Validate data in column {0} sorted by {1}")
     private void validateSortData(ColumnNames columnName, String sortType, List<String> expectedResultList) {
-        var tableData = adSpotsPage.getAdSpotTable().getTableData();
-        var tablePagination = adSpotsPage.getAdSpotTable().getTablePagination();
+        var tableData = adSpotsPage.getAdSpotsTable().getTableData();
+        var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
 
         testStart()
                 .given()

@@ -50,7 +50,7 @@ public class AdSpotTest extends BaseTest {
 
     @Test
     public void createCustomAdSpotTest() {
-        var tableData = adspotsPage.getAdSpotTable().getTableData();
+        var tableData = adspotsPage.getAdSpotsTable().getTableData();
         String adSpotName = captionWithSuffix("AdSpot");
 
         AdSpot adSpot = AdSpotPrecondition.adSpot()

@@ -2,11 +2,13 @@ package api.preconditionbuilders;
 
 import api.core.client.HttpClient;
 import api.dto.GenericResponse;
+import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.adspot.AdSpot;
 import api.dto.rx.inventory.adspot.AdSpotRequest;
 import api.dto.rx.inventory.adspot.Video;
 import api.dto.rx.inventory.media.Media;
+import api.dto.rx.inventory.media.MediaRequest;
 import api.services.AdSpotService;
 import configurations.User;
 import io.restassured.response.Response;
@@ -77,6 +79,36 @@ public class AdSpotPrecondition {
             return this;
         }
 
+        public AdSpotPreconditionBuilder createNewAdSpot(String name, String publisherName, Boolean isEnabled) {
+            this.adSpotRequest = createAdSpotRequest(name, publisherName, isEnabled);
+            this.response = adSpotService.createAdSpot(adSpotRequest);
+            this.adSpotResponse = response.as(AdSpot.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
+        private AdSpotRequest createAdSpotRequest(String name, String publisherName, Boolean isEnabled) {
+            Publisher publisher = createPublisher(publisherName);
+            Media media = createMedia("autoMedia",publisher.getId());
+
+            return AdSpotRequest.builder()
+                    .name(name)
+                    .enabled(isEnabled)
+                    .publisherId(media.getPublisherId())
+                    .currency(Currency.JPY.name())
+                    .floorPrice(11.00)
+                    .mediaId(media.getId())
+                    .positionId(1)
+                    .coppa(true)
+                    .sizeIds(List.of(10))
+                    .floorPriceAutomated(true)
+                    .testMode(false)
+                    .categoryIds(List.of(1, 9))
+                    .video(createVideo())
+                    .build();
+        }
+
         private Media createMedia(){
 
             return MediaPrecondition.media()
@@ -85,6 +117,29 @@ public class AdSpotPrecondition {
                     .getMediaResponse();
         }
 
+        private Media createMedia(String name, Integer id){
+
+            return MediaPrecondition.media()
+                    .createNewMedia(name,id,true)
+                    .build()
+                    .getMediaResponse();
+        }
+
+        private Publisher createPublisher(){
+
+            return PublisherPrecondition.publisher()
+                    .createNewPublisher()
+                    .build()
+                    .getPublisherResponse();
+        }
+
+        private Publisher createPublisher(String name){
+
+            return PublisherPrecondition.publisher()
+                    .createNewPublisher(name)
+                    .build()
+                    .getPublisherResponse();
+        }
         private Video createVideo(){
 
             return  Video.builder()
