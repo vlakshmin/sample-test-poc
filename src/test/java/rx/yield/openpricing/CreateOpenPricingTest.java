@@ -1,7 +1,9 @@
 package rx.yield.openpricing;
 
+import api.dto.rx.device.Device;
 import api.dto.rx.inventory.media.Media;
 import api.dto.rx.yield.openpricing.OpenPricing;
+import api.preconditionbuilders.DevicePrecondition;
 import api.preconditionbuilders.MediaPrecondition;
 import api.preconditionbuilders.OpenPricingPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
@@ -18,6 +20,7 @@ import widgets.common.detailsmenu.menu.sections.DetailsSection;
 import widgets.common.multipane.Multipane;
 import widgets.common.multipane.MultipaneName;
 import widgets.common.table.ColumnNames;
+import widgets.common.table.TableData;
 import widgets.yield.openPricing.sidebar.CreateOpenPricingSidebar;
 
 import java.util.NoSuchElementException;
@@ -187,14 +190,31 @@ public class CreateOpenPricingTest extends BaseTest {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var inventoryDetailsSection = pricingTableDetailsMenu.getInventoryDetailsSection();
 
-        testStart()
-                .and("Hovering mouse cursor on 'Details' column in Pricing  Table")
-                .hoverMouseOnWebElement(tableData.getCellByPositionInTable(ColumnNames.DETAILS, 0))
-                .testEnd();
+        hoverMouseCursorOnDetailsIcon(tableData);
 
         var expectedMedia = getMediaById(newlyCreatedPricing.getRule().getMedia().getMedia().get(0)).getName();
 
         verifySelectionInDetailsMenuForTableItem(inventoryDetailsSection, expectedMedia);
+    }
+
+    @Test(priority = 13, dependsOnMethods = {"saveOpenPricingTest", "getNewlyCreatedPricingByApi"} )
+    @Step("Verify 'Inventory' Items in Details' menu in Pricing in table")
+    public void checkDeviceMenuDetailsTest() {
+        var tableData = openPricingPage.getOpenPricingTable().getTableData();
+        var deviceDetailsSection = pricingTableDetailsMenu.getDeviceDetailsSection();
+
+        hoverMouseCursorOnDetailsIcon(tableData);
+
+        var expectedDeice = getDeviceFromDeviceList(0).getName();
+
+        verifySelectionInDetailsMenuForTableItem(deviceDetailsSection, expectedDeice);
+    }
+
+    private void hoverMouseCursorOnDetailsIcon(TableData tableData){
+        testStart()
+                .and("Hovering mouse cursor on 'Details' column in Pricing Table")
+                .hoverMouseOnWebElement(tableData.getCellByPositionInTable(ColumnNames.DETAILS, 0))
+                .testEnd();
     }
 
     private void verifySelectionInDetailsMenuForTableItem(DetailsSection detailsSection, String ... expectedItemNames){
@@ -264,5 +284,15 @@ public class CreateOpenPricingTest extends BaseTest {
                 .getMediaById(mediaId)
                 .build()
                 .getMediaResponse();
+    }
+
+    private Device getDeviceFromDeviceList(int devicePosition) {
+
+        return DevicePrecondition.openPricing()
+                .getDeviceLList()
+                .build()
+                .getDeviceGetAllResponse()
+                .getItems()
+                .get(0);
     }
 }
