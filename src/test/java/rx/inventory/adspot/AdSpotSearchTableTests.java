@@ -55,27 +55,27 @@ public class AdSpotSearchTableTests extends BaseTest {
         adSpotIds = new ArrayList<>();
         publishersIds = new ArrayList<>();
 
-        AdSpot adSpot = createCustomAdSpot("adspot_auto","pub_auto", true);
+        AdSpot adSpot = createCustomAdSpot("adspot_auto", "pub_auto", true);
         adSpotIds.add(adSpot.getId());
         publishersIds.add(adSpot.getPublisherId());
 
-        adSpot =createCustomAdSpot(AD_SPOT_NAME,  PUB_NAME, true);
+        adSpot = createCustomAdSpot(AD_SPOT_NAME, PUB_NAME, true);
         adSpotIds.add(adSpot.getId());
         publishersIds.add(adSpot.getPublisherId());
 
-        adSpot = createCustomAdSpot(FILTER_SEARCH + "2",FILTER_SEARCH + "2", true);
+        adSpot = createCustomAdSpot(FILTER_SEARCH + "2", FILTER_SEARCH + "2", true);
         adSpotIds.add(adSpot.getId());
         publishersIds.add(adSpot.getPublisherId());
 
-        adSpot = createCustomAdSpot(FILTER_SEARCH + "3",FILTER_SEARCH + "3", true);
+        adSpot = createCustomAdSpot(FILTER_SEARCH + "3", FILTER_SEARCH + "3", true);
         adSpotIds.add(adSpot.getId());
         publishersIds.add(adSpot.getPublisherId());
 
-        adSpot = createCustomAdSpot(FILTER_SEARCH + "4",FILTER_SEARCH + "5", false);
+        adSpot = createCustomAdSpot(FILTER_SEARCH + "4", FILTER_SEARCH + "5", false);
         adSpotIds.add(adSpot.getId());
         publishersIds.add(adSpot.getPublisherId());
 
-        adSpot = createCustomAdSpot(FILTER_SEARCH + "5",  FILTER_SEARCH + "5", false);
+        adSpot = createCustomAdSpot(FILTER_SEARCH + "5", FILTER_SEARCH + "5", false);
         adSpotIds.add(adSpot.getId());
         publishersIds.add(adSpot.getPublisherId());
 

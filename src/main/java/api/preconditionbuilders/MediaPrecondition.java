@@ -124,6 +124,17 @@ public class MediaPrecondition {
             return this;
         }
 
+//        public MediaPrecondition.MediaPreconditionBuilder changeMediaStatus(int id, Boolean isEnabled) {
+//            this.response = mediaService.getMedia(id);
+//            this.publisherResponse = this.response.as(Publisher.class);
+//
+//            this.publisherResponse.setIsEnabled(isEnabled);
+//
+//            this.response = publisherService.updatePublisher(this.publisherResponse);
+//            this.responseCode = response.getStatusCode();
+//
+//            return this;
+//        }
         public MediaPrecondition build() {
             HttpClient.setCredentials(User.TEST_USER);
 

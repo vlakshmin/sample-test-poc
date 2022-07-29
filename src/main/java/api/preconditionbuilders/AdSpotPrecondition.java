@@ -88,8 +88,38 @@ public class AdSpotPrecondition {
             return this;
         }
 
+        public AdSpotPreconditionBuilder createNewAdSpot(String name, Boolean isEnabled) {
+            this.adSpotRequest = createAdSpotRequest(name, isEnabled);
+            this.response = adSpotService.createAdSpot(adSpotRequest);
+            this.adSpotResponse = response.as(AdSpot.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
         private AdSpotRequest createAdSpotRequest(String name, String publisherName, Boolean isEnabled) {
             Publisher publisher = createPublisher(publisherName);
+            Media media = createMedia("autoMedia",publisher.getId());
+
+            return AdSpotRequest.builder()
+                    .name(name)
+                    .enabled(isEnabled)
+                    .publisherId(media.getPublisherId())
+                    .currency(Currency.JPY.name())
+                    .floorPrice(11.00)
+                    .mediaId(media.getId())
+                    .positionId(1)
+                    .coppa(true)
+                    .sizeIds(List.of(10))
+                    .floorPriceAutomated(true)
+                    .testMode(false)
+                    .categoryIds(List.of(1, 9))
+                    .video(createVideo())
+                    .build();
+        }
+
+        private AdSpotRequest createAdSpotRequest(String name, Boolean isEnabled) {
+            Publisher publisher = createPublisher("autoPub");
             Media media = createMedia("autoMedia",publisher.getId());
 
             return AdSpotRequest.builder()
