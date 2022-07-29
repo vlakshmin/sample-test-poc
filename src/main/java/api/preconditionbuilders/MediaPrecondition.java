@@ -132,17 +132,33 @@ public class MediaPrecondition {
             return this;
         }
 
-//        public MediaPrecondition.MediaPreconditionBuilder changeMediaStatus(int id, Boolean isEnabled) {
-//            this.response = mediaService.getMedia(id);
-//            this.publisherResponse = this.response.as(Publisher.class);
-//
-//            this.publisherResponse.setIsEnabled(isEnabled);
-//
-//            this.response = publisherService.updatePublisher(this.publisherResponse);
-//            this.responseCode = response.getStatusCode();
-//
-//            return this;
-//        }
+        public MediaPrecondition.MediaPreconditionBuilder updateMedia(Media media) {
+
+            var updateMediaRequest = Media.builder()
+                    .name(media.getName())
+                    .publisherId(media.getPublisherId())
+                    .platformId(media.getPlatformId())
+                    .url(media.getUrl())
+                    .isEnabled(media.getIsEnabled())
+                    .categoryIds(media.getCategoryIds())
+                    .build();
+            this.response = mediaService.updateMedia(updateMediaRequest);
+            this.responseCode = response.getStatusCode();
+            this.mediaResponse = response.as(Media.class);
+
+            return this;
+        }
+        public MediaPrecondition.MediaPreconditionBuilder changeMediaStatus(int id, Boolean isEnabled) {
+            this.response = mediaService.getMediaById(id);
+            this.mediaResponse = this.response.as(Media.class);
+
+            this.mediaResponse.setIsEnabled(isEnabled);
+
+            this.response = mediaService.updateMedia(this.mediaResponse);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
         public MediaPrecondition build() {
             HttpClient.setCredentials(User.TEST_USER);
 

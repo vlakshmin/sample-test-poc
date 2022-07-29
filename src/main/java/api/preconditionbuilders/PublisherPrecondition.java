@@ -173,7 +173,5 @@ public class PublisherPrecondition {
 
             return this;
         }
-
-
     }
 }

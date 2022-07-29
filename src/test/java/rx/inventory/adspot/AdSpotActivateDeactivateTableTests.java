@@ -371,7 +371,7 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
     }
 
     private void deactivateMedia(Integer id) {
-       // media().changeMediaStatus(id, false);
+        media().changeMediaStatus(id, false);
     }
 
     private void deletePublishers() {

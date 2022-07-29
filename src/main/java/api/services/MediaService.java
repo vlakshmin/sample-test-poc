@@ -1,5 +1,7 @@
 package api.services;
 
+import api.dto.rx.admin.publisher.Publisher;
+import api.dto.rx.inventory.media.Media;
 import api.dto.rx.inventory.media.MediaRequest;
 import io.restassured.response.Response;
 
@@ -40,5 +42,10 @@ public class MediaService extends BaseService {
         return delete(URL);
     }
 
+    public Response updateMedia(Media media) {
+        URL = initURL(UPDATE_MEDIA.setParameters(media.getId()));
+
+        return put(URL, media.toJson());
+    }
 
 }
