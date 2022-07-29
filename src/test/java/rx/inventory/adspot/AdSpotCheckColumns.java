@@ -23,7 +23,7 @@ public class AdSpotCheckColumns extends BaseTest {
     private AdSpotsPage adSpotsPage;
 
     @BeforeClass
-    private void initTestData(){
+    private void login(){
           adSpotsPage = new AdSpotsPage();
 
         testStart()
