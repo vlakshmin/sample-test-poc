@@ -100,8 +100,6 @@ public class AdSpotCheckColumns extends BaseTest {
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.DEFAULT_FLOOR_PRICE.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.CREATED_DATE.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.UPDATED_BY.getName()))
-                .and("Click on 'Table Options' button")
-                .clickOnWebElement(table.getTableOptionsBtn())
                 .testEnd();
     }
 
