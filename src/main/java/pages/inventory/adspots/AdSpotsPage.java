@@ -23,5 +23,4 @@ public class AdSpotsPage extends BasePage {
     private ElementsCollection adSpotsItems = $$x(ADSPOT_ITEMS.getSelector()).as(ADSPOT_ITEMS.getAlias());
     private SelenideElement createAdSpotButton = $x(CREATE_ADSPOT_BUTTON.getSelector()).as(CREATE_ADSPOT_BUTTON.getAlias());
     private Table adSpotsTable = new Table();
-
 }
