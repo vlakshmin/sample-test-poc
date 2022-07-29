@@ -10,6 +10,7 @@ import api.dto.rx.inventory.adspot.AdSpotRequest;
 import api.dto.rx.inventory.media.Media;
 import api.services.OpenPricingService;
 import configurations.User;
+import io.restassured.common.mapper.TypeRef;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -128,7 +129,8 @@ public class OpenPricingPrecondition {
         public OpenPricingPreconditionBuilder getOpenPricingList() {
             this.response = openPricingService.getAll();
 
-            this.openPricingGetAllResponse = this.response.as(new GenericResponse<OpenPricing>().getClass());
+            this.openPricingGetAllResponse = this.response.as(new TypeRef<GenericResponse<OpenPricing>>() {});
+            //new TypeRef<List<Person>>() {}
             this.responseCode = response.getStatusCode();
 
             return this;
