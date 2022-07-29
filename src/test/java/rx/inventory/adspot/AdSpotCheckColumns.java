@@ -55,6 +55,7 @@ public class AdSpotCheckColumns extends BaseTest {
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.DEFAULT_FLOOR_PRICE))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.UPDATED_BY))
+                .scrollIntoView(table.getTableOptionsBtn())
                 .clickOnWebElement(table.getTableOptionsBtn())
                 .then("All columns should be shown")
                 .validateListSize((ElementsCollection) tableData.getColumns(),
@@ -72,6 +73,7 @@ public class AdSpotCheckColumns extends BaseTest {
                         ColumnNames.CREATED_DATE.getName(),
                         ColumnNames.UPDATED_BY.getName())
                 .and("Hide all columns")
+                .scrollIntoView(table.getTableOptionsBtn())
                 .clickOnWebElement(table.getTableOptionsBtn())
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.ID))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.DETAILS))

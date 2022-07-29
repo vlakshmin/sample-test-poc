@@ -13,9 +13,8 @@
             <class name="rx.inventory.media.MediaActivateDeactivateTableTests"/>
             <class name="rx.inventory.media.MediaSearchTableTests"/>
             <class name="rx.inventory.media.MediaSortingTableTests"/>
-            <class name="rx.inventory.adspot.AdSpotSortingTableTests"/>
+            <class name="rx.inventory.adspot.AdSpotSortingTableTests"/>-->
             <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
-            <class name="rx.pipelines.DeleteTestData"/> -->
             <class name="rx.inventory.adspot.AdSpotCheckColumns"/>
         </classes>
     </test>
