@@ -2,7 +2,6 @@ package rx.inventory.adspot;
 
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.inventory.adspot.AdSpot;
-import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
@@ -25,6 +24,7 @@ import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
 import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
+import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
@@ -49,10 +49,12 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
     private AdSpot adSpotActiveWithInactivePublisher;
     private AdSpot AdSpotInActiveWithInactivePublisher;
     private AdSpot adSpotActiveWithInactiveMedia;
+    private AdSpot adSpotInActiveWithInactiveMedia;
 
     private AdSpotsPage adSpotsPage;
 
-    private static final String PREFIX_AD_SPOT = "autoAdSpotSingle";
+    private static final String PREFIX_AD_SPOT = "autoAdSpotSingleActive";
+    private static final String PREFIX_AD_SPOT_INACTIVE = "autoAdSpotSingleInactive";
     private static final String PREFIX_AD_SPOT_INACTIVE_PUBLISHER = "autoAdSpotInactivePub";
     private static final String PREFIX_AD_SPOT_INACTIVE_MEDIA = "autoAdSpotInactiveMedia";
     private static final String PREFIX_AD_SPOT_BULK_1 = "autoAdSpotBulk1";
@@ -69,8 +71,9 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
 
         //Creating media Using API
         adSpotActive1 = createAdSpot(PREFIX_AD_SPOT, true);
-        adSpotInActive1 = createAdSpot(PREFIX_AD_SPOT, false);
-
+        adSpotInActive1 = createAdSpot(PREFIX_AD_SPOT_INACTIVE, false);
+        adSpotActiveWithInactiveMedia = createAdSpot(PREFIX_AD_SPOT_INACTIVE_MEDIA, true);
+        adSpotInActiveWithInactiveMedia = createAdSpot(PREFIX_AD_SPOT_INACTIVE_MEDIA, false);
 
         adSpotActiveBulkA1 = createAdSpot(PREFIX_AD_SPOT_BULK_1, true);
         adSpotActiveBulkA2 = createAdSpot(PREFIX_AD_SPOT_BULK_1, true);
@@ -119,9 +122,51 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .and("Click 'Deactivate' button")
                 .clickOnWebElement(adSpotsPage.getDeactivateAdSpotButton())
                 .then("Validate media status should be changed on 'Inactive'")
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.AD_SPOT_NAME, adSpotActive1.getName()),
                         Statuses.INACTIVE.getStatus())
+                .testEnd();
+    }
+
+    @Test(testName = "Deactivate single ad spot with inactive media")
+    public void deactivateSingleAdSpotWithInactiveMedia() {
+        var tableData = adSpotsPage.getAdSpotsTable().getTableData();
+        var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
+
+        testStart()
+                .given()
+                .and(String.format("Search ad spot by name '%s'", adSpotActiveWithInactiveMedia.getName()))
+                .setValueWithClean(tableData.getSearch(), adSpotActiveWithInactiveMedia.getName())
+                .clickEnterButton(tableData.getSearch())
+                .validateContainsText(tablePagination.getPaginationPanel(), "1-1 of 1")
+                .selectAllRowsByColumnCellValue(tableData, ColumnNames.AD_SPOT_NAME, adSpotActiveWithInactiveMedia.getName())
+                .and("Click 'Deactivate' button")
+                .clickOnWebElement(adSpotsPage.getDeactivateAdSpotButton())
+                .then("Validate media status should be changed on 'Inactive'")
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
+                                ColumnNames.AD_SPOT_NAME, adSpotActiveWithInactiveMedia.getName()),
+                        Statuses.INACTIVE.getStatus())
+                .testEnd();
+    }
+
+    @Test(testName = "Activate single ad spot with inactive media")
+    public void activateSingleAdSpotWithInactiveMedia() {
+        var tableData = adSpotsPage.getAdSpotsTable().getTableData();
+        var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
+
+        testStart()
+                .given()
+                .and(String.format("Search ad spot by name '%s'", adSpotInActiveWithInactiveMedia.getName()))
+                .setValueWithClean(tableData.getSearch(), adSpotInActiveWithInactiveMedia.getName())
+                .clickEnterButton(tableData.getSearch())
+                .validateContainsText(tablePagination.getPaginationPanel(), "1-1 of 1")
+                .selectAllRowsByColumnCellValue(tableData, ColumnNames.AD_SPOT_NAME, adSpotInActiveWithInactiveMedia.getName())
+                .and("Click 'Activate' button")
+                .clickOnWebElement(adSpotsPage.getActivateAdSpotButton())
+                .then("Validate media status should be changed on 'Inactive'")
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
+                                ColumnNames.AD_SPOT_NAME, adSpotInActiveWithInactiveMedia.getName()),
+                        Statuses.ACTIVE.getStatus())
                 .testEnd();
     }
 
@@ -152,7 +197,7 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .and("Close toaster message")
                 .clickOnWebElement(toasterPanel.getRemoveIcon())
                 .then("Validate ad spot status should not be changed on 'Inactive'")
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.AD_SPOT_NAME, adSpotActiveWithInactivePublisher.getName()),
                         Statuses.ACTIVE.getStatus())
                 .testEnd();
@@ -183,7 +228,7 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .and("Close toaster message")
                 .clickOnWebElement(toasterPanel.getRemoveIcon())
                 .then("Validate ad spot status should not be changed on 'Active'")
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.AD_SPOT_NAME,
                                 AdSpotInActiveWithInactivePublisher.getName()),
                         Statuses.INACTIVE.getStatus())
@@ -209,7 +254,7 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .then("Validate ad spot status should be changed on 'Active'")
                 .waitAndValidate(disappear, adSpotsPage.getTableProgressBar())
                 .and(String.format("Search ad spot by name '%s'", adSpotInActive1))
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.AD_SPOT_NAME, adSpotInActive1.getName()),
                         Statuses.ACTIVE.getStatus())
                 .testEnd();
@@ -234,22 +279,22 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .then("Validate ad spots status should be changed on 'Active'")
                 .waitAndValidate(visible, tableData.getCheckbox(1)
                         .shouldHave(attributeMatching("class", CLASS_ATTRIBUTE_FOR_UNCHECKED_CHECKBOX)))
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.AD_SPOT_NAME, adSpotInActiveBulkA1.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.AD_SPOT_NAME, adSpotInActiveBulkA2.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.AD_SPOT_NAME, adSpotInActiveBulkA3.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.AD_SPOT_NAME, adSpotActiveBulkA1.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.AD_SPOT_NAME, adSpotActiveBulkA2.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.AD_SPOT_NAME, adSpotActiveBulkA3.getName()),
                         Statuses.ACTIVE.getStatus())
                 .validate(not(exist), adSpotsPage.getToasterMessage().getPanelError())
@@ -275,22 +320,22 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .then("Validate ad spots status should be changed on 'Inactive'")
                 .waitAndValidate(visible, tableData.getCheckbox(1)
                         .shouldHave(attributeMatching("class", CLASS_ATTRIBUTE_FOR_UNCHECKED_CHECKBOX)))
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.AD_SPOT_NAME, adSpotInActiveBulkD1.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.AD_SPOT_NAME, adSpotInActiveBulkD2.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.AD_SPOT_NAME, adSpotInActiveBulkD3.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.AD_SPOT_NAME, adSpotActiveBulkD1.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.AD_SPOT_NAME, adSpotActiveBulkD2.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.AD_SPOT_NAME, adSpotActiveBulkD3.getName()),
                         Statuses.ACTIVE.getStatus())
                 .validate(not(exist), adSpotsPage.getToasterMessage().getPanelError())
@@ -389,7 +434,7 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
 
 
         return adSpot()
-                .createNewAdSpot(name, isEnabled)
+                .createNewAdSpot(captionWithSuffix(name), isEnabled)
                 .build()
                 .getAdSpotResponse();
     }
