@@ -20,7 +20,7 @@ import static pages.inventory.media.MediaPageElements.DEACTIVATE_MEDIA_BUTTON;
 @Getter
 public class AdSpotsPage extends BasePage {
 
-    @Getter(AccessLevel.NONE)
+//    @Getter(AccessLevel.NONE)
     private SelenideElement pageTitle = $x(ADSPOTS_PAGE_TITLE.getSelector()).as(ADSPOTS_PAGE_TITLE.getAlias());
     private ElementsCollection adSpotsItems = $$x(ADSPOT_ITEMS.getSelector()).as(ADSPOT_ITEMS.getAlias());
     private SelenideElement createAdSpotButton = $x(CREATE_ADSPOT_BUTTON.getSelector()).as(CREATE_ADSPOT_BUTTON.getAlias());
