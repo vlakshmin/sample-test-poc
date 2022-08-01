@@ -130,7 +130,6 @@ public class OpenPricingPrecondition {
             this.response = openPricingService.getAll();
 
             this.openPricingGetAllResponse = this.response.as(new TypeRef<GenericResponse<OpenPricing>>() {});
-            //new TypeRef<List<Person>>() {}
             this.responseCode = response.getStatusCode();
 
             return this;

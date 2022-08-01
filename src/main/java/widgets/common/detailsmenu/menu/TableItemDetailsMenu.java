@@ -9,6 +9,7 @@ import static widgets.common.detailsmenu.DetailsSectionName.*;
 public class TableItemDetailsMenu {
 
     private DetailsSection geoDetailsSection = new DetailsSection(GEO);
+    private DetailsSection deviceDetailsSection = new DetailsSection(DEVICE);
     private DetailsSection adSizeDetailsSection = new DetailsSection(AD_SIZE);
     private DetailsSection adFormatDetailsSection = new DetailsSection(AD_FORMAT);
     private DetailsSection inventoryDetailsSection = new DetailsSection(INVENTORY);
