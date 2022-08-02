@@ -142,26 +142,24 @@ public class DeleteTestData {
         Map<String, Object> queryParams = new HashMap();
         queryParams.put("search", PREFIX_ADSPOTS);
         queryParams.put("sort", "id-desc");
-        var adSpotsList = AdSpotPrecondition.adSpot()
+
+        return AdSpotPrecondition.adSpot()
                 .getAdSpotsWithFilter(queryParams)
                 .build()
                 .getAdSpotsGetAllResponse()
                 .getItems();
-
-        return ObjectMapperUtils.getCollectionType(adSpotsList, AdSpot.class);
     }
 
     private List<OpenPricing> getAllPricingByParams() {
         Map<String, Object> queryParams = new HashMap();
         queryParams.put("search", PREFIX_OPEN_PRICING);
         queryParams.put("sort", "id-desc");
-        var pricingList = OpenPricingPrecondition.openPricing()
+
+        return OpenPricingPrecondition.openPricing()
                 .getOpenPricingWithFilter(queryParams)
                 .build()
                 .getOpenPricingGetAllResponse()
                 .getItems();
-
-        return ObjectMapperUtils.getCollectionType(pricingList, OpenPricing.class);
     }
 
     private List<Protection> getAllProtectionsByParams() {
