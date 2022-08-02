@@ -3,7 +3,6 @@ package api.preconditionbuilders;
 import api.core.client.HttpClient;
 import api.dto.GenericResponse;
 import api.dto.rx.admin.publisher.Publisher;
-import api.dto.rx.admin.user.UserDto;
 import api.dto.rx.inventory.media.Media;
 import api.dto.rx.inventory.media.MediaRequest;
 import api.services.MediaService;
@@ -107,7 +106,7 @@ public class MediaPrecondition {
 
         public MediaPreconditionBuilder getAllMediaList() {
             this.response = mediaService.getAll();
-            this.mediaGetAllResponse = this.response.as(new GenericResponse<Media>().getClass());
+            this.mediaGetAllResponse = this.response.as(new TypeRef<GenericResponse<Media>>() {});
             this.responseCode = response.getStatusCode();
 
             return this;

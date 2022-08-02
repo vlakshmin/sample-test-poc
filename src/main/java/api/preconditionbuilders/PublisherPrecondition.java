@@ -110,7 +110,7 @@ public class PublisherPrecondition {
         public PublisherPreconditionBuilder getPublishersList() {
             this.response = publisherService.getAll();
 
-            this.publisherGetAllResponse = this.response.as(new GenericResponse<Publisher>().getClass());
+            this.publisherGetAllResponse = this.response.as(new TypeRef<GenericResponse<Publisher>> () {});
             this.responseCode = response.getStatusCode();
 
             return this;

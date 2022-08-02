@@ -1,10 +1,7 @@
 package rx.inventory.media;
 
 import api.dto.rx.admin.publisher.Publisher;
-import api.dto.rx.admin.publisher.PublisherRequest;
-import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.media.Media;
-import api.dto.rx.inventory.media.MediaRequest;
 import api.preconditionbuilders.MediaPrecondition;
 import api.preconditionbuilders.PublisherPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
@@ -15,7 +12,6 @@ import pages.inventory.media.MediaPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.Statuses;
-import zutils.ObjectMapperUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,27 +24,26 @@ import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
 import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
-import static zutils.FakerUtils.*;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
 public class MediaSearchTableTests extends BaseTest {
 
     private Publisher publisher;
-    private static final String MEDIA_NAME = "SS1";
-    private static final String PUB_NAME = "SSS2";
-    private static final String FILTER_SEARCH = "RpT5";
-    private List<String> mediaNamesByAsc;
-    private List<String> publishersByAsc;
+    private MediaPage mediaPage;
     private List<String> searchByA;
+    private List<String> searchBoth;
     private List<String> searchActive;
     private List<String> searchInactive;
-    private List<String> searchBoth;
-
-    private MediaPage mediaPage;
+    private List<String> mediaNamesByAsc;
+    private List<String> publishersByAsc;
 
     private List<Integer> mediaIds;
     private List<Integer> publishersIds;
+
+    private static final String PUB_NAME = "SSS2";
+    private static final String MEDIA_NAME = "SS1";
+    private static final String FILTER_SEARCH = "RpT5";
 
     public MediaSearchTableTests() {
         mediaPage = new MediaPage();
@@ -59,23 +54,23 @@ public class MediaSearchTableTests extends BaseTest {
         mediaIds = new ArrayList<>();
         publishersIds = new ArrayList<>();
 
-        Media media = createCustomMedia("media",true,"pub");
+        Media media = createCustomMedia("media", true, "pub");
         mediaIds.add(media.getId());
         publishersIds.add(media.getPublisherId());
 
-        media =createCustomMedia(MEDIA_NAME, true, PUB_NAME);
+        media = createCustomMedia(MEDIA_NAME, true, PUB_NAME);
         mediaIds.add(media.getId());
         publishersIds.add(media.getPublisherId());
 
-        media = createCustomMedia(FILTER_SEARCH + "2",true,FILTER_SEARCH + "2");
+        media = createCustomMedia(FILTER_SEARCH + "2", true, FILTER_SEARCH + "2");
         mediaIds.add(media.getId());
         publishersIds.add(media.getPublisherId());
 
-        media = createCustomMedia(FILTER_SEARCH + "3",true,FILTER_SEARCH + "3");
+        media = createCustomMedia(FILTER_SEARCH + "3", true, FILTER_SEARCH + "3");
         mediaIds.add(media.getId());
         publishersIds.add(media.getPublisherId());
 
-        media = createCustomMedia(FILTER_SEARCH + "4",false,FILTER_SEARCH + "5");
+        media = createCustomMedia(FILTER_SEARCH + "4", false, FILTER_SEARCH + "5");
         mediaIds.add(media.getId());
         publishersIds.add(media.getPublisherId());
 
@@ -189,7 +184,7 @@ public class MediaSearchTableTests extends BaseTest {
                 .then(String.format("Validate that text in table footer '1-10 of %s'", searchByA.size()))
                 .and("Sort column 'Media Name'")
                 .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
-                .then(String.format("Validate data in column 'Media Name' should contain 'A'"))
+                .then("Validate data in column 'Media Name' should contain 'A'")
                 .validateAttribute(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()),
                         "aria-sort", "ascending")
                 .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME), searchByA.subList(0, 10))
@@ -211,7 +206,6 @@ public class MediaSearchTableTests extends BaseTest {
     public void mediaSearchWithFilterByStatus() {
         var tableData = mediaPage.getMediaTable().getTableData();
         var tableOptions = mediaPage.getMediaTable().getTableOptions();
-        var tablePagination = mediaPage.getMediaTable().getTablePagination();
 
         testStart()
                 .given()
@@ -279,17 +273,16 @@ public class MediaSearchTableTests extends BaseTest {
     }
 
     private List<Media> getAllItemsByParams(String strParams, Boolean isEnabled) {
-        Map<String, Object> queryParams = new HashMap();
+        Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("search", strParams);
         queryParams.put("sort", "name-asc");
         if (isEnabled != null) queryParams.put("enabled", isEnabled);
-        List<Media> mediaList = MediaPrecondition.media()
+
+        return MediaPrecondition.media()
                 .getMediaWithFilter(queryParams)
                 .build()
                 .getMediaGetAllResponse()
                 .getItems();
-
-        return ObjectMapperUtils.getCollectionType(mediaList, Media.class);
     }
 
 }

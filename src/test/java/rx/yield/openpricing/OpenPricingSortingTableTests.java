@@ -534,15 +534,14 @@ public class OpenPricingSortingTableTests extends BaseTest {
     }
 
     private List<OpenPricing> getAllItemsByParams(String strParams) {
-        HashMap<String, Object> queryParams = new HashMap();
+        HashMap<String, Object> queryParams = new HashMap<>();
         queryParams.put("sort", strParams);
-        List<OpenPricing> openPricingList = OpenPricingPrecondition.openPricing()
+
+        return OpenPricingPrecondition.openPricing()
                 .getOpenPricingWithFilter(queryParams)
                 .build()
                 .getOpenPricingGetAllResponse()
                 .getItems();
-
-        return ObjectMapperUtils.getCollectionType(openPricingList, OpenPricing.class);
     }
 
     private String customFormat(Double value) {
