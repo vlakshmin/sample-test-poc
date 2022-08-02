@@ -10,7 +10,7 @@ import api.preconditionbuilders.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
-import zutils.ObjectMapperUtils;
+import rx.BaseTest;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,13 +19,7 @@ import java.util.Map;
 import static configurations.User.USER_FOR_DELETION;
 
 @Slf4j
-public class DeleteTestData {
-    private List<Media> media;
-    private List<UserDto> users;
-    private List<AdSpot> adSpots;
-    private List<Publisher> publishers;
-    private List<Protection> protections;
-    private List<OpenPricing> openPricing;
+public class DeleteGeneratedDataTest extends BaseTest {
 
     private static final String PREFIX_MEDIA = "auto";
     private static final String PREFIX_ADSPOTS = "auto";
@@ -34,10 +28,9 @@ public class DeleteTestData {
     private static final String PREFIX_USERS = "Test Account";
     private static final String PREFIX_PROTECTIONS = "api protection";
 
-
     @Test(priority = 1)
     public void deleteProtections() {
-        protections = getAllProtectionsByParams();
+        var protections = getAllProtectionsByParams();
         int deleted = 0;
         for (Protection pr : protections) {
             if (ProtectionsPrecondition.protection()
@@ -52,10 +45,10 @@ public class DeleteTestData {
 
     @Test(priority = 2)
     public void deleteAdSpots() {
-        adSpots = getAllAdSpotsByParams();
+        var adSpots = getAllAdSpotsByParams();
         int deleted = 0;
         for (AdSpot as : adSpots) {
-            if ( AdSpotPrecondition.adSpot()
+            if (AdSpotPrecondition.adSpot()
                     .setCredentials(USER_FOR_DELETION)
                     .deleteAdSpot(as.getId())
                     .build()
@@ -67,7 +60,7 @@ public class DeleteTestData {
 
     @Test(priority = 3)
     public void deleteMedia() {
-        media = getAllMediaByParams();
+        var media = getAllMediaByParams();
         int deleted = 0;
         for (Media m : media) {
             if (MediaPrecondition.media().
@@ -82,7 +75,7 @@ public class DeleteTestData {
 
     @Test(priority = 4)
     public void deleteOpenPricing() {
-        openPricing = getAllPricingByParams();
+        var openPricing = getAllPricingByParams();
         int deleted = 0;
         for (OpenPricing p : openPricing) {
             if (OpenPricingPrecondition.openPricing()
@@ -97,7 +90,7 @@ public class DeleteTestData {
 
     @Test(priority = 5)
     public void deletePublishers() {
-        publishers = getAllPublishersByParams();
+        var publishers = getAllPublishersByParams();
         int deleted = 0;
         for (Publisher p : publishers) {
             if (PublisherPrecondition.publisher()
@@ -112,7 +105,7 @@ public class DeleteTestData {
 
     @Test(priority = 6)
     public void deleteUsers() {
-        users = getAllUsersByParams();
+        var users = getAllUsersByParams();
         int deleted = 0;
         for (UserDto user : users) {
             if (UsersPrecondition.user()
@@ -126,20 +119,19 @@ public class DeleteTestData {
     }
 
     private List<Media> getAllMediaByParams() {
-        Map<String, Object> queryParams = new HashMap();
+        Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("search", PREFIX_MEDIA);
         queryParams.put("sort", "id-desc");
-        var mediaList = MediaPrecondition.media()
+
+        return MediaPrecondition.media()
                 .getMediaWithFilter(queryParams)
                 .build()
                 .getMediaGetAllResponse()
                 .getItems();
-
-        return ObjectMapperUtils.getCollectionType(mediaList, Media.class);
     }
 
     private List<AdSpot> getAllAdSpotsByParams() {
-        Map<String, Object> queryParams = new HashMap();
+        Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("search", PREFIX_ADSPOTS);
         queryParams.put("sort", "id-desc");
 
@@ -151,7 +143,7 @@ public class DeleteTestData {
     }
 
     private List<OpenPricing> getAllPricingByParams() {
-        Map<String, Object> queryParams = new HashMap();
+        Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("search", PREFIX_OPEN_PRICING);
         queryParams.put("sort", "id-desc");
 
@@ -163,41 +155,38 @@ public class DeleteTestData {
     }
 
     private List<Protection> getAllProtectionsByParams() {
-        Map<String, Object> queryParams = new HashMap();
+        Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("search", PREFIX_PROTECTIONS);
         queryParams.put("sort", "id-desc");
-        var protectionsList = ProtectionsPrecondition.protection()
+
+        return ProtectionsPrecondition.protection()
                 .getProtectionsWithFilter(queryParams)
                 .build()
                 .getProtectionsGetAllResponse()
                 .getItems();
-
-        return ObjectMapperUtils.getCollectionType(protectionsList, Protection.class);
     }
 
     private List<Publisher> getAllPublishersByParams() {
-        Map<String, Object> queryParams = new HashMap();
+        Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("search", PREFIX_PUBLISHERS);
         queryParams.put("sort", "id-desc");
-        var publishersList = PublisherPrecondition.publisher()
+
+        return PublisherPrecondition.publisher()
                 .getPublisherWithFilter(queryParams)
                 .build()
                 .getPublisherGetAllResponse()
                 .getItems();
-
-        return ObjectMapperUtils.getCollectionType(publishersList, Publisher.class);
     }
 
     private List<UserDto> getAllUsersByParams() {
-        Map<String, Object> queryParams = new HashMap();
+        Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("search", PREFIX_USERS);
         queryParams.put("sort", "id-desc");
-        var usersList = UsersPrecondition.user()
+
+        return UsersPrecondition.user()
                 .getUsersWithFilter(queryParams)
                 .build()
                 .getUserGetAllResponse()
                 .getItems();
-
-        return ObjectMapperUtils.getCollectionType(usersList, UserDto.class);
     }
 }
