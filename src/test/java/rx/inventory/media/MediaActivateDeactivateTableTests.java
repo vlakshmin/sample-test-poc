@@ -321,13 +321,12 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
     private List<Publisher> getAllPublishersItemsByParams(String strParams) {
         Map<String, Object> queryParams = new HashMap();
         queryParams.put("search", strParams);
-        var publisherList = publisher()
+
+        return publisher()
                 .getPublisherWithFilter(queryParams)
                 .build()
                 .getPublisherGetAllResponse()
                 .getItems();
-
-        return ObjectMapperUtils.getCollectionType(publisherList, Publisher.class);
     }
 
     @AfterMethod
