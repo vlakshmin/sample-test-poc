@@ -12,7 +12,7 @@ import zutils.ObjectMapperUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Os {
+public class OperatingSystem {
 
     private Integer id;
     private String name;

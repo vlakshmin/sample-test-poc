@@ -2,8 +2,7 @@ package api.preconditionbuilders;
 
 import api.core.client.HttpClient;
 import api.dto.GenericResponse;
-import api.dto.rx.device.Device;
-import api.dto.rx.os.Os;
+import api.dto.rx.os.OperatingSystem;
 import api.services.OperatingSystemService;
 import configurations.User;
 import io.restassured.common.mapper.TypeRef;
@@ -18,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 public class OperatingSystemPrecondition {
 
     private Integer responseCode;
-    private GenericResponse<Os> operatingSystemGetAllResponse;
+    private GenericResponse<OperatingSystem> operatingSystemGetAllResponse;
 
     private OperatingSystemPrecondition(OperatingSystemPreconditionBuilder builder) {
         this.responseCode = builder.responseCode;
@@ -34,7 +33,7 @@ public class OperatingSystemPrecondition {
 
         private Response response;
         private Integer responseCode;
-        private GenericResponse<Os> operatingSystemGetAllResponse;
+        private GenericResponse<OperatingSystem> operatingSystemGetAllResponse;
         private OperatingSystemService operatingSystemService = new OperatingSystemService();
 
 
@@ -43,7 +42,7 @@ public class OperatingSystemPrecondition {
             this.response = operatingSystemService.getAll();
 
             this.responseCode = response.getStatusCode();
-            this.operatingSystemGetAllResponse = this.response.as(new TypeRef<GenericResponse<Os>>() {});
+            this.operatingSystemGetAllResponse = this.response.as(new TypeRef<GenericResponse<OperatingSystem>>() {});
 
             return this;
         }
