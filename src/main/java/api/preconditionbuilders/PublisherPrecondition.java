@@ -2,11 +2,12 @@ package api.preconditionbuilders;
 
 import api.core.client.HttpClient;
 import api.dto.GenericResponse;
-import api.dto.rx.common.Currency;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.admin.publisher.PublisherRequest;
+import api.dto.rx.common.Currency;
 import api.services.PublisherService;
 import configurations.User;
+import io.restassured.common.mapper.TypeRef;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -109,7 +110,7 @@ public class PublisherPrecondition {
         public PublisherPreconditionBuilder getPublishersList() {
             this.response = publisherService.getAll();
 
-            this.publisherGetAllResponse = this.response.as(new GenericResponse<Publisher>().getClass());
+            this.publisherGetAllResponse = this.response.as(new TypeRef<GenericResponse<Publisher>> () {});
             this.responseCode = response.getStatusCode();
 
             return this;
@@ -168,7 +169,7 @@ public class PublisherPrecondition {
         public PublisherPreconditionBuilder getPublisherWithFilter(Map<String, Object> queryParams) {
             this.response = publisherService.getPublisherWithFilter(queryParams);
 
-            this.publisherGetAllResponse = this.response.as(GenericResponse.class);
+            this.publisherGetAllResponse = this.response.as(new TypeRef<GenericResponse<Publisher>> () {});
             this.responseCode = response.getStatusCode();
 
             return this;

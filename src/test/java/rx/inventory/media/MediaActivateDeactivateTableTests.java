@@ -309,25 +309,23 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
     private List<Media> getAllMediaItemsByParams(String strParams) {
         Map<String, Object> queryParams = new HashMap();
         queryParams.put("search", strParams);
-        var mediaList = media()
+
+        return media()
                 .getMediaWithFilter(queryParams)
                 .build()
                 .getMediaGetAllResponse()
                 .getItems();
-
-        return ObjectMapperUtils.getCollectionType(mediaList, Media.class);
     }
 
     private List<Publisher> getAllPublishersItemsByParams(String strParams) {
         Map<String, Object> queryParams = new HashMap();
         queryParams.put("search", strParams);
-        var publisherList = publisher()
+
+        return publisher()
                 .getPublisherWithFilter(queryParams)
                 .build()
                 .getPublisherGetAllResponse()
                 .getItems();
-
-        return ObjectMapperUtils.getCollectionType(publisherList, Publisher.class);
     }
 
     @AfterMethod
