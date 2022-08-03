@@ -13,7 +13,7 @@
             <class name="rx.inventory.media.MediaActivateDeactivateTableTests"/>
             <class name="rx.inventory.media.MediaSearchTableTests"/>
             <class name="rx.inventory.media.MediaSortingTableTests"/>
-            <class name="rx.pipelines.DeleteGeneratedDataTest"/>
+<!--            <class name="rx.pipelines.DeleteGeneratedDataTest"/>-->
         </classes>
     </test>
 </suite>
