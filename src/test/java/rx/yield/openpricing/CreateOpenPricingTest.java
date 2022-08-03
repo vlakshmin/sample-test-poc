@@ -288,7 +288,7 @@ public class CreateOpenPricingTest extends BaseTest {
 
     private Device getDeviceFromDeviceList(int devicePosition) {
 
-        return DevicePrecondition.openPricing()
+        return DevicePrecondition.device()
                 .getDeviceLList()
                 .build()
                 .getDeviceGetAllResponse()
