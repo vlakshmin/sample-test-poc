@@ -7,6 +7,7 @@ import api.dto.rx.inventory.media.Media;
 import api.dto.rx.inventory.media.MediaRequest;
 import api.services.MediaService;
 import configurations.User;
+import io.restassured.common.mapper.TypeRef;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -105,7 +106,7 @@ public class MediaPrecondition {
 
         public MediaPreconditionBuilder getAllMediaList() {
             this.response = mediaService.getAll();
-            this.mediaGetAllResponse = this.response.as(new GenericResponse<Media>().getClass());
+            this.mediaGetAllResponse = this.response.as(new TypeRef<GenericResponse<Media>>() {});
             this.responseCode = response.getStatusCode();
 
             return this;
@@ -113,7 +114,7 @@ public class MediaPrecondition {
 
         public MediaPreconditionBuilder getMediaWithFilter(Map<String, Object> queryParams) {
             this.response = mediaService.getMediaWithFilter(queryParams);
-            this.mediaGetAllResponse = this.response.as(new GenericResponse<Media>().getClass());
+            this.mediaGetAllResponse = this.response.as(new TypeRef<GenericResponse<Media>>() {});
             this.responseCode = response.getStatusCode();
 
             return this;

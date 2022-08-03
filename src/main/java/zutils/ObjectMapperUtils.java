@@ -34,18 +34,4 @@ public class ObjectMapperUtils {
             e.printStackTrace();
         }
     }
-
-    public static List getCollectionType(Object list, Class T) {
-        String jsonString = ObjectMapperUtils.toJson(list);
-
-        CollectionType listType =
-                objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, T);
-
-        try {
-            return objectMapper.readValue(jsonString, listType);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }

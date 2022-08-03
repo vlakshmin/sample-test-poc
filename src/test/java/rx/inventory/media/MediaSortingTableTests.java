@@ -306,15 +306,14 @@ public class MediaSortingTableTests extends BaseTest {
     }
 
     private List<Media> getAllItemsByParams(String strParams) {
-        Map<String, Object> queryParams = new HashMap();
+        Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("sort", strParams);
-        var mediaList = MediaPrecondition.media()
+
+        return MediaPrecondition.media()
                 .getMediaWithFilter(queryParams)
                 .build()
                 .getMediaGetAllResponse()
                 .getItems();
-
-        return ObjectMapperUtils.getCollectionType(mediaList, Media.class);
     }
 
     private void generateMedia() {

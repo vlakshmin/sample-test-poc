@@ -8,6 +8,7 @@ import api.dto.rx.admin.user.UserRequest;
 import api.dto.rx.admin.user.UserRole;
 import api.services.UserService;
 import configurations.User;
+import io.restassured.common.mapper.TypeRef;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -99,7 +100,7 @@ public class UsersPrecondition {
 
         public UsersPreconditionBuilder getAllUsers() {
             this.response = userService.getAll();
-            this.userGetAllResponse = this.response.as(new GenericResponse<UserDto>().getClass());
+            this.userGetAllResponse = this.response.as(new TypeRef<GenericResponse<UserDto>>() {});
             this.responseCode = response.getStatusCode();
 
             return this;
@@ -131,7 +132,7 @@ public class UsersPrecondition {
         public UsersPreconditionBuilder getUsersWithFilter(Map<String, Object> queryParams) {
             this.response = userService.getUsersWithFilter(queryParams);
 
-            this.userGetAllResponse = this.response.as(new GenericResponse<UserDto>().getClass());
+            this.userGetAllResponse = this.response.as(new TypeRef<GenericResponse<UserDto>>() {});
             this.responseCode = response.getStatusCode();
 
             return this;
