@@ -4,10 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.Path;
 import pages.inventory.adspots.AdSpotsPage;
 import rx.BaseTest;
@@ -26,10 +23,13 @@ public class AdSpotCheckToolTips extends BaseTest {
     private EditAdSpotSidebar editAdSpotSidebar;
 
     @BeforeClass
-    private void login(){
+    private void init() {
         adSpotsPage = new AdSpotsPage();
         editAdSpotSidebar = new EditAdSpotSidebar();
+    }
 
+    @BeforeMethod
+    private void login() {
         testStart()
                 .given()
                 .openDirectPath(Path.AD_SPOT)
@@ -44,70 +44,70 @@ public class AdSpotCheckToolTips extends BaseTest {
                 .testEnd();
     }
 
-    @Test
+    @Test(description = "'Categories' Tooltip Text")
     private void categoriesTooltip(){
         verifyTooltip(editAdSpotSidebar.getTooltipCategories(),
                 AdSpotTooltipText.CATEGORIES.getText());
     }
 
-    @Test
+    @Test(description = "'Content for Children' Tooltip Text")
     private void contentForChildrenTooltip(){
         verifyTooltip(editAdSpotSidebar.getTooltipContentForChildren(),
                 AdSpotTooltipText.CONTENT_FOR_CHILDREN.getText());
     }
 
-    @Test
+    @Test(description = "'Default Ad Sizes' Tooltip Text")
     private void defaultAdSizesTooltip(){
         verifyTooltip(editAdSpotSidebar.getTooltipDefaultAdSizes(),
                 AdSpotTooltipText.DEFAULT_AD_SIZES.getText());
     }
 
-    @Test
+    @Test(description = "'Default Floor Price' Tooltip Text")
     private void defaultFloorPriceTooltip(){
         verifyTooltip(editAdSpotSidebar.getTooltipDefaultFloorPrice(),
                 AdSpotTooltipText.DEFAULT_FLOOR_PRICE.getText());
     }
 
-    @Test
-    private void bannerAdSizesTooltip(){
-        verifyTooltip(editAdSpotSidebar.getTooltipBannerAdSizes(),
-                AdSpotTooltipText.BANNER_AD_SIZE.getText());
-    }
-
-    @Test
-    private void bannerFloorPriceTooltip(){
-        verifyTooltip(editAdSpotSidebar.getTooltipBannerFloorPrice(),
-                AdSpotTooltipText.BANNER_FLOOR_PRICE.getText());
-    }
-
-    @Test
+    @Test(description = "'Native Card. 'Floor Price' Tooltip Text'")
     private void nativeFloorPriceTooltip(){
         verifyTooltip(editAdSpotSidebar.getTooltipNativeFloorPrice(),
                 AdSpotTooltipText.NATIVE_FLOOR_PRICE.getText());
     }
 
-    @Test
+    @Test(description = "Banner Card. 'Ad Sizes' Tooltip Text")
+    private void bannerAdSizesTooltip(){
+        verifyTooltip(editAdSpotSidebar.getTooltipBannerAdSizes(),
+                AdSpotTooltipText.BANNER_AD_SIZE.getText());
+    }
+
+    @Test(description = "Banner Card. 'Floor Price' Tooltip Text")
+    private void bannerFloorPriceTooltip(){
+        verifyTooltip(editAdSpotSidebar.getTooltipBannerFloorPrice(),
+                AdSpotTooltipText.BANNER_FLOOR_PRICE.getText());
+    }
+
+    @Test(description = "Video Card. 'Floor Price' Tooltip Text")
     private void videoFloorPriceTooltip(){
        verifyTooltip(editAdSpotSidebar.getTooltipVideoFloorPrice(),
                AdSpotTooltipText.VIDEO_FLOOR_PRICE.getText());
     }
 
-    @Test
+    @Test(description = "Video Card. 'Ad Sizes' Tooltip Text")
     private void videoAdSizesTooltip(){
         verifyTooltip(editAdSpotSidebar.getTooltipVideoAdSizes(),
                 AdSpotTooltipText.VIDEO_AD_SIZE.getText());
     }
 
-    @Step
+    @Step("Verify Tooltip Text")
     private void verifyTooltip(SelenideElement field, String expectedText){
         testStart()
+                .scrollIntoView(field)
                 .validateTooltip(field,
                         AdSpotSidebarElements.TOOLTIP_PLACEHOLDER.getSelector(), expectedText)
                 .testEnd();
     }
 
-
-    @AfterClass
+    @AfterMethod
     private void logout(){
         testStart()
                 .clickOnWebElement(editAdSpotSidebar.getCloseIcon())
