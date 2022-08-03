@@ -27,7 +27,7 @@ public class DeleteTestData {
     private List<Protection> protections;
     private List<OpenPricing> openPricing;
 
-    private static final String PREFIX_MEDIA = "auto";
+    private static final String PREFIX_MEDIA = "";
     private static final String PREFIX_ADSPOTS = "auto";
     private static final String PREFIX_PUBLISHERS = "auto";
     private static final String PREFIX_OPEN_PRICING = "auto";
@@ -70,12 +70,14 @@ public class DeleteTestData {
         media = getAllMediaByParams();
         int deleted = 0;
         for (Media m : media) {
-            if (MediaPrecondition.media().
-                    setCredentials(USER_FOR_DELETION).
-                    deleteMedia(m.getId())
-                    .build()
-                    .getResponseCode() == HttpStatus.SC_NO_CONTENT)
-                deleted++;
+            if (m.getId()>43) {
+                if (MediaPrecondition.media().
+                        setCredentials(USER_FOR_DELETION).
+                        deleteMedia(m.getId())
+                        .build()
+                        .getResponseCode() == HttpStatus.SC_NO_CONTENT)
+                    deleted++;
+            }
         }
         log.info(String.format("Deleted media items %s of %s", deleted, media.size()));
     }

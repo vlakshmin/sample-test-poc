@@ -1,10 +1,7 @@
 package rx.inventory.media;
 
-import api.dto.rx.admin.publisher.Publisher;
-import api.dto.rx.admin.publisher.PublisherRequest;
-import api.dto.rx.common.Currency;
+
 import api.dto.rx.inventory.media.Media;
-import api.dto.rx.inventory.media.MediaRequest;
 import api.preconditionbuilders.MediaPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
@@ -19,7 +16,6 @@ import zutils.ObjectMapperUtils;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;

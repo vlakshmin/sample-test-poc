@@ -380,7 +380,7 @@ public final class TestManager {
         public TestManagerBuilder validateTooltip(SelenideElement icon, String tooltip, String value) {
             logEvent(format("Validating %s has tooltip '%s'", icon.getAlias(), value));
             icon.shouldBe(exist, visible).hover();
-            $x(tooltip + String.format("[text()='%s']", value)).should(appear);
+            $x(tooltip + String.format("[text()=\"%s\"]", value)).should(appear);
 
             return this;
         }
