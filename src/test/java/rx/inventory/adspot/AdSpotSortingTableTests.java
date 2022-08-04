@@ -332,13 +332,12 @@ public class AdSpotSortingTableTests extends BaseTest {
     private List<AdSpot> getAllItemsByParams(String strParams) {
         Map<String, Object> queryParams = new HashMap();
         queryParams.put("sort", strParams);
-        var adSpotsList = AdSpotPrecondition.adSpot()
+
+        return  AdSpotPrecondition.adSpot()
                 .getAdSpotsWithFilter(queryParams)
                 .build()
                 .getAdSpotsGetAllResponse()
                 .getItems();
-
-        return ObjectMapperUtils.getCollectionType(adSpotsList, AdSpot.class);
     }
 
     private void generateAdSpots() {

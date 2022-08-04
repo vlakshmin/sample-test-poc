@@ -356,25 +356,23 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
     private List<AdSpot> getAllAdSpotsItemsByParams(String strParams) {
         Map<String, Object> queryParams = new HashMap();
         queryParams.put("search", strParams);
-        var adSpotsList = adSpot()
+
+        return adSpot()
                 .getAdSpotsWithFilter(queryParams)
                 .build()
                 .getAdSpotsGetAllResponse()
                 .getItems();
-
-        return ObjectMapperUtils.getCollectionType(adSpotsList, AdSpot.class);
     }
 
     private List<Publisher> getAllPublishersItemsByParams(String strParams) {
         Map<String, Object> queryParams = new HashMap();
         queryParams.put("search", strParams);
-        var publisherList = publisher()
+
+        return publisher()
                 .getPublisherWithFilter(queryParams)
                 .build()
                 .getPublisherGetAllResponse()
                 .getItems();
-
-        return ObjectMapperUtils.getCollectionType(publisherList, Publisher.class);
     }
 
     @AfterMethod

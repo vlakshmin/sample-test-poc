@@ -272,13 +272,12 @@ public class AdSpotSearchTableTests extends BaseTest {
         queryParams.put("sort", "name-asc");
 
         if (isEnabled != null) queryParams.put("enabled", isEnabled);
-        List<AdSpot> adSpotList = AdSpotPrecondition.adSpot()
+
+        return AdSpotPrecondition.adSpot()
                 .getAdSpotsWithFilter(queryParams)
                 .build()
                 .getAdSpotsGetAllResponse()
                 .getItems();
-
-        return ObjectMapperUtils.getCollectionType(adSpotList, AdSpot.class);
     }
 
 }
