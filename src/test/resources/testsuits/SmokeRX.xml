@@ -8,6 +8,7 @@
             <class name="rx.component.table.TableDataTests"/>
             <class name="rx.login.LoginPositiveTest"/>
             <class name="rx.protections.ProtectionsTest"/>
+            <class name="rx.inventory.adspot.AdSpotCheckColumns"/>
             <class name="rx.sales.deals.DealsTest"/>-->
             <class name="rx.inventory.media.MediaActivateDeactivateTableTests"/>
             <class name="rx.inventory.media.MediaSearchTableTests"/>
@@ -19,7 +20,7 @@
             <class name="rx.inventory.adspot.AdSpotTest"/>
             <class name="rx.inventory.adspot.AdSpotSortingTableTests"/>
             <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
-            <class name="rx.inventory.adspot.AdSpotCheckColumns"/>
+
             <class name="rx.inventory.adspot.AdSpotCheckPagination"/>
             <class name="rx.inventory.adspot.AdSpotCheckToolTips"/>
         </classes>
