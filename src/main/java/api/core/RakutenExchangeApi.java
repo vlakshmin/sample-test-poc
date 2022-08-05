@@ -49,7 +49,10 @@ public enum RakutenExchangeApi {
     DELETE_ADSPOT("/v2/adspots/%s"),
 
     //Device
-    GET_ALL_DEVICE_TYPES("/v2/device-types");
+    GET_ALL_DEVICE_TYPES("/v2/device-types"),
+
+    //Operating system
+    GET_ALL_OPERATING_SYSTEM("/v2/device-os");
 
     private String endpoint;
 
