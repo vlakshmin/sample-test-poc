@@ -24,7 +24,7 @@ public class DeleteTest extends BaseTest {
 
     @Test(priority = 1)
     public void deleteProtections() {
-       DevicePrecondition.openPricing().getDeviceLList().build();
+       DevicePrecondition.device().getDeviceLList().build();
     }
 
 }
