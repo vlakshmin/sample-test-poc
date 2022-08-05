@@ -10,7 +10,6 @@ import pages.Path;
 import pages.inventory.adspots.AdSpotsPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
-import zutils.ObjectMapperUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -77,13 +76,13 @@ public class AdSpotSortingTableTests extends BaseTest {
     }
 
     @Test(testName = "Sorting 'ID' column by descending")
-    public void mediaSortingByIdDesc() {
+    public void adSpotSortingByIdDesc() {
         sortByDescColumnByName(ColumnNames.ID);
         validateSortData(ColumnNames.ID, DESC, sortIdsByDesc);
     }
 
     @Test(testName = "Sorting 'ID' column by ascending")
-    public void mediaSortingByIdAsc() {
+    public void adSpotSortingByIdAsc() {
 
         sortByAscColumnByName(ColumnNames.ID);
         validateSortData(ColumnNames.ID, ASC, sortIdsByAsc);
@@ -96,43 +95,43 @@ public class AdSpotSortingTableTests extends BaseTest {
     }
 
     @Test(testName = "Sorting 'Ad Spot Name' column by ascending")
-    public void mediaSortingByAdSpotNameAsc() {
+    public void adSpotSortingByAdSpotNameAsc() {
         sortByAscColumnByName(ColumnNames.AD_SPOT_NAME);
         validateSortData(ColumnNames.AD_SPOT_NAME, ASC, sortNamesByAsc);
     }
 
     @Test(testName = "Sorting 'Publisher' column by ascending")
-    public void mediaSortingByPublisherNameAsc() {
+    public void adSpotSortingByPublisherNameAsc() {
         sortByAscColumnByName(ColumnNames.PUBLISHER);
         validateSortData(ColumnNames.PUBLISHER, ASC, sortPublisherNameByAsc);
     }
 
     @Test(testName = "Sorting 'Publisher' column by descending")
-    public void mediaSortingByPublisherNameDesc() {
+    public void adSpotSortingByPublisherNameDesc() {
         sortByDescColumnByName(ColumnNames.PUBLISHER);
         validateSortData(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
     }
 
     @Test(testName = "Sorting 'Related Media' column by descending")
-    public void mediaSortingByRelatedMediaDesc() {
+    public void adSpotSortingByRelatedMediaDesc() {
         sortByDescColumnByName(ColumnNames.RELATED_MEDIA);
         validateSortData(ColumnNames.RELATED_MEDIA, DESC, sortRelatedMediasByDesc);
     }
 
     @Test(testName = "Sorting 'Related Media' column by ascending")
-    public void mediaSortingByRelatedMediaAsc() {
+    public void adSpotSortingByRelatedMediaAsc() {
         sortByAscColumnByName(ColumnNames.RELATED_MEDIA);
         validateSortData(ColumnNames.RELATED_MEDIA, ASC, sortRelatedMediaByAsc);
     }
 
     @Test(testName = "Sorting 'Active/Inactive' column by descending")
-    public void mediaSortingByStatusDesc() {
+    public void adSpotSortingByStatusDesc() {
         sortByDescColumnByName(ColumnNames.ACTIVE_INACTIVE);
         validateSortData(ColumnNames.ID, DESC, sortStatusByDesc);
     }
 
     @Test(testName = "Sorting 'Active/Inactive' column by ascending")
-    public void mediaSortingByStatusAsc() {
+    public void adSpotSortingByStatusAsc() {
         sortByAscColumnByName(ColumnNames.ACTIVE_INACTIVE);
         validateSortData(ColumnNames.ID, ASC, sortStatusByAsc);
     }
@@ -218,6 +217,7 @@ public class AdSpotSortingTableTests extends BaseTest {
                 .given()
                 .waitAndValidate(disappear, adSpotsPage.getNuxtProgress())
                 .and("Select 50 row per page")
+                .scrollIntoView(tablePagination.getPageMenu())
                 .selectFromDropdown(tablePagination.getPageMenu(),
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, adSpotsPage.getTableProgressBar())

@@ -1,6 +1,5 @@
 package rx.inventory.adspot;
 
-import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.inventory.adspot.AdSpot;
 import api.preconditionbuilders.AdSpotPrecondition;
 import api.preconditionbuilders.PublisherPrecondition;
@@ -12,7 +11,6 @@ import pages.inventory.adspots.AdSpotsPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.Statuses;
-import zutils.ObjectMapperUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +28,6 @@ import static managers.TestManager.testStart;
 @Listeners({ScreenShooter.class})
 public class AdSpotSearchTableTests extends BaseTest {
 
-    private Publisher publisher;
     private static final String AD_SPOT_NAME = "SSDD1";
     private static final String PUB_NAME = "SSSDD2";
     private static final String FILTER_SEARCH = "RpTT7";

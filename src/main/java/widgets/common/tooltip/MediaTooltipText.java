@@ -2,9 +2,13 @@ package widgets.common.tooltip;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
 @Getter
 @AllArgsConstructor
 public enum MediaTooltipText {
+
+    APP_STORE_URL_TOOLTIP_TEXT("'App Store App' Tooltip Text",
+            "App Store URL is indicated in bid requests as the app.bundle or app.storeurl"),
 
     CATEGORY_TOOLTIP_TEXT("'Category' Tooltip Text",
             "Category/ies set in the Media level are indicated in bid requests coming from its ad spots as the " +
@@ -12,10 +16,7 @@ public enum MediaTooltipText {
 
     SITE_URL_TOOLTIP_TEXT("'Site URL' Tooltip Text",
             "URL set in the Media level is indicated in bid requests coming from its ad spots as the site.domain " +
-                    "in web media types, and as app.bundle or app.storeurl in mobile app, respectively to the media type set."),
-
-    APP_STORE_URL_TOOLTIP_TEXT("'App Store App' Tooltip Text",
-            "App Store URL is indicated in bid requests as the app.bundle or app.storeurl");
+                    "in web media types, and as app.bundle or app.storeurl in mobile app, respectively to the media type set.");
 
 
     private String alias;

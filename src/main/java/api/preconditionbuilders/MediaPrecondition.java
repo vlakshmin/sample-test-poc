@@ -86,6 +86,14 @@ public class MediaPrecondition {
             return this;
         }
 
+        public MediaPreconditionBuilder createNewMedia(String name, String url) {
+            this.mediaRequest = createMediaRequest(name, url);
+            this.response = mediaService.createMedia(mediaRequest);
+            this.mediaResponse = response.as(Media.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
         public MediaPreconditionBuilder createNewMedia(String name, Integer id, Boolean isEnabled) {
             this.mediaRequest = createMediaRequest(name, id, isEnabled);
             this.response = mediaService.createMedia(mediaRequest);
@@ -187,7 +195,21 @@ public class MediaPrecondition {
                     .name(captionWithSuffix(name))
                     .publisherId(publisher.getId())
                     .platformId(2)
-                    .url("http://localhost:5016")
+                    .url("http://autotestrak987.com")
+                    .isEnabled(true)
+                    .categoryIds(List.of(1, 9))
+                    .build();
+        }
+
+        private MediaRequest createMediaRequest(String name, String url) {
+
+            Publisher publisher = createPublisher();
+
+            return MediaRequest.builder()
+                    .name(captionWithSuffix(name))
+                    .publisherId(publisher.getId())
+                    .platformId(2)
+                    .url(url)
                     .isEnabled(true)
                     .categoryIds(List.of(1, 9))
                     .build();

@@ -8,7 +8,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
-import pages.inventory.adspots.AdSpotsPage;
 import pages.inventory.media.MediaPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
@@ -23,8 +22,8 @@ public class MediaCheckColumns extends BaseTest {
     private MediaPage mediaPage;
 
     @BeforeClass
-    private void login(){
-          mediaPage = new MediaPage();
+    private void login() {
+        mediaPage = new MediaPage();
 
         testStart()
                 .given()
@@ -51,8 +50,6 @@ public class MediaCheckColumns extends BaseTest {
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.PLATFORM))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
-              //  .scrollIntoView(table.getTableOptionsBtn())
-              //  .clickOnWebElement(table.getTableOptionsBtn())
                 .then("All columns should be shown")
                 .validateListSize((ElementsCollection) tableData.getColumns(),
                         ColumnNames.ID.getName(),
@@ -64,8 +61,7 @@ public class MediaCheckColumns extends BaseTest {
                         ColumnNames.CREATED_DATE.getName(),
                         ColumnNames.UPDATED_DATE.getName())
                 .and("Hide all columns")
-          //      .scrollIntoView(table.getTableOptionsBtn())
-          //      .clickOnWebElement(table.getTableOptionsBtn())
+
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.ID))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.MEDIA_NAME))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.PUBLISHER))
@@ -74,7 +70,7 @@ public class MediaCheckColumns extends BaseTest {
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.STATUS))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
-               .then("All columns should be hidden")
+                .then("All columns should be hidden")
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.ID.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.PLATFORM.getName()))
@@ -87,7 +83,7 @@ public class MediaCheckColumns extends BaseTest {
     }
 
     @AfterClass
-    private void logout(){
+    private void logout() {
         testStart()
                 .logOut()
                 .testEnd();

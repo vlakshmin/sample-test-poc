@@ -1,20 +1,17 @@
 package rx.inventory.media;
 
-import api.dto.rx.inventory.adspot.AdSpot;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
 import pages.Path;
-import pages.inventory.adspots.AdSpotsPage;
 import pages.inventory.media.MediaPage;
 import rx.BaseTest;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static api.preconditionbuilders.AdSpotPrecondition.adSpot;
 import static api.preconditionbuilders.MediaPrecondition.media;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.disappear;
@@ -33,7 +30,7 @@ public class MediaCheckPagination extends BaseTest {
     private List<Media> listMedia;
 
     @BeforeClass
-    private void init(){
+    private void init() {
         mediaPage = new MediaPage();
 
         if (getTotalMedia() < 100) generateMedia();
@@ -42,7 +39,7 @@ public class MediaCheckPagination extends BaseTest {
     }
 
     @BeforeMethod
-    private void login(){
+    private void login() {
         testStart()
                 .given()
                 .openDirectPath(Path.MEDIA)
@@ -82,33 +79,33 @@ public class MediaCheckPagination extends BaseTest {
     }
 
     @Step("Verify pagination {0}")
-    private void verifyPagination(Integer rowsPerPage){
+    private void verifyPagination(Integer rowsPerPage) {
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
         var tableData = mediaPage.getMediaTable().getTableData();
 
         testStart()
-                .and(String.format("Select %s rows per page",rowsPerPage))
+                .and(String.format("Select %s rows per page", rowsPerPage))
                 .scrollIntoView(tablePagination.getPageMenu())
                 .selectFromDropdown(tablePagination.getPageMenu(),
                         tablePagination.getRowNumbersList(), rowsPerPage.toString())
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format(String.format("Validate that text in table footer '1-%s of %s'",rowsPerPage,
+                .then(String.format(String.format("Validate that text in table footer '1-%s of %s'", rowsPerPage,
                         totalMedia)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format(String.format("1-%s of %s",rowsPerPage, totalMedia)))
-                .then(String.format("Rows in table page equals %s",rowsPerPage))
-                .validateListSize(tableData.getRows(),rowsPerPage)
+                        String.format(String.format("1-%s of %s", rowsPerPage, totalMedia)))
+                .then(String.format("Rows in table page equals %s", rowsPerPage))
+                .validateListSize(tableData.getRows(), rowsPerPage)
                 .and("Click on Next page")
                 .scrollIntoView(tablePagination.getNext())
                 .clickOnWebElement(tablePagination.getNext())
                 .then(String.format(String.format("Validate that text in table footer '%s-%s of %s'",
-                        rowsPerPage+1, Math.min(rowsPerPage*2,totalMedia), totalMedia)))
+                        rowsPerPage + 1, Math.min(rowsPerPage * 2, totalMedia), totalMedia)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format(String.format("%s-%s of %s",
-                                rowsPerPage+1, Math.min(rowsPerPage*2,totalMedia), totalMedia)))
-                .then(String.format("Rows in table page equals %s",rowsPerPage))
-                .validateListSize(tableData.getRows(),rowsPerPage)
+                                rowsPerPage + 1, Math.min(rowsPerPage * 2, totalMedia), totalMedia)))
+                .then(String.format("Rows in table page equals %s", rowsPerPage))
+                .validateListSize(tableData.getRows(), rowsPerPage)
                 .and("Click on Previous page")
                 .scrollIntoView(tablePagination.getPrevious())
                 .clickOnWebElement(tablePagination.getPrevious())
@@ -117,16 +114,16 @@ public class MediaCheckPagination extends BaseTest {
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format(String.format("1-%s of %s",
                                 rowsPerPage, totalMedia)))
-                .then(String.format("Rows in table page equals %s",rowsPerPage))
-                .validateListSize(tableData.getRows(),rowsPerPage)
+                .then(String.format("Rows in table page equals %s", rowsPerPage))
+                .validateListSize(tableData.getRows(), rowsPerPage)
                 .and("Logout")
                 .logOut()
                 .testEnd();
     }
 
     @AfterClass
-    private void deleteEntities(){
-        if(listMedia!=null) {
+    private void deleteEntities() {
+        if (listMedia != null) {
             for (Media media : listMedia) {
                 deleteMedia(media.getId());
                 deletePublisher(media.getPublisherId());
@@ -134,13 +131,13 @@ public class MediaCheckPagination extends BaseTest {
         }
     }
 
-    private void deleteMedia(Integer id){
+    private void deleteMedia(Integer id) {
         media()
                 .setCredentials(USER_FOR_DELETION)
                 .deleteMedia(id);
     }
 
-    private void deletePublisher(Integer id){
+    private void deletePublisher(Integer id) {
         publisher()
                 .setCredentials(USER_FOR_DELETION)
                 .deletePublisher(id);
