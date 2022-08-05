@@ -2,10 +2,12 @@ package rx.yield.openpricing;
 
 import api.dto.rx.device.Device;
 import api.dto.rx.inventory.media.Media;
+import api.dto.rx.os.OperatingSystem;
 import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.DevicePrecondition;
 import api.preconditionbuilders.MediaPrecondition;
 import api.preconditionbuilders.OpenPricingPrecondition;
+import api.preconditionbuilders.OperatingSystemPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,8 @@ import widgets.common.table.TableData;
 import widgets.yield.openPricing.sidebar.CreateOpenPricingSidebar;
 
 import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
@@ -184,8 +188,8 @@ public class CreateOpenPricingTest extends BaseTest {
                         new NoSuchElementException(format("The Open Pricing with name '%s' wasn't found", PRICING_NAME)));
     }
 
-    @Test(priority = 12, dependsOnMethods = {"saveOpenPricingTest", "getNewlyCreatedPricingByApi"} )
-    @Step("Verify 'Inventory' Items in Details' menu in Pricing in table")
+    @Test(priority = 12, dependsOnMethods = {"saveOpenPricingTest", "getNewlyCreatedPricingByApi"})
+    @Step("Verify 'Inventory' Items in Details' menu in Pricing table")
     public void checkInventoryMenuDetailsTest() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var inventoryDetailsSection = pricingTableDetailsMenu.getInventoryDetailsSection();
@@ -193,12 +197,11 @@ public class CreateOpenPricingTest extends BaseTest {
         hoverMouseCursorOnDetailsIcon(tableData);
 
         var expectedMedia = getMediaById(newlyCreatedPricing.getRule().getMedia().getMedia().get(0)).getName();
-
         verifySelectionInDetailsMenuForTableItem(inventoryDetailsSection, expectedMedia);
     }
 
-    @Test(priority = 13, dependsOnMethods = {"saveOpenPricingTest", "getNewlyCreatedPricingByApi"} )
-    @Step("Verify 'Inventory' Items in Details' menu in Pricing in table")
+    @Test(priority = 13, dependsOnMethods = {"saveOpenPricingTest", "getNewlyCreatedPricingByApi"})
+    @Step("Verify 'Device' Items in Details' menu in Pricing table")
     public void checkDeviceMenuDetailsTest() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var deviceDetailsSection = pricingTableDetailsMenu.getDeviceDetailsSection();
@@ -206,26 +209,44 @@ public class CreateOpenPricingTest extends BaseTest {
         hoverMouseCursorOnDetailsIcon(tableData);
 
         var expectedDeice = getDeviceFromDeviceList(0).getName();
-
         verifySelectionInDetailsMenuForTableItem(deviceDetailsSection, expectedDeice);
     }
 
-    private void hoverMouseCursorOnDetailsIcon(TableData tableData){
+    @Test(priority = 14, dependsOnMethods = {"saveOpenPricingTest", "getNewlyCreatedPricingByApi"})
+    @Step("Verify 'Os' Items in Details' menu in Pricing table")
+    public void checkOsMenuDetailsTest() {
+        var tableData = openPricingPage.getOpenPricingTable().getTableData();
+        var operatingSystemsDetailsSection = pricingTableDetailsMenu.getOperatingSystemDetailsSection();
+
+        hoverMouseCursorOnDetailsIcon(tableData);
+
+        var expectedOperatingSystem = getOperatingSystemFromDeviceList(0).getName();
+        verifySelectionInDetailsMenuForTableItem(operatingSystemsDetailsSection, expectedOperatingSystem);
+    }
+
+    private void hoverMouseCursorOnDetailsIcon(TableData tableData) {
         testStart()
                 .and("Hovering mouse cursor on 'Details' column in Pricing Table")
                 .hoverMouseOnWebElement(tableData.getCellByPositionInTable(ColumnNames.DETAILS, 0))
                 .testEnd();
     }
 
-    private void verifySelectionInDetailsMenuForTableItem(DetailsSection detailsSection, String ... expectedItemNames){
+    private void verifySelectionInDetailsMenuForTableItem(DetailsSection detailsSection, String... expectedItemNames) {
 
-        testStart()
-                .then("Check that Selected inventory is presented in Details Menu")
-                .validate(visible, detailsSection.getMenuItemByPositionInList(0).getName())
-                .validate(detailsSection.getMenuItemByPositionInList(0).getName(), expectedItemNames[0])
-                .validate(visible, detailsSection.getMenuItemByPositionInList(0).getIncludedIcon())
-                .validate(not(visible), detailsSection.getMenuItemByPositionInList(0).getExcludedIcon())
-                .testEnd();
+        AtomicInteger currentItemPosition = new AtomicInteger();
+
+        Stream.of(expectedItemNames).forEach(item -> {
+            testStart()
+                    .then(format("Check that %s with name '%s' is presented in 'Details' Menu on %s position",
+                            detailsSection.getDetailsSection().getName(), item, currentItemPosition))
+                    .validate(visible, detailsSection.getMenuItemByPositionInList(currentItemPosition.get()).getName())
+                    .validate(detailsSection.getMenuItemByPositionInList(currentItemPosition.get()).getName(),
+                            expectedItemNames[currentItemPosition.get()])
+                    .validate(visible, detailsSection.getMenuItemByPositionInList(currentItemPosition.get()).getIncludedIcon())
+                    .validate(not(visible), detailsSection.getMenuItemByPositionInList(currentItemPosition.get()).getExcludedIcon())
+                    .testEnd();
+            currentItemPosition.getAndIncrement();
+        });
     }
 
     private void verifyItemSelectionInMultipane(Multipane multipane, String expectedPanelNameLabel) {
@@ -288,11 +309,21 @@ public class CreateOpenPricingTest extends BaseTest {
 
     private Device getDeviceFromDeviceList(int devicePosition) {
 
-        return DevicePrecondition.openPricing()
+        return DevicePrecondition.device()
                 .getDeviceLList()
                 .build()
                 .getDeviceGetAllResponse()
                 .getItems()
-                .get(0);
+                .get(devicePosition);
+    }
+
+    private OperatingSystem getOperatingSystemFromDeviceList(int operatingSystemPosition) {
+
+        return OperatingSystemPrecondition.openPricing()
+                .getOperatingSystemLList()
+                .build()
+                .getOperatingSystemGetAllResponse()
+                .getItems()
+                .get(operatingSystemPosition);
     }
 }

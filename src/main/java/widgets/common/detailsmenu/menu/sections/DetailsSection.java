@@ -2,6 +2,7 @@ package widgets.common.detailsmenu.menu.sections;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
+import lombok.Getter;
 import org.openqa.selenium.WebElement;
 import widgets.common.detailsmenu.DetailsSectionName;
 import widgets.common.detailsmenu.item.DetailsMenuItem;
@@ -20,6 +21,7 @@ import static widgets.common.detailsmenu.menu.sections.DetailsSectionElements.DE
 
 public class DetailsSection {
 
+    @Getter
     private DetailsSectionName detailsSection;
     private ElementsCollection menuMenuSectionItems;
 
