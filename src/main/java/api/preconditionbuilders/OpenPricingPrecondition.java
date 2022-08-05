@@ -50,7 +50,7 @@ public class OpenPricingPrecondition {
         private Integer responseCode;
         private OpenPricing openPricingResponse;
         private OpenPricingRequest openPricingRequest;
-        private GenericResponse openPricingGetAllResponse;
+        private GenericResponse<OpenPricing> openPricingGetAllResponse;
         private OpenPricingService openPricingService = new OpenPricingService();
 
         public OpenPricingPreconditionBuilder createNewOpenPricing() {
@@ -161,7 +161,7 @@ public class OpenPricingPrecondition {
         public OpenPricingPreconditionBuilder getOpenPricingWithFilter(Map<String, Object> queryParams) {
             this.response = openPricingService.getOpenPricingWithFilter(queryParams);
 
-            this.openPricingGetAllResponse = this.response.as(GenericResponse.class);
+            this.openPricingGetAllResponse = this.response.as(new TypeRef<GenericResponse<OpenPricing>>() {});
             this.responseCode = response.getStatusCode();
 
             return this;

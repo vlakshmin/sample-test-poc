@@ -9,6 +9,7 @@ import api.dto.rx.inventory.adspot.Video;
 import api.dto.rx.inventory.media.Media;
 import api.services.AdSpotService;
 import configurations.User;
+import io.restassured.common.mapper.TypeRef;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -101,7 +102,7 @@ public class AdSpotPrecondition {
         public AdSpotPreconditionBuilder getAllAdSpotsList() {
             this.response = adSpotService.getAll();
 
-            this.adSpotsGetAllResponse = this.response.as(new GenericResponse<AdSpot>().getClass());
+            this.adSpotsGetAllResponse = this.response.as(new TypeRef<GenericResponse<AdSpot>>() {});
             this.responseCode = response.getStatusCode();
 
             return this;
@@ -115,7 +116,7 @@ public class AdSpotPrecondition {
         public AdSpotPreconditionBuilder getAdSpotsWithFilter(Map<String, Object> queryParams) {
             this.response = adSpotService.getAdSpotsWithFilter(queryParams);
 
-            this.adSpotsGetAllResponse = this.response.as(new GenericResponse<AdSpot>().getClass());
+            this.adSpotsGetAllResponse = this.response.as(new TypeRef<GenericResponse<AdSpot>>() {});
             this.responseCode = response.getStatusCode();
 
             return this;

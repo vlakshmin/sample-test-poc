@@ -6,6 +6,7 @@ import api.dto.GenericResponse;
 import api.dto.rx.protection.*;
 import api.services.ProtectionsService;
 import configurations.User;
+import io.restassured.common.mapper.TypeRef;
 import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,6 +37,7 @@ public class ProtectionsPrecondition {
     }
 
     public static ProtectionsPreconditionBuilder protection() {
+
         return new ProtectionsPreconditionBuilder();
     }
 
@@ -45,7 +47,7 @@ public class ProtectionsPrecondition {
         private Integer responseCode;
         private Protection protectionsResponse;
         private ProtectionRequest protectionsRequest;
-        private GenericResponse protectionsGetAllResponse;
+        private GenericResponse<Protection> protectionsGetAllResponse;
         private ProtectionsService protectionsService = new ProtectionsService();
 
         public ProtectionsPreconditionBuilder createNewRandomProtection() {
@@ -143,8 +145,7 @@ public class ProtectionsPrecondition {
 
         public ProtectionsPreconditionBuilder getProtectionsWithFilter(Map<String, Object> queryParams) {
             this.response = protectionsService.getProtectionsWithFilter(queryParams);
-
-            this.protectionsGetAllResponse = this.response.as(GenericResponse.class);
+            this.protectionsGetAllResponse = this.response.as(new TypeRef<GenericResponse<Protection>>() {});
             this.responseCode = response.getStatusCode();
 
             return this;

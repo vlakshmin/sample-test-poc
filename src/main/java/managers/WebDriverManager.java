@@ -1,36 +1,24 @@
 package managers;
 
-import com.codeborne.selenide.Browser;
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.WebDriverProvider;
 import com.codeborne.selenide.WebDriverRunner;
-import configurations.ConfigurationLoader;
 import configurations.EnvConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchSessionException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.LocalFileDetector;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
 import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.FileDownloadMode.PROXY;
 import static configurations.ConfigurationLoader.getConfig;
 import static io.qameta.allure.Allure.addAttachment;
-import static io.qameta.allure.Allure.step;
-import static java.lang.String.format;
-import static org.openqa.selenium.remote.CapabilityType.TAKES_SCREENSHOT;
+import static java.lang.Thread.currentThread;
 
 @Slf4j
 public class WebDriverManager {
@@ -65,17 +53,18 @@ public class WebDriverManager {
 
     public void closeWebDriverSession() {
         log.info("Current test class {}", currentTestClassName);
-        //Todo add check if Selenide has been started
         if (!config.getHoldBrowserOpen()) {
-            driver = WebDriverRunner.getWebDriver();
+            log.info("Checking weather WebDriver session has been started in thread {}", currentThread().getId());
             try {
-                log.info("Accepting browser alerts if they are presented");
-                driver.switchTo().alert().accept();
-                log.info("Closing webDriver in thread {}", Thread.currentThread().getId());
-                driver.quit();
-            } catch (NoAlertPresentException e) {
-                log.info("Closing webDriver in thread {}", Thread.currentThread().getId());
-                driver.quit();
+                driver = WebDriverRunner.getWebDriver();
+                this.closeBrowserAlertsIfPresent();
+
+            } catch (NullPointerException e) {
+                log.warn("WebDriver is null  in thread {}", currentThread().getId());
+            } catch (NoSuchSessionException e) {
+                log.warn("WebDriver Session hasn't been started in thread {}. Nothing to close", currentThread().getId());
+            } catch (IllegalStateException e) {
+                log.warn("No WebDriver is bound to current thread: '{}'. You need to call open(url) first.", currentThread().getId());
             }
         } else {
             log.info("WebDriver will not close the session due to holdBrowserOpened = 'true'");
@@ -85,20 +74,47 @@ public class WebDriverManager {
     public String getBrowserLogs() {
         //Todo add check if Selenide has been started
         log.info("Collecting Browser Log");
+        String browserLogString = "";
+        try {
+            browserLogString = driver.manage().logs().get(LogType.BROWSER)
+                    .getAll().stream()
+                    .map(LogEntry::toString)
+                    .collect(Collectors.joining("\n"));
+        } catch (NullPointerException e) {
+            log.warn("WebDriver is null  in thread {}", currentThread().getId());
+        } catch (NoSuchSessionException e) {
+            log.warn("WebDriver Session hasn't been started in thread {}. Nothing to close", currentThread().getId());
+        } catch (IllegalStateException e) {
+            log.warn("No WebDriver is bound to current thread: '{}'. You need to call open(url) first.", currentThread().getId());
+        }
 
-        return WebDriverRunner.getWebDriver().manage().logs().get(LogType.BROWSER)
-                .getAll().stream()
-                .map(LogEntry::toString)
-                .collect(Collectors.joining("\n"));
+        return browserLogString;
     }
 
     public void attachTheBrowserConsoleLog() {
-        log.info("Attaching to Allure Report");
         try {
-            InputStream is = new ByteArrayInputStream(this.getBrowserLogs().getBytes(StandardCharsets.UTF_8));
-            addAttachment("Browser log", is);
+            if (driver != null) {
+                log.info("Attaching Browser Console log to Allure Report");
+                InputStream is = new ByteArrayInputStream(this.getBrowserLogs().getBytes(StandardCharsets.UTF_8));
+                addAttachment("Browser log", is);
+            } else {
+                log.warn("Can't attach browser log because Browser wasn't started");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void closeBrowserAlertsIfPresent() {
+        try {
+            log.info("Accepting browser alerts if they are presented");
+            driver.switchTo().alert().accept();
+            log.info("Closing webDriver session in thread {}", currentThread().getId());
+            driver.quit();
+        } catch (NoAlertPresentException e) {
+            log.warn("Closing webDriver session in thread {}", currentThread().getId());
+            driver.quit();
         }
     }
 }
