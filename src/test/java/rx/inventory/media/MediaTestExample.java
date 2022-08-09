@@ -75,7 +75,7 @@ public class MediaTestExample extends BaseTest {
                 .then("Validate Categories tooltip text")
                 .validateTooltip(editMediaSidebar.getTooltipIconByFieldName("Categories"),
                         MediaSidebarElements.TOOLTIP_PLACEHOLDER.getSelector(),
-                        MediaTooltipText.CATEGORY_TOOLTIP_TEXT.getText())
+                        MediaTooltipText.CATEGORIES.getText())
                 .and("Click on 'Save' button")
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
                 .then("Validate bottom panel with errors")
