@@ -13,6 +13,7 @@ import widgets.common.tooltip.MediaTooltipText;
 import widgets.errormessages.ErrorMessages;
 import widgets.inventory.media.sidebar.EditMediaSidebar;
 import widgets.inventory.media.sidebar.MediaSidebarElements;
+import widgets.inventory.media.sidebar.MediaTooltipSidebarElements;
 
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
@@ -74,7 +75,7 @@ public class MediaTestExample extends BaseTest {
                 .waitSideBarOpened()
                 .then("Validate Categories tooltip text")
                 .validateTooltip(editMediaSidebar.getTooltipIconByFieldName("Categories"),
-                        MediaSidebarElements.TOOLTIP_PLACEHOLDER.getSelector(),
+                        MediaTooltipSidebarElements.TOOLTIP_PLACEHOLDER.getSelector(),
                         MediaTooltipText.CATEGORIES.getText())
                 .and("Click on 'Save' button")
                 .clickOnWebElement(editMediaSidebar.getSaveButton())

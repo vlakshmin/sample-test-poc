@@ -14,7 +14,7 @@ import static widgets.inventory.adSpots.sidebar.AdSpotTooltipSidebarElements.*;
 public class AdSpotTooltipSidebar {
 
     private SelenideElement tooltipCategories = $x(TOOLTIP_CATEGORIES_ICON.getSelector())
-            .as(TOOLTIP_CONTENT_FOR_CHILDREN_ICON.getAlias());
+            .as(TOOLTIP_CATEGORIES_ICON.getAlias());
     private SelenideElement tooltipVideoAdSizes = $x(TOOLTIP_VIDEO_AD_SIZES_ICON.getSelector())
             .as(TOOLTIP_VIDEO_AD_SIZES_ICON.getAlias());
     private SelenideElement tooltipBannerAdSizes = $x(TOOLTIP_BANNER_AD_SIZES_ICON.getSelector())

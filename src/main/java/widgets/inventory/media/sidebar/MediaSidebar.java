@@ -1,10 +1,13 @@
 package widgets.inventory.media.sidebar;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import widgets.common.validationalert.ValidationBottomAlert;
 
+import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
+import static widgets.inventory.adSpots.sidebar.AdSpotSidebarElements.CLOSE_ICON;
 import static widgets.inventory.media.sidebar.MediaSidebarElements.*;
 
 /**
@@ -15,12 +18,14 @@ public abstract class MediaSidebar {
 
     private SelenideElement siteURL = $x(SITE_URL.getSelector()).as(SITE_URL.getAlias());
     private SelenideElement nameInput = $x(MEDIA_NAME.getSelector()).as(MEDIA_NAME.getAlias());
+    private SelenideElement closeIcon = $x(CLOSE_ICON.getSelector()).as(CLOSE_ICON.getAlias());
     private SelenideElement categories = $x(CATEGORIES.getSelector()).as(CATEGORIES.getAlias());
     private SelenideElement saveButton = $x(SAVE_BUTTON.getSelector()).as(SAVE_BUTTON.getAlias());
     private SelenideElement mediaTypeInput = $x(MEDIA_TYPE.getSelector()).as(MEDIA_TYPE.getAlias());
     private SelenideElement appStoreURL = $x(APP_STORE_URL.getSelector()).as(APP_STORE_URL.getAlias());
     private SelenideElement publisherInput = $x(PUBLISHER_NAME.getSelector()).as(PUBLISHER_NAME.getAlias());
-    private SelenideElement tooltipPlaceholder = $x(TOOLTIP_PLACEHOLDER.getSelector()).as(TOOLTIP_PLACEHOLDER.getAlias());
+    private ElementsCollection publisherItems = $$x(PUBLISHER_ITEMS.getSelector()).as(PUBLISHER_ITEMS.getAlias());
+    private ElementsCollection mediaTypeItems = $$x(MEDIA_TYPE_ITEMS.getSelector()).as(MEDIA_TYPE_ITEMS.getAlias());
     private ValidationBottomAlert errorAlert = new ValidationBottomAlert();
     public SelenideElement getTooltipIconByFieldName(String fieldName){
 
