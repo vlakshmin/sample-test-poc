@@ -22,10 +22,12 @@ import static managers.TestManager.testStart;
 public class AdSpotCheckColumns extends BaseTest {
     private AdSpotsPage adSpotsPage;
 
-    @BeforeClass
-    private void login(){
-          adSpotsPage = new AdSpotsPage();
+    public AdSpotCheckColumns() {
+        adSpotsPage = new AdSpotsPage();
+    }
 
+    @BeforeClass
+    private void login() {
         testStart()
                 .given()
                 .openDirectPath(Path.AD_SPOT)
@@ -41,8 +43,7 @@ public class AdSpotCheckColumns extends BaseTest {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         testStart()
                 .and("'Show' all columns")
-                .scrollIntoView(adSpotsPage.getPageTitle())
-
+                .scrollIntoView(tableOptions.getTableOptionsBtn())
                 .clickOnWebElement(tableOptions.getTableOptionsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ID))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DETAILS))
@@ -56,11 +57,9 @@ public class AdSpotCheckColumns extends BaseTest {
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_SIZES))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_FLOOR_PRICE))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
-              //  .scrollIntoView(table.getTableOptionsBtn())
-              //  .clickOnWebElement(table.getTableOptionsBtn())
+              //  .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .then("All columns should be shown")
-                .validateListSize((ElementsCollection) tableData.getColumns(),
+                .validateListSize(tableData.getColumns(),
                         ColumnNames.ID.getName(),
                         ColumnNames.DETAILS.getName(),
                         ColumnNames.AD_SPOT_NAME.getName(),
@@ -72,8 +71,8 @@ public class AdSpotCheckColumns extends BaseTest {
                         ColumnNames.TEST_MODE.getName(),
                         ColumnNames.DEFAULT_SIZES.getName(),
                         ColumnNames.DEFAULT_FLOOR_PRICE.getName(),
-                        ColumnNames.CREATED_DATE.getName(),
-                        ColumnNames.UPDATED_DATE.getName())
+                        ColumnNames.CREATED_DATE.getName())
+                     //   ColumnNames.UPDATED_DATE.getName())
                 .and("Hide all columns")
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ID))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DETAILS))
@@ -87,8 +86,8 @@ public class AdSpotCheckColumns extends BaseTest {
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_SIZES))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_FLOOR_PRICE))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
-                .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
-               .then("All columns should be hidden")
+           //     .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
+                .then("All columns should be hidden")
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.ID.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.DETAILS.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.AD_SPOT_NAME.getName()))
@@ -101,12 +100,12 @@ public class AdSpotCheckColumns extends BaseTest {
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.DEFAULT_SIZES.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.DEFAULT_FLOOR_PRICE.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.CREATED_DATE.getName()))
-                .validate(not(visible), tableData.getColumnHeader(ColumnNames.UPDATED_DATE.getName()))
+         //       .validate(not(visible), tableData.getColumnHeader(ColumnNames.UPDATED_DATE.getName()))
                 .testEnd();
     }
 
     @AfterClass
-    private void logout(){
+    private void logout() {
         testStart()
                 .logOut()
                 .testEnd();

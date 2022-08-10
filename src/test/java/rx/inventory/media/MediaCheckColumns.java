@@ -21,9 +21,12 @@ import static managers.TestManager.testStart;
 public class MediaCheckColumns extends BaseTest {
     private MediaPage mediaPage;
 
+    public MediaCheckColumns() {
+        mediaPage = new MediaPage();
+    }
+
     @BeforeClass
     private void login() {
-        mediaPage = new MediaPage();
 
         testStart()
                 .given()

@@ -333,7 +333,7 @@ public class AdSpotSortingTableTests extends BaseTest {
         Map<String, Object> queryParams = new HashMap();
         queryParams.put("sort", strParams);
 
-        return  AdSpotPrecondition.adSpot()
+        return AdSpotPrecondition.adSpot()
                 .getAdSpotsWithFilter(queryParams)
                 .build()
                 .getAdSpotsGetAllResponse()

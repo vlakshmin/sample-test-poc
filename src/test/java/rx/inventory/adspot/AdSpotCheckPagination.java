@@ -29,17 +29,19 @@ public class AdSpotCheckPagination extends BaseTest {
     private int totalAdSpots;
     private List<AdSpot> listAdSpots;
 
-    @BeforeClass
-    private void init(){
+    public AdSpotCheckPagination() {
         adSpotsPage = new AdSpotsPage();
+    }
 
+    @BeforeClass
+    private void init() {
         if (getTotalAdSpots() < 100) generateAdSpots();
 
         totalAdSpots = getTotalAdSpots();
     }
 
     @BeforeMethod
-    private void login(){
+    private void login() {
         testStart()
                 .given()
                 .openDirectPath(Path.AD_SPOT)
@@ -79,33 +81,32 @@ public class AdSpotCheckPagination extends BaseTest {
     }
 
     @Step("Verify pagination {0}")
-    private void verifyPagination(Integer rowsPerPage){
+    private void verifyPagination(Integer rowsPerPage) {
         var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
 
         testStart()
-                .and(String.format("Select %s rows per page",rowsPerPage))
+                .and(String.format("Select %s rows per page", rowsPerPage))
                 .scrollIntoView(tablePagination.getPageMenu())
                 .selectFromDropdown(tablePagination.getPageMenu(),
                         tablePagination.getRowNumbersList(), rowsPerPage.toString())
-                .waitLoading(visible, adSpotsPage.getTableProgressBar())
                 .waitLoading(disappear, adSpotsPage.getTableProgressBar())
-                .then(String.format(String.format("Validate that text in table footer '1-%s of %s'",rowsPerPage,
+                .then(String.format(String.format("Validate that text in table footer '1-%s of %s'", rowsPerPage,
                         totalAdSpots)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format(String.format("1-%s of %s",rowsPerPage, totalAdSpots)))
-                .then(String.format("Rows in table page equals %s",rowsPerPage))
-                .validateListSize(tableData.getRows(),rowsPerPage)
+                        String.format(String.format("1-%s of %s", rowsPerPage, totalAdSpots)))
+                .then(String.format("Rows in table page equals %s", rowsPerPage))
+                .validateListSize(tableData.getRows(), rowsPerPage)
                 .and("Click on Next page")
                 .scrollIntoView(tablePagination.getNext())
                 .clickOnWebElement(tablePagination.getNext())
                 .then(String.format(String.format("Validate that text in table footer '%s-%s of %s'",
-                        rowsPerPage+1, Math.min(rowsPerPage*2,totalAdSpots), totalAdSpots)))
+                        rowsPerPage + 1, Math.min(rowsPerPage * 2, totalAdSpots), totalAdSpots)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format(String.format("%s-%s of %s",
-                                rowsPerPage+1, Math.min(rowsPerPage*2,totalAdSpots), totalAdSpots)))
-                .then(String.format("Rows in table page equals %s",rowsPerPage))
-                .validateListSize(tableData.getRows(),rowsPerPage)
+                                rowsPerPage + 1, Math.min(rowsPerPage * 2, totalAdSpots), totalAdSpots)))
+                .then(String.format("Rows in table page equals %s", rowsPerPage))
+                .validateListSize(tableData.getRows(), rowsPerPage)
                 .and("Click on Previous page")
                 .scrollIntoView(tablePagination.getPrevious())
                 .clickOnWebElement(tablePagination.getPrevious())
@@ -114,16 +115,16 @@ public class AdSpotCheckPagination extends BaseTest {
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format(String.format("1-%s of %s",
                                 rowsPerPage, totalAdSpots)))
-                .then(String.format("Rows in table page equals %s",rowsPerPage))
-                .validateListSize(tableData.getRows(),rowsPerPage)
+                .then(String.format("Rows in table page equals %s", rowsPerPage))
+                .validateListSize(tableData.getRows(), rowsPerPage)
                 .and("Logout")
                 .logOut()
                 .testEnd();
     }
 
     @AfterClass
-    private void deleteEntities(){
-        if(listAdSpots!=null) {
+    private void deleteEntities() {
+        if (listAdSpots != null) {
             for (AdSpot adSpot : listAdSpots) {
                 deleteAdSpot(adSpot.getId());
                 deleteMedia(adSpot.getMediaId());
@@ -132,19 +133,19 @@ public class AdSpotCheckPagination extends BaseTest {
         }
     }
 
-    private void deleteAdSpot(Integer id){
+    private void deleteAdSpot(Integer id) {
         adSpot()
                 .setCredentials(USER_FOR_DELETION)
                 .deleteAdSpot(id);
     }
 
-    private void deleteMedia(Integer id){
+    private void deleteMedia(Integer id) {
         media()
                 .setCredentials(USER_FOR_DELETION)
                 .deleteMedia(id);
     }
 
-    private void deletePublisher(Integer id){
+    private void deletePublisher(Integer id) {
         publisher()
                 .setCredentials(USER_FOR_DELETION)
                 .deletePublisher(id);

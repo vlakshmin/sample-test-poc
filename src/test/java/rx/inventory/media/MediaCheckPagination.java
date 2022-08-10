@@ -29,10 +29,12 @@ public class MediaCheckPagination extends BaseTest {
     private int totalMedia;
     private List<Media> listMedia;
 
+    public MediaCheckPagination() {
+        mediaPage = new MediaPage();
+    }
+
     @BeforeClass
     private void init() {
-        mediaPage = new MediaPage();
-
         if (getTotalMedia() < 100) generateMedia();
 
         totalMedia = getTotalMedia();

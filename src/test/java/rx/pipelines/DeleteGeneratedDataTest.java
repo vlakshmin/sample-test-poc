@@ -5,6 +5,7 @@ import api.dto.rx.admin.user.UserDto;
 import api.dto.rx.inventory.adspot.AdSpot;
 import api.dto.rx.inventory.media.Media;
 import api.dto.rx.protection.Protection;
+import api.dto.rx.yield.dynamicpricing.DynamicPricing;
 import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.*;
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +22,13 @@ import static configurations.User.USER_FOR_DELETION;
 @Slf4j
 public class DeleteGeneratedDataTest extends BaseTest {
 
-    private static final String PREFIX_MEDIA = "";
+    private static final String PREFIX_MEDIA = "auto";
     private static final String PREFIX_ADSPOTS = "auto";
     private static final String PREFIX_PUBLISHERS = "auto";
     private static final String PREFIX_OPEN_PRICING = "auto";
     private static final String PREFIX_USERS = "Test Account";
-    private static final String PREFIX_PROTECTIONS = "api protection";
+    private static final String PREFIX_DYNAMIC_PRICING = "auto";
+    private static final String PREFIX_PROTECTIONS = "Api protection";
 
     @Test(priority = 1)
     public void deleteProtections() {
@@ -63,14 +65,12 @@ public class DeleteGeneratedDataTest extends BaseTest {
         var media = getAllMediaByParams();
         int deleted = 0;
         for (Media m : media) {
-            if (m.getId()>43) {
-                if (MediaPrecondition.media().
-                        setCredentials(USER_FOR_DELETION).
-                        deleteMedia(m.getId())
-                        .build()
-                        .getResponseCode() == HttpStatus.SC_NO_CONTENT)
-                    deleted++;
-            }
+            if (MediaPrecondition.media().
+                    setCredentials(USER_FOR_DELETION).
+                    deleteMedia(m.getId())
+                    .build()
+                    .getResponseCode() == HttpStatus.SC_NO_CONTENT)
+                deleted++;
         }
         log.info(String.format("Deleted media items %s of %s", deleted, media.size()));
     }
@@ -91,6 +91,21 @@ public class DeleteGeneratedDataTest extends BaseTest {
     }
 
     @Test(priority = 5)
+    public void deleteDynamicPricing() {
+        var dynamicPricing = getAllDynamicPricingByParams();
+        int deleted = 0;
+        for (DynamicPricing p : dynamicPricing) {
+            if (DynamicPricingPrecondition.dynamicPricing()
+                    .setCredentials(USER_FOR_DELETION)
+                    .deleteDynamicPricing(p.getId())
+                    .build()
+                    .getResponseCode() == HttpStatus.SC_NO_CONTENT)
+                deleted++;
+        }
+        log.info(String.format("Deleted dynamic pricing items %s of %s", deleted, dynamicPricing.size()));
+    }
+
+    @Test(priority = 6)
     public void deletePublishers() {
         var publishers = getAllPublishersByParams();
         int deleted = 0;
@@ -105,7 +120,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
         log.info(String.format("Deleted publishers items %s of %s", deleted, publishers.size()));
     }
 
-    @Test(priority = 6)
+    @Test(priority = 7)
     public void deleteUsers() {
         var users = getAllUsersByParams();
         int deleted = 0;
@@ -153,6 +168,18 @@ public class DeleteGeneratedDataTest extends BaseTest {
                 .getOpenPricingWithFilter(queryParams)
                 .build()
                 .getOpenPricingGetAllResponse()
+                .getItems();
+    }
+
+    private List<DynamicPricing> getAllDynamicPricingByParams() {
+        Map<String, Object> queryParams = new HashMap<>();
+        queryParams.put("search", PREFIX_DYNAMIC_PRICING);
+        queryParams.put("sort", "id-desc");
+
+        return DynamicPricingPrecondition.dynamicPricing()
+                .getDynamicPricingWithFilter(queryParams)
+                .build()
+                .getDynamicPricingGetAllResponse()
                 .getItems();
     }
 
