@@ -48,6 +48,12 @@ public enum RakutenExchangeApi {
     UPDATE_ADSPOT("/v2/adspots/%s"),
     DELETE_ADSPOT("/v2/adspots/%s"),
 
+    //Dsp
+    GET_ALL_DSPS("/v2/dsps"),
+
+    //AdSize
+    GET_ALL_AD_SIZES("/v2/ad-sizes"),
+
     //Device
     GET_ALL_DEVICE_TYPES("/v2/device-types"),
 
