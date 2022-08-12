@@ -1,58 +1,58 @@
-package rx.inventory.media;
+package rx.inventory.adspot;
 
-
-import api.dto.rx.inventory.media.Media;
-import api.preconditionbuilders.MediaPrecondition;
+import api.dto.rx.inventory.adspot.AdSpot;
+import api.preconditionbuilders.AdSpotPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
 import pages.Path;
-import pages.inventory.media.MediaPage;
+import pages.inventory.adspots.AdSpotsPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
 import static managers.TestManager.testStart;
-import static zutils.FakerUtils.*;
+import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class MediaSortingTableTests extends BaseTest {
+public class AdSpotSortingTableTests extends BaseTest {
 
-    private int totalMedia;
+    private int totalAdSpots;
     private List<String> sortIdsByAsc;
     private List<String> sortIdsByDesc;
     private List<String> sortNamesByAsc;
     private List<String> sortNamesByDesc;
 
-
-    private List<String> sortURLByAsc;
-    private List<String> sortURLByDesc;
-
     private List<String> sortPublisherNameByDesc;
     private List<String> sortPublisherNameByAsc;
-
-    private MediaPage mediaPage;
+    private List<String> sortRelatedMediasByDesc;
+    private List<String> sortRelatedMediaByAsc;
+    private List<String> sortStatusByDesc;
+    private List<String> sortStatusByAsc;
+    private AdSpotsPage adSpotsPage;
 
     private static final String ASC = "ascending";
     private static final String DESC = "descending";
 
-    public MediaSortingTableTests() {
-        mediaPage = new MediaPage();
+    public AdSpotSortingTableTests() {
+        adSpotsPage = new AdSpotsPage();
     }
 
     @BeforeClass
     private void loginAndCreateExpectedResuts() {
 
-        if (getTotalMedia() < 60) generateMedia();
+        if (getTotalAdSpots() < 60) generateAdSpots();
 
-        totalMedia = getTotalMedia();
+        totalAdSpots = getTotalAdSpots();
 
         //expected results for Media Name column
         sortNamesByDesc = getNamesByDesc();
@@ -66,73 +66,85 @@ public class MediaSortingTableTests extends BaseTest {
         sortPublisherNameByAsc = getPublisherNameByAsc();
         sortPublisherNameByDesc = getPublisherNameByDesc();
 
-        //Expected result for URL column
-        sortURLByAsc = getUrlByAsc();
-        sortURLByDesc = getUrlByDesc();
-    }
+        //Expected result for Related Media column
+        sortRelatedMediaByAsc = getRelatedMediaByAsc();
+        sortRelatedMediasByDesc = getRelatedMediaByDesc();
 
-    @Test(testName = "Sorting 'Media Name' column by descending")
-    public void mediaSortingByMediaNameDesc() {
-        sortByDescColumnByName(ColumnNames.MEDIA_NAME);
-        validateSortData(ColumnNames.MEDIA_NAME, DESC, sortNamesByDesc);
-    }
-
-    @Test(testName = "Sorting 'Media Name' column by ascending")
-    public void mediaSortingByMediaNameAsc() {
-        sortByAscColumnByName(ColumnNames.MEDIA_NAME);
-        validateSortData(ColumnNames.MEDIA_NAME, ASC, sortNamesByAsc);
-    }
-
-    @Test(testName = "Sorting 'Publisher' column by ascending")
-    public void mediaSortingByPublisherNameAsc() {
-        sortByAscColumnByName(ColumnNames.PUBLISHER);
-        validateSortData(ColumnNames.PUBLISHER, ASC, sortPublisherNameByAsc);
-    }
-
-    @Test(testName = "Sorting 'Publisher' column by descending")
-    public void mediaSortingByPublisherNameDesc() {
-        sortByDescColumnByName(ColumnNames.PUBLISHER);
-        validateSortData(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
+        //Expected result for Active/Inactive column
+        sortStatusByAsc = getStatusByAsc();
+        sortStatusByDesc = getStatusByDesc();
     }
 
     @Test(testName = "Sorting 'ID' column by descending")
-    public void mediaSortingByIdDesc() {
+    public void adSpotSortingByIdDesc() {
         sortByDescColumnByName(ColumnNames.ID);
         validateSortData(ColumnNames.ID, DESC, sortIdsByDesc);
     }
 
     @Test(testName = "Sorting 'ID' column by ascending")
-    public void mediaSortingByIdAsc() {
+    public void adSpotSortingByIdAsc() {
 
         sortByAscColumnByName(ColumnNames.ID);
         validateSortData(ColumnNames.ID, ASC, sortIdsByAsc);
     }
 
-    @Test(testName = "Sorting 'Site/App Store URL' column by descending")
-    public void mediaSortingByUrlDesc() {
-        sortByDescColumnByName(ColumnNames.SITE_APP_STORE_URL);
-        validateSortData(ColumnNames.SITE_APP_STORE_URL, DESC, sortURLByDesc);
+    @Test(testName = "Sorting 'Ad Spot Name' column by descending")
+    public void adSpotSortingByNameDesc() {
+        sortByDescColumnByName(ColumnNames.AD_SPOT_NAME);
+        validateSortData(ColumnNames.AD_SPOT_NAME, DESC, sortNamesByDesc);
     }
 
-    @Test(testName = "Sorting 'Site/App Store URL' column by ascending")
-    public void mediaSortingByUrlAsc() {
-        sortByAscColumnByName(ColumnNames.SITE_APP_STORE_URL);
-        validateSortData(ColumnNames.SITE_APP_STORE_URL, ASC, sortURLByAsc);
+    @Test(testName = "Sorting 'Ad Spot Name' column by ascending")
+    public void adSpotSortingByAdSpotNameAsc() {
+        sortByAscColumnByName(ColumnNames.AD_SPOT_NAME);
+        validateSortData(ColumnNames.AD_SPOT_NAME, ASC, sortNamesByAsc);
+    }
+
+    @Test(testName = "Sorting 'Publisher' column by ascending")
+    public void adSpotSortingByPublisherNameAsc() {
+        sortByAscColumnByName(ColumnNames.PUBLISHER);
+        validateSortData(ColumnNames.PUBLISHER, ASC, sortPublisherNameByAsc);
+    }
+
+    @Test(testName = "Sorting 'Publisher' column by descending")
+    public void adSpotSortingByPublisherNameDesc() {
+        sortByDescColumnByName(ColumnNames.PUBLISHER);
+        validateSortData(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
+    }
+
+    @Test(testName = "Sorting 'Related Media' column by descending")
+    public void adSpotSortingByRelatedMediaDesc() {
+        sortByDescColumnByName(ColumnNames.RELATED_MEDIA);
+        validateSortData(ColumnNames.RELATED_MEDIA, DESC, sortRelatedMediasByDesc);
+    }
+
+    @Test(testName = "Sorting 'Related Media' column by ascending")
+    public void adSpotSortingByRelatedMediaAsc() {
+        sortByAscColumnByName(ColumnNames.RELATED_MEDIA);
+        validateSortData(ColumnNames.RELATED_MEDIA, ASC, sortRelatedMediaByAsc);
+    }
+
+    @Test(testName = "Sorting 'Active/Inactive' column by descending")
+    public void adSpotSortingByStatusDesc() {
+        sortByDescColumnByName(ColumnNames.ACTIVE_INACTIVE);
+        validateSortData(ColumnNames.ID, DESC, sortStatusByDesc);
+    }
+
+    @Test(testName = "Sorting 'Active/Inactive' column by ascending")
+    public void adSpotSortingByStatusAsc() {
+        sortByAscColumnByName(ColumnNames.ACTIVE_INACTIVE);
+        validateSortData(ColumnNames.ID, ASC, sortStatusByAsc);
     }
 
     @BeforeMethod
     private void login() {
-        var table = mediaPage.getMediaTable().getTableOptions();
-        var tableData = mediaPage.getMediaTable().getTableData();
+        var table = adSpotsPage.getAdSpotsTable().getTableOptions();
+        var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         testStart()
                 .given()
-                .openDirectPath(Path.MEDIA)
+                .openDirectPath(Path.AD_SPOT)
                 .logIn(TEST_USER)
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-                .clickOnWebElement(table.getTableOptionsBtn())
-                .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))
-                .validate(visible, tableData.getColumnHeader(ColumnNames.SITE_APP_STORE_URL.getName()))
-                .clickOnWebElement(table.getTableOptionsBtn())
+                .waitAndValidate(disappear, adSpotsPage.getNuxtProgress())
                 .testEnd();
     }
 
@@ -146,7 +158,7 @@ public class MediaSortingTableTests extends BaseTest {
 
     @Step("Sort column {0} by DESC")
     private void sortByDescColumnByName(ColumnNames columnName) {
-        var tableData = mediaPage.getMediaTable().getTableData();
+        var tableData = adSpotsPage.getAdSpotsTable().getTableData();
 
         testStart()
                 .given()
@@ -167,14 +179,14 @@ public class MediaSortingTableTests extends BaseTest {
                 .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
                 .validateAttribute(tableData.getColumnHeader(columnName.getName()),
                         "aria-sort", DESC)
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+                .waitAndValidate(disappear, adSpotsPage.getNuxtProgress())
                 .testEnd();
 
     }
 
     @Step("Sort column {0} by ASC")
     private void sortByAscColumnByName(ColumnNames columnName) {
-        var tableData = mediaPage.getMediaTable().getTableData();
+        var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         testStart()
                 .given()
                 .and(String.format("Sort column '%s'", columnName))
@@ -191,75 +203,76 @@ public class MediaSortingTableTests extends BaseTest {
                 .then("Ensure that sort by ascending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(columnName.getName()),
                         "aria-sort", ASC)
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+                .waitAndValidate(disappear, adSpotsPage.getNuxtProgress())
                 .testEnd();
 
     }
 
     @Step("Validate data in column {0} sorted by {1}")
     private void validateSortData(ColumnNames columnName, String sortType, List<String> expectedResultList) {
-        var tableData = mediaPage.getMediaTable().getTableData();
-        var tablePagination = mediaPage.getMediaTable().getTablePagination();
+        var tableData = adSpotsPage.getAdSpotsTable().getTableData();
+        var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
 
         testStart()
                 .given()
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+                .waitAndValidate(disappear, adSpotsPage.getNuxtProgress())
                 .and("Select 50 row per page")
+                .scrollIntoView(tablePagination.getPageMenu())
                 .selectFromDropdown(tablePagination.getPageMenu(),
                         tablePagination.getRowNumbersList(), "50")
-                .waitLoading(visible, mediaPage.getTableProgressBar())
-                .waitLoading(disappear, mediaPage.getTableProgressBar())
+                .waitLoading(visible, adSpotsPage.getTableProgressBar())
+                .waitLoading(disappear, adSpotsPage.getTableProgressBar())
                 .then(String.format("Validate that text in table footer '1-50 of %s'",
-                        totalMedia))
+                        totalAdSpots))
                 .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-50 of %s", totalMedia))
+                        String.format("1-50 of %s", totalAdSpots))
                 .then(String.format("Validate data in column '%s' should be sorted by $s",
                         columnName.getName(), sortType))
                 .validateList(tableData.getCustomCells(columnName),
                         expectedResultList.subList(0, 50))
                 .and("Check next page")
                 .clickOnWebElement(tablePagination.getNext())
-                .waitLoading(visible, mediaPage.getTableProgressBar())
-                .waitLoading(disappear, mediaPage.getTableProgressBar())
+                .waitLoading(visible, adSpotsPage.getTableProgressBar())
+                .waitLoading(disappear, adSpotsPage.getTableProgressBar())
                 .then(String.format("Validate that text in table footer '51-%s of %s'",
-                        Math.min(100, totalMedia), totalMedia))
+                        Math.min(100, totalAdSpots), totalAdSpots))
                 .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-%s of %s", Math.min(100, totalMedia), totalMedia))
+                        String.format("51-%s of %s", Math.min(100, totalAdSpots), totalAdSpots))
                 .then(String.format("Validate data in column '%s' should be sorted by %s", columnName.getName(), sortType))
                 .validateList(tableData.getCustomCells(columnName),
-                        expectedResultList.subList(50, Math.min(100, totalMedia)))
+                        expectedResultList.subList(50, Math.min(100, totalAdSpots)))
 
                 .testEnd();
     }
 
 
-    private int getTotalMedia() {
+    private int getTotalAdSpots() {
 
-        return MediaPrecondition.media()
-                .getAllMediaList()
+        return AdSpotPrecondition.adSpot()
+                .getAllAdSpotsList()
                 .build()
-                .getMediaGetAllResponse()
+                .getAdSpotsGetAllResponse()
                 .getTotal();
     }
 
     private List<String> getNamesByDesc() {
 
         return getAllItemsByParams("name-desc").stream()
-                .map(Media::getName)
+                .map(AdSpot::getName)
                 .collect(Collectors.toList());
     }
 
     private List<String> getNamesByAsc() {
 
         return getAllItemsByParams("name-asc").stream()
-                .map(Media::getName)
+                .map(AdSpot::getName)
                 .collect(Collectors.toList());
     }
 
     private List<String> getIdsByAsc() {
 
         return getAllItemsByParams("id-asc").stream()
-                .map(Media::getId)
+                .map(AdSpot::getId)
                 .map(x -> x.toString())
                 .collect(Collectors.toList());
     }
@@ -267,7 +280,7 @@ public class MediaSortingTableTests extends BaseTest {
     private List<String> getIdsByDesc() {
 
         return getAllItemsByParams("id-desc").stream()
-                .map(Media::getId)
+                .map(AdSpot::getId)
                 .map(x -> x.toString())
                 .collect(Collectors.toList());
     }
@@ -275,46 +288,62 @@ public class MediaSortingTableTests extends BaseTest {
     private List<String> getPublisherNameByAsc() {
 
         return getAllItemsByParams("publisher_name-asc").stream()
-                .map(Media::getPublisherName)
+                .map(AdSpot::getPublisherName)
                 .collect(Collectors.toList());
     }
 
     private List<String> getPublisherNameByDesc() {
 
         return getAllItemsByParams("publisher_name-desc").stream()
-                .map(Media::getPublisherName)
+                .map(AdSpot::getPublisherName)
                 .collect(Collectors.toList());
     }
 
-    private List<String> getUrlByAsc() {
+    private List<String> getRelatedMediaByDesc() {
 
-        return getAllItemsByParams("url-asc").stream()
-                .map(Media::getUrl)
+        return getAllItemsByParams("media_name-desc").stream()
+                .map(AdSpot::getMediaName)
                 .collect(Collectors.toList());
     }
 
-    private List<String> getUrlByDesc() {
+    private List<String> getRelatedMediaByAsc() {
 
-        return getAllItemsByParams("url-desc").stream()
-                .map(Media::getUrl)
+        return getAllItemsByParams("media_name-asc").stream()
+                .map(AdSpot::getMediaName)
                 .collect(Collectors.toList());
     }
 
-    private List<Media> getAllItemsByParams(String strParams) {
-        Map<String, Object> queryParams = new HashMap<>();
+    private List<String> getStatusByDesc() {
+
+        return getAllItemsByParams("enabled-desc").stream()
+                .map(AdSpot::getId)
+                .map(x -> x.toString())
+                .collect(Collectors.toList());
+    }
+
+    private List<String> getStatusByAsc() {
+
+        return getAllItemsByParams("enabled-asc").stream()
+                .map(AdSpot::getId)
+                .map(x -> x.toString())
+                .collect(Collectors.toList());
+    }
+
+    private List<AdSpot> getAllItemsByParams(String strParams) {
+        Map<String, Object> queryParams = new HashMap();
         queryParams.put("sort", strParams);
 
-        return MediaPrecondition.media()
-                .getMediaWithFilter(queryParams)
+        return AdSpotPrecondition.adSpot()
+                .getAdSpotsWithFilter(queryParams)
                 .build()
-                .getMediaGetAllResponse()
+                .getAdSpotsGetAllResponse()
                 .getItems();
     }
 
-    private void generateMedia() {
-        while (getTotalMedia() < 60) {
-            MediaPrecondition.media()
-                    .createNewMedia(captionWithSuffix("auto"))
+    private void generateAdSpots() {
+        while (getTotalAdSpots() < 60) {
+            AdSpotPrecondition.adSpot()
+                    .createNewAdSpot(captionWithSuffix("auto"))
                     .build();
         }
     }

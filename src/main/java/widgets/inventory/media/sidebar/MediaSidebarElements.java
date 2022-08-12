@@ -7,7 +7,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum MediaSidebarElements {
 
-    TOOLTIP_PLACEHOLDER("Tooltip Placeholder","//span"),
     SITE_URL( "'Site URL' Input", "//label[text()='Site URL']/../input"),
     MEDIA_TYPE("'Media Type' Input", "//label[text()='Media Type']/../div"),
     MEDIA_NAME("'Media Name' Input", "//label[text()='Media Name']/../input"),
@@ -19,8 +18,12 @@ public enum MediaSidebarElements {
     APP_STORE_URL( "'App Store URL' Input", "//label[text()='App Store URL']/../input"),
     SAVE_BUTTON("'Save Media' Button",  "//button/span[contains(text(),'Save Media')]"),
     PUBLISHER_NAME( "'Publisher Name' Input", "//label[text()='Publisher Name']/../div"),
-    ACTIVE_TOGGLE("'Active' Toggle",  "//label[text()='Active']/..//input[@role='switch']/..");
-
+    PUBLISHER_ITEMS( "'Publisher's Items' Input",
+            "//div[contains(@class,'menuable__content__activ')]//div[@class='v-list-item__title']"),
+    ACTIVE_TOGGLE("'Active' Toggle",  "//label[text()='Active']/..//input[@role='switch']/.."),
+    MEDIA_TYPE_ITEMS("'Media Type Items'",
+            "//div[contains(@class,'menuable__content__activ')]//div[contains(@class,'v-list-item')]"),
+    CLOSE_ICON("'Close Ad Spot' Icon", "//div[@class='v-toolbar__content']/button[contains(@class,'v-btn--round theme--dark')]");
 
     private String alias;
     private String selector;

@@ -1,12 +1,7 @@
 package rx.inventory.media;
 
 import api.dto.rx.admin.publisher.Publisher;
-import api.dto.rx.admin.publisher.PublisherRequest;
-import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.media.Media;
-import api.dto.rx.inventory.media.MediaRequest;
-import api.preconditionbuilders.MediaPrecondition;
-import api.preconditionbuilders.PublisherPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
@@ -16,7 +11,6 @@ import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.Statuses;
 import widgets.errormessages.ErrorMessages;
-import zutils.ObjectMapperUtils;
 
 import java.util.*;
 
@@ -26,7 +20,6 @@ import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
 import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
-import static zutils.FakerUtils.*;
 
 @Slf4j
 @Listeners({ScreenShooter.class})

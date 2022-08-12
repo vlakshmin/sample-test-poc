@@ -2,11 +2,13 @@ package api.preconditionbuilders;
 
 import api.core.client.HttpClient;
 import api.dto.GenericResponse;
+import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.adspot.AdSpot;
 import api.dto.rx.inventory.adspot.AdSpotRequest;
 import api.dto.rx.inventory.adspot.Video;
 import api.dto.rx.inventory.media.Media;
+import api.dto.rx.inventory.media.MediaRequest;
 import api.services.AdSpotService;
 import configurations.User;
 import io.restassured.common.mapper.TypeRef;
@@ -52,23 +54,57 @@ public class AdSpotPrecondition {
         private GenericResponse<AdSpot> adSpotsGetAllResponse;
 
         public AdSpotPreconditionBuilder createNewAdSpot() {
+            this.adSpotRequest = createAdSpotRequest(captionWithSuffix("ad_spot_auto"));
+            this.response = adSpotService.createAdSpot(adSpotRequest);
+            this.adSpotResponse = response.as(AdSpot.class);
+            this.responseCode = response.getStatusCode();
 
-            Media media = MediaPrecondition.media()
-                    .createNewMedia()
-                    .build()
-                    .getMediaResponse();
+            return this;
+        }
 
-            Video video = Video.builder()
-                    .floorPrice(23.00)
-                    .maxDuration(10)
-                    .enabled(true)
-                    .sizeIds(List.of(10))
-                    .playbackMethodIds(List.of(1))
-                    .build();
+        public AdSpotPreconditionBuilder createNewAdSpot(AdSpotRequest adSpotRequest) {
+            this.adSpotRequest = adSpotRequest;
+            this.response = adSpotService.createAdSpot(adSpotRequest);
+            this.adSpotResponse = response.as(AdSpot.class);
+            this.responseCode = response.getStatusCode();
 
+            return this;
+        }
 
-            this.adSpotRequest = AdSpotRequest.builder()
-                    .name(captionWithSuffix("ad spot"))
+        public AdSpotPreconditionBuilder createNewAdSpot(String name) {
+            this.adSpotRequest = createAdSpotRequest(name);
+            this.response = adSpotService.createAdSpot(adSpotRequest);
+            this.adSpotResponse = response.as(AdSpot.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
+        public AdSpotPreconditionBuilder createNewAdSpot(String name, String publisherName, Boolean isEnabled) {
+            this.adSpotRequest = createAdSpotRequest(name, publisherName, isEnabled);
+            this.response = adSpotService.createAdSpot(adSpotRequest);
+            this.adSpotResponse = response.as(AdSpot.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
+        public AdSpotPreconditionBuilder createNewAdSpot(String name, Boolean isEnabled) {
+            this.adSpotRequest = createAdSpotRequest(name, isEnabled);
+            this.response = adSpotService.createAdSpot(adSpotRequest);
+            this.adSpotResponse = response.as(AdSpot.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
+        private AdSpotRequest createAdSpotRequest(String name, String publisherName, Boolean isEnabled) {
+            Publisher publisher = createPublisher(publisherName);
+            Media media = createMedia("autoMedia",publisher.getId());
+
+            return AdSpotRequest.builder()
+                    .name(name)
+                    .enabled(isEnabled)
                     .publisherId(media.getPublisherId())
                     .currency(Currency.JPY.name())
                     .floorPrice(11.00)
@@ -79,24 +115,90 @@ public class AdSpotPrecondition {
                     .floorPriceAutomated(true)
                     .testMode(false)
                     .categoryIds(List.of(1, 9))
-                    .video(video)
-
+                    .video(createVideo())
                     .build();
-
-            this.response = adSpotService.createAdSpot(adSpotRequest);
-            this.adSpotResponse = response.as(AdSpot.class);
-            this.responseCode = response.getStatusCode();
-
-            return this;
         }
 
-        public AdSpotPreconditionBuilder createNewAdSpot(AdSpotRequest adSpotRequest) {
+        private AdSpotRequest createAdSpotRequest(String name, Boolean isEnabled) {
+            Publisher publisher = createPublisher("autoPub");
+            Media media = createMedia("autoMedia",publisher.getId());
 
-            this.response = adSpotService.createAdSpot(adSpotRequest);
-            this.adSpotResponse = response.as(AdSpot.class);
-            this.responseCode = response.getStatusCode();
+            return AdSpotRequest.builder()
+                    .name(name)
+                    .enabled(isEnabled)
+                    .publisherId(media.getPublisherId())
+                    .currency(Currency.JPY.name())
+                    .floorPrice(11.00)
+                    .mediaId(media.getId())
+                    .positionId(1)
+                    .coppa(true)
+                    .sizeIds(List.of(10))
+                    .floorPriceAutomated(true)
+                    .testMode(false)
+                    .categoryIds(List.of(1, 9))
+                    .video(createVideo())
+                    .build();
+        }
 
-            return this;
+        private Media createMedia(){
+
+            return MediaPrecondition.media()
+                    .createNewMedia()
+                    .build()
+                    .getMediaResponse();
+        }
+
+        private Media createMedia(String name, Integer id){
+
+            return MediaPrecondition.media()
+                    .createNewMedia(name,id,true)
+                    .build()
+                    .getMediaResponse();
+        }
+
+        private Publisher createPublisher(){
+
+            return PublisherPrecondition.publisher()
+                    .createNewPublisher()
+                    .build()
+                    .getPublisherResponse();
+        }
+
+        private Publisher createPublisher(String name){
+
+            return PublisherPrecondition.publisher()
+                    .createNewPublisher(name)
+                    .build()
+                    .getPublisherResponse();
+        }
+        private Video createVideo(){
+
+            return  Video.builder()
+                    .floorPrice(23.00)
+                    .maxDuration(10)
+                    .enabled(true)
+                    .sizeIds(List.of(10))
+                    .playbackMethodIds(List.of(1))
+                    .build();
+        }
+
+        private  AdSpotRequest createAdSpotRequest(String name){
+            Media media = createMedia();
+
+            return AdSpotRequest.builder()
+                    .name(name)
+                    .publisherId(media.getPublisherId())
+                    .currency(Currency.JPY.name())
+                    .floorPrice(11.00)
+                    .mediaId(media.getId())
+                    .positionId(1)
+                    .coppa(true)
+                    .sizeIds(List.of(10))
+                    .floorPriceAutomated(true)
+                    .testMode(false)
+                    .categoryIds(List.of(1, 9))
+                    .video(createVideo())
+                    .build();
         }
 
         public AdSpotPreconditionBuilder getAllAdSpotsList() {

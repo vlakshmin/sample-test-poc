@@ -2,6 +2,9 @@ package widgets.inventory.adSpots.sidebar;
 
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
+import widgets.inventory.adSpots.sidebar.card.AdSpotBannerCardSidebar;
+import widgets.inventory.adSpots.sidebar.card.AdSpotNativeCardSidebar;
+import widgets.inventory.adSpots.sidebar.card.AdSpotVideoCardSidebar;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static widgets.inventory.adSpots.sidebar.AdSpotSidebarElements.*;
@@ -12,13 +15,23 @@ import static widgets.inventory.adSpots.sidebar.AdSpotSidebarElements.*;
 @Getter
 public abstract class AdSpotSidebar {
 
+    private AdSpotVideoCardSidebar videoCard = new AdSpotVideoCardSidebar();
+    private AdSpotBannerCardSidebar bannerCard = new AdSpotBannerCardSidebar();
+    private AdSpotNativeCardSidebar nativeCard = new AdSpotNativeCardSidebar();
     private SelenideElement filter = $x(FILTER.getSelector()).as(FILTER.getAlias());
     private SelenideElement position = $x(POSITION.getSelector()).as(POSITION.getAlias());
+    private SelenideElement closeIcon = $x(CLOSE_ICON.getSelector()).as(CLOSE_ICON.getAlias());
     private SelenideElement categories = $x(CATEGORIES.getSelector()).as(CATEGORIES.getAlias());
     private SelenideElement saveButton = $x(SAVE_BUTTON.getSelector()).as(SAVE_BUTTON.getAlias());
     private SelenideElement nameInput = $x(AD_SPOT_NAME.getSelector()).as(AD_SPOT_NAME.getAlias());
     private SelenideElement publisherInput = $x(PUBLISHER_NAME.getSelector()).as(PUBLISHER_NAME.getAlias());
     private SelenideElement relatedMediaInput = $x(RELATED_MEDIA.getSelector()).as(RELATED_MEDIA.getAlias());
-    private SelenideElement defaultAdSize = $x(DEFAULT_AD_SIZE.getSelector()).as(DEFAULT_AD_SIZE.getAlias());
+    private SelenideElement defaultAdSizes = $x(DEFAULT_AD_SIZES.getSelector()).as(DEFAULT_AD_SIZES.getAlias());
     private SelenideElement defaultFloorPrice = $x(DEFAULT_FLOOR_PRICE.getSelector()).as(DEFAULT_FLOOR_PRICE.getAlias());
+
+    public SelenideElement getErrorAlertByFieldName(String fieldName){
+
+        return $x(String.format(ERROR_ALERT_BY_FIELD_NAME.getSelector(),fieldName))
+                .as(String.format(ERROR_ALERT_BY_FIELD_NAME.getAlias(),fieldName));
+    }
 }

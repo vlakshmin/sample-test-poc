@@ -6,14 +6,23 @@
             <class name="rx.admin.publishers.PublisherTest"/>
             <class name="rx.component.multipane.MultipaneTest"/>
             <class name="rx.component.table.TableDataTests"/>
-            <class name="rx.inventory.adspot.AdSpotTest"/>
             <class name="rx.login.LoginPositiveTest"/>
             <class name="rx.protections.ProtectionsTest"/>
+            <class name="rx.inventory.adspot.AdSpotCheckColumns"/>
             <class name="rx.sales.deals.DealsTest"/>
+            <class name="rx.inventory.media.MediaTestExample"/>
             <class name="rx.inventory.media.MediaActivateDeactivateTableTests"/>
             <class name="rx.inventory.media.MediaSearchTableTests"/>
             <class name="rx.inventory.media.MediaSortingTableTests"/>
-<!--            <class name="rx.pipelines.DeleteGeneratedDataTest"/>-->
+            <class name="rx.inventory.media.MediaCheckColumns"/>
+            <class name="rx.inventory.media.MediaCheckPagination"/>
+            <class name="rx.inventory.media.MediaCheckTooltips"/>
+            <class name="rx.inventory.adspot.AdSpotCheckTooltips"/>
+            <class name="rx.inventory.adspot.AdSpotTest"/>
+            <class name="rx.inventory.adspot.AdSpotSortingTableTests"/>
+            <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
+            <class name="rx.inventory.adspot.AdSpotCheckPagination"/>
+            <class name="rx.inventory.adspot.AdSpotCheckTooltips"/>
         </classes>
     </test>
 </suite>

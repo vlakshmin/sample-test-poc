@@ -13,6 +13,7 @@ import widgets.common.tooltip.MediaTooltipText;
 import widgets.errormessages.ErrorMessages;
 import widgets.inventory.media.sidebar.EditMediaSidebar;
 import widgets.inventory.media.sidebar.MediaSidebarElements;
+import widgets.inventory.media.sidebar.MediaTooltipSidebarElements;
 
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
@@ -38,7 +39,7 @@ public class MediaTestExample extends BaseTest {
         //Creating media to edit Using API
         media = MediaPrecondition.media()
 
-                .createNewMedia()
+                .createNewMedia("auto", "http://localhost:8080")
                 .build().getMediaResponse();
     }
 
@@ -53,7 +54,10 @@ public class MediaTestExample extends BaseTest {
                 .openDirectPath(Path.MEDIA)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+                .waitLoading(visible, mediaPage.getTableProgressBar())
+                .waitLoading(disappear, mediaPage.getTableProgressBar())
                 .and(String.format("Search Media by name '%s'", media.getName()))
+                .scrollIntoView(tableData.getSearch())
                 .setValueWithClean(tableData.getSearch(), media.getName())
                 .clickEnterButton(tableData.getSearch())
                 .then("Wait table data loading")
@@ -71,8 +75,8 @@ public class MediaTestExample extends BaseTest {
                 .waitSideBarOpened()
                 .then("Validate Categories tooltip text")
                 .validateTooltip(editMediaSidebar.getTooltipIconByFieldName("Categories"),
-                        MediaSidebarElements.TOOLTIP_PLACEHOLDER.getSelector(),
-                        MediaTooltipText.CATEGORY_TOOLTIP_TEXT.getText())
+                        MediaTooltipSidebarElements.TOOLTIP_PLACEHOLDER.getSelector(),
+                        MediaTooltipText.CATEGORIES.getText())
                 .and("Click on 'Save' button")
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
                 .then("Validate bottom panel with errors")
@@ -81,8 +85,8 @@ public class MediaTestExample extends BaseTest {
                         ErrorMessages.SITE_URL_ERROR_ALERT.getText())
                 .then("Validate error message under the 'Site URL' field")
                 .scrollIntoView(editMediaSidebar.getErrorAlert().getErrorPanel())
-                .validate(visible,editMediaSidebar.getErrorAlert().getErrorPanel())
-                .validate(visible,editMediaSidebar.getErrorAlert().getIconError())
+                .validate(visible, editMediaSidebar.getErrorAlert().getErrorPanel())
+                .validate(visible, editMediaSidebar.getErrorAlert().getIconError())
                 .scrollIntoView(editMediaSidebar.getSiteURL())
                 .validateContainsText(editMediaSidebar.getErrorAlertByFieldName("Site URL"),
                         ErrorMessages.SITE_URL_ERROR_ALERT.getText())
@@ -90,13 +94,13 @@ public class MediaTestExample extends BaseTest {
                 .setValueWithClean(editMediaSidebar.getSiteURL(), "https://test.com")
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
                 .then("Errors should be disappeared")
-                .validate(disappear,editMediaSidebar.getErrorAlert().getErrorPanel())
+                .validate(disappear, editMediaSidebar.getErrorAlert().getErrorPanel())
                 .then("Wait until SideBar closed")
                 .waitSideBarClosed()
                 .and("Logout")
                 .logOut()
                 .and("End")
-        .testEnd();
+                .testEnd();
     }
 
     @AfterTest

@@ -34,6 +34,13 @@ public enum RakutenExchangeApi {
     GET_OPEN_PRICING("/v3/pricing/open/%s"),
     DELETE_OPEN_PRICING("/v3/pricing/open/%s"),
 
+    //Dynamic Pricing
+    CREATE_DYNAMIC_PRICING("/v3/pricing/dynamic"),
+    UPDATE_DYNAMIC_PRICING("/v3/pricing/dynamic/%s"),
+    GET_ALL_DYNAMIC_PRICING("/v3/pricing/dynamic"),
+    GET_DYNAMIC_PRICING("/v3/pricing/dynamic/%s"),
+    DELETE_DYNAMIC_PRICING("/v3/pricing/dynamic/%s"),
+
     //Media
     CREATE_MEDIA("/v2/media"),
     GET_MEDIA("/v2/media/%s"),
