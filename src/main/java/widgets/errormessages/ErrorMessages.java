@@ -13,8 +13,10 @@ public enum ErrorMessages {
     MEDIA_NAME_ERROR_ALERT("'Media Name' Error Alert Text", "The Media Name field is required"),
     MEDIA_TYPE_ERROR_ALERT("'Media Type' Error Alert Text", "The Media Type field is required"),
     SITE_URL_ERROR_ALERT("'Site URL' Error Alert Text", "The Site URL field must be a valid url"),
+    SITE_URL_REQUIRED_ERROR_ALERT("'Site URL' Error Alert Text", "The Site URL field is required"),
     PUBLISHER_NAME_ERROR_ALERT("'Publisher Name' Error Alert Text", "The Publisher Name field is required"),
     APP_STORE_URL_ERROR_ALERT("'App Store URL' Error Alert Text", "The App Store URL field must be a valid url"),
+    APP_STORE_URL_REQUIRED_ERROR_ALERT("'App Store URL' Error Alert Text", "The App Store URL field is required"),
 
     //Private Auction / Deal
     DSP_ERROR_ALERT("DSP Error Alert Text", "The DSP field is required"),

@@ -96,7 +96,7 @@ buildNumber.properties
 ### Gulp ###
 node_modules
 build
-allure-results
+target/allure-results
 
 
 ### Gulp ###
@@ -120,7 +120,7 @@ application-prod.yml
 *.txt
 *.log
 .allure
-allure-results
+target/allure-results
 docker/docker-compose.yml
 target
 

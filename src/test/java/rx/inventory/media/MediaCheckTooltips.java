@@ -80,18 +80,17 @@ public class MediaCheckTooltips extends BaseTest {
                 MediaTooltipText.SITE_URL.getText());
     }
 
-    //TODO: GS-2439
-//    @Test(description = "'Bundle' Tooltip Text")
-//    private void bundleTooltip(){
-//        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.ANDROID.getName(),
-//                MediaTooltipText.BUNDLE.getText());
-//        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.IOS.getName(),
-//                MediaTooltipText.BUNDLE.getText());
-//        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.IOS_WEB_VIEW.getName(),
-//                MediaTooltipText.BUNDLE.getText());
-//        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.ANDROID_WEB_VIEW.getName(),
-//                MediaTooltipText.BUNDLE.getText());
-//    }
+    @Test(description = "'Bundle' Tooltip Text")
+    private void bundleTooltip(){
+        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.ANDROID.getName(),
+                MediaTooltipText.BUNDLE.getText());
+        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.IOS.getName(),
+                MediaTooltipText.BUNDLE.getText());
+        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.IOS_WEB_VIEW.getName(),
+                MediaTooltipText.BUNDLE.getText());
+        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.ANDROID_WEB_VIEW.getName(),
+                MediaTooltipText.BUNDLE.getText());
+    }
 
     @Test(description = "'App Store URL' Tooltip Text")
     private void appStoreURLTooltip() {

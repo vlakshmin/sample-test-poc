@@ -61,6 +61,9 @@ public enum RakutenExchangeApi {
     //AdSize
     GET_ALL_AD_SIZES("/v2/ad-sizes"),
 
+    //Platform Types
+    GET_ALL_PLATFORM_TYPES("/v2/platform-types"),
+
     //Device
     GET_ALL_DEVICE_TYPES("/v2/device-types"),
 

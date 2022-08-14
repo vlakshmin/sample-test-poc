@@ -3,7 +3,7 @@
 <suite name="SmokeTest Suite" parallel="false">
     <test name="SmokeTest Suite">
         <classes>
-            <class name="rx.admin.publishers.PublisherTest"/>
+        <!--    <class name="rx.admin.publishers.PublisherTest"/>
             <class name="rx.component.multipane.MultipaneTest"/>
             <class name="rx.component.table.TableDataTests"/>
             <class name="rx.login.LoginPositiveTest"/>
@@ -21,7 +21,7 @@
             <class name="rx.inventory.adspot.AdSpotTest"/>
             <class name="rx.inventory.adspot.AdSpotSortingTableTests"/>
             <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
-            <class name="rx.inventory.adspot.AdSpotCheckPagination"/>
+            <class name="rx.inventory.adspot.AdSpotCheckPagination"/>-->
             <class name="rx.inventory.adspot.AdSpotCheckTooltips"/>
         </classes>
     </test>
