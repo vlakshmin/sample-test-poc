@@ -3,6 +3,7 @@ package rx.inventory.media;
 import api.dto.rx.admin.publisher.Publisher;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpStatus;
 import org.testng.annotations.*;
 import pages.Path;
 import pages.inventory.media.MediaPage;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
+import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
 import static zutils.FakerUtils.captionWithSuffix;
 
@@ -82,7 +84,6 @@ public class MediaCheckFields extends BaseTest {
                 .then("Validate required fields")
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
                 .waitAndValidate(visible, editMediaSidebar.getErrorAlert().getErrorPanel())
-     //           .validate(editMediaSidebar.getErrorAlert().getHeaderError(),"The form has the following validation errors:")
                 .validateListSize(errorsList,4)
                 .validateList(errorsList,  new ArrayList<>() {
                             {
@@ -111,7 +112,7 @@ public class MediaCheckFields extends BaseTest {
                 .waitAndValidate(visible,editMediaSidebar.getErrorAlertByFieldName("Media Type"))
                 .validate(editMediaSidebar.getErrorAlertByFieldName("Media Type"),ErrorMessages.MEDIA_TYPE_ERROR_ALERT.getText())
                 .waitAndValidate(visible,editMediaSidebar.getErrorAlertByFieldName("Site URL"))
-                .validate(editMediaSidebar.getErrorAlertByFieldName("Media Type"),ErrorMessages.MEDIA_TYPE_ERROR_ALERT.getText())
+                .validate(editMediaSidebar.getErrorAlertByFieldName("Site URL"),ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText())
 
                 .and("Fill Name")
                 .setValueWithClean(editMediaSidebar.getNameInput(), "mediaName")
@@ -158,6 +159,62 @@ public class MediaCheckFields extends BaseTest {
 
     @Test(description = "Check errors then switch Media type")
     private void switchMediaTypeAndCheckError(){
+        var errorsList = editMediaSidebar.getErrorAlert().getErrorsList();
+
+        testStart()
+                .and("Select Publisher")
+                .selectFromDropdown(editMediaSidebar.getPublisherInput(),
+                editMediaSidebar.getPublisherItems(), publisher.getName())
+                .and("Fill Name")
+                .setValueWithClean(editMediaSidebar.getNameInput(), "mediaName")
+                .and("Select Media Type 'Android'")
+                .selectFromDropdown(editMediaSidebar.getMediaType(),
+                editMediaSidebar.getMediaTypeItems(), MediaTypes.ANDROID.getName())
+                .and("Click 'Save'")
+                .clickOnWebElement(editMediaSidebar.getSaveButton())
+                .then("Validate Error Message is appears")
+                .validateList(errorsList,  new ArrayList<String>() {
+                    {
+                        add(ErrorMessages.APP_STORE_URL_REQUIRED_ERROR_ALERT.getText());
+                    }
+                })
+                .waitAndValidate(visible,editMediaSidebar.getErrorAlertByFieldName("App Store URL"))
+                .validate(editMediaSidebar.getErrorAlertByFieldName("App Store URL"),
+                        ErrorMessages.APP_STORE_URL_REQUIRED_ERROR_ALERT.getText())
+                .selectFromDropdown(editMediaSidebar.getMediaType(),
+                        editMediaSidebar.getMediaTypeItems(), MediaTypes.IOS.getName())
+                .clickOnWebElement(editMediaSidebar.getSaveButton())
+                .validateList(errorsList,  new ArrayList<String>() {
+                    {
+                        add(ErrorMessages.APP_STORE_URL_REQUIRED_ERROR_ALERT.getText());
+                    }
+                })
+                .waitAndValidate(visible,editMediaSidebar.getErrorAlertByFieldName("App Store URL"))
+                .validate(editMediaSidebar.getErrorAlertByFieldName("App Store URL"),
+                        ErrorMessages.APP_STORE_URL_REQUIRED_ERROR_ALERT.getText())
+                .selectFromDropdown(editMediaSidebar.getMediaType(),
+                        editMediaSidebar.getMediaTypeItems(), MediaTypes.MOBILE_WEB.getName())
+                .clickOnWebElement(editMediaSidebar.getSaveButton())
+                .validateList(errorsList,  new ArrayList<String>() {
+                    {
+                        add(ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText());
+                    }
+                })
+                .waitAndValidate(visible,editMediaSidebar.getErrorAlertByFieldName("Site URL"))
+                .validate(editMediaSidebar.getErrorAlertByFieldName("Site URL"),
+                        ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText())
+                                .selectFromDropdown(editMediaSidebar.getMediaType(),
+                editMediaSidebar.getMediaTypeItems(), MediaTypes.ANDROID_WEB_VIEW.getName())
+                .clickOnWebElement(editMediaSidebar.getSaveButton())
+                .validateList(errorsList,  new ArrayList<String>() {
+                    {
+                        add(ErrorMessages.APP_STORE_URL_REQUIRED_ERROR_ALERT.getText());
+                    }
+                })
+                .waitAndValidate(visible,editMediaSidebar.getErrorAlertByFieldName("App Store URL"))
+                .validate(editMediaSidebar.getErrorAlertByFieldName("App Store URL"),
+                        ErrorMessages.APP_STORE_URL_REQUIRED_ERROR_ALERT.getText())
+                .testEnd();
 
     }
 
@@ -169,7 +226,16 @@ public class MediaCheckFields extends BaseTest {
                 .waitSideBarClosed()
                 .logOut()
                 .testEnd();
+    }
 
+    @AfterClass
+    private void deletePublisher() {
+        if (publisher()
+                .setCredentials(USER_FOR_DELETION)
+                .deletePublisher(publisher.getId())
+                .build()
+                .getResponseCode() == HttpStatus.SC_NO_CONTENT)
+            log.info(String.format("Deleted publisher %s", publisher.getId()));
     }
 
 }
