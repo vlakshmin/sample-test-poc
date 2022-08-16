@@ -4,6 +4,8 @@ import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import widgets.common.multipane.Multipane;
 import widgets.common.multipane.MultipaneNameImpl;
+import widgets.protections.protectiontypemultipane.ProtectionTypeMultipane;
+import widgets.protections.protectiontypemultipane.ProtectionTypeNameImpl;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static widgets.protections.sidebar.ProtectionsSidebarElements.*;
@@ -28,4 +30,7 @@ public abstract class ProtectionsSidebar {
     private Multipane inventoryMultipane = new Multipane(MultipaneNameImpl.INVENTORY);
     private Multipane demandSourcesMultipane = new Multipane(MultipaneNameImpl.DEMAND_SOURCES);
     private Multipane operatingSystemMultipane = new Multipane(MultipaneNameImpl.OPERATING_SYSTEM);
+
+    private Multipane advertiserTypeMultipane = new ProtectionTypeMultipane(ProtectionTypeNameImpl.ADVERTISER);
+    private Multipane adCategoriesTypeMultipane = new ProtectionTypeMultipane(ProtectionTypeNameImpl.AD_CATEGORIES);
 }

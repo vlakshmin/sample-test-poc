@@ -1,4 +1,4 @@
-package widgets.protections.advertiser;
+package widgets.protections.protectiontypemultipane;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
