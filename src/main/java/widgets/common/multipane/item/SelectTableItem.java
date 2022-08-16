@@ -8,7 +8,7 @@ public class SelectTableItem extends CommonSelectTableItem {
     private static final String SELECT_TABLE_ITEM = "h3[text()='%s']/../..//table[contains(@class,'select-table')]/tbody";
     //descendant::h3[text()='%s']/../..//table[contains(@class,'select-table')]/tbody
 
-    public SelectTableItem(int position, MultipaneName  multipaneName) {
-        super(position, SELECT_TABLE_ITEM, multipaneName);
+    public SelectTableItem(int position, MultipaneName multipaneNameImpl) {
+        super(position, SELECT_TABLE_ITEM, multipaneNameImpl);
     }
 }

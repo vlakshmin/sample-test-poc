@@ -3,7 +3,7 @@ package widgets.protections.sidebar;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import widgets.common.multipane.Multipane;
-import widgets.common.multipane.MultipaneName;
+import widgets.common.multipane.MultipaneNameImpl;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static widgets.protections.sidebar.ProtectionsSidebarElements.*;
@@ -21,11 +21,11 @@ public abstract class ProtectionsSidebar {
     private SelenideElement protectionTypeDropdown = $x(PROTECTION_TYPE_DROPDOWN.getSelector()).as(PROTECTION_TYPE_DROPDOWN.getAlias());
     private SelenideElement managedBySystemAdminOnly = $x(MANAGED_BY_SYSTEM_ADMIN_ONLY.getSelector()).as(MANAGED_BY_SYSTEM_ADMIN_ONLY.getAlias());
 
-    private Multipane geoMultipane = new Multipane(MultipaneName.GEO);
-    private Multipane deviceMultipane = new Multipane(MultipaneName.DEVICE);
-    private Multipane adSizeMultipane = new Multipane(MultipaneName.AD_SIZE);
-    private Multipane adFormatMultipane = new Multipane(MultipaneName.AD_FORMAT);
-    private Multipane inventoryMultipane = new Multipane(MultipaneName.INVENTORY);
-    private Multipane demandSourcesMultipane = new Multipane(MultipaneName.DEMAND_SOURCES);
-    private Multipane operatingSystemMultipane = new Multipane(MultipaneName.OPERATING_SYSTEM);
+    private Multipane geoMultipane = new Multipane(MultipaneNameImpl.GEO);
+    private Multipane deviceMultipane = new Multipane(MultipaneNameImpl.DEVICE);
+    private Multipane adSizeMultipane = new Multipane(MultipaneNameImpl.AD_SIZE);
+    private Multipane adFormatMultipane = new Multipane(MultipaneNameImpl.AD_FORMAT);
+    private Multipane inventoryMultipane = new Multipane(MultipaneNameImpl.INVENTORY);
+    private Multipane demandSourcesMultipane = new Multipane(MultipaneNameImpl.DEMAND_SOURCES);
+    private Multipane operatingSystemMultipane = new Multipane(MultipaneNameImpl.OPERATING_SYSTEM);
 }

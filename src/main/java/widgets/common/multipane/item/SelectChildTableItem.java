@@ -1,6 +1,7 @@
 package widgets.common.multipane.item;
 
 import widgets.common.multipane.MultipaneName;
+import widgets.common.multipane.MultipaneNameImpl;
 import widgets.common.multipane.item.common.CommonSelectTableItem;
 
 

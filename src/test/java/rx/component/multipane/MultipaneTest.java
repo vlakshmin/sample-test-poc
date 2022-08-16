@@ -3,7 +3,6 @@ package rx.component.multipane;
 import api.dto.rx.admin.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
-import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +12,7 @@ import org.testng.annotations.Test;
 import pages.Path;
 import rx.BaseTest;
 import widgets.common.multipane.Multipane;
-import widgets.common.multipane.MultipaneName;
+import widgets.common.multipane.MultipaneNameImpl;
 
 import java.util.NoSuchElementException;
 
@@ -39,7 +38,7 @@ public class MultipaneTest extends BaseTest {
 
 
     public MultipaneTest() {
-        deviceMultipane = new Multipane(MultipaneName.DEVICE);
+        deviceMultipane = new Multipane(MultipaneNameImpl.DEVICE);
     }
 
     @BeforeClass

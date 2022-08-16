@@ -4,7 +4,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import widgets.common.multipane.Multipane;
-import widgets.common.multipane.MultipaneName;
+import widgets.common.multipane.MultipaneNameImpl;
 import widgets.yield.openPricing.floorprice.FloorPriceField;
 
 import static com.codeborne.selenide.Selenide.$$x;
@@ -25,13 +25,13 @@ public abstract class OpenPricingSidebar {
 
     private FloorPriceField floorPriceField = new FloorPriceField();
 
-    private Multipane geoMultipane = new Multipane(MultipaneName.GEO);
-    private Multipane deviceMultipane = new Multipane(MultipaneName.DEVICE);
-    private Multipane adSizeMultipane = new Multipane(MultipaneName.AD_SIZE);
-    private Multipane adFormatMultipane = new Multipane(MultipaneName.AD_FORMAT);
-    private Multipane inventoryMultipane = new Multipane(MultipaneName.INVENTORY);
-    private Multipane demandSourcesMultipane = new Multipane(MultipaneName.DEMAND_SOURCES);
-    private Multipane operatingSystemMultipane = new Multipane(MultipaneName.OPERATING_SYSTEM);
+    private Multipane geoMultipane = new Multipane(MultipaneNameImpl.GEO);
+    private Multipane deviceMultipane = new Multipane(MultipaneNameImpl.DEVICE);
+    private Multipane adSizeMultipane = new Multipane(MultipaneNameImpl.AD_SIZE);
+    private Multipane adFormatMultipane = new Multipane(MultipaneNameImpl.AD_FORMAT);
+    private Multipane inventoryMultipane = new Multipane(MultipaneNameImpl.INVENTORY);
+    private Multipane demandSourcesMultipane = new Multipane(MultipaneNameImpl.DEMAND_SOURCES);
+    private Multipane operatingSystemMultipane = new Multipane(MultipaneNameImpl.OPERATING_SYSTEM);
 
     public SelenideElement getErrorLabelByFieldName(OpenPricingField field) {
 
