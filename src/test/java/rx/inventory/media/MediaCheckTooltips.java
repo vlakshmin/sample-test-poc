@@ -111,7 +111,7 @@ public class MediaCheckTooltips extends BaseTest {
     @Step("Verify Tooltip Text")
     private void verifyTooltip(SelenideElement field, String mediaType, String expectedText) {
         testStart()
-                .selectFromDropdown(editMediaSidebar.getMediaTypeInput(),
+                .selectFromDropdown(editMediaSidebar.getMediaType(),
                         editMediaSidebar.getMediaTypeItems(), mediaType)
                 .scrollIntoView(field)
                 .validateTooltip(field,

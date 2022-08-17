@@ -115,12 +115,12 @@ public class TableDataTests extends BaseTest {
                 .waitLoading(visible, publishersPage.getTableProgressBar())
                 .waitLoading(disappear, publishersPage.getTableProgressBar())
                 .validateListSize(tableData.getRows(), 10)
-                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.ACTIVE),
+                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE),
                         Statuses.ACTIVE.getStatus())
                 .clickOnWebElement(tablePagenation.getNext())
                 .waitLoading(visible, publishersPage.getTableProgressBar())
                 .waitLoading(disappear, publishersPage.getTableProgressBar())
-                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.ACTIVE),
+                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE),
                         Statuses.ACTIVE.getStatus())
                 .logOut()
                 .testEnd();
