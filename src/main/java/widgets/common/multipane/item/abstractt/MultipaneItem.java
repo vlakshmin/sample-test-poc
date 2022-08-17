@@ -4,6 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import lombok.AccessLevel;
 import lombok.Getter;
 import widgets.common.multipane.MultipaneName;
+import widgets.common.multipane.MultipaneNameImpl;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static java.lang.String.format;
@@ -28,12 +29,12 @@ public abstract class MultipaneItem {
     @Getter(AccessLevel.NONE)
     protected String multipaneItem;
 
-    public MultipaneItem(int position, String  multipaneItem, MultipaneName  multipaneName) {
+    public MultipaneItem(int position, String  multipaneItem, MultipaneName multipaneName) {
         this.position = position;
         this.multipaneItem = multipaneItem;
         this.multipaneName = multipaneName.getName();
 
-        switch (multipaneName) {
+        switch ((MultipaneNameImpl) multipaneName) {
             case INVENTORY:
                 this.name = $x(buildXpath(INVENTORY_NAME.getSelector())).as(format("%s%s", INVENTORY_NAME.getAlias(), position));
                 this.type = $x(buildXpath(INVENTORY_TYPE.getSelector())).as(format("%s%s", INVENTORY_TYPE.getAlias(), position));

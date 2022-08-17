@@ -1,29 +1,27 @@
-package widgets.yield.openPricing.sidebar;
+package widgets.protections.sidebar;
 
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import widgets.common.multipane.Multipane;
 import widgets.common.multipane.MultipaneNameImpl;
-import widgets.yield.openPricing.floorprice.FloorPriceField;
+import widgets.protections.protectiontypemultipane.ProtectionTypeMultipane;
+import widgets.protections.protectiontypemultipane.ProtectionTypeNameImpl;
 
-import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
-import static java.lang.String.*;
-import static widgets.yield.openPricing.sidebar.OpenPricingSidebarElements.*;
+import static widgets.protections.sidebar.ProtectionsSidebarElements.*;
 
 /**
- * Keep Selectors of UI elements in {@link OpenPricingSidebarElements}
+ * Keep Selectors of UI elements in {@link ProtectionsSidebarElements}
  */
 @Getter
-public abstract class OpenPricingSidebar {
+public abstract class ProtectionsSidebar {
 
+    private SelenideElement notes = $x(NOTES.getSelector()).as(NOTES.getAlias());
+    private SelenideElement nameInput = $x(NAME.getSelector()).as(NAME.getAlias());
     private SelenideElement saveButton = $x(SAVE_BUTTON.getSelector()).as(SAVE_BUTTON.getAlias());
-    private SelenideElement nameInput = $x(OPEN_PRICING_FIELD_NAME.getSelector()).as(OPEN_PRICING_FIELD_NAME.getAlias());
-    private ElementsCollection publisherNameDropdownItems = $$x(DROPDOWN_ITEMS.getSelector()).as(DROPDOWN_ITEMS.getAlias());
     private SelenideElement publisherNameDropdown = $x(PUBLISHER_NAME_DROPDOWN.getSelector()).as(PUBLISHER_NAME_DROPDOWN.getAlias());
-
-    private FloorPriceField floorPriceField = new FloorPriceField();
+    private SelenideElement protectionTypeDropdown = $x(PROTECTION_TYPE_DROPDOWN.getSelector()).as(PROTECTION_TYPE_DROPDOWN.getAlias());
+    private SelenideElement managedBySystemAdminOnly = $x(MANAGED_BY_SYSTEM_ADMIN_ONLY.getSelector()).as(MANAGED_BY_SYSTEM_ADMIN_ONLY.getAlias());
 
     private Multipane geoMultipane = new Multipane(MultipaneNameImpl.GEO);
     private Multipane deviceMultipane = new Multipane(MultipaneNameImpl.DEVICE);
@@ -33,10 +31,6 @@ public abstract class OpenPricingSidebar {
     private Multipane demandSourcesMultipane = new Multipane(MultipaneNameImpl.DEMAND_SOURCES);
     private Multipane operatingSystemMultipane = new Multipane(MultipaneNameImpl.OPERATING_SYSTEM);
 
-    public SelenideElement getErrorLabelByFieldName(OpenPricingField field) {
-
-        return $x(format(OPEN_PRICING_FIELD_NAME.getSelector(), field.getName()))
-                .as(format(OPEN_PRICING_FIELD_NAME.getAlias(), field.getName()));
-    }
-
+    private Multipane advertiserTypeMultipane = new ProtectionTypeMultipane(ProtectionTypeNameImpl.ADVERTISER);
+    private Multipane adCategoriesTypeMultipane = new ProtectionTypeMultipane(ProtectionTypeNameImpl.AD_CATEGORIES);
 }

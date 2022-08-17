@@ -20,7 +20,7 @@ import rx.BaseTest;
 import widgets.common.detailsmenu.menu.TableItemDetailsMenu;
 import widgets.common.detailsmenu.menu.sections.DetailsSection;
 import widgets.common.multipane.Multipane;
-import widgets.common.multipane.MultipaneName;
+import widgets.common.multipane.MultipaneNameImpl;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.TableData;
 import widgets.yield.openPricing.sidebar.CreateOpenPricingSidebar;
@@ -257,7 +257,7 @@ public class CreateOpenPricingTest extends BaseTest {
 
         var firstItemToSelect = multipane.getSelectTableItemByPositionInList(0);
         var demandSourceRelatedOnlyCondition =
-                multipane.getMultipaneName().equals(MultipaneName.DEMAND_SOURCES) ? visible : not(visible);
+                multipane.getMultipaneName().equals(MultipaneNameImpl.DEMAND_SOURCES) ? visible : not(visible);
 
         testStart()
                 .then(format("Validate initial state of Items to select in '%s' Multipane", multipane.getMultipaneName()))

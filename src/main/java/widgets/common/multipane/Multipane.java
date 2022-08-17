@@ -29,7 +29,7 @@ import static widgets.common.multipane.MultipaneElements.*;
 @Getter
 public class Multipane {
 
-    private MultipaneName multipaneName;
+    protected MultipaneName multipaneName;
 
     private SelenideElement searchInput;
     private SelenideElement excludedIcon;
