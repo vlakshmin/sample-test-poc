@@ -2,6 +2,7 @@ package rx.inventory.media;
 
 import api.dto.rx.admin.publisher.Publisher;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.*;
@@ -46,7 +47,7 @@ public class MediaCheckFields extends BaseTest {
     }
 
     @BeforeMethod
-    private void login(){
+    private void login() {
 
         testStart()
                 .given()
@@ -59,163 +60,168 @@ public class MediaCheckFields extends BaseTest {
     }
 
     @Test(description = "Check fields by default")
-    private void checkDefaultFields(){
+    private void checkDefaultFields() {
         testStart()
                 .then("Validate fields by default")
-                .validate(disabled,editMediaSidebar.getActiveToggle())
-                .validateAttribute(editMediaSidebar.getActiveToggle(),"aria-checked","true")
-                .validate(visible,editMediaSidebar.getPublisherInput())
-                .validate(editMediaSidebar.getPublisherInput(),"")
-                .validate(disabled,editMediaSidebar.getMediaTypeInput())
-                .validate(editMediaSidebar.getMediaTypeInput(),"")
-                .validate(disabled,editMediaSidebar.getNameInput())
-                .validate(editMediaSidebar.getNameInput(),"")
-                .validate(disabled,editMediaSidebar.getSiteURL())
-                .validate(editMediaSidebar.getSiteURL(),"")
-                .validate(disabled,editMediaSidebar.getCategoriesInput())
+                .validate(disabled, editMediaSidebar.getActiveToggle())
+                .validateAttribute(editMediaSidebar.getActiveToggle(), "aria-checked", "true")
+                .validate(visible, editMediaSidebar.getPublisherInput())
+                .validate(editMediaSidebar.getPublisherInput(), "")
+                .validate(disabled, editMediaSidebar.getMediaTypeInput())
+                .validate(editMediaSidebar.getMediaTypeInput(), "")
+                .validate(disabled, editMediaSidebar.getNameInput())
+                .validate(editMediaSidebar.getNameInput(), "")
+                .validate(disabled, editMediaSidebar.getSiteURL())
+                .validate(editMediaSidebar.getSiteURL(), "")
+                .validate(disabled, editMediaSidebar.getCategoriesInput())
                 .testEnd();
     }
 
     @Test(description = "Check required fields")
-    private void checkRequiredFields(){
+    private void checkRequiredFields() {
         var errorsList = editMediaSidebar.getErrorAlert().getErrorsList();
 
         testStart()
                 .then("Validate required fields")
+                .and("Click 'Save' with all empty fields")
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
+                .then("Validate errors for all required fields in Error Panel")
                 .waitAndValidate(visible, editMediaSidebar.getErrorAlert().getErrorPanel())
-                .validateListSize(errorsList,4)
-                .validateList(errorsList,  new ArrayList<>() {
-                            {
-                                add(ErrorMessages.PUBLISHER_NAME_ERROR_ALERT.getText());
-                                add(ErrorMessages.MEDIA_NAME_ERROR_ALERT.getText());
-                                add(ErrorMessages.MEDIA_TYPE_ERROR_ALERT.getText());
-                                add(ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText());
-                            }
-                        })
-                .waitAndValidate(visible,editMediaSidebar.getErrorAlertByFieldName("Publisher Name"))
-                .validate(editMediaSidebar.getErrorAlertByFieldName("Publisher Name"),ErrorMessages.PUBLISHER_NAME_ERROR_ALERT.getText())
+                .validateListSize(errorsList, 4)
+                .validateList(errorsList, new ArrayList<>() {
+                    {
+                        add(ErrorMessages.PUBLISHER_NAME_ERROR_ALERT.getText());
+                        add(ErrorMessages.MEDIA_NAME_ERROR_ALERT.getText());
+                        add(ErrorMessages.MEDIA_TYPE_ERROR_ALERT.getText());
+                        add(ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText());
+                    }
+                })
+                .then("Validate error under the 'Publisher' field")
+                .waitAndValidate(visible, editMediaSidebar.getErrorAlertByFieldName("Publisher Name"))
+                .validate(editMediaSidebar.getErrorAlertByFieldName("Publisher Name"), ErrorMessages.PUBLISHER_NAME_ERROR_ALERT.getText())
+                .and(String.format("Select Publisher '%s'", publisher.getName()))
                 .selectFromDropdown(editMediaSidebar.getPublisherInput(),
                         editMediaSidebar.getPublisherItems(), publisher.getName())
-                .waitAndValidate(not(visible),editMediaSidebar.getErrorAlertByFieldName("Publisher Name"))
+                .then("Validate error under the 'Publisher field' disappeared")
+                .waitAndValidate(not(visible), editMediaSidebar.getErrorAlertByFieldName("Publisher Name"))
+                .and("Click 'Save'")
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
-                .validateListSize(errorsList,3)
-                .validateList(errorsList,  new ArrayList<>() {
+                .then("Validate errors for 3 required fields in Error Panel (Media Name, Media Type, Site URL)")
+                .validateListSize(errorsList, 3)
+                .validateList(errorsList, new ArrayList<>() {
                     {
                         add(ErrorMessages.MEDIA_NAME_ERROR_ALERT.getText());
                         add(ErrorMessages.MEDIA_TYPE_ERROR_ALERT.getText());
                         add(ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText());
                     }
                 })
-                .waitAndValidate(visible,editMediaSidebar.getErrorAlertByFieldName("Media Name"))
-                .validate(editMediaSidebar.getErrorAlertByFieldName("Media Name"),ErrorMessages.MEDIA_NAME_ERROR_ALERT.getText())
-                .waitAndValidate(visible,editMediaSidebar.getErrorAlertByFieldName("Media Type"))
-                .validate(editMediaSidebar.getErrorAlertByFieldName("Media Type"),ErrorMessages.MEDIA_TYPE_ERROR_ALERT.getText())
-                .waitAndValidate(visible,editMediaSidebar.getErrorAlertByFieldName("Site URL"))
-                .validate(editMediaSidebar.getErrorAlertByFieldName("Site URL"),ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText())
-
-                .and("Fill Name")
+                .then("Validate error under the 'Media Name' field")
+                .waitAndValidate(visible, editMediaSidebar.getErrorAlertByFieldName("Media Name"))
+                .validate(editMediaSidebar.getErrorAlertByFieldName("Media Name"), ErrorMessages.MEDIA_NAME_ERROR_ALERT.getText())
+                .then("Validate error under the 'Media Type' field")
+                .waitAndValidate(visible, editMediaSidebar.getErrorAlertByFieldName("Media Type"))
+                .validate(editMediaSidebar.getErrorAlertByFieldName("Media Type"), ErrorMessages.MEDIA_TYPE_ERROR_ALERT.getText())
+                .then("Validate error under the 'Site URL' field")
+                .waitAndValidate(visible, editMediaSidebar.getErrorAlertByFieldName("Site URL"))
+                .validate(editMediaSidebar.getErrorAlertByFieldName("Site URL"), ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText())
+                .and(String.format("Fill Name with value %s", "mediaName"))
                 .setValueWithClean(editMediaSidebar.getNameInput(), "mediaName")
-                .waitAndValidate(not(visible),editMediaSidebar.getErrorAlertByFieldName("Media Name"))
-                .validateListSize(errorsList,2)
-                .validateList(errorsList,  new ArrayList<>() {
+                .then("Validate error under the 'Media Name' disappeared")
+                .waitAndValidate(not(visible), editMediaSidebar.getErrorAlertByFieldName("Media Name"))
+                .then("Validate errors for 3 required fields in Error Panel (Media Type, Site URL)")
+                .validateListSize(errorsList, 2)
+                .validateList(errorsList, new ArrayList<>() {
                     {
                         add(ErrorMessages.MEDIA_TYPE_ERROR_ALERT.getText());
                         add(ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText());
                     }
                 })
+                .and("Select Media Type 'Android'")
                 .selectFromDropdown(editMediaSidebar.getMediaType(),
                         editMediaSidebar.getMediaTypeItems(), MediaTypes.ANDROID.getName())
-                .waitAndValidate(not(visible),editMediaSidebar.getErrorAlertByFieldName("Media Type"))
-                .validateListSize(errorsList,1)
-                .validateList(errorsList,  new ArrayList<String>() {
+                .then("Validate error under the 'Media Type' disappeared")
+                .waitAndValidate(not(visible), editMediaSidebar.getErrorAlertByFieldName("Media Type"))
+                .then("Validate errors for 1 required field in Error Panel (App Store URL)")
+                .validateListSize(errorsList, 1)
+                .validateList(errorsList, new ArrayList<String>() {
                     {
                         add(ErrorMessages.APP_STORE_URL_REQUIRED_ERROR_ALERT.getText());
                     }
                 })
+                .and("Select Media Type 'Mobile Web'")
                 .selectFromDropdown(editMediaSidebar.getMediaType(),
                         editMediaSidebar.getMediaTypeItems(), MediaTypes.MOBILE_WEB.getName())
-                .validateListSize(errorsList,1)
-                .validateList(errorsList,  new ArrayList<String>() {
+                .then("Validate errors for 1 required field in Error Panel (Site URL)")
+                .validateListSize(errorsList, 1)
+                .validateList(errorsList, new ArrayList<String>() {
                     {
                         add(ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText());
                     }
                 })
+                .and(String.format("Fill 'Site URL' field with wrong value '%s'", "wrong url"))
                 .setValueWithClean(editMediaSidebar.getSiteURL(), "wrong url")
-                .validateListSize(errorsList,1)
-                .validateList(errorsList,  new ArrayList<>() {
+                .then("Validate errors in Error Panel that 'Site URL' value is wrong")
+                .validateListSize(errorsList, 1)
+                .validateList(errorsList, new ArrayList<>() {
                     {
                         add(ErrorMessages.SITE_URL_ERROR_ALERT.getText());
                     }
                 })
-                .waitAndValidate(visible,editMediaSidebar.getErrorAlertByFieldName("Site URL"))
-                .validate(editMediaSidebar.getErrorAlertByFieldName("Site URL"),ErrorMessages.SITE_URL_ERROR_ALERT.getText())
+                .then("Validate error under the field that 'Site URL' value is wrong")
+                .waitAndValidate(visible, editMediaSidebar.getErrorAlertByFieldName("Site URL"))
+                .validate(editMediaSidebar.getErrorAlertByFieldName("Site URL"), ErrorMessages.SITE_URL_ERROR_ALERT.getText())
+                .and(String.format("Fill 'Site URL' field with valid value '%s'", URL))
                 .setValueWithClean(editMediaSidebar.getSiteURL(), URL)
-                .waitAndValidate(not(visible),editMediaSidebar.getErrorAlertByFieldName("Site URL"))
-                .validate(not(visible),editMediaSidebar.getErrorAlert().getErrorPanel())
+                .then("Validate errors disappeared")
+                .waitAndValidate(not(visible), editMediaSidebar.getErrorAlertByFieldName("Site URL"))
+                .validate(not(visible), editMediaSidebar.getErrorAlert().getErrorPanel())
 
                 .testEnd();
     }
 
     @Test(description = "Check errors then switch Media type")
-    private void switchMediaTypeAndCheckError(){
+    private void switchMediaTypeAndCheckError() {
+        var errorsList = editMediaSidebar.getErrorAlert().getErrorsList();
+        var appStoreURLErrorMsg = ErrorMessages.APP_STORE_URL_REQUIRED_ERROR_ALERT.getText();
+        var siteURLErrorMsg = ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText();
+
+        testStart()
+                .and(String.format("Select Publisher '%s'", publisher.getName()))
+                .selectFromDropdown(editMediaSidebar.getPublisherInput(),
+                        editMediaSidebar.getPublisherItems(), publisher.getName())
+                .and(String.format("Fill Name with value '%s'", "mediaName"))
+                .setValueWithClean(editMediaSidebar.getNameInput(), "mediaName")
+                .testEnd();
+
+        changeMediaTypeAndValidateErrors(MediaTypes.ANDROID.getName(), appStoreURLErrorMsg, "App Store URL");
+        changeMediaTypeAndValidateErrors(MediaTypes.ANDROID_WEB_VIEW.getName(), appStoreURLErrorMsg, "App Store URL");
+        changeMediaTypeAndValidateErrors(MediaTypes.PC_WEB.getName(), siteURLErrorMsg, "Site URL");
+        changeMediaTypeAndValidateErrors(MediaTypes.IOS.getName(), appStoreURLErrorMsg, "App Store URL");
+        changeMediaTypeAndValidateErrors(MediaTypes.MOBILE_WEB.getName(), siteURLErrorMsg, "Site URL");
+        changeMediaTypeAndValidateErrors(MediaTypes.IOS_WEB_VIEW.getName(), appStoreURLErrorMsg, "App Store URL");
+    }
+
+    @Step("Change Media Type {0}")
+    private void changeMediaTypeAndValidateErrors(String mediaType, String errorMsg, String fieldName) {
         var errorsList = editMediaSidebar.getErrorAlert().getErrorsList();
 
         testStart()
-                .and("Select Publisher")
-                .selectFromDropdown(editMediaSidebar.getPublisherInput(),
-                editMediaSidebar.getPublisherItems(), publisher.getName())
-                .and("Fill Name")
-                .setValueWithClean(editMediaSidebar.getNameInput(), "mediaName")
-                .and("Select Media Type 'Android'")
+                .and(String.format("Select Media Type '%s'", mediaType))
                 .selectFromDropdown(editMediaSidebar.getMediaType(),
-                editMediaSidebar.getMediaTypeItems(), MediaTypes.ANDROID.getName())
+                        editMediaSidebar.getMediaTypeItems(), mediaType)
                 .and("Click 'Save'")
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
-                .then("Validate Error Message is appears")
-                .validateList(errorsList,  new ArrayList<String>() {
+                .then(String.format("Validate Error Message appeared in Error panel :'%s'", errorMsg))
+                .validateList(errorsList, new ArrayList<String>() {
                     {
-                        add(ErrorMessages.APP_STORE_URL_REQUIRED_ERROR_ALERT.getText());
+                        add(errorMsg);
                     }
                 })
-                .waitAndValidate(visible,editMediaSidebar.getErrorAlertByFieldName("App Store URL"))
-                .validate(editMediaSidebar.getErrorAlertByFieldName("App Store URL"),
-                        ErrorMessages.APP_STORE_URL_REQUIRED_ERROR_ALERT.getText())
-                .selectFromDropdown(editMediaSidebar.getMediaType(),
-                        editMediaSidebar.getMediaTypeItems(), MediaTypes.IOS.getName())
-                .clickOnWebElement(editMediaSidebar.getSaveButton())
-                .validateList(errorsList,  new ArrayList<String>() {
-                    {
-                        add(ErrorMessages.APP_STORE_URL_REQUIRED_ERROR_ALERT.getText());
-                    }
-                })
-                .waitAndValidate(visible,editMediaSidebar.getErrorAlertByFieldName("App Store URL"))
-                .validate(editMediaSidebar.getErrorAlertByFieldName("App Store URL"),
-                        ErrorMessages.APP_STORE_URL_REQUIRED_ERROR_ALERT.getText())
-                .selectFromDropdown(editMediaSidebar.getMediaType(),
-                        editMediaSidebar.getMediaTypeItems(), MediaTypes.MOBILE_WEB.getName())
-                .clickOnWebElement(editMediaSidebar.getSaveButton())
-                .validateList(errorsList,  new ArrayList<String>() {
-                    {
-                        add(ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText());
-                    }
-                })
-                .waitAndValidate(visible,editMediaSidebar.getErrorAlertByFieldName("Site URL"))
-                .validate(editMediaSidebar.getErrorAlertByFieldName("Site URL"),
-                        ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText())
-                                .selectFromDropdown(editMediaSidebar.getMediaType(),
-                editMediaSidebar.getMediaTypeItems(), MediaTypes.ANDROID_WEB_VIEW.getName())
-                .clickOnWebElement(editMediaSidebar.getSaveButton())
-                .validateList(errorsList,  new ArrayList<String>() {
-                    {
-                        add(ErrorMessages.APP_STORE_URL_REQUIRED_ERROR_ALERT.getText());
-                    }
-                })
-                .waitAndValidate(visible,editMediaSidebar.getErrorAlertByFieldName("App Store URL"))
-                .validate(editMediaSidebar.getErrorAlertByFieldName("App Store URL"),
-                        ErrorMessages.APP_STORE_URL_REQUIRED_ERROR_ALERT.getText())
+                .then(String.format("Validate Error Message is '%s' appeared under the field '%s'",
+                        errorMsg, errorMsg))
+                .waitAndValidate(visible, editMediaSidebar.getErrorAlertByFieldName(fieldName))
+                .validate(editMediaSidebar.getErrorAlertByFieldName(fieldName), errorMsg)
                 .testEnd();
-
     }
 
     @AfterMethod
@@ -224,6 +230,7 @@ public class MediaCheckFields extends BaseTest {
                 .and("Close Media Sidebar")
                 .clickOnWebElement(editMediaSidebar.getCloseIcon())
                 .waitSideBarClosed()
+                .and("Logout")
                 .logOut()
                 .testEnd();
     }

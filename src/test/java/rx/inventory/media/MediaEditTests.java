@@ -142,7 +142,7 @@ public class MediaEditTests extends BaseTest {
                 .clickOnTableCellLink(tableData, ColumnNames.MEDIA_NAME, media.getName())
                 .waitSideBarOpened()
                 .then("Check all fields")
-                .validateAttribute( editMediaSidebar.getActiveToggle(),"aria-checked", "true")
+                .validateAttribute(editMediaSidebar.getActiveToggle(), "aria-checked", "true")
                 .validate(disabled, editMediaSidebar.getPublisherNameInput())
                 .validate(editMediaSidebar.getPublisherInput(), media.getPublisherName())
                 .validateAttribute(editMediaSidebar.getNameInput(), "value", media.getName())
@@ -168,16 +168,16 @@ public class MediaEditTests extends BaseTest {
 
                 .testEnd();
 
-                if (!mediaTypeUpdated.equals("PC Web") && (!mediaTypeUpdated.equals("Mobile Web"))) {
-                    testStart()
-                            .setValueWithClean(editMediaSidebar.getAppStoreURL(), urlUpdated)
-                            .setValueWithClean(editMediaSidebar.getBundleInput(), bundleUpdated)
-                            .testEnd();
-                } else {
-                    testStart()
-                            .setValueWithClean(editMediaSidebar.getSiteURL(), urlUpdated)
-                            .testEnd();
-                }
+        if (!mediaTypeUpdated.equals("PC Web") && (!mediaTypeUpdated.equals("Mobile Web"))) {
+            testStart()
+                    .setValueWithClean(editMediaSidebar.getAppStoreURL(), urlUpdated)
+                    .setValueWithClean(editMediaSidebar.getBundleInput(), bundleUpdated)
+                    .testEnd();
+        } else {
+            testStart()
+                    .setValueWithClean(editMediaSidebar.getSiteURL(), urlUpdated)
+                    .testEnd();
+        }
 
         testStart()
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
@@ -197,23 +197,23 @@ public class MediaEditTests extends BaseTest {
                 .clickOnTableCellLink(tableData, ColumnNames.MEDIA_NAME, mediaNameUpdated)
                 .waitSideBarOpened()
                 .then("Check all fields")
-                .validateAttribute( editMediaSidebar.getActiveToggle(),"aria-checked", "false")
+                .validateAttribute(editMediaSidebar.getActiveToggle(), "aria-checked", "false")
                 .validate(disabled, editMediaSidebar.getPublisherNameInput())
                 .validate(editMediaSidebar.getPublisherInput(), media.getPublisherName())
                 .validateAttribute(editMediaSidebar.getNameInput(), "value", mediaNameUpdated)
                 .validate(editMediaSidebar.getMediaType(), mediaTypeUpdated)
                 .testEnd();
 
-                if (!mediaTypeUpdated.equals("PC Web") && (!mediaTypeUpdated.equals("Mobile Web"))) {
-                    testStart()
-                            .validateAttribute(editMediaSidebar.getAppStoreURL(), "value", urlUpdated)
-                            .validateAttribute(editMediaSidebar.getBundleInput(), "value", bundleUpdated)
-                            .testEnd();
-                } else {
-                    testStart()
-                            .validateAttribute(editMediaSidebar.getSiteURL(), "value", urlUpdated)
-                            .testEnd();
-                }
+        if (!mediaTypeUpdated.equals("PC Web") && (!mediaTypeUpdated.equals("Mobile Web"))) {
+            testStart()
+                    .validateAttribute(editMediaSidebar.getAppStoreURL(), "value", urlUpdated)
+                    .validateAttribute(editMediaSidebar.getBundleInput(), "value", bundleUpdated)
+                    .testEnd();
+        } else {
+            testStart()
+                    .validateAttribute(editMediaSidebar.getSiteURL(), "value", urlUpdated)
+                    .testEnd();
+        }
 
         testStart()
                 .and("Click Save")
@@ -227,11 +227,11 @@ public class MediaEditTests extends BaseTest {
                 .and("Toaster Error message is absent")
                 .waitAndValidate(not(visible), mediaPage.getToasterMessage().getPanelError())
                 .then("Validate data in table")
-                .validate(tableData.getCellByRowValue(ColumnNames.ID,ColumnNames.MEDIA_NAME, mediaNameUpdated),media.getId().toString())
-                .validate(tableData.getCellByRowValue(ColumnNames.STATUS,ColumnNames.MEDIA_NAME, mediaNameUpdated),Statuses.INACTIVE.getStatus())
-                .validate(tableData.getCellByRowValue(ColumnNames.PUBLISHER,ColumnNames.MEDIA_NAME, mediaNameUpdated),media.getPublisherName())
-                .validate(tableData.getCellByRowValue(ColumnNames.PLATFORM,ColumnNames.MEDIA_NAME, mediaNameUpdated),mediaTypeUpdated)
-                .validate(tableData.getCellByRowValue(ColumnNames.SITE_APP_STORE_URL,ColumnNames.MEDIA_NAME, mediaNameUpdated),urlUpdated)
+                .validate(tableData.getCellByRowValue(ColumnNames.ID, ColumnNames.MEDIA_NAME, mediaNameUpdated), media.getId().toString())
+                .validate(tableData.getCellByRowValue(ColumnNames.STATUS, ColumnNames.MEDIA_NAME, mediaNameUpdated), Statuses.INACTIVE.getStatus())
+                .validate(tableData.getCellByRowValue(ColumnNames.PUBLISHER, ColumnNames.MEDIA_NAME, mediaNameUpdated), media.getPublisherName())
+                .validate(tableData.getCellByRowValue(ColumnNames.PLATFORM, ColumnNames.MEDIA_NAME, mediaNameUpdated), mediaTypeUpdated)
+                .validate(tableData.getCellByRowValue(ColumnNames.SITE_APP_STORE_URL, ColumnNames.MEDIA_NAME, mediaNameUpdated), urlUpdated)
                 .clickOnWebElement(tableData.getClear())
                 .then("Validate that text in table footer '1-20 of X")
                 .validateContainsText(tablePagination.getPaginationPanel(), "1-20 of ")
