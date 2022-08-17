@@ -7,7 +7,8 @@ import widgets.common.multipane.item.abstractt.MultipaneItem;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static java.lang.String.format;
-import static widgets.common.multipane.item.included.IncludedTableItemElements.*;
+import static widgets.common.multipane.item.included.IncludedTableItemElements.PARENT_LABEL;
+import static widgets.common.multipane.item.included.IncludedTableItemElements.REMOVE_BUTTON;
 
 /**
  * Keep Selectors of UI elements in {@link IncludedTableItemElements}

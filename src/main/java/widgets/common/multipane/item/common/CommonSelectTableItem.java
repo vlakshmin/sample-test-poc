@@ -1,9 +1,9 @@
 package widgets.common.multipane.item.common;
 
-import api.dto.rx.admin.publisher.PublisherRequest;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import widgets.common.multipane.MultipaneName;
+import widgets.common.multipane.MultipaneNameImpl;
 import widgets.common.multipane.item.abstractt.MultipaneItem;
 
 import static com.codeborne.selenide.Selenide.$x;
@@ -26,7 +26,7 @@ public class CommonSelectTableItem extends MultipaneItem {
     private SelenideElement includeButton;
     private SelenideElement associatedWithPublisherIcon;
 
-    public CommonSelectTableItem(int position, String tableItem, MultipaneName  multipaneName) {
+    public CommonSelectTableItem(int position, String tableItem, MultipaneName multipaneName) {
         super(position, tableItem, multipaneName);
 
         this.activeIcon = $x(buildXpath(ACTIVE_ICON.getSelector())).as(format("%s%s", ACTIVE_ICON.getAlias(), position));
