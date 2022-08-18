@@ -76,13 +76,13 @@ jobs:
       #generate allure html report
       - run:
                 name: Allure archive download
-                command: curl -L https://github.com/allure-framework/allure2/releases/download/<< parameters.version >>/allure-commandline-<< parameters.version >>.zip -o /tmp/allure.zip
+                command: curl -L https://github.com/allure-framework/allure2/releases/download/<< 2.19.0 >>/allure-commandline-<< 2.19.0 >>.zip -o /tmp/allure.zip
       - run:
                       name: Archive extraction
                       command: unzip /tmp/allure.zip
       - run:
                       name: Allure installation
-                      command: sudo mv allure-<< parameters.version >> /usr/local/share/allure
+                      command: sudo mv allure-<< 2.19.0 >> /usr/local/share/allure
       - run:
                       name: Allure binary symlinking
                       command: sudo ln -s /usr/local/share/allure/bin/allure /usr/local/bin/allure
