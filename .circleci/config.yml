@@ -76,6 +76,7 @@ jobs:
       #generate allure html report
       - run:
           name: Generate allure html report
+          command:
             curl -L https://github.com/allure-framework/allure2/releases/download/<< parameters.version >>/allure-commandline-<< parameters.version >>.zip -o /tmp/allure.zip
             unzip /tmp/allure.zip
             sudo mv allure-<< parameters.version >> /usr/local/share/allure
