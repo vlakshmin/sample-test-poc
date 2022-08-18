@@ -49,8 +49,7 @@ public class MediaCheckTooltips extends BaseTest {
                 .openDirectPath(Path.MEDIA)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-
-                .openDirectPath(Path.OPEN_PRICING)
+                .clickBrowserRefreshButton()
                 .openDirectPath(Path.MEDIA)
                 .clickOnWebElement(mediaPage.getCreateMediaButton())
                 .waitSideBarOpened()

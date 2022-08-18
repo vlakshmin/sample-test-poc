@@ -13,7 +13,7 @@ import widgets.errormessages.ErrorMessages;
 import widgets.inventory.media.sidebar.EditMediaSidebar;
 import widgets.inventory.media.sidebar.MediaTypes;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.*;
@@ -88,14 +88,12 @@ public class MediaCheckFields extends BaseTest {
                 .then("Validate errors for all required fields in Error Panel")
                 .waitAndValidate(visible, editMediaSidebar.getErrorAlert().getErrorPanel())
                 .validateListSize(errorsList, 4)
-                .validateList(errorsList, new ArrayList<>() {
-                    {
-                        add(ErrorMessages.PUBLISHER_NAME_ERROR_ALERT.getText());
-                        add(ErrorMessages.MEDIA_NAME_ERROR_ALERT.getText());
-                        add(ErrorMessages.MEDIA_TYPE_ERROR_ALERT.getText());
-                        add(ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText());
-                    }
-                })
+                .validateList(errorsList, List.of(
+                        ErrorMessages.PUBLISHER_NAME_ERROR_ALERT.getText(),
+                        ErrorMessages.MEDIA_NAME_ERROR_ALERT.getText(),
+                        ErrorMessages.MEDIA_TYPE_ERROR_ALERT.getText(),
+                        ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText())
+                )
                 .then("Validate error under the 'Publisher' field")
                 .waitAndValidate(visible, editMediaSidebar.getErrorAlertByFieldName("Publisher Name"))
                 .validate(editMediaSidebar.getErrorAlertByFieldName("Publisher Name"), ErrorMessages.PUBLISHER_NAME_ERROR_ALERT.getText())
@@ -108,13 +106,11 @@ public class MediaCheckFields extends BaseTest {
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
                 .then("Validate errors for 3 required fields in Error Panel (Media Name, Media Type, Site URL)")
                 .validateListSize(errorsList, 3)
-                .validateList(errorsList, new ArrayList<>() {
-                    {
-                        add(ErrorMessages.MEDIA_NAME_ERROR_ALERT.getText());
-                        add(ErrorMessages.MEDIA_TYPE_ERROR_ALERT.getText());
-                        add(ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText());
-                    }
-                })
+                .validateList(errorsList, List.of(
+                        ErrorMessages.MEDIA_NAME_ERROR_ALERT.getText(),
+                        ErrorMessages.MEDIA_TYPE_ERROR_ALERT.getText(),
+                        ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText())
+                )
                 .then("Validate error under the 'Media Name' field")
                 .waitAndValidate(visible, editMediaSidebar.getErrorAlertByFieldName("Media Name"))
                 .validate(editMediaSidebar.getErrorAlertByFieldName("Media Name"), ErrorMessages.MEDIA_NAME_ERROR_ALERT.getText())
@@ -130,12 +126,10 @@ public class MediaCheckFields extends BaseTest {
                 .waitAndValidate(not(visible), editMediaSidebar.getErrorAlertByFieldName("Media Name"))
                 .then("Validate errors for 3 required fields in Error Panel (Media Type, Site URL)")
                 .validateListSize(errorsList, 2)
-                .validateList(errorsList, new ArrayList<>() {
-                    {
-                        add(ErrorMessages.MEDIA_TYPE_ERROR_ALERT.getText());
-                        add(ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText());
-                    }
-                })
+                .validateList(errorsList, List.of(
+                        ErrorMessages.MEDIA_TYPE_ERROR_ALERT.getText(),
+                        ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText())
+                )
                 .and("Select Media Type 'Android'")
                 .selectFromDropdown(editMediaSidebar.getMediaType(),
                         editMediaSidebar.getMediaTypeItems(), MediaTypes.ANDROID.getName())
@@ -143,30 +137,24 @@ public class MediaCheckFields extends BaseTest {
                 .waitAndValidate(not(visible), editMediaSidebar.getErrorAlertByFieldName("Media Type"))
                 .then("Validate errors for 1 required field in Error Panel (App Store URL)")
                 .validateListSize(errorsList, 1)
-                .validateList(errorsList, new ArrayList<String>() {
-                    {
-                        add(ErrorMessages.APP_STORE_URL_REQUIRED_ERROR_ALERT.getText());
-                    }
-                })
+                .validateList(errorsList, List.of(
+                        ErrorMessages.APP_STORE_URL_REQUIRED_ERROR_ALERT.getText())
+                )
                 .and("Select Media Type 'Mobile Web'")
                 .selectFromDropdown(editMediaSidebar.getMediaType(),
                         editMediaSidebar.getMediaTypeItems(), MediaTypes.MOBILE_WEB.getName())
                 .then("Validate errors for 1 required field in Error Panel (Site URL)")
                 .validateListSize(errorsList, 1)
-                .validateList(errorsList, new ArrayList<String>() {
-                    {
-                        add(ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText());
-                    }
-                })
+                .validateList(errorsList, List.of(
+                        ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText())
+                )
                 .and(String.format("Fill 'Site URL' field with wrong value '%s'", "wrong url"))
                 .setValueWithClean(editMediaSidebar.getSiteURL(), "wrong url")
                 .then("Validate errors in Error Panel that 'Site URL' value is wrong")
                 .validateListSize(errorsList, 1)
-                .validateList(errorsList, new ArrayList<>() {
-                    {
-                        add(ErrorMessages.SITE_URL_ERROR_ALERT.getText());
-                    }
-                })
+                .validateList(errorsList, List.of(
+                        ErrorMessages.SITE_URL_ERROR_ALERT.getText())
+                )
                 .then("Validate error under the field that 'Site URL' value is wrong")
                 .waitAndValidate(visible, editMediaSidebar.getErrorAlertByFieldName("Site URL"))
                 .validate(editMediaSidebar.getErrorAlertByFieldName("Site URL"), ErrorMessages.SITE_URL_ERROR_ALERT.getText())
@@ -212,11 +200,7 @@ public class MediaCheckFields extends BaseTest {
                 .and("Click 'Save'")
                 .clickOnWebElement(editMediaSidebar.getSaveButton())
                 .then(String.format("Validate Error Message appeared in Error panel :'%s'", errorMsg))
-                .validateList(errorsList, new ArrayList<String>() {
-                    {
-                        add(errorMsg);
-                    }
-                })
+                .validateList(errorsList, List.of(errorMsg))
                 .then(String.format("Validate Error Message is '%s' appeared under the field '%s'",
                         errorMsg, errorMsg))
                 .waitAndValidate(visible, editMediaSidebar.getErrorAlertByFieldName(fieldName))
