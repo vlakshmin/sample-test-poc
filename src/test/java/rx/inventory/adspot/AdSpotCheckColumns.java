@@ -52,12 +52,13 @@ public class AdSpotCheckColumns extends BaseTest {
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.RELATED_MEDIA))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE_INACTIVE))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PAGE_CATEGORY))
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.FILTER))
+             //   .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.FILTER))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.TEST_MODE))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_SIZES))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_FLOOR_PRICE))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
-                // TODO:GS-2748 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
+                // TODO:GS-2748
+                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .then("All columns should be shown")
                 .validateListSize(tableData.getColumns(),
                         ColumnNames.ID.getName(),
@@ -67,12 +68,13 @@ public class AdSpotCheckColumns extends BaseTest {
                         ColumnNames.RELATED_MEDIA.getName(),
                         ColumnNames.ACTIVE_INACTIVE.getName(),
                         ColumnNames.PAGE_CATEGORY.getName(),
-                        ColumnNames.FILTER.getName(),
+                //        ColumnNames.FILTER.getName(),
                         ColumnNames.TEST_MODE.getName(),
                         ColumnNames.DEFAULT_SIZES.getName(),
                         ColumnNames.DEFAULT_FLOOR_PRICE.getName(),
-                        ColumnNames.CREATED_DATE.getName())
-                // TODO:GS-2748  ColumnNames.UPDATED_DATE.getName())
+                        ColumnNames.CREATED_DATE.getName(),
+                // TODO:GS-2748
+                ColumnNames.UPDATED_DATE.getName())
                 .and("Hide all columns")
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ID))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DETAILS))
@@ -81,12 +83,13 @@ public class AdSpotCheckColumns extends BaseTest {
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.RELATED_MEDIA))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE_INACTIVE))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PAGE_CATEGORY))
-                .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.FILTER))
+            //    .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.FILTER))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.TEST_MODE))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_SIZES))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_FLOOR_PRICE))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
-                // TODO:GS-2748   .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
+                // TODO:GS-2748
+                .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .then("All columns should be hidden")
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.ID.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.DETAILS.getName()))
@@ -95,12 +98,13 @@ public class AdSpotCheckColumns extends BaseTest {
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.RELATED_MEDIA.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.ACTIVE_INACTIVE.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.PAGE_CATEGORY.getName()))
-                .validate(not(visible), tableData.getColumnHeader(ColumnNames.FILTER.getName()))
+           //     .validate(not(visible), tableData.getColumnHeader(ColumnNames.FILTER.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.TEST_MODE.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.DEFAULT_SIZES.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.DEFAULT_FLOOR_PRICE.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.CREATED_DATE.getName()))
-                // TODO:GS-2748      .validate(not(visible), tableData.getColumnHeader(ColumnNames.UPDATED_DATE.getName()))
+                // TODO:GS-2748
+                .validate(not(visible), tableData.getColumnHeader(ColumnNames.UPDATED_DATE.getName()))
                 .testEnd();
     }
 

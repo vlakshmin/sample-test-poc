@@ -10,7 +10,7 @@ public enum ValidationBottomAlertElements {
     ERROR_PANEL( "Error Panel", "//div[@class='v-alert__wrapper']"),
     ERROR_ICON( "Icon Error", "//div[@class='v-alert__wrapper']/i"),
     HEADER_ERROR( "Header Error", "//div[@class='v-alert__wrapper']/div[@class='v-alert__content']/div"),
-    ERRORS_LIST( "Errors List", "//div[@class='v-alert__wrapper']/div[@class='v-alert__content']/div/ul");
+    ERRORS_LIST( "Errors List", "//div[@class='v-alert__wrapper']/div[@class='v-alert__content']/div/ul/li");
 
     private String alias;
     private String selector;

@@ -185,17 +185,19 @@ public final class TestManager {
             return this;
         }
 
-        //Todo
         public TestManagerBuilder turnToggleOn(SelenideElement toggle) {
-            //Todo implement realisation
-
+            logEvent(format("Set toggle ON %s", toggle.getAlias()));
+            if (toggle.getAttribute("aria-checked").equals("false")) {
+                toggle.parent().click();
+            }
             return this;
         }
 
-        //Todo
         public TestManagerBuilder turnToggleOff(SelenideElement toggle) {
-            //Todo implement realisation
-
+            logEvent(format("Set toggle OFF %s", toggle.getAlias()));
+            if (toggle.getAttribute("aria-checked").equals("true")) {
+                toggle.parent().click();
+            }
             return this;
         }
 
@@ -388,7 +390,8 @@ public final class TestManager {
         public TestManagerBuilder validateAttribute(SelenideElement element, String attributeName, String attributeValue) {
             logEvent(format("Validating %s  has attribute '%s' with value '%s'",
                     element.getAlias(), attributeName, attributeValue));
-            element.shouldBe(exist, visible).hover().shouldHave(attribute(attributeName, attributeValue));
+    //        element.shouldBe(exist, visible).hover().shouldHave(attribute(attributeName, attributeValue));
+            element.shouldHave(attribute(attributeName, attributeValue));
 
             return this;
         }
