@@ -80,6 +80,9 @@ jobs:
       - run:
                 name: Allure archive download
                 command: sudo apt -y install allure
+      - run:
+          name: Checking allure version
+          command: ./allure --version
 #                command: curl -L https://github.com/allure-framework/allure2/releases/download/2.19.0/allure-commandline-2.19.0.zip -o /tmp/allure.zip
 #      - run:
 #                      name: Archive extraction
