@@ -79,7 +79,7 @@ jobs:
           command: curl -o allure-2.19.0.tgz -Ls https://dl.bintray.com/qameta/generic/io/qameta/allure/allure/2.19.0/allure-2.19.0.tgz
       - run:
           name: Checking list of files
-          command: ls -la
+          command: file test allure-2.19.0.tgz
       - run:
           name: Unpacking allure to /opt
           command: sudo tar zxvf allure-2.19.0.tgz -C /opt/
