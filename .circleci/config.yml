@@ -75,6 +75,9 @@ jobs:
 
       #generate allure html report
       - run:
+          name: Update apt
+          command: sudo apt update
+      - run:
                 name: Allure archive download
                 command: sudo apt -y install allure
 #                command: curl -L https://github.com/allure-framework/allure2/releases/download/2.19.0/allure-commandline-2.19.0.zip -o /tmp/allure.zip
