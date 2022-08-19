@@ -37,7 +37,7 @@ public class MediaCheckTooltips extends BaseTest {
     @BeforeClass
     private void init() {
         publisher = publisher()
-                .createNewPublisher(captionWithSuffix("1autoPub"))
+                .createNewPublisher(captionWithSuffix("10autoPub"))
                 .build()
                 .getPublisherResponse();
     }
@@ -49,6 +49,8 @@ public class MediaCheckTooltips extends BaseTest {
                 .openDirectPath(Path.MEDIA)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+                .clickBrowserRefreshButton()
+                .openDirectPath(Path.MEDIA)
                 .clickOnWebElement(mediaPage.getCreateMediaButton())
                 .waitSideBarOpened()
                 .selectFromDropdown(editMediaSidebar.getPublisherInput(),
@@ -81,17 +83,17 @@ public class MediaCheckTooltips extends BaseTest {
     }
 
     //TODO: GS-2439
-//    @Test(description = "'Bundle' Tooltip Text")
-//    private void bundleTooltip(){
-//        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.ANDROID.getName(),
-//                MediaTooltipText.BUNDLE.getText());
-//        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.IOS.getName(),
-//                MediaTooltipText.BUNDLE.getText());
-//        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.IOS_WEB_VIEW.getName(),
-//                MediaTooltipText.BUNDLE.getText());
-//        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.ANDROID_WEB_VIEW.getName(),
-//                MediaTooltipText.BUNDLE.getText());
-//    }
+    @Test(description = "'Bundle' Tooltip Text")
+    private void bundleTooltip(){
+        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.ANDROID.getName(),
+                MediaTooltipText.BUNDLE.getText());
+        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.IOS.getName(),
+                MediaTooltipText.BUNDLE.getText());
+        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.IOS_WEB_VIEW.getName(),
+                MediaTooltipText.BUNDLE.getText());
+        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.ANDROID_WEB_VIEW.getName(),
+                MediaTooltipText.BUNDLE.getText());
+    }
 
     @Test(description = "'App Store URL' Tooltip Text")
     private void appStoreURLTooltip() {
@@ -108,7 +110,7 @@ public class MediaCheckTooltips extends BaseTest {
     @Step("Verify Tooltip Text")
     private void verifyTooltip(SelenideElement field, String mediaType, String expectedText) {
         testStart()
-                .selectFromDropdown(editMediaSidebar.getMediaTypeInput(),
+                .selectFromDropdown(editMediaSidebar.getMediaType(),
                         editMediaSidebar.getMediaTypeItems(), mediaType)
                 .scrollIntoView(field)
                 .validateTooltip(field,

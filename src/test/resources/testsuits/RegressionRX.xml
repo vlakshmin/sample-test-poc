@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Media Suite" parallel="false">
+    <test name="Media 2439">
+        <classes>
+            <class name="rx.inventory.media.MediaCheckFields"/>
+            <class name="rx.inventory.media.MediaCreateTests"/>
+            <class name="rx.inventory.media.MediaEditTests"/>
+         <!--   <class name="rx.inventory.media.MediaActivateDeactivateTableTests"/>
+            <class name="rx.inventory.media.MediaSearchTableTests"/>
+            <class name="rx.inventory.media.MediaSortingTableTests"/>
+            <class name="rx.inventory.media.MediaCheckColumns"/>
+            <class name="rx.inventory.media.MediaCheckPagination"/>
+            <class name="rx.inventory.media.MediaCheckTooltips"/> -->
+        </classes>
+    </test>
+
+  <!--  <test name="Ad Spots Feature">
+        <classes>
+            <class name="rx.inventory.adspot.AdSpotCheckColumns"/>
+            <class name="rx.inventory.adspot.AdSpotCheckTooltips"/>
+            <class name="rx.inventory.adspot.AdSpotSortingTableTests"/>
+            <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
+            <class name="rx.inventory.adspot.AdSpotCheckPagination"/>
+            <class name="rx.inventory.adspot.AdSpotCheckTooltips"/>
+        </classes>
+    </test>-->
+</suite>

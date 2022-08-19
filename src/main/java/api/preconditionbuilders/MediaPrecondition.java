@@ -5,6 +5,7 @@ import api.dto.GenericResponse;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.inventory.media.Media;
 import api.dto.rx.inventory.media.MediaRequest;
+import api.dto.rx.platformtype.PlatformType;
 import api.services.MediaService;
 import configurations.User;
 import io.restassured.common.mapper.TypeRef;
@@ -16,7 +17,10 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
+import static api.preconditionbuilders.PlatformTypesPrecondition.platformType;
+import static java.lang.String.format;
 import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
@@ -112,6 +116,14 @@ public class MediaPrecondition {
             return this;
         }
 
+        public MediaPreconditionBuilder createNewMedia(String name, String mediaType, String url, String bundle, Boolean isEnabled) {
+            this.mediaRequest = createMediaRequest(name, mediaType, url, bundle, isEnabled);
+            this.response = mediaService.createMedia(mediaRequest);
+            this.mediaResponse = response.as(Media.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
         public MediaPreconditionBuilder getAllMediaList() {
             this.response = mediaService.getAll();
             this.mediaGetAllResponse = this.response.as(new TypeRef<GenericResponse<Media>>() {});
@@ -202,6 +214,31 @@ public class MediaPrecondition {
                     .platformId(2)
                     .url(url)
                     .isEnabled(true)
+                    .categoryIds(List.of(1, 9))
+                    .build();
+        }
+
+        private MediaRequest createMediaRequest(String name, String mediaType,
+                                                String url, String bundle, Boolean isEnabled) {
+
+            Publisher publisher = createPublisher();
+
+            List<PlatformType> platformTypes = platformType()
+                    .getAllPlatformsList().build().getPlatformTypesGetAllResponse().getItems();
+
+            Integer platformId = platformTypes.stream()
+                    .filter(x -> x.getName().equalsIgnoreCase(mediaType))
+                    .findFirst()
+                    .orElseThrow(() -> new NoSuchElementException
+                            (String.format("Platform Id with name %s does not find",mediaType))).getId();
+
+            return MediaRequest.builder()
+                    .name(captionWithSuffix(name))
+                    .publisherId(publisher.getId())
+                    .platformId(platformId)
+                    .appBundleId(bundle)
+                    .url(url)
+                    .isEnabled(isEnabled)
                     .categoryIds(List.of(1, 9))
                     .build();
         }
