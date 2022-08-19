@@ -82,7 +82,7 @@ jobs:
           command: ls -la
       - run:
           name: Unpacking allure to /opt
-          command: sudo tar -zxvf allure-2.19.0.tgz -C /opt/
+          command: sudo tar zxvf allure-2.19.0.tgz -C /opt/
       - run:
           name: Installing allure
           command: sudo ln -s /opt/allure-2.19.0/bin/allure /usr/bin/allure
