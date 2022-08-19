@@ -24,6 +24,7 @@ public abstract class AdSpotSidebar {
     private SelenideElement categories = $x(CATEGORIES.getSelector()).as(CATEGORIES.getAlias());
     private SelenideElement saveButton = $x(SAVE_BUTTON.getSelector()).as(SAVE_BUTTON.getAlias());
     private SelenideElement nameInput = $x(AD_SPOT_NAME.getSelector()).as(AD_SPOT_NAME.getAlias());
+    private SelenideElement activeToggle = $x(ACTIVE_TOGGLE.getSelector()).as(ACTIVE_TOGGLE.getAlias());
     private SelenideElement publisherInput = $x(PUBLISHER_NAME.getSelector()).as(PUBLISHER_NAME.getAlias());
     private SelenideElement relatedMediaInput = $x(RELATED_MEDIA.getSelector()).as(RELATED_MEDIA.getAlias());
     private SelenideElement defaultAdSizes = $x(DEFAULT_AD_SIZES.getSelector()).as(DEFAULT_AD_SIZES.getAlias());
