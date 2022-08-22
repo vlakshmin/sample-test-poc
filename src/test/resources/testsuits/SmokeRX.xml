@@ -26,12 +26,37 @@
     </test>
     <test name="Protections Feature">
         <classes>
-            <class name="rx.protections.ProtectionsCheckPagination"/>
+            <class name="rx.protections.ProtectionsCheckPaginationTests"/>
+            <class name="rx.protections.ProtectionsTest"/>
         </classes>
     </test>
     <test name="Deals Feature">
         <classes>
             <class name="rx.sales.deals.DealsTest"/>
+        </classes>
+    </test>
+    <test name="Login Feature">
+        <classes>
+            <class name="rx.login.LoginPositiveTest"/>
+        </classes>
+    </test>
+    <test name="Components Tests">
+        <classes>
+            <class name="rx.component.multipane.MultipaneTest"/>
+            <class name="rx.component.table.TableDataTests"/>
+        </classes>
+    </test>
+    <test name="Publisher Feature">
+        <classes>
+            <class name="rx.admin.publishers.PublisherTest"/>
+        </classes>
+    </test>
+    <test name="Open Pricing Feature">
+        <classes>
+            <class name="rx.yield.openpricing.CreateOpenPricingTest"/>
+            <class name="rx.yield.openpricing.OpenPricingSortingTableTests"/>
+            <class name="rx.yield.openpricing.OpenPricingTests"/>
+            <class name="rx.yield.openpricing.VerifyPublisherTests"/>
         </classes>
     </test>
 </suite>

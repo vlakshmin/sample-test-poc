@@ -22,13 +22,13 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class ProtectionsCheckPagination extends BaseTest {
+public class ProtectionsCheckPaginationTests extends BaseTest {
     private ProtectionsPage protectionsPage;
 
     private int totalProtections;
     private List<Protection> listProtections;
 
-    public ProtectionsCheckPagination() {
+    public ProtectionsCheckPaginationTests() {
         protectionsPage = new ProtectionsPage();
     }
 
@@ -41,7 +41,12 @@ public class ProtectionsCheckPagination extends BaseTest {
 
     @BeforeMethod
     private void login() {
-        testStart().given().openDirectPath(Path.PROTECTIONS).logIn(TEST_USER).waitAndValidate(disappear, protectionsPage.getNuxtProgress()).testEnd();
+        testStart()
+                .given()
+                .openDirectPath(Path.PROTECTIONS)
+                .logIn(TEST_USER)
+                .waitAndValidate(disappear, protectionsPage.getNuxtProgress())
+                .testEnd();
     }
 
     @Test(description = "Verify Pagination: 100 rows per page")
@@ -79,7 +84,43 @@ public class ProtectionsCheckPagination extends BaseTest {
         var tablePagination = protectionsPage.getProtectionsTable().getTablePagination();
         var tableData = protectionsPage.getProtectionsTable().getTableData();
 
-        testStart().and(String.format("Select %s rows per page", rowsPerPage)).scrollIntoView(tablePagination.getPageMenu()).selectFromDropdown(tablePagination.getPageMenu(), tablePagination.getRowNumbersList(), rowsPerPage.toString()).waitLoading(visible, protectionsPage.getTableProgressBar()).waitLoading(disappear, protectionsPage.getTableProgressBar()).then(String.format(String.format("Validate that text in table footer '1-%s of %s'", rowsPerPage, totalProtections))).validateContainsText(tablePagination.getPaginationPanel(), String.format(String.format("1-%s of %s", rowsPerPage, totalProtections))).then(String.format("Rows in table page equals %s", rowsPerPage)).validateListSize(tableData.getRows(), rowsPerPage).and("Click on Next page").scrollIntoView(tablePagination.getNext()).clickOnWebElement(tablePagination.getNext()).then(String.format(String.format("Validate that text in table footer '%s-%s of %s'", rowsPerPage + 1, Math.min(rowsPerPage * 2, totalProtections), totalProtections))).validateContainsText(tablePagination.getPaginationPanel(), String.format(String.format("%s-%s of %s", rowsPerPage + 1, Math.min(rowsPerPage * 2, totalProtections), totalProtections))).then(String.format("Rows in table page equals %s", rowsPerPage)).validateListSize(tableData.getRows(), rowsPerPage).and("Click on Previous page").scrollIntoView(tablePagination.getPrevious()).clickOnWebElement(tablePagination.getPrevious()).then(String.format(String.format("Validate that text in table footer '1-%s of %s'", rowsPerPage, totalProtections))).validateContainsText(tablePagination.getPaginationPanel(), String.format(String.format("1-%s of %s", rowsPerPage, totalProtections))).then(String.format("Rows in table page equals %s", rowsPerPage)).validateListSize(tableData.getRows(), rowsPerPage).and("Logout").logOut().testEnd();
+        testStart().and(String.format("Select %s rows per page", rowsPerPage))
+                .scrollIntoView(tablePagination.getPageMenu())
+                .selectFromDropdown(tablePagination.getPageMenu(),
+                        tablePagination.getRowNumbersList(),
+                        rowsPerPage.toString())
+                .waitLoading(visible, protectionsPage.getTableProgressBar())
+                .waitLoading(disappear, protectionsPage.getTableProgressBar())
+                .then(String.format(String.format("Validate that text in table footer '1-%s of %s'",
+                        rowsPerPage, totalProtections)))
+                .validateContainsText(tablePagination.getPaginationPanel(),
+                        String.format(String.format("1-%s of %s", rowsPerPage, totalProtections)))
+                .then(String.format("Rows in table page equals %s", rowsPerPage))
+                .validateListSize(tableData.getRows(), rowsPerPage)
+                .and("Click on Next page").scrollIntoView(tablePagination.getNext())
+                .clickOnWebElement(tablePagination.getNext())
+                .then(String.format(String.format("Validate that text in table footer '%s-%s of %s'",
+                        rowsPerPage + 1, Math.min(rowsPerPage * 2, totalProtections), totalProtections)))
+                .validateContainsText(tablePagination.getPaginationPanel(),
+                        String.format(String.format("%s-%s of %s", rowsPerPage + 1,
+                                Math.min(rowsPerPage * 2, totalProtections), totalProtections)))
+                .then(String.format("Rows in table page equals %s", rowsPerPage))
+                .validateListSize(tableData.getRows(), rowsPerPage).and("Click on Previous page")
+                .scrollIntoView(tablePagination.getPrevious()).clickOnWebElement(tablePagination.getPrevious())
+                .then(String.format(String.format("Validate that text in table footer '1-%s of %s'", rowsPerPage,
+                        totalProtections))).validateContainsText(tablePagination.getPaginationPanel(),
+                        String.format(String.format("1-%s of %s", rowsPerPage, totalProtections)))
+                .then(String.format("Rows in table page equals %s", rowsPerPage))
+                .validateListSize(tableData.getRows(), rowsPerPage)
+                .testEnd();
+    }
+
+    @AfterMethod
+    private void logout(){
+        testStart()
+                .and("Logout")
+                .logOut()
+                .testEnd();
     }
 
     @AfterClass
@@ -106,7 +147,7 @@ public class ProtectionsCheckPagination extends BaseTest {
     }
 
     private void generateProtection() {
-        listProtections = new ArrayList<>();
+        listProtections.clear();
         while (getTotalProtections() < 120) {
             Protection protection = protection().createNewRandomProtection().build().getProtectionsResponse();
 

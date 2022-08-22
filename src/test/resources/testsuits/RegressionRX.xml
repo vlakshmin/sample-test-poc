@@ -3,15 +3,20 @@
 <suite name="Media Suite" parallel="false">
     <test name="Media">
         <classes>
-            <class name="rx.inventory.media.MediaCheckFields"/>
+   <!--         <class name="rx.inventory.media.MediaCheckFields"/>
             <class name="rx.inventory.media.MediaCreateTests"/>
-            <class name="rx.inventory.media.MediaEditTests"/>
+            <class name="rx.inventory.media.MediaEditTests"/>-->
             <class name="rx.inventory.media.MediaActivateDeactivateTableTests"/>
             <class name="rx.inventory.media.MediaSearchTableTests"/>
             <class name="rx.inventory.media.MediaSortingTableTests"/>
             <class name="rx.inventory.media.MediaCheckColumns"/>
             <class name="rx.inventory.media.MediaCheckPagination"/>
             <class name="rx.inventory.media.MediaCheckTooltips"/>
+        </classes>
+    </test>
+    <test name="Protections Feature">
+        <classes>
+            <class name="rx.protections.ProtectionsCheckPaginationTests"/>
         </classes>
     </test>
     <test name="Ad Spots Feature">
@@ -22,11 +27,6 @@
             <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
             <class name="rx.inventory.adspot.AdSpotCheckPagination"/>
             <class name="rx.inventory.adspot.AdSpotCheckTooltips"/>
-        </classes>
-    </test>
-    <test name="Protections Feature">
-        <classes>
-            <class name="rx.protections.ProtectionsCheckPagination"/>
         </classes>
     </test>
 </suite>
