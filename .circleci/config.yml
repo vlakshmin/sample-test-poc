@@ -85,13 +85,13 @@ jobs:
 #          command: zip -FF /tmp/allure.zip --out /tmp/allure_fixed.zip | unzip
       - run:
           name: Unpacking allure to /opt
-          command: sudo apt update && sudo apt install p7zip -y && sudo 7z e /tmp/allure.zip -C /opt/
-      - run:
-          name: Installing allure
-          command: sudo ln -s /opt/allure-2.19.0/bin/allure /usr/bin/allure
-      - run:
-          name: Allure binary symlinking
-          command: sudo ln -s /usr/local/share/allure/bin/allure /usr/local/bin/allure
+          command: sudo apt-get update && sudo apt-install allure
+#      - run:
+#          name: Installing allure
+#          command: sudo ln -s /opt/allure-2.19.0/bin/allure /usr/bin/allure
+#      - run:
+#          name: Allure binary symlinking
+#          command: sudo ln -s /usr/local/share/allure/bin/allure /usr/local/bin/allure
       - run:
           name: Checking allure version
           command: allure --version
