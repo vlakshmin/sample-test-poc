@@ -85,7 +85,7 @@ jobs:
 #          command: zip -FF /tmp/allure.zip --out /tmp/allure_fixed.zip | unzip
       - run:
           name: Unpacking allure to /opt
-          command: sudo apt update && sudo apt install p7zip-full p7zip-rar && sudo 7z e /tmp/allure.zip -C /opt/
+          command: sudo apt update && sudo apt install p7zip-full && sudo 7z e /tmp/allure.zip -C /opt/
       - run:
           name: Installing allure
           command: sudo ln -s /opt/allure-2.19.0/bin/allure /usr/bin/allure
