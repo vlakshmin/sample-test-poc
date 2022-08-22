@@ -52,7 +52,7 @@ public class ProtectionsPrecondition {
 
         public ProtectionsPreconditionBuilder createNewRandomProtection() {
             this.protectionsRequest = ProtectionRequest.builder()
-                    .name(captionWithSuffix("Test_Rule"))
+                    .name(captionWithSuffix("Auto_Test_Rule"))
                     .publisherId(4)
                     .typeId(2)
                     .active(true)
@@ -145,6 +145,14 @@ public class ProtectionsPrecondition {
 
         public ProtectionsPreconditionBuilder getProtectionsWithFilter(Map<String, Object> queryParams) {
             this.response = protectionsService.getProtectionsWithFilter(queryParams);
+            this.protectionsGetAllResponse = this.response.as(new TypeRef<GenericResponse<Protection>>() {});
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
+        public ProtectionsPreconditionBuilder getAllProtectionsList() {
+            this.response = protectionsService.getAll();
             this.protectionsGetAllResponse = this.response.as(new TypeRef<GenericResponse<Protection>>() {});
             this.responseCode = response.getStatusCode();
 
