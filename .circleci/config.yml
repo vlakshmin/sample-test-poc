@@ -79,7 +79,10 @@ jobs:
           command: curl -L https://github.com/allure-framework/allure2/releases/download/2.19.0/allure-commandline-2.19.0.zip -o /tmp/allure.zip
       - run:
           name: Checking list of files
-          command: ls -la
+          command: ls -la /tmp/
+      - run:
+          name: Fixing zip issue
+          command: zip -FF /tmp/allure.zip --out /tmp/allure.zip | unzip
       - run:
           name: Unpacking allure to /opt
           command: sudo unzip /tmp/allure.zip -C /opt/
