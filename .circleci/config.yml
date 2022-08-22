@@ -76,16 +76,19 @@ jobs:
       #generate allure html report
       - run:
           name: Download allure
-          command: curl -o allure-2.19.0.tgz -Ls https://dl.bintray.com/qameta/generic/io/qameta/allure/allure/2.19.0/allure-2.19.0.tgz
+          command: curl -L https://github.com/allure-framework/allure2/releases/download/2.19.0/allure-commandline-2.19.0.zip -o /tmp/allure.zip
       - run:
           name: Checking list of files
           command: ls -la
       - run:
           name: Unpacking allure to /opt
-          command: sudo tar -zxvf allure-2.19.0.tgz -C /opt/
+          command: sudo unzip /tmp/allure.zip -C /opt/
       - run:
           name: Installing allure
           command: sudo ln -s /opt/allure-2.19.0/bin/allure /usr/bin/allure
+      - run:
+          name: Allure binary symlinking
+          command: sudo ln -s /usr/local/share/allure/bin/allure /usr/local/bin/allure
       - run:
           name: Checking allure version
           command: allure --version
