@@ -82,10 +82,10 @@ jobs:
           command: ls -la /tmp/
       - run:
           name: Fixing zip issue
-          command: zip -FF /tmp/allure.zip --out /tmp/allureZip.zip | unzip
+          command: zip -FF /tmp/allure.zip --out /tmp/allure_fixed.zip | unzip
       - run:
           name: Unpacking allure to /opt
-          command: sudo unzip /tmp/allureZip.zip -C /opt/
+          command: sudo unzip /tmp/allure_fixed.zip -C /opt/
       - run:
           name: Installing allure
           command: sudo ln -s /opt/allure-2.19.0/bin/allure /usr/bin/allure
