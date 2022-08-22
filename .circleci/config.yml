@@ -82,7 +82,7 @@ jobs:
           command: ls -la /tmp/
       - run:
           name: Fixing zip issue
-          command: zip -FF /tmp/allure.zip --out /tmp/allureZip.zip | unzip
+          command: zip -FF /tmp/allure.zip --out /tmp/allureZip.zip
       - run:
           name: Unpacking allure to /opt
           command: sudo unzip /tmp/allureZip.zip -C /opt/
