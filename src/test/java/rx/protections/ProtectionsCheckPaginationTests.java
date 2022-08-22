@@ -134,22 +134,35 @@ public class ProtectionsCheckPaginationTests extends BaseTest {
     }
 
     private void deleteProtection(Integer id) {
-        protection().setCredentials(USER_FOR_DELETION).deleteProtection(id);
+        protection()
+                .setCredentials(USER_FOR_DELETION)
+                .deleteProtection(id)
+                .build();
     }
 
     private void deletePublisher(Integer id) {
-        publisher().setCredentials(USER_FOR_DELETION).deletePublisher(id);
+        publisher()
+                .setCredentials(USER_FOR_DELETION)
+                .deletePublisher(id)
+                .build();
     }
 
     private int getTotalProtections() {
 
-        return protection().getAllProtectionsList().build().getProtectionsGetAllResponse().getTotal();
+        return protection()
+                .getAllProtectionsList()
+                .build()
+                .getProtectionsGetAllResponse()
+                .getTotal();
     }
 
     private void generateProtection() {
         listProtections.clear();
         while (getTotalProtections() < 120) {
-            Protection protection = protection().createNewRandomProtection().build().getProtectionsResponse();
+            Protection protection = protection()
+                    .createNewRandomProtection()
+                    .build()
+                    .getProtectionsResponse();
 
             listProtections.add(protection);
         }

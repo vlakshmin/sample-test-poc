@@ -151,7 +151,7 @@ public class ProtectionsPrecondition {
             return this;
         }
 
-        public ProtectionsPrecondition.ProtectionsPreconditionBuilder getAllProtectionsList() {
+        public ProtectionsPreconditionBuilder getAllProtectionsList() {
             this.response = protectionsService.getAll();
             this.protectionsGetAllResponse = this.response.as(new TypeRef<GenericResponse<Protection>>() {});
             this.responseCode = response.getStatusCode();

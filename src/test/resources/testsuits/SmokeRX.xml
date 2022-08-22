@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="Media Suite" parallel="false">
+<suite name="SmokeTest Suite" parallel="false">
     <test name="Media">
         <classes>
             <class name="rx.inventory.media.MediaCheckFields"/>
