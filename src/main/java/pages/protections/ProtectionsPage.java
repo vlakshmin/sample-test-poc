@@ -1,11 +1,15 @@
 package pages.protections;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import pages.BasePage;
+import widgets.common.table.Table;
 
+import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
-import static pages.yield.dynamicprice.DynamicPricePageElements.DYNAMIC_PRICE_PAGE_TITLE;
+import static pages.protections.ProtectionsPageElements.*;
+
 
 /**
  * Keep Selectors of UI elements in {@link ProtectionsPageElements}
@@ -13,5 +17,11 @@ import static pages.yield.dynamicprice.DynamicPricePageElements.DYNAMIC_PRICE_PA
 @Getter
 public class ProtectionsPage extends BasePage {
 
-    private SelenideElement pageTitle = $x(DYNAMIC_PRICE_PAGE_TITLE.getSelector()).as(DYNAMIC_PRICE_PAGE_TITLE.getAlias());
+    private Table protectionsTable = new Table();
+    private ElementsCollection protectionItems = $$x(PROTECTION_ITEMS.getSelector()).as(PROTECTION_ITEMS.getAlias());
+    private SelenideElement editProtectionButton = $x(EDIT_PROTECTION_BUTTON.getSelector()).as(EDIT_PROTECTION_BUTTON.getAlias());
+    private SelenideElement createProtectionButton = $x(CREATE_PROTECTION_BUTTON.getSelector()).as(CREATE_PROTECTION_BUTTON.getAlias());
+    private SelenideElement activateProtectionButton = $x(ACTIVATE_PROTECTION_BUTTON.getSelector()).as(ACTIVATE_PROTECTION_BUTTON.getAlias());
+    private SelenideElement deactivateProtectionButton = $x(DEACTIVATE_PROTECTION_BUTTON.getSelector()).as(DEACTIVATE_PROTECTION_BUTTON.getAlias());
+
 }
