@@ -74,8 +74,11 @@ jobs:
 
       # generate allure html report
       - run:
+          name: Download npm
+          command: curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+      - run:
           name: Install npm
-          command: curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash - && sudo apt install nodejs npm
+          command: sudo apt install nodejs npm
       - run:
           name: Unpacking allure to /opt
           command: sudo npm install -g allure-commandline --save-dev
