@@ -7,7 +7,12 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ProtectionsPageElements {
 
-    PROTECTIONS_PAGE_TITLE( "'Protections' Page Title", "//h1");
+    PROTECTION_ITEMS("Protection Items", "//tbody/tr"),
+    PROTECTIONS_PAGE_TITLE("'Protections' Page Title", "//h1"),
+    EDIT_PROTECTION_BUTTON("'Edit Protection' Button", "//button//span[text()='Edit Protections']"),
+    CREATE_PROTECTION_BUTTON("'Create Protection' Button", "//button//span[text()='Create Protections']"),
+    ACTIVATE_PROTECTION_BUTTON("'Activate Protection' Button", "//button//span[text()='Activate']"),
+    DEACTIVATE_PROTECTION_BUTTON("'Deactivate Protection' Button", "//button//span[text()='Deactivate']");
 
     private String alias;
     private String selector;

@@ -1,35 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="SmokeTest Suite" parallel="false">
-    <test name="SmokeTest Suite">
+    <test name="Media">
         <classes>
-
-         <!--   <class name="rx.sales.deals.DealsTest"/>-->
-
-            <class name="rx.inventory.media.MediaTestExample"/>
+            <class name="rx.inventory.media.MediaCheckFields"/>
+            <class name="rx.inventory.media.MediaCreateTests"/>
+            <class name="rx.inventory.media.MediaEditTests"/>
             <class name="rx.inventory.media.MediaActivateDeactivateTableTests"/>
             <class name="rx.inventory.media.MediaSearchTableTests"/>
             <class name="rx.inventory.media.MediaSortingTableTests"/>
             <class name="rx.inventory.media.MediaCheckColumns"/>
             <class name="rx.inventory.media.MediaCheckPagination"/>
             <class name="rx.inventory.media.MediaCheckTooltips"/>
-            <class name="rx.inventory.media.MediaCheckFields"/>
-            <class name="rx.inventory.media.MediaEditTests"/>
-            <class name="rx.inventory.media.MediaCreateTests"/>
-
+        </classes>
+    </test>
+    <test name="Ad Spots Feature">
+        <classes>
             <class name="rx.inventory.adspot.AdSpotCheckColumns"/>
             <class name="rx.inventory.adspot.AdSpotCheckTooltips"/>
-            <class name="rx.inventory.adspot.AdSpotTest"/>
             <class name="rx.inventory.adspot.AdSpotSortingTableTests"/>
             <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
             <class name="rx.inventory.adspot.AdSpotCheckPagination"/>
             <class name="rx.inventory.adspot.AdSpotCheckTooltips"/>
-
-         <class name="rx.admin.publishers.PublisherTest"/>
-         <class name="rx.component.multipane.MultipaneTest"/>
-         <class name="rx.component.table.TableDataTests"/>
-         <class name="rx.login.LoginPositiveTest"/>
-         <class name="rx.protections.ProtectionsTest"/>
+        </classes>
+    </test>
+    <test name="Protections Feature">
+        <classes>
+            <class name="rx.protections.ProtectionsCheckPaginationTests"/>
+            <class name="rx.protections.ProtectionsTest"/>
+        </classes>
+    </test>
+    <test name="Deals Feature">
+        <classes>
+            <class name="rx.sales.deals.DealsTest"/>
+        </classes>
+    </test>
+    <test name="Login Feature">
+        <classes>
+            <class name="rx.login.LoginPositiveTest"/>
+        </classes>
+    </test>
+    <test name="Components Tests">
+        <classes>
+            <class name="rx.component.multipane.MultipaneTest"/>
+            <class name="rx.component.table.TableDataTests"/>
+        </classes>
+    </test>
+    <test name="Publisher Feature">
+        <classes>
+            <class name="rx.admin.publishers.PublisherTest"/>
+        </classes>
+    </test>
+    <test name="Open Pricing Feature">
+        <classes>
+            <class name="rx.yield.openpricing.CreateOpenPricingTest"/>
+            <class name="rx.yield.openpricing.OpenPricingSortingTableTests"/>
+            <class name="rx.yield.openpricing.OpenPricingTests"/>
+            <class name="rx.yield.openpricing.VerifyPublisherTests"/>
         </classes>
     </test>
 </suite>

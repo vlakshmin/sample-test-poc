@@ -8,6 +8,7 @@ import lombok.Getter;
 public enum Path {
 
     CREATE_PROTECTION("/protections/create"),
+    PROTECTIONS("/protections"),
     PUBLISHER("/admin/publishers"),
     USER("/admin/publishers"),
     DEALS("/sales/deals"),
