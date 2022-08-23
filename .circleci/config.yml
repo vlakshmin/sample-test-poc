@@ -80,9 +80,9 @@ jobs:
       - run:
           name: Checking list of files
           command: ls -la /tmp/
-#      - run:
-#          name: Fixing zip issue
-#          command: zip -FF /tmp/allure.zip --out /tmp/allure_fixed.zip | unzip
+      - run:
+          name: APT SECURE
+          command: sudo apt-secure
       - run:
           name: Install npm
           command: curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash - && sudo apt install nodejs npm
