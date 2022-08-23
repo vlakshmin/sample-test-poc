@@ -70,13 +70,9 @@ jobs:
       # run tests!
       - run:
           name: Run Tests
-          command:
-            mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testsuits/SmokeRX.xml
+          command: mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testsuits/SmokeRX.xml
 
       # generate allure html report
-     - run:
-          name: APT SECURE
-          command: sudo apt-secure
       - run:
           name: Install npm
           command: curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash - && sudo apt install nodejs npm
