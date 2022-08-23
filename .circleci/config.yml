@@ -10,6 +10,8 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:11-jdk-browsers
+      - image: cimg/node:18.7.0
+#      - image: cimg/python:3.10.6
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -74,13 +76,7 @@ jobs:
             mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testsuits/SmokeRX.xml
 
       #generate allure html report
-      - run:
-          name: Download allure
-          command: curl -L https://github.com/allure-framework/allure2/releases/download/2.19.0/allure-commandline-2.19.0.zip -o /tmp/allure.zip
-      - run:
-          name: Checking list of files
-          command: ls -la /tmp/
-      - run:
+     - run:
           name: APT SECURE
           command: sudo apt-secure
       - run:
