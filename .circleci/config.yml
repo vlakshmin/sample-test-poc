@@ -103,9 +103,7 @@ workflows:
   build-workflow:
     jobs:
       - build
-      - generate-allure:
-          requires:
-            - build
+      - generate-allure
   nightly:
     triggers:
       - schedule:
@@ -116,7 +114,5 @@ workflows:
                 - master
     jobs:
       - build
-      - generate-allure:
-          requires:
-            - build
+      - generate-allure
  
