@@ -7,6 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum AdSpotNativeCardSidebarElements {
 
+    NATIVE_PANEL("'Native' Panel with Elements", "//div[text()='Native']/../../span"),
     NATIVE_CARD("'Native' Card", "//div[text()='Native']/../button//i[contains(@class,'v-icon')]"),
     TOOLTIP_NATIVE_FLOOR_PRICE_ICON("Native Card Floor Price Tooltip '%s' Icon",
             "//div[text()='Native']/../..//*[text()='Floor Price']/../../div/span[contains(@class,'v-tooltip')]/../i");

@@ -7,6 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum AdSpotBannerCardSidebarElements {
 
+    BANNER_PANEL("'Banner' Panel with Elements", "//div[text()='Banner']/../../span"),
     BANNER_CARD("'Banner' Card", "//div[text()='Banner']/../button//i[contains(@class,'v-icon')]"),
     TOOLTIP_BANNER_AD_SIZES_ICON("Banner Card  Ad Sizes Tooltip '%s' Icon",
             "//div[text()='Banner']/../..//*[text()='Ad Sizes']/../div/*[contains(@class,'v-tooltip')]/../i"),

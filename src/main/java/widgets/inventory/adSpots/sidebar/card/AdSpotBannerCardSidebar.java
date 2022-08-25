@@ -12,6 +12,8 @@ import static widgets.inventory.adSpots.sidebar.card.AdSpotBannerCardSidebarElem
 @Getter
 public class AdSpotBannerCardSidebar {
 
+    private SelenideElement bannerPanel = $x(BANNER_PANEL.getSelector())
+            .as(BANNER_PANEL.getAlias());
     private SelenideElement tooltipBannerAdSizes = $x(TOOLTIP_BANNER_AD_SIZES_ICON.getSelector())
             .as(TOOLTIP_BANNER_AD_SIZES_ICON.getAlias());
     private SelenideElement tooltipBannerFloorPrice = $x(TOOLTIP_BANNER_FLOOR_PRICE_ICON.getSelector())

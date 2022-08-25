@@ -62,17 +62,49 @@ public class AdSpotCheckFields extends BaseTest {
                 .validateAttribute(editAdSpotSidebar.getActiveToggle(), "aria-checked", "true")
                 .validate(visible, editAdSpotSidebar.getPublisherInput())
                 .validate(editAdSpotSidebar.getPublisherInput(), "")
-
+                .validate(disabled,editAdSpotSidebar.getCategoriesInput())
+                .validate(disabled,editAdSpotSidebar.getNameInput())
+                .validate(disabled,editAdSpotSidebar.getRelatedMediaInput())
+                .validate(disabled,editAdSpotSidebar.getPosition())
+                .validate(disabled,editAdSpotSidebar.getDefaultAdSizes())
+                .validate(disabled,editAdSpotSidebar.getDefaultFloorPrice())
+                .validate(disabled,editAdSpotSidebar.getTestModeToggle())
+                .validate(disabled,editAdSpotSidebar.getContentForChildrenToggle())
+                .validateAttribute(editAdSpotSidebar.getBannerCard().getBannerPanel(),"style","display: none;")
+                .validateAttribute(editAdSpotSidebar.getVideoCard().getVideoPanel(),"style","display: none;")
+                .validateAttribute(editAdSpotSidebar.getNativeCard().getNativePanel(),"style","display: none;")
+                .and("Close Ad Spot Sidebar")
+                .clickOnWebElement(editAdSpotSidebar.getCloseIcon())
+                .waitSideBarClosed()
                 .testEnd();
+    }
+
+    @Test(description = "Check required fields")
+    private void checkRequiredFields() {
+        var videoCard = editAdSpotSidebar.getVideoCard();
+        var bannerCard = editAdSpotSidebar.getBannerCard();
+        var nativeCard = editAdSpotSidebar.getNativeCard();
+
+        testStart()
+                .and("Expand all cards")
+                .clickOnWebElement(bannerCard.getBannerCardHeader())
+                .clickOnWebElement(nativeCard.getNativeCardHeader())
+                .clickOnWebElement(videoCard.getVideoCardHeader())
+
+                .then("Click 'Save' and check Errors")
+                .scrollIntoView(editAdSpotSidebar.getSaveButton())
+                .clickOnWebElement(editAdSpotSidebar.getSaveButton())
+                .and("Close Ad Spot Sidebar")
+                .clickOnWebElement(editAdSpotSidebar.getCloseIcon())
+                .waitSideBarClosed()
+
+              .testEnd();
     }
 
 
     @AfterMethod
     private void logout() {
         testStart()
-                .and("Close Ad Spot Sidebar")
-                .clickOnWebElement(editAdSpotSidebar.getCloseIcon())
-                .waitSideBarClosed()
                 .and("Logout")
                 .logOut()
                 .testEnd();

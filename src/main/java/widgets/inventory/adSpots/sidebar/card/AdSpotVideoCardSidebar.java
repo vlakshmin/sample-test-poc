@@ -4,6 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 
 import static com.codeborne.selenide.Selenide.$x;
+import static widgets.inventory.adSpots.sidebar.card.AdSpotBannerCardSidebarElements.TOOLTIP_BANNER_AD_SIZES_ICON;
 import static widgets.inventory.adSpots.sidebar.card.AdSpotVideoCardSidebarElements.*;
 
 /**
@@ -12,6 +13,8 @@ import static widgets.inventory.adSpots.sidebar.card.AdSpotVideoCardSidebarEleme
 @Getter
 public class AdSpotVideoCardSidebar {
 
+    private SelenideElement videoPanel = $x(VIDEO_PANEL.getSelector())
+            .as(VIDEO_PANEL.getAlias());
     private SelenideElement videoCardHeader = $x(VIDEO_CARD.getSelector()).as(VIDEO_CARD.getAlias());
     private SelenideElement tooltipVideoAdSizes = $x(TOOLTIP_VIDEO_AD_SIZES_ICON.getSelector())
             .as(TOOLTIP_VIDEO_AD_SIZES_ICON.getAlias());

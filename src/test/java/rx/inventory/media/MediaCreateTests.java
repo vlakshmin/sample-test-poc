@@ -41,10 +41,11 @@ public class MediaCreateTests extends BaseTest {
         testStart()
                 .given()
                 .openDirectPath(Path.MEDIA)
+                .clickBrowserRefreshButton()
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+                .clickBrowserRefreshButton()
                 .testEnd();
-
     }
 
     @Test(description = "Create Media with 'IOS' media type")

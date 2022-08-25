@@ -7,6 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum AdSpotVideoCardSidebarElements {
 
+    VIDEO_PANEL("'Video' Panel with Elements", "//div[text()='Video']/../../span"),
     VIDEO_CARD("'Video' Card", "//div[text()='Video']/../button//i[contains(@class,'v-icon')]"),
     TOOLTIP_VIDEO_AD_SIZES_ICON("Video Card Ad Sizes Tooltip '%s' Icon",
             "//div[text()='Video']/../..//*[text()='Ad Sizes']/../div/*[contains(@class,'v-tooltip')]/../i"),
