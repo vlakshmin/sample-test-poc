@@ -6,13 +6,12 @@ import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
 import pages.Path;
-import pages.inventory.media.MediaPage;
+import pages.inventory.media.*;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import widgets.common.tooltip.MediaTooltipText;
 import widgets.errormessages.ErrorMessages;
 import widgets.inventory.media.sidebar.EditMediaSidebar;
-import widgets.inventory.media.sidebar.MediaSidebarElements;
 import widgets.inventory.media.sidebar.MediaTooltipSidebarElements;
 
 import static com.codeborne.selenide.Condition.*;

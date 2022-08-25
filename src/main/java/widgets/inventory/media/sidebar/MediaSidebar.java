@@ -3,6 +3,7 @@ package widgets.inventory.media.sidebar;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
+import widgets.common.categories.CategoriesListPanel;
 import widgets.common.validationalert.ValidationBottomAlert;
 
 import static com.codeborne.selenide.Selenide.$$x;
@@ -32,15 +33,17 @@ public abstract class MediaSidebar {
     private ElementsCollection mediaTypeItems = $$x(MEDIA_TYPE_ITEMS.getSelector()).as(MEDIA_TYPE_ITEMS.getAlias());
     private SelenideElement publisherNameInput = $x(PUBLISHER_NAME_INPUT.getSelector()).as(PUBLISHER_NAME_INPUT.getAlias());
     private ValidationBottomAlert errorAlert = new ValidationBottomAlert();
-    public SelenideElement getTooltipIconByFieldName(String fieldName){
+    private CategoriesListPanel categoriesPanel = new CategoriesListPanel();
 
-        return $x(String.format(TOOLTIP_ICON_BY_FIELD_NAME.getSelector(),fieldName))
-                .as(String.format(TOOLTIP_ICON_BY_FIELD_NAME.getAlias(),fieldName));
+    public SelenideElement getTooltipIconByFieldName(String fieldName) {
+
+        return $x(String.format(TOOLTIP_ICON_BY_FIELD_NAME.getSelector(), fieldName))
+                .as(String.format(TOOLTIP_ICON_BY_FIELD_NAME.getAlias(), fieldName));
     }
 
-    public SelenideElement getErrorAlertByFieldName(String fieldName){
+    public SelenideElement getErrorAlertByFieldName(String fieldName) {
 
-        return $x(String.format(ERROR_ALERT_BY_FIELD_NAME.getSelector(),fieldName))
-                .as(String.format(ERROR_ALERT_BY_FIELD_NAME.getAlias(),fieldName));
+        return $x(String.format(ERROR_ALERT_BY_FIELD_NAME.getSelector(), fieldName))
+                .as(String.format(ERROR_ALERT_BY_FIELD_NAME.getAlias(), fieldName));
     }
 }
