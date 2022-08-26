@@ -89,6 +89,7 @@ public class AdSpotCheckFields extends BaseTest {
                 .and("Expand all cards")
                 .clickOnWebElement(bannerCard.getBannerCardHeader())
                 .clickOnWebElement(nativeCard.getNativeCardHeader())
+                .scrollIntoView(videoCard.getVideoCardHeader())
                 .clickOnWebElement(videoCard.getVideoCardHeader())
 
                 .then("Click 'Save' and check Errors")
