@@ -20,10 +20,13 @@ public enum ErrorMessages {
 
     //Ad Spot
     POSITION_ERROR_ALERT("'Position' Error Alert Text", "The Position field is required"),
+    DURATION_ERROR_ALERT("'Duration' Error Alert Text", "Duration should be between 0 and 10000"),
     AD_SPOT_NAME_ERROR_ALERT("'Ad Spot Name' Error Alert Text", "The Ad Spot Name field is required"),
     RELATED_MEDIA_TYPE_ERROR_ALERT("'Related Media' Error Alert Text", "The Related Media field is required"),
     DEFAULT_AD_SIZE_TYPE_ERROR_ALERT("'Default Ad size' Error Alert Text", "The Default Ad Sizes field is required"),
     DEFAULT_FLOOR_PRICE_ERROR_ALERT("'Default Floor Price' Error Alert Text", "The Default Floor Price field is required"),
+    VIDEO_PLACEMENT_TYPE_ERROR_ALERT("'Video Placement Type' Error Alert Text", "The Video Placement Type field is required"),
+    VIDEO_PLAYBACK_METHOD_ERROR_ALERT("'Video Playback Method' Error Alert Text", "The Video Playback Methods field is required"),
 
     //Private Auction / Deal
     DSP_ERROR_ALERT("DSP Error Alert Text", "The DSP field is required"),
@@ -49,7 +52,10 @@ public enum ErrorMessages {
     //DSP
     FORMAT_ERROR_ALERT("Format Error Alert Text", "The Format field is required"),
     PLATFORM_ERROR_ALERT("Platform Error Alert Text", "The Platform field is required"),
-    ENDPOINT_ERROR_ALERT("Endpoint Error Alert Text", "Endpoint URI has no selections");
+    ENDPOINT_ERROR_ALERT("Endpoint Error Alert Text", "Endpoint URI has no selections"),
+
+    //COMMON
+    MIN_MAX_VALUE_FLOOR_PRICE("Min/Max Value Floor Price Alert Text", "A valid price is between 0.00 and 999,999.99 inclusive");
 
     private String alias;
     private String text;
