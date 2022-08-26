@@ -1,11 +1,14 @@
 package widgets.inventory.adSpots.sidebar;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
+import widgets.common.validationalert.ValidationBottomAlert;
 import widgets.inventory.adSpots.sidebar.card.AdSpotBannerCardSidebar;
 import widgets.inventory.adSpots.sidebar.card.AdSpotNativeCardSidebar;
 import widgets.inventory.adSpots.sidebar.card.AdSpotVideoCardSidebar;
 
+import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 import static widgets.inventory.adSpots.sidebar.AdSpotSidebarElements.*;
 
@@ -30,9 +33,11 @@ public abstract class AdSpotSidebar {
     private SelenideElement relatedMediaInput = $x(RELATED_MEDIA.getSelector()).as(RELATED_MEDIA.getAlias());
     private SelenideElement defaultAdSizes = $x(DEFAULT_AD_SIZES.getSelector()).as(DEFAULT_AD_SIZES.getAlias());
     private SelenideElement categoriesInput = $x(CATEGORIES_INPUT.getSelector()).as(CATEGORIES_INPUT.getAlias());
+    private ElementsCollection publisherItems = $$x(PUBLISHER_ITEMS.getSelector()).as(PUBLISHER_ITEMS.getAlias());
     private SelenideElement defaultFloorPrice = $x(DEFAULT_FLOOR_PRICE.getSelector()).as(DEFAULT_FLOOR_PRICE.getAlias());
+    private SelenideElement publisherNameInput = $x(PUBLISHER_NAME_INPUT.getSelector()).as(PUBLISHER_NAME_INPUT.getAlias());
     private SelenideElement contentForChildrenToggle = $x(CONTENT_FOR_CHILDREN.getSelector()).as(CONTENT_FOR_CHILDREN.getAlias());
-
+    private ValidationBottomAlert errorAlert = new ValidationBottomAlert();
     public SelenideElement getErrorAlertByFieldName(String fieldName){
 
         return $x(String.format(ERROR_ALERT_BY_FIELD_NAME.getSelector(),fieldName))

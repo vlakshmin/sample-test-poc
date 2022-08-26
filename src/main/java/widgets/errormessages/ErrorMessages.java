@@ -18,6 +18,13 @@ public enum ErrorMessages {
     APP_STORE_URL_ERROR_ALERT("'App Store URL' Error Alert Text", "The App Store URL field must be a valid url"),
     APP_STORE_URL_REQUIRED_ERROR_ALERT("'App Store URL' Error Alert Text", "The App Store URL field is required"),
 
+    //Ad Spot
+    POSITION_ERROR_ALERT("'Position' Error Alert Text", "The Position field is required"),
+    AD_SPOT_NAME_ERROR_ALERT("'Ad Spot Name' Error Alert Text", "The Ad Spot Name field is required"),
+    RELATED_MEDIA_TYPE_ERROR_ALERT("'Related Media' Error Alert Text", "The Related Media field is required"),
+    DEFAULT_AD_SIZE_TYPE_ERROR_ALERT("'Default Ad size' Error Alert Text", "The Default Ad Sizes field is required"),
+    DEFAULT_FLOOR_PRICE_ERROR_ALERT("'Default Floor Price' Error Alert Text", "The Default Floor Price field is required"),
+
     //Private Auction / Deal
     DSP_ERROR_ALERT("DSP Error Alert Text", "The DSP field is required"),
     NAME_ERROR_ALERT("Name Error Alert Text", "The Name field is required"),
