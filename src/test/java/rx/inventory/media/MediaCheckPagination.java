@@ -50,32 +50,32 @@ public class MediaCheckPagination extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Verify Pagination: 100 rows per page")
+    @Test(description = "Verify Pagination: 100 rows per page",alwaysRun = true)
     public void checkPagination100() {
         verifyPagination(100);
     }
 
-    @Test(description = "Verify Pagination: 50 rows per page")
+    @Test(description = "Verify Pagination: 50 rows per page",alwaysRun = true)
     public void checkPagination50() {
         verifyPagination(50);
     }
 
-    @Test(description = "Verify Pagination: 25 rows per page")
+    @Test(description = "Verify Pagination: 25 rows per page",alwaysRun = true)
     public void checkPagination25() {
         verifyPagination(25);
     }
 
-    @Test(description = "Verify Pagination: 20 rows per page")
+    @Test(description = "Verify Pagination: 20 rows per page",alwaysRun = true)
     public void checkPagination20() {
         verifyPagination(20);
     }
 
-    @Test(description = "Verify Pagination: 15 rows per page")
+    @Test(description = "Verify Pagination: 15 rows per page",alwaysRun = true)
     public void checkPagination15() {
         verifyPagination(15);
     }
 
-    @Test(description = "Verify Pagination: 10 rows per page")
+    @Test(description = "Verify Pagination: 10 rows per page",alwaysRun = true)
     public void checkPagination10() {
         verifyPagination(10);
     }
@@ -123,7 +123,7 @@ public class MediaCheckPagination extends BaseTest {
                 .testEnd();
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     private void deleteEntities() {
         if (listMedia != null) {
             for (Media media : listMedia) {

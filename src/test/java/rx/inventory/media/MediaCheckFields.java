@@ -41,7 +41,7 @@ public class MediaCheckFields extends BaseTest {
     private void init() {
 
         publisher = publisher()
-                .createNewPublisher(captionWithSuffix("1autoPub1"))
+                .createNewPublisher(captionWithSuffix("02autoPub1"))
                 .build()
                 .getPublisherResponse();
     }

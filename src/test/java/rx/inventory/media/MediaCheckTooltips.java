@@ -37,7 +37,7 @@ public class MediaCheckTooltips extends BaseTest {
     @BeforeClass
     private void init() {
         publisher = publisher()
-                .createNewPublisher(captionWithSuffix("10autoPub"))
+                .createNewPublisher(captionWithSuffix("02autoPub"))
                 .build()
                 .getPublisherResponse();
     }
@@ -58,7 +58,7 @@ public class MediaCheckTooltips extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "'Categories' Tooltip Text")
+    @Test(description = "'Categories' Tooltip Text",alwaysRun = true)
     private void categoriesTooltip() {
         verifyTooltip(mediaTooltipSidebar.getTooltipCategories(), MediaTypes.ANDROID.getName(),
                 MediaTooltipText.CATEGORIES.getText());
@@ -74,7 +74,7 @@ public class MediaCheckTooltips extends BaseTest {
                 MediaTooltipText.CATEGORIES.getText());
     }
 
-    @Test(description = "'Site URL' Tooltip Text")
+    @Test(description = "'Site URL' Tooltip Text",alwaysRun = true)
     private void siteURLTooltip() {
         verifyTooltip(mediaTooltipSidebar.getTooltipSiteURL(), MediaTypes.MOBILE_WEB.getName(),
                 MediaTooltipText.SITE_URL.getText());
@@ -82,8 +82,7 @@ public class MediaCheckTooltips extends BaseTest {
                 MediaTooltipText.SITE_URL.getText());
     }
 
-    //TODO: GS-2439
-    @Test(description = "'Bundle' Tooltip Text")
+    @Test(description = "'Bundle' Tooltip Text",alwaysRun = true)
     private void bundleTooltip(){
         verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.ANDROID.getName(),
                 MediaTooltipText.BUNDLE.getText());
@@ -95,7 +94,7 @@ public class MediaCheckTooltips extends BaseTest {
                 MediaTooltipText.BUNDLE.getText());
     }
 
-    @Test(description = "'App Store URL' Tooltip Text")
+    @Test(description = "'App Store URL' Tooltip Text",alwaysRun = true)
     private void appStoreURLTooltip() {
         verifyTooltip(mediaTooltipSidebar.getTooltipAppStoreURL(), MediaTypes.ANDROID.getName(),
                 MediaTooltipText.APP_STORE_URL.getText());
@@ -118,7 +117,7 @@ public class MediaCheckTooltips extends BaseTest {
                 .testEnd();
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     private void logout() {
         testStart()
                 .clickOnWebElement(editMediaSidebar.getCloseIcon())
@@ -127,7 +126,7 @@ public class MediaCheckTooltips extends BaseTest {
                 .testEnd();
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     private void deletePublisher() {
         if (publisher()
                 .setCredentials(USER_FOR_DELETION)

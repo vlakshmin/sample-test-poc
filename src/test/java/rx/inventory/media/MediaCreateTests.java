@@ -34,7 +34,7 @@ public class MediaCreateTests extends BaseTest {
     @BeforeClass
     private void initAndLogin() {
         publisher = publisher()
-                .createNewPublisher(captionWithSuffix("1autoPub"))
+                .createNewPublisher(captionWithSuffix("02autoPub"))
                 .build()
                 .getPublisherResponse();
 
