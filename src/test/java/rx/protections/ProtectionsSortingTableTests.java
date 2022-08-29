@@ -5,6 +5,7 @@ import api.preconditionbuilders.ProtectionsPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.units.qual.A;
 import org.testng.annotations.*;
 import pages.Path;
 import pages.protections.ProtectionsPage;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
@@ -26,7 +28,7 @@ import static managers.TestManager.testStart;
 @Slf4j
 @Listeners({ScreenShooter.class})
 public class ProtectionsSortingTableTests extends BaseTest {
-    private static final int MIN_COUNT_PROTECTIONS = 60;
+    private static final int MIN_COUNT_PROTECTIONS = 300;
     private int totalProtections;
     private List<String> sortIdsByAsc;
     private ArrayList<Integer> idsToDelete;
@@ -38,10 +40,12 @@ public class ProtectionsSortingTableTests extends BaseTest {
     private static final String ASC = "ascending";
     private static final String DESC = "descending";
 
-    private ProtectionsPrecondition.ProtectionsPreconditionBuilder protection = ProtectionsPrecondition.protection();
+    private final ProtectionsPrecondition.ProtectionsPreconditionBuilder protection;
 
     public ProtectionsSortingTableTests() {
+        idsToDelete = new ArrayList<>();
         protectionsPage = new ProtectionsPage();
+        protection =ProtectionsPrecondition.protection();
     }
 
     @BeforeClass
@@ -49,8 +53,8 @@ public class ProtectionsSortingTableTests extends BaseTest {
         protection.setCredentials(TEST_USER);
         int count = MIN_COUNT_PROTECTIONS - getTotalProtections();
         if (count > 0) {
-            idsToDelete = new ArrayList<>(MIN_COUNT_PROTECTIONS - getTotalProtections());
-            if (getTotalProtections() < MIN_COUNT_PROTECTIONS) generateProtections();
+            idsToDelete = new ArrayList<>(count);
+            generateProtections(count, idsToDelete);
         }
 
         totalProtections = getTotalProtections();
@@ -85,7 +89,6 @@ public class ProtectionsSortingTableTests extends BaseTest {
         sortByDescColumnByName(ColumnNames.PUBLISHER);
         validateSortData(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
     }
-
 
     @BeforeMethod
     private void login() {
@@ -243,21 +246,21 @@ public class ProtectionsSortingTableTests extends BaseTest {
                 .getItems();
     }
 
-    private void generateProtections() {
-        while (getTotalProtections() < 60) {
-            protection.createNewRandomProtection(idsToDelete).build();
+    private void generateProtections(int count, ArrayList<Integer> idsToDelete) {
+
+        for (int i = 0; i < count; i++) {
+            var builder = protection.createNewRandomProtection().build();
+            var response = builder.getProtectionsResponse();
+            if (response != null) {
+                idsToDelete.add(response.getId());
+            }
         }
     }
 
-    @AfterTest(enabled = true)
+    @AfterClass
     private void deleteEntities() {
-        if (idsToDelete == null || idsToDelete.isEmpty()){
-            return;
-        }
         protection.setCredentials(USER_FOR_DELETION);
-        for (Integer protectionId : idsToDelete) {
-            protection.deleteProtection(protectionId);
-        }
+        idsToDelete.forEach(id -> protection.deleteProtection(id).build());
     }
 }
 

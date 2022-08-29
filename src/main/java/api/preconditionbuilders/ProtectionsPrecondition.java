@@ -1,6 +1,5 @@
 package api.preconditionbuilders;
 
-
 import api.core.client.HttpClient;
 import api.dto.GenericResponse;
 import api.dto.rx.protection.*;
@@ -13,7 +12,6 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 import static zutils.FakerUtils.captionWithSuffix;
 
@@ -47,11 +45,9 @@ public class ProtectionsPrecondition {
         private Protection protectionsResponse;
         private ProtectionRequest protectionsRequest;
         private GenericResponse<Protection> protectionsGetAllResponse;
-        private ProtectionsService protectionsService = new ProtectionsService();
+        private final ProtectionsService protectionsService = new ProtectionsService();
+
         public ProtectionsPreconditionBuilder createNewRandomProtection() {
-            return createNewRandomProtection(null);
-        }
-        public ProtectionsPreconditionBuilder createNewRandomProtection(ArrayList<Integer> idsToDelete) {
             this.protectionsRequest = ProtectionRequest.builder()
                     .name(captionWithSuffix("Auto_Test_Rule"))
                     .publisherId(4)
@@ -118,18 +114,12 @@ public class ProtectionsPrecondition {
             this.protectionsResponse = response.as(Protection.class);
             this.responseCode = response.getStatusCode();
 
-            if (idsToDelete!=null&&protectionsResponse!=null){
-                idsToDelete.add(protectionsResponse.getId());
-            }
-
             return this;
         }
-
 
         public ProtectionsPreconditionBuilder deleteProtection(int id) {
             this.response = protectionsService.deleteProtection(id);
             this.responseCode = response.getStatusCode();
-            Logger.getLogger("Debug").info("status code: " + responseCode + " id:" + id);
 
             return this;
         }
@@ -145,11 +135,10 @@ public class ProtectionsPrecondition {
             return new ProtectionsPrecondition(this);
         }
 
-        public List<Protection> getProtectionsResponseList() {
+        private List<Protection> getProtectionsResponseList() {
 
             return Arrays.asList(response.jsonPath().getObject("items", Protection.class));
         }
-
 
         public Integer getProtectionsListSize() {
             Map<String, Object> queryParams = new HashMap<>();
@@ -160,13 +149,11 @@ public class ProtectionsPrecondition {
                     .build()
                     .getProtectionsGetAllResponse()
                     .getItems().size();
-
         }
 
         public ProtectionsPreconditionBuilder getProtectionsWithFilter(Map<String, Object> queryParams) {
             this.response = protectionsService.getProtectionsWithFilter(queryParams);
-            this.protectionsGetAllResponse = this.response.as(new TypeRef<GenericResponse<Protection>>() {
-            });
+            this.protectionsGetAllResponse = this.response.as(new TypeRef<GenericResponse<Protection>>() {});
             this.responseCode = response.getStatusCode();
 
             return this;
@@ -180,5 +167,4 @@ public class ProtectionsPrecondition {
             return this;
         }
     }
-
 }
