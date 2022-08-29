@@ -73,7 +73,7 @@ public class PublisherTest extends BaseTest {
                 .validateAttribute(createPublisherSidebar.getCurrency(), "disabled", "true")
                 .and()
                 .setValueWithClean(createPublisherSidebar.getNameInput(), PUBLISHER_NAME_EDITED)
-                .setValueWithClean(createPublisherSidebar.getAdOpsInput(), PUBLISHER_AD_OPS_EDITED + "AAAA")
+                .setValueWithClean(createPublisherSidebar.getAdOpsInput(), PUBLISHER_AD_OPS_EDITED)
                 .clickOnWebElement(createPublisherSidebar.getSaveButton())
                 .waitSideBarClosed()
                 .then()
