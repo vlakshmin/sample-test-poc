@@ -28,7 +28,7 @@ import static managers.TestManager.testStart;
 @Slf4j
 @Listeners({ScreenShooter.class})
 public class ProtectionsSortingTableTests extends BaseTest {
-    private static final int MIN_COUNT_PROTECTIONS = 300;
+    private static final int MIN_COUNT_PROTECTIONS = 60;
     private int totalProtections;
     private List<String> sortIdsByAsc;
     private ArrayList<Integer> idsToDelete;
@@ -45,7 +45,7 @@ public class ProtectionsSortingTableTests extends BaseTest {
     public ProtectionsSortingTableTests() {
         idsToDelete = new ArrayList<>();
         protectionsPage = new ProtectionsPage();
-        protection =ProtectionsPrecondition.protection();
+        protection = ProtectionsPrecondition.protection();
     }
 
     @BeforeClass
