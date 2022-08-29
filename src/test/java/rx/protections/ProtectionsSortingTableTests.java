@@ -176,7 +176,7 @@ public class ProtectionsSortingTableTests extends BaseTest {
                         totalProtections))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalProtections))
-                .then(String.format("Validate data in column '%s' should be sorted by $s",
+                .then(String.format("Validate data in column '%s' should be sorted by %s",
                         columnName.getName(), sortType))
                 .validateList(tableData.getCustomCells(columnName),
                         expectedResultList.subList(0, 50))
