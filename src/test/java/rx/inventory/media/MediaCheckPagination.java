@@ -6,7 +6,7 @@ import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
 import pages.Path;
-import pages.inventory.media.MediaPage;
+import pages.inventory.media.*;
 import rx.BaseTest;
 
 import java.util.ArrayList;

@@ -10,7 +10,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
-import pages.inventory.media.MediaPage;
+import pages.inventory.media.*;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.Statuses;

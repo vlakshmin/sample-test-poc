@@ -19,7 +19,7 @@ public class OpenPricing {
     private String name;
     private String notes;
     private Boolean active;
-    private Integer priority;
+    private Boolean priority;
     private String createdAt;
     private String createdBy;
     private String updatedAt;

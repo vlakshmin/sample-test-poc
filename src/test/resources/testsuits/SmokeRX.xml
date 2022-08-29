@@ -44,6 +44,7 @@
         <classes>
             <class name="rx.component.multipane.MultipaneTest"/>
             <class name="rx.component.table.TableDataTests"/>
+            <class name="rx.component.categories.CategoriesSelectionTests"/>
         </classes>
     </test>
     <test name="Publisher Feature">

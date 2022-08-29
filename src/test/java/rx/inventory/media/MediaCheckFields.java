@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.*;
 import pages.Path;
-import pages.inventory.media.MediaPage;
+import pages.inventory.media.*;
 import rx.BaseTest;
 import widgets.errormessages.ErrorMessages;
 import widgets.inventory.media.sidebar.EditMediaSidebar;
