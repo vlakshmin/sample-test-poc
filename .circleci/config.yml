@@ -34,7 +34,19 @@ jobs:
       - run:
           name: Resolve Maven Dependencies
           command: mvn dependency:go-offline
-
+            # generate allure html report
+      - run:
+          name: Update apt
+          command: sudo apt update
+      - run:
+          name: Install npm
+          command: sudo apt install nodejs npm
+      - run:
+          name: Unpacking allure to /opt
+          command: sudo npm install -g allure-commandline --save-dev
+      - run:
+          name: Checking allure version
+          command: allure --version
       #- run:
          # name: Install latest version of Chrome
           #command: |
@@ -63,32 +75,9 @@ jobs:
 
       # run tests!
       - run:
-          name: Run Tests
-          command: mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testsuits/SmokeRX.xml
-
-  generate-allure:
-    docker:
-    # specify the version you desire here
-    - image: circleci/openjdk:11-jdk-browsers
-
-    steps:
-
-        # generate allure html report
-      - run:
-          name: Update apt
-          command: sudo apt update
-      - run:
-          name: Install npm
-          command: sudo apt install nodejs npm
-      - run:
-          name: Unpacking allure to /opt
-          command: sudo npm install -g allure-commandline --save-dev
-      - run:
-          name: Checking allure version
-          command: allure --version
-      - run:
-          name: Generate allure html report
-          command: allure generate -c target/allure-results -o target/allure-results-html
+          name: Run Tests and Generate allure html report
+          command: mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testsuits/SmokeRX.xml &&
+          allure generate -c target/allure-results -o target/allure-results-html
 
         # store artifacts and results
       - store_artifacts:
@@ -103,7 +92,6 @@ workflows:
   build-workflow:
     jobs:
       - build
-      - generate-allure
   nightly:
     triggers:
       - schedule:
@@ -114,5 +102,4 @@ workflows:
                 - master
     jobs:
       - build
-      - generate-allure
  
