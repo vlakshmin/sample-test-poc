@@ -124,17 +124,17 @@ public class AdSpotSortingTableTests extends BaseTest {
         validateSortData(ColumnNames.RELATED_MEDIA, ASC, sortRelatedMediaByAsc);
     }
 
-    @Test(testName = "Sorting 'Active/Inactive' column by descending")
-    public void adSpotSortingByStatusDesc() {
-        sortByDescColumnByName(ColumnNames.ACTIVE_INACTIVE);
-        validateSortData(ColumnNames.ID, DESC, sortStatusByDesc);
-    }
-
-    @Test(testName = "Sorting 'Active/Inactive' column by ascending")
-    public void adSpotSortingByStatusAsc() {
-        sortByAscColumnByName(ColumnNames.ACTIVE_INACTIVE);
-        validateSortData(ColumnNames.ID, ASC, sortStatusByAsc);
-    }
+//    @Test(testName = "Sorting 'Active/Inactive' column by descending")
+//    public void adSpotSortingByStatusDesc() {
+//        sortByDescColumnByName(ColumnNames.ACTIVE_INACTIVE);
+//        validateSortData(ColumnNames.ID, DESC, sortStatusByDesc);
+//    }
+//
+//    @Test(testName = "Sorting 'Active/Inactive' column by ascending")
+//    public void adSpotSortingByStatusAsc() {
+//        sortByAscColumnByName(ColumnNames.ACTIVE_INACTIVE);
+//        validateSortData(ColumnNames.ID, ASC, sortStatusByAsc);
+//    }
 
     @BeforeMethod
     private void login() {

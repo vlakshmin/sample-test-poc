@@ -16,7 +16,7 @@ public enum AdSpotBannerCardSidebarElements {
             "//div[text()='Banner']/../..//label[text()='%s']/../../..//child::div[@class='v-messages__message']"),
     TOOLTIP_BANNER_FLOOR_PRICE_ICON("Banner Card  Floor Price Tooltip '%s' Icon",
             "//div[text()='Banner']/../..//*[text()='Floor Price']/../../div/*[contains(@class,'v-tooltip')]/../i"),
-    BANNER_AD_SIZES("'Banner' Ad Sizes Button", "//div[text()='Banner']/../..//label[text()='Ad Sizes']/../div/div"),
+    BANNER_AD_SIZES("'Banner' Ad Sizes Button", "//div[text()='Banner']/../..//label[text()='Ad Sizes']/../div[1]"),
     BANNER_AD_SIZES_INPUT("'Banner' Ad Sizes Input", "//div[text()='Banner']/../..//label[text()='Ad Sizes']/../div/input"),
     BANNER_FLOOR_PRICE("'Banner' Floor Price Input", "//div[text()='Banner']/../..//label[text()='Floor Price']/../../div/input");
 

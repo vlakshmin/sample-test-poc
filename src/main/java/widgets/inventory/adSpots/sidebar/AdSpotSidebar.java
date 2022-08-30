@@ -48,6 +48,7 @@ public abstract class AdSpotSidebar {
     private AdSizesListPanel adSizesPanel = new AdSizesListPanel();
     private ValidationBottomAlert errorAlert = new ValidationBottomAlert();
     private ChangePublisherBanner changePublisherBanner = new ChangePublisherBanner();
+    private CategoriesListPanel categoriesPanel = new CategoriesListPanel();
 
     public SelenideElement getErrorAlertByFieldName(String fieldName){
 

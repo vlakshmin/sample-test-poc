@@ -27,7 +27,7 @@
             <class name="rx.inventory.adspot.AdSpotCheckPagination"/>
             <class name="rx.inventory.adspot.AdSpotCheckTooltips"/>
             <class name="rx.inventory.adspot.AdSpotCheckFields"/>
-            <class name="rx.inventory.adspot.AdSpotEditTests"/>
+
             <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
         </classes>
     </test>

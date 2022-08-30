@@ -55,7 +55,8 @@ public enum ErrorMessages {
     ENDPOINT_ERROR_ALERT("Endpoint Error Alert Text", "Endpoint URI has no selections"),
 
     //COMMON
-    MIN_MAX_VALUE_FLOOR_PRICE("Min/Max Value Floor Price Alert Text", "A valid price is between 0.00 and 999,999.99 inclusive");
+    MIN_MAX_VALUE_FLOOR_PRICE("Min/Max Value Floor Price Alert Text", "A valid price is between 0.00 and 999,999.99 inclusive"),
+    MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE("Min/Max Value Floor Price Alert Text", "A valid price is between 0.01 and 999,999.99 inclusive");
 
     private String alias;
     private String text;
