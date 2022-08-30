@@ -29,7 +29,8 @@ import static zutils.FakerUtils.captionWithSuffix;
 public class AdSpotCheckFields extends BaseTest {
     private AdSpotsPage adSpotPage;
     private EditAdSpotSidebar editAdSpotSidebar;
-    private Media media;
+    private Media media1;
+    private Media media2;
 
     public AdSpotCheckFields() {
         adSpotPage = new AdSpotsPage();
@@ -39,8 +40,13 @@ public class AdSpotCheckFields extends BaseTest {
     @BeforeClass
     private void init() {
 
-        media = media()
-                .createNewMedia(captionWithSuffix("autoMedia"))
+        media1 = media()
+                .createNewMedia(captionWithSuffix("auto1Media"))
+                .build()
+                .getMediaResponse();
+
+        media2 = media()
+                .createNewMedia(captionWithSuffix("auto2Media"))
                 .build()
                 .getMediaResponse();
     }
@@ -114,9 +120,9 @@ public class AdSpotCheckFields extends BaseTest {
                 .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Publisher Name"))
                 .validate(editAdSpotSidebar.getErrorAlertByFieldName("Publisher Name"),
                         ErrorMessages.PUBLISHER_NAME_ERROR_ALERT.getText())
-                .and(String.format("Select Publisher '%s'", media.getPublisherName()))
+                .and(String.format("Select Publisher '%s'", media1.getPublisherName()))
                 .selectFromDropdown(editAdSpotSidebar.getPublisherInput(),
-                        editAdSpotSidebar.getPublisherItems(), media.getPublisherName())
+                        editAdSpotSidebar.getPublisherItems(), media1.getPublisherName())
                 .then("Validate error under the 'Publisher field' disappeared")
                 .waitAndValidate(not(visible), editAdSpotSidebar.getErrorAlertByFieldName("Publisher Name"))
                 .and("Click 'Save'")
@@ -163,7 +169,7 @@ public class AdSpotCheckFields extends BaseTest {
 
                 .and("Select Related Media")
                 .selectFromDropdown(editAdSpotSidebar.getRelatedMedia(),
-                        editAdSpotSidebar.getRelatedMediaItems(), media.getName())
+                        editAdSpotSidebar.getRelatedMediaItems(), media1.getName())
                 .then("Validate error under the 'Related Media field' disappeared")
                 .waitAndValidate(not(visible), editAdSpotSidebar.getErrorAlertByFieldName("Related Media"))
                 .and("Click 'Save'")
@@ -231,7 +237,7 @@ public class AdSpotCheckFields extends BaseTest {
         var nativeCard = editAdSpotSidebar.getNativeCard();
         var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
 
-        fillGeneralFields();
+        fillGeneralFields(media1.getPublisherName(), media1.getName());
         testStart()
                 .and("Expand Video Card")
                 .scrollIntoView(videoCard.getVideoCardHeader())
@@ -276,7 +282,7 @@ public class AdSpotCheckFields extends BaseTest {
     private void checkMinValueDefaultFloorPrice() {
         var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
 
-        fillGeneralFields();
+        fillGeneralFields(media1.getPublisherName(), media1.getName());
         testStart()
                 .setValueWithClean(editAdSpotSidebar.getDefaultFloorPrice(), "-1")
                 .and("Click 'Save'")
@@ -303,7 +309,7 @@ public class AdSpotCheckFields extends BaseTest {
         var bannerCard = editAdSpotSidebar.getBannerCard();
         var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
 
-        fillGeneralFields();
+        fillGeneralFields(media1.getPublisherName(), media1.getName());
         testStart()
                 .clickOnWebElement(bannerCard.getBannerCardHeader())
                 .turnToggleOn(bannerCard.getEnabledToggle())
@@ -332,7 +338,7 @@ public class AdSpotCheckFields extends BaseTest {
         var nativeCard = editAdSpotSidebar.getNativeCard();
         var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
 
-        fillGeneralFields();
+        fillGeneralFields(media1.getPublisherName(), media1.getName());
         testStart()
                 .clickOnWebElement(nativeCard.getNativeCardHeader())
                 .turnToggleOn(nativeCard.getEnabledToggle())
@@ -361,7 +367,7 @@ public class AdSpotCheckFields extends BaseTest {
         var videoCard = editAdSpotSidebar.getVideoCard();
         var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
 
-        fillGeneralFields();
+        fillGeneralFields(media1.getPublisherName(), media1.getName());
         testStart()
                 .clickOnWebElement(videoCard.getVideoCardHeader())
                 .turnToggleOn(videoCard.getEnabledToggle())
@@ -396,7 +402,7 @@ public class AdSpotCheckFields extends BaseTest {
     private void checkMaxValueDefaultFloorPrice() {
         var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
 
-        fillGeneralFields();
+        fillGeneralFields(media1.getPublisherName(), media1.getName());
         testStart()
                 .setValueWithClean(editAdSpotSidebar.getDefaultFloorPrice(), "1000000")
                 .and("Click 'Save'")
@@ -423,7 +429,7 @@ public class AdSpotCheckFields extends BaseTest {
         var bannerCard = editAdSpotSidebar.getBannerCard();
         var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
 
-        fillGeneralFields();
+        fillGeneralFields(media1.getPublisherName(), media1.getName());
         testStart()
                 .clickOnWebElement(bannerCard.getBannerCardHeader())
                 .turnToggleOn(bannerCard.getEnabledToggle())
@@ -452,7 +458,7 @@ public class AdSpotCheckFields extends BaseTest {
         var nativeCard = editAdSpotSidebar.getNativeCard();
         var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
 
-        fillGeneralFields();
+        fillGeneralFields(media1.getPublisherName(), media1.getName());
         testStart()
                 .clickOnWebElement(nativeCard.getNativeCardHeader())
                 .turnToggleOn(nativeCard.getEnabledToggle())
@@ -481,7 +487,7 @@ public class AdSpotCheckFields extends BaseTest {
         var videoCard = editAdSpotSidebar.getVideoCard();
         var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
 
-        fillGeneralFields();
+        fillGeneralFields(media1.getPublisherName(), media1.getName());
         testStart()
                 .clickOnWebElement(videoCard.getVideoCardHeader())
                 .turnToggleOn(videoCard.getEnabledToggle())
@@ -517,7 +523,7 @@ public class AdSpotCheckFields extends BaseTest {
         var videoCard = editAdSpotSidebar.getVideoCard();
         var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
 
-        fillGeneralFields();
+        fillGeneralFields(media1.getPublisherName(), media1.getName());
         testStart()
                 .clickOnWebElement(videoCard.getVideoCardHeader())
                 .turnToggleOn(videoCard.getEnabledToggle())
@@ -549,17 +555,37 @@ public class AdSpotCheckFields extends BaseTest {
                 .testEnd();
     }
 
+    @Test(description = "Switch Publisher and Accept reseted fields", alwaysRun = true)
+    public void switchPublisherAccept(){
+        var changePublisherBanner = editAdSpotSidebar.getChangePublisherBanner();
+
+        fillGeneralFields(media1.getPublisherName(), media1.getName());
+        testStart()
+                .and(String. format("Select Publisher %s",media2.getPublisherName()))
+                .selectFromDropdown(editAdSpotSidebar.getPublisherInput(),
+                editAdSpotSidebar.getPublisherItems(), media2.getPublisherName())
+                .then("Check that warning banner appears")
+                .validate(visible,changePublisherBanner.getChangePublisherLabel())
+                .then("Click 'Accept' on Warning Banner")
+                .clickOnWebElement(changePublisherBanner.getAcceptButton())
+                .and("Select Related Media")
+                .selectFromDropdown(editAdSpotSidebar.getRelatedMedia(),
+                editAdSpotSidebar.getRelatedMediaItems(), media2.getName())
+                .testEnd();
+    }
+
+
     @Step("Fill general fields")
-    private void fillGeneralFields() {
+    private void fillGeneralFields(String publisherName, String mediaName) {
         var adSpotName = captionWithSuffix("4autoAdSpot");
         testStart()
-                .and(String.format("Select Publisher '%s'", media.getPublisherName()))
+                .and(String.format("Select Publisher '%s'", publisherName))
                 .selectFromDropdown(editAdSpotSidebar.getPublisherInput(),
-                        editAdSpotSidebar.getPublisherItems(), media.getPublisherName())
+                        editAdSpotSidebar.getPublisherItems(), publisherName)
                 .and("Fill Ad Spot Name")
                 .setValueWithClean(editAdSpotSidebar.getNameInput(), adSpotName)
                 .selectFromDropdown(editAdSpotSidebar.getRelatedMedia(),
-                        editAdSpotSidebar.getRelatedMediaItems(), media.getName())
+                        editAdSpotSidebar.getRelatedMediaItems(), mediaName)
                 .selectFromDropdown(editAdSpotSidebar.getPosition(),
                         editAdSpotSidebar.getPositionItems(), "Header")
                 .clickOnWebElement(editAdSpotSidebar.getDefaultAdSizes())
@@ -587,16 +613,16 @@ public class AdSpotCheckFields extends BaseTest {
 
         if (media()
                 .setCredentials(USER_FOR_DELETION)
-                .deleteMedia(media.getId())
+                .deleteMedia(media1.getId())
                 .build()
                 .getResponseCode() == HttpStatus.SC_NO_CONTENT)
-            log.info(String.format("Deleted media %s", media.getId()));
+            log.info(String.format("Deleted media %s", media1.getId()));
 
         if (publisher()
                 .setCredentials(USER_FOR_DELETION)
-                .deletePublisher(media.getPublisherId())
+                .deletePublisher(media1.getPublisherId())
                 .build()
                 .getResponseCode() == HttpStatus.SC_NO_CONTENT)
-            log.info(String.format("Deleted publisher %s", media.getPublisherId()));
+            log.info(String.format("Deleted publisher %s", media1.getPublisherId()));
     }
 }

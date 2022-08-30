@@ -6,6 +6,7 @@ import lombok.Getter;
 import widgets.common.adSizes.AdSizesListPanel;
 import widgets.common.categories.CategoriesListPanel;
 import widgets.common.validationalert.ValidationBottomAlert;
+import widgets.common.warningbanner.ChangePublisherBanner;
 import widgets.inventory.adSpots.sidebar.card.AdSpotBannerCardSidebar;
 import widgets.inventory.adSpots.sidebar.card.AdSpotNativeCardSidebar;
 import widgets.inventory.adSpots.sidebar.card.AdSpotVideoCardSidebar;
@@ -44,8 +45,10 @@ public abstract class AdSpotSidebar {
     private ElementsCollection relatedMediaItems = $$x(RELATED_MEDIA_ITEMS.getSelector()).as(RELATED_MEDIA_ITEMS.getAlias());
     private SelenideElement defaultAdSizesInput = $x(DEFAULT_AD_SIZES_INPUT.getSelector()).as(DEFAULT_AD_SIZES_INPUT.getAlias());
     private SelenideElement contentForChildrenToggle = $x(CONTENT_FOR_CHILDREN.getSelector()).as(CONTENT_FOR_CHILDREN.getAlias());
-    private ValidationBottomAlert errorAlert = new ValidationBottomAlert();
     private AdSizesListPanel adSizesPanel = new AdSizesListPanel();
+    private ValidationBottomAlert errorAlert = new ValidationBottomAlert();
+    private ChangePublisherBanner changePublisherBanner = new ChangePublisherBanner();
+
     public SelenideElement getErrorAlertByFieldName(String fieldName){
 
         return $x(String.format(ERROR_ALERT_BY_FIELD_NAME.getSelector(),fieldName))
