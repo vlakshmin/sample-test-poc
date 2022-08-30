@@ -16,15 +16,14 @@
     </test>-->
     <test name="Ad Spots Feature">
         <classes>
-            <class name="rx.inventory.adspot.AdSpotCheckColumns"/>
+        <!--    <class name="rx.inventory.adspot.AdSpotCheckColumns"/>
             <class name="rx.inventory.adspot.AdSpotCheckTooltips"/>
             <class name="rx.inventory.adspot.AdSpotSortingTableTests"/>
             <class name="rx.inventory.adspot.AdSpotCheckPagination"/>
             <class name="rx.inventory.adspot.AdSpotCheckTooltips"/>
             <class name="rx.inventory.adspot.AdSpotCheckFields"/>
-
-
-            <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
+            <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>-->
+            <class name="rx.inventory.adspot.ChangingPublisherInSidebars2977"/>
         </classes>
     </test>
 <!--    <test name="Protections Feature">
