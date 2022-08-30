@@ -28,6 +28,7 @@
         <classes>
             <class name="rx.protections.ProtectionsCheckPaginationTests"/>
             <class name="rx.protections.ProtectionsTest"/>
+            <class name="rx.protections.ProtectionsSortingTableTests"></class>
         </classes>
     </test>
     <test name="Deals Feature">
