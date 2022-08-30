@@ -24,12 +24,12 @@
             <class name="rx.inventory.adspot.AdSpotCheckColumns"/>
             <class name="rx.inventory.adspot.AdSpotCheckTooltips"/>
             <class name="rx.inventory.adspot.AdSpotSortingTableTests"/>
-            <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
             <class name="rx.inventory.adspot.AdSpotCheckPagination"/>
             <class name="rx.inventory.adspot.AdSpotCheckTooltips"/>
             <class name="rx.inventory.adspot.AdSpotCheckFields"/>
             <class name="rx.inventory.adspot.AdSpotCreateTests"/>
             <class name="rx.inventory.adspot.AdSpotEditTests"/>
+            <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
         </classes>
     </test>
 </suite>
