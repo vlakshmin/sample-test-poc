@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="SmokeTest Suite" parallel="false">
-    <test name="Media">
+ <!--   <test name="Media">
         <classes>
             <class name="rx.inventory.media.MediaCheckFields"/>
             <class name="rx.inventory.media.MediaCreateTests"/>
@@ -13,18 +13,21 @@
             <class name="rx.inventory.media.MediaCheckPagination"/>
             <class name="rx.inventory.media.MediaCheckTooltips"/>
         </classes>
-    </test>
+    </test>-->
     <test name="Ad Spots Feature">
         <classes>
             <class name="rx.inventory.adspot.AdSpotCheckColumns"/>
             <class name="rx.inventory.adspot.AdSpotCheckTooltips"/>
             <class name="rx.inventory.adspot.AdSpotSortingTableTests"/>
-            <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
             <class name="rx.inventory.adspot.AdSpotCheckPagination"/>
             <class name="rx.inventory.adspot.AdSpotCheckTooltips"/>
+            <class name="rx.inventory.adspot.AdSpotCheckFields"/>
+            <class name="rx.inventory.adspot.AdSpotCreateTests"/>
+            <class name="rx.inventory.adspot.AdSpotEditTests"/>
+            <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
         </classes>
     </test>
-    <test name="Protections Feature">
+<!--    <test name="Protections Feature">
         <classes>
             <class name="rx.protections.ProtectionsCheckPaginationTests"/>
             <class name="rx.protections.ProtectionsTest"/>
@@ -59,5 +62,5 @@
             <class name="rx.yield.openpricing.OpenPricingTests"/>
             <class name="rx.yield.openpricing.VerifyPublisherTests"/>
         </classes>
-    </test>
+    </test>-->
 </suite>
