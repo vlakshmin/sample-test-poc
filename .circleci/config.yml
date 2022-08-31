@@ -39,6 +39,12 @@ jobs:
           name: Update apt
           command: sudo apt update
       - run:
+          name: Installing gzip
+          command: sudo apt gzip
+      - run:
+          name: Checking allure version
+          command: gzip --version
+      - run:
           name: Install npm
           command: sudo apt install nodejs npm
       - run:
@@ -47,6 +53,7 @@ jobs:
       - run:
           name: Checking allure version
           command: allure --version
+
       #- run:
          # name: Install latest version of Chrome
           #command: |
