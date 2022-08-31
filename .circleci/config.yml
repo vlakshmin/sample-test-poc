@@ -42,7 +42,7 @@ jobs:
           name: Installing gzip
           command: sudo apt install gzip
       - run:
-          name: Checking allure version
+          name: Checking gzip version
           command: gzip --version
       - run:
           name: Install npm
@@ -89,6 +89,11 @@ jobs:
           name: Generate artifacts to target
           command: allure generate -c target/allure-results -o target/allure-results-html
           when: always
+
+      - run:
+          name: Add artifacts to zip archive
+            command: tar cvzf target/allure-results-zip/allure-results.zip target/allure-results
+            when: always
 
         # store artifacts and results
       - store_artifacts:
