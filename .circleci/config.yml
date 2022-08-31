@@ -40,7 +40,7 @@ jobs:
           command: sudo apt update
       - run:
           name: Installing gzip
-          command: sudo apt gzip
+          command: sudo apt install gzip
       - run:
           name: Checking allure version
           command: gzip --version
