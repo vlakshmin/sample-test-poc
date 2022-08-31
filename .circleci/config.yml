@@ -92,8 +92,8 @@ jobs:
 
       - run:
           name: Add artifacts to zip archive
-            command: tar cvzf target/allure-results-zip/allure-results.zip target/allure-results
-            when: always
+          command: tar cvzf target/allure-results-zip/allure-results.zip target/allure-results
+          when: always
 
         # store artifacts and results
       - store_artifacts:
