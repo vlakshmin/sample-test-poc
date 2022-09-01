@@ -26,6 +26,7 @@ public class MediaRequest {
     private String publisherName;
 
     private List<Integer> categoryIds;
+    private List<Integer> dspIds;
 
     public String toJson() {
 

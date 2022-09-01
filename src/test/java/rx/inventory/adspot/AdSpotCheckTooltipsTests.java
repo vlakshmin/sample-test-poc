@@ -19,12 +19,12 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class AdSpotCheckTooltips extends BaseTest {
+public class AdSpotCheckTooltipsTests extends BaseTest {
     private AdSpotsPage adSpotsPage;
     private EditAdSpotSidebar editAdSpotSidebar;
     private AdSpotTooltipSidebar adSpotTooltips;
 
-    public AdSpotCheckTooltips(){
+    public AdSpotCheckTooltipsTests(){
         adSpotsPage = new AdSpotsPage();
         adSpotTooltips = new AdSpotTooltipSidebar();
         editAdSpotSidebar = new EditAdSpotSidebar();

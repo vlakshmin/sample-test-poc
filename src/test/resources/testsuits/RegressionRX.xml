@@ -3,15 +3,15 @@
 <suite name="Media Suite" parallel="false">
  <!--   <test name="Media">
         <classes>
-            <class name="rx.inventory.media.MediaCheckFields"/>
+            <class name="rx.inventory.media.MediaCheckFieldsTests"/>
             <class name="rx.inventory.media.MediaCreateTests"/>
             <class name="rx.inventory.media.MediaEditTests"/>
             <class name="rx.inventory.media.MediaActivateDeactivateTableTests"/>
             <class name="rx.inventory.media.MediaSearchTableTests"/>
             <class name="rx.inventory.media.MediaSortingTableTests"/>
-            <class name="rx.inventory.media.MediaCheckColumns"/>
-            <class name="rx.inventory.media.MediaCheckPagination"/>
-            <class name="rx.inventory.media.MediaCheckTooltips"/>
+            <class name="rx.inventory.media.MediaCheckColumnsTests"/>
+            <class name="rx.inventory.media.MediaCheckPaginationTests"/>
+            <class name="rx.inventory.media.MediaCheckTooltipsTests"/>
         </classes>
     </test>-->
  <!--   <test name="Protections Feature">
@@ -21,12 +21,12 @@
     </test>-->
     <test name="Ad Spots Feature">
         <classes>
-            <class name="rx.inventory.adspot.AdSpotCheckColumns"/>
-            <class name="rx.inventory.adspot.AdSpotCheckTooltips"/>
+            <class name="rx.inventory.adspot.AdSpotCheckColumnsTests"/>
+            <class name="rx.inventory.adspot.AdSpotCheckTooltipsTests"/>
             <class name="rx.inventory.adspot.AdSpotSortingTableTests"/>
-            <class name="rx.inventory.adspot.AdSpotCheckPagination"/>
-            <class name="rx.inventory.adspot.AdSpotCheckTooltips"/>
-            <class name="rx.inventory.adspot.AdSpotCheckFields"/>
+            <class name="rx.inventory.adspot.AdSpotCheckPaginationTests"/>
+            <class name="rx.inventory.adspot.AdSpotCheckTooltipsTests"/>
+            <class name="rx.inventory.adspot.AdSpotCheckFieldsTests"/>
 
             <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
         </classes>

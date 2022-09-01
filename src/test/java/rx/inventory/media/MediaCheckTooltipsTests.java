@@ -22,13 +22,13 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class MediaCheckTooltips extends BaseTest {
+public class MediaCheckTooltipsTests extends BaseTest {
     private MediaPage mediaPage;
     private EditMediaSidebar editMediaSidebar;
     private MediaTooltipSidebar mediaTooltipSidebar;
     private Publisher publisher;
 
-    public MediaCheckTooltips() {
+    public MediaCheckTooltipsTests() {
         mediaPage = new MediaPage();
         editMediaSidebar = new EditMediaSidebar();
         mediaTooltipSidebar = new MediaTooltipSidebar();

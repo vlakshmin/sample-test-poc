@@ -233,6 +233,13 @@ public final class TestManager {
             return this;
         }
 
+        public TestManagerBuilder validate(int actualInt, int expectedInt) {
+            logEvent(format("Validating value %s should equal '%s'", actualInt, expectedInt));
+            assertTrue(actualInt==expectedInt);
+
+            return this;
+        }
+
         public TestManagerBuilder validate(String... texts) {
             Stream.of(texts).forEach(text -> {
                 logEvent(format("Validating Web element with text '%s' is visible on UI", text));

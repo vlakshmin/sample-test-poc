@@ -26,13 +26,13 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class AdSpotCheckFields extends BaseTest {
+public class AdSpotCheckFieldsTests extends BaseTest {
     private AdSpotsPage adSpotPage;
     private EditAdSpotSidebar editAdSpotSidebar;
     private Media media1;
     private Media media2;
 
-    public AdSpotCheckFields() {
+    public AdSpotCheckFieldsTests() {
         adSpotPage = new AdSpotsPage();
         editAdSpotSidebar = new EditAdSpotSidebar();
     }

@@ -5,7 +5,11 @@ import api.dto.GenericResponse;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.admin.publisher.PublisherRequest;
 import api.dto.rx.common.Currency;
+import api.dto.rx.inventory.media.MediaRequest;
+import api.dto.rx.platformtype.PlatformType;
+import api.dto.rx.protection.Category;
 import api.services.PublisherService;
+import com.sun.xml.bind.v2.TODO;
 import configurations.User;
 import io.restassured.common.mapper.TypeRef;
 import io.restassured.response.Response;
@@ -16,7 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
+import static api.preconditionbuilders.PlatformTypesPrecondition.platformType;
 import static zutils.FakerUtils.*;
 
 @Slf4j
@@ -62,16 +68,7 @@ public class PublisherPrecondition {
         }
 
         private void performPublisherCreation(String name) {
-            this.publisherRequest = PublisherRequest.builder()
-                    .name(name)
-                    .salesAccountName("ops_persoj")
-                    .mail(randomMail())
-                    .isEnabled(true)
-                    .domain(randomUrl())
-                    .currency(Currency.JPY.name())
-                    .categoryIds(List.of(1, 9))
-                    .dspIds(List.of(7))
-                    .build();
+            this.publisherRequest = getPublisherRequest(name, true);
 
             this.response = publisherService.createPublisher(publisherRequest);
             this.publisherResponse = response.as(Publisher.class);
@@ -80,6 +77,16 @@ public class PublisherPrecondition {
 
         public PublisherPreconditionBuilder createNewPublisher(PublisherRequest publisherRequest) {
             this.publisherRequest = publisherRequest;
+            this.response = publisherService.createPublisher(publisherRequest);
+            this.publisherResponse = response.as(Publisher.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
+        public PublisherPreconditionBuilder createNewPublisher(String name, Boolean isEnabled, Currency currency,
+                                                               List<Integer> categoryIds, List<Integer>dspIds){
+            this.publisherRequest = getPublisherRequest(name, isEnabled, currency, categoryIds, dspIds);
             this.response = publisherService.createPublisher(publisherRequest);
             this.publisherResponse = response.as(Publisher.class);
             this.responseCode = response.getStatusCode();
@@ -118,15 +125,22 @@ public class PublisherPrecondition {
 
         private PublisherRequest getPublisherRequest(String name, Boolean isEnabled) {
 
+            return getPublisherRequest(name, isEnabled, Currency.JPY, List.of(1, 9), List.of(7));
+        }
+
+       // TODO need to add verification categoryIds and DSPIds. They should exist
+        private PublisherRequest getPublisherRequest(String name, Boolean isEnabled, Currency currency,
+                                                     List<Integer> categoryIds, List<Integer>dspIds) {
+
             return PublisherRequest.builder()
                     .name(name)
                     .salesAccountName("person_auto")
                     .mail(randomMail())
                     .isEnabled(isEnabled)
                     .domain(randomUrl())
-                    .currency(Currency.JPY.name())
-                    .categoryIds(List.of(1, 9))
-                    .dspIds(List.of(7))
+                    .currency(currency.name())
+                    .categoryIds(categoryIds)
+                    .dspIds(dspIds)
                     .build();
         }
 

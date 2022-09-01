@@ -47,8 +47,8 @@ public abstract class AdSpotSidebar {
     private SelenideElement contentForChildrenToggle = $x(CONTENT_FOR_CHILDREN.getSelector()).as(CONTENT_FOR_CHILDREN.getAlias());
     private AdSizesListPanel adSizesPanel = new AdSizesListPanel();
     private ValidationBottomAlert errorAlert = new ValidationBottomAlert();
-    private ChangePublisherBanner changePublisherBanner = new ChangePublisherBanner();
     private CategoriesListPanel categoriesPanel = new CategoriesListPanel();
+    private ChangePublisherBanner changePublisherBanner = new ChangePublisherBanner();
 
     public SelenideElement getErrorAlertByFieldName(String fieldName){
 

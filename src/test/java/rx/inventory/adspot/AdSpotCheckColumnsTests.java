@@ -1,6 +1,5 @@
 package rx.inventory.adspot;
 
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
@@ -19,10 +18,10 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class AdSpotCheckColumns extends BaseTest {
+public class AdSpotCheckColumnsTests extends BaseTest {
     private AdSpotsPage adSpotsPage;
 
-    public AdSpotCheckColumns() {
+    public AdSpotCheckColumnsTests() {
         adSpotsPage = new AdSpotsPage();
     }
 

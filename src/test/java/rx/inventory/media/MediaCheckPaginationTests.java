@@ -1,21 +1,21 @@
-package rx.inventory.adspot;
+package rx.inventory.media;
 
-import api.dto.rx.inventory.adspot.AdSpot;
+import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
 import pages.Path;
-import pages.inventory.adspots.AdSpotsPage;
+import pages.inventory.media.*;
 import rx.BaseTest;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static api.preconditionbuilders.AdSpotPrecondition.adSpot;
 import static api.preconditionbuilders.MediaPrecondition.media;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
-import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.disappear;
+import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
 import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
@@ -23,98 +23,99 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class AdSpotCheckPagination extends BaseTest {
-    private AdSpotsPage adSpotsPage;
+public class MediaCheckPaginationTests extends BaseTest {
+    private MediaPage mediaPage;
 
-    private int totalAdSpots;
-    private List<AdSpot> listAdSpots;
+    private int totalMedia;
+    private List<Media> listMedia;
 
-    public AdSpotCheckPagination() {
-        adSpotsPage = new AdSpotsPage();
+    public MediaCheckPaginationTests() {
+        mediaPage = new MediaPage();
     }
 
     @BeforeClass
     private void init() {
-        if (getTotalAdSpots() < 100) generateAdSpots();
+        if (getTotalMedia() < 100) generateMedia();
 
-        totalAdSpots = getTotalAdSpots();
+        totalMedia = getTotalMedia();
     }
 
     @BeforeMethod
     private void login() {
         testStart()
                 .given()
-                .openDirectPath(Path.AD_SPOT)
+                .openDirectPath(Path.MEDIA)
                 .logIn(TEST_USER)
-                .waitAndValidate(disappear, adSpotsPage.getNuxtProgress())
+                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .testEnd();
     }
 
-    @Test(description = "Verify Pagination: 100 rows per page")
+    @Test(description = "Verify Pagination: 100 rows per page",alwaysRun = true)
     public void checkPagination100() {
         verifyPagination(100);
     }
 
-    @Test(description = "Verify Pagination: 50 rows per page")
+    @Test(description = "Verify Pagination: 50 rows per page",alwaysRun = true)
     public void checkPagination50() {
         verifyPagination(50);
     }
 
-    @Test(description = "Verify Pagination: 25 rows per page")
+    @Test(description = "Verify Pagination: 25 rows per page",alwaysRun = true)
     public void checkPagination25() {
         verifyPagination(25);
     }
 
-    @Test(description = "Verify Pagination: 20 rows per page")
+    @Test(description = "Verify Pagination: 20 rows per page",alwaysRun = true)
     public void checkPagination20() {
         verifyPagination(20);
     }
 
-    @Test(description = "Verify Pagination: 15 rows per page")
+    @Test(description = "Verify Pagination: 15 rows per page",alwaysRun = true)
     public void checkPagination15() {
         verifyPagination(15);
     }
 
-    @Test(description = "Verify Pagination: 10 rows per page")
+    @Test(description = "Verify Pagination: 10 rows per page",alwaysRun = true)
     public void checkPagination10() {
         verifyPagination(10);
     }
 
     @Step("Verify pagination {0}")
     private void verifyPagination(Integer rowsPerPage) {
-        var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
-        var tableData = adSpotsPage.getAdSpotsTable().getTableData();
+        var tablePagination = mediaPage.getMediaTable().getTablePagination();
+        var tableData = mediaPage.getMediaTable().getTableData();
 
         testStart()
                 .and(String.format("Select %s rows per page", rowsPerPage))
                 .scrollIntoView(tablePagination.getPageMenu())
                 .selectFromDropdown(tablePagination.getPageMenu(),
                         tablePagination.getRowNumbersList(), rowsPerPage.toString())
-                .waitLoading(disappear, adSpotsPage.getTableProgressBar())
+                .waitLoading(visible, mediaPage.getTableProgressBar())
+                .waitLoading(disappear, mediaPage.getTableProgressBar())
                 .then(String.format(String.format("Validate that text in table footer '1-%s of %s'", rowsPerPage,
-                        totalAdSpots)))
+                        totalMedia)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format(String.format("1-%s of %s", rowsPerPage, totalAdSpots)))
+                        String.format(String.format("1-%s of %s", rowsPerPage, totalMedia)))
                 .then(String.format("Rows in table page equals %s", rowsPerPage))
                 .validateListSize(tableData.getRows(), rowsPerPage)
                 .and("Click on Next page")
                 .scrollIntoView(tablePagination.getNext())
                 .clickOnWebElement(tablePagination.getNext())
                 .then(String.format(String.format("Validate that text in table footer '%s-%s of %s'",
-                        rowsPerPage + 1, Math.min(rowsPerPage * 2, totalAdSpots), totalAdSpots)))
+                        rowsPerPage + 1, Math.min(rowsPerPage * 2, totalMedia), totalMedia)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format(String.format("%s-%s of %s",
-                                rowsPerPage + 1, Math.min(rowsPerPage * 2, totalAdSpots), totalAdSpots)))
+                                rowsPerPage + 1, Math.min(rowsPerPage * 2, totalMedia), totalMedia)))
                 .then(String.format("Rows in table page equals %s", rowsPerPage))
                 .validateListSize(tableData.getRows(), rowsPerPage)
                 .and("Click on Previous page")
                 .scrollIntoView(tablePagination.getPrevious())
                 .clickOnWebElement(tablePagination.getPrevious())
                 .then(String.format(String.format("Validate that text in table footer '1-%s of %s'",
-                        rowsPerPage, totalAdSpots)))
+                        rowsPerPage, totalMedia)))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format(String.format("1-%s of %s",
-                                rowsPerPage, totalAdSpots)))
+                                rowsPerPage, totalMedia)))
                 .then(String.format("Rows in table page equals %s", rowsPerPage))
                 .validateListSize(tableData.getRows(), rowsPerPage)
                 .and("Logout")
@@ -122,21 +123,14 @@ public class AdSpotCheckPagination extends BaseTest {
                 .testEnd();
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     private void deleteEntities() {
-        if (listAdSpots != null) {
-            for (AdSpot adSpot : listAdSpots) {
-                deleteAdSpot(adSpot.getId());
-                deleteMedia(adSpot.getMediaId());
-                deletePublisher(adSpot.getPublisherId());
+        if (listMedia != null) {
+            for (Media media : listMedia) {
+                deleteMedia(media.getId());
+                deletePublisher(media.getPublisherId());
             }
         }
-    }
-
-    private void deleteAdSpot(Integer id) {
-        adSpot()
-                .setCredentials(USER_FOR_DELETION)
-                .deleteAdSpot(id);
     }
 
     private void deleteMedia(Integer id) {
@@ -151,24 +145,24 @@ public class AdSpotCheckPagination extends BaseTest {
                 .deletePublisher(id);
     }
 
-    private int getTotalAdSpots() {
+    private int getTotalMedia() {
 
-        return adSpot()
-                .getAllAdSpotsList()
+        return media()
+                .getAllMediaList()
                 .build()
-                .getAdSpotsGetAllResponse()
+                .getMediaGetAllResponse()
                 .getTotal();
     }
 
-    private void generateAdSpots() {
-        listAdSpots = new ArrayList<>();
-        while (getTotalAdSpots() < 110) {
-            AdSpot adSpot = adSpot()
-                    .createNewAdSpot(captionWithSuffix("auto"))
+    private void generateMedia() {
+        listMedia = new ArrayList<>();
+        while (getTotalMedia() < 110) {
+            Media media = media()
+                    .createNewMedia(captionWithSuffix("auto"))
                     .build()
-                    .getAdSpotResponse();
+                    .getMediaResponse();
 
-            listAdSpots.add(adSpot);
+            listMedia.add(media);
         }
     }
 }

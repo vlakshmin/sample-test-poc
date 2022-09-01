@@ -1,5 +1,7 @@
 package rx.inventory.adspot;
 
+import api.dto.rx.admin.publisher.Publisher;
+import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
@@ -13,6 +15,8 @@ import widgets.common.adSizes.AdSizesList;
 import widgets.common.categories.CategoriesList;
 import widgets.inventory.adSpots.sidebar.EditAdSpotSidebar;
 
+import java.util.List;
+
 import static api.preconditionbuilders.MediaPrecondition.media;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.*;
@@ -23,35 +27,50 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class ChangingPublisherInSidebars2977 extends BaseTest {
+public class ChangingPublisherInSidebarTests extends BaseTest {
     private AdSpotsPage adSpotPage;
     private EditAdSpotSidebar editAdSpotSidebar;
     private Media media1;
     private Media media2;
+    private Publisher publisher1;
+    private Publisher publisher2;
 
     final private static String DEFAULT_FLOOR_PRICE = "10";
     final private static String BANNER_FLOOR_PRICE = "12";
     final private static String VIDEO_FLOOR_PRICE = "15";
     final private static String NATIVE_FLOOR_PRICE = "18";
+    private final static List<Integer> DSP_IDS_PUBLISHER = List.of(9, 11, 13);
+    private final static List<Integer> CATEGORY_IDS = List.of(1, 9);
 
     final private static String BANNER_TEXT =
             "By changing the Publisher the form will be reset and the previous changes will not be saved.";
 
-    public ChangingPublisherInSidebars2977() {
+    public ChangingPublisherInSidebarTests() {
         adSpotPage = new AdSpotsPage();
         editAdSpotSidebar = new EditAdSpotSidebar();
     }
 
     @BeforeClass
     private void init() {
+        publisher1 = publisher()
+                .createNewPublisher(captionWithSuffix("0000autoPub1"), true,
+                        Currency.JPY, CATEGORY_IDS, DSP_IDS_PUBLISHER)
+                .build()
+                .getPublisherResponse();
+
+        publisher2 = publisher()
+                .createNewPublisher(captionWithSuffix("0000autoPub2"), true,
+                        Currency.EUR, CATEGORY_IDS, DSP_IDS_PUBLISHER)
+                .build()
+                .getPublisherResponse();
 
         media1 = media()
-                .createNewMedia(captionWithSuffix("auto1Media"))
+                .createNewMedia(captionWithSuffix("auto1Media"), publisher1.getId(), true)
                 .build()
                 .getMediaResponse();
 
         media2 = media()
-                .createNewMedia(captionWithSuffix("auto2Media"))
+                .createNewMedia(captionWithSuffix("auto2Media"), publisher2.getId(), true)
                 .build()
                 .getMediaResponse();
     }
@@ -70,27 +89,35 @@ public class ChangingPublisherInSidebars2977 extends BaseTest {
     }
 
 
-    @Test(description = "Switch Publisher and check fields", alwaysRun = true)
+    @Test(description = "Change Publisher and check fields", alwaysRun = true)
     public void adSpotChangePublisher() {
 
-        fillGeneralFields(media1.getPublisherName(), media1.getName());
+        testStart()
+                .clickBrowserRefreshButton()
+                .and(String.format("Select Publisher '%s'", publisher1.getName()))
+                .selectFromDropdown(editAdSpotSidebar.getPublisherInput(),
+                        editAdSpotSidebar.getPublisherItems(), publisher1.getName())
+                .testEnd();
+
+        fillGeneralFields(publisher1.getName(), media1.getName());
         fillBannerFormat();
         fillVideoFormat();
         fillNativeFormat();
-        changePublisherAndClickAccept(media2.getPublisherName());
+        changePublisherAndClickAccept(publisher2.getName());
         validateFieldsAreCleanedAndRelatedMediaListIsCorrect(media2.getName());
-        changePublisherAndClickAccept(media1.getPublisherName());
+        changePublisherAndClickAccept(publisher1.getName());
         validateFieldsAreCleanedAndRelatedMediaListIsCorrect(media1.getName());
-        changePublisherAndClickAccept(media2.getPublisherName());
+        changePublisherAndClickAccept(publisher2.getName());
         validateFieldsAreCleanedAndRelatedMediaListIsCorrect(media2.getName());
-        changePublisherAndClickAccept(media1.getPublisherName());
+        changePublisherAndClickAccept(publisher1.getName());
         validateFieldsAreCleanedAndRelatedMediaListIsCorrect(media1.getName());
-        changePublisherAndClickCancel(media2.getPublisherName());
-        validateFieldsValuesShouldNotBeChanged(media1.getPublisherName(),media1.getName());
-        changePublisherAndClickAccept(media2.getPublisherName());
+        changePublisherAndClickCancel(publisher2.getName());
+        validateFieldsValuesShouldNotBeChanged(publisher1.getName(), media1.getName());
+        changePublisherAndClickAccept(publisher2.getName());
         validateFieldsAreCleanedAndRelatedMediaListIsCorrect(media2.getName());
-        changePublisherAndClickCancel(media1.getPublisherName());
-        validateFieldsValuesShouldNotBeChanged(media2.getPublisherName(),media2.getName());
+        fillGeneralFields(publisher2.getName(), media2.getName());
+        changePublisherAndClickCancel(publisher1.getName());
+        validateFieldsValuesShouldNotBeChanged(publisher2.getName(), media2.getName());
     }
 
 
@@ -99,10 +126,6 @@ public class ChangingPublisherInSidebars2977 extends BaseTest {
         var adSpotName = captionWithSuffix("4autoAdSpot");
         var categories = editAdSpotSidebar.getCategoriesPanel();
         testStart()
-                .clickBrowserRefreshButton()
-                .and(String.format("Select Publisher '%s'", publisherName))
-                .selectFromDropdown(editAdSpotSidebar.getPublisherInput(),
-                        editAdSpotSidebar.getPublisherItems(), publisherName)
                 .and("Fill Ad Spot Name")
                 .setValueWithClean(editAdSpotSidebar.getNameInput(), adSpotName)
                 .selectFromDropdown(editAdSpotSidebar.getRelatedMedia(),
@@ -168,17 +191,17 @@ public class ChangingPublisherInSidebars2977 extends BaseTest {
                 .then("Position should be cleaned")
                 .validate(editAdSpotSidebar.getPositionInput().getText(), "")
                 .validateAttribute(videoCard.getEnabledToggle(), "aria-checked", "false")
-                .validate(videoCard.getVideoPlacementType(),"")
-                .validate(videoCard.getVideoPlaybackMethods(),"")
-                .validate(videoCard.getVideoFloorPrice(),"")
-                .validate(videoCard.getMaxVideoDuration(),"")
-                .validate(videoCard.getMinVideoDuration(),"")
-                .validate(videoCard.getVideoAdSizes(),"")
+                .validate(videoCard.getVideoPlacementType(), "")
+                .validate(videoCard.getVideoPlaybackMethods(), "")
+                .validate(videoCard.getVideoFloorPrice(), "")
+                .validate(videoCard.getMaxVideoDuration(), "")
+                .validate(videoCard.getMinVideoDuration(), "")
+                .validate(videoCard.getVideoAdSizes(), "")
                 .validateAttribute(nativeCard.getEnabledToggle(), "aria-checked", "false")
-                .validate(nativeCard.getFloorPrice(),"")
+                .validate(nativeCard.getFloorPrice(), "")
                 .validateAttribute(bannerCard.getEnabledToggle(), "aria-checked", "false")
-                .validate(bannerCard.getAdSizes(),"")
-                .validate(bannerCard.getFloorPrice(),"")
+                .validate(bannerCard.getAdSizes(), "")
+                .validate(bannerCard.getFloorPrice(), "")
 
                 .and("Select Related Media")
                 .selectFromDropdown(editAdSpotSidebar.getRelatedMedia(),
@@ -188,19 +211,19 @@ public class ChangingPublisherInSidebars2977 extends BaseTest {
     }
 
     @Step("Expand Banner Card and fill fields")
-    private void fillBannerFormat(){
+    private void fillBannerFormat() {
         var bannerCard = editAdSpotSidebar.getBannerCard();
         testStart()
                 .clickOnWebElement(bannerCard.getBannerCardHeader())
                 .turnToggleOn(bannerCard.getEnabledToggle())
-              //  .clickOnWebElement(bannerCard.getAdSizes())
-             //   .clickOnWebElement(bannerCard.getAdSizesPanel().getAdSizeCheckbox(AdSizesList.A120x60))
+                //  .clickOnWebElement(bannerCard.getAdSizes())
+                //   .clickOnWebElement(bannerCard.getAdSizesPanel().getAdSizeCheckbox(AdSizesList.A120x60))
                 .setValueWithClean(bannerCard.getFloorPrice(), BANNER_FLOOR_PRICE)
                 .testEnd();
     }
 
     @Step("Expand Video Card and fill fields")
-    private void fillVideoFormat(){
+    private void fillVideoFormat() {
         var videoCard = editAdSpotSidebar.getVideoCard();
         testStart()
                 .scrollIntoView(videoCard.getVideoCardHeader())
@@ -219,7 +242,7 @@ public class ChangingPublisherInSidebars2977 extends BaseTest {
     }
 
     @Step("Expand Native Card and fill fields")
-    private void fillNativeFormat(){
+    private void fillNativeFormat() {
         var nativeCard = editAdSpotSidebar.getNativeCard();
         testStart()
                 .clickOnWebElement(nativeCard.getNativeCardHeader())
@@ -229,10 +252,10 @@ public class ChangingPublisherInSidebars2977 extends BaseTest {
     }
 
     @Step("")
-    private void validateFieldsValuesShouldNotBeChanged(String publisherName, String mediaName){
+    private void validateFieldsValuesShouldNotBeChanged(String publisherName, String mediaName) {
         testStart()
-                .validate(editAdSpotSidebar.getPublisherInput().getText(),publisherName)
-                .validate(editAdSpotSidebar.getRelatedMediaInput().getText(),mediaName)
+                .validate(editAdSpotSidebar.getPublisherInput().getText(), publisherName)
+                .validate(editAdSpotSidebar.getRelatedMediaInput().getText(), mediaName)
                 .testEnd();
 
     }
@@ -249,20 +272,31 @@ public class ChangingPublisherInSidebars2977 extends BaseTest {
     }
 
     @AfterClass(alwaysRun = true)
-    private void deletePublisher() {
+    private void deleteTestData() {
+        deletePublisher(publisher1.getId());
+        deletePublisher(publisher2.getId());
+        deleteMedia(media1.getId());
+        deleteMedia(media2.getId());
 
-        if (media()
-                .setCredentials(USER_FOR_DELETION)
-                .deleteMedia(media1.getId())
-                .build()
-                .getResponseCode() == HttpStatus.SC_NO_CONTENT)
-            log.info(String.format("Deleted media %s", media1.getId()));
+    }
 
+    private void deletePublisher(int id) {
         if (publisher()
                 .setCredentials(USER_FOR_DELETION)
-                .deletePublisher(media1.getPublisherId())
+                .deletePublisher(id)
                 .build()
                 .getResponseCode() == HttpStatus.SC_NO_CONTENT)
-            log.info(String.format("Deleted publisher %s", media1.getPublisherId()));
+            log.info(String.format("Deleted publisher %s", publisher1.getId()));
+
+    }
+
+    private void deleteMedia(int id) {
+        if (media()
+                .setCredentials(USER_FOR_DELETION)
+                .deleteMedia(id)
+                .build()
+                .getResponseCode() == HttpStatus.SC_NO_CONTENT)
+            log.info(String.format("Deleted media %s", id));
+
     }
 }
