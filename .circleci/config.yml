@@ -95,8 +95,8 @@ jobs:
           command: tar cvzf allure-results.zip target/allure-results
           when: always
       - run:
-          name: Checking presence of  to zip
-          command: ls -la
+          name: Copy archive to target
+          command: mkdir -p target/allure-results-zip && cp allure-results.zip target/allure-results-zip
           when: always
 
         # store artifacts and results
