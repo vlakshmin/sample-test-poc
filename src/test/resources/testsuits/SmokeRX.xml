@@ -34,8 +34,8 @@
                 <class name="rx.inventory.adspot.AdSpotCheckPaginationTests"/>
                 <class name="rx.inventory.adspot.AdSpotCheckTooltipsTests"/>
                 <class name="rx.inventory.adspot.AdSpotCheckFieldsTests"/>
-                <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>-->
-            <class name="rx.yield.openpricing.OpenPricingChangePublisherTests"/>
+                <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
+            <class name="rx.yield.openpricing.OpenPricingChangePublisherTests"/>-->
         </classes>
     </test>
 <!--    <test name="Protections Feature">
