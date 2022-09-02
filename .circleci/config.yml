@@ -83,7 +83,7 @@ jobs:
       # run tests!
       - run:
           name: Run Tests
-          command: mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testsuits/SmokeRX.xml -Dselenide.browserVersion=104
+          command: mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testsuits/SmokeRX.xml
 
       - run:
           name: Generate allure html report
