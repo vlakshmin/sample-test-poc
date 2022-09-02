@@ -40,9 +40,10 @@ public class AdSpotCheckColumnsTests extends BaseTest {
     public void checkColumns() {
         var tableOptions = adSpotsPage.getAdSpotsTable().getTableOptions();
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
+
         testStart()
                 .and("'Show' all columns")
-                .scrollIntoView(tableOptions.getTableOptionsBtn())
+                .scrollIntoView(adSpotsPage.getPageTitle())
                 .clickOnWebElement(tableOptions.getTableOptionsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ID))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DETAILS))
