@@ -39,6 +39,12 @@ jobs:
           name: Update apt
           command: sudo apt update
       - run:
+          name: Installing gzip
+          command: sudo apt install gzip
+      - run:
+          name: Checking gzip version
+          command: gzip --version
+      - run:
           name: Install npm
           command: sudo apt install nodejs npm
       - run:
@@ -47,6 +53,7 @@ jobs:
       - run:
           name: Checking allure version
           command: allure --version
+
       #- run:
          # name: Install latest version of Chrome
           #command: |
@@ -75,12 +82,21 @@ jobs:
 
       # run tests!
       - run:
-          name: Run Tests and Generate allure html report
+          name: Run Tests
           command: mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testsuits/SmokeRX.xml
 
       - run:
-          name: Generate artifacts to target
+          name: Generate allure html report
           command: allure generate -c target/allure-results -o target/allure-results-html
+          when: always
+
+      - run:
+          name: Add allure/results folder to zip archive
+          command: tar cvzf allure-results.zip target/allure-results
+          when: always
+      - run:
+          name: Copy archive to target
+          command: mkdir -p target/allure-results-zip && cp allure-results.zip target/allure-results-zip
           when: always
 
         # store artifacts and results
