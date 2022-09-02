@@ -40,7 +40,7 @@ public class WebDriverManager {
         Configuration.startMaximized = true;
         Configuration.driverManagerEnabled = true;
         Configuration.browser = config.getBrowser();
-        Configuration.browserVersion = "104.0.5112.101";
+        Configuration.browserVersion = "104";
     }
 
     private void setProxyEnabled(boolean enabled) {

@@ -82,16 +82,16 @@ jobs:
 
       # run tests!
       - run:
-          name: Run Tests and Generate allure html report
+          name: Run Tests
           command: mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testsuits/SmokeRX.xml
 
       - run:
-          name: Generate artifacts to target
+          name: Generate allure html report
           command: allure generate -c target/allure-results -o target/allure-results-html
           when: always
 
       - run:
-          name: Add artifacts to zip archive
+          name: Add allure/results folder to zip archive
           command: tar cvzf allure-results.zip target/allure-results
           when: always
       - run:
