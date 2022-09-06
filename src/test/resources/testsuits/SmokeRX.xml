@@ -17,13 +17,13 @@
     <test name="Ad Spot">
         <classes>
           <class name="rx.inventory.adspot.AdSpotCheckColumnsTests"/>
-          <!--    <class name="rx.inventory.adspot.AdSpotCheckTooltipsTests"/>
-            <class name="rx.inventory.adspot.AdSpotSortingTableTests"/>
-            <class name="rx.inventory.adspot.AdSpotCheckPaginationTests"/>
-            <class name="rx.inventory.adspot.AdSpotCheckTooltipsTests"/>
-            <class name="rx.inventory.adspot.AdSpotCheckFieldsTests"/>
-            <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
-            <class name="rx.inventory.adspot.ChangingPublisherInSidebarTests"/>-->
+            <!--    <class name="rx.inventory.adspot.AdSpotCheckTooltipsTests"/>
+              <class name="rx.inventory.adspot.AdSpotSortingTableTests"/>
+               <class name="rx.inventory.adspot.AdSpotCheckPaginationTests"/>
+               <class name="rx.inventory.adspot.AdSpotCheckTooltipsTests"/>
+               <class name="rx.inventory.adspot.AdSpotCheckFieldsTests"/>
+               <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
+               <class name="rx.inventory.adspot.ChangingPublisherInSidebarTests"/>-->
         </classes>
     </test>
     <test name="Open Pricing">
