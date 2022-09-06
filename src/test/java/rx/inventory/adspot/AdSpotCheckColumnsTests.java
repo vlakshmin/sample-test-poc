@@ -33,6 +33,7 @@ public class AdSpotCheckColumnsTests extends BaseTest {
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, adSpotsPage.getNuxtProgress())
                 .scrollIntoView(adSpotsPage.getPageTitle())
+
                 .testEnd();
     }
 
@@ -41,8 +42,11 @@ public class AdSpotCheckColumnsTests extends BaseTest {
     public void checkColumns() {
         var tableOptions = adSpotsPage.getAdSpotsTable().getTableOptions();
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
-
+        var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
         testStart()
+                .scrollIntoView(tablePagination.getPageMenu())
+                .selectFromDropdown(tablePagination.getPageMenu(),
+                        tablePagination.getRowNumbersList(), "10")
                 .and("'Show' all columns")
                 .scrollIntoView(tableOptions.getTableOptionsBtn())
                 .clickOnWebElement(tableOptions.getTableOptionsBtn())
