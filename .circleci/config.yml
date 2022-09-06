@@ -39,6 +39,12 @@ jobs:
           name: Update apt
           command: sudo apt update
       - run:
+          name: Installing gzip
+          command: sudo apt install gzip
+      - run:
+          name: Checking gzip version
+          command: gzip --version
+      - run:
           name: Install npm
           command: sudo apt install nodejs npm
       - run:
@@ -47,22 +53,15 @@ jobs:
       - run:
           name: Checking allure version
           command: allure --version
-      #- run:
-         # name: Install latest version of Chrome
-          #command: |
-           #sudo wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-           #sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-            #sudo apt-get update
-            #sudo apt-get -y install google-chrome-stable
-      #- run:
-         # name: Use ChromeDriver found in repository
-          #command: |
-           #sudo chmod 777 /home/circleci/circleCiTesting/UITest/chromeexe/chromedriver.exe
-            #sudo apt-get install libxi6 libgconf-2-4
-            #sudo apt-get -y install xvfb gtk2-engines-pixbuf
-            #sudo apt-get -y install xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable
-            #sudo apt-get install xvfb
-            #sudo apt-get -y install imagemagick x11-apps
+      - run:
+          name: Installing wget
+          command: sudo apt install wget
+      - run:
+          name: Checking wget version
+          command: wget --version
+      - run:
+          name: Setting up browser with latest version
+          command: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo apt install ./google-chrome-stable_current_amd64.deb
       - run:
           name: Test Setup
           command: |
@@ -75,12 +74,21 @@ jobs:
 
       # run tests!
       - run:
-          name: Run Tests and Generate allure html report
+          name: Run Tests
           command: mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testsuits/SmokeRX.xml
 
       - run:
-          name: Generate artifacts to target
+          name: Generate allure html report
           command: allure generate -c target/allure-results -o target/allure-results-html
+          when: always
+
+      - run:
+          name: Add allure/results folder to zip archive
+          command: tar cvzf allure-results.zip target/allure-results
+          when: always
+      - run:
+          name: Copy archive to target
+          command: mkdir -p target/allure-results-zip && cp allure-results.zip target/allure-results-zip
           when: always
 
         # store artifacts and results
