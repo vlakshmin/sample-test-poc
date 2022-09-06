@@ -45,6 +45,15 @@ public class DemandSourcePrecondition {
             return this;
         }
 
+        public DemandSourcePreconditionBuilder createDemandSource() {
+            this.response = demandSourceService.createDSP();
+
+            this.demandSourceGetAllResponse = this.response.as(new TypeRef<GenericResponse<DemandSource>>() {});
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
         public DemandSourcePreconditionBuilder setCredentials(User user) {
             HttpClient.setCredentials(user);
 

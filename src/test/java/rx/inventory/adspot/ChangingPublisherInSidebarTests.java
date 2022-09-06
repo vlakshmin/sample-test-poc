@@ -2,6 +2,7 @@ package rx.inventory.adspot;
 
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.common.Currency;
+import api.dto.rx.demandsource.DemandSource;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
@@ -17,6 +18,7 @@ import widgets.inventory.adSpots.sidebar.EditAdSpotSidebar;
 
 import java.util.List;
 
+import static api.preconditionbuilders.DemandSourcePrecondition.demandSource;
 import static api.preconditionbuilders.MediaPrecondition.media;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.*;
@@ -73,6 +75,16 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
                 .createNewMedia(captionWithSuffix("auto2Media"), publisher2.getId(), true)
                 .build()
                 .getMediaResponse();
+
+        List<DemandSource> allDSP = demandSource().getDemandSourceList().build().getDemandSourceGetAllResponse().getItems();
+        if (allDSP.size()<6){
+            demandSource().createDemandSource().build().getResponseCode();
+        }
+
+        List<DemandSource> list1 = allDSP.subList(0,allDSP.size()/2);
+        List<DemandSource> list2 = allDSP.subList(allDSP.size()/2+1, allDSP.size());
+
+
     }
 
     @BeforeMethod
