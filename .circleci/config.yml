@@ -54,6 +54,12 @@ jobs:
           name: Checking allure version
           command: allure --version
       - run:
+          name: Installing wget
+          command: sudo apt install wget
+      - run:
+          name: Checking wget version
+          command: wget --version
+      - run:
           name: Setting up browser with specified version
           command: wget --version
       - run:
