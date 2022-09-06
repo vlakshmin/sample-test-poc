@@ -140,17 +140,6 @@ public class ProtectionsPrecondition {
             return Arrays.asList(response.jsonPath().getObject("items", Protection.class));
         }
 
-        public Integer getProtectionsListSize() {
-            Map<String, Object> queryParams = new HashMap<>();
-            queryParams.put("sort", "id-desc");
-
-            return ProtectionsPrecondition.protection()
-                    .getProtectionsWithFilter(queryParams)
-                    .build()
-                    .getProtectionsGetAllResponse()
-                    .getItems().size();
-        }
-
         public ProtectionsPreconditionBuilder getProtectionsWithFilter(Map<String, Object> queryParams) {
             this.response = protectionsService.getProtectionsWithFilter(queryParams);
             this.protectionsGetAllResponse = this.response.as(new TypeRef<GenericResponse<Protection>>() {});

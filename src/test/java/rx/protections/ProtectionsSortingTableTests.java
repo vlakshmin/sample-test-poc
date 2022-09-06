@@ -12,10 +12,7 @@ import pages.protections.ProtectionsPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -30,30 +27,29 @@ import static managers.TestManager.testStart;
 public class ProtectionsSortingTableTests extends BaseTest {
     private static final int MIN_COUNT_PROTECTIONS = 60;
     private int totalProtections;
+    private int[] idsToDelete = {};
     private List<String> sortIdsByAsc;
-    private ArrayList<Integer> idsToDelete;
     private List<String> sortIdsByDesc;
     private List<String> sortPublisherNameByDesc;
     private List<String> sortPublisherNameByAsc;
-    private ProtectionsPage protectionsPage;
+    private final ProtectionsPage protectionsPage;
 
     private static final String ASC = "ascending";
     private static final String DESC = "descending";
 
-    private final ProtectionsPrecondition.ProtectionsPreconditionBuilder protection;
+    private  ProtectionsPrecondition.ProtectionsPreconditionBuilder protection;
 
     public ProtectionsSortingTableTests() {
-        idsToDelete = new ArrayList<>();
         protectionsPage = new ProtectionsPage();
-        protection = ProtectionsPrecondition.protection();
     }
 
     @BeforeClass
     private void loginAndCreateExpectedResults() {
+        protection = ProtectionsPrecondition.protection();
         protection.setCredentials(TEST_USER);
         int count = MIN_COUNT_PROTECTIONS - getTotalProtections();
         if (count > 0) {
-            idsToDelete = new ArrayList<>(count);
+            idsToDelete = new int[count];
             generateProtections(count, idsToDelete);
         }
 
@@ -197,7 +193,7 @@ public class ProtectionsSortingTableTests extends BaseTest {
 
     private int getTotalProtections() {
 
-        return protection.getProtectionsListSize();
+        return getProtectionsListSize();
     }
 
     private List<String> getIdsByAsc() {
@@ -226,6 +222,17 @@ public class ProtectionsSortingTableTests extends BaseTest {
                 .collect(Collectors.toList());
     }
 
+    public Integer getProtectionsListSize() {
+        Map<String, Object> queryParams = new HashMap<>();
+        queryParams.put("sort", "id-desc");
+
+        return ProtectionsPrecondition.protection()
+                .getProtectionsWithFilter(queryParams)
+                .build()
+                .getProtectionsGetAllResponse()
+                .getItems().size();
+    }
+
     private List<String> getPublisherNameByDesc() {
 
         return getAllItemsByParams("publisher_name-desc")
@@ -246,13 +253,13 @@ public class ProtectionsSortingTableTests extends BaseTest {
                 .getItems();
     }
 
-    private void generateProtections(int count, ArrayList<Integer> idsToDelete) {
+    private void generateProtections(int count, int... idsToDelete) {
 
         for (int i = 0; i < count; i++) {
             var builder = protection.createNewRandomProtection().build();
             var response = builder.getProtectionsResponse();
             if (response != null) {
-                idsToDelete.add(response.getId());
+                idsToDelete[i]=response.getId();
             }
         }
     }
@@ -260,7 +267,7 @@ public class ProtectionsSortingTableTests extends BaseTest {
     @AfterClass
     private void deleteEntities() {
         protection.setCredentials(USER_FOR_DELETION);
-        idsToDelete.forEach(id -> protection.deleteProtection(id).build());
+        Arrays.stream(idsToDelete).forEach(id -> protection.deleteProtection(id).build());
     }
 }
 
