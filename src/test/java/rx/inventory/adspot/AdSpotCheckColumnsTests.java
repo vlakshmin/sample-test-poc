@@ -44,6 +44,7 @@ public class AdSpotCheckColumnsTests extends BaseTest {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
         testStart()
+                .and("Action to remove the scroll table")
                 .scrollIntoView(tablePagination.getPageMenu())
                 .selectFromDropdown(tablePagination.getPageMenu(),
                         tablePagination.getRowNumbersList(), "10")
