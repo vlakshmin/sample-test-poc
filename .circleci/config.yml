@@ -60,8 +60,8 @@ jobs:
           name: Checking wget version
           command: wget --version
       - run:
-          name: Setting up browser with specified version
-          command: wget --version
+          name: Setting up browser with latest version
+          command: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo apt install ./google-chrome-stable_current_amd64.deb
       - run:
           name: Test Setup
           command: |
