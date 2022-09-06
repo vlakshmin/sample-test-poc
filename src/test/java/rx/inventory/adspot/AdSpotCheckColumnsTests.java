@@ -32,6 +32,7 @@ public class AdSpotCheckColumnsTests extends BaseTest {
                 .openDirectPath(Path.AD_SPOT)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, adSpotsPage.getNuxtProgress())
+                .scrollIntoView(adSpotsPage.getPageTitle())
                 .testEnd();
     }
 
@@ -43,7 +44,7 @@ public class AdSpotCheckColumnsTests extends BaseTest {
 
         testStart()
                 .and("'Show' all columns")
-                .scrollIntoView(tableData.getSearch())
+                .scrollIntoView(tableOptions.getTableOptionsBtn())
                 .clickOnWebElement(tableOptions.getTableOptionsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ID))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DETAILS))
