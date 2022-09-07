@@ -5,18 +5,20 @@ import api.preconditionbuilders.ProtectionsPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.A;
 import org.testng.annotations.*;
 import pages.Path;
 import pages.protections.ProtectionsPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.disappear;
+import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
 import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
@@ -106,7 +108,7 @@ public class ProtectionsSortingTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Step("Sort column {0} by DESC")
+    @Step("Sort column {0} by Name DESC")
     private void sortByDescColumnByName(ColumnNames columnName) {
         var tableData = protectionsPage.getProtectionsTable().getTableData();
 
@@ -131,7 +133,7 @@ public class ProtectionsSortingTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Step("Sort column {0} by ASC")
+    @Step("Sort column {0} by Name ASC")
     private void sortByAscColumnByName(ColumnNames columnName) {
         var tableData = protectionsPage.getProtectionsTable().getTableData();
 
