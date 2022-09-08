@@ -94,6 +94,7 @@ public class OpenPricingChangePublisherTests extends BaseTest {
     private void changePublisherAndClickAccept() {
         testStart()
                 .clickBrowserRefreshButton()
+                .and(String.format("Select Publisher %s",publisher1.getName()))
                 .selectFromDropdown(openPricingSidebar.getPublisherNameDropdown(),
                         openPricingSidebar.getPublisherNameDropdownItems(), publisher1.getName())
                 .testEnd();
@@ -118,20 +119,29 @@ public class OpenPricingChangePublisherTests extends BaseTest {
     private void fillAllFields() {
         testStart()
                 .waitAndValidate(enabled, openPricingSidebar.getNameInput())
+                .and(String.format("Fill Name %s",OPEN_PRICING_NAME))
                 .setValueWithClean(openPricingSidebar.getNameInput(), OPEN_PRICING_NAME)
+                .and(String.format("Set Floor Price %s",FLOOR_PRICE))
                 .setValueWithClean(openPricingSidebar.getFloorPriceField().getFloorPriceInput(), FLOOR_PRICE)
+                .and("Expand Inventory Multipane and include all")
                 .clickOnWebElement(openPricingSidebar.getInventoryMultipane().getPanelNameLabel())
                 .clickOnWebElement(openPricingSidebar.getInventoryMultipane().getIncludeAllButton())
+                .and("Expand Geo Multipane and include all")
                 .clickOnWebElement(openPricingSidebar.getGeoMultipane().getPanelNameLabel())
                 .clickOnWebElement(openPricingSidebar.getGeoMultipane().getIncludeAllButton())
+                .and("Expand Device Multipane and include all")
                 .clickOnWebElement(openPricingSidebar.getDeviceMultipane().getPanelNameLabel())
                 .clickOnWebElement(openPricingSidebar.getDeviceMultipane().getIncludeAllButton())
+                .and("Expand Operating System Multipane and include all")
                 .clickOnWebElement(openPricingSidebar.getOperatingSystemMultipane().getPanelNameLabel())
                 .clickOnWebElement(openPricingSidebar.getOperatingSystemMultipane().getIncludeAllButton())
+                .and("Expand Ad Format Multipane and include all")
                 .clickOnWebElement(openPricingSidebar.getAdFormatMultipane().getPanelNameLabel())
                 .clickOnWebElement(openPricingSidebar.getAdFormatMultipane().getIncludeAllButton())
+                .and("Expand Ad Size Multipane and include all")
                 .clickOnWebElement(openPricingSidebar.getAdSizeMultipane().getPanelNameLabel())
                 .clickOnWebElement(openPricingSidebar.getAdSizeMultipane().getIncludeAllButton())
+                .and("Expand Demand Source Multipane and include all")
                 .clickOnWebElement(openPricingSidebar.getDemandSourcesMultipane().getPanelNameLabel())
                 .clickOnWebElement(openPricingSidebar.getDemandSourcesMultipane().getIncludeAllButton())
                 .testEnd();
@@ -143,6 +153,7 @@ public class OpenPricingChangePublisherTests extends BaseTest {
         var changePublisherBanner = openPricingSidebar.getChangePublisherBanner();
 
         testStart()
+                .and(String.format("Select Publisher %s",publisherName))
                 .selectFromDropdown(openPricingSidebar.getPublisherNameDropdown(),
                         openPricingSidebar.getPublisherNameDropdownItems(), publisherName)
                 .then("Check that warning banner appears")
@@ -174,18 +185,25 @@ public class OpenPricingChangePublisherTests extends BaseTest {
                 .validate(openPricingSidebar.getNameInput(), "")
                 .then("Floor Price should be cleaned")
                 .validate(openPricingSidebar.getFloorPriceField().getFloorPriceInput(), "")
+                .then("Expand Inventory Multipane and ensure that included/excluded items list is empty")
                 .clickOnWebElement(openPricingSidebar.getInventoryMultipane().getPanelNameLabel())
                 .validate(openPricingSidebar.getInventoryMultipane().countIncludedExcludedTableItems(), 0)
+                .then("Expand Geo Multipane and ensure that included/excluded items list is empty")
                 .clickOnWebElement(openPricingSidebar.getGeoMultipane().getPanelNameLabel())
                 .validate(openPricingSidebar.getGeoMultipane().countIncludedExcludedTableItems(), 0)
+                .then("Expand Device Multipane and ensure that included/excluded items list is empty")
                 .clickOnWebElement(openPricingSidebar.getDeviceMultipane().getPanelNameLabel())
                 .validate(openPricingSidebar.getDeviceMultipane().countIncludedExcludedTableItems(), 0)
+                .then("Expand Operating System Multipane and ensure that included/excluded items list is empty")
                 .clickOnWebElement(openPricingSidebar.getOperatingSystemMultipane().getPanelNameLabel())
                 .validate(openPricingSidebar.getOperatingSystemMultipane().countIncludedExcludedTableItems(), 0)
+                .then("Expand Ad Format Multipane and ensure that included/excluded items list is empty")
                 .clickOnWebElement(openPricingSidebar.getAdFormatMultipane().getPanelNameLabel())
                 .validate(openPricingSidebar.getAdFormatMultipane().countIncludedExcludedTableItems(), 0)
+                .then("Expand Ad Sizes Multipane and ensure that included/excluded items list is empty")
                 .clickOnWebElement(openPricingSidebar.getAdSizeMultipane().getPanelNameLabel())
                 .validate(openPricingSidebar.getAdSizeMultipane().countIncludedExcludedTableItems(), 0)
+                .then("Expand Demand source Multipane and ensure that included/excluded items list is empty")
                 .clickOnWebElement(openPricingSidebar.getDemandSourcesMultipane().getPanelNameLabel())
                 .validate(openPricingSidebar.getDemandSourcesMultipane().countIncludedExcludedTableItems(), 0)
                 .testEnd();
@@ -196,9 +214,13 @@ public class OpenPricingChangePublisherTests extends BaseTest {
         var changePublisherBanner = openPricingSidebar.getChangePublisherBanner();
 
         testStart()
+                .then(String.format("Publisher name should be %s",publisher.getName()))
                 .validate(openPricingSidebar.getPublisherNameDropdown().getText(), publisher.getName())
+                .then(String.format("Name should be %s",OPEN_PRICING_NAME))
                 .validateAttribute(openPricingSidebar.getNameInput(), "value", OPEN_PRICING_NAME)
+                .then(String.format("Floor Price should be %s",FLOOR_PRICE))
                 .validateAttribute(openPricingSidebar.getFloorPriceField().getFloorPriceInput(), "value", FLOOR_PRICE)
+                .then(String.format("Currency should be %s",publisher.getCurrency()))
                 .validate(openPricingSidebar.getFloorPriceField().getFloorPricePrefix().getText(), publisher.getCurrency())
                 .testEnd();
     }
@@ -206,6 +228,7 @@ public class OpenPricingChangePublisherTests extends BaseTest {
     @Step("Validate Inventory List")
     private void validateListInventory(List<String> inventory) {
         testStart()
+                .and("Expand Inventory multipane and ensure that values in list corresponds with selected publisher")
                 .clickOnWebElement(openPricingSidebar.getInventoryMultipane().getPanelNameLabel())
                 .validate(openPricingSidebar.getInventoryMultipane().getSelectTableItemByPositionInList(0).getName(), inventory.get(0))
                 .testEnd();
@@ -215,6 +238,7 @@ public class OpenPricingChangePublisherTests extends BaseTest {
     @Step("Validate Demand Sources List")
     private void validateListDemandSources(List<String> dsp) {
         testStart()
+                .and("Expand  Demand Source multipane and ensure that values in list corresponds with selected publisher")
                 .clickOnWebElement(openPricingSidebar.getDemandSourcesMultipane().getPanelNameLabel())
                 .validate(openPricingSidebar.getDemandSourcesMultipane().getSelectTableItemByPositionInList(0).getName(), dsp.get(0))
                 .validate(openPricingSidebar.getDemandSourcesMultipane().getSelectTableItemByPositionInList(1).getName(), dsp.get(1))

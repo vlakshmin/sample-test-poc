@@ -150,14 +150,19 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
         testStart()
                 .and("Fill Ad Spot Name")
                 .setValueWithClean(editAdSpotSidebar.getNameInput(), adSpotName)
+                .and("Select Related Media")
                 .selectFromDropdown(editAdSpotSidebar.getRelatedMedia(),
                         editAdSpotSidebar.getRelatedMediaItems(), mediaName)
+                .and("Select Position value")
                 .selectFromDropdown(editAdSpotSidebar.getPosition(),
                         editAdSpotSidebar.getPositionItems(), "Header")
+                .and("Select Ad size")
                 .clickOnWebElement(editAdSpotSidebar.getDefaultAdSizes())
                 .clickOnWebElement(editAdSpotSidebar.getAdSizesPanel().getAdSizeCheckbox(AdSizesList.A120x20))
                 .clickOnWebElement(editAdSpotSidebar.getNameInput())
+                .and("Set Default Floor Price")
                 .setValueWithClean(editAdSpotSidebar.getDefaultFloorPrice(), DEFAULT_FLOOR_PRICE)
+                .and("Select Categories")
                 .clickOnWebElement(editAdSpotSidebar.getCategories())
                 .clickOnWebElement(categories.getCategoryCheckbox(CategoriesList.EDUCATION))
                 .clickOnWebElement(categories.getCategoryGroupIcon(CategoriesList.AUTOMOTIVE))
@@ -191,7 +196,7 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
                         editAdSpotSidebar.getPublisherItems(), publisherName)
                 .then("Check that warning banner appears")
                 .validate(visible, changePublisherBanner.getBannerText(BANNER_TEXT))
-                .then("Click 'Accept' on Warning Banner")
+                .and("Click 'Accept' on Warning Banner")
                 .clickOnWebElement(changePublisherBanner.getCancelButton(BANNER_TEXT))
                 .testEnd();
     }
@@ -212,17 +217,29 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
                 .validate(editAdSpotSidebar.getCategories().getText(), "")
                 .then("Position should be cleaned")
                 .validate(editAdSpotSidebar.getPositionInput().getText(), "")
+                .then("Video should be disabled")
                 .validateAttribute(videoCard.getEnabledToggle(), "aria-checked", "false")
+                .then("Video Placement type should be empty")
                 .validate(videoCard.getVideoPlacementType(), "")
+                .then("Video Playback Method should be empty")
                 .validate(videoCard.getVideoPlaybackMethods(), "")
+                .then("Video Floor Price should be empty")
                 .validate(videoCard.getVideoFloorPrice(), "")
+                .then("Video Max duration should be empty")
                 .validate(videoCard.getMaxVideoDuration(), "")
+                .then("VideoMin duration should be empty")
                 .validate(videoCard.getMinVideoDuration(), "")
+                .then("Video Ad sizes should be empty")
                 .validate(videoCard.getVideoAdSizes(), "")
+                .then("Native card should be disabled")
                 .validateAttribute(nativeCard.getEnabledToggle(), "aria-checked", "false")
+                .then("Native Floor Price should be empty")
                 .validate(nativeCard.getFloorPrice(), "")
+                .then("Banner card should be disabled")
                 .validateAttribute(bannerCard.getEnabledToggle(), "aria-checked", "false")
+                .then("Banner Ad sizes should be empty")
                 .validate(bannerCard.getAdSizes(), "")
+                .then("Banner Floor price should be empty")
                 .validate(bannerCard.getFloorPrice(), "")
 
                 .and("Select Related Media")
@@ -236,10 +253,14 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
     private void fillBannerFormat() {
         var bannerCard = editAdSpotSidebar.getBannerCard();
         testStart()
+                .and("Expand Banner Card")
                 .clickOnWebElement(bannerCard.getBannerCardHeader())
+                .and("Switch toggle to Enabled state")
                 .turnToggleOn(bannerCard.getEnabledToggle())
-                //  .clickOnWebElement(bannerCard.getAdSizes())
-                //   .clickOnWebElement(bannerCard.getAdSizesPanel().getAdSizeCheckbox(AdSizesList.A120x60))
+                .and("Select Ad Size")
+                .clickOnWebElement(bannerCard.getAdSizes())
+                .clickOnWebElement(bannerCard.getAdSizesPanel().getAdSizeCheckbox(AdSizesList.A120x60))
+                .and("Set Floor Price")
                 .setValueWithClean(bannerCard.getFloorPrice(), BANNER_FLOOR_PRICE)
                 .testEnd();
     }
@@ -248,8 +269,10 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
     private void fillVideoFormat() {
         var videoCard = editAdSpotSidebar.getVideoCard();
         testStart()
+                .and("Expand Video Card")
                 .scrollIntoView(videoCard.getVideoCardHeader())
                 .clickOnWebElement(videoCard.getVideoCardHeader())
+                .and("Switch toggle to enabled state ")
                 .turnToggleOn(videoCard.getEnabledToggle())
                 .and("Fill Video Placement Type")
                 .selectFromDropdown(videoCard.getVideoPlacementType(),
@@ -258,6 +281,7 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
                 .scrollIntoView(videoCard.getVideoPlaybackMethods())
                 .selectFromDropdown(videoCard.getVideoPlaybackMethods(),
                         videoCard.getVideoPlaybackMethodsItems(), "Click Sound On")
+                .and("Set Floor Price")
                 .setValueWithClean(videoCard.getVideoFloorPrice(), VIDEO_FLOOR_PRICE)
                 .testEnd();
 
@@ -267,16 +291,21 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
     private void fillNativeFormat() {
         var nativeCard = editAdSpotSidebar.getNativeCard();
         testStart()
+                .and("Expand Native Card")
                 .clickOnWebElement(nativeCard.getNativeCardHeader())
+                .and("Switch toggle to enabled state ")
                 .turnToggleOn(nativeCard.getEnabledToggle())
+                .and("Set Floor Price")
                 .setValueWithClean(nativeCard.getFloorPrice(), NATIVE_FLOOR_PRICE)
                 .testEnd();
     }
 
-    @Step("")
+    @Step("Validate fields values should not be changed")
     private void validateFieldsValuesShouldNotBeChanged(String publisherName, String mediaName) {
         testStart()
+                .then(String.format("Publisher should be %s", publisherName))
                 .validate(editAdSpotSidebar.getPublisherInput().getText(), publisherName)
+                .then(String.format("Related Media should be %s", mediaName))
                 .validate(editAdSpotSidebar.getRelatedMediaInput().getText(), mediaName)
                 .testEnd();
 
