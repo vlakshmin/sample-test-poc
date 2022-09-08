@@ -521,64 +521,45 @@ public class AdSpotCheckFieldsTests extends BaseTest {
 //                .validate(not(visible), editAdSpotSidebar.getErrorAlert().getErrorPanel())
                 .testEnd();
     }
-//@Ignore
-//    @Test(description = "Check Minimum Video Duration Value", alwaysRun = true)
-//    private void checkMinVideoDurationValue() {
-//        var videoCard = editAdSpotSidebar.getVideoCard();
-//        var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
-//
-//        fillGeneralFields(media1.getPublisherName(), media1.getName());
-//        testStart()
-//                .clickOnWebElement(videoCard.getVideoCardHeader())
-//                .turnToggleOn(videoCard.getEnabledToggle())
-//                .and("Fill Video Placement Type")
-//                .selectFromDropdown(videoCard.getVideoPlacementType(),
-//                        videoCard.getVideoPlacementTypeItems(), "In-Stream")
-//                .and("Fill Video Playback Method")
-//                .scrollIntoView(videoCard.getVideoPlaybackMethods())
-//                .selectFromDropdown(videoCard.getVideoPlaybackMethods(),
-//                        videoCard.getVideoPlaybackMethodsItems(), "Click Sound On")
-//                .clickOnText("Video")
-//                .setValueWithClean(videoCard.getMinVideoDuration(),"-1")
-//                .clickOnText("Banner")
-//                .then("Validate error under the 'Minimum Video Duration' field")
-////                .waitAndValidate(visible, videoCard.getErrorAlertByFieldName("Minimum Video Duration (seconds)"))
-////                .validate(videoCard.getErrorAlertByFieldName("Minimum Video Duration (seconds)"),
-////                        ErrorMessages.DURATION_ERROR_ALERT.getText())
-//                .validateListSize(errorsList, 1)
-//                .clickOnText("Banner")
-//                .validateList(errorsList, List.of(
-//                        ErrorMessages.DURATION_ERROR_ALERT.getText())
-//                )
-//                .setValueWithClean(videoCard.getVideoFloorPrice(), "0")
-//                .then("Validate error under the 'Minimum Video Duration (seconds)' field disappeared")
-//                .waitAndValidate(not(visible), videoCard.getErrorAlertByFieldName("Minimum Video Duration (seconds)"))
-//                .then("Validate errors disappeared")
-//                .waitAndValidate(not(visible), videoCard.getErrorAlertByFieldName("Minimum Video Duration (seconds)"))
-//                .validate(not(visible), editAdSpotSidebar.getErrorAlert().getErrorPanel())
-//                .testEnd();
-//    }
-//
-//    @Ignore
-//    @Test(description = "Switch Publisher and Accept reseted fields", alwaysRun = true)
-//    public void switchPublisherAccept(){
-//        var changePublisherBanner = editAdSpotSidebar.getChangePublisherBanner();
-//
-//        fillGeneralFields(media1.getPublisherName(), media1.getName());
-//        testStart()
-//                .and(String. format("Select Publisher %s",media2.getPublisherName()))
-//                .selectFromDropdown(editAdSpotSidebar.getPublisherInput(),
-//                editAdSpotSidebar.getPublisherItems(), media2.getPublisherName())
-//                .then("Check that warning banner appears")
-//                .validate(visible,changePublisherBanner.getChangePublisherLabel())
-//                .then("Click 'Accept' on Warning Banner")
-//                .clickOnWebElement(changePublisherBanner.getAcceptButton())
-//                .and("Select Related Media")
-//                .selectFromDropdown(editAdSpotSidebar.getRelatedMedia(),
-//                editAdSpotSidebar.getRelatedMediaItems(), media2.getName())
-//                .testEnd();
-//    }
-//
+
+    @Test(description = "Check Minimum Video Duration Value", alwaysRun = true)
+    private void checkMinVideoDurationValue() {
+        var videoCard = editAdSpotSidebar.getVideoCard();
+        var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
+
+        fillGeneralFields(media1.getPublisherName(), media1.getName());
+        testStart()
+                .clickOnWebElement(videoCard.getVideoCardHeader())
+                .turnToggleOn(videoCard.getEnabledToggle())
+                .and("Fill Video Placement Type")
+                .selectFromDropdown(videoCard.getVideoPlacementType(),
+                        videoCard.getVideoPlacementTypeItems(), "In-Stream")
+                .and("Fill Video Playback Method")
+                .scrollIntoView(videoCard.getVideoPlaybackMethods())
+                .selectFromDropdown(videoCard.getVideoPlaybackMethods(),
+                        videoCard.getVideoPlaybackMethodsItems(), "Click Sound On")
+                .clickOnText("Video")
+                .setValueWithClean(videoCard.getMinVideoDuration(),"-1")
+                .clickOnText("Banner")
+                .then("Validate error under the 'Minimum Video Duration' field")
+              //  .waitAndValidate(visible, videoCard.getErrorAlertByFieldName("Minimum Video Duration (seconds)"))
+
+                .validate(videoCard.getErrorAlertByFieldName("Minimum Video Duration (seconds)"),
+                        ErrorMessages.DURATION_ERROR_ALERT.getText())
+                .validateListSize(errorsList, 1)
+                .clickOnText("Banner")
+                .validateList(errorsList, List.of(
+                        ErrorMessages.DURATION_ERROR_ALERT.getText())
+                )
+                .setValueWithClean(videoCard.getVideoFloorPrice(), "0")
+                .then("Validate error under the 'Minimum Video Duration (seconds)' field disappeared")
+                .waitAndValidate(not(visible), videoCard.getErrorAlertByFieldName("Minimum Video Duration (seconds)"))
+                .then("Validate errors disappeared")
+                .waitAndValidate(not(visible), videoCard.getErrorAlertByFieldName("Minimum Video Duration (seconds)"))
+                .validate(not(visible), editAdSpotSidebar.getErrorAlert().getErrorPanel())
+                .testEnd();
+    }
+
 
     @Step("Fill general fields")
     private void fillGeneralFields(String publisherName, String mediaName) {

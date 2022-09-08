@@ -7,8 +7,7 @@ import lombok.Getter;
 
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
-import static widgets.common.adSizes.AdSizesListPanelElements.AD_SIZES_SELECTED_ITEMS;
-import static widgets.common.adSizes.AdSizesListPanelElements.AD_SIZE_CHECKBOX;
+import static widgets.common.adSizes.AdSizesListPanelElements.*;
 
 /**
  * Keep Selectors of UI elements in {@link AdSizesListPanelElements}
@@ -21,8 +20,9 @@ public class AdSizesListPanel {
     @Getter(AccessLevel.NONE)
     private SelenideElement adsizeCheckbox = $x(AD_SIZE_CHECKBOX.getSelector()).as(AD_SIZE_CHECKBOX.getAlias());
 
+
     public SelenideElement getAdSizeCheckbox(AdSizesList adSize) {
 
-        return $x(String.format(AD_SIZE_CHECKBOX.getSelector(), adSize.getName())).as(AD_SIZE_CHECKBOX.getAlias());
+        return $x(String.format(AD_SIZE_CHECKBOX.getSelector(), adSize.getSize())).as(AD_SIZE_CHECKBOX.getAlias());
     }
 }

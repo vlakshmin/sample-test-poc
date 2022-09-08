@@ -46,7 +46,7 @@ public class CreateOpenPricingTest extends BaseTest {
     private CreateOpenPricingSidebar createOpenPricingSidebar;
 
     private static final String EMPTY_STRING = "";
-    private static final String PRICING_NAME = captionWithSuffix("Pricing");
+    private static final String PRICING_NAME = captionWithSuffix("autoPricing");
 
     public CreateOpenPricingTest() {
         openPricingPage = new OpenPricingPage();

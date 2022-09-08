@@ -16,6 +16,8 @@ public class AdSpotNativeCardSidebar {
             .as(NATIVE_PANEL.getAlias());
     private SelenideElement floorPrice = $x(NATIVE_FLOOR_PRICE.getSelector())
             .as(NATIVE_FLOOR_PRICE.getAlias());
+    private SelenideElement floorPriceCurrency = $x(NATIVE_FLOOR_PRICE_CURRENCY.getSelector())
+            .as(NATIVE_FLOOR_PRICE_CURRENCY.getAlias());
     private SelenideElement tooltipNativeFloorPrice = $x(TOOLTIP_NATIVE_FLOOR_PRICE_ICON.getSelector())
             .as(TOOLTIP_NATIVE_FLOOR_PRICE_ICON.getAlias());
     private SelenideElement nativeCardHeader = $x(NATIVE_CARD.getSelector()).as(NATIVE_CARD.getAlias());

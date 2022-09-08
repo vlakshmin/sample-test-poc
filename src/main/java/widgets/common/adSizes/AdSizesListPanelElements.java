@@ -8,9 +8,10 @@ import lombok.Getter;
 public enum AdSizesListPanelElements {
 
     AD_SIZES_SELECTED_ITEMS("Ad Sizes Selected Items",
-            "//label[text()='Default Ad Sizes']/..//span[@class='v-chip__content']"),
-    AD_SIZE_CHECKBOX("Category Checkbox", "//div[@class='v-list-item__title' and text()='%s']/../.." +
-            "/div[@class='v-list-item__action']/div[@class='v-simple-checkbox']/div");
+            "//div[contains(@class,'menuable__content__active')]"),
+    AD_SIZE_CHECKBOX("Category Checkbox", "//div[contains(@class,'menuable__content__active')]" +
+            "//div[@class='v-list-item__title' and text()='%s']/../../div[@class='v-list-item__action']" +
+            "/div[@class='v-simple-checkbox']/div");
 
 
     private String alias;

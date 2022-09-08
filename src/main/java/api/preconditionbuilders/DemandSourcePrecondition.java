@@ -3,6 +3,7 @@ package api.preconditionbuilders;
 import api.core.client.HttpClient;
 import api.dto.GenericResponse;
 import api.dto.rx.demandsource.DemandSource;
+import api.dto.rx.inventory.media.Media;
 import api.services.DemandSourceService;
 import configurations.User;
 import io.restassured.common.mapper.TypeRef;
@@ -10,6 +11,8 @@ import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Map;
 
 @Slf4j
 @Getter
@@ -60,6 +63,13 @@ public class DemandSourcePrecondition {
             return this;
         }
 
+        public DemandSourcePreconditionBuilder getDSPsWithFilter(Map<String, Object> queryParams) {
+            this.response = demandSourceService.getDSPsWithFilter(queryParams);
+            this.demandSourceGetAllResponse = this.response.as(new TypeRef<GenericResponse<DemandSource>>() {});
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
         public DemandSourcePrecondition build() {
 
             return new DemandSourcePrecondition(this);

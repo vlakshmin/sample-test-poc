@@ -29,6 +29,8 @@ public enum AdSpotSidebarElements {
     DEFAULT_AD_SIZES_INPUT("'Default Ad Sizes' Input", "//label[text()='Default Ad Sizes']/../div/input"),
     PUBLISHER_NAME_INPUT( "'Publisher Name' Input", "//label[text()='Publisher Name']/../div/input"),
     DEFAULT_FLOOR_PRICE("'Default Floor Price' Input", "//label[text()='Default Floor Price']/../input"),
+    DEFAULT_FLOOR_PRICE_CURRENCY("'Default Floor Price Currency' Label",
+            "//label[text()='Default Floor Price']/../div"),
     POSITION_ITEMS("'Position' Items", "//div[contains(@class,'menuable__content__activ')]//div[@class='v-list-item__title']"),
     CLOSE_ICON("'Close Ad Spot' Icon", "//div[@class='v-toolbar__content']/button[contains(@class,'v-btn--round theme--dark')]"),
     CONTENT_FOR_CHILDREN("'Content For Children' Toggle", "//span[text()='Content for Children']/../../div/input[@role='switch']");

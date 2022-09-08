@@ -21,6 +21,8 @@ public class AdSpotBannerCardSidebar {
             .as(ENABLED_TOGGLE.getAlias());
     private SelenideElement floorPrice = $x(BANNER_FLOOR_PRICE.getSelector())
             .as(BANNER_FLOOR_PRICE.getAlias());
+    private SelenideElement floorPriceCurrency = $x(BANNER_FLOOR_PRICE_CURRENCY.getSelector())
+            .as(BANNER_FLOOR_PRICE_CURRENCY.getAlias());
     private SelenideElement adSizesInput = $x(BANNER_AD_SIZES_INPUT.getSelector())
             .as(BANNER_AD_SIZES_INPUT.getAlias());
     private SelenideElement tooltipBannerAdSizes = $x(TOOLTIP_BANNER_AD_SIZES_ICON.getSelector())

@@ -16,41 +16,32 @@ public class DemandSource {
 
     private Integer id;
     private String key;
-    private String name;
-
-//
-//                "id": 1,
-//                        "corp": "RBidder",
-//                        "currency": "USD",
-//                        "country": "US",
-//                        "bidEndpoints": [
-
-//                    "syncUrl": "//cm-eu.rd.linksynergy.com/rx?ssp_id={{user_id}}",
-//                    "requestAdjustmentRate": 100,
-//                    "idfaRequired": false,
-//                    "syncRequired": false,
-//                    "nativeAllowed": true,
-//                    "bannerAllowed": true,
-//                    "videoAllowed": false,
-//                    "platformIosAppAllowed": true,
-//                    "platformAndroidAppAllowed": true,
-//                    "platformMobileWebAllowed": true,
-//                    "platformPcWebAllowed": true,
-//                    "tokenGeneration": false,
-//                    "timeout": 500,
-//                    "debugAdspotIds": "",
-//                    "status": 3,
-//                    "allowedCountries": "USA",
-//                    "dspTypeId": 3,
-//                    "pmpSupported": true,
-//                    "ecpmSupported": false,
-//                    "nonProgrammatic": false,
-//                    "createdAt": "2018-12-20T22:17:54Z",
-//                    "createdBy": "mike.potter@rakuten.com",
-//                    "updatedAt": "2022-02-08T21:25:27Z",
-//                    "updatedBy": "mike.potter@rakuten.com"
-//
-//
+    private String corp;
+    private String currency;
+    private String country;
+    private String syncUrl;
+    private Integer requestAdjustmentRate;
+    private Boolean idfaRequired;
+    private Boolean syncRequired;
+    private Boolean isEnabled;
+    private Boolean nativeAllowed;
+    private Boolean bannerAllowed;
+    private Boolean videoAllowed;
+    private Boolean platformIosAppAllowed;
+    private Boolean platformAndroidAppAllowed;
+    private Boolean platformMobileWebAllowed;
+    private Boolean platformPcWebAllowed;
+    private Boolean tokenGeneration;
+    private Integer timeout;
+    private String debugAdspotIds;
+    private Integer status;
+    private String allowedCountries;
+    private Integer dspTypeId;
+    private Boolean pmpSupported;
+    private Boolean ecpmSupported;
+    private Boolean nonProgrammatic;
+    private String createdAt;
+    private String updatedAt;
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);

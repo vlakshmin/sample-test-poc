@@ -16,7 +16,9 @@ import widgets.common.adSizes.AdSizesList;
 import widgets.common.categories.CategoriesList;
 import widgets.inventory.adSpots.sidebar.EditAdSpotSidebar;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static api.preconditionbuilders.DemandSourcePrecondition.demandSource;
 import static api.preconditionbuilders.MediaPrecondition.media;
@@ -76,15 +78,23 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
                 .build()
                 .getMediaResponse();
 
-        List<DemandSource> allDSP = demandSource().getDemandSourceList().build().getDemandSourceGetAllResponse().getItems();
+        Map<String, Object> param = new HashMap<>();
+        param.put("status","3");
+        List<DemandSource> allDSP = demandSource()
+                .getDSPsWithFilter(param)
+                .build()
+                .getDemandSourceGetAllResponse()
+                .getItems();
+
         if (allDSP.size()<6){
-            demandSource().createDemandSource().build().getResponseCode();
+            demandSource()
+                    .createDemandSource()
+                    .build()
+                    .getResponseCode();
         }
 
         List<DemandSource> list1 = allDSP.subList(0,allDSP.size()/2);
         List<DemandSource> list2 = allDSP.subList(allDSP.size()/2+1, allDSP.size());
-
-
     }
 
     @BeforeMethod

@@ -10,6 +10,7 @@ import widgets.common.warningbanner.ChangePublisherBanner;
 import widgets.inventory.adSpots.sidebar.card.AdSpotBannerCardSidebar;
 import widgets.inventory.adSpots.sidebar.card.AdSpotNativeCardSidebar;
 import widgets.inventory.adSpots.sidebar.card.AdSpotVideoCardSidebar;
+import widgets.yield.openPricing.floorprice.FloorPriceField;
 
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
@@ -41,6 +42,7 @@ public abstract class AdSpotSidebar {
     private ElementsCollection publisherItems = $$x(PUBLISHER_ITEMS.getSelector()).as(PUBLISHER_ITEMS.getAlias());
     private SelenideElement relatedMediaInput = $x(RELATED_MEDIA_INPUT.getSelector()).as(RELATED_MEDIA_INPUT.getAlias());
     private SelenideElement defaultFloorPrice = $x(DEFAULT_FLOOR_PRICE.getSelector()).as(DEFAULT_FLOOR_PRICE.getAlias());
+    private SelenideElement defaultFloorPriceCurrency = $x(DEFAULT_FLOOR_PRICE_CURRENCY.getSelector()).as(DEFAULT_FLOOR_PRICE_CURRENCY.getAlias());
     private SelenideElement publisherNameInput = $x(PUBLISHER_NAME_INPUT.getSelector()).as(PUBLISHER_NAME_INPUT.getAlias());
     private ElementsCollection relatedMediaItems = $$x(RELATED_MEDIA_ITEMS.getSelector()).as(RELATED_MEDIA_ITEMS.getAlias());
     private SelenideElement defaultAdSizesInput = $x(DEFAULT_AD_SIZES_INPUT.getSelector()).as(DEFAULT_AD_SIZES_INPUT.getAlias());
@@ -49,6 +51,7 @@ public abstract class AdSpotSidebar {
     private ValidationBottomAlert errorAlert = new ValidationBottomAlert();
     private CategoriesListPanel categoriesPanel = new CategoriesListPanel();
     private ChangePublisherBanner changePublisherBanner = new ChangePublisherBanner();
+    private FloorPriceField floorPriceField = new FloorPriceField();
 
     public SelenideElement getErrorAlertByFieldName(String fieldName){
 

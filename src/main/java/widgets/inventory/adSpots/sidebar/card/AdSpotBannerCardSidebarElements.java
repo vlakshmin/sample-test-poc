@@ -18,7 +18,8 @@ public enum AdSpotBannerCardSidebarElements {
             "//div[text()='Banner']/../..//*[text()='Floor Price']/../../div/*[contains(@class,'v-tooltip')]/../i"),
     BANNER_AD_SIZES("'Banner' Ad Sizes Button", "//div[text()='Banner']/../..//label[text()='Ad Sizes']/../div[1]"),
     BANNER_AD_SIZES_INPUT("'Banner' Ad Sizes Input", "//div[text()='Banner']/../..//label[text()='Ad Sizes']/../div/input"),
-    BANNER_FLOOR_PRICE("'Banner' Floor Price Input", "//div[text()='Banner']/../..//label[text()='Floor Price']/../../div/input");
+    BANNER_FLOOR_PRICE("'Banner' Floor Price Input", "//div[text()='Banner']/../..//label[text()='Floor Price']/../../div/input"),
+    BANNER_FLOOR_PRICE_CURRENCY("'Banner' Floor Price Currency Label", "//div[text()='Banner']/../..//label[text()='Floor Price']/../../div/div");
 
 
     private String alias;

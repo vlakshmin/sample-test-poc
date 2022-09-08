@@ -24,5 +24,5 @@ public enum AdSizesList {
     A300x1050("300x1050"),
     A1080x1920("1080x1920");
 
-    private String name;
+    private String size;
 }
