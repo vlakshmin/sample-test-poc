@@ -54,13 +54,13 @@ public class OpenPricingChangePublisherTests extends BaseTest {
     @BeforeClass
     private void createTestData() {
         publisher1 = publisher()
-                .createNewPublisher(captionWithSuffix("000autoPub1"), true,
+                .createNewPublisher(captionWithSuffix("000000autoPub1"), true,
                         Currency.JPY, CATEGORY_IDS, DSP_IDS_PUBLISHER_1)
                 .build()
                 .getPublisherResponse();
 
         publisher2 = publisher()
-                .createNewPublisher(captionWithSuffix("000autoPub2"), true,
+                .createNewPublisher(captionWithSuffix("000000autoPub2"), true,
                         Currency.EUR, CATEGORY_IDS, DSP_IDS_PUBLISHER_2)
                 .build()
                 .getPublisherResponse();
