@@ -1,4 +1,4 @@
-package widgets.inventory.adSpots.sidebar.card;
+package widgets.inventory.adSpots.sidebar.card.video;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,10 +28,7 @@ public enum AdSpotVideoCardSidebarElements {
     TOOLTIP_VIDEO_FLOOR_PRICE_ICON("Video Card Floor Price Tooltip '%s' Icon",
             "//div[text()='Video']/../..//*[text()='Floor Price']/../../div/*[contains(@class,'v-tooltip')]/../i"),
     VIDEO_PLACEMENT_TYPE("'Video' Placement Type", "//label[text()='Video Placement Type']/../../div/div[2]"),
-    VIDEO_PLAYBACK_METHODS("'Video' Playback Methods", "//label[text()='Video Playback Methods']/../../div/div[2]"),
-    VIDEO_FLOOR_PRICE("'Video' Floor Price", "//div[text()='Video']/../..//label[text()='Floor Price']/../../div/input"),
-    VIDEO_FLOOR_PRICE_CURRENCY("'Video' Floor Price Currency", "//div[text()='Video']/../..//label[text()='Floor Price']/../../div/div");
-
+    VIDEO_PLAYBACK_METHODS("'Video' Playback Methods", "//label[text()='Video Playback Methods']/../../div/div[2]");
 
     private String alias;
     private String selector;

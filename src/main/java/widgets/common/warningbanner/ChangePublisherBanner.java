@@ -6,7 +6,6 @@ import lombok.Getter;
 import static com.codeborne.selenide.Selenide.$x;
 
 import static widgets.common.warningbanner.ChangePublisherBannerElements.*;
-import static widgets.inventory.adSpots.sidebar.card.AdSpotBannerCardSidebarElements.ERROR_ALERT_BY_FIELD_NAME;
 
 
 /**

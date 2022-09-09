@@ -1,13 +1,14 @@
-package widgets.inventory.adSpots.sidebar.card;
+package widgets.inventory.adSpots.sidebar.card.video;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import widgets.common.adSizes.AdSizesListPanel;
+import widgets.inventory.adSpots.sidebar.card.video.floorprice.FloorPriceField;
 
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
-import static widgets.inventory.adSpots.sidebar.card.AdSpotVideoCardSidebarElements.*;
+import static widgets.inventory.adSpots.sidebar.card.video.AdSpotVideoCardSidebarElements.*;
 
 /**
  * Keep Selectors of UI elements in {@link AdSpotVideoCardSidebarElements}
@@ -21,10 +22,6 @@ public class AdSpotVideoCardSidebar {
             .as(VIDEO_AD_SIZES.getAlias());
     private SelenideElement enabledToggle = $x(ENABLED_TOGGLE.getSelector())
             .as(ENABLED_TOGGLE.getAlias());
-    private SelenideElement videoFloorPrice = $x(VIDEO_FLOOR_PRICE.getSelector())
-            .as(VIDEO_FLOOR_PRICE.getAlias());
-    private SelenideElement videoFloorPriceCurrency = $x(VIDEO_FLOOR_PRICE_CURRENCY.getSelector())
-            .as(VIDEO_FLOOR_PRICE_CURRENCY.getAlias());
     private SelenideElement minVideoDuration = $x(MIN_VIDEO_DURATION.getSelector())
             .as(MIN_VIDEO_DURATION.getAlias());
     private SelenideElement maxVideoDuration = $x(MAX_VIDEO_DURATION.getSelector())
@@ -45,6 +42,7 @@ public class AdSpotVideoCardSidebar {
     private ElementsCollection videoPlaybackMethodsSelectedItems = $$x(VIDEO_PLAYBACK_METHODS_SELECTED_ITEMS.getSelector())
             .as(VIDEO_PLAYBACK_METHODS_SELECTED_ITEMS.getAlias());
     private AdSizesListPanel adSizesPanel = new AdSizesListPanel();
+    private FloorPriceField floorPriceField = new FloorPriceField();
 
     public SelenideElement getErrorAlertByFieldName(String fieldName){
 

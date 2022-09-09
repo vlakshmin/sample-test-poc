@@ -1,4 +1,4 @@
-package widgets.inventory.adSpots.sidebar.card;
+package widgets.inventory.adSpots.sidebar.card.banner;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,10 +17,7 @@ public enum AdSpotBannerCardSidebarElements {
     TOOLTIP_BANNER_FLOOR_PRICE_ICON("Banner Card  Floor Price Tooltip '%s' Icon",
             "//div[text()='Banner']/../..//*[text()='Floor Price']/../../div/*[contains(@class,'v-tooltip')]/../i"),
     BANNER_AD_SIZES("'Banner' Ad Sizes Button", "//div[text()='Banner']/../..//label[text()='Ad Sizes']/../div[1]"),
-    BANNER_AD_SIZES_INPUT("'Banner' Ad Sizes Input", "//div[text()='Banner']/../..//label[text()='Ad Sizes']/../div/input"),
-    BANNER_FLOOR_PRICE("'Banner' Floor Price Input", "//div[text()='Banner']/../..//label[text()='Floor Price']/../../div/input"),
-    BANNER_FLOOR_PRICE_CURRENCY("'Banner' Floor Price Currency Label", "//div[text()='Banner']/../..//label[text()='Floor Price']/../../div/div");
-
+    BANNER_AD_SIZES_INPUT("'Banner' Ad Sizes Input", "//div[text()='Banner']/../..//label[text()='Ad Sizes']/../div/input");
 
     private String alias;
     private String selector;

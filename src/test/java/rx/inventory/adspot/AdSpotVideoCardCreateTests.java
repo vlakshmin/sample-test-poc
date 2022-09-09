@@ -1,12 +1,16 @@
 package rx.inventory.adspot;
 
 import api.dto.rx.admin.publisher.Publisher;
+import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
 import pages.Path;
 import pages.inventory.adspots.AdSpotsPage;
 import rx.BaseTest;
@@ -15,12 +19,9 @@ import widgets.common.categories.CategoriesList;
 import widgets.common.detailsmenu.menu.TableItemDetailsMenu;
 import widgets.common.detailsmenu.menu.sections.DetailsSection;
 import widgets.common.table.ColumnNames;
-import widgets.common.table.Statuses;
 import widgets.common.table.TableData;
 import widgets.inventory.adSpots.sidebar.EditAdSpotSidebar;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
@@ -36,7 +37,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class AdSpotCreateTests extends BaseTest {
+public class AdSpotVideoCardCreateTests extends BaseTest {
     private Media media;
     private Publisher publisher;
     private AdSpotsPage adSpotPage;
@@ -44,32 +45,23 @@ public class AdSpotCreateTests extends BaseTest {
     private TableItemDetailsMenu adSpotTableDetailsMenu;
 
     final private static String POSITION = "Header";
-    final private static String VIDEO_FLOOR_PRICE = "15.32";
-    final private static String NATIVE_FLOOR_PRICE = "18.45";
-    final private static String BANNER_FLOOR_PRICE = "12.11";
-    final private static String DEFAULT_FLOOR_PRICE = "10.00";
+    final private static String DEFAULT_FLOOR_PRICE = "10.98";
 
     final private static String VIDEO_PLACEMENT_TYPE = "In-Stream";
     final private static String VIDEO_PLAYBACK_METHOD = "Click Sound On";
 
-    final private static String VIDEO_MIN_DURATION = "2000";
-    final private static String VIDEO_MAX_DURATION = "7000";
+    final private static String DEFAULT_VALUE = "Same as default";
 
-    final private static AdSizesList VIDEO_AD_SIZE = AdSizesList.A216x36;
-    final private static AdSizesList BANNER_AD_SIZE = AdSizesList.A120x20;
     final private static AdSizesList DEFAULT_AD_SIZE = AdSizesList.A300x1050;
 
-    final private static CategoriesList CATEGORY_AUTO_REPAIR = CategoriesList.AUTO_REPAIR;
+    final private static Currency CURRENCY = Currency.JPY;
+
     final private static CategoriesList CATEGORY_EDUCATION = CategoriesList.EDUCATION;
+    final private static CategoriesList CATEGORY_AUTO_REPAIR = CategoriesList.AUTO_REPAIR;
 
     final private static String AD_SPOT_NAME = captionWithSuffix("4autoAdSpot");
 
-    private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-    private static Date date = new Date();
-    final private static String currentDate = formatter.format(date);
-
-
-    public AdSpotCreateTests() {
+    public AdSpotVideoCardCreateTests() {
         adSpotPage = new AdSpotsPage();
         adSpotSidebar = new EditAdSpotSidebar();
         adSpotTableDetailsMenu = new TableItemDetailsMenu();
@@ -79,7 +71,7 @@ public class AdSpotCreateTests extends BaseTest {
     private void init() {
 
         publisher = publisher()
-                .createNewPublisher(captionWithSuffix("0000autoPub1"))
+                .createNewPublisher(captionWithSuffix("0000autoPub1"), true, CURRENCY, List.of(), List.of())
                 .build()
                 .getPublisherResponse();
 
@@ -87,10 +79,6 @@ public class AdSpotCreateTests extends BaseTest {
                 .createNewMedia(captionWithSuffix("autoMedia"), publisher.getId(), true)
                 .build()
                 .getMediaResponse();
-//    }
-//
-//    @BeforeMethod
-//    private void login() {
 
         testStart()
                 .given()
@@ -108,8 +96,6 @@ public class AdSpotCreateTests extends BaseTest {
         var tablePagination = adSpotPage.getAdSpotsTable().getTablePagination();
 
         fillGeneralFields();
-        fillBannerCardFields();
-        fillNativeCardFields();
         fillVideoCardFields();
         testStart()
                 .clickOnWebElement(adSpotSidebar.getSaveButton())
@@ -121,92 +107,106 @@ public class AdSpotCreateTests extends BaseTest {
                 .clickEnterButton(tableData.getSearch())
                 .then("Validate that text in table footer '1-1 of 1")
                 .validateContainsText(tablePagination.getPaginationPanel(), "1-1 of 1")
-                //    .and("Open Sidebar and check data")
-                //       .clickOnTableCellLink(tableData, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME)
-                //     .waitSideBarOpened()
-
+                .clickOnTableCellLink(tableData, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME)
+                .waitSideBarOpened()
                 .testEnd();
 
-//        validateGeneralFieldsValues();
-//        validateBannerFieldsValues();
-//        validateNativeFieldsValues();
-//        validateVideoFieldsValues();
-//
-//        testStart()
-//                .clickOnWebElement(adSpotSidebar.getSaveButton())
-//                .waitSideBarClosed()
-//                .and("Toaster Error message is absent")
-//                .waitAndValidate(not(visible), adSpotPage.getToasterMessage().getPanelError())
-//                .testEnd();
-    }
-
-    @Test(description = "Check columns data in the Ad Spots table for created Ad Spot",
-            dependsOnMethods = "createAdSpotWithAllFields")
-    private void checkTableColumns() {
-        var tableData = adSpotPage.getAdSpotsTable().getTableData();
-        var tableOptions = adSpotPage.getAdSpotsTable().getTableOptions();
+        validateGeneralFieldsValues();
+        validateBannerFieldsValues();
+        validateNativeFieldsValues();
+        validateVideoFieldsValues();
 
         testStart()
-                .and("'Show' all columns")
-                .scrollIntoView(tableOptions.getTableOptionsBtn())
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ID))
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DETAILS))
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.AD_SPOT_NAME))
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PUBLISHER))
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.RELATED_MEDIA))
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE_INACTIVE))
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PAGE_CATEGORY))
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.TEST_MODE))
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_SIZES))
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_FLOOR_PRICE))
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
-                .clickOnWebElement(adSpotPage.getPageTitle())
-                .then("Validate data in table")
-                .validate(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), Statuses.ACTIVE.getStatus())
-                .validate(tableData.getCellByRowValue(ColumnNames.PUBLISHER, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), publisher.getName())
-                .validate(tableData.getCellByRowValue(ColumnNames.RELATED_MEDIA, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), media.getName())
-                .validate(tableData.getCellByRowValue(ColumnNames.DEFAULT_FLOOR_PRICE, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME),
-                        String.format("%s %s", DEFAULT_FLOOR_PRICE, publisher.getCurrency()))
-                .validate(tableData.getCellByRowValue(ColumnNames.DEFAULT_SIZES, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), DEFAULT_AD_SIZE.getSize())
-                .validate(tableData.getCellByRowValue(ColumnNames.TEST_MODE, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), "Enabled")
-                .validate(tableData.getCellByRowValue(ColumnNames.PAGE_CATEGORY, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME),
-                        String.format("%s, %s", CATEGORY_AUTO_REPAIR.getName(), CATEGORY_EDUCATION.getName()))
-                .validate(tableData.getCellByRowValue(ColumnNames.CREATED_DATE, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), currentDate)
-                .validate(tableData.getCellByRowValue(ColumnNames.UPDATED_DATE, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), currentDate)
-
+                .clickOnWebElement(adSpotSidebar.getSaveButton())
+                .waitSideBarClosed()
+                .and("Toaster Error message is absent")
+                .waitAndValidate(not(visible), adSpotPage.getToasterMessage().getPanelError())
                 .testEnd();
     }
 
-    @Test(description = "Check details info: Native Floor Price",dependsOnMethods = "createAdSpotWithAllFields")
-    private void checkInfoBannerPanelDetails(){
+    @Test(description = "Check details info: Native", dependsOnMethods = "createAdSpotWithAllFields")
+    private void checkInfoNativePanel() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
         var nativeDetailsSection = adSpotTableDetailsMenu.getNativeDetailsSection();
 
         hoverMouseCursorOnDetailsIcon(tableData);
 
-        verifySelectionInDetailsMenuForTableItem(nativeDetailsSection,
-                String.format("%s: %s%s",publisher.getCurrency(),"¥",NATIVE_FLOOR_PRICE));
+        verifySelectionInDetailsMenuForTableItem(nativeDetailsSection, "Inactive");
+
+        removeMouseCursorFromDetailsIcon();
     }
-    @Test(description = "Check details info: Banner Ad Size",dependsOnMethods = "createAdSpotWithAllFields")
-    private void checkInfoBannerAdSize(){
+
+    @Test(description = "Check details info: Banner", dependsOnMethods = "createAdSpotWithAllFields")
+    private void checkInfoBanner() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
         var bannerDetailsSection = adSpotTableDetailsMenu.getBannerDetailsSection();
 
         hoverMouseCursorOnDetailsIcon(tableData);
 
-        verifySelectionInDetailsMenuForTableItem(bannerDetailsSection, BANNER_AD_SIZE.getSize());
+        verifySelectionInDetailsMenuForTableItem(bannerDetailsSection, "Inactive");
+
+        removeMouseCursorFromDetailsIcon();
     }
 
-    @Test(description = "Check details info: Banner Floor Price",dependsOnMethods = "createAdSpotWithAllFields")
-    private void checkInfoBannerFloorPrice(){
+
+    @Test(description = "Check details info: Video Floor Price", dependsOnMethods = "createAdSpotWithAllFields")
+    private void checkInfoVideoFloorPrice() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
-        var bannerDetailsSection = adSpotTableDetailsMenu.getBannerDetailsSection();
+        var videoFloorPriceDetailsSection = adSpotTableDetailsMenu.getVideoFloorPriceDetailsSection();
 
         hoverMouseCursorOnDetailsIcon(tableData);
 
-        verifySelectionInDetailsMenuForTableItem(bannerDetailsSection, BANNER_FLOOR_PRICE);
+        verifySelectionInDetailsMenuForTableItem(videoFloorPriceDetailsSection, DEFAULT_VALUE);
+
+        removeMouseCursorFromDetailsIcon();
+    }
+
+    @Test(description = "Check details info: Video Min Duration", dependsOnMethods = "createAdSpotWithAllFields")
+    private void checkInfoMinDurationPrice() {
+        var tableData = adSpotPage.getAdSpotsTable().getTableData();
+        var videoMinDurationDetailsSection = adSpotTableDetailsMenu.getVideoMinDurationDetailsSection();
+
+        hoverMouseCursorOnDetailsIcon(tableData);
+
+        verifySelectionInDetailsMenuForTableItem(videoMinDurationDetailsSection, "No Limit");
+
+        removeMouseCursorFromDetailsIcon();
+    }
+
+    @Test(description = "Check details info: Video Max Duration", dependsOnMethods = "createAdSpotWithAllFields")
+    private void checkInfoMaxDurationPrice() {
+        var tableData = adSpotPage.getAdSpotsTable().getTableData();
+        var videoMaxDurationDetailsSection = adSpotTableDetailsMenu.getVideoMaxDurationDetailsSection();
+
+        hoverMouseCursorOnDetailsIcon(tableData);
+
+        verifySelectionInDetailsMenuForTableItem(videoMaxDurationDetailsSection, "No Limit");
+
+        removeMouseCursorFromDetailsIcon();
+    }
+
+    @Test(description = "Check details info: Video Playback Method", dependsOnMethods = "createAdSpotWithAllFields")
+    private void checkInfoPlaybackMethodPrice() {
+        var tableData = adSpotPage.getAdSpotsTable().getTableData();
+        var videoPlaybackMethodDetailsSection = adSpotTableDetailsMenu.getVideoPlaybackMethodDetailsSection();
+
+        hoverMouseCursorOnDetailsIcon(tableData);
+
+        verifySelectionInDetailsMenuForTableItem(videoPlaybackMethodDetailsSection, VIDEO_PLAYBACK_METHOD);
+
+        removeMouseCursorFromDetailsIcon();
+    }
+
+    @Test(description = "Check details info: Video Placement Type Method", dependsOnMethods = "createAdSpotWithAllFields")
+    private void checkInfoPlacementTypePrice() {
+        var tableData = adSpotPage.getAdSpotsTable().getTableData();
+        var videoPlacementTypeDetailsSection = adSpotTableDetailsMenu.getVideoPlacementTypeDetailsSection();
+
+        hoverMouseCursorOnDetailsIcon(tableData);
+
+        verifySelectionInDetailsMenuForTableItem(videoPlacementTypeDetailsSection, VIDEO_PLACEMENT_TYPE);
+
+        removeMouseCursorFromDetailsIcon();
     }
 
     private void hoverMouseCursorOnDetailsIcon(TableData tableData) {
@@ -215,6 +215,7 @@ public class AdSpotCreateTests extends BaseTest {
                 .hoverMouseOnWebElement(tableData.getCellByPositionInTable(ColumnNames.DETAILS, 0))
                 .testEnd();
     }
+
 
     private void verifySelectionInDetailsMenuForTableItem(DetailsSection detailsSection, String... expectedItemNames) {
 
@@ -227,14 +228,20 @@ public class AdSpotCreateTests extends BaseTest {
                     .validate(visible, detailsSection.getMenuItemByPositionInList(currentItemPosition.get()).getName())
                     .validate(detailsSection.getMenuItemByPositionInList(currentItemPosition.get()).getName(),
                             expectedItemNames[currentItemPosition.get()])
-                    .validate(visible, detailsSection.getMenuItemByPositionInList(currentItemPosition.get()).getIncludedIcon())
-                    .validate(not(visible), detailsSection.getMenuItemByPositionInList(currentItemPosition.get()).getExcludedIcon())
                     .testEnd();
             currentItemPosition.getAndIncrement();
         });
     }
 
-    @Step("Fill general fields")
+    @Step("Remove mouse cursor from details icon")
+    private void removeMouseCursorFromDetailsIcon() {
+
+        testStart()
+                .clickOnWebElement(adSpotPage.getPageTitle())
+                .testEnd();
+    }
+
+    @Step("Fill general field")
     private void fillGeneralFields() {
         var categories = adSpotSidebar.getCategoriesPanel();
         testStart()
@@ -261,28 +268,6 @@ public class AdSpotCreateTests extends BaseTest {
                 .testEnd();
     }
 
-    @Step("Fill Banner card fields")
-    private void fillBannerCardFields() {
-        var bannerCard = adSpotSidebar.getBannerCard();
-        testStart()
-                .clickOnWebElement(bannerCard.getBannerCardHeader())
-                .turnToggleOn(bannerCard.getEnabledToggle())
-                .clickOnWebElement(bannerCard.getAdSizes())
-                .clickOnWebElement(bannerCard.getAdSizesPanel().getAdSizeCheckbox(BANNER_AD_SIZE))
-                .setValueWithClean(bannerCard.getFloorPrice(), BANNER_FLOOR_PRICE)
-                .testEnd();
-    }
-
-    @Step("Fill Native card fields")
-    private void fillNativeCardFields() {
-        var nativeCard = adSpotSidebar.getNativeCard();
-        testStart()
-                .clickOnWebElement(nativeCard.getNativeCardHeader())
-                .turnToggleOn(nativeCard.getEnabledToggle())
-                .setValueWithClean(nativeCard.getFloorPrice(), NATIVE_FLOOR_PRICE)
-                .testEnd();
-    }
-
     @Step("Fill Video card fields")
     private void fillVideoCardFields() {
         var videoCard = adSpotSidebar.getVideoCard();
@@ -290,8 +275,6 @@ public class AdSpotCreateTests extends BaseTest {
                 .scrollIntoView(videoCard.getVideoCardHeader())
                 .clickOnWebElement(videoCard.getVideoCardHeader())
                 .turnToggleOn(videoCard.getEnabledToggle())
-                .clickOnWebElement(videoCard.getVideoAdSizes())
-                .clickOnWebElement(videoCard.getAdSizesPanel().getAdSizeCheckbox(VIDEO_AD_SIZE))
                 .and("Fill Video Placement Type")
                 .selectFromDropdown(videoCard.getVideoPlacementType(),
                         videoCard.getVideoPlacementTypeItems(), VIDEO_PLACEMENT_TYPE)
@@ -300,9 +283,6 @@ public class AdSpotCreateTests extends BaseTest {
                 .selectFromDropdown(videoCard.getVideoPlaybackMethods(),
                         videoCard.getVideoPlaybackMethodsItems(), VIDEO_PLAYBACK_METHOD)
                 .clickOnWebElement(videoCard.getVideoPanel())
-                .setValueWithClean(videoCard.getVideoFloorPrice(), VIDEO_FLOOR_PRICE)
-                .setValue(videoCard.getMinVideoDuration(), VIDEO_MIN_DURATION)
-                .setValue(videoCard.getMaxVideoDuration(), VIDEO_MAX_DURATION)
                 .testEnd();
     }
 
@@ -332,10 +312,10 @@ public class AdSpotCreateTests extends BaseTest {
 
         testStart()
                 .clickOnWebElement(bannerCard.getBannerCardHeader())
-                .validateAttribute(bannerCard.getEnabledToggle(), "aria-checked", "true")
-                .validate(bannerCard.getAdSizes().getText(), BANNER_AD_SIZE.getSize())
-                .validateAttribute(bannerCard.getFloorPrice(), "value", BANNER_FLOOR_PRICE)
-                .validate(bannerCard.getFloorPriceCurrency().getText(), publisher.getCurrency())
+                .validateAttribute(bannerCard.getEnabledToggle(), "aria-checked", "false")
+                .validate(bannerCard.getAdSizes().getText(), "")
+                .validateAttribute(bannerCard.getFloorPriceField().getFloorPriceInput(), "value","")
+                .validate(bannerCard.getFloorPriceField().getFloorPricePrefix().getText(), publisher.getCurrency())
                 .testEnd();
     }
 
@@ -345,9 +325,9 @@ public class AdSpotCreateTests extends BaseTest {
 
         testStart()
                 .clickOnWebElement(nativeCard.getNativeCardHeader())
-                .validateAttribute(nativeCard.getEnabledToggle(), "aria-checked", "true")
-                .validateAttribute(nativeCard.getFloorPrice(), "value", NATIVE_FLOOR_PRICE)
-                .validate(nativeCard.getFloorPriceCurrency().getText(), publisher.getCurrency())
+                .validateAttribute(nativeCard.getEnabledToggle(), "aria-checked", "false")
+                .validateAttribute(nativeCard.getFloorPriceField().getFloorPriceInput(), "value", "")
+                .validate(nativeCard.getFloorPriceField().getFloorPricePrefix().getText(), publisher.getCurrency())
                 .testEnd();
     }
 
@@ -359,19 +339,17 @@ public class AdSpotCreateTests extends BaseTest {
                 .scrollIntoView(videoCard.getVideoCardHeader())
                 .clickOnWebElement(videoCard.getVideoCardHeader())
                 .validateAttribute(videoCard.getEnabledToggle(), "aria-checked", "true")
-                .validate(videoCard.getVideoAdSizes().getText(), VIDEO_AD_SIZE.getSize())
-                .validateAttribute(videoCard.getVideoFloorPrice(), "value", VIDEO_FLOOR_PRICE)
-
+                .validate(videoCard.getVideoAdSizes().getText(), "")
                 .validate(videoCard.getVideoPlacementType().getText(), VIDEO_PLACEMENT_TYPE)
                 .validateList(videoCard.getVideoPlaybackMethodsSelectedItems(), List.of(VIDEO_PLAYBACK_METHOD))
-                .validateAttribute(videoCard.getVideoFloorPrice(), "value", VIDEO_FLOOR_PRICE)
-                .validate(videoCard.getVideoFloorPriceCurrency().getText(), publisher.getCurrency())
-                .validateAttribute(videoCard.getMinVideoDuration(), "value", VIDEO_MIN_DURATION)
-                .validateAttribute(videoCard.getMaxVideoDuration(), "value", VIDEO_MAX_DURATION)
+                .validateAttribute(videoCard.getFloorPriceField().getFloorPriceInput(), "value", "")
+                .validate(videoCard.getFloorPriceField().getFloorPricePrefix().getText(), publisher.getCurrency())
+                .validateAttribute(videoCard.getMinVideoDuration(), "value", "No Limit")
+                .validateAttribute(videoCard.getMaxVideoDuration(), "value", "No Limit")
                 .testEnd();
     }
 
-    // @AfterMethod(alwaysRun = true)
+    @Step("Logout")
     private void logout() {
         testStart()
                 .and("Logout")

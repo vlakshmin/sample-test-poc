@@ -1,12 +1,8 @@
 
 package widgets.common.warningbanner;
 
-import com.codeborne.selenide.SelenideElement;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import static com.codeborne.selenide.Selenide.$x;
-import static widgets.inventory.adSpots.sidebar.card.AdSpotBannerCardSidebarElements.ERROR_ALERT_BY_FIELD_NAME;
 
 @Getter
 @AllArgsConstructor   ////div[contains(@class,'pa-4 container--fluid')]/div[contains(@class,'v-alert customAlert v-sheet')]

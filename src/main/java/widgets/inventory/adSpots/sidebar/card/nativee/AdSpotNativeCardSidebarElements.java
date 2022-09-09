@@ -1,4 +1,4 @@
-package widgets.inventory.adSpots.sidebar.card;
+package widgets.inventory.adSpots.sidebar.card.nativee;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,10 +7,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum AdSpotNativeCardSidebarElements {
 
-    NATIVE_FLOOR_PRICE("'Native' Floor Price Input",
-            "//div[text()='Native']/../..//label[text()='Floor Price']/../../div/input"),
-    NATIVE_FLOOR_PRICE_CURRENCY("'Native' Floor Price Currency Label",
-            "//div[text()='Native']/../..//label[text()='Floor Price']/../../div/div"),
     NATIVE_PANEL("'Native' Panel with Elements", "//div[text()='Native']/../../span"),
     ENABLED_TOGGLE("'Native' Active Toggle", "//div[text()='Native']/..//input[@role='switch']"),
     NATIVE_CARD("'Native' Card", "//div[text()='Native']/../button//i[contains(@class,'v-icon')]"),

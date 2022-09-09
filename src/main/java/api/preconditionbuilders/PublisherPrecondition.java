@@ -5,11 +5,7 @@ import api.dto.GenericResponse;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.admin.publisher.PublisherRequest;
 import api.dto.rx.common.Currency;
-import api.dto.rx.inventory.media.MediaRequest;
-import api.dto.rx.platformtype.PlatformType;
-import api.dto.rx.protection.Category;
 import api.services.PublisherService;
-import com.sun.xml.bind.v2.TODO;
 import configurations.User;
 import io.restassured.common.mapper.TypeRef;
 import io.restassured.response.Response;
@@ -20,9 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
-import static api.preconditionbuilders.PlatformTypesPrecondition.platformType;
 import static zutils.FakerUtils.*;
 
 @Slf4j
@@ -138,7 +132,7 @@ public class PublisherPrecondition {
                     .mail(randomMail())
                     .isEnabled(isEnabled)
                     .domain(randomUrl())
-                    .currency(currency.name())
+                    .currency(currency.getAlias())
                     .categoryIds(categoryIds)
                     .dspIds(dspIds)
                     .build();

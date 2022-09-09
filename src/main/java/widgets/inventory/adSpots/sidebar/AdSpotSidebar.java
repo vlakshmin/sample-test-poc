@@ -7,9 +7,9 @@ import widgets.common.adSizes.AdSizesListPanel;
 import widgets.common.categories.CategoriesListPanel;
 import widgets.common.validationalert.ValidationBottomAlert;
 import widgets.common.warningbanner.ChangePublisherBanner;
-import widgets.inventory.adSpots.sidebar.card.AdSpotBannerCardSidebar;
-import widgets.inventory.adSpots.sidebar.card.AdSpotNativeCardSidebar;
-import widgets.inventory.adSpots.sidebar.card.AdSpotVideoCardSidebar;
+import widgets.inventory.adSpots.sidebar.card.banner.AdSpotBannerCardSidebar;
+import widgets.inventory.adSpots.sidebar.card.nativee.AdSpotNativeCardSidebar;
+import widgets.inventory.adSpots.sidebar.card.video.AdSpotVideoCardSidebar;
 import widgets.yield.openPricing.floorprice.FloorPriceField;
 
 import static com.codeborne.selenide.Selenide.$$x;

@@ -224,7 +224,7 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
                 .then("Video Playback Method should be empty")
                 .validate(videoCard.getVideoPlaybackMethods(), "")
                 .then("Video Floor Price should be empty")
-                .validate(videoCard.getVideoFloorPrice(), "")
+                .validate(videoCard.getFloorPriceField().getFloorPriceInput(), "")
                 .then("Video Max duration should be empty")
                 .validate(videoCard.getMaxVideoDuration(), "")
                 .then("VideoMin duration should be empty")
@@ -234,13 +234,13 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
                 .then("Native card should be disabled")
                 .validateAttribute(nativeCard.getEnabledToggle(), "aria-checked", "false")
                 .then("Native Floor Price should be empty")
-                .validate(nativeCard.getFloorPrice(), "")
+                .validate(nativeCard.getFloorPriceField().getFloorPriceInput(), "")
                 .then("Banner card should be disabled")
                 .validateAttribute(bannerCard.getEnabledToggle(), "aria-checked", "false")
                 .then("Banner Ad sizes should be empty")
                 .validate(bannerCard.getAdSizes(), "")
                 .then("Banner Floor price should be empty")
-                .validate(bannerCard.getFloorPrice(), "")
+                .validate(bannerCard.getFloorPriceField().getFloorPriceInput(), "")
 
                 .and("Select Related Media")
                 .selectFromDropdown(editAdSpotSidebar.getRelatedMedia(),
@@ -261,7 +261,7 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
                 .clickOnWebElement(bannerCard.getAdSizes())
                 .clickOnWebElement(bannerCard.getAdSizesPanel().getAdSizeCheckbox(AdSizesList.A120x60))
                 .and("Set Floor Price")
-                .setValueWithClean(bannerCard.getFloorPrice(), BANNER_FLOOR_PRICE)
+                .setValueWithClean(bannerCard.getFloorPriceField().getFloorPriceInput(), BANNER_FLOOR_PRICE)
                 .testEnd();
     }
 
@@ -282,7 +282,7 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
                 .selectFromDropdown(videoCard.getVideoPlaybackMethods(),
                         videoCard.getVideoPlaybackMethodsItems(), "Click Sound On")
                 .and("Set Floor Price")
-                .setValueWithClean(videoCard.getVideoFloorPrice(), VIDEO_FLOOR_PRICE)
+                .setValueWithClean(videoCard.getFloorPriceField().getFloorPriceInput(), VIDEO_FLOOR_PRICE)
                 .testEnd();
 
     }
@@ -296,7 +296,7 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
                 .and("Switch toggle to enabled state ")
                 .turnToggleOn(nativeCard.getEnabledToggle())
                 .and("Set Floor Price")
-                .setValueWithClean(nativeCard.getFloorPrice(), NATIVE_FLOOR_PRICE)
+                .setValueWithClean(nativeCard.getFloorPriceField().getFloorPriceInput(), NATIVE_FLOOR_PRICE)
                 .testEnd();
     }
 

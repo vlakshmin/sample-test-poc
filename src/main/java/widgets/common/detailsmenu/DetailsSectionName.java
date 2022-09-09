@@ -17,18 +17,17 @@ public enum DetailsSectionName {
 
 //---Ad Spots
     NATIVE("Native"),
-    NATIVE_FLOOR_PRICE("Native Floor Price"),
     BANNER("Banner"),
     VIDEO("Video"),
-    BANNER_FLOOR_PRICE("Banner Floor Price"),
-    BANNER_AD_SIZE("Banner Ad Size"),
-
     VIDEO_AD_SIZE("Video Ad Size"),
-    VIDEO_PLACEMENT_TYPE("Video Placement Type"),
-    VIDEO_PLAYBACK_METHOD("Video Playback Method"),
+    BANNER_AD_SIZE("Banner Ad Size"),
     VIDEO_FLOOR_PRICE("Video Floor Price"),
     VIDEO_MIN_DURATION("Video Min Duration"),
-    VIDEO_MAX_DURATION("Video Max Duration");
+    VIDEO_MAX_DURATION("Video Max Duration"),
+    NATIVE_FLOOR_PRICE("Native Floor Price"),
+    BANNER_FLOOR_PRICE("Banner Floor Price"),
+    VIDEO_PLACEMENT_TYPE("Video Placement Type"),
+    VIDEO_PLAYBACK_METHOD("Video Playback Method");
 
     private final String name;
 }

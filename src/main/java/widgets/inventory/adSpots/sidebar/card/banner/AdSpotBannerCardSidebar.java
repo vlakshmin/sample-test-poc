@@ -1,11 +1,12 @@
-package widgets.inventory.adSpots.sidebar.card;
+package widgets.inventory.adSpots.sidebar.card.banner;
 
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import widgets.common.adSizes.AdSizesListPanel;
+import widgets.inventory.adSpots.sidebar.card.banner.floorprice.FloorPriceField;
 
 import static com.codeborne.selenide.Selenide.$x;
-import static widgets.inventory.adSpots.sidebar.card.AdSpotBannerCardSidebarElements.*;
+import static widgets.inventory.adSpots.sidebar.card.banner.AdSpotBannerCardSidebarElements.*;
 
 /**
  * Keep Selectors of UI elements in {@link AdSpotBannerCardSidebarElements}
@@ -19,10 +20,6 @@ public class AdSpotBannerCardSidebar {
             .as(BANNER_AD_SIZES.getAlias());
     private SelenideElement enabledToggle = $x(ENABLED_TOGGLE.getSelector())
             .as(ENABLED_TOGGLE.getAlias());
-    private SelenideElement floorPrice = $x(BANNER_FLOOR_PRICE.getSelector())
-            .as(BANNER_FLOOR_PRICE.getAlias());
-    private SelenideElement floorPriceCurrency = $x(BANNER_FLOOR_PRICE_CURRENCY.getSelector())
-            .as(BANNER_FLOOR_PRICE_CURRENCY.getAlias());
     private SelenideElement adSizesInput = $x(BANNER_AD_SIZES_INPUT.getSelector())
             .as(BANNER_AD_SIZES_INPUT.getAlias());
     private SelenideElement tooltipBannerAdSizes = $x(TOOLTIP_BANNER_AD_SIZES_ICON.getSelector())
@@ -31,6 +28,7 @@ public class AdSpotBannerCardSidebar {
             .as(TOOLTIP_BANNER_FLOOR_PRICE_ICON.getAlias());
     private SelenideElement bannerCardHeader = $x(BANNER_CARD.getSelector()).as(BANNER_CARD.getAlias());
     private AdSizesListPanel adSizesPanel = new AdSizesListPanel();
+    private FloorPriceField floorPriceField = new FloorPriceField();
 
     public SelenideElement getErrorAlertByFieldName(String fieldName){
 
