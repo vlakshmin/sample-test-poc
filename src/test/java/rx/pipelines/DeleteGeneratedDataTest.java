@@ -10,6 +10,7 @@ import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import rx.BaseTest;
 
@@ -45,7 +46,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
         log.info(String.format("Deleted protections items %s of %s", deleted, protections.size()));
     }
 
-    @Test(priority = 2)
+    @Test(priority = 3)
     public void deleteAdSpots() {
         var adSpots = getAllAdSpotsByParams();
         int deleted = 0;
@@ -60,7 +61,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
         log.info(String.format("Deleted ad spots items %s of %s", deleted, adSpots.size()));
     }
 
-    @Test(priority = 3)
+    @Test(priority = 2)
     public void deleteMedia() {
         var media = getAllMediaByParams();
         int deleted = 0;
@@ -120,6 +121,8 @@ public class DeleteGeneratedDataTest extends BaseTest {
         log.info(String.format("Deleted publishers items %s of %s", deleted, publishers.size()));
     }
 
+    //TODO
+    @Ignore
     @Test(priority = 7)
     public void updatePublishers() {
         var publishers = getAllPublishersByParams();
