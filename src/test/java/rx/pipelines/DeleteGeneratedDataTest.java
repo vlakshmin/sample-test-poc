@@ -121,6 +121,37 @@ public class DeleteGeneratedDataTest extends BaseTest {
     }
 
     @Test(priority = 7)
+    public void updatePublishers() {
+        var publishers = getAllPublishersByParams();
+        int deleted = 0;
+        Publisher pub;
+
+        for (Publisher p : publishers) {
+            pub = Publisher.builder()
+                    .id(p.getId())
+                    .name(p.getName())
+                    .salesAccountName(p.getSalesAccountName())
+                    .mail(p.getMail())
+                    .isEnabled(false)
+                    .domain(p.getDomain())
+                    .currency(p.getCurrency())
+                    .categoryIds(p.getCategoryIds())
+                    .dspIds(p.getDspIds())
+                    .createdAt(p.getCreatedAt())
+                    .updatedAt(p.getUpdatedAt())
+                    .build();
+
+            if (PublisherPrecondition.publisher()
+                    .setCredentials(USER_FOR_DELETION)
+                    .updatePublisher(pub)
+                    .build()
+                    .getResponseCode() == HttpStatus.SC_NO_CONTENT)
+                deleted++;
+        }
+        log.info(String.format("Updated publishers items %s of %s", deleted, publishers.size()));
+    }
+
+    @Test(priority = 7)
     public void deleteUsers() {
         var users = getAllUsersByParams();
         int deleted = 0;

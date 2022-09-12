@@ -82,7 +82,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     private void init() {
 
         publisher = publisher()
-                .createNewPublisher(captionWithSuffix("0000autoPub1"), true, CURRENCY, List.of(), List.of())
+                .createNewPublisher(captionWithSuffix("0000000autoPub1"), true, CURRENCY, List.of(), List.of())
                 .build()
                 .getPublisherResponse();
 
