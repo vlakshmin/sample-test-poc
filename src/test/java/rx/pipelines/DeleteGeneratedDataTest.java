@@ -29,7 +29,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
     private static final String PREFIX_OPEN_PRICING = "auto";
     private static final String PREFIX_USERS = "Test Account";
     private static final String PREFIX_DYNAMIC_PRICING = "auto";
-    private static final String PREFIX_PROTECTIONS = "Api protection";
+    private static final String PREFIX_PROTECTIONS = "auto";
 
     @Test(priority = 1)
     public void deleteProtections() {

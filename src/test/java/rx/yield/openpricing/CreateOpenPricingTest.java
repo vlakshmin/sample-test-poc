@@ -68,7 +68,7 @@ public class CreateOpenPricingTest extends BaseTest {
                 .openDirectPath(Path.CREATE_OPEN_PRICING)
                 .waitSideBarOpened()
                 .and("Enter data to all fields of sidebar")
-                .selectFromDropdownWithSearch(createOpenPricingSidebar.getPublisherNameDropdown(),
+                .selectFromDropdown(createOpenPricingSidebar.getPublisherNameDropdown(),
                         createOpenPricingSidebar.getPublisherNameDropdownItems(), "Viber")
                 .setValue(createOpenPricingSidebar.getNameInput(), PRICING_NAME)
                 .setValue(createOpenPricingSidebar.getFloorPriceField().getFloorPriceInput(), "22")
