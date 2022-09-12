@@ -8,7 +8,7 @@ import widgets.common.categories.CategoriesListPanel;
 import widgets.common.validationalert.ValidationBottomAlert;
 import widgets.common.warningbanner.ChangePublisherBanner;
 import widgets.inventory.adSpots.sidebar.card.banner.AdSpotBannerCardSidebar;
-import widgets.inventory.adSpots.sidebar.card.nativee.AdSpotNativeCardSidebar;
+import widgets.inventory.adSpots.sidebar.card.anative.AdSpotNativeCardSidebar;
 import widgets.inventory.adSpots.sidebar.card.video.AdSpotVideoCardSidebar;
 import widgets.yield.openPricing.floorprice.FloorPriceField;
 
@@ -53,9 +53,9 @@ public abstract class AdSpotSidebar {
     private ChangePublisherBanner changePublisherBanner = new ChangePublisherBanner();
     private FloorPriceField floorPriceField = new FloorPriceField();
 
-    public SelenideElement getErrorAlertByFieldName(String fieldName){
+    public SelenideElement getErrorAlertByFieldName(String fieldName) {
 
-        return $x(String.format(ERROR_ALERT_BY_FIELD_NAME.getSelector(),fieldName))
-                .as(String.format(ERROR_ALERT_BY_FIELD_NAME.getAlias(),fieldName));
+        return $x(String.format(ERROR_ALERT_BY_FIELD_NAME.getSelector(), fieldName))
+                .as(String.format(ERROR_ALERT_BY_FIELD_NAME.getAlias(), fieldName));
     }
 }

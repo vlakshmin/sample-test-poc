@@ -1,11 +1,11 @@
-package widgets.inventory.adSpots.sidebar.card.nativee;
+package widgets.inventory.adSpots.sidebar.card.anative;
 
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
-import widgets.inventory.adSpots.sidebar.card.nativee.floorprice.FloorPriceField;
+import widgets.inventory.adSpots.sidebar.card.anative.floorprice.FloorPriceField;
 
 import static com.codeborne.selenide.Selenide.$x;
-import static widgets.inventory.adSpots.sidebar.card.nativee.AdSpotNativeCardSidebarElements.*;
+import static widgets.inventory.adSpots.sidebar.card.anative.AdSpotNativeCardSidebarElements.*;
 
 /**
  * Keep Selectors of UI elements in {@link AdSpotNativeCardSidebarElements}

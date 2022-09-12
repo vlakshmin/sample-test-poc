@@ -25,6 +25,6 @@ public class DemandSourceService extends BaseService {
     public Response getDSPsWithFilter(Map<String, Object> queryParams) {
         URL = initURL(GET_ALL_DSPS);
 
-        return get(URL,queryParams);
+        return get(URL, queryParams);
     }
 }

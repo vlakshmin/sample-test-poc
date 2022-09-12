@@ -1,5 +1,5 @@
 
-package widgets.inventory.adSpots.sidebar.card.nativee.floorprice;
+package widgets.inventory.adSpots.sidebar.card.anative.floorprice;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

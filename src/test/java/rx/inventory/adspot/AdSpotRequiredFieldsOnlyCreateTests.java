@@ -110,7 +110,7 @@ public class AdSpotRequiredFieldsOnlyCreateTests extends BaseTest {
                 .clickEnterButton(tableData.getSearch())
                 .then("Validate that text in table footer '1-1 of 1")
                 .validateContainsText(tablePagination.getPaginationPanel(), "1-1 of 1")
-                .clickOnTableCellLink(tableData,ColumnNames.AD_SPOT_NAME,AD_SPOT_NAME)
+                .clickOnTableCellLink(tableData, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME)
                 .waitSideBarOpened()
                 .testEnd();
 

@@ -24,7 +24,7 @@ public class AdSpotCheckTooltipsTests extends BaseTest {
     private EditAdSpotSidebar editAdSpotSidebar;
     private AdSpotTooltipSidebar adSpotTooltips;
 
-    public AdSpotCheckTooltipsTests(){
+    public AdSpotCheckTooltipsTests() {
         adSpotsPage = new AdSpotsPage();
         adSpotTooltips = new AdSpotTooltipSidebar();
         editAdSpotSidebar = new EditAdSpotSidebar();
@@ -51,61 +51,61 @@ public class AdSpotCheckTooltipsTests extends BaseTest {
     }
 
     @Test(description = "'Categories' Tooltip Text")
-    private void categoriesTooltip(){
+    private void categoriesTooltip() {
         verifyTooltip(adSpotTooltips.getTooltipCategories(),
                 AdSpotTooltipText.CATEGORIES.getText());
     }
 
     @Test(description = "'Content for Children' Tooltip Text")
-    private void contentForChildrenTooltip(){
+    private void contentForChildrenTooltip() {
         verifyTooltip(adSpotTooltips.getTooltipContentForChildren(),
                 AdSpotTooltipText.CONTENT_FOR_CHILDREN.getText());
     }
 
     @Test(description = "'Default Ad Sizes' Tooltip Text")
-    private void defaultAdSizesTooltip(){
+    private void defaultAdSizesTooltip() {
         verifyTooltip(adSpotTooltips.getTooltipDefaultAdSizes(),
                 AdSpotTooltipText.DEFAULT_AD_SIZES.getText());
     }
 
     @Test(description = "'Default Floor Price' Tooltip Text")
-    private void defaultFloorPriceTooltip(){
+    private void defaultFloorPriceTooltip() {
         verifyTooltip(adSpotTooltips.getTooltipDefaultFloorPrice(),
                 AdSpotTooltipText.DEFAULT_FLOOR_PRICE.getText());
     }
 
     @Test(description = "'Native Card. 'Floor Price' Tooltip Text'")
-    private void nativeFloorPriceTooltip(){
+    private void nativeFloorPriceTooltip() {
         verifyTooltip(adSpotTooltips.getTooltipNativeFloorPrice(),
                 AdSpotTooltipText.NATIVE_FLOOR_PRICE.getText());
     }
 
     @Test(description = "Banner Card. 'Ad Sizes' Tooltip Text")
-    private void bannerAdSizesTooltip(){
+    private void bannerAdSizesTooltip() {
         verifyTooltip(adSpotTooltips.getTooltipBannerAdSizes(),
                 AdSpotTooltipText.BANNER_AD_SIZE.getText());
     }
 
     @Test(description = "Banner Card. 'Floor Price' Tooltip Text")
-    private void bannerFloorPriceTooltip(){
+    private void bannerFloorPriceTooltip() {
         verifyTooltip(adSpotTooltips.getTooltipBannerFloorPrice(),
                 AdSpotTooltipText.BANNER_FLOOR_PRICE.getText());
     }
 
     @Test(description = "Video Card. 'Floor Price' Tooltip Text")
-    private void videoFloorPriceTooltip(){
-       verifyTooltip(adSpotTooltips.getTooltipVideoFloorPrice(),
-               AdSpotTooltipText.VIDEO_FLOOR_PRICE.getText());
+    private void videoFloorPriceTooltip() {
+        verifyTooltip(adSpotTooltips.getTooltipVideoFloorPrice(),
+                AdSpotTooltipText.VIDEO_FLOOR_PRICE.getText());
     }
 
     @Test(description = "Video Card. 'Ad Sizes' Tooltip Text")
-    private void videoAdSizesTooltip(){
+    private void videoAdSizesTooltip() {
         verifyTooltip(adSpotTooltips.getTooltipVideoAdSizes(),
                 AdSpotTooltipText.VIDEO_AD_SIZE.getText());
     }
 
     @Step("Verify Tooltip Text")
-    private void verifyTooltip(SelenideElement field, String expectedText){
+    private void verifyTooltip(SelenideElement field, String expectedText) {
         testStart()
                 .scrollIntoView(field)
                 .validateTooltip(field,
@@ -114,7 +114,7 @@ public class AdSpotCheckTooltipsTests extends BaseTest {
     }
 
     @AfterMethod
-    private void logout(){
+    private void logout() {
         testStart()
                 .clickOnWebElement(editAdSpotSidebar.getCloseIcon())
                 .waitSideBarClosed()

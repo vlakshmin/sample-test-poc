@@ -314,7 +314,7 @@ public class AdSpotVideoCardCreateTests extends BaseTest {
                 .clickOnWebElement(bannerCard.getBannerCardHeader())
                 .validateAttribute(bannerCard.getEnabledToggle(), "aria-checked", "false")
                 .validate(bannerCard.getAdSizes().getText(), "")
-                .validateAttribute(bannerCard.getFloorPriceField().getFloorPriceInput(), "value","")
+                .validateAttribute(bannerCard.getFloorPriceField().getFloorPriceInput(), "value", "")
                 .validate(bannerCard.getFloorPriceField().getFloorPricePrefix().getText(), publisher.getCurrency())
                 .testEnd();
     }

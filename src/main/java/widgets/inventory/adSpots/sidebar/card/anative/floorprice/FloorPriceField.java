@@ -1,10 +1,10 @@
-package widgets.inventory.adSpots.sidebar.card.nativee.floorprice;
+package widgets.inventory.adSpots.sidebar.card.anative.floorprice;
 
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 
 import static com.codeborne.selenide.Selenide.$x;
-import static widgets.inventory.adSpots.sidebar.card.nativee.floorprice.FloorPriceFieldElements.*;
+import static widgets.inventory.adSpots.sidebar.card.anative.floorprice.FloorPriceFieldElements.*;
 
 
 /**

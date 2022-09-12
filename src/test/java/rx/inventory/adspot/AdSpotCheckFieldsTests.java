@@ -1,5 +1,6 @@
 package rx.inventory.adspot;
 
+import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
@@ -28,25 +29,25 @@ import static zutils.FakerUtils.captionWithSuffix;
 @Listeners({ScreenShooter.class})
 public class AdSpotCheckFieldsTests extends BaseTest {
     private AdSpotsPage adSpotPage;
-    private EditAdSpotSidebar editAdSpotSidebar;
+    private EditAdSpotSidebar adSpotSidebar;
     private Media media1;
-    private Media media2;
+    private Publisher publisher;
 
     public AdSpotCheckFieldsTests() {
         adSpotPage = new AdSpotsPage();
-        editAdSpotSidebar = new EditAdSpotSidebar();
+        adSpotSidebar = new EditAdSpotSidebar();
     }
 
     @BeforeClass
     private void init() {
 
-        media1 = media()
-                .createNewMedia(captionWithSuffix("auto1Media"))
+        publisher = publisher()
+                .createNewPublisher(captionWithSuffix("00000000autoPub"))
                 .build()
-                .getMediaResponse();
+                .getPublisherResponse();
 
-        media2 = media()
-                .createNewMedia(captionWithSuffix("auto2Media"))
+        media1 = media()
+                .createNewMedia(captionWithSuffix("auto1Media"), publisher.getId(), true)
                 .build()
                 .getMediaResponse();
     }
@@ -69,30 +70,30 @@ public class AdSpotCheckFieldsTests extends BaseTest {
     private void checkDefaultFields() {
         testStart()
                 .then("Validate fields by default")
-                .validate(disabled, editAdSpotSidebar.getActiveToggle())
-                .validateAttribute(editAdSpotSidebar.getActiveToggle(), "aria-checked", "true")
-                .validate(visible, editAdSpotSidebar.getPublisherInput())
-                .validate(editAdSpotSidebar.getPublisherInput(), "")
-                .validate(disabled, editAdSpotSidebar.getCategoriesInput())
-                .validate(disabled, editAdSpotSidebar.getNameInput())
-                .validate(disabled, editAdSpotSidebar.getRelatedMediaInput())
-                .validate(disabled, editAdSpotSidebar.getPositionInput())
-                .validate(disabled, editAdSpotSidebar.getDefaultAdSizesInput())
-                .validate(disabled, editAdSpotSidebar.getDefaultFloorPrice())
-                .validate(disabled, editAdSpotSidebar.getTestModeToggle())
-                .validate(disabled, editAdSpotSidebar.getContentForChildrenToggle())
-                .validateAttribute(editAdSpotSidebar.getBannerCard().getBannerPanel(), "style", "display: none;")
-                .validateAttribute(editAdSpotSidebar.getVideoCard().getVideoPanel(), "style", "display: none;")
-                .validateAttribute(editAdSpotSidebar.getNativeCard().getNativePanel(), "style", "display: none;")
+                .validate(disabled, adSpotSidebar.getActiveToggle())
+                .validateAttribute(adSpotSidebar.getActiveToggle(), "aria-checked", "true")
+                .validate(visible, adSpotSidebar.getPublisherInput())
+                .validate(adSpotSidebar.getPublisherInput(), "")
+                .validate(disabled, adSpotSidebar.getCategoriesInput())
+                .validate(disabled, adSpotSidebar.getNameInput())
+                .validate(disabled, adSpotSidebar.getRelatedMediaInput())
+                .validate(disabled, adSpotSidebar.getPositionInput())
+                .validate(disabled, adSpotSidebar.getDefaultAdSizesInput())
+                .validate(disabled, adSpotSidebar.getDefaultFloorPrice())
+                .validate(disabled, adSpotSidebar.getTestModeToggle())
+                .validate(disabled, adSpotSidebar.getContentForChildrenToggle())
+                .validateAttribute(adSpotSidebar.getBannerCard().getBannerPanel(), "style", "display: none;")
+                .validateAttribute(adSpotSidebar.getVideoCard().getVideoPanel(), "style", "display: none;")
+                .validateAttribute(adSpotSidebar.getNativeCard().getNativePanel(), "style", "display: none;")
                 .testEnd();
     }
 
     @Test(description = "Check required fields", alwaysRun = true)
     private void checkRequiredFields() {
-        var videoCard = editAdSpotSidebar.getVideoCard();
-        var bannerCard = editAdSpotSidebar.getBannerCard();
-        var nativeCard = editAdSpotSidebar.getNativeCard();
-        var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
+        var videoCard = adSpotSidebar.getVideoCard();
+        var bannerCard = adSpotSidebar.getBannerCard();
+        var nativeCard = adSpotSidebar.getNativeCard();
+        var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
         var adSpotName = captionWithSuffix("autoAdSpot");
 
         testStart()
@@ -103,10 +104,10 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .clickOnWebElement(videoCard.getVideoCardHeader())
 
                 .and("Click 'Save'")
-                .scrollIntoView(editAdSpotSidebar.getSaveButton())
-                .clickOnWebElement(editAdSpotSidebar.getSaveButton())
+                .scrollIntoView(adSpotSidebar.getSaveButton())
+                .clickOnWebElement(adSpotSidebar.getSaveButton())
                 .then("Validate errors for all required fields in Error Panel")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlert().getErrorPanel())
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlert().getErrorPanel())
                 .validateListSize(errorsList, 6)
                 .validateList(errorsList, List.of(
                         ErrorMessages.PUBLISHER_NAME_ERROR_ALERT.getText(),
@@ -117,26 +118,26 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                         ErrorMessages.DEFAULT_FLOOR_PRICE_ERROR_ALERT.getText())
                 )
                 .then("Validate error under the 'Publisher' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Publisher Name"))
-                .validate(editAdSpotSidebar.getErrorAlertByFieldName("Publisher Name"),
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Publisher Name"))
+                .validate(adSpotSidebar.getErrorAlertByFieldName("Publisher Name"),
                         ErrorMessages.PUBLISHER_NAME_ERROR_ALERT.getText())
                 .and(String.format("Select Publisher '%s'", media1.getPublisherName()))
-                .selectFromDropdown(editAdSpotSidebar.getPublisherInput(),
-                        editAdSpotSidebar.getPublisherItems(), media1.getPublisherName())
+                .selectFromDropdown(adSpotSidebar.getPublisherInput(),
+                        adSpotSidebar.getPublisherItems(), media1.getPublisherName())
                 .then("Validate error under the 'Publisher field' disappeared")
-                .waitAndValidate(not(visible), editAdSpotSidebar.getErrorAlertByFieldName("Publisher Name"))
+                .waitAndValidate(not(visible), adSpotSidebar.getErrorAlertByFieldName("Publisher Name"))
                 .and("Click 'Save'")
-                .clickOnWebElement(editAdSpotSidebar.getSaveButton())
+                .clickOnWebElement(adSpotSidebar.getSaveButton())
                 .then("Validate error under the 'Ad Spot Name' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Ad Spot Name"))
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Ad Spot Name"))
                 .then("Validate error under the 'Related Media' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Related Media"))
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Related Media"))
                 .then("Validate error under the 'Position' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Position"))
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Position"))
                 .then("Validate error under the 'Default Ad size' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Default Ad Sizes"))
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Default Ad Sizes"))
                 .then("Validate error under the 'Default Floor Price' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
                 .validateListSize(errorsList, 5)
                 .validateList(errorsList, List.of(
                         ErrorMessages.AD_SPOT_NAME_ERROR_ALERT.getText(),
@@ -146,19 +147,19 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                         ErrorMessages.DEFAULT_FLOOR_PRICE_ERROR_ALERT.getText())
                 )
                 .and("Fill Ad Spot Name")
-                .setValueWithClean(editAdSpotSidebar.getNameInput(), adSpotName)
+                .setValueWithClean(adSpotSidebar.getNameInput(), adSpotName)
                 .then("Validate error under the 'Ad Spot field' disappeared")
-                .waitAndValidate(not(visible), editAdSpotSidebar.getErrorAlertByFieldName("Ad Spot Name"))
+                .waitAndValidate(not(visible), adSpotSidebar.getErrorAlertByFieldName("Ad Spot Name"))
                 .and("Click 'Save'")
-                .clickOnWebElement(editAdSpotSidebar.getSaveButton())
+                .clickOnWebElement(adSpotSidebar.getSaveButton())
                 .then("Validate error under the 'Related Media' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Related Media"))
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Related Media"))
                 .then("Validate error under the 'Position' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Position"))
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Position"))
                 .then("Validate error under the 'Default Ad size' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Default Ad Sizes"))
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Default Ad Sizes"))
                 .then("Validate error under the 'Default Floor Price' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
                 .validateListSize(errorsList, 4)
                 .validateList(errorsList, List.of(
                         ErrorMessages.RELATED_MEDIA_TYPE_ERROR_ALERT.getText(),
@@ -168,18 +169,18 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 )
 
                 .and("Select Related Media")
-                .selectFromDropdown(editAdSpotSidebar.getRelatedMedia(),
-                        editAdSpotSidebar.getRelatedMediaItems(), media1.getName())
+                .selectFromDropdown(adSpotSidebar.getRelatedMedia(),
+                        adSpotSidebar.getRelatedMediaItems(), media1.getName())
                 .then("Validate error under the 'Related Media field' disappeared")
-                .waitAndValidate(not(visible), editAdSpotSidebar.getErrorAlertByFieldName("Related Media"))
+                .waitAndValidate(not(visible), adSpotSidebar.getErrorAlertByFieldName("Related Media"))
                 .and("Click 'Save'")
-                .clickOnWebElement(editAdSpotSidebar.getSaveButton())
+                .clickOnWebElement(adSpotSidebar.getSaveButton())
                 .then("Validate error under the 'Position' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Position"))
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Position"))
                 .then("Validate error under the 'Default Ad size' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Default Ad Sizes"))
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Default Ad Sizes"))
                 .then("Validate error under the 'Default Floor Price' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
                 .validateListSize(errorsList, 3)
                 .validateList(errorsList, List.of(
                         ErrorMessages.POSITION_ERROR_ALERT.getText(),
@@ -188,16 +189,16 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 )
 
                 .and("Select Position")
-                .selectFromDropdown(editAdSpotSidebar.getPosition(),
-                        editAdSpotSidebar.getPositionItems(), "Header")
+                .selectFromDropdown(adSpotSidebar.getPosition(),
+                        adSpotSidebar.getPositionItems(), "Header")
                 .then("Validate error under the 'Position field' disappeared")
-                .waitAndValidate(not(visible), editAdSpotSidebar.getErrorAlertByFieldName("Position"))
+                .waitAndValidate(not(visible), adSpotSidebar.getErrorAlertByFieldName("Position"))
                 .and("Click 'Save'")
-                .clickOnWebElement(editAdSpotSidebar.getSaveButton())
+                .clickOnWebElement(adSpotSidebar.getSaveButton())
                 .then("Validate error under the 'Default Ad size' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Default Ad Sizes"))
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Default Ad Sizes"))
                 .then("Validate error under the 'Default Floor Price' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
                 .validateListSize(errorsList, 2)
                 .validateList(errorsList, List.of(
                         ErrorMessages.DEFAULT_AD_SIZE_TYPE_ERROR_ALERT.getText(),
@@ -205,15 +206,15 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 )
 
                 .and("Select Ad Size")
-                .clickOnWebElement(editAdSpotSidebar.getDefaultAdSizes())
-                .clickOnWebElement(editAdSpotSidebar.getAdSizesPanel().getAdSizeCheckbox(AdSizesList.A120x20))
-                .clickOnWebElement(editAdSpotSidebar.getNameInput())
+                .clickOnWebElement(adSpotSidebar.getDefaultAdSizes())
+                .clickOnWebElement(adSpotSidebar.getAdSizesPanel().getAdSizeCheckbox(AdSizesList.A120x20))
+                .clickOnWebElement(adSpotSidebar.getNameInput())
                 .then("Validate error under the 'Default Ad Sizes' field disappeared")
-                .waitAndValidate(not(visible), editAdSpotSidebar.getErrorAlertByFieldName("Default Ad Sizes"))
+                .waitAndValidate(not(visible), adSpotSidebar.getErrorAlertByFieldName("Default Ad Sizes"))
                 .and("Click 'Save'")
-                .clickOnWebElement(editAdSpotSidebar.getSaveButton())
+                .clickOnWebElement(adSpotSidebar.getSaveButton())
                 .then("Validate error under the 'Default Floor Price' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
                 .validateListSize(errorsList, 1)
                 .validateList(errorsList, List.of(
                         ErrorMessages.DEFAULT_FLOOR_PRICE_ERROR_ALERT.getText())
@@ -221,21 +222,21 @@ public class AdSpotCheckFieldsTests extends BaseTest {
 
 
                 .and("Fill Default Floor Price")
-                .setValueWithClean(editAdSpotSidebar.getDefaultFloorPrice(), "0")
+                .setValueWithClean(adSpotSidebar.getDefaultFloorPrice(), "0")
                 .then("Validate error under the 'Default Floor Price' field disappeared")
-                .waitAndValidate(not(visible), editAdSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
+                .waitAndValidate(not(visible), adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
                 .then("Validate errors disappeared")
-                .waitAndValidate(not(visible), editAdSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
-                .validate(not(visible), editAdSpotSidebar.getErrorAlert().getErrorPanel())
+                .waitAndValidate(not(visible), adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
+                .validate(not(visible), adSpotSidebar.getErrorAlert().getErrorPanel())
                 .testEnd();
     }
 
     @Test(description = "Check Video Card fields", alwaysRun = true)
     private void checkVideoCardFields() {
-        var videoCard = editAdSpotSidebar.getVideoCard();
-        var bannerCard = editAdSpotSidebar.getBannerCard();
-        var nativeCard = editAdSpotSidebar.getNativeCard();
-        var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
+        var videoCard = adSpotSidebar.getVideoCard();
+        var bannerCard = adSpotSidebar.getBannerCard();
+        var nativeCard = adSpotSidebar.getNativeCard();
+        var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
 
         fillGeneralFields(media1.getPublisherName(), media1.getName());
         testStart()
@@ -246,11 +247,11 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .turnToggleOn(bannerCard.getEnabledToggle())
                 .turnToggleOn(nativeCard.getEnabledToggle())
                 .and("Click 'Save'")
-                .clickOnWebElement(editAdSpotSidebar.getSaveButton())
+                .clickOnWebElement(adSpotSidebar.getSaveButton())
                 .then("Validate error under the 'Video Placement Type' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Video Placement Type"))
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Video Placement Type"))
                 .then("Validate error under the 'Video Playback Methods' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Video Playback Methods"))
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Video Playback Methods"))
                 .validateListSize(errorsList, 2)
                 .validateList(errorsList, List.of(
                         ErrorMessages.VIDEO_PLACEMENT_TYPE_ERROR_ALERT.getText(),
@@ -260,9 +261,9 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .selectFromDropdown(videoCard.getVideoPlacementType(),
                         videoCard.getVideoPlacementTypeItems(), "In-Stream")
                 .then("Validate error under the 'Video Placement Type' field disappeared")
-                .waitAndValidate(not(visible), editAdSpotSidebar.getErrorAlertByFieldName("Video Placement Type"))
+                .waitAndValidate(not(visible), adSpotSidebar.getErrorAlertByFieldName("Video Placement Type"))
                 .then("Validate error under the 'Video Playback Methods' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Video Playback Methods"))
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Video Playback Methods"))
                 .validateListSize(errorsList, 1)
                 .validateList(errorsList, List.of(
                         ErrorMessages.VIDEO_PLAYBACK_METHOD_ERROR_ALERT.getText())
@@ -273,173 +274,49 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                         videoCard.getVideoPlaybackMethodsItems(), "Click Sound On")
 
                 .then("Validate errors disappeared")
-                .waitAndValidate(not(visible), editAdSpotSidebar.getErrorAlertByFieldName("Video Playback Methods"))
-                .validate(not(visible), editAdSpotSidebar.getErrorAlert().getErrorPanel())
+                .waitAndValidate(not(visible), adSpotSidebar.getErrorAlertByFieldName("Video Playback Methods"))
+                .validate(not(visible), adSpotSidebar.getErrorAlert().getErrorPanel())
                 .testEnd();
     }
 
-// @Ignore
-//    @Test(description = "Check Minimum Value Default Floor Price", alwaysRun = true)
-//    private void checkMinValueDefaultFloorPrice() {
-//        var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
-//
-//        fillGeneralFields(media1.getPublisherName(), media1.getName());
-//        testStart()
-//                .setValueWithClean(editAdSpotSidebar.getDefaultFloorPrice(), "-1")
-//                .and("Click 'Save'")
-//                .clickOnWebElement(editAdSpotSidebar.getSaveButton())
-//                .then("Validate error under the 'Default Floor Price' field")
-//                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
-//                .validate(editAdSpotSidebar.getErrorAlertByFieldName("Default Floor Price"),
-//                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
-//                .validateListSize(errorsList, 1)
-//                .validateList(errorsList, List.of(
-//                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
-//                )
-////                .setValueWithClean(editAdSpotSidebar.getDefaultFloorPrice(), "0")
-////                .then("Validate error under the 'Default Floor Price' field disappeared")
-////                .waitAndValidate(not(visible), editAdSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
-////                .then("Validate errors disappeared")
-////                .waitAndValidate(not(visible), editAdSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
-////                .validate(not(visible), editAdSpotSidebar.getErrorAlert().getErrorPanel())
-//                .testEnd();
-//    }
-
-//    @Ignore
-//    @Test(description = "Check Minimum Value Banner Floor Price", alwaysRun = true)
-//    private void checkMinValueBannerFloorPrice() {
-//        var bannerCard = editAdSpotSidebar.getBannerCard();
-//        var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
-//
-//        fillGeneralFields(media1.getPublisherName(), media1.getName());
-//        testStart()
-//                .clickOnWebElement(bannerCard.getBannerCardHeader())
-//                .turnToggleOn(bannerCard.getEnabledToggle())
-//                .setValueWithClean(bannerCard.getFloorPrice(), "-1")
-//                .and("Click 'Save'")
-//                .clickOnWebElement(editAdSpotSidebar.getSaveButton())
-//                .then("Validate error under the 'Floor Price' field")
-//                .waitAndValidate(visible, bannerCard.getErrorAlertByFieldName("Floor Price"))
-//                .validate(bannerCard.getErrorAlertByFieldName("Floor Price"),
-//                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
-//                .validateListSize(errorsList, 1)
-//                .validateList(errorsList, List.of(
-//                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
-//                )
-////                .setValueWithClean(bannerCard.getFloorPrice(), "0")
-////                .then("Validate error under the 'Floor Price' field disappeared")
-////                .waitAndValidate(not(visible), bannerCard.getErrorAlertByFieldName("Floor Price"))
-////                .then("Validate errors disappeared")
-////                .waitAndValidate(not(visible), bannerCard.getErrorAlertByFieldName("Floor Price"))
-////                .validate(not(visible), editAdSpotSidebar.getErrorAlert().getErrorPanel())
-//                .testEnd();
-//    }
-
-//    @Ignore
-//    @Test(description = "Check Minimum Value Native Floor Price", alwaysRun = true)
-//    private void checkMinValueNativeFloorPrice() {
-//        var nativeCard = editAdSpotSidebar.getNativeCard();
-//        var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
-//
-//        fillGeneralFields(media1.getPublisherName(), media1.getName());
-//        testStart()
-//                .clickOnWebElement(nativeCard.getNativeCardHeader())
-//                .turnToggleOn(nativeCard.getEnabledToggle())
-//                .setValueWithClean(nativeCard.getFloorPrice(), "-1")
-//                .and("Click 'Save'")
-//                .clickOnWebElement(editAdSpotSidebar.getSaveButton())
-//                .then("Validate error under the 'Floor Price' field")
-//                .waitAndValidate(visible, nativeCard.getErrorAlertByFieldName("Floor Price"))
-//                .validate(nativeCard.getErrorAlertByFieldName("Floor Price"),
-//                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
-//                .validateListSize(errorsList, 1)
-//                .validateList(errorsList, List.of(
-//                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
-//                )
-////                .setValueWithClean(nativeCard.getFloorPrice(), "0")
-////                .then("Validate error under the 'Floor Price' field disappeared")
-////                .waitAndValidate(not(visible), nativeCard.getErrorAlertByFieldName("Floor Price"))
-////                .then("Validate errors disappeared")
-////                .waitAndValidate(not(visible), nativeCard.getErrorAlertByFieldName("Floor Price"))
-////                .validate(not(visible), editAdSpotSidebar.getErrorAlert().getErrorPanel())
-//                .testEnd();
-//    }
-
-    @Test(description = "Check Minimum Value Video Floor Price", alwaysRun = true)
-    private void checkMinValueVideoFloorPrice() {
-        var videoCard = editAdSpotSidebar.getVideoCard();
-        var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
+    @Test(description = "Check Minimum Value Default Floor Price", alwaysRun = true)
+    private void checkMinValueDefaultFloorPrice() {
+        var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
 
         fillGeneralFields(media1.getPublisherName(), media1.getName());
         testStart()
-                .clickOnWebElement(videoCard.getVideoCardHeader())
-                .turnToggleOn(videoCard.getEnabledToggle())
-                .and("Fill Video Placement Type")
-                .selectFromDropdown(videoCard.getVideoPlacementType(),
-                        videoCard.getVideoPlacementTypeItems(), "In-Stream")
-                .and("Fill Video Playback Method")
-                .scrollIntoView(videoCard.getVideoPlaybackMethods())
-                .selectFromDropdown(videoCard.getVideoPlaybackMethods(),
-                        videoCard.getVideoPlaybackMethodsItems(), "Click Sound On")
-                .setValueWithClean(videoCard.getFloorPriceField().getFloorPriceInput(), "-1")
+                .setValueWithClean(adSpotSidebar.getDefaultFloorPrice(), "-1.00")
                 .and("Click 'Save'")
-                .clickOnWebElement(editAdSpotSidebar.getSaveButton())
-                .then("Validate error under the 'Floor Price' field")
-                .waitAndValidate(visible, videoCard.getErrorAlertByFieldName("Floor Price"))
-                .validate(videoCard.getErrorAlertByFieldName("Floor Price"),
-                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
-                .validateListSize(errorsList, 1)
-                .validateList(errorsList, List.of(
-                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
-                )
-//                .setValueWithClean(videoCard.getVideoFloorPrice(), "0")
-//                .then("Validate error under the 'Floor Price' field disappeared")
-//                .waitAndValidate(not(visible), videoCard.getErrorAlertByFieldName("Floor Price"))
-//                .then("Validate errors disappeared")
-//                .waitAndValidate(not(visible), videoCard.getErrorAlertByFieldName("Floor Price"))
-//                .validate(not(visible), editAdSpotSidebar.getErrorAlert().getErrorPanel())
-                .testEnd();
-    }
-
-    @Test(description = "Check Maximum Value Default Floor Price", alwaysRun = true)
-    private void checkMaxValueDefaultFloorPrice() {
-        var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
-
-        fillGeneralFields(media1.getPublisherName(), media1.getName());
-        testStart()
-                .setValueWithClean(editAdSpotSidebar.getDefaultFloorPrice(), "1000000")
-                .and("Click 'Save'")
-                .clickOnWebElement(editAdSpotSidebar.getSaveButton())
+                .clickOnWebElement(adSpotSidebar.getSaveButton())
                 .then("Validate error under the 'Default Floor Price' field")
-                .waitAndValidate(visible, editAdSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
-                .validate(editAdSpotSidebar.getErrorAlertByFieldName("Default Floor Price"),
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
+                .validate(adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"),
                         ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
                 .validateListSize(errorsList, 1)
                 .validateList(errorsList, List.of(
                         ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
                 )
-//                .setValueWithClean(editAdSpotSidebar.getDefaultFloorPrice(), "")
-//                .setValueWithClean(editAdSpotSidebar.getDefaultFloorPrice(), "0")
-//                .then("Validate error under the 'Default Floor Price' field disappeared")
-//                .waitAndValidate(not(visible), editAdSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
-//                .then("Validate errors disappeared")
-//                .waitAndValidate(not(visible), editAdSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
-//                .validate(not(visible), editAdSpotSidebar.getErrorAlert().getErrorPanel())
+                .setValueWithClean(adSpotSidebar.getDefaultFloorPrice(), "0.00")
+                .then("Validate error under the 'Default Floor Price' field disappeared")
+                .waitAndValidate(not(visible), adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
+                .then("Validate errors disappeared")
+                .waitAndValidate(not(visible), adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
+                .validate(not(visible), adSpotSidebar.getErrorAlert().getErrorPanel())
                 .testEnd();
     }
 
-    @Test(description = "Check Maximum Value Banner Floor Price", alwaysRun = true)
-    private void checkMaxValueBannerFloorPrice() {
-        var bannerCard = editAdSpotSidebar.getBannerCard();
-        var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
+    @Test(description = "Check Minimum Value Banner Floor Price", alwaysRun = true)
+    private void checkMinValueBannerFloorPrice() {
+        var bannerCard = adSpotSidebar.getBannerCard();
+        var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
 
         fillGeneralFields(media1.getPublisherName(), media1.getName());
         testStart()
                 .clickOnWebElement(bannerCard.getBannerCardHeader())
                 .turnToggleOn(bannerCard.getEnabledToggle())
-                .setValueWithClean(bannerCard.getFloorPriceField().getFloorPriceInput(), "1000000")
+                .setValueWithClean(bannerCard.getFloorPriceField().getFloorPriceInput(), "-1.00")
                 .and("Click 'Save'")
-                .clickOnWebElement(editAdSpotSidebar.getSaveButton())
+                .clickOnWebElement(adSpotSidebar.getSaveButton())
                 .then("Validate error under the 'Floor Price' field")
                 .waitAndValidate(visible, bannerCard.getErrorAlertByFieldName("Floor Price"))
                 .validate(bannerCard.getErrorAlertByFieldName("Floor Price"),
@@ -448,27 +325,28 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .validateList(errorsList, List.of(
                         ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
                 )
-//                .setValueWithClean(bannerCard.getFloorPrice(), "0")
-//                .then("Validate error under the 'Floor Price' field disappeared")
-//                .waitAndValidate(not(visible), bannerCard.getErrorAlertByFieldName("Floor Price"))
-//                .then("Validate errors disappeared")
-//                .waitAndValidate(not(visible), bannerCard.getErrorAlertByFieldName("Floor Price"))
-//                .validate(not(visible), editAdSpotSidebar.getErrorAlert().getErrorPanel())
+                .setValueWithClean(bannerCard.getFloorPriceField().getFloorPriceInput(), "0.00")
+                .then("Validate error under the 'Floor Price' field disappeared")
+                .waitAndValidate(not(visible), bannerCard.getErrorAlertByFieldName("Floor Price"))
+                .then("Validate errors disappeared")
+                .waitAndValidate(not(visible), bannerCard.getErrorAlertByFieldName("Floor Price"))
+                .validate(not(visible), adSpotSidebar.getErrorAlert().getErrorPanel())
                 .testEnd();
     }
 
-    @Test(description = "Check Maximum Value Native Floor Price", alwaysRun = true)
-    private void checkMaxValueNativeFloorPrice() {
-        var nativeCard = editAdSpotSidebar.getNativeCard();
-        var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
+
+    @Test(description = "Check Minimum Value Native Floor Price", alwaysRun = true)
+    private void checkMinValueNativeFloorPrice() {
+        var nativeCard = adSpotSidebar.getNativeCard();
+        var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
 
         fillGeneralFields(media1.getPublisherName(), media1.getName());
         testStart()
                 .clickOnWebElement(nativeCard.getNativeCardHeader())
                 .turnToggleOn(nativeCard.getEnabledToggle())
-                .setValueWithClean(nativeCard.getFloorPriceField().getFloorPriceInput(), "1000000")
+                .setValueWithClean(nativeCard.getFloorPriceField().getFloorPriceInput(), "-1.00")
                 .and("Click 'Save'")
-                .clickOnWebElement(editAdSpotSidebar.getSaveButton())
+                .clickOnWebElement(adSpotSidebar.getSaveButton())
                 .then("Validate error under the 'Floor Price' field")
                 .waitAndValidate(visible, nativeCard.getErrorAlertByFieldName("Floor Price"))
                 .validate(nativeCard.getErrorAlertByFieldName("Floor Price"),
@@ -477,19 +355,19 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .validateList(errorsList, List.of(
                         ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
                 )
-//                .setValueWithClean(nativeCard.getFloorPrice(), "0")
-//                .then("Validate error under the 'Floor Price' field disappeared")
-//                .waitAndValidate(not(visible), nativeCard.getErrorAlertByFieldName("Floor Price"))
-//                .then("Validate errors disappeared")
-//                .waitAndValidate(not(visible), nativeCard.getErrorAlertByFieldName("Floor Price"))
-//                .validate(not(visible), editAdSpotSidebar.getErrorAlert().getErrorPanel())
+                .setValueWithClean(nativeCard.getFloorPriceField().getFloorPriceInput(), "0.00")
+                .then("Validate error under the 'Floor Price' field disappeared")
+                .waitAndValidate(not(visible), nativeCard.getErrorAlertByFieldName("Floor Price"))
+                .then("Validate errors disappeared")
+                .waitAndValidate(not(visible), nativeCard.getErrorAlertByFieldName("Floor Price"))
+                .validate(not(visible), adSpotSidebar.getErrorAlert().getErrorPanel())
                 .testEnd();
     }
 
-    @Test(description = "Check Maximum Value Video Floor Price", alwaysRun = true)
-    private void checkMaxValueVideoFloorPrice() {
-        var videoCard = editAdSpotSidebar.getVideoCard();
-        var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
+    @Test(description = "Check Minimum Value Video Floor Price", alwaysRun = true)
+    private void checkMinValueVideoFloorPrice() {
+        var videoCard = adSpotSidebar.getVideoCard();
+        var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
 
         fillGeneralFields(media1.getPublisherName(), media1.getName());
         testStart()
@@ -502,9 +380,9 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .scrollIntoView(videoCard.getVideoPlaybackMethods())
                 .selectFromDropdown(videoCard.getVideoPlaybackMethods(),
                         videoCard.getVideoPlaybackMethodsItems(), "Click Sound On")
-                .setValueWithClean(videoCard.getFloorPriceField().getFloorPriceInput(), "1000000")
+                .setValueWithClean(videoCard.getFloorPriceField().getFloorPriceInput(), "-1.00")
                 .and("Click 'Save'")
-                .clickOnWebElement(editAdSpotSidebar.getSaveButton())
+                .clickOnWebElement(adSpotSidebar.getSaveButton())
                 .then("Validate error under the 'Floor Price' field")
                 .waitAndValidate(visible, videoCard.getErrorAlertByFieldName("Floor Price"))
                 .validate(videoCard.getErrorAlertByFieldName("Floor Price"),
@@ -513,19 +391,140 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .validateList(errorsList, List.of(
                         ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
                 )
-//                .setValueWithClean(videoCard.getVideoFloorPrice(), "0")
-//                .then("Validate error under the 'Floor Price' field disappeared")
-//                .waitAndValidate(not(visible), videoCard.getErrorAlertByFieldName("Floor Price"))
-//                .then("Validate errors disappeared")
-//                .waitAndValidate(not(visible), videoCard.getErrorAlertByFieldName("Floor Price"))
-//                .validate(not(visible), editAdSpotSidebar.getErrorAlert().getErrorPanel())
+                .setValueWithClean(videoCard.getFloorPriceField().getFloorPriceInput(), "0.00")
+                .then("Validate error under the 'Floor Price' field disappeared")
+                .waitAndValidate(not(visible), videoCard.getErrorAlertByFieldName("Floor Price"))
+                .then("Validate errors disappeared")
+                .waitAndValidate(not(visible), videoCard.getErrorAlertByFieldName("Floor Price"))
+                .validate(not(visible), adSpotSidebar.getErrorAlert().getErrorPanel())
+                .testEnd();
+    }
+
+    @Test(description = "Check Maximum Value Default Floor Price", alwaysRun = true)
+    private void checkMaxValueDefaultFloorPrice() {
+        var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
+
+        fillGeneralFields(media1.getPublisherName(), media1.getName());
+        testStart()
+                .setValueWithClean(adSpotSidebar.getDefaultFloorPrice(), "1000000.00")
+                .and("Click 'Save'")
+                .clickOnWebElement(adSpotSidebar.getSaveButton())
+                .then("Validate error under the 'Default Floor Price' field")
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
+                .validate(adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"),
+                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                .validateListSize(errorsList, 1)
+                .validateList(errorsList, List.of(
+                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                )
+                .setValueWithClean(adSpotSidebar.getDefaultFloorPrice(), "")
+                .setValueWithClean(adSpotSidebar.getDefaultFloorPrice(), "0.00")
+                .then("Validate error under the 'Default Floor Price' field disappeared")
+                .waitAndValidate(not(visible), adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
+                .then("Validate errors disappeared")
+                .waitAndValidate(not(visible), adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
+                .validate(not(visible), adSpotSidebar.getErrorAlert().getErrorPanel())
+                .testEnd();
+    }
+
+    @Test(description = "Check Maximum Value Banner Floor Price", alwaysRun = true)
+    private void checkMaxValueBannerFloorPrice() {
+        var bannerCard = adSpotSidebar.getBannerCard();
+        var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
+
+        fillGeneralFields(media1.getPublisherName(), media1.getName());
+        testStart()
+                .clickOnWebElement(bannerCard.getBannerCardHeader())
+                .turnToggleOn(bannerCard.getEnabledToggle())
+                .setValueWithClean(bannerCard.getFloorPriceField().getFloorPriceInput(), "1000000.00")
+                .and("Click 'Save'")
+                .clickOnWebElement(adSpotSidebar.getSaveButton())
+                .then("Validate error under the 'Floor Price' field")
+                .waitAndValidate(visible, bannerCard.getErrorAlertByFieldName("Floor Price"))
+                .validate(bannerCard.getErrorAlertByFieldName("Floor Price"),
+                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                .validateListSize(errorsList, 1)
+                .validateList(errorsList, List.of(
+                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                )
+                .setValueWithClean(bannerCard.getFloorPriceField().getFloorPriceInput(), "0.00")
+                .then("Validate error under the 'Floor Price' field disappeared")
+                .waitAndValidate(not(visible), bannerCard.getErrorAlertByFieldName("Floor Price"))
+                .then("Validate errors disappeared")
+                .waitAndValidate(not(visible), bannerCard.getErrorAlertByFieldName("Floor Price"))
+                .validate(not(visible), adSpotSidebar.getErrorAlert().getErrorPanel())
+                .testEnd();
+    }
+
+    @Test(description = "Check Maximum Value Native Floor Price", alwaysRun = true)
+    private void checkMaxValueNativeFloorPrice() {
+        var nativeCard = adSpotSidebar.getNativeCard();
+        var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
+
+        fillGeneralFields(media1.getPublisherName(), media1.getName());
+        testStart()
+                .clickOnWebElement(nativeCard.getNativeCardHeader())
+                .turnToggleOn(nativeCard.getEnabledToggle())
+                .setValueWithClean(nativeCard.getFloorPriceField().getFloorPriceInput(), "1000000.00")
+                .and("Click 'Save'")
+                .clickOnWebElement(adSpotSidebar.getSaveButton())
+                .then("Validate error under the 'Floor Price' field")
+                .waitAndValidate(visible, nativeCard.getErrorAlertByFieldName("Floor Price"))
+                .validate(nativeCard.getErrorAlertByFieldName("Floor Price"),
+                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                .validateListSize(errorsList, 1)
+                .validateList(errorsList, List.of(
+                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                )
+                .setValueWithClean(nativeCard.getFloorPriceField().getFloorPriceInput(), "0.00")
+                .then("Validate error under the 'Floor Price' field disappeared")
+                .waitAndValidate(not(visible), nativeCard.getErrorAlertByFieldName("Floor Price"))
+                .then("Validate errors disappeared")
+                .waitAndValidate(not(visible), nativeCard.getErrorAlertByFieldName("Floor Price"))
+                .validate(not(visible), adSpotSidebar.getErrorAlert().getErrorPanel())
+                .testEnd();
+    }
+
+    @Test(description = "Check Maximum Value Video Floor Price", alwaysRun = true)
+    private void checkMaxValueVideoFloorPrice() {
+        var videoCard = adSpotSidebar.getVideoCard();
+        var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
+
+        fillGeneralFields(media1.getPublisherName(), media1.getName());
+        testStart()
+                .clickOnWebElement(videoCard.getVideoCardHeader())
+                .turnToggleOn(videoCard.getEnabledToggle())
+                .and("Fill Video Placement Type")
+                .selectFromDropdown(videoCard.getVideoPlacementType(),
+                        videoCard.getVideoPlacementTypeItems(), "In-Stream")
+                .and("Fill Video Playback Method")
+                .scrollIntoView(videoCard.getVideoPlaybackMethods())
+                .selectFromDropdown(videoCard.getVideoPlaybackMethods(),
+                        videoCard.getVideoPlaybackMethodsItems(), "Click Sound On")
+                .setValueWithClean(videoCard.getFloorPriceField().getFloorPriceInput(), "1000000.00")
+                .and("Click 'Save'")
+                .clickOnWebElement(adSpotSidebar.getSaveButton())
+                .then("Validate error under the 'Floor Price' field")
+                .waitAndValidate(visible, videoCard.getErrorAlertByFieldName("Floor Price"))
+                .validate(videoCard.getErrorAlertByFieldName("Floor Price"),
+                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                .validateListSize(errorsList, 1)
+                .validateList(errorsList, List.of(
+                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                )
+                .setValueWithClean(videoCard.getFloorPriceField().getFloorPriceInput(), "999,999.99")
+                .then("Validate error under the 'Floor Price' field disappeared")
+                .waitAndValidate(not(visible), videoCard.getErrorAlertByFieldName("Floor Price"))
+                .then("Validate errors disappeared")
+                .waitAndValidate(not(visible), videoCard.getErrorAlertByFieldName("Floor Price"))
+                .validate(not(visible), adSpotSidebar.getErrorAlert().getErrorPanel())
                 .testEnd();
     }
 
     @Test(description = "Check Minimum Video Duration Value", alwaysRun = true)
     private void checkMinVideoDurationValue() {
-        var videoCard = editAdSpotSidebar.getVideoCard();
-        var errorsList = editAdSpotSidebar.getErrorAlert().getErrorsList();
+        var videoCard = adSpotSidebar.getVideoCard();
+        var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
 
         fillGeneralFields(media1.getPublisherName(), media1.getName());
         testStart()
@@ -539,24 +538,20 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .selectFromDropdown(videoCard.getVideoPlaybackMethods(),
                         videoCard.getVideoPlaybackMethodsItems(), "Click Sound On")
                 .clickOnText("Video")
-                .setValueWithClean(videoCard.getMinVideoDuration(),"-1")
+                .setValueWithClean(videoCard.getMinVideoDuration(), "-1")
                 .clickOnText("Banner")
                 .then("Validate error under the 'Minimum Video Duration' field")
-              //  .waitAndValidate(visible, videoCard.getErrorAlertByFieldName("Minimum Video Duration (seconds)"))
-
+                .waitAndValidate(visible, videoCard.getErrorAlertByFieldName("Minimum Video Duration (seconds)"))
                 .validate(videoCard.getErrorAlertByFieldName("Minimum Video Duration (seconds)"),
                         ErrorMessages.DURATION_ERROR_ALERT.getText())
-                .validateListSize(errorsList, 1)
+                .validateListSize(errorsList, 0)
                 .clickOnText("Banner")
-                .validateList(errorsList, List.of(
-                        ErrorMessages.DURATION_ERROR_ALERT.getText())
-                )
-                .setValueWithClean(videoCard.getFloorPriceField().getFloorPriceInput(), "0")
+                .setValueWithClean(videoCard.getMinVideoDuration(), "0")
                 .then("Validate error under the 'Minimum Video Duration (seconds)' field disappeared")
                 .waitAndValidate(not(visible), videoCard.getErrorAlertByFieldName("Minimum Video Duration (seconds)"))
                 .then("Validate errors disappeared")
                 .waitAndValidate(not(visible), videoCard.getErrorAlertByFieldName("Minimum Video Duration (seconds)"))
-                .validate(not(visible), editAdSpotSidebar.getErrorAlert().getErrorPanel())
+                .validate(not(visible), adSpotSidebar.getErrorAlert().getErrorPanel())
                 .testEnd();
     }
 
@@ -564,30 +559,30 @@ public class AdSpotCheckFieldsTests extends BaseTest {
     @Step("Fill general fields")
     private void fillGeneralFields(String publisherName, String mediaName) {
         var adSpotName = captionWithSuffix("4autoAdSpot");
+
         testStart()
                 .and(String.format("Select Publisher '%s'", publisherName))
-                .selectFromDropdown(editAdSpotSidebar.getPublisherInput(),
-                        editAdSpotSidebar.getPublisherItems(), publisherName)
+                .selectFromDropdown(adSpotSidebar.getPublisherInput(),
+                        adSpotSidebar.getPublisherItems(), publisherName)
                 .and("Fill Ad Spot Name")
-                .setValueWithClean(editAdSpotSidebar.getNameInput(), adSpotName)
-                .selectFromDropdown(editAdSpotSidebar.getRelatedMedia(),
-                        editAdSpotSidebar.getRelatedMediaItems(), mediaName)
-                .selectFromDropdown(editAdSpotSidebar.getPosition(),
-                        editAdSpotSidebar.getPositionItems(), "Header")
-                .clickOnWebElement(editAdSpotSidebar.getDefaultAdSizes())
-                .clickOnWebElement(editAdSpotSidebar.getAdSizesPanel().getAdSizeCheckbox(AdSizesList.A120x20))
-                .clickOnWebElement(editAdSpotSidebar.getNameInput())
-                .setValueWithClean(editAdSpotSidebar.getDefaultFloorPrice(), "0")
-
-
+                .setValueWithClean(adSpotSidebar.getNameInput(), adSpotName)
+                .selectFromDropdown(adSpotSidebar.getRelatedMedia(),
+                        adSpotSidebar.getRelatedMediaItems(), mediaName)
+                .selectFromDropdown(adSpotSidebar.getPosition(),
+                        adSpotSidebar.getPositionItems(), "Header")
+                .clickOnWebElement(adSpotSidebar.getDefaultAdSizes())
+                .clickOnWebElement(adSpotSidebar.getAdSizesPanel().getAdSizeCheckbox(AdSizesList.A120x20))
+                .clickOnWebElement(adSpotSidebar.getNameInput())
+                .setValueWithClean(adSpotSidebar.getDefaultFloorPrice(), "0")
                 .testEnd();
     }
 
     @AfterMethod(alwaysRun = true)
     private void logout() {
+
         testStart()
                 .and("Close Ad Spot Sidebar")
-                .clickOnWebElement(editAdSpotSidebar.getCloseIcon())
+                .clickOnWebElement(adSpotSidebar.getCloseIcon())
                 .waitSideBarClosed()
                 .and("Logout")
                 .logOut()

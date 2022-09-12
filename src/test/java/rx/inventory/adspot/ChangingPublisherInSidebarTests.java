@@ -77,24 +77,6 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
                 .createNewMedia(captionWithSuffix("auto2Media"), publisher2.getId(), true)
                 .build()
                 .getMediaResponse();
-
-        Map<String, Object> param = new HashMap<>();
-        param.put("status","3");
-        List<DemandSource> allDSP = demandSource()
-                .getDSPsWithFilter(param)
-                .build()
-                .getDemandSourceGetAllResponse()
-                .getItems();
-
-        if (allDSP.size()<6){
-            demandSource()
-                    .createDemandSource()
-                    .build()
-                    .getResponseCode();
-        }
-
-        List<DemandSource> list1 = allDSP.subList(0,allDSP.size()/2);
-        List<DemandSource> list2 = allDSP.subList(allDSP.size()/2+1, allDSP.size());
     }
 
     @BeforeMethod
@@ -206,6 +188,7 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
         var videoCard = editAdSpotSidebar.getVideoCard();
         var bannerCard = editAdSpotSidebar.getBannerCard();
         var nativeCard = editAdSpotSidebar.getNativeCard();
+
         testStart()
                 .then("Name should be cleaned")
                 .validate(editAdSpotSidebar.getNameInput(), "")
@@ -252,6 +235,7 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
     @Step("Expand Banner Card and fill fields")
     private void fillBannerFormat() {
         var bannerCard = editAdSpotSidebar.getBannerCard();
+
         testStart()
                 .and("Expand Banner Card")
                 .clickOnWebElement(bannerCard.getBannerCardHeader())
@@ -268,6 +252,7 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
     @Step("Expand Video Card and fill fields")
     private void fillVideoFormat() {
         var videoCard = editAdSpotSidebar.getVideoCard();
+
         testStart()
                 .and("Expand Video Card")
                 .scrollIntoView(videoCard.getVideoCardHeader())

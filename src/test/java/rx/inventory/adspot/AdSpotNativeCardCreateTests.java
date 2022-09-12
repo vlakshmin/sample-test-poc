@@ -22,8 +22,6 @@ import widgets.common.table.ColumnNames;
 import widgets.common.table.TableData;
 import widgets.inventory.adSpots.sidebar.EditAdSpotSidebar;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
@@ -273,7 +271,7 @@ public class AdSpotNativeCardCreateTests extends BaseTest {
         testStart()
                 .clickOnWebElement(nativeCard.getNativeCardHeader())
                 .validateAttribute(nativeCard.getEnabledToggle(), "aria-checked", "true")
-                .validateAttribute(nativeCard.getFloorPriceField().getFloorPriceInput(), "value",NATIVE_FLOOR_PRICE)
+                .validateAttribute(nativeCard.getFloorPriceField().getFloorPriceInput(), "value", NATIVE_FLOOR_PRICE)
                 .validate(nativeCard.getFloorPriceField().getFloorPricePrefix().getText(), publisher.getCurrency())
                 .testEnd();
     }

@@ -44,9 +44,9 @@ public class AdSpotVideoCardSidebar {
     private AdSizesListPanel adSizesPanel = new AdSizesListPanel();
     private FloorPriceField floorPriceField = new FloorPriceField();
 
-    public SelenideElement getErrorAlertByFieldName(String fieldName){
+    public SelenideElement getErrorAlertByFieldName(String fieldName) {
 
-        return $x(String.format(ERROR_ALERT_BY_FIELD_NAME.getSelector(),fieldName))
-                .as(String.format(ERROR_ALERT_BY_FIELD_NAME.getAlias(),fieldName));
+        return $x(String.format(VIDEO_ERROR_ALERT_BY_FIELD_NAME.getSelector(), fieldName))
+                .as(String.format(VIDEO_ERROR_ALERT_BY_FIELD_NAME.getAlias(), fieldName));
     }
 }

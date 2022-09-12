@@ -312,6 +312,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     @Step("Fill general field")
     private void fillGeneralFields() {
         var categories = adSpotSidebar.getCategoriesPanel();
+
         testStart()
                 .and(String.format("Select Publisher '%s'", media.getPublisherName()))
                 .selectFromDropdown(adSpotSidebar.getPublisherInput(),
@@ -381,7 +382,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
                 .testEnd();
     }
 
-    @Step("validateGeneralFieldsValues")
+    @Step("Validate General fields values")
     private void validateGeneralFieldsValues() {
         var categories = adSpotSidebar.getCategoriesPanel();
         testStart()
@@ -401,7 +402,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
                 .testEnd();
     }
 
-    @Step("validateGeneralFieldsValues")
+    @Step("Validate Banner Card fields values")
     private void validateBannerFieldsValues() {
         var bannerCard = adSpotSidebar.getBannerCard();
 
@@ -414,7 +415,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
                 .testEnd();
     }
 
-    @Step("validateGeneralFieldsValues")
+    @Step("Validate Native Card fields values")
     private void validateNativeFieldsValues() {
         var nativeCard = adSpotSidebar.getNativeCard();
 
@@ -426,7 +427,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
                 .testEnd();
     }
 
-    @Step("validateGeneralFieldsValues")
+    @Step("Validate Video Card fields values")
     private void validateVideoFieldsValues() {
         var videoCard = adSpotSidebar.getVideoCard();
 

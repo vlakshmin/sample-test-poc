@@ -3,7 +3,6 @@ package api.preconditionbuilders;
 import api.core.client.HttpClient;
 import api.dto.GenericResponse;
 import api.dto.rx.demandsource.DemandSource;
-import api.dto.rx.inventory.media.Media;
 import api.services.DemandSourceService;
 import configurations.User;
 import io.restassured.common.mapper.TypeRef;
@@ -42,7 +41,8 @@ public class DemandSourcePrecondition {
         public DemandSourcePreconditionBuilder getDemandSourceList() {
             this.response = demandSourceService.getAll();
 
-            this.demandSourceGetAllResponse = this.response.as(new TypeRef<GenericResponse<DemandSource>>() {});
+            this.demandSourceGetAllResponse = this.response.as(new TypeRef<GenericResponse<DemandSource>>() {
+            });
             this.responseCode = response.getStatusCode();
 
             return this;
@@ -51,7 +51,8 @@ public class DemandSourcePrecondition {
         public DemandSourcePreconditionBuilder createDemandSource() {
             this.response = demandSourceService.createDSP();
 
-            this.demandSourceGetAllResponse = this.response.as(new TypeRef<GenericResponse<DemandSource>>() {});
+            this.demandSourceGetAllResponse = this.response.as(new TypeRef<GenericResponse<DemandSource>>() {
+            });
             this.responseCode = response.getStatusCode();
 
             return this;
@@ -65,11 +66,13 @@ public class DemandSourcePrecondition {
 
         public DemandSourcePreconditionBuilder getDSPsWithFilter(Map<String, Object> queryParams) {
             this.response = demandSourceService.getDSPsWithFilter(queryParams);
-            this.demandSourceGetAllResponse = this.response.as(new TypeRef<GenericResponse<DemandSource>>() {});
+            this.demandSourceGetAllResponse = this.response.as(new TypeRef<GenericResponse<DemandSource>>() {
+            });
             this.responseCode = response.getStatusCode();
 
             return this;
         }
+
         public DemandSourcePrecondition build() {
 
             return new DemandSourcePrecondition(this);
