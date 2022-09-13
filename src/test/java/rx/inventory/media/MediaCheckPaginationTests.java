@@ -1,5 +1,6 @@
 package rx.inventory.media;
 
+import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
@@ -28,6 +29,8 @@ public class MediaCheckPaginationTests extends BaseTest {
 
     private int totalMedia;
     private List<Media> listMedia;
+
+    Publisher publisher;
 
     public MediaCheckPaginationTests() {
         mediaPage = new MediaPage();
@@ -128,8 +131,8 @@ public class MediaCheckPaginationTests extends BaseTest {
         if (listMedia != null) {
             for (Media media : listMedia) {
                 deleteMedia(media.getId());
-                deletePublisher(media.getPublisherId());
             }
+            deletePublisher(publisher.getId());
         }
     }
 
@@ -155,10 +158,16 @@ public class MediaCheckPaginationTests extends BaseTest {
     }
 
     private void generateMedia() {
+
+        publisher = publisher()
+                .createNewPublisher("autoPub")
+                .build()
+                .getPublisherResponse();
+
         listMedia = new ArrayList<>();
         while (getTotalMedia() < 110) {
             Media media = media()
-                    .createNewMedia(captionWithSuffix("auto"))
+                    .createNewMedia(captionWithSuffix("auto"), publisher.getId(), true)
                     .build()
                     .getMediaResponse();
 

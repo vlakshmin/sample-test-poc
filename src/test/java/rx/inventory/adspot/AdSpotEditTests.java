@@ -105,39 +105,15 @@ public class AdSpotEditTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Save existing Ad Spot without changes", alwaysRun = true, priority = 0)
+    @Test(description = "Save existing Ad Spot without changes", alwaysRun = true, priority = 1)
     public void saveAdSpotWithoutChanges() {
-        var tableData = adSpotPage.getAdSpotsTable().getTableData();
-        var tablePagination = adSpotPage.getAdSpotsTable().getTablePagination();
 
-        testStart()
-                .clickEnterButton(tableData.getSearch())
-                .then("Validate that text in table footer '1-1 of 1")
-                .validateContainsText(tablePagination.getPaginationPanel(), "1-1 of 1")
-                .and("Open Sidebar and check data")
-                .clickOnTableCellLink(tableData, ColumnNames.AD_SPOT_NAME, adSpot.getName())
-                .waitSideBarOpened()
-                .and("Click Save")
-                .clickOnWebElement(adSpotSidebar.getSaveButton())
-                .waitAndValidate(not(visible), adSpotSidebar.getErrorAlert().getErrorPanel())
-                .waitAndValidate(not(visible), adSpotPage.getToasterMessage().getPanelError())
-                .waitSideBarClosed()
-                .testEnd();
-    }
+     }
 
-    @Test(description = "Change all enabled fields and save", alwaysRun = true, priority = 2)
+    @Test(description = "Change all enabled fields and save", alwaysRun = true, priority = 3)
     private void changeAllFieldsAndSave() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotPage.getAdSpotsTable().getTablePagination();
-
-        testStart()
-                .clickEnterButton(tableData.getSearch())
-                .then("Validate that text in table footer '1-1 of 1")
-                .validateContainsText(tablePagination.getPaginationPanel(), "1-1 of 1")
-                .and("Open Sidebar and check data")
-                .clickOnTableCellLink(tableData, ColumnNames.AD_SPOT_NAME, adSpot.getName())
-                .waitSideBarOpened()
-                .testEnd();
 
         changeGeneralFields();
         changeBannerCardFields();
@@ -165,17 +141,9 @@ public class AdSpotEditTests extends BaseTest {
         validateBannerFieldsValues();
         validateNativeFieldsValues();
         validateVideoFieldsValues();
-
-        testStart()
-                .and("Click Save")
-                .clickOnWebElement(adSpotSidebar.getSaveButton())
-                .waitAndValidate(not(visible), adSpotSidebar.getErrorAlert().getErrorPanel())
-                .waitAndValidate(not(visible), adSpotPage.getToasterMessage().getPanelError())
-                .waitSideBarClosed()
-                .testEnd();
     }
 
-    @Test(description = "Check fields enabled/disabled state", priority = 1)
+    @Test(description = "Check fields enabled/disabled state", priority = 2)
     private void checkEnabledDisabledFields() {
 
         testStart()

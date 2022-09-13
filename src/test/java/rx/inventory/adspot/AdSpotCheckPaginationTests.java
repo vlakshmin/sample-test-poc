@@ -1,6 +1,8 @@
 package rx.inventory.adspot;
 
+import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.inventory.adspot.AdSpot;
+import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +30,9 @@ public class AdSpotCheckPaginationTests extends BaseTest {
 
     private int totalAdSpots;
     private List<AdSpot> listAdSpots;
+
+    Publisher publisher;
+    Media media;
 
     public AdSpotCheckPaginationTests() {
         adSpotsPage = new AdSpotsPage();
@@ -124,12 +129,13 @@ public class AdSpotCheckPaginationTests extends BaseTest {
 
     @AfterClass(alwaysRun = true)
     private void deleteEntities() {
+
         if (listAdSpots != null) {
             for (AdSpot adSpot : listAdSpots) {
                 deleteAdSpot(adSpot.getId());
-                deleteMedia(adSpot.getMediaId());
-                deletePublisher(adSpot.getPublisherId());
             }
+            deleteMedia(media.getId());
+            deletePublisher(publisher.getId());
         }
     }
 
@@ -161,10 +167,21 @@ public class AdSpotCheckPaginationTests extends BaseTest {
     }
 
     private void generateAdSpots() {
+
+        publisher = publisher()
+                .createNewPublisher(captionWithSuffix("autoPub"))
+                .build()
+                .getPublisherResponse();
+
+        media = media()
+                .createNewMedia(captionWithSuffix("autoMedia"), publisher.getId(), true)
+                .build()
+                .getMediaResponse();
+
         listAdSpots = new ArrayList<>();
         while (getTotalAdSpots() < 110) {
             AdSpot adSpot = adSpot()
-                    .createNewAdSpot(captionWithSuffix("auto"))
+                    .createNewAdSpot(captionWithSuffix("auto"), publisher.getId(), media.getId(), true)
                     .build()
                     .getAdSpotResponse();
 
