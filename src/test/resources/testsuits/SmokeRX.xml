@@ -34,7 +34,7 @@
             <class name="rx.inventory.adspot.AdSpotCheckRelatedMediaListTests"/>
         </classes>
     </test>
-  <!--  <test name="Open Pricing">
+    <test name="Open Pricing">
         <classes>
             <class name="rx.yield.openpricing.OpenPricingChangePublisherTests"/>
             <class name="rx.yield.openpricing.OpenPricingTests"/>
@@ -70,6 +70,6 @@
         <classes>
             <class name="rx.admin.publishers.PublisherTest"/>
         </classes>
-    </test>-->
+    </test>
 
 </suite>
