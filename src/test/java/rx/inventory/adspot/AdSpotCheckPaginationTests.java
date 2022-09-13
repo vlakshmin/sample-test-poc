@@ -40,7 +40,7 @@ public class AdSpotCheckPaginationTests extends BaseTest {
 
     @BeforeClass
     private void init() {
-        if (getTotalAdSpots() < 100) generateAdSpots();
+        if (getTotalAdSpots() < 200) generateAdSpots();
 
         totalAdSpots = getTotalAdSpots();
     }
@@ -111,7 +111,7 @@ public class AdSpotCheckPaginationTests extends BaseTest {
                         String.format(String.format("%s-%s of %s",
                                 rowsPerPage + 1, Math.min(rowsPerPage * 2, totalAdSpots), totalAdSpots)))
                 .then(String.format("Rows in table page equals %s", rowsPerPage))
-                .validateListSize(tableData.getRows(), rowsPerPage)
+                .validateListSize(tableData.getRows(),rowsPerPage)
                 .and("Click on Previous page")
                 .scrollIntoView(tablePagination.getPrevious())
                 .clickOnWebElement(tablePagination.getPrevious())
@@ -185,7 +185,7 @@ public class AdSpotCheckPaginationTests extends BaseTest {
                 .getMediaResponse();
 
         listAdSpots = new ArrayList<>();
-        while (getTotalAdSpots() < 110) {
+        while (getTotalAdSpots() < 210) {
             AdSpot adSpot = adSpot()
                     .createNewAdSpot(captionWithSuffix("auto"), publisher.getId(), media.getId(), true)
                     .build()

@@ -390,6 +390,7 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
     private void deleteAdSpots() {
 
         deleteAdSpot(getAllAdSpotsItemsByParams(PREFIX_AD_SPOT));
+        deleteAdSpot(getAllAdSpotsItemsByParams(PREFIX_AD_SPOT_INACTIVE));
         deleteAdSpot(getAllAdSpotsItemsByParams(PREFIX_AD_SPOT_BULK_1));
         deleteAdSpot(getAllAdSpotsItemsByParams(PREFIX_AD_SPOT_BULK_2));
         deleteAdSpot(getAllAdSpotsItemsByParams(PREFIX_AD_SPOT_INACTIVE_MEDIA));
