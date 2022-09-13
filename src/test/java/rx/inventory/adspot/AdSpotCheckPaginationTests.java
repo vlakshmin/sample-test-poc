@@ -55,32 +55,32 @@ public class AdSpotCheckPaginationTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Verify Pagination: 100 rows per page", alwaysRun = true)
+    @Test(description = "Verify Pagination: 100 rows per page", alwaysRun = true, priority = 1)
     public void checkPagination100() {
         verifyPagination(100);
     }
 
-    @Test(description = "Verify Pagination: 50 rows per page", alwaysRun = true)
+    @Test(description = "Verify Pagination: 50 rows per page", alwaysRun = true, priority = 4)
     public void checkPagination50() {
         verifyPagination(50);
     }
 
-    @Test(description = "Verify Pagination: 25 rows per page", alwaysRun = true)
+    @Test(description = "Verify Pagination: 25 rows per page", alwaysRun = true, priority = 5)
     public void checkPagination25() {
         verifyPagination(25);
     }
 
-    @Test(description = "Verify Pagination: 20 rows per page", alwaysRun = true)
+    @Test(description = "Verify Pagination: 20 rows per page", alwaysRun = true, priority = 6)
     public void checkPagination20() {
         verifyPagination(20);
     }
 
-    @Test(description = "Verify Pagination: 15 rows per page", alwaysRun = true)
+    @Test(description = "Verify Pagination: 15 rows per page", alwaysRun = true, priority = 3)
     public void checkPagination15() {
         verifyPagination(15);
     }
 
-    @Test(description = "Verify Pagination: 10 rows per page", alwaysRun = true)
+    @Test(description = "Verify Pagination: 10 rows per page", alwaysRun = true, priority = 2)
     public void checkPagination10() {
         verifyPagination(10);
     }
