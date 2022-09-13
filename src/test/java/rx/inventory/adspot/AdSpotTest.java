@@ -8,6 +8,7 @@ import api.preconditionbuilders.AdSpotPrecondition;
 import api.preconditionbuilders.MediaPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -19,9 +20,13 @@ import widgets.inventory.adSpots.sidebar.EditAdSpotSidebar;
 
 import java.util.List;
 
+import static api.preconditionbuilders.AdSpotPrecondition.adSpot;
+import static api.preconditionbuilders.MediaPrecondition.media;
+import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
+import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
 import static zutils.FakerUtils.captionWithSuffix;
 
@@ -41,7 +46,7 @@ public class AdSpotTest extends BaseTest {
     @BeforeClass
     public void createNewAdSpot() {
         //Creating ad spot to edit Using API
-        adSpot = AdSpotPrecondition.adSpot()
+        adSpot = adSpot()
                 .createNewAdSpot()
                 .build()
                 .getAdSpotResponse();
@@ -51,9 +56,9 @@ public class AdSpotTest extends BaseTest {
     @Test
     public void createCustomAdSpotTest() {
         var tableData = adspotsPage.getAdSpotsTable().getTableData();
-        String adSpotName = captionWithSuffix("AdSpot");
+        String adSpotName = captionWithSuffix("autoAdSpot");
 
-        AdSpot adSpot = AdSpotPrecondition.adSpot()
+        AdSpot adSpot = adSpot()
                 .createNewAdSpot(createCustomAdSpot(adSpotName))
                 .build()
                 .getAdSpotResponse();
@@ -84,8 +89,8 @@ public class AdSpotTest extends BaseTest {
 
     private AdSpotRequest createCustomAdSpot(String name) {
 
-        Media media = MediaPrecondition.media()
-                .createNewMedia()
+        Media media = media()
+                .createNewMedia(captionWithSuffix("autoMedia"))
                 .build()
                 .getMediaResponse();
 
@@ -105,5 +110,23 @@ public class AdSpotTest extends BaseTest {
                         .sizeIds(List.of(3))
                         .build())
                 .build();
+    }
+
+    @AfterClass(alwaysRun = true)
+    private void cleanData(){
+
+        adSpot()
+                .setCredentials(USER_FOR_DELETION)
+                .deleteAdSpot(adSpot.getId())
+                .build();
+
+        media()
+                .setCredentials(USER_FOR_DELETION)
+                .deleteMedia(adSpot.getMediaId())
+                .build();
+
+        publisher()
+                .setCredentials(USER_FOR_DELETION)
+                .deletePublisher(adSpot.getPublisherId());
     }
 }

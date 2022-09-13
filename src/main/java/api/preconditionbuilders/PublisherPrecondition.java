@@ -51,7 +51,7 @@ public class PublisherPrecondition {
         private PublisherService publisherService = new PublisherService();
 
         public PublisherPreconditionBuilder createNewPublisher() {
-            performPublisherCreation(captionWithSuffix("0000000APub_Auto"));
+            performPublisherCreation(captionWithSuffix("0Pub_Auto"));
             return this;
         }
 

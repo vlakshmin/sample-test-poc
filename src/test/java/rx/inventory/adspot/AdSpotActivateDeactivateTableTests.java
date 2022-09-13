@@ -106,7 +106,7 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(testName = "Deactivate single ad spot")
+    @Test(testName = "Deactivate single ad spot", alwaysRun = true)
     public void deactivateSingleAdSpot() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
@@ -127,7 +127,7 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(testName = "Deactivate single ad spot with inactive media")
+    @Test(testName = "Deactivate single ad spot with inactive media", alwaysRun = true)
     public void deactivateSingleAdSpotWithInactiveMedia() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
@@ -148,7 +148,7 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(testName = "Activate single ad spot with inactive media")
+    @Test(testName = "Activate single ad spot with inactive media", alwaysRun = true)
     public void activateSingleAdSpotWithInactiveMedia() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
@@ -169,7 +169,7 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(testName = "Deactivate single ad spot with inactive publisher")
+    @Test(testName = "Deactivate single ad spot with inactive publisher", alwaysRun = true)
     public void deactivateSingleAdSpotWithInactivePublisher() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
@@ -202,7 +202,7 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(testName = "Activate single ad spot with inactive publisher")
+    @Test(testName = "Activate single ad spot with inactive publisher", alwaysRun = true)
     public void activateSingleAdSpotWithInactivePublisher() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
@@ -234,7 +234,7 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(testName = "Activate single ad spot")
+    @Test(testName = "Activate single ad spot", alwaysRun = true)
     public void activateSingleAdSpot() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
@@ -259,7 +259,7 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(testName = "Activate bulk ad spot")
+    @Test(testName = "Activate bulk ad spot", alwaysRun = true)
     public void activateBulkAdSpot() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
@@ -300,7 +300,7 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(testName = "Deactivate bulk ad spot")
+    @Test(testName = "Deactivate bulk ad spot", alwaysRun = true)
     public void deactivateBulkAdSpot() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
@@ -374,7 +374,7 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .getItems();
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     private void logOut() {
         testStart()
                 .given()
@@ -382,11 +382,9 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     private void cleanData() {
         deleteAdSpots();
-        //TODO: waiting filter table cleaned
-        //   deletePublishers();
     }
 
     private void deleteAdSpots() {
@@ -405,6 +403,8 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                     .setCredentials(USER_FOR_DELETION)
                     .deleteAdSpot(adSpot.getId())
                     .build();
+            deleteMedia(adSpot.getMediaId());
+            deletePublisher(adSpot.getPublisherId());
         }
     }
 
@@ -416,22 +416,27 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
         media().changeMediaStatus(id, false);
     }
 
-    private void deletePublishers() {
-        List<Publisher> publishersList = getAllPublishersItemsByParams("autoPublisher");
+    private void deletePublisher(Integer id) {
 
-        for (Publisher publisher : publishersList) {
-            publisher()
+             publisher()
                     .setCredentials(USER_FOR_DELETION)
-                    .deletePublisher(publisher.getId())
+                    .deletePublisher(id)
                     .build();
-        }
+    }
+
+    private void deleteMedia(Integer id) {
+
+       media()
+                .setCredentials(USER_FOR_DELETION)
+                .deleteMedia(id)
+                .build();
     }
 
     private AdSpot createAdSpot(String name, Boolean isEnabled) {
 
 
         return adSpot()
-                .createNewAdSpot(captionWithSuffix(name), isEnabled)
+                .createNewAdSpot(captionWithSuffix(name), captionWithSuffix("autoPub"),isEnabled)
                 .build()
                 .getAdSpotResponse();
     }

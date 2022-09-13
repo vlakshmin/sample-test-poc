@@ -296,7 +296,6 @@ public class AdSpotNativeCardCreateTests extends BaseTest {
                 .testEnd();
     }
 
-    // @AfterMethod(alwaysRun = true)
     private void logout() {
         testStart()
                 .and("Logout")
@@ -308,6 +307,7 @@ public class AdSpotNativeCardCreateTests extends BaseTest {
     private void deletePublisher() {
 
         logout();
+
         if (media()
                 .setCredentials(USER_FOR_DELETION)
                 .deleteMedia(media.getId())

@@ -75,66 +75,66 @@ public class AdSpotSortingTableTests extends BaseTest {
         sortStatusByDesc = getStatusByDesc();
     }
 
-    @Test(testName = "Sorting 'ID' column by descending")
+    @Test(testName = "Sorting 'ID' column by descending", alwaysRun = true)
     public void adSpotSortingByIdDesc() {
         sortByDescColumnByName(ColumnNames.ID);
         validateSortData(ColumnNames.ID, DESC, sortIdsByDesc);
     }
 
-    @Test(testName = "Sorting 'ID' column by ascending")
+    @Test(testName = "Sorting 'ID' column by ascending", alwaysRun = true)
     public void adSpotSortingByIdAsc() {
 
         sortByAscColumnByName(ColumnNames.ID);
         validateSortData(ColumnNames.ID, ASC, sortIdsByAsc);
     }
 
-    @Test(testName = "Sorting 'Ad Spot Name' column by descending")
+    @Test(testName = "Sorting 'Ad Spot Name' column by descending", alwaysRun = true)
     public void adSpotSortingByNameDesc() {
         sortByDescColumnByName(ColumnNames.AD_SPOT_NAME);
         validateSortData(ColumnNames.AD_SPOT_NAME, DESC, sortNamesByDesc);
     }
 
-    @Test(testName = "Sorting 'Ad Spot Name' column by ascending")
+    @Test(testName = "Sorting 'Ad Spot Name' column by ascending", alwaysRun = true)
     public void adSpotSortingByAdSpotNameAsc() {
         sortByAscColumnByName(ColumnNames.AD_SPOT_NAME);
         validateSortData(ColumnNames.AD_SPOT_NAME, ASC, sortNamesByAsc);
     }
 
-    @Test(testName = "Sorting 'Publisher' column by ascending")
+    @Test(testName = "Sorting 'Publisher' column by ascending", alwaysRun = true)
     public void adSpotSortingByPublisherNameAsc() {
         sortByAscColumnByName(ColumnNames.PUBLISHER);
         validateSortData(ColumnNames.PUBLISHER, ASC, sortPublisherNameByAsc);
     }
 
-    @Test(testName = "Sorting 'Publisher' column by descending")
+    @Test(testName = "Sorting 'Publisher' column by descending", alwaysRun = true)
     public void adSpotSortingByPublisherNameDesc() {
         sortByDescColumnByName(ColumnNames.PUBLISHER);
         validateSortData(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
     }
 
-    @Test(testName = "Sorting 'Related Media' column by descending")
+    @Test(testName = "Sorting 'Related Media' column by descending", alwaysRun = true)
     public void adSpotSortingByRelatedMediaDesc() {
         sortByDescColumnByName(ColumnNames.RELATED_MEDIA);
         validateSortData(ColumnNames.RELATED_MEDIA, DESC, sortRelatedMediasByDesc);
     }
 
-    @Test(testName = "Sorting 'Related Media' column by ascending")
+    @Test(testName = "Sorting 'Related Media' column by ascending", alwaysRun = true)
     public void adSpotSortingByRelatedMediaAsc() {
         sortByAscColumnByName(ColumnNames.RELATED_MEDIA);
         validateSortData(ColumnNames.RELATED_MEDIA, ASC, sortRelatedMediaByAsc);
     }
 
-//    @Test(testName = "Sorting 'Active/Inactive' column by descending")
-//    public void adSpotSortingByStatusDesc() {
-//        sortByDescColumnByName(ColumnNames.ACTIVE_INACTIVE);
-//        validateSortData(ColumnNames.ID, DESC, sortStatusByDesc);
-//    }
-//
-//    @Test(testName = "Sorting 'Active/Inactive' column by ascending")
-//    public void adSpotSortingByStatusAsc() {
-//        sortByAscColumnByName(ColumnNames.ACTIVE_INACTIVE);
-//        validateSortData(ColumnNames.ID, ASC, sortStatusByAsc);
-//    }
+    @Test(testName = "Sorting 'Active/Inactive' column by descending", alwaysRun = true)
+    public void adSpotSortingByStatusDesc() {
+        sortByDescColumnByName(ColumnNames.ACTIVE_INACTIVE);
+        validateSortData(ColumnNames.ID, DESC, sortStatusByDesc);
+    }
+
+    @Test(testName = "Sorting 'Active/Inactive' column by ascending", alwaysRun = true)
+    public void adSpotSortingByStatusAsc() {
+        sortByAscColumnByName(ColumnNames.ACTIVE_INACTIVE);
+        validateSortData(ColumnNames.ID, ASC, sortStatusByAsc);
+    }
 
     @BeforeMethod
     private void login() {
@@ -148,7 +148,7 @@ public class AdSpotSortingTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     private void logOut() {
         testStart()
                 .given()

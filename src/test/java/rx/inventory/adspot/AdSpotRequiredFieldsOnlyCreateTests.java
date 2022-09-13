@@ -72,7 +72,7 @@ public class AdSpotRequiredFieldsOnlyCreateTests extends BaseTest {
     private void init() {
 
         publisher = publisher()
-                .createNewPublisher(captionWithSuffix("0000autoPub1"))
+                .createNewPublisher(captionWithSuffix("0autoPub1"))
                 .build()
                 .getPublisherResponse();
 
@@ -415,7 +415,6 @@ public class AdSpotRequiredFieldsOnlyCreateTests extends BaseTest {
                 .testEnd();
     }
 
-    // @AfterMethod(alwaysRun = true)
     private void logout() {
         testStart()
                 .and("Logout")
@@ -427,6 +426,7 @@ public class AdSpotRequiredFieldsOnlyCreateTests extends BaseTest {
     private void deletePublisher() {
 
         logout();
+
         if (media()
                 .setCredentials(USER_FOR_DELETION)
                 .deleteMedia(media.getId())

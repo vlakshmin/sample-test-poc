@@ -28,9 +28,9 @@ import static managers.TestManager.testStart;
 @Listeners({ScreenShooter.class})
 public class AdSpotSearchTableTests extends BaseTest {
 
-    private static final String AD_SPOT_NAME = "SSDD1";
-    private static final String PUB_NAME = "SSSDD2";
-    private static final String FILTER_SEARCH = "RpTT7";
+    private static final String AD_SPOT_NAME = "autoSSDD1";
+    private static final String PUB_NAME = "autoSSSDD2";
+    private static final String FILTER_SEARCH = "autoRpTT7";
     private List<String> adSpotNamesByAsc;
     private List<String> publishersByAsc;
     private List<String> searchByA;
@@ -113,7 +113,7 @@ public class AdSpotSearchTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     private void logOut() {
         testStart()
                 .given()
@@ -121,7 +121,7 @@ public class AdSpotSearchTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(testName = "Search by 'Ad Spot Name'")
+    @Test(testName = "Search by 'Ad Spot Name'", alwaysRun = true)
     public void adspotsSearchByAdSpotName() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
 
@@ -141,7 +141,7 @@ public class AdSpotSearchTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(testName = "Search by 'Publisher'")
+    @Test(testName = "Search by 'Publisher'", alwaysRun = true)
     public void adSpotsSearchByPublisher() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
 
@@ -163,7 +163,7 @@ public class AdSpotSearchTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(testName = "Search by 'A'")
+    @Test(testName = "Search by 'A'", alwaysRun = true)
     public void adSpotsSearchWithPaginatinaton() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
@@ -201,11 +201,10 @@ public class AdSpotSearchTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(testName = "Search with filter by status")
+    @Test(testName = "Search with filter by status", alwaysRun = true)
     public void adSpotsSearchWithFilterByStatus() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tableOptions = adSpotsPage.getAdSpotsTable().getTableOptions();
-        var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
 
         testStart()
                 .given()
@@ -240,8 +239,9 @@ public class AdSpotSearchTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @AfterTest
+    @AfterTest(alwaysRun = true)
     private void deleteEntities() {
+
         for (Integer adSpotId : adSpotIds) {
             AdSpotPrecondition.adSpot()
                     .setCredentials(USER_FOR_DELETION)
@@ -276,5 +276,4 @@ public class AdSpotSearchTableTests extends BaseTest {
                 .getAdSpotsGetAllResponse()
                 .getItems();
     }
-
 }
