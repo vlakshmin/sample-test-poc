@@ -132,7 +132,7 @@ public class AdSpotPrecondition {
 
             Media media = createMedia("autoMedia",publisher.getId());
 
-            return createAdSpotRequest(captionWithSuffix("autoAdSpot"), publisher.getId(), media.getId(), isEnabled);
+            return createAdSpotRequest(name, publisher.getId(), media.getId(), isEnabled);
         }
 
         private AdSpotRequest createAdSpotRequest(String name, Boolean isEnabled) {
