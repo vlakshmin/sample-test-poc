@@ -18,12 +18,12 @@
         <classes>
             <class name="rx.inventory.adspot.AdSpotCheckPaginationTests"/>
             <class name="rx.inventory.adspot.AdSpotEditTests"/>
+            <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
+            <class name="rx.inventory.adspot.AdSpotSearchTableTests"/>
             <class name="rx.inventory.adspot.AdSpotCheckColumnsTests"/>
             <class name="rx.inventory.adspot.AdSpotCheckTooltipsTests"/>
             <class name="rx.inventory.adspot.AdSpotSortingTableTests"/>
-            <class name="rx.inventory.adspot.AdSpotSearchTableTests"/>
             <class name="rx.inventory.adspot.AdSpotCheckFieldsTests"/>
-            <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
             <class name="rx.inventory.adspot.ChangingPublisherInSidebarTests"/>
             <class name="rx.inventory.adspot.AdSpotBannerCardCreateTests"/>
             <class name="rx.inventory.adspot.AdSpotNativeCardCreateTests"/>

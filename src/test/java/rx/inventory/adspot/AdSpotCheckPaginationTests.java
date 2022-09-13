@@ -122,6 +122,12 @@ public class AdSpotCheckPaginationTests extends BaseTest {
                                 rowsPerPage, totalAdSpots)))
                 .then(String.format("Rows in table page equals %s", rowsPerPage))
                 .validateListSize(tableData.getRows(), rowsPerPage)
+                .testEnd();
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void logout(){
+        testStart()
                 .and("Logout")
                 .logOut()
                 .testEnd();
