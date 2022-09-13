@@ -38,6 +38,8 @@ public class AdSpotSearchTableTests extends BaseTest {
     private List<String> searchInactive;
     private List<String> searchBoth;
 
+    private AdSpot adSpot;
+
     private AdSpotsPage adSpotsPage;
 
     private List<Integer> adSpotIds;
@@ -52,7 +54,7 @@ public class AdSpotSearchTableTests extends BaseTest {
         adSpotIds = new ArrayList<>();
         publishersIds = new ArrayList<>();
 
-        AdSpot adSpot = createCustomAdSpot("adspot_auto", "pub_auto", true);
+        adSpot = createCustomAdSpot("adspot_auto", "pub_auto", true);
         adSpotIds.add(adSpot.getId());
         publishersIds.add(adSpot.getPublisherId());
 

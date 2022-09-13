@@ -38,7 +38,7 @@ public class MediaCheckPaginationTests extends BaseTest {
 
     @BeforeClass
     private void init() {
-        if (getTotalMedia() < 100) generateMedia();
+        if (getTotalMedia() < 200) generateMedia();
 
         totalMedia = getTotalMedia();
     }
@@ -165,7 +165,7 @@ public class MediaCheckPaginationTests extends BaseTest {
                 .getPublisherResponse();
 
         listMedia = new ArrayList<>();
-        while (getTotalMedia() < 110) {
+        while (getTotalMedia() < 210) {
             Media media = media()
                     .createNewMedia(captionWithSuffix("auto"), publisher.getId(), true)
                     .build()
