@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="SmokeTest Suite" parallel="false">
-    <!-- <test name="Media">
+<!--    <test name="Media">
         <classes>
             <class name="rx.inventory.media.MediaCheckFields"/>
             <class name="rx.inventory.media.MediaCreateTests"/>
@@ -59,7 +59,7 @@
             <class name="rx.yield.openpricing.OpenPricingTests"/>
             <class name="rx.yield.openpricing.VerifyPublisherTests"/>
         </classes>
-   </test>-->
+    </test>-->
     <test name="Delete Data after tests. Use it only in some cases">
         <classes>
             <class name="rx.pipelines.DeleteGeneratedDataTest"/>
