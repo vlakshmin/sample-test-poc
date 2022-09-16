@@ -35,6 +35,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 import static java.lang.String.format;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 @Slf4j
@@ -235,7 +236,7 @@ public final class TestManager {
 
         public TestManagerBuilder validate(int actualInt, int expectedInt) {
             logEvent(format("Validating value %s should equal '%s'", actualInt, expectedInt));
-            assertTrue(actualInt==expectedInt);
+            assertEquals(actualInt, expectedInt);
 
             return this;
         }

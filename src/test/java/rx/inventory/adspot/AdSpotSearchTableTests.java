@@ -28,7 +28,7 @@ import static managers.TestManager.testStart;
 @Listeners({ScreenShooter.class})
 public class AdSpotSearchTableTests extends BaseTest {
 
-    private static final String AD_SPOT_NAME = "SSDD1";
+    private static final String AD_SPOT_NAME = "autoSSDD1";
     private static final String PUB_NAME = "autoSSSDD2";
     private static final String FILTER_SEARCH = "autoRpTT7";
     private List<String> adSpotNamesByAsc;

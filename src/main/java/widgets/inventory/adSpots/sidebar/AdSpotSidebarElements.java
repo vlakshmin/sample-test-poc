@@ -11,6 +11,7 @@ public enum AdSpotSidebarElements {
     POSITION("'Position' Button", "//label[text()='Position']/../div/div"),
     CATEGORIES("'Categories' Element", "//label[text()='Categories']/../div[1]"),
     POSITION_INPUT("'Position' Input", "//label[text()='Position']/../div/input"),
+    //TODO: child does not work , need to investigate
     ERROR_ALERT_BY_FIELD_NAME("Error Alert under Field '%s'",
             "//label[text()='%s']/../../../div[2]/div/div/div"),
     AD_SPOT_NAME("'Ad Spot Name' Input", "//label[text()='Ad Spot Name']/../input"),

@@ -29,7 +29,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
     private static final String PREFIX_OPEN_PRICING = "auto";
     private static final String PREFIX_USERS = "Test Account";
     private static final String PREFIX_DYNAMIC_PRICING = "auto";
-    private static final String PREFIX_PROTECTIONS = "auto";
+    private static final String PREFIX_PROTECTIONS = "api";
 
     @Test(priority = 1)
     public void deleteProtections() {
@@ -126,7 +126,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
     @Test(priority = 7)
     public void updatePublishers() {
         var publishers = getAllPublishersByParams();
-        int deleted = 0;
+        int updated = 0;
         Publisher pub;
 
         for (Publisher p : publishers) {
@@ -149,9 +149,9 @@ public class DeleteGeneratedDataTest extends BaseTest {
                     .updatePublisher(pub)
                     .build()
                     .getResponseCode() == HttpStatus.SC_NO_CONTENT)
-                deleted++;
+                updated++;
         }
-        log.info(String.format("Updated publishers items %s of %s", deleted, publishers.size()));
+        log.info(String.format("Updated publishers items %s of %s", updated, publishers.size()));
     }
 
     @Test(priority = 7)

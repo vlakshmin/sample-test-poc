@@ -4,6 +4,8 @@ import api.dto.rx.admin.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpStatus;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -15,6 +17,7 @@ import widgets.admin.publisher.sidebar.CreatePublisherSidebar;
 import widgets.admin.publisher.sidebar.EditPublisherSidebar;
 import zutils.FakerUtils;
 
+import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
@@ -87,7 +90,15 @@ public class PublisherTest extends BaseTest {
                 .validateAttribute(editPublisherSidebar.getNameInput(), "value", PUBLISHER_NAME_EDITED)
                 .validateAttribute(editPublisherSidebar.getAdOpsInput(), "value", PUBLISHER_AD_OPS_EDITED)
                 .testEnd();
+    }
 
-        //allure serve
+    @AfterClass
+    private void deletePublisher(){
+        if (publisher()
+                .setCredentials(USER_FOR_DELETION)
+                .deletePublisher(publisher.getId())
+                .build()
+                .getResponseCode() == HttpStatus.SC_NO_CONTENT)
+            log.info(String.format("Deleted publisher %s",publisher.getId()));
     }
 }

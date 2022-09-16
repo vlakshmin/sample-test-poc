@@ -447,7 +447,6 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
                 .testEnd();
     }
 
-    // @AfterMethod(alwaysRun = true)
     private void logout() {
         testStart()
                 .and("Logout")
