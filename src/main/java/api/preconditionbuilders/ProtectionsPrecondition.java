@@ -1,6 +1,5 @@
 package api.preconditionbuilders;
 
-
 import api.core.client.HttpClient;
 import api.dto.GenericResponse;
 import api.dto.rx.protection.*;
@@ -12,9 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static zutils.FakerUtils.captionWithSuffix;
 
@@ -48,7 +45,7 @@ public class ProtectionsPrecondition {
         private Protection protectionsResponse;
         private ProtectionRequest protectionsRequest;
         private GenericResponse<Protection> protectionsGetAllResponse;
-        private ProtectionsService protectionsService = new ProtectionsService();
+        private final ProtectionsService protectionsService = new ProtectionsService();
 
         public ProtectionsPreconditionBuilder createNewRandomProtection() {
             this.protectionsRequest = ProtectionRequest.builder()
