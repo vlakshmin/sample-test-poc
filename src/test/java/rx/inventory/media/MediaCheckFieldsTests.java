@@ -24,7 +24,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class MediaCheckFields extends BaseTest {
+public class MediaCheckFieldsTests extends BaseTest {
     private MediaPage mediaPage;
     private EditMediaSidebar editMediaSidebar;
     private Publisher publisher;
@@ -32,7 +32,7 @@ public class MediaCheckFields extends BaseTest {
     private static String URL = "https://play.google.com/store/apps/";
     private static String BUNDLE = "com.viber.voip";
 
-    public MediaCheckFields() {
+    public MediaCheckFieldsTests() {
         mediaPage = new MediaPage();
         editMediaSidebar = new EditMediaSidebar();
     }
@@ -41,7 +41,7 @@ public class MediaCheckFields extends BaseTest {
     private void init() {
 
         publisher = publisher()
-                .createNewPublisher(captionWithSuffix("1autoPub1"))
+                .createNewPublisher(captionWithSuffix("00000002autoPub1"))
                 .build()
                 .getPublisherResponse();
     }

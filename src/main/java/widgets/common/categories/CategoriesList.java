@@ -7,12 +7,12 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum CategoriesList {
 
-    ART_ENTERTAIMENTS("Arts & Entertainment", ""),
-    BOOKS_LITERATURE("Books & Literature", "Arts & Entertainment"),
-    CELEBRITY_FAN_GOSSIP("Celebrity Fan/Gossip", "Arts & Entertainment"),
     HUMOR("Humor", "Arts & Entertainment"),
     MUSIC("Music", "Arts & Entertainment"),
+    ART_ENTERTAIMENTS("Arts & Entertainment", ""),
     TELEVISION("Television", "Arts & Entertainment"),
+    BOOKS_LITERATURE("Books & Literature", "Arts & Entertainment"),
+    CELEBRITY_FAN_GOSSIP("Celebrity Fan/Gossip", "Arts & Entertainment"),
 
     AUTOMOTIVE("Automotive", ""),
     AUTO_PARTS("Auto Parts", "Automotive"),

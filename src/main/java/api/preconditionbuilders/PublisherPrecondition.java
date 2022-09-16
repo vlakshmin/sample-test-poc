@@ -51,7 +51,7 @@ public class PublisherPrecondition {
         private PublisherService publisherService = new PublisherService();
 
         public PublisherPreconditionBuilder createNewPublisher() {
-            performPublisherCreation(captionWithSuffix("Publisher_Auto"));
+            performPublisherCreation(captionWithSuffix("0Pub_Auto"));
             return this;
         }
 
@@ -62,16 +62,7 @@ public class PublisherPrecondition {
         }
 
         private void performPublisherCreation(String name) {
-            this.publisherRequest = PublisherRequest.builder()
-                    .name(name)
-                    .salesAccountName("ops_persoj")
-                    .mail(randomMail())
-                    .isEnabled(true)
-                    .domain(randomUrl())
-                    .currency(Currency.JPY.name())
-                    .categoryIds(List.of(1, 9))
-                    .dspIds(List.of(7))
-                    .build();
+            this.publisherRequest = getPublisherRequest(name, true);
 
             this.response = publisherService.createPublisher(publisherRequest);
             this.publisherResponse = response.as(Publisher.class);
@@ -80,6 +71,16 @@ public class PublisherPrecondition {
 
         public PublisherPreconditionBuilder createNewPublisher(PublisherRequest publisherRequest) {
             this.publisherRequest = publisherRequest;
+            this.response = publisherService.createPublisher(publisherRequest);
+            this.publisherResponse = response.as(Publisher.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
+        public PublisherPreconditionBuilder createNewPublisher(String name, Boolean isEnabled, Currency currency,
+                                                               List<Integer> categoryIds, List<Integer>dspIds){
+            this.publisherRequest = getPublisherRequest(name, isEnabled, currency, categoryIds, dspIds);
             this.response = publisherService.createPublisher(publisherRequest);
             this.publisherResponse = response.as(Publisher.class);
             this.responseCode = response.getStatusCode();
@@ -118,15 +119,22 @@ public class PublisherPrecondition {
 
         private PublisherRequest getPublisherRequest(String name, Boolean isEnabled) {
 
+            return getPublisherRequest(name, isEnabled, Currency.JPY, List.of(1, 9), List.of(7));
+        }
+
+       // TODO need to add verification categoryIds and DSPIds. They should exist
+        private PublisherRequest getPublisherRequest(String name, Boolean isEnabled, Currency currency,
+                                                     List<Integer> categoryIds, List<Integer>dspIds) {
+
             return PublisherRequest.builder()
                     .name(name)
                     .salesAccountName("person_auto")
                     .mail(randomMail())
                     .isEnabled(isEnabled)
                     .domain(randomUrl())
-                    .currency(Currency.JPY.name())
-                    .categoryIds(List.of(1, 9))
-                    .dspIds(List.of(7))
+                    .currency(currency.getAlias())
+                    .categoryIds(categoryIds)
+                    .dspIds(dspIds)
                     .build();
         }
 

@@ -1,6 +1,5 @@
 package rx.inventory.adspot;
 
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
@@ -19,10 +18,10 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class AdSpotCheckColumns extends BaseTest {
+public class AdSpotCheckColumnsTests extends BaseTest {
     private AdSpotsPage adSpotsPage;
 
-    public AdSpotCheckColumns() {
+    public AdSpotCheckColumnsTests() {
         adSpotsPage = new AdSpotsPage();
     }
 
@@ -33,6 +32,8 @@ public class AdSpotCheckColumns extends BaseTest {
                 .openDirectPath(Path.AD_SPOT)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, adSpotsPage.getNuxtProgress())
+                .scrollIntoView(adSpotsPage.getPageTitle())
+
                 .testEnd();
     }
 
@@ -41,7 +42,12 @@ public class AdSpotCheckColumns extends BaseTest {
     public void checkColumns() {
         var tableOptions = adSpotsPage.getAdSpotsTable().getTableOptions();
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
+        var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
         testStart()
+                .and("Action to remove the scroll table")
+                .scrollIntoView(tablePagination.getPageMenu())
+                .selectFromDropdown(tablePagination.getPageMenu(),
+                        tablePagination.getRowNumbersList(), "10")
                 .and("'Show' all columns")
                 .scrollIntoView(tableOptions.getTableOptionsBtn())
                 .clickOnWebElement(tableOptions.getTableOptionsBtn())
@@ -52,12 +58,10 @@ public class AdSpotCheckColumns extends BaseTest {
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.RELATED_MEDIA))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE_INACTIVE))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PAGE_CATEGORY))
-             //   .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.FILTER))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.TEST_MODE))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_SIZES))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_FLOOR_PRICE))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
-                // TODO:GS-2748
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .then("All columns should be shown")
                 .validateListSize(tableData.getColumns(),
@@ -68,13 +72,11 @@ public class AdSpotCheckColumns extends BaseTest {
                         ColumnNames.RELATED_MEDIA.getName(),
                         ColumnNames.ACTIVE_INACTIVE.getName(),
                         ColumnNames.PAGE_CATEGORY.getName(),
-                //        ColumnNames.FILTER.getName(),
                         ColumnNames.TEST_MODE.getName(),
                         ColumnNames.DEFAULT_SIZES.getName(),
                         ColumnNames.DEFAULT_FLOOR_PRICE.getName(),
                         ColumnNames.CREATED_DATE.getName(),
-                // TODO:GS-2748
-                ColumnNames.UPDATED_DATE.getName())
+                        ColumnNames.UPDATED_DATE.getName())
                 .and("Hide all columns")
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ID))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DETAILS))
@@ -83,12 +85,10 @@ public class AdSpotCheckColumns extends BaseTest {
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.RELATED_MEDIA))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE_INACTIVE))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PAGE_CATEGORY))
-            //    .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.FILTER))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.TEST_MODE))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_SIZES))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_FLOOR_PRICE))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
-                // TODO:GS-2748
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .then("All columns should be hidden")
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.ID.getName()))
@@ -98,12 +98,10 @@ public class AdSpotCheckColumns extends BaseTest {
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.RELATED_MEDIA.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.ACTIVE_INACTIVE.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.PAGE_CATEGORY.getName()))
-           //     .validate(not(visible), tableData.getColumnHeader(ColumnNames.FILTER.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.TEST_MODE.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.DEFAULT_SIZES.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.DEFAULT_FLOOR_PRICE.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.CREATED_DATE.getName()))
-                // TODO:GS-2748
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.UPDATED_DATE.getName()))
                 .testEnd();
     }

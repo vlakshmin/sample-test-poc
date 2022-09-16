@@ -123,7 +123,7 @@ public class ProtectionsCheckPaginationTests extends BaseTest {
                 .testEnd();
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     private void deleteEntities() {
         if (listProtections != null) {
             for (Protection protection : listProtections) {
@@ -157,8 +157,9 @@ public class ProtectionsCheckPaginationTests extends BaseTest {
     }
 
     private void generateProtection() {
-        listProtections.clear();
-        while (getTotalProtections() < 120) {
+        listProtections = new ArrayList<>();
+
+        while (getTotalProtections() < 121) {
             Protection protection = protection()
                     .createNewRandomProtection()
                     .build()

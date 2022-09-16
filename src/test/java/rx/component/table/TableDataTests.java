@@ -98,7 +98,7 @@ public class TableDataTests extends BaseTest {
     }
 
     @Test
-    public void checkPagenation() {
+    public void checkPagination() {
         var table = publishersPage.getTable().getTableOptions();
         var tableData = publishersPage.getTable().getTableData();
         var tablePagenation = publishersPage.getTable().getTablePagination();

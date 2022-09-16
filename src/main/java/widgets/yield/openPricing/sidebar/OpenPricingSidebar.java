@@ -5,11 +5,13 @@ import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import widgets.common.multipane.Multipane;
 import widgets.common.multipane.MultipaneNameImpl;
+import widgets.common.warningbanner.ChangePublisherBanner;
 import widgets.yield.openPricing.floorprice.FloorPriceField;
 
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 import static java.lang.String.*;
+import static widgets.inventory.adSpots.sidebar.AdSpotSidebarElements.PUBLISHER_NAME;
 import static widgets.yield.openPricing.sidebar.OpenPricingSidebarElements.*;
 
 /**
@@ -18,11 +20,12 @@ import static widgets.yield.openPricing.sidebar.OpenPricingSidebarElements.*;
 @Getter
 public abstract class OpenPricingSidebar {
 
+    private SelenideElement closeIcon = $x(CLOSE_ICON.getSelector()).as(CLOSE_ICON.getAlias());
     private SelenideElement saveButton = $x(SAVE_BUTTON.getSelector()).as(SAVE_BUTTON.getAlias());
+    private SelenideElement publisherInput = $x(PUBLISHER_NAME.getSelector()).as(PUBLISHER_NAME.getAlias());
     private SelenideElement nameInput = $x(OPEN_PRICING_FIELD_NAME.getSelector()).as(OPEN_PRICING_FIELD_NAME.getAlias());
     private ElementsCollection publisherNameDropdownItems = $$x(DROPDOWN_ITEMS.getSelector()).as(DROPDOWN_ITEMS.getAlias());
     private SelenideElement publisherNameDropdown = $x(PUBLISHER_NAME_DROPDOWN.getSelector()).as(PUBLISHER_NAME_DROPDOWN.getAlias());
-
     private FloorPriceField floorPriceField = new FloorPriceField();
 
     private Multipane geoMultipane = new Multipane(MultipaneNameImpl.GEO);
@@ -32,6 +35,8 @@ public abstract class OpenPricingSidebar {
     private Multipane inventoryMultipane = new Multipane(MultipaneNameImpl.INVENTORY);
     private Multipane demandSourcesMultipane = new Multipane(MultipaneNameImpl.DEMAND_SOURCES);
     private Multipane operatingSystemMultipane = new Multipane(MultipaneNameImpl.OPERATING_SYSTEM);
+
+    private ChangePublisherBanner changePublisherBanner = new ChangePublisherBanner();
 
     public SelenideElement getErrorLabelByFieldName(OpenPricingField field) {
 
