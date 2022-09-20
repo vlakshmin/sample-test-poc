@@ -34,6 +34,7 @@ public class Multipane {
     private SelenideElement searchInput;
     private SelenideElement excludedIcon;
     private SelenideElement includedIcon;
+    private SelenideElement showInactive;
     private SelenideElement excludedBanner;
     private SelenideElement includedBanner;
     private SelenideElement panelNameLabel;
@@ -74,6 +75,7 @@ public class Multipane {
         this.clearAllButton = $x(buildXpath(CLEAR_ALL_BUTTON.getSelector())).as(CLEAR_ALL_BUTTON.getAlias());
         this.clearSearchIcon = $x(buildXpath(CLEAR_SEARCH_ICON.getSelector())).as(CLEAR_SEARCH_ICON.getAlias());
         this.includeAllButton = $x(buildXpath(INCLUDE_ALL_BUTTON.getSelector())).as(INCLUDE_ALL_BUTTON.getAlias());
+        this.showInactive = $x(buildXpath(SHOW_INACTIVE_TOGGLE.getSelector())).as(SHOW_INACTIVE_TOGGLE.getAlias());
         this.selectionInfoLabel = $x(buildXpath(SELECTION_INFO_LABEL.getSelector())).as(SELECTION_INFO_LABEL.getAlias());
         this.itemsQuantityString = $x(buildXpath(ITEMS_QUANTITY_STRING.getSelector())).as(ITEMS_QUANTITY_STRING.getAlias());
         this.selectionInfoExcludedLabel = $x(buildXpath(SELECTION_INFO_EXCLUDED_LABEL.getSelector())).as(SELECTION_INFO_EXCLUDED_LABEL.getAlias());
@@ -87,7 +89,7 @@ public class Multipane {
      * TableItems Section
      */
 
-    private int countSelectTableItems() {
+    public int countSelectTableItems() {
         panelNameLabel.shouldHave(attribute("aria-expanded", "true"))
                 .scrollIntoView(true);
 

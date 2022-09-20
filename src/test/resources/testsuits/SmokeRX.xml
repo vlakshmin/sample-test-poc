@@ -62,7 +62,7 @@
     </test>
     <test name="Components Tests">
         <classes>
-            <class name="rx.component.multipane.MultipaneTest"/>
+        <!--    <class name="rx.component.multipane.MultipaneTest"/>-->
             <class name="rx.component.table.TableDataTests"/>
             <class name="rx.component.categories.CategoriesSelectionTests"/>
         </classes>

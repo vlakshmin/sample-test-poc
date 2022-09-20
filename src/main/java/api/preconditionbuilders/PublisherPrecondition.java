@@ -51,18 +51,24 @@ public class PublisherPrecondition {
         private PublisherService publisherService = new PublisherService();
 
         public PublisherPreconditionBuilder createNewPublisher() {
-            performPublisherCreation(captionWithSuffix("0Pub_Auto"));
+            performPublisherCreation(captionWithSuffix("0Pub_Auto"), true);
             return this;
         }
 
         public PublisherPreconditionBuilder createNewPublisher(String name) {
-            performPublisherCreation(name);
+            performPublisherCreation(name, true);
 
             return this;
         }
 
-        private void performPublisherCreation(String name) {
-            this.publisherRequest = getPublisherRequest(name, true);
+        public PublisherPreconditionBuilder createNewPublisher(String name, Boolean isEnabled) {
+            performPublisherCreation(name, isEnabled);
+
+            return this;
+        }
+
+        private void performPublisherCreation(String name, Boolean isEnabled) {
+            this.publisherRequest = getPublisherRequest(name, isEnabled);
 
             this.response = publisherService.createPublisher(publisherRequest);
             this.publisherResponse = response.as(Publisher.class);
