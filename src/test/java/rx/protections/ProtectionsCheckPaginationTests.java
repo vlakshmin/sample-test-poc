@@ -115,7 +115,7 @@ public class ProtectionsCheckPaginationTests extends BaseTest {
                 .testEnd();
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     private void logout(){
         testStart()
                 .and("Logout")

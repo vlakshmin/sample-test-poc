@@ -263,7 +263,7 @@ public class ProtectionsSortingTableTests extends BaseTest {
         }
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     private void deleteEntities() {
         Arrays.stream(idsToDelete).forEach(id -> protection().deleteProtection(id).build());
     }

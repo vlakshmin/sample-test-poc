@@ -1,19 +1,20 @@
 package rx.sales.deals;
 
+import api.dto.rx.admin.publisher.Publisher;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.Path;
 import pages.dashbord.DashboardPage;
 import pages.sales.deals.DealsPage;
 import rx.BaseTest;
 import widgets.sales.deals.sidebar.CreateDealSidebar;
 
+import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
+import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
 import static zutils.FakerUtils.captionWithSuffix;
 
@@ -25,12 +26,22 @@ public class DealsTest extends BaseTest {
     private DashboardPage dashboardsPage;
     private CreateDealSidebar createDealSidebar;
 
+    Publisher publisher;
+
     public DealsTest() {
         dealsPage = new DealsPage();
         dashboardsPage = new DashboardPage();
         createDealSidebar = new CreateDealSidebar();
     }
 
+    @BeforeClass
+    private void createPublisher(){
+
+        publisher = publisher()
+                .createNewPublisher("00000autoPubDeals")
+                .build()
+                .getPublisherResponse();
+    }
 
     @Test
     public void createDealTest() {
@@ -50,7 +61,7 @@ public class DealsTest extends BaseTest {
                 .and()
                 .selectFromDropdown(createDealSidebar.getPublisherDropdown(),
                         createDealSidebar.getDropDownItems(),
-                        "Viber")
+                        publisher.getName())
                 .setValue(createDealSidebar.getNameInput(), captionWithSuffix("Deal"))
                 .selectFromDropdownByPosition(createDealSidebar.getPrivateAuctionDropdown(),
                         createDealSidebar.getDropDownItems(), 0)
@@ -96,10 +107,19 @@ public class DealsTest extends BaseTest {
         //allure serve
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void logOut() {
         testStart()
                 .logOut()
                 .testEnd();
+    }
+
+    @AfterClass(alwaysRun = true)
+    private void deletePublisher(){
+
+        publisher()
+                .setCredentials(USER_FOR_DELETION)
+                .deletePublisher(publisher.getId())
+                .build();
     }
 }

@@ -96,6 +96,8 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .clickOnWebElement(protectionMultipane.getPanelNameLabel())
                 .then("Validate inventory items list should be empty")
                 .validate(protectionMultipane.countSelectTableItems(), 0)
+                .and("Collapse 'Inventory' multipane")
+                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
                 .testEnd();
     }
 
@@ -113,6 +115,11 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .testEnd();
 
         validateMediaList(mediaActiveList);
+
+        testStart()
+                .and("Collapse 'Inventory' multipane")
+                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
+                .testEnd();
     }
 
     @Test(description = "Check Ad Spots Inventory Items List")
@@ -128,9 +135,14 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
 
         validateAdSpotsList(mediaActiveList.get(0), adSpotActiveList_0);
         validateAdSpotsList(mediaActiveList.get(1), adSpotActiveList_1);
-        validateAdSpotsCount(mediaActiveList.get(2), 0);
-        validateAdSpotsCount(mediaActiveList.get(3), 0);
+        validateAdSpotsCount(mediaActiveList.get(2).getName(), 0);
+        validateAdSpotsCount(mediaActiveList.get(3).getName(), 0);
 
+
+        testStart()
+                .and("Collapse 'Inventory' multipane")
+                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
+                .testEnd();
     }
 
     @Test(description = "Check Media Inventory Items List without Ad Spots should be empty")
@@ -144,9 +156,15 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .clickOnWebElement(protectionMultipane.getPanelNameLabel())
                 .testEnd();
 
-        validateAdSpotsCount(mediaActiveList.get(2), 0);
-        validateAdSpotsCount(mediaActiveList.get(3), 0);
-        validateAdSpotsCount(mediaActiveList.get(4), 0);
+        validateAdSpotsCount(mediaActiveList.get(2).getName(), 0);
+        validateAdSpotsCount(mediaActiveList.get(3).getName(), 0);
+        validateAdSpotsCount(mediaActiveList.get(4).getName(), 0);
+
+
+        testStart()
+                .and("Collapse 'Inventory' multipane")
+                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
+                .testEnd();
     }
 
     @Test(description = "Check Media Inventory Inactive Items List")
@@ -172,6 +190,12 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .validate(protectionMultipane.countSelectTableItems(), MEDIA_ACTIVE_COUNT)
                 .testEnd();
         validateMediaList(mediaActiveList);
+
+
+        testStart()
+                .and("Collapse 'Inventory' multipane")
+                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
+                .testEnd();
     }
 
     @Test(description = "Check AdSpots Inventory Inactive Items List (Media is Active)")
@@ -186,13 +210,19 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .and("Set 'Show Inactive' toggle ON")
                 .turnToggleOn(protectionMultipane.getShowInactive())
                 .testEnd();
-        validateAdSpotsCount(mediaActiveList.get(0),AD_SPOT_INACTIVE_COUNT+AD_SPOT_ACTIVE_COUNT);
+        validateAdSpotsCount(mediaActiveList.get(0).getName(),AD_SPOT_INACTIVE_COUNT+AD_SPOT_ACTIVE_COUNT);
         validateInactiveAdSpotsList(mediaActiveList.get(0), adSpotInactiveList_0);
         testStart()
                 .and("Set 'Show Inactive' toggle OFF")
                 .turnToggleOff(protectionMultipane.getShowInactive())
                 .testEnd();
-        validateAdSpotsCount(mediaActiveList.get(0),AD_SPOT_ACTIVE_COUNT);
+        validateAdSpotsCount(mediaActiveList.get(0).getName(),AD_SPOT_ACTIVE_COUNT);
+
+
+        testStart()
+                .and("Collapse 'Inventory' multipane")
+                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
+                .testEnd();
     }
 
     @Test(description = "Check AdSpots Inventory Inactive Items List (Media is Inactive)")
@@ -207,13 +237,19 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .and("Set 'Show Inactive' toggle ON")
                 .turnToggleOn(protectionMultipane.getShowInactive())
                 .testEnd();
-        validateAdSpotsCount(mediaInactiveList.get(0),AD_SPOT_INACTIVE_COUNT);
+        validateAdSpotsCount(String.format("(Inactive) %s",mediaInactiveList.get(0).getName()),AD_SPOT_INACTIVE_COUNT);
         validateInactiveAdSpotsList(mediaInactiveList.get(0), adSpotInactiveList_0);
         testStart()
                 .and("Set 'Show Inactive' toggle OFF")
                 .turnToggleOff(protectionMultipane.getShowInactive())
                 .testEnd();
-        validateAdSpotsCount(mediaInactiveList.get(0),AD_SPOT_INACTIVE_COUNT);
+        validateAdSpotsCount(mediaInactiveList.get(0).getName(),AD_SPOT_INACTIVE_COUNT);
+
+
+        testStart()
+                .and("Collapse 'Inventory' multipane")
+                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
+                .testEnd();
     }
 
     @Test(description = "Check Search Active Media")
@@ -237,6 +273,8 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .then("Validate item list includes only active inventory")
                 .validate(protectionMultipane.countSelectTableItems(), 1)
                 .validate(protectionMultipane.getSelectTableItemByPositionInList(0).getName(), mediaActiveList.get(0).getName())
+                .and("Collapse 'Inventory' multipane")
+                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
                 .testEnd();
     }
 
@@ -260,6 +298,8 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .turnToggleOff(protectionMultipane.getShowInactive())
                 .then("Validate item list includes only active inventory")
                 .validate(protectionMultipane.countSelectTableItems(), 0)
+                .and("Collapse 'Inventory' multipane")
+                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
                 .testEnd();
     }
 
@@ -336,11 +376,11 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
     }
 
     @Step("Validate ad spot count for media {0}")
-    private void validateAdSpotsCount(Media media, Integer count) {
+    private void validateAdSpotsCount(String mediaName, Integer count) {
         testStart()
-                .clickOnWebElement(protectionMultipane.getSelectTableItemByName(media.getName()).getName())
+                .clickOnWebElement(protectionMultipane.getSelectTableItemByName(mediaName).getName())
                 .validate(protectionMultipane.countSelectChildTableItems(),  count)
-                .clickOnWebElement(protectionMultipane.getSelectTableItemByName(media.getName()).getName())
+                .clickOnWebElement(protectionMultipane.getSelectTableItemByName(mediaName).getName())
                 .testEnd();
     }
 

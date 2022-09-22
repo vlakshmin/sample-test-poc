@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="Regression" parallel="false">
+    <test name="Precondition. Delete records with 'auto' substring">
+        <classes>
+            <class name="rx.pipelines.DeleteGeneratedDataTest"/>
+        </classes>
+     </test>
+
        <test name="Media">
         <classes>
               <class name="rx.inventory.media.MediaCheckFieldsTests"/>
@@ -37,10 +43,10 @@
     <test name="Open Pricing">
         <classes>
             <class name="rx.yield.openpricing.OpenPricingChangePublisherTests"/>
-            <class name="rx.yield.openpricing.OpenPricingTests"/>
-            <class name="rx.yield.openpricing.OpenPricingSortingTableTests"/>
-            <class name="rx.yield.openpricing.VerifyPublisherTests"/>
             <class name="rx.yield.openpricing.CreateOpenPricingTest"/>
+            <class name="rx.yield.openpricing.OpenPricingSortingTableTests"/>
+         <!--   <class name="rx.yield.openpricing.VerifyPublisherTests"/>
+            <class name="rx.yield.openpricing.OpenPricingTests"/>-->
         </classes>
     </test>
     <test name="Protections Feature">
@@ -62,7 +68,7 @@
     </test>
     <test name="Components Tests">
         <classes>
-        <!--    <class name="rx.component.multipane.MultipaneTest"/>-->
+            <class name="rx.component.multipane.MultipaneTest"/>
             <class name="rx.component.table.TableDataTests"/>
             <class name="rx.component.categories.CategoriesSelectionTests"/>
         </classes>

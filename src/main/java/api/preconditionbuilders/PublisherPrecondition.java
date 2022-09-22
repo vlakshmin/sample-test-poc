@@ -109,7 +109,6 @@ public class PublisherPrecondition {
                     .build();
             this.response = publisherService.updatePublisher(updatePublisherRequest);
             this.responseCode = response.getStatusCode();
-            this.publisherResponse = response.as(Publisher.class);
 
             return this;
         }

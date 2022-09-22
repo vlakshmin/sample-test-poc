@@ -56,8 +56,8 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
     private static final String PREFIX_AD_SPOT_INACTIVE = "autoAdSpotSingleInactive";
     private static final String PREFIX_AD_SPOT_INACTIVE_PUBLISHER = "autoAdSpotInactivePub";
     private static final String PREFIX_AD_SPOT_INACTIVE_MEDIA = "autoAdSpotInactiveMedia";
-    private static final String PREFIX_AD_SPOT_BULK_1 = "autoAdSpotBulk1";
-    private static final String PREFIX_AD_SPOT_BULK_2 = "autoAdSpotBulk2";
+    private static final String PREFIX_AD_SPOT_BULK_1 = captionWithSuffix("autoAdSpotBulk1");
+    private static final String PREFIX_AD_SPOT_BULK_2 = captionWithSuffix("autoAdSpotBulk2");
     private static final String CLASS_ATTRIBUTE_FOR_UNCHECKED_CHECKBOX = "v-icon notranslate mdi mdi-checkbox-blank-outline theme--light";
 
     public AdSpotActivateDeactivateTableTests() {
