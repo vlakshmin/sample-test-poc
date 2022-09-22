@@ -197,7 +197,7 @@ public class CreateOpenPricingTest extends BaseTest {
                 .and("Adding 'updatedBy' column in to Pricing  Table")
                 .clickOnWebElement(pricingTable.getTableOptions().getTableOptionsBtn())
                 .selectCheckBox(pricingTable.getTableOptions().getMenuItemCheckbox(ColumnNames.UPDATED_BY))
-                .clickOnWebElement(pricingTable.getTableOptions().getTableOptionsBtn())
+              //  .clickOnWebElement(pricingTable.getTableOptions().getTableOptionsBtn())
                 .then("Check that user under testing is not presented in table")
                 .validate(tableData.getCustomCells(ColumnNames.UPDATED_BY).get(0), EMPTY_STRING)
                 .testEnd();

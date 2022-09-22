@@ -34,7 +34,7 @@ public class ProtectionsCheckPaginationTests extends BaseTest {
 
     @BeforeClass
     private void init() {
-        if (getTotalProtections() < 100) generateProtection();
+        if (getTotalProtections() < 200) generateProtection();
 
         totalProtections = getTotalProtections();
     }
@@ -159,7 +159,7 @@ public class ProtectionsCheckPaginationTests extends BaseTest {
     private void generateProtection() {
         listProtections = new ArrayList<>();
 
-        while (getTotalProtections() < 121) {
+        while (getTotalProtections() < 221) {
             Protection protection = protection()
                     .createNewRandomProtection()
                     .build()

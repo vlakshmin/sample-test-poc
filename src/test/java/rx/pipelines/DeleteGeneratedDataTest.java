@@ -8,6 +8,7 @@ import api.dto.rx.protection.Protection;
 import api.dto.rx.yield.dynamicpricing.DynamicPricing;
 import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.*;
+import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
@@ -28,11 +29,20 @@ public class DeleteGeneratedDataTest extends BaseTest {
     private static final String PREFIX_OPEN_PRICING = "auto";
     private static final String PREFIX_USERS = "Test Account";
     private static final String PREFIX_DYNAMIC_PRICING = "auto";
-    private static final String PREFIX_PROTECTIONS = "api";
+    private static final String PREFIX_PROTECTIONS_1 = "api";
+    private static final String PREFIX_PROTECTIONS_2 = "auto";
 
     @Test(priority = 1)
-    public void deleteProtections() {
-        var protections = getAllProtectionsByParams();
+    public void deleteProtectionsByPrefix() {
+
+        deleteProtections(PREFIX_PROTECTIONS_1);
+        deleteProtections(PREFIX_PROTECTIONS_2);
+    }
+
+    @Step("Delete Protections")
+    private void deleteProtections(String prefix){
+
+        var protections = getAllProtectionsByParams(prefix);
         int deleted = 0;
         for (Protection pr : protections) {
             if (ProtectionsPrecondition.protection()
@@ -214,9 +224,9 @@ public class DeleteGeneratedDataTest extends BaseTest {
                 .getItems();
     }
 
-    private List<Protection> getAllProtectionsByParams() {
+    private List<Protection> getAllProtectionsByParams(String prefix) {
         Map<String, Object> queryParams = new HashMap<>();
-        queryParams.put("search", PREFIX_PROTECTIONS);
+        queryParams.put("search", prefix);
         queryParams.put("sort", "id-desc");
 
         return ProtectionsPrecondition.protection()
