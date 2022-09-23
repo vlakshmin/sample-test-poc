@@ -175,6 +175,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         "aria-sort", "ascending")
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
                 .and("Select 50 row per page")
+                .scrollIntoView(tablePagination.getPageMenu())
                 .selectFromDropdown(tablePagination.getPageMenu(),
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, openPricingPage.getTableProgressBar())

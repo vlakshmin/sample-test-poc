@@ -5,21 +5,20 @@
         <classes>
             <class name="rx.pipelines.DeleteGeneratedDataTest"/>
         </classes>
-     </test>
-
-       <test name="Media">
+    </test>
+    <test name="Media">
         <classes>
-              <class name="rx.inventory.media.MediaCheckFieldsTests"/>
-              <class name="rx.inventory.media.MediaCreateTests"/>
-              <class name="rx.inventory.media.MediaEditTests"/>
-              <class name="rx.inventory.media.MediaActivateDeactivateTableTests"/>
-              <class name="rx.inventory.media.MediaSearchTableTests"/>
-              <class name="rx.inventory.media.MediaSortingTableTests"/>
-              <class name="rx.inventory.media.MediaCheckColumnsTests"/>
-              <class name="rx.inventory.media.MediaCheckPaginationTests"/>
-              <class name="rx.inventory.media.MediaCheckTooltipsTests"/>
-          </classes>
-      </test>
+            <class name="rx.inventory.media.MediaCheckFieldsTests"/>
+            <class name="rx.inventory.media.MediaCreateTests"/>
+            <class name="rx.inventory.media.MediaEditTests"/>
+            <class name="rx.inventory.media.MediaActivateDeactivateTableTests"/>
+            <class name="rx.inventory.media.MediaSearchTableTests"/>
+            <class name="rx.inventory.media.MediaSortingTableTests"/>
+            <class name="rx.inventory.media.MediaCheckColumnsTests"/>
+            <class name="rx.inventory.media.MediaCheckPaginationTests"/>
+            <class name="rx.inventory.media.MediaCheckTooltipsTests"/>
+        </classes>
+    </test>
     <test name="Ad Spot">
         <classes>
             <class name="rx.inventory.adspot.AdSpotCheckPaginationTests"/>
@@ -45,8 +44,8 @@
             <class name="rx.yield.openpricing.OpenPricingChangePublisherTests"/>
             <class name="rx.yield.openpricing.CreateOpenPricingTest"/>
             <class name="rx.yield.openpricing.OpenPricingSortingTableTests"/>
-         <!--   <class name="rx.yield.openpricing.VerifyPublisherTests"/>
-            <class name="rx.yield.openpricing.OpenPricingTests"/>-->
+            <!--   <class name="rx.yield.openpricing.VerifyPublisherTests"/>
+               <class name="rx.yield.openpricing.OpenPricingTests"/>-->
         </classes>
     </test>
     <test name="Protections Feature">
