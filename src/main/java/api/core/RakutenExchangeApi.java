@@ -55,6 +55,9 @@ public enum RakutenExchangeApi {
     UPDATE_ADSPOT("/v2/adspots/%s"),
     DELETE_ADSPOT("/v2/adspots/%s"),
 
+    //Geos
+    GET_ALL_GEOS("/v2/geos/countries"),
+
     //Dsp
     GET_ALL_DSPS("/v2/dsps"),
     CREATE_DSP("/v2/dsps"),

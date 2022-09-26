@@ -1,13 +1,11 @@
 package rx.yield.openpricing;
 
 import api.dto.rx.device.Device;
+import api.dto.rx.geo.Geo;
 import api.dto.rx.inventory.media.Media;
 import api.dto.rx.os.OperatingSystem;
 import api.dto.rx.yield.openpricing.OpenPricing;
-import api.preconditionbuilders.DevicePrecondition;
-import api.preconditionbuilders.MediaPrecondition;
-import api.preconditionbuilders.OpenPricingPrecondition;
-import api.preconditionbuilders.OperatingSystemPrecondition;
+import api.preconditionbuilders.*;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +23,8 @@ import widgets.common.table.ColumnNames;
 import widgets.common.table.TableData;
 import widgets.yield.openPricing.sidebar.CreateOpenPricingSidebar;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
@@ -220,8 +220,20 @@ public class CreateOpenPricingTest extends BaseTest {
 
         hoverMouseCursorOnDetailsIcon(tableData);
 
-        var expectedOperatingSystem = getOperatingSystemFromDeviceList(0).getName();
+        var expectedOperatingSystem = getOperatingSystemFromOperatingSystemList(0).getName();
         verifySelectionInDetailsMenuForTableItem(operatingSystemsDetailsSection, expectedOperatingSystem);
+    }
+
+    @Test(priority = 15, dependsOnMethods = {"saveOpenPricingTest", "getNewlyCreatedPricingByApi"})
+    @Step("Verify 'Geo' Items in Details' menu in Pricing table")
+    public void checkGeoMenuDetailsTest() {
+        var tableData = openPricingPage.getOpenPricingTable().getTableData();
+        var geoDetailsSection = pricingTableDetailsMenu.getGeoDetailsSection();
+
+        hoverMouseCursorOnDetailsIcon(tableData);
+
+        var expectedGeo = getGeoFromGeoList(0).getName();
+        verifySelectionInDetailsMenuForTableItem(geoDetailsSection, expectedGeo);
     }
 
     private void hoverMouseCursorOnDetailsIcon(TableData tableData) {
@@ -317,7 +329,7 @@ public class CreateOpenPricingTest extends BaseTest {
                 .get(devicePosition);
     }
 
-    private OperatingSystem getOperatingSystemFromDeviceList(int operatingSystemPosition) {
+    private OperatingSystem getOperatingSystemFromOperatingSystemList(int operatingSystemPosition) {
 
         return OperatingSystemPrecondition.openPricing()
                 .getOperatingSystemLList()
@@ -325,5 +337,14 @@ public class CreateOpenPricingTest extends BaseTest {
                 .getOperatingSystemGetAllResponse()
                 .getItems()
                 .get(operatingSystemPosition);
+    }
+
+    private Geo getGeoFromGeoList(int geoPosition) {
+
+        return GeoPrecondition.geo()
+                .getAllGeosWithFilter(Map.of("localeCode", "en"))
+                .build().getGeoGetAllResponse()
+                .getItems()
+                .get(geoPosition);
     }
 }
