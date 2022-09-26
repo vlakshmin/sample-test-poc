@@ -228,7 +228,7 @@ public class CreateOpenPricingTest extends BaseTest {
     @Step("Verify 'Geo' Items in Details' menu in Pricing table")
     public void checkGeoMenuDetailsTest() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var geoDetailsSection = pricingTableDetailsMenu.getOperatingSystemDetailsSection();
+        var geoDetailsSection = pricingTableDetailsMenu.getGeoDetailsSection();
 
         hoverMouseCursorOnDetailsIcon(tableData);
 
