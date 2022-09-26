@@ -121,6 +121,7 @@ application-prod.yml
 *.log
 .allure
 target/allure-results
+allure-results
 docker/docker-compose.yml
 target
 

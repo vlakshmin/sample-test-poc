@@ -10,6 +10,7 @@ import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import rx.BaseTest;
 
@@ -28,7 +29,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
     private static final String PREFIX_OPEN_PRICING = "auto";
     private static final String PREFIX_USERS = "Test Account";
     private static final String PREFIX_DYNAMIC_PRICING = "auto";
-    private static final String PREFIX_PROTECTIONS = "Api protection";
+    private static final String PREFIX_PROTECTIONS = "api";
 
     @Test(priority = 1)
     public void deleteProtections() {
@@ -45,7 +46,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
         log.info(String.format("Deleted protections items %s of %s", deleted, protections.size()));
     }
 
-    @Test(priority = 2)
+    @Test(priority = 3)
     public void deleteAdSpots() {
         var adSpots = getAllAdSpotsByParams();
         int deleted = 0;
@@ -60,7 +61,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
         log.info(String.format("Deleted ad spots items %s of %s", deleted, adSpots.size()));
     }
 
-    @Test(priority = 3)
+    @Test(priority = 2)
     public void deleteMedia() {
         var media = getAllMediaByParams();
         int deleted = 0;
@@ -118,6 +119,39 @@ public class DeleteGeneratedDataTest extends BaseTest {
                 deleted++;
         }
         log.info(String.format("Deleted publishers items %s of %s", deleted, publishers.size()));
+    }
+
+    //TODO
+    @Ignore
+    @Test(priority = 7)
+    public void updatePublishers() {
+        var publishers = getAllPublishersByParams();
+        int updated = 0;
+        Publisher pub;
+
+        for (Publisher p : publishers) {
+            pub = Publisher.builder()
+                    .id(p.getId())
+                    .name(p.getName())
+                    .salesAccountName(p.getSalesAccountName())
+                    .mail(p.getMail())
+                    .isEnabled(false)
+                    .domain(p.getDomain())
+                    .currency(p.getCurrency())
+                    .categoryIds(p.getCategoryIds())
+                    .dspIds(p.getDspIds())
+                    .createdAt(p.getCreatedAt())
+                    .updatedAt(p.getUpdatedAt())
+                    .build();
+
+            if (PublisherPrecondition.publisher()
+                    .setCredentials(USER_FOR_DELETION)
+                    .updatePublisher(pub)
+                    .build()
+                    .getResponseCode() == HttpStatus.SC_NO_CONTENT)
+                updated++;
+        }
+        log.info(String.format("Updated publishers items %s of %s", updated, publishers.size()));
     }
 
     @Test(priority = 7)

@@ -34,17 +34,18 @@ public class MediaCreateTests extends BaseTest {
     @BeforeClass
     private void initAndLogin() {
         publisher = publisher()
-                .createNewPublisher(captionWithSuffix("1autoPub"))
+                .createNewPublisher(captionWithSuffix("02autoPub"))
                 .build()
                 .getPublisherResponse();
 
         testStart()
                 .given()
                 .openDirectPath(Path.MEDIA)
+                .clickBrowserRefreshButton()
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+                .clickBrowserRefreshButton()
                 .testEnd();
-
     }
 
     @Test(description = "Create Media with 'IOS' media type")

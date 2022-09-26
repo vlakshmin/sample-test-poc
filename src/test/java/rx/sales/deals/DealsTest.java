@@ -48,7 +48,7 @@ public class DealsTest extends BaseTest {
                 .clickOnWebElement(dealsPage.getCreateNewDealButton())
                 .waitSideBarOpened()
                 .and()
-                .selectFromDropdownWithSearch(createDealSidebar.getPublisherDropdown(),
+                .selectFromDropdown(createDealSidebar.getPublisherDropdown(),
                         createDealSidebar.getDropDownItems(),
                         "Viber")
                 .setValue(createDealSidebar.getNameInput(), captionWithSuffix("Deal"))

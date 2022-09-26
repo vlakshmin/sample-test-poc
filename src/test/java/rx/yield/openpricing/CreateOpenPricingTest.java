@@ -46,7 +46,7 @@ public class CreateOpenPricingTest extends BaseTest {
     private CreateOpenPricingSidebar createOpenPricingSidebar;
 
     private static final String EMPTY_STRING = "";
-    private static final String PRICING_NAME = captionWithSuffix("Pricing");
+    private static final String PRICING_NAME = captionWithSuffix("autoPricing");
 
     public CreateOpenPricingTest() {
         openPricingPage = new OpenPricingPage();
@@ -68,7 +68,7 @@ public class CreateOpenPricingTest extends BaseTest {
                 .openDirectPath(Path.CREATE_OPEN_PRICING)
                 .waitSideBarOpened()
                 .and("Enter data to all fields of sidebar")
-                .selectFromDropdownWithSearch(createOpenPricingSidebar.getPublisherNameDropdown(),
+                .selectFromDropdown(createOpenPricingSidebar.getPublisherNameDropdown(),
                         createOpenPricingSidebar.getPublisherNameDropdownItems(), "Viber")
                 .setValue(createOpenPricingSidebar.getNameInput(), PRICING_NAME)
                 .setValue(createOpenPricingSidebar.getFloorPriceField().getFloorPriceInput(), "22")

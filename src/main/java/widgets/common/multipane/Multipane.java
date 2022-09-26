@@ -62,10 +62,10 @@ public class Multipane {
     @Getter(AccessLevel.NONE)
     private List<SelectChildTableItem> selectTableChildItemsList = new ArrayList<>();
 
-    public Multipane(MultipaneName multipaneName){
+    public Multipane(MultipaneName multipaneName) {
         this.multipaneName = multipaneName;
 
-        this.searchInput =  $x(buildXpath(SEARCH_INPUT.getSelector())).as(SEARCH_INPUT.getAlias());
+        this.searchInput = $x(buildXpath(SEARCH_INPUT.getSelector())).as(SEARCH_INPUT.getAlias());
         this.excludedIcon = $x(buildXpath(EXCLUDED_ICON.getSelector())).as(EXCLUDED_ICON.getAlias());
         this.includedIcon = $x(buildXpath(INCLUDED_ICON.getSelector())).as(INCLUDED_ICON.getAlias());
         this.excludedBanner = $x(buildXpath(EXCLUDED_BANNER.getSelector())).as(EXCLUDED_BANNER.getAlias());
@@ -75,25 +75,32 @@ public class Multipane {
         this.clearSearchIcon = $x(buildXpath(CLEAR_SEARCH_ICON.getSelector())).as(CLEAR_SEARCH_ICON.getAlias());
         this.includeAllButton = $x(buildXpath(INCLUDE_ALL_BUTTON.getSelector())).as(INCLUDE_ALL_BUTTON.getAlias());
         this.selectionInfoLabel = $x(buildXpath(SELECTION_INFO_LABEL.getSelector())).as(SELECTION_INFO_LABEL.getAlias());
-        this.itemsQuantityString =  $x(buildXpath(ITEMS_QUANTITY_STRING.getSelector())).as(ITEMS_QUANTITY_STRING.getAlias());
+        this.itemsQuantityString = $x(buildXpath(ITEMS_QUANTITY_STRING.getSelector())).as(ITEMS_QUANTITY_STRING.getAlias());
         this.selectionInfoExcludedLabel = $x(buildXpath(SELECTION_INFO_EXCLUDED_LABEL.getSelector())).as(SELECTION_INFO_EXCLUDED_LABEL.getAlias());
 
-        this.selectTableItems =  $$x(buildXpath(SELECT_TABLE_ITEMS.getSelector()));
-        this.selectChildTableItems =  $$x(buildXpath(SELECT_CHILD_TABLE_ITEMS.getSelector()));
-        this.includedExcludedTableItems =  $$x(buildXpath(INCLUDED_EXCLUDED_TABLE_ITEMS.getSelector()));
+        this.selectTableItems = $$x(buildXpath(SELECT_TABLE_ITEMS.getSelector()));
+        this.selectChildTableItems = $$x(buildXpath(SELECT_CHILD_TABLE_ITEMS.getSelector()));
+        this.includedExcludedTableItems = $$x(buildXpath(INCLUDED_EXCLUDED_TABLE_ITEMS.getSelector()));
     }
 
-    /** TableItems Section */
+    /**
+     * TableItems Section
+     */
 
-    private void countSelectTableItems() {
+    private int countSelectTableItems() {
         panelNameLabel.shouldHave(attribute("aria-expanded", "true"))
                 .scrollIntoView(true);
 
-        selectTableItems.shouldBe(CollectionCondition.allMatch("Wait to collection element to be visible",
+        int count = 0;
+
+        if (selectTableItems.size()>0)
+            count = (int)selectTableItems.shouldBe(CollectionCondition.allMatch("Wait to collection element to be visible",
                         WebElement::isDisplayed))
                 .stream()
                 .map(se -> se.shouldBe(exist).scrollTo().shouldBe(visible))
                 .count();
+
+        return count;
     }
 
     private void addSelectTableItemsToList() {
@@ -125,19 +132,28 @@ public class Multipane {
                                 selectItemName)));
     }
 
-    /** End of TableItems Section
-     *
-     * TableChildItems Section */
+    /**
+     * End of TableItems Section
+     * <p>
+     * TableChildItems Section
+     */
 
-    private void countSelectChildTableItems() {
+    public int countSelectChildTableItems() {
         panelNameLabel.shouldHave(attribute("aria-expanded", "true"))
                 .scrollIntoView(true);
 
-        selectChildTableItems.shouldBe(CollectionCondition.allMatch("Wait to collection element to be visible",
-                        WebElement::isDisplayed))
-                .stream()
-                .map(se -> se.shouldBe(exist).scrollTo().shouldBe(visible))
-                .count();
+        int count = 0;
+
+        if (selectChildTableItems.size() > 0)
+            count = (int) selectChildTableItems.shouldBe(CollectionCondition.allMatch("Wait to collection element to be visible",
+                            WebElement::isDisplayed))
+                    .stream()
+                    .map(se -> se.shouldBe(exist).scrollTo().shouldBe(visible))
+
+                    .count();
+
+        return count;
+
     }
 
     private void addSelectChildTableItemsToList() {
@@ -169,20 +185,27 @@ public class Multipane {
                                 selectItemName)));
     }
 
-    /** End of TableChildItems Section
-     *
-     *
-     * IncludedExcludedTableItems Section */
+    /**
+     * End of TableChildItems Section
+     * <p>
+     * <p>
+     * IncludedExcludedTableItems Section
+     */
 
-    private void countIncludedExcludedTableItems() {
+    public int countIncludedExcludedTableItems() {
         panelNameLabel.shouldHave(attribute("aria-expanded", "true"))
                 .scrollIntoView(true);
 
-        includedExcludedTableItems.shouldBe(CollectionCondition.allMatch("Wait to collection element to be visible",
-                        WebElement::isDisplayed))
-                .stream()
-                .map(se -> se.shouldBe(exist).scrollTo().shouldBe(visible))
-                .count();
+        int count = 0;
+
+        if (includedExcludedTableItems.size() > 0)
+            count = (int) includedExcludedTableItems.shouldBe(CollectionCondition.allMatch("Wait to collection element to be visible",
+                            WebElement::isDisplayed))
+                    .stream()
+                    .map(se -> se.shouldBe(exist).scrollTo().shouldBe(visible))
+                    .count();
+
+        return count;
     }
 
     private void addIncludedExcludedTableItemsToList() {
@@ -214,7 +237,9 @@ public class Multipane {
                                 selectItemName)));
     }
 
-    /** End of IncludedExcludedTableItems Section */
+    /**
+     * End of IncludedExcludedTableItems Section
+     */
 
     protected String buildXpath(String elementXpath) {
 

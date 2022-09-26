@@ -60,6 +60,7 @@ public enum RakutenExchangeApi {
 
     //Dsp
     GET_ALL_DSPS("/v2/dsps"),
+    CREATE_DSP("/v2/dsps"),
 
     //AdSize
     GET_ALL_AD_SIZES("/v2/ad-sizes"),

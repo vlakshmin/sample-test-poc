@@ -98,6 +98,7 @@ public class MediaPrecondition {
 
             return this;
         }
+
         public MediaPreconditionBuilder createNewMedia(String name, Integer id, Boolean isEnabled) {
             this.mediaRequest = createMediaRequest(name, id, isEnabled);
             this.response = mediaService.createMedia(mediaRequest);
@@ -124,9 +125,11 @@ public class MediaPrecondition {
 
             return this;
         }
+
         public MediaPreconditionBuilder getAllMediaList() {
             this.response = mediaService.getAll();
-            this.mediaGetAllResponse = this.response.as(new TypeRef<GenericResponse<Media>>() {});
+            this.mediaGetAllResponse = this.response.as(new TypeRef<GenericResponse<Media>>() {
+            });
             this.responseCode = response.getStatusCode();
 
             return this;
@@ -134,7 +137,8 @@ public class MediaPrecondition {
 
         public MediaPreconditionBuilder getMediaWithFilter(Map<String, Object> queryParams) {
             this.response = mediaService.getMediaWithFilter(queryParams);
-            this.mediaGetAllResponse = this.response.as(new TypeRef<GenericResponse<Media>>() {});
+            this.mediaGetAllResponse = this.response.as(new TypeRef<GenericResponse<Media>>() {
+            });
             this.responseCode = response.getStatusCode();
 
             return this;
@@ -169,6 +173,7 @@ public class MediaPrecondition {
 
             return this;
         }
+
         public MediaPrecondition.MediaPreconditionBuilder changeMediaStatus(int id, Boolean isEnabled) {
             this.response = mediaService.getMediaById(id);
             this.mediaResponse = this.response.as(Media.class);
@@ -180,6 +185,7 @@ public class MediaPrecondition {
 
             return this;
         }
+
         public MediaPrecondition build() {
             HttpClient.setCredentials(User.TEST_USER);
 
@@ -230,7 +236,7 @@ public class MediaPrecondition {
                     .filter(x -> x.getName().equalsIgnoreCase(mediaType))
                     .findFirst()
                     .orElseThrow(() -> new NoSuchElementException
-                            (String.format("Platform Id with name %s does not find",mediaType))).getId();
+                            (String.format("Platform Id with name %s does not find", mediaType))).getId();
 
             return MediaRequest.builder()
                     .name(captionWithSuffix(name))
@@ -248,6 +254,11 @@ public class MediaPrecondition {
             Publisher publisher = createPublisher();
 
             return createMediaRequest(name, publisher.getId(), isEnabled);
+        }
+
+        private MediaRequest createMediaRequest(String name, Boolean isEnabled, int publisherId) {
+
+            return createMediaRequest(name, publisherId, isEnabled);
         }
 
         private MediaRequest createMediaRequest(String name, int id, Boolean isEnabled) {

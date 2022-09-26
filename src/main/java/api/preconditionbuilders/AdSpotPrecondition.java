@@ -8,7 +8,6 @@ import api.dto.rx.inventory.adspot.AdSpot;
 import api.dto.rx.inventory.adspot.AdSpotRequest;
 import api.dto.rx.inventory.adspot.Video;
 import api.dto.rx.inventory.media.Media;
-import api.dto.rx.inventory.media.MediaRequest;
 import api.services.AdSpotService;
 import configurations.User;
 import io.restassured.common.mapper.TypeRef;
@@ -98,17 +97,25 @@ public class AdSpotPrecondition {
             return this;
         }
 
-        private AdSpotRequest createAdSpotRequest(String name, String publisherName, Boolean isEnabled) {
-            Publisher publisher = createPublisher(publisherName);
-            Media media = createMedia("autoMedia",publisher.getId());
+        public AdSpotPreconditionBuilder createNewAdSpot(String name, Integer publisherId, Integer mediaId, Boolean isEnabled) {
+
+            this.adSpotRequest = createAdSpotRequest(name, publisherId, mediaId, isEnabled);
+            this.response = adSpotService.createAdSpot(adSpotRequest);
+            this.adSpotResponse = response.as(AdSpot.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
+        private AdSpotRequest createAdSpotRequest(String name, Integer publisherId, Integer mediaId, Boolean isEnabled) {
 
             return AdSpotRequest.builder()
                     .name(name)
                     .enabled(isEnabled)
-                    .publisherId(media.getPublisherId())
+                    .publisherId(publisherId)
                     .currency(Currency.JPY.name())
                     .floorPrice(11.00)
-                    .mediaId(media.getId())
+                    .mediaId(mediaId)
                     .positionId(1)
                     .coppa(true)
                     .sizeIds(List.of(10))
@@ -117,6 +124,15 @@ public class AdSpotPrecondition {
                     .categoryIds(List.of(1, 9))
                     .video(createVideo())
                     .build();
+        }
+
+        private AdSpotRequest createAdSpotRequest(String name, String publisherName, Boolean isEnabled) {
+
+            Publisher publisher = createPublisher(publisherName);
+
+            Media media = createMedia("autoMedia",publisher.getId());
+
+            return createAdSpotRequest(name, publisher.getId(), media.getId(), isEnabled);
         }
 
         private AdSpotRequest createAdSpotRequest(String name, Boolean isEnabled) {
