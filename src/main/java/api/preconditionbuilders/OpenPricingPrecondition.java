@@ -29,6 +29,7 @@ public class OpenPricingPrecondition {
 
     private Integer responseCode;
     private OpenPricing openPricingResponse;
+    private String openPricingExportResponse;
     private OpenPricingRequest openPricingRequest;
     private GenericResponse<OpenPricing> openPricingGetAllResponse;
 
@@ -36,6 +37,7 @@ public class OpenPricingPrecondition {
         this.responseCode = builder.responseCode;
         this.openPricingRequest = builder.openPricingRequest;
         this.openPricingResponse = builder.openPricingResponse;
+        this.openPricingExportResponse = openPricingExportResponse;
         this.openPricingGetAllResponse = builder.openPricingGetAllResponse;
     }
 
@@ -49,6 +51,7 @@ public class OpenPricingPrecondition {
         private Response response;
         private Integer responseCode;
         private OpenPricing openPricingResponse;
+        private String openPricingExportResponse;
         private OpenPricingRequest openPricingRequest;
         private GenericResponse<OpenPricing> openPricingGetAllResponse;
         private OpenPricingService openPricingService = new OpenPricingService();
@@ -121,6 +124,15 @@ public class OpenPricingPrecondition {
 
             this.response = openPricingService.createOpenPricing(openPricingRequest);
             this.openPricingResponse = response.as(OpenPricing.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
+        public OpenPricingPreconditionBuilder export(int publisherId) {
+            this.response = openPricingService.export(Map.of("publisher_id", String.valueOf(publisherId)));
+
+            this.openPricingExportResponse = this.response.as(String.class);
             this.responseCode = response.getStatusCode();
 
             return this;

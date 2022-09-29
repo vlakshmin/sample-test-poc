@@ -28,11 +28,12 @@ public enum RakutenExchangeApi {
     DELETE_USER("/v2/accounts/%s"),
 
     //Open Pricing
-    CREATE_OPEN_PRICING("/v3/pricing/open"),
-    UPDATE_OPEN_PRICING("/v3/pricing/open/%s"),
-    GET_ALL_OPEN_PRICING("/v3/pricing/open"),
     GET_OPEN_PRICING("/v3/pricing/open/%s"),
+    CREATE_OPEN_PRICING("/v3/pricing/open"),
+    GET_ALL_OPEN_PRICING("/v3/pricing/open"),
+    UPDATE_OPEN_PRICING("/v3/pricing/open/%s"),
     DELETE_OPEN_PRICING("/v3/pricing/open/%s"),
+    EXPORT_OPEN_PRICING_FLOOR_PRICE("/v3/pricing/open/export"),
 
     //Dynamic Pricing
     CREATE_DYNAMIC_PRICING("/v3/pricing/dynamic"),
@@ -77,6 +78,7 @@ public enum RakutenExchangeApi {
     private String endpoint;
 
     public String setParameters(Object... parameters) {
+
         return parameters.length > 0 ? String.format(endpoint, parameters) : endpoint;
     }
 
