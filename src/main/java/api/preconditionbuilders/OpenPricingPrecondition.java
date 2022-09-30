@@ -19,6 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static zutils.FakerUtils.captionWithSuffix;
 
@@ -29,15 +31,15 @@ public class OpenPricingPrecondition {
 
     private Integer responseCode;
     private OpenPricing openPricingResponse;
-    private String openPricingExportResponse;
     private OpenPricingRequest openPricingRequest;
+    private Map<String, String> openPricingExportResponse;
     private GenericResponse<OpenPricing> openPricingGetAllResponse;
 
     private OpenPricingPrecondition(OpenPricingPreconditionBuilder builder) {
         this.responseCode = builder.responseCode;
         this.openPricingRequest = builder.openPricingRequest;
         this.openPricingResponse = builder.openPricingResponse;
-        this.openPricingExportResponse = openPricingExportResponse;
+        this.openPricingExportResponse = builder.openPricingExportResponse;
         this.openPricingGetAllResponse = builder.openPricingGetAllResponse;
     }
 
@@ -51,8 +53,8 @@ public class OpenPricingPrecondition {
         private Response response;
         private Integer responseCode;
         private OpenPricing openPricingResponse;
-        private String openPricingExportResponse;
         private OpenPricingRequest openPricingRequest;
+        private Map<String, String> openPricingExportResponse;
         private GenericResponse<OpenPricing> openPricingGetAllResponse;
         private OpenPricingService openPricingService = new OpenPricingService();
 
@@ -132,7 +134,10 @@ public class OpenPricingPrecondition {
         public OpenPricingPreconditionBuilder export(int publisherId) {
             this.response = openPricingService.export(Map.of("publisher_id", String.valueOf(publisherId)));
 
-            this.openPricingExportResponse = this.response.as(String.class);
+            this.openPricingExportResponse = Stream.of(response.getBody().asString().split("\n"))
+                    .map(str -> str.split(","))
+                    .collect(Collectors.toMap(str -> str[0], str -> str[1]));
+
             this.responseCode = response.getStatusCode();
 
             return this;
