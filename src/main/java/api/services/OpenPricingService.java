@@ -28,6 +28,12 @@ public class OpenPricingService extends BaseService {
         return get(URL);
     }
 
+    public Response export(Map<String, Object> queryParams) {
+        URL = initURL(EXPORT_OPEN_PRICING_FLOOR_PRICE);
+
+        return get(URL, queryParams);
+    }
+
     public Response deleteOpenPricing(Integer id) {
         URL = initURL(DELETE_OPEN_PRICING.setParameters(id));
 
