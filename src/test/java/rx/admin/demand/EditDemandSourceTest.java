@@ -58,9 +58,6 @@ public class EditDemandSourceTest extends BaseTest {
                 .openDirectPath(Path.DEMAND)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, demandPage.getNuxtProgress())
-                .setValueWithClean(demandPage.getDemandTable().getTableData().getSearch(),
-                        demandSource.getCorp())
-                .clickEnterButton(demandPage.getDemandTable().getTableData().getSearch())
                 .testEnd();
     }
 
@@ -71,10 +68,14 @@ public class EditDemandSourceTest extends BaseTest {
                 .given("Open newly created Demand Source")
                 .openDirectPath(Path.DEMAND)
                 .waitAndValidate(disappear, demandPage.getTableProgressBar())
+                .when("Searching Demand source")
+                .setValueWithClean(demandPage.getDemandTable().getTableData().getSearch(),
+                        demandSource.getCorp())
+                .clickEnterButton(demandPage.getDemandTable().getTableData().getSearch())
                 .clickOnTableCellLink(demandPage.getDemandTable().getTableData(), ColumnNames.BIDDER, demandSource.getCorp())
                 .waitSideBarOpened()
                 .then("Validate Settings of Demand Source")
-                .validateAttribute(editDemandSidebar.getInactiveRadioButton(), "aria-checked", "true")
+                .validateAttribute(editDemandSidebar.getInactiveRadioButton(), "aria-checked", "false")
 //                .validateAttribute(createPublisherSidebar.getCurrency(), "disabled", "true")
 //                .and()
 //                .setValueWithClean(createPublisherSidebar.getNameInput(), PUBLISHER_NAME_EDITED)
