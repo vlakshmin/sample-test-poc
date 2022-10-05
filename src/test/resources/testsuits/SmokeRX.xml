@@ -19,7 +19,7 @@
             <class name="rx.inventory.media.MediaCheckTooltipsTests"/>
         </classes>
     </test>
-    <test name="Ad Spot">
+ <!--   <test name="Ad Spot">
         <classes>
             <class name="rx.inventory.adspot.AdSpotCheckPaginationTests"/>
             <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
@@ -44,8 +44,8 @@
             <class name="rx.yield.openpricing.OpenPricingChangePublisherTests"/>
             <class name="rx.yield.openpricing.CreateOpenPricingTest"/>
             <class name="rx.yield.openpricing.OpenPricingSortingTableTests"/>
-            <!--   <class name="rx.yield.openpricing.VerifyPublisherTests"/>
-               <class name="rx.yield.openpricing.OpenPricingTests"/>-->
+              <class name="rx.yield.openpricing.VerifyPublisherTests"/>
+               <class name="rx.yield.openpricing.OpenPricingTests"/>
         </classes>
     </test>
     <test name="Protections Feature">
@@ -76,7 +76,7 @@
         <classes>
             <class name="rx.admin.publishers.PublisherTest"/>
         </classes>
-    </test>
+    </test> -->
     <test name="XPost-conditions. Delete records with 'auto' substring">
         <classes>
             <class name="rx.pipelines.DeleteGeneratedDataTest"/>
