@@ -7,14 +7,15 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Path {
 
-    CREATE_PROTECTION("/protections/create"),
-    PROTECTIONS("/protections"),
-    PUBLISHER("/admin/publishers"),
-    USER("/admin/publishers"),
-    DEALS("/sales/deals"),
     MEDIA("/media"),
     AD_SPOT("/adspots"),
+    DEALS("/sales/deals"),
+    DEMAND("/admin/demand"),
+    USER("/admin/publishers"),
+    PROTECTIONS("/protections"),
+    PUBLISHER("/admin/publishers"),
     OPEN_PRICING("/yield/open-pricing"),
+    CREATE_PROTECTION("/protections/create"),
     CREATE_OPEN_PRICING("/yield/open-pricing/create");
 
     private String path;

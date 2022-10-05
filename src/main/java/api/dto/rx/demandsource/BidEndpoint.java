@@ -15,6 +15,7 @@ import zutils.ObjectMapperUtils;
 public class BidEndpoint {
 
     private Integer id;
+    private Integer dspID;
     private String endpoint;
     private Integer datacenterID;
 
