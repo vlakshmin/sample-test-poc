@@ -6,6 +6,7 @@ import api.dto.rx.inventory.media.Media;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.Path;
 import pages.protections.ProtectionsPage;
@@ -35,6 +36,8 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
     private List<Media> mediaInactiveList;
     private List<AdSpot> adSpotActiveList_0;
     private List<AdSpot> adSpotInactiveList_0;
+    private List<AdSpot> adSpotActiveListInactiveMedia_0;
+    private List<AdSpot> adSpotInactiveListInactiveMedia_0;
 
     private List<AdSpot> adSpotActiveList_1;
     private List<AdSpot> adSpotInactiveList_1;
@@ -74,6 +77,9 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
         adSpotActiveList_1 = createAdSpot(mediaActiveList.get(1), true, AD_SPOT_ACTIVE_COUNT);
         adSpotInactiveList_1 = createAdSpot(mediaActiveList.get(1), false, AD_SPOT_INACTIVE_COUNT);
 
+        adSpotActiveListInactiveMedia_0 = createAdSpot(mediaInactiveList.get(0), true, AD_SPOT_ACTIVE_COUNT);
+        adSpotInactiveListInactiveMedia_0 = createAdSpot(mediaInactiveList.get(0), false, AD_SPOT_INACTIVE_COUNT);
+
         testStart()
                 .given()
                 .openDirectPath(Path.PROTECTIONS)
@@ -85,7 +91,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Empty Inventory Items List")
+    @Test(description = "Check Empty Inventory Items List", priority = 0)
     private void checkEmptyInventoryList() {
 
         testStart()
@@ -101,7 +107,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Media Inventory Items List")
+    @Test(description = "Check Media Inventory Items List", priority = 1)
     private void checkInventoryList() {
 
         testStart()
@@ -122,7 +128,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Ad Spots Inventory Items List")
+    @Test(description = "Check Ad Spots Inventory Items List", priority = 2)
     private void checkAdSpotInventoryList() {
 
         testStart()
@@ -145,7 +151,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Media Inventory Items List without Ad Spots should be empty")
+    @Test(description = "Check Media Inventory Items List without Ad Spots should be empty", priority = 3)
     private void checkAdSpotInventoryListWithoutAdSpots() {
 
         testStart()
@@ -167,7 +173,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Media Inventory Inactive Items List")
+    @Test(description = "Check Media Inventory Inactive Items List", priority = 4)
     private void checkMediaInactiveInventoryList() {
 
         testStart()
@@ -198,7 +204,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check AdSpots Inventory Inactive Items List (Media is Active)")
+    @Test(description = "Check AdSpots Inventory Inactive Items List (Media is Active)", priority = 5)
     private void checkAdSpotsInactiveInventoryListActiveMedia() {
 
         testStart()
@@ -225,11 +231,11 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check AdSpots Inventory Inactive Items List (Media is Inactive)")
+    @Test(description = "Check AdSpots Inventory Inactive Items List (Media is Inactive)", priority = 6)
     private void checkAdSpotsInactiveInventoryListInactiveMedia() {
 
         testStart()
-                .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
+                .and(String.format("Select Publisher '%s'", publisherActive.getName()))
                 .selectFromDropdown(protectionSidebar.getPublisherInput(),
                         protectionSidebar.getPublisherItems(), publisherActive.getName())
                 .and("Expand 'Inventory' multipane")
@@ -237,14 +243,8 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .and("Set 'Show Inactive' toggle ON")
                 .turnToggleOn(protectionMultipane.getShowInactive())
                 .testEnd();
-        validateAdSpotsCount(String.format("(Inactive) %s",mediaInactiveList.get(0).getName()),AD_SPOT_INACTIVE_COUNT);
-        validateInactiveAdSpotsList(mediaInactiveList.get(0), adSpotInactiveList_0);
-        testStart()
-                .and("Set 'Show Inactive' toggle OFF")
-                .turnToggleOff(protectionMultipane.getShowInactive())
-                .testEnd();
-        validateAdSpotsCount(mediaInactiveList.get(0).getName(),AD_SPOT_INACTIVE_COUNT);
-
+        validateAdSpotsCount(mediaInactiveList.get(0).getName(),AD_SPOT_INACTIVE_COUNT+AD_SPOT_ACTIVE_COUNT);
+        validateInactiveAdSpotsList(mediaInactiveList.get(0), adSpotInactiveListInactiveMedia_0);
 
         testStart()
                 .and("Collapse 'Inventory' multipane")
@@ -252,8 +252,8 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Search Active Media")
-    private void checkSearch() {
+    @Test(description = "Check Search Active Media", priority = 7)
+    private void checkSearchActiveMedia() {
 
         testStart()
                 .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
@@ -261,8 +261,9 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                         protectionSidebar.getPublisherItems(), publisherActive.getName())
                 .and("Expand 'Inventory' multipane")
                 .clickOnWebElement(protectionMultipane.getPanelNameLabel())
-                .and("Search inventory by Name")
+                .and(String.format("Search inventory by Name = %s",mediaActiveList.get(0).getName()))
                 .setValueWithClean(protectionMultipane.getSearchInput(), mediaActiveList.get(0).getName())
+                .clickEnterButton(protectionMultipane.getSearchInput())
                 .and("Set 'Show Inactive' toggle ON")
                 .turnToggleOn(protectionMultipane.getShowInactive())
                 .then("Validate item list includes inactive inventory")
@@ -278,7 +279,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Search Inactive Media")
+    @Test(description = "Check Search Inactive Media", priority = 8)
     private void checkSearchInactiveMedia() {
 
         testStart()
@@ -303,6 +304,33 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .testEnd();
     }
 
+    //:TODO
+    @Ignore
+    @Test(description = "Check Search Active Ad Spot", priority = 9)
+    private void checkSearchActiveAdSpot() {
+
+        testStart()
+                .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
+                .selectFromDropdown(protectionSidebar.getPublisherInput(),
+                        protectionSidebar.getPublisherItems(), publisherActive.getName())
+                .and("Expand 'Inventory' multipane")
+                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
+                .and(String.format("Search inventory by Name = %s",adSpotActiveList_0.get(0).getName()))
+                .setValueWithClean(protectionMultipane.getSearchInput(), adSpotActiveList_0.get(0).getName())
+                .clickEnterButton(protectionMultipane.getSearchInput())
+                .then("Validate item list")
+                .validate(protectionMultipane.countSelectTableItems(), 1)
+                .validate(protectionMultipane.getSelectTableItemByPositionInList(0).getName(), mediaActiveList.get(0).getName())
+                .validate(protectionMultipane.getSelectTableItemByPositionInList(1).getName(), adSpotActiveList_0.get(0).getName())
+                .and("Set 'Show Inactive' toggle OFF")
+                .turnToggleOff(protectionMultipane.getShowInactive())
+                .then("Validate item list includes only active inventory")
+                .validate(protectionMultipane.countSelectTableItems(), 1)
+                .validate(protectionMultipane.getSelectTableItemByPositionInList(1).getName(), adSpotActiveList_0.get(0).getName())
+                .and("Collapse 'Inventory' multipane")
+                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
+                .testEnd();
+    }
 
     @AfterClass(alwaysRun = true)
     private void logout() {
