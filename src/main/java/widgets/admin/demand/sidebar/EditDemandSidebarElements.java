@@ -13,11 +13,13 @@ public enum EditDemandSidebarElements {
     TOKEN_GENERATION_TOGGLE("'Token Generation' Toggle", "//label[text()='Token Generation']/..//input[@role='switch']"),
     NON_PROGRAMMATIC_TOGGLE("'Non-Programmatic' Toggle", "//label[text()='Non-Programmatic']/..//input[@role='switch']"),
 
-    ACTIVE_RADIO_BUTTON("'Active' Radio Button", "//label[text()='Inactive']/..//input"),
+    ACTIVE_RADIO_BUTTON("'Active' Radio Button", "//label[text()='Active']/..//input"),
     INACTIVE_RADIO_BUTTON("'Inactive' Radio Button", "//label[text()='Inactive']/..//input"),
     ONBOARDING_RADIO_BUTTON("'Active' Radio Button", "//label[text()='Onboarding']/..//input"),
     EDDPOINT_URI_INPUT("'Publisher Domain' Input", "//label[text()='Endpoint URI']/../input"),
     SYNC_URL("'Sync Url' Input", "//label[text()='Sync Url']/../input"),
+    FORMAT_LABEL("'Format' Label", "//header[text()='Format']"),
+    CLOSE_ICON("'Close  Sidebar' Icon", "//header/div/button/span/i"),
     BIDDER( "'Bidder' Input", "//label[text()='Bidder']/../input"),
     BANNER_CHECKBOX("'Banner' Checkbox", "//label[text()='Banner']/../../div//input"),
     NATIVE_CHECKBOX("'Native' Checkbox", "//label[text()='Native']/../../div//input"),
@@ -29,7 +31,7 @@ public enum EditDemandSidebarElements {
     DROPDOWN_ITEMS("Dropdown Items", "//div[contains(@class,'menuable__content__activ')]//div[@class='v-list-item__title']"),
     CURRENCY_DROPDOWN("'Currency' Dropdown", "//label[text()='Currency']/../input"),
     DATA_CENTER_DROPDOWN( "'Data Center' Dropdown", "//label[text()='Data Center']/../input"),
-    SAVE_BUTTON("'Save Publisher' Button",  "//button/span[contains(text(),'Save Publisher')]");
+    SAVE_BUTTON("'Save' Button",  "//button/span[contains(text(),'Save')]");
 
     private String alias;
     private String selector;

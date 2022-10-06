@@ -63,8 +63,9 @@ public class DemandSourcePrecondition {
         public DemandSourcePreconditionBuilder createDemandSource() {
             this.demandSourceRequest = DemandSource.builder()
                     .corp(FakerUtils.captionWithSuffix("Demand auto"))
+                    .status(1)
                     .currency(Currency.EUR.getAlias())
-                    .country(CountryCode.UA.getCode())
+                    .country(CountryCode.US.getCode())
                     .bidEndpoints(List.of(BidEndpoint.builder()
                                     .id(2)
                                     .datacenterID(1)
@@ -73,19 +74,36 @@ public class DemandSourcePrecondition {
                             .build()))
                     .syncUrl("http://sync.com")
                     .requestAdjustmentRate(100)
+                    .idfaRequired(false)
+                    .syncRequired(false)
                     .nativeAllowed(true)
                     .bannerAllowed(true)
+                    .videoAllowed(false)
                     .platformIosAppAllowed(true)
+                    .platformAndroidAppAllowed(true)
                     .platformMobileWebAllowed(true)
                     .platformPcWebAllowed(true)
+                    .tokenGeneration(false)
+                    .debugAdspotIds("")
                     .timeout(300)
+                    .allowedCountries("")
+                    .dspTypeId(0)
                     .isEnabled(true)
                     .pmpSupported(true)
+                    .ecpmSupported(false)
+                    .nonProgrammatic(false)
                     .build();
 
             this.response = demandSourceService.createDSP(this.demandSourceRequest);
 
             this.demandSourceResponse = this.response.as(DemandSource.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
+        public DemandSourcePreconditionBuilder deleteDemandSource(int id) {
+            this.response = demandSourceService.deleteDsp(id);
             this.responseCode = response.getStatusCode();
 
             return this;

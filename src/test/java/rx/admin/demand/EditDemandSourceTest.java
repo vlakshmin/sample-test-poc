@@ -20,6 +20,7 @@ import widgets.admin.publisher.sidebar.EditPublisherSidebar;
 import widgets.common.table.ColumnNames;
 import zutils.FakerUtils;
 
+import static api.preconditionbuilders.DemandSourcePrecondition.demandSource;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
@@ -35,9 +36,6 @@ public class EditDemandSourceTest extends BaseTest {
     private DemandPage demandPage;
     private DemandSource demandSource;
     private EditDemandSidebar editDemandSidebar;
-
-//    private static final String PUBLISHER_NAME_EDITED = FakerUtils.captionWithSuffix("Pub_Auto_Edited");
-//    private static final String PUBLISHER_AD_OPS_EDITED = FakerUtils.captionWithSuffix("Ad_Ops_Edited");
 
     public EditDemandSourceTest() {
         demandPage = new DemandPage();
@@ -58,6 +56,7 @@ public class EditDemandSourceTest extends BaseTest {
                 .openDirectPath(Path.DEMAND)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, demandPage.getNuxtProgress())
+                .waitAndValidate(disappear, demandPage.getTableProgressBar())
                 .testEnd();
     }
 
@@ -65,52 +64,69 @@ public class EditDemandSourceTest extends BaseTest {
     public void checkDspSettingsTest() {
 
         testStart()
-                .given("Open newly created Demand Source")
-                .openDirectPath(Path.DEMAND)
-                .waitAndValidate(disappear, demandPage.getTableProgressBar())
-                .when("Searching Demand source")
+                .given("Searching Demand source")
                 .setValueWithClean(demandPage.getDemandTable().getTableData().getSearch(),
                         demandSource.getCorp())
                 .clickEnterButton(demandPage.getDemandTable().getTableData().getSearch())
                 .clickOnTableCellLink(demandPage.getDemandTable().getTableData(), ColumnNames.BIDDER, demandSource.getCorp())
+                .then("Wait till Demand Source sidebar will be opened")
                 .waitSideBarOpened()
-                .then("Validate Settings of Demand Source")
-                .validateAttribute(editDemandSidebar.getInactiveRadioButton(), "aria-checked", "false")
-//                .validateAttribute(createPublisherSidebar.getCurrency(), "disabled", "true")
-//                .and()
-//                .setValueWithClean(createPublisherSidebar.getNameInput(), PUBLISHER_NAME_EDITED)
-//                .setValueWithClean(createPublisherSidebar.getAdOpsInput(), PUBLISHER_AD_OPS_EDITED)
-//                .clickOnWebElement(createPublisherSidebar.getSaveButton())
-//                .waitSideBarClosed()
-//                .then()
-//                .validate(demandPage.getPublisherItemByPositionInList(0).getPublisherName(), PUBLISHER_NAME_EDITED)
-//                .validate(demandPage.getPublisherItemByPositionInList(0).getPublisherAdOps(), PUBLISHER_AD_OPS_EDITED)
-//                .validate(demandPage.getPublisherItemByPositionInList(0).getPublisherId(), valueOf(demandSource.getId()))
-//                .and()
-//                .clickOnWebElement(demandPage.getPublisherItemByPositionInList(0).getPublisherName())
-//                .waitSideBarOpened()
-//                .then()
-//                .validateAttribute(editDemandSidebar.getNameInput(), "value", PUBLISHER_NAME_EDITED)
-//                .validateAttribute(editDemandSidebar.getAdOpsInput(), "value", PUBLISHER_AD_OPS_EDITED)
+                .then("Validate All Settings of Demand Source sidebar")
+                .validateAttribute(editDemandSidebar.getInactiveRadioButton(), "aria-checked", "true")
+                .validateAttribute(editDemandSidebar.getActiveRadioButton(), "aria-checked", "false")
+                .validateAttribute(editDemandSidebar.getOnboardingRadioButton(), "aria-checked", "false")
+                .then("Check inputs value")
+                .validateAttribute(editDemandSidebar.getBidderInput(), "value", demandSource.getCorp())
+                .validateAttribute(editDemandSidebar.getBidderInput(), "disabled", "true")
+                .validateAttribute(editDemandSidebar.getRequestAdjustmentRateField().getRequestAdjustmentRateFieldInput(),
+                        "value", valueOf(demandSource.getRequestAdjustmentRate()))
+                .then("Check sidebar toggles")
+                .validateAttribute(editDemandSidebar.getSyncRequiredToggle(), "aria-checked", "false")
+                .validateAttribute(editDemandSidebar.getIdfaRequiredToggle(), "aria-checked", "false")
+                .validateAttribute(editDemandSidebar.getTokenGenerationToggle(), "aria-checked", "false")
+                .validateAttribute(editDemandSidebar.getPmpSupportToggle(), "aria-checked", "true")
+                .validateAttribute(editDemandSidebar.getNonProgrammaticToggle(), "aria-checked", "false")
+                .then("Check values of checkBoxes")
+                .scrollIntoView(editDemandSidebar.getFormatLabel())
+                .validateAttribute(editDemandSidebar.getBannerCheckBox(), "aria-checked", "true")
+                .validateAttribute(editDemandSidebar.getNativeCheckBox(), "aria-checked", "true")
+                .validateAttribute(editDemandSidebar.getVideoCheckBox(), "aria-checked", "false")
+                .validateAttribute(editDemandSidebar.getIosCheckBox(), "aria-checked", "true")
+                .validateAttribute(editDemandSidebar.getAndroidCheckBox() ,"aria-checked", "true")
+                .validateAttribute(editDemandSidebar.getMobileWebCheckBox(), "aria-checked", "true")
+                .validateAttribute(editDemandSidebar.getPcWebCheckBox(), "aria-checked", "true")
+                .then("Close sidebar")
+                .clickOnWebElement(editDemandSidebar.getCloseIcon())
                 .testEnd();
     }
 
-//    @AfterClass
-//    private void deleteDemandSource(){
-//        if (publisher()
-//                .setCredentials(USER_FOR_DELETION)
-//                .deletePublisher(demandSource.getId())
-//                .build()
-//                .getResponseCode() == HttpStatus.SC_NO_CONTENT)
-//            log.info(String.format("Deleted publisher %s", demandSource.getId()));
-//    }
+    @AfterClass
+    private void logOutAndDeleteData(){
+        deleteDsp(demandSource.getId());
+        logout();
+    }
+
+    @Step("Delete Demand Source")
+    private void logout(){
+        testStart()
+                .logOut()
+                .testEnd();
+    }
 
     @Step("Create New Demand Source")
     private DemandSource createNewDsp(){
 
-        return DemandSourcePrecondition.demandSource()
+        return demandSource()
                 .createDemandSource()
                 .build()
                 .getDemandSourceResponse();
+    }
+
+    @Step("Delete Demand Source")
+    private void deleteDsp(int id){
+        demandSource()
+                .setCredentials(USER_FOR_DELETION)
+                .deleteDemandSource(id)
+                .build();
     }
 }
