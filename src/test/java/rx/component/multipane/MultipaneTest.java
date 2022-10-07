@@ -29,8 +29,8 @@ public class MultipaneTest extends BaseTest {
 
     private Multipane deviceMultipane;
 
-    public static final String ONE_DEVICE_INCLUDED = "1 device(s) are included";
-    public static final String ALL_DEVICES_INCLUDED = "All devices are included";
+    public static final String ONE_DEVICE_INCLUDED = "1 device is included";
+    public static final String ALL_DEVICES_INCLUDED = "7 devices are included";
 
     //Todo remove it after
     private String publisherDropdown = "//label[text()='Publisher Name']/../div";

@@ -13,7 +13,7 @@ public enum MultipaneElements {
     INCLUDED_ICON("'Included' Icon in Multipane", "//div[@class='included-banner']/i"),
     EXCLUDED_BANNER("'Excluded' Banner in Multipane", "//div[@class='excluded-banner']"),
     INCLUDED_BANNER("'Included' Banner in Multipane", "//div[@class='included-banner']"),
-    SHOW_INACTIVE_TOGGLE("'Show Inactive' Toggle in Multipane",  "//input[@role='switch']/.."),
+    SHOW_INACTIVE_TOGGLE("'Show Inactive' Toggle in Multipane",  "//input[@role='switch']"),
     ITEMS_QUANTITY_STRING("'Items Quantity' String in Multipane", "//div[@class='item-count']"),
     CLEAR_ALL_BUTTON( "'Clear All' button in Multipane", "//span[contains(text(),'Clear All')]"),
     CLEAR_SEARCH_ICON("'Clear Seach' Input Icon in Multipane", "//button[@aria-label='clear icon']"),

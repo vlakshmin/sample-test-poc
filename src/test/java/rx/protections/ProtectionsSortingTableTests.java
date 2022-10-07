@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static api.preconditionbuilders.ProtectionsPrecondition.protection;
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
@@ -39,16 +40,13 @@ public class ProtectionsSortingTableTests extends BaseTest {
     private static final String ASC = "ascending";
     private static final String DESC = "descending";
 
-    private  ProtectionsPrecondition.ProtectionsPreconditionBuilder protection;
-
     public ProtectionsSortingTableTests() {
         protectionsPage = new ProtectionsPage();
     }
 
     @BeforeClass
     private void loginAndCreateExpectedResults() {
-        protection = ProtectionsPrecondition.protection();
-        protection.setCredentials(TEST_USER);
+
         int count = MIN_COUNT_PROTECTIONS - getTotalProtections();
         if (count > 0) {
             idsToDelete = new int[count];
@@ -228,7 +226,7 @@ public class ProtectionsSortingTableTests extends BaseTest {
         Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("sort", "id-desc");
 
-        return ProtectionsPrecondition.protection()
+        return protection()
                 .getProtectionsWithFilter(queryParams)
                 .build()
                 .getProtectionsGetAllResponse()
@@ -247,8 +245,7 @@ public class ProtectionsSortingTableTests extends BaseTest {
         Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("sort", strParams);
 
-        return ProtectionsPrecondition
-                .protection()
+        return protection()
                 .getProtectionsWithFilter(queryParams)
                 .build()
                 .getProtectionsGetAllResponse()
@@ -258,7 +255,7 @@ public class ProtectionsSortingTableTests extends BaseTest {
     private void generateProtections(int count, int... idsToDelete) {
 
         for (int i = 0; i < count; i++) {
-            var builder = protection.createNewRandomProtection().build();
+            var builder = protection().createNewRandomProtection().build();
             var response = builder.getProtectionsResponse();
             if (response != null) {
                 idsToDelete[i]=response.getId();
@@ -266,10 +263,9 @@ public class ProtectionsSortingTableTests extends BaseTest {
         }
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     private void deleteEntities() {
-        protection.setCredentials(USER_FOR_DELETION);
-        Arrays.stream(idsToDelete).forEach(id -> protection.deleteProtection(id).build());
+        Arrays.stream(idsToDelete).forEach(id -> protection().deleteProtection(id).build());
     }
 }
 
