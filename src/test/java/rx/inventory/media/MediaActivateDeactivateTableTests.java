@@ -20,6 +20,7 @@ import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
 import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
+import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
@@ -46,10 +47,10 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
 
     private MediaPage mediaPage;
 
-    private static final String PREFIX_MEDIA = "autoMediaSingle";
-    private static final String PREFIX_MEDIA_INACTIVE_PUBLISHER = "autoMediaInactivePub";
-    private static final String PREFIX_MEDIA_BULK_1 = "autoMediaBulk1";
-    private static final String PREFIX_MEDIA_BULK_2 = "autoMediaBulk2";
+    private static final String PREFIX_MEDIA = captionWithSuffix("autoMediaSingle");
+    private static final String PREFIX_MEDIA_INACTIVE_PUBLISHER = captionWithSuffix("autoMediaInactivePub");
+    private static final String PREFIX_MEDIA_BULK_1 = captionWithSuffix("autoMediaBulk1");
+    private static final String PREFIX_MEDIA_BULK_2 = captionWithSuffix("autoMediaBulk2");
     private static final String CLASS_ATTRIBUTE_FOR_UNCHECKED_CHECKBOX = "v-icon notranslate mdi mdi-checkbox-blank-outline theme--light";
 
     public MediaActivateDeactivateTableTests() {
@@ -329,11 +330,10 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     private void cleanData() {
         deleteMedia();
-        //TODO: waiting filter table cleaned
-        //   deletePublishers();
+        deletePublishers();
     }
 
     private void deleteMedia() {

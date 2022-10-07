@@ -1,5 +1,6 @@
 package widgets.protections.sidebar;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import widgets.common.multipane.Multipane;
@@ -7,7 +8,9 @@ import widgets.common.multipane.MultipaneNameImpl;
 import widgets.protections.protectiontypemultipane.ProtectionTypeMultipane;
 import widgets.protections.protectiontypemultipane.ProtectionTypeNameImpl;
 
+import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
+import static widgets.inventory.adSpots.sidebar.AdSpotSidebarElements.CLOSE_ICON;
 import static widgets.protections.sidebar.ProtectionsSidebarElements.*;
 
 /**
@@ -22,6 +25,10 @@ public abstract class ProtectionsSidebar {
     private SelenideElement publisherNameDropdown = $x(PUBLISHER_NAME_DROPDOWN.getSelector()).as(PUBLISHER_NAME_DROPDOWN.getAlias());
     private SelenideElement protectionTypeDropdown = $x(PROTECTION_TYPE_DROPDOWN.getSelector()).as(PROTECTION_TYPE_DROPDOWN.getAlias());
     private SelenideElement managedBySystemAdminOnly = $x(MANAGED_BY_SYSTEM_ADMIN_ONLY.getSelector()).as(MANAGED_BY_SYSTEM_ADMIN_ONLY.getAlias());
+
+    private SelenideElement closeIcon = $x(CLOSE_ICON.getSelector()).as(CLOSE_ICON.getAlias());
+    private SelenideElement publisherInput = $x(PUBLISHER_NAME.getSelector()).as(PUBLISHER_NAME.getAlias());
+    private ElementsCollection publisherItems = $$x(PUBLISHER_ITEMS.getSelector()).as(PUBLISHER_ITEMS.getAlias());
 
     private Multipane geoMultipane = new Multipane(MultipaneNameImpl.GEO);
     private Multipane deviceMultipane = new Multipane(MultipaneNameImpl.DEVICE);

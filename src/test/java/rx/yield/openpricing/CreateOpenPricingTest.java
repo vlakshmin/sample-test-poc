@@ -1,14 +1,18 @@
 package rx.yield.openpricing;
 
+import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.device.Device;
-import api.dto.rx.geo.Geo;
 import api.dto.rx.inventory.media.Media;
 import api.dto.rx.os.OperatingSystem;
 import api.dto.rx.yield.openpricing.OpenPricing;
-import api.preconditionbuilders.*;
+import api.preconditionbuilders.DevicePrecondition;
+import api.preconditionbuilders.MediaPrecondition;
+import api.preconditionbuilders.OpenPricingPrecondition;
+import api.preconditionbuilders.OperatingSystemPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -23,14 +27,17 @@ import widgets.common.table.ColumnNames;
 import widgets.common.table.TableData;
 import widgets.yield.openPricing.sidebar.CreateOpenPricingSidebar;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Comparator;
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static api.preconditionbuilders.MediaPrecondition.media;
+import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
+import static configurations.User.USER_FOR_DELETION;
 import static java.lang.String.format;
 import static managers.TestManager.testStart;
 import static rx.enums.MultipaneConstants.*;
@@ -45,8 +52,14 @@ public class CreateOpenPricingTest extends BaseTest {
     private TableItemDetailsMenu pricingTableDetailsMenu;
     private CreateOpenPricingSidebar createOpenPricingSidebar;
 
+    Publisher publisher;
+    Media media1;
+    Media media2;
+
     private static final String EMPTY_STRING = "";
     private static final String PRICING_NAME = captionWithSuffix("autoPricing");
+
+    private final static String FLOOR_PRICE = "22.09";
 
     public CreateOpenPricingTest() {
         openPricingPage = new OpenPricingPage();
@@ -57,6 +70,21 @@ public class CreateOpenPricingTest extends BaseTest {
     @BeforeClass
     @Step("Login ToOpenPricing Page")
     public void loginToCreateOpenPricingSidebar() {
+
+        publisher = publisher()
+                .createNewPublisher(captionWithSuffix("00000autoPubPricing"))
+                .build()
+                .getPublisherResponse();
+
+        media1 = media()
+                .createNewMedia("autoMedia", publisher.getId(), true)
+                .build()
+                .getMediaResponse();
+
+        media2 = media()
+                .createNewMedia("autoMedia", publisher.getId(), true)
+                .build()
+                .getMediaResponse();
 
         testStart()
                 .given("Logging Directly to Open Pricing Page")
@@ -69,9 +97,9 @@ public class CreateOpenPricingTest extends BaseTest {
                 .waitSideBarOpened()
                 .and("Enter data to all fields of sidebar")
                 .selectFromDropdown(createOpenPricingSidebar.getPublisherNameDropdown(),
-                        createOpenPricingSidebar.getPublisherNameDropdownItems(), "Viber")
+                        createOpenPricingSidebar.getPublisherNameDropdownItems(), publisher.getName())
                 .setValue(createOpenPricingSidebar.getNameInput(), PRICING_NAME)
-                .setValue(createOpenPricingSidebar.getFloorPriceField().getFloorPriceInput(), "22")
+                .setValue(createOpenPricingSidebar.getFloorPriceField().getFloorPriceInput(), FLOOR_PRICE)
                 .testEnd();
     }
 
@@ -137,8 +165,8 @@ public class CreateOpenPricingTest extends BaseTest {
         testStart()
                 .then("Checking data of newly created pricing in Table")
                 .validate(tableData.getCustomCells(ColumnNames.NAME).get(0), PRICING_NAME)
-                .validate(tableData.getCustomCells(ColumnNames.PUBLISHER).get(0), "Viber")
-                .validate(tableData.getCustomCells(ColumnNames.FLOOR_PRICE).get(0), "22.00 USD")
+                .validate(tableData.getCustomCells(ColumnNames.PUBLISHER).get(0), publisher.getName())
+                .validate(tableData.getCustomCells(ColumnNames.FLOOR_PRICE).get(0), String.format("%s %s", FLOOR_PRICE, publisher.getCurrency()))
                 .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
                 .testEnd();
     }
@@ -169,7 +197,6 @@ public class CreateOpenPricingTest extends BaseTest {
                 .and("Adding 'updatedBy' column in to Pricing  Table")
                 .clickOnWebElement(pricingTable.getTableOptions().getTableOptionsBtn())
                 .selectCheckBox(pricingTable.getTableOptions().getMenuItemCheckbox(ColumnNames.UPDATED_BY))
-                .clickOnWebElement(pricingTable.getTableOptions().getTableOptionsBtn())
                 .then("Check that user under testing is not presented in table")
                 .validate(tableData.getCustomCells(ColumnNames.UPDATED_BY).get(0), EMPTY_STRING)
                 .testEnd();
@@ -220,20 +247,8 @@ public class CreateOpenPricingTest extends BaseTest {
 
         hoverMouseCursorOnDetailsIcon(tableData);
 
-        var expectedOperatingSystem = getOperatingSystemFromOperatingSystemList(0).getName();
+        var expectedOperatingSystem = getOperatingSystemFromDeviceList(0).getName();
         verifySelectionInDetailsMenuForTableItem(operatingSystemsDetailsSection, expectedOperatingSystem);
-    }
-
-    @Test(priority = 15, dependsOnMethods = {"saveOpenPricingTest", "getNewlyCreatedPricingByApi"})
-    @Step("Verify 'Geo' Items in Details' menu in Pricing table")
-    public void checkGeoMenuDetailsTest() {
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var geoDetailsSection = pricingTableDetailsMenu.getGeoDetailsSection();
-
-        hoverMouseCursorOnDetailsIcon(tableData);
-
-        var expectedGeo = getGeoFromGeoList(0).getName();
-        verifySelectionInDetailsMenuForTableItem(geoDetailsSection, expectedGeo);
     }
 
     private void hoverMouseCursorOnDetailsIcon(TableData tableData) {
@@ -304,7 +319,7 @@ public class CreateOpenPricingTest extends BaseTest {
                 .validate(not(visible), firstSelectedItem.getParentLabel())
                 .validate(visible, firstSelectedItem.getRemoveButton())
                 .validate(enabled, multipane.getClearAllButton())
-                .and(format("Collups '%s' Multipane", multipane.getMultipaneName()))
+                .and(format("Collapse '%s' Multipane", multipane.getMultipaneName()))
                 .clickOnWebElement(multipane.getPanelNameLabel())
                 .then(format("Validate '%s' Multipane Panel Strings", multipane.getMultipaneName()))
                 .validateContainsText(multipane.getPanelNameLabel(), expectedPanelNameLabel)
@@ -313,7 +328,7 @@ public class CreateOpenPricingTest extends BaseTest {
 
     private Media getMediaById(int mediaId) {
 
-        return MediaPrecondition.media()
+        return media()
                 .getMediaById(mediaId)
                 .build()
                 .getMediaResponse();
@@ -325,26 +340,40 @@ public class CreateOpenPricingTest extends BaseTest {
                 .getDeviceLList()
                 .build()
                 .getDeviceGetAllResponse()
-                .getItems()
+                .getItems().stream()
+                .sorted(Comparator.comparing(Device::getName))
+                .collect(Collectors.toList())
                 .get(devicePosition);
     }
 
-    private OperatingSystem getOperatingSystemFromOperatingSystemList(int operatingSystemPosition) {
+    private OperatingSystem getOperatingSystemFromDeviceList(int operatingSystemPosition) {
 
         return OperatingSystemPrecondition.openPricing()
-                .getOperatingSystemLList()
+                .getOperatingSystemList()
                 .build()
                 .getOperatingSystemGetAllResponse()
-                .getItems()
+                .getItems().stream()
+                .sorted(Comparator.comparing(OperatingSystem::getName))
+                .collect(Collectors.toList())
                 .get(operatingSystemPosition);
     }
 
-    private Geo getGeoFromGeoList(int geoPosition) {
+    @AfterClass(alwaysRun = true)
+    private void deleteEntities() {
 
-        return GeoPrecondition.geo()
-                .getAllGeosWithFilter(Map.of("localeCode", "en"))
-                .build().getGeoGetAllResponse()
-                .getItems()
-                .get(geoPosition);
+        publisher()
+                .setCredentials(USER_FOR_DELETION)
+                .deletePublisher(publisher.getId())
+                .build();
+
+        media()
+                .setCredentials(USER_FOR_DELETION)
+                .deleteMedia(media1.getId())
+                .build();
+
+        media()
+                .setCredentials(USER_FOR_DELETION)
+                .deleteMedia(media2.getId())
+                .build();
     }
 }

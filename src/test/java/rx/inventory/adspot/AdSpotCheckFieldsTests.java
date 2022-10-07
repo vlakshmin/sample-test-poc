@@ -42,7 +42,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
     private void init() {
 
         publisher = publisher()
-                .createNewPublisher(captionWithSuffix("00000000autoPub"))
+                .createNewPublisher(captionWithSuffix("000000autoPub"))
                 .build()
                 .getPublisherResponse();
 
