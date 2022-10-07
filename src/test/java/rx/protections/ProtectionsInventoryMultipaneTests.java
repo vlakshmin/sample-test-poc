@@ -3,11 +3,10 @@ package rx.protections;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.inventory.adspot.AdSpot;
 import api.dto.rx.inventory.media.Media;
+import com.codeborne.selenide.testng.ScreenShooter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Ignore;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.Path;
 import pages.protections.ProtectionsPage;
 import rx.BaseTest;
@@ -28,6 +27,8 @@ import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
 import static zutils.FakerUtils.captionWithSuffix;
 
+@Slf4j
+@Listeners({ScreenShooter.class})
 public class ProtectionsInventoryMultipaneTests extends BaseTest {
     private Publisher publisherEmpty;
     private Publisher publisherActive;
