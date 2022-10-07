@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import zutils.ObjectMapperUtils;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -42,6 +44,7 @@ public class DemandSource {
     private Boolean nonProgrammatic;
     private String createdAt;
     private String updatedAt;
+    private List<BidEndpoint> bidEndpoints;
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);

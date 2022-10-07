@@ -1,12 +1,12 @@
 package api.services;
 
+import api.dto.rx.demandsource.DemandSource;
 import io.restassured.response.Response;
 
 import java.util.Map;
 
 import static api.core.RakutenExchangeApi.*;
-import static api.core.client.HttpClient.get;
-import static api.core.client.HttpClient.initURL;
+import static api.core.client.HttpClient.*;
 
 public class DemandSourceService extends BaseService {
 
@@ -16,10 +16,15 @@ public class DemandSourceService extends BaseService {
         return get(URL);
     }
 
-    public Response createDSP() {
+    public Response createDSP(DemandSource body) {
         URL = initURL(CREATE_DSP);
 
-        return get(URL);
+        return post(URL, body.toJson());
+    }
+    public Response deleteDsp(int id) {
+        URL = initURL(DELETE_DSP.setParameters(id));
+
+        return delete(URL);
     }
 
     public Response getDSPsWithFilter(Map<String, Object> queryParams) {

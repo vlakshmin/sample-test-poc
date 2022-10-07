@@ -52,7 +52,7 @@
         <classes>
             <class name="rx.protections.ProtectionsCheckPaginationTests"/>
             <class name="rx.protections.ProtectionsTest"/>
-            <class name="rx.protections.ProtectionsSortingTableTests"></class>
+            <class name="rx.protections.ProtectionsSortingTableTests"/>
             <class name="rx.protections.ProtectionsInventoryMultipaneTests"/>
         </classes>
     </test>
@@ -76,6 +76,12 @@
     <test name="Publisher Feature">
         <classes>
             <class name="rx.admin.publishers.PublisherTest"/>
+        </classes>
+    </test>
+
+    <test name="Demand Source Feature">
+        <classes>
+            <class name="rx.admin.demand.EditDemandSourceTest"/>
         </classes>
     </test>
 
