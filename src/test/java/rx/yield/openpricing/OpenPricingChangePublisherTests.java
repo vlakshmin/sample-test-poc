@@ -273,7 +273,7 @@ public class OpenPricingChangePublisherTests extends BaseTest {
                 .deletePublisher(id)
                 .build()
                 .getResponseCode() == HttpStatus.SC_NO_CONTENT)
-            log.info(String.format("Deleted publisher %s", publisher1.getId()));
+            log.info(String.format("Deleted publisher %s", id));
 
     }
 
