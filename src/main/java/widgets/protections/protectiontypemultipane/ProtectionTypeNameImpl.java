@@ -9,6 +9,7 @@ import widgets.common.multipane.MultipaneName;
 public enum ProtectionTypeNameImpl implements MultipaneName {
 
     ADVERTISER("Advertiser"),
+    INVENTORY("Inventory"),
     AD_CATEGORIES("Ad Categories");
 
     private final String name;

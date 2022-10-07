@@ -101,6 +101,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
 
     @BeforeMethod
     private void login() {
+
         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
@@ -109,8 +110,9 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     private void logOut() {
+
         testStart()
                 .given()
                 .logOut()
@@ -173,6 +175,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         "aria-sort", "ascending")
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
                 .and("Select 50 row per page")
+                .scrollIntoView(tablePagination.getPageMenu())
                 .selectFromDropdown(tablePagination.getPageMenu(),
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
@@ -314,7 +317,6 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .and("Check next page")
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
                 .then(String.format("Validate that text in table footer '51-100 of %s'",
                         totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),

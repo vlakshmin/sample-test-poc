@@ -38,7 +38,7 @@ public class OperatingSystemPrecondition {
 
 
 
-        public OperatingSystemPreconditionBuilder getOperatingSystemLList() {
+        public OperatingSystemPreconditionBuilder getOperatingSystemList() {
             this.response = operatingSystemService.getAll();
 
             this.responseCode = response.getStatusCode();

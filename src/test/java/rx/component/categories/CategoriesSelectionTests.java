@@ -1,5 +1,6 @@
 package rx.component.categories;
 
+import api.dto.rx.admin.publisher.Publisher;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
@@ -17,8 +18,10 @@ import pages.inventory.media.*;
 
 import java.util.List;
 
+import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
+import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
 import static zutils.FakerUtils.captionWithSuffix;
 
@@ -28,8 +31,7 @@ public class CategoriesSelectionTests extends BaseTest {
 
     private MediaPage mediaPage;
     private EditMediaSidebar editMediaSidebar;
-
-    private static String PUBLISHER_NAME = "Viki";
+    Publisher publisher;
 
 
     public CategoriesSelectionTests() {
@@ -39,6 +41,13 @@ public class CategoriesSelectionTests extends BaseTest {
 
     @BeforeClass
     private void initAndLogin() {
+
+        publisher = publisher()
+                .createNewPublisher(captionWithSuffix("0000001autoPubCategories"))
+                .build()
+                .getPublisherResponse();
+
+
         testStart()
                 .given()
                 .openDirectPath(Path.MEDIA)
@@ -59,8 +68,8 @@ public class CategoriesSelectionTests extends BaseTest {
         testStart()
                 .clickOnWebElement(mediaPage.getCreateMediaButton())
                 .waitSideBarOpened()
-                .selectFromDropdownWithSearch(editMediaSidebar.getPublisherInput(),
-                        editMediaSidebar.getPublisherItems(), PUBLISHER_NAME)
+                .selectFromDropdown(editMediaSidebar.getPublisherInput(),
+                        editMediaSidebar.getPublisherItems(), publisher.getName())
                 .and("Fill Name")
                 .setValueWithClean(editMediaSidebar.getNameInput(), mediaName)
                 .selectFromDropdown(editMediaSidebar.getMediaType(),
@@ -88,7 +97,7 @@ public class CategoriesSelectionTests extends BaseTest {
                 .clickOnTableCellLink(tableData, ColumnNames.MEDIA_NAME, mediaName)
                 .waitSideBarOpened()
                 .then("Check all fields")
-                .validate(editMediaSidebar.getPublisherInput(), PUBLISHER_NAME)
+                .validate(editMediaSidebar.getPublisherInput(), publisher.getName())
                 .validateAttribute(editMediaSidebar.getNameInput(), "value", mediaName)
                 .validate(editMediaSidebar.getMediaType(), MediaTypes.MOBILE_WEB.getName())
                 .validateList(categories.getCategoriesSelectedItems(), List.of(CategoriesList.AUTO_REPAIR.getName(),
@@ -98,12 +107,17 @@ public class CategoriesSelectionTests extends BaseTest {
                 .testEnd();
     }
 
+    @AfterClass(alwaysRun = true)
+    private void deletePublisher(){
 
-    @AfterClass
-    private void logout() {
         testStart()
                 .logOut()
                 .testEnd();
 
+
+        publisher()
+                .setCredentials(USER_FOR_DELETION)
+                .deletePublisher(publisher.getId())
+                .build();
     }
 }

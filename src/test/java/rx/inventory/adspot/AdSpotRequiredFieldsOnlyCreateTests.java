@@ -72,7 +72,7 @@ public class AdSpotRequiredFieldsOnlyCreateTests extends BaseTest {
     private void init() {
 
         publisher = publisher()
-                .createNewPublisher(captionWithSuffix("0autoPub1"))
+                .createNewPublisher(captionWithSuffix("000000autoPub1"))
                 .build()
                 .getPublisherResponse();
 
