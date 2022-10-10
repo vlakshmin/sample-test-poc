@@ -5,6 +5,7 @@ import api.dto.rx.yield.openpricing.OpenPricing;
 import com.codeborne.selenide.testng.ScreenShooter;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.*;
@@ -40,10 +41,6 @@ public class OpenPricingUploadTests extends BaseTest {
     private List<OpenPricing> openPricingList;
     private Map<String, String> fileData;
 
-    private final String UPLOAD_CSV_TEXT = "This action will analyze the CSV based on the rule names and will " +
-            "only overwrite the floor price for the selected publisher. " +
-            "In the case that there is not a matching Rule name, that rule will be ignored in the batch upload.";
-
     private final String RESOURCES_DIRECTORY = "src/test/resources/csvfiles/openpricing/";
 
     public OpenPricingUploadTests() {
@@ -54,78 +51,103 @@ public class OpenPricingUploadTests extends BaseTest {
 
     @BeforeClass
     private void createTestData() {
+
         publisher = publisher()
                 .createNewPublisher(captionWithSuffix("000autoPub1"))
                 .build()
                 .getPublisherResponse();
-    }
 
-    @BeforeMethod
-    private void loginUI() {
+        openPricingList = new ArrayList<>();
 
         testStart()
                 .given("Open Open Pricing page")
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
+                .testEnd();
+    }
+
+    @DataProvider(name = "Positive Upload")
+    public Object[][] uploadFiles() {
+        return new Object[][]{
+                {"3 out of 3.csv", 0.00, ""},
+                {"1 out of 3 decimal.csv", 1.50, ""},
+                {"decimal into int.csv", 1.15, "Upload CSV update decimal floorPrice to int"},
+                {"zero decimal.csv", 0.00, "Upload CSV update by zero decimal floorPrice"},
+                {"zero to int.csv", 0.00, "Upload CSV update zero floorPrice to int"},
+                {"zero decimal.csv", 0.00, "Upload CSV update zero floorPrice to max decimal"},
+                {"zero decimal.csv", 0.00, "Upload CSV update zero floorPrice by Stringified number value"},
+        };
+    }
+
+    @Test(description = "Positive: Update existing open pricing rules", dataProvider = "Positive Upload")
+    private void updateExistingOpenPricingRulesPositive(String filename, Double floorPrice, String descr) {
+
+        log.info(descr);
+
+        openFile(filename);
+        uploadData(filename);
+        //updateOpenPricing(floorPrice);
+
+        validateFloorPrice(openPricingList.get(0).getName());
+        validateFloorPrice(openPricingList.get(1).getName());
+        validateFloorPrice(openPricingList.get(2).getName());
+    }
+
+    @Step("Upload Data")
+    private void uploadData(String filename) {
+
+        testStart()
                 .and("Open Upload")
                 .clickOnWebElement(openPricingPage.getUploadOpenPricingButton())
                 .clickOnWebElement(openPricingPage.getUpdateOpenPricingLink())
                 .waitSideBarOpened()
+                .and(String.format("Select Publisher %s", publisher.getName()))
+                .selectFromDropdown(openPricingUploadSidebar.getPublisherNameDropdown(),
+                        openPricingUploadSidebar.getPublisherNameDropdownItems(), publisher.getName())
+                .uploadFileFromDialog(openPricingUploadSidebar.getCsvFileInput(), RESOURCES_DIRECTORY + filename)
+                .and("Click 'Update Existing Open Pricing Rules'")
+                .clickOnWebElement(openPricingUploadSidebar.getUpdateExistingRulesButton())
                 .testEnd();
     }
 
 
-    @Test(description = "Update existing open pricing rules")
-    private void updateExistingOpenPricingRules(){
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+    @Step("Validate floor price updated")
+    private void validateFloorPrice(String ruleName) {
 
-        String filename = "3 out of 3.csv";
-        openFile(filename);
+        var tableData = openPricingPage.getOpenPricingTable().getTableData();
 
         testStart()
-                .and(String.format("Select Publisher %s",publisher.getName()))
-                .selectFromDropdown(openPricingUploadSidebar.getPublisherNameDropdown(),
-                        openPricingUploadSidebar.getPublisherNameDropdownItems(), publisher.getName())
-                .uploadFileFromDialog(openPricingUploadSidebar.getCsvFileInput(),RESOURCES_DIRECTORY+filename)
-                .and("Click 'Update Existing Open Pricing Rules'")
-                .clickOnWebElement(openPricingUploadSidebar.getUpdateExistingRulesButton())
-                .and("Close sidebar")
-                .clickOnWebElement(openPricingUploadSidebar.getCloseIcon())
-                .waitSideBarClosed()
-
-                .setValueWithClean(tableData.getSearch(),openPricingList.get(0).getName())
+                .setValueWithClean(tableData.getSearch(), ruleName)
                 .clickEnterButton(tableData.getSearch())
-                .then("Validate that text in table footer '1-1 of 1")
-                .validateContainsText(tablePagination.getPaginationPanel(), "1-1 of 1")
+                .then("Wait data loading")
+                .validateContainsText(tableData.getCellByPositionInTable(ColumnNames.NAME, 0), ruleName)
                 .and("Open Sidebar and check data")
-                .clickOnTableCellLink(tableData, ColumnNames.NAME, openPricingList.get(0).getName())
+                .clickOnTableCellLink(tableData, ColumnNames.NAME, ruleName)
                 .waitSideBarOpened()
                 .then("Check Floor Price")
-                .validateAttribute(openPricingSidebar.getFloorPriceField().getFloorPriceInput(),"value",
-                        fileData.get(openPricingList.get(0).getName()))
+                .validateAttribute(openPricingSidebar.getFloorPriceField().getFloorPriceInput(), "value",
+                        fileData.get(ruleName))
                 .and("Close Open Pricing Sidebar")
                 .clickOnWebElement(openPricingSidebar.getCloseIcon())
                 .waitSideBarClosed()
                 .testEnd();
     }
 
-
-    @AfterClass(alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
     private void deleteTestData() {
         deleteOpenPricingRules();
-        deletePublisher(publisher.getId());
     }
 
-    private void deletePublisher(int id) {
+    @AfterClass(alwaysRun = true)
+    private void deletePublisher() {
 
         if (publisher()
                 .setCredentials(USER_FOR_DELETION)
-                .deletePublisher(id)
+                .deletePublisher(publisher.getId())
                 .build()
                 .getResponseCode() == HttpStatus.SC_NO_CONTENT)
-            log.info(String.format("Deleted publisher %s", id));
+            log.info(String.format("Deleted publisher %s", publisher.getId()));
     }
 
     private void deleteOpenPricingRules() {
@@ -140,11 +162,7 @@ public class OpenPricingUploadTests extends BaseTest {
         }
     }
 
-    private void generateOpenPricingFromFile(String filename){
-
-    }
-
-    private OpenPricing createOpenPricing(String name, Double floorPrice){
+    private OpenPricing createOpenPricing(String name, Double floorPrice) {
 
         return openPricing()
                 .createNewOpenPricing(name, floorPrice, publisher)
@@ -152,9 +170,28 @@ public class OpenPricingUploadTests extends BaseTest {
                 .getOpenPricingResponse();
     }
 
+    private void updateOpenPricing(Double floorPrice) {
+
+        for (OpenPricing rule : openPricingList) {
+
+            var updatedRule = updateRule(rule, floorPrice);
+
+            openPricing()
+                    .updateOpenPricing(updatedRule)
+                    .build()
+                    .getOpenPricingResponse();
+        }
+    }
+
+    private OpenPricing updateRule(OpenPricing rule, Double floorPrice) {
+
+        rule.setFloorPrice(floorPrice);
+
+        return rule;
+    }
+
     private void openFile(String fileName) {
 
-        openPricingList = new ArrayList<>();
         fileData = new HashMap<>();
 
         try {
@@ -166,9 +203,10 @@ public class OpenPricingUploadTests extends BaseTest {
 
             for (String[] row : allData) {
                 System.out.println(row[0]);
-                openPricingList.add(createOpenPricing(row[0],0.00));
-                fileData.put(row[0], row[1]);
-                System.out.println();
+                if (!row[0].isEmpty()) {
+                    openPricingList.add(createOpenPricing(row[0], 0.00));
+                    fileData.put(row[0], row[1]);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

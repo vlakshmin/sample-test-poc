@@ -59,7 +59,7 @@ public class OpenPricingPrecondition {
         private GenericResponse<OpenPricing> openPricingGetAllResponse;
         private OpenPricingService openPricingService = new OpenPricingService();
 
-        public OpenPricingPreconditionBuilder createNewOpenPricing(){
+        public OpenPricingPreconditionBuilder createNewOpenPricing() {
             this.openPricingRequest = createOpenPricingRequest(captionWithSuffix("OpenPricingAuto"), 5.66);
             this.response = openPricingService.createOpenPricing(openPricingRequest);
             this.openPricingResponse = response.as(OpenPricing.class);
@@ -68,6 +68,7 @@ public class OpenPricingPrecondition {
             return this;
 
         }
+
         public OpenPricingPreconditionBuilder createNewOpenPricing(String name, Double floorPrice) {
             this.openPricingRequest = createOpenPricingRequest(name, floorPrice);
             this.response = openPricingService.createOpenPricing(openPricingRequest);
@@ -85,6 +86,108 @@ public class OpenPricingPrecondition {
 
             return this;
         }
+
+        public OpenPricingPrecondition.OpenPricingPreconditionBuilder updateOpenPricing(OpenPricing rule) {
+
+            var updateOpenPricingRequest = OpenPricing.builder()
+                    .id(rule.getId())
+                    .name(rule.getName())
+                    .active(rule.getActive())
+                    .floorPrice(rule.getFloorPrice())
+                    .notes(rule.getNotes())
+                    .priority(rule.getPriority())
+                    .publisherName(rule.getPublisherName())
+                    .publisherId(rule.getPublisherId())
+                    .rule(Rule.builder()
+                            .adspot(AdSpotRule.builder()
+                                    .includedAdspots(rule.getRule().getAdspot().getIncludedAdspots())
+                                    .excludedAdspots(rule.getRule().getAdspot().getExcludedAdspots())
+                                    .build())
+                            .adFormat(AdFormat.builder()
+                                    .adFormats(rule.getRule().getAdFormat().getAdFormats())
+                                    .exclude(rule.getRule().getAdFormat().getExclude())
+                                    .build())
+                            .adSize(AdSize.builder()
+                                    .adSizes(rule.getRule().getAdSize().getAdSizes())
+                                    .exclude(rule.getRule().getAdSize().getExclude())
+                                    .build())
+                            .media(MediaRule.builder()
+                                    .media(rule.getRule().getMedia().getMedia())
+                                    .exclude(rule.getRule().getMedia().getExclude())
+                                    .build())
+                            .deviceType(DeviceType.builder()
+                                    .deviceTypes(rule.getRule().getDeviceType().getDeviceTypes())
+                                    .exclude(rule.getRule().getDeviceOS().getExclude())
+                                    .build())
+                            .geo(Geo.builder()
+                                    .geos(rule.getRule().getGeo().getGeos())
+                                    .exclude(rule.getRule().getGeo().getExclude())
+                                    .build())
+                            .deviceOS(DeviceOS.builder()
+                                    .deviceOSs(rule.getRule().getDeviceOS().getDeviceOSs())
+                                    .exclude(rule.getRule().getDeviceOS().getExclude())
+                                    .build())
+                            .dsp(Dsp.builder()
+                                    .dsps(rule.getRule().getDsp().getDsps())
+                                    .exclude(rule.getRule().getDsp().getExclude())
+                                    .build())
+                            .build())
+                    .build();
+
+
+            this.response = openPricingService.updateOpenPricing(updateOpenPricingRequest);
+            this.openPricingResponse = response.as(OpenPricing.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
+//        private OpenPricing updateOpenPricingRequest(OpenPricing rule){
+//
+//            return OpenPricingRequest.builder()
+//                    .name(rule.getName())
+//                    .active(rule.getActive())
+//                    .floorPrice(rule.getFloorPrice())
+//                    .notes(rule.getNotes())
+//                    .priority(rule.getPriority())
+//                    .publisherName(rule.getPublisherName())
+//                    .publisherId(rule.getPublisherId())
+////                    .rule(Rule.builder()
+////                            .adspot(AdSpotRule.builder()
+////                                    .includedAdspots(rule.getRule().getAdspot().getIncludedAdspots())
+////                                    .excludedAdspots(rule.getRule().getAdspot().getExcludedAdspots())
+////                                    .build())
+////                            .adFormat(AdFormat.builder()
+////                                    .adFormats(rule.getRule().getAdFormat().getAdFormats())
+////                                    .exclude(rule.getRule().getAdFormat().getExclude())
+////                                    .build())
+////                            .adSize(AdSize.builder()
+////                                    .adSizes(rule.getRule().getAdSize().getAdSizes())
+////                                    .exclude(rule.getRule().getAdSize().getExclude())
+////                                    .build())
+////                            .media(MediaRule.builder()
+////                                    .media(rule.getRule().getMedia().getMedia())
+////                                    .exclude(rule.getRule().getMedia().getExclude())
+////                                    .build())
+////                            .deviceType(DeviceType.builder()
+////                                    .deviceTypes(rule.getRule().getDeviceType().getDeviceTypes())
+////                                    .exclude(rule.getRule().getDeviceOS().getExclude())
+////                                    .build())
+////                            .geo(Geo.builder()
+////                                    .geos(rule.getRule().getGeo().getGeos())
+////                                    .exclude(rule.getRule().getGeo().getExclude())
+////                                    .build())
+////                            .deviceOS(DeviceOS.builder()
+////                                    .deviceOSs(rule.getRule().getDeviceOS().getDeviceOSs())
+////                                    .exclude(rule.getRule().getDeviceOS().getExclude())
+////                                    .build())
+////                            .dsp(Dsp.builder()
+////                                    .dsps(rule.getRule().getDsp().getDsps())
+////                                    .exclude(rule.getRule().getDsp().getExclude())
+//   //                                 .build())
+// //                           .build())
+//                    .build();
+//        }
 
         public OpenPricingRequest createOpenPricingRequest(String name, Double floorPrice, Publisher publisher) {
 
@@ -155,7 +258,7 @@ public class OpenPricingPrecondition {
                     .build()
                     .getAdSpotResponse();
 
-           return OpenPricingRequest.builder()
+            return OpenPricingRequest.builder()
                     .name(name)
                     .active(true)
                     .floorPrice(floorPrice)
@@ -213,7 +316,8 @@ public class OpenPricingPrecondition {
         public OpenPricingPreconditionBuilder getOpenPricingList() {
             this.response = openPricingService.getAll();
 
-            this.openPricingGetAllResponse = this.response.as(new TypeRef<GenericResponse<OpenPricing>>() {});
+            this.openPricingGetAllResponse = this.response.as(new TypeRef<GenericResponse<OpenPricing>>() {
+            });
             this.responseCode = response.getStatusCode();
 
             return this;
@@ -245,7 +349,8 @@ public class OpenPricingPrecondition {
         public OpenPricingPreconditionBuilder getOpenPricingWithFilter(Map<String, Object> queryParams) {
             this.response = openPricingService.getOpenPricingWithFilter(queryParams);
 
-            this.openPricingGetAllResponse = this.response.as(new TypeRef<GenericResponse<OpenPricing>>() {});
+            this.openPricingGetAllResponse = this.response.as(new TypeRef<GenericResponse<OpenPricing>>() {
+            });
             this.responseCode = response.getStatusCode();
 
             return this;

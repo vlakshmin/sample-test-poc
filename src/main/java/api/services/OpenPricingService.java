@@ -1,5 +1,6 @@
 package api.services;
 
+import api.dto.rx.yield.openpricing.OpenPricing;
 import api.dto.rx.yield.openpricing.OpenPricingRequest;
 import io.restassured.response.Response;
 
@@ -14,6 +15,12 @@ public class OpenPricingService extends BaseService {
         URL = initURL(CREATE_OPEN_PRICING);
 
         return post(URL, body.toJson());
+    }
+
+    public Response updateOpenPricing(OpenPricing rule) {
+        URL = initURL(UPDATE_OPEN_PRICING.setParameters(rule.getId()));
+
+        return put(URL, rule.toString());
     }
 
     public Response getOpenPricingWithFilter(Map<String, Object> queryParams) {
