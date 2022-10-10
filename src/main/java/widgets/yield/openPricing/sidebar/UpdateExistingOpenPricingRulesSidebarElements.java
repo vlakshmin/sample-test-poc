@@ -17,7 +17,7 @@ public enum UpdateExistingOpenPricingRulesSidebarElements {
     DOWNLOAD_EXISTING_OPEN_PRICING_BUTTON("'Download Existing Open Pricing Rules' Button",
             "//span[contains(text(),'Download Existing Open Pricing Rules')]/../../button"),
 
-    CSV_FILE_INPUT( "'CSV File' Input", "//*[@id='csv']/../div"),
+    CSV_FILE_INPUT( "'CSV File' Input", "//*[@id='csv']"),
     CSV_FILE_CLEAR( "'CSV File' Clear Icon", "//button[@aria-label='clear icon']"),
     UPLOAD_CSV_TEXT( "'Upload your CSV' Text", "//h2[text()='Upload your CSV']/../p"),
     UPDATE_PRICING_RULES_BUTTON("'Update Pricing Rules' Button", "//button/span[contains(text(),'Update Pricing Rules')]"),

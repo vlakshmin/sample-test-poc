@@ -1,6 +1,7 @@
 package api.preconditionbuilders;
 
 import api.core.client.HttpClient;
+import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.yield.openpricing.OpenPricingRequest;
 import api.dto.rx.yield.openpricing.*;
 import api.dto.GenericResponse;
@@ -58,7 +59,79 @@ public class OpenPricingPrecondition {
         private GenericResponse<OpenPricing> openPricingGetAllResponse;
         private OpenPricingService openPricingService = new OpenPricingService();
 
-        public OpenPricingPreconditionBuilder createNewOpenPricing() {
+        public OpenPricingPreconditionBuilder createNewOpenPricing(){
+            this.openPricingRequest = createOpenPricingRequest(captionWithSuffix("OpenPricingAuto"), 5.66);
+            this.response = openPricingService.createOpenPricing(openPricingRequest);
+            this.openPricingResponse = response.as(OpenPricing.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+
+        }
+        public OpenPricingPreconditionBuilder createNewOpenPricing(String name, Double floorPrice) {
+            this.openPricingRequest = createOpenPricingRequest(name, floorPrice);
+            this.response = openPricingService.createOpenPricing(openPricingRequest);
+            this.openPricingResponse = response.as(OpenPricing.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
+        public OpenPricingPreconditionBuilder createNewOpenPricing(String name, Double floorPrice, Publisher publisher) {
+            this.openPricingRequest = createOpenPricingRequest(name, floorPrice, publisher);
+            this.response = openPricingService.createOpenPricing(openPricingRequest);
+            this.openPricingResponse = response.as(OpenPricing.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
+        public OpenPricingRequest createOpenPricingRequest(String name, Double floorPrice, Publisher publisher) {
+
+            return OpenPricingRequest.builder()
+                    .name(name)
+                    .active(true)
+                    .floorPrice(floorPrice)
+                    .notes("autotest")
+                    .priority(true)
+                    .publisherName(publisher.getName())
+                    .publisherId(publisher.getId())
+                    .rule(Rule.builder()
+                            .adspot(AdSpotRule.builder()
+                                    .includedAdspots(List.of())
+                                    .excludedAdspots(List.of())
+                                    .build())
+                            .adFormat(AdFormat.builder()
+                                    .adFormats(List.of())
+                                    .exclude(false)
+                                    .build())
+                            .adSize(AdSize.builder()
+                                    .adSizes(List.of())
+                                    .exclude(false).build())
+                            .media(MediaRule.builder()
+                                    .media(List.of())
+                                    .exclude(false).build())
+                            .deviceType(DeviceType.builder()
+                                    .deviceTypes(List.of())
+                                    .exclude(false)
+                                    .build())
+                            .geo(Geo.builder()
+                                    .geos(List.of())
+                                    .exclude(false)
+                                    .build())
+                            .deviceOS(DeviceOS.builder()
+                                    .deviceOSs(List.of())
+                                    .exclude(false)
+                                    .build())
+                            .dsp(Dsp.builder()
+                                    .dsps(null)
+                                    .exclude(false)
+                                    .build())
+                            .build())
+                    .build();
+        }
+
+        public OpenPricingRequest createOpenPricingRequest(String name, Double floorPrice) {
 
             Media media = MediaPrecondition.media().createNewMedia().build().getMediaResponse();
 
@@ -82,12 +155,12 @@ public class OpenPricingPrecondition {
                     .build()
                     .getAdSpotResponse();
 
-            this.openPricingRequest = OpenPricingRequest.builder()
-                    .name(captionWithSuffix("OpenPricing"))
+           return OpenPricingRequest.builder()
+                    .name(name)
                     .active(true)
-                    .floorPrice(5.66)
+                    .floorPrice(floorPrice)
                     .notes("autotest")
-                    .priority(1)
+                    .priority(true)
                     .publisherName(media.getPublisherName())
                     .publisherId(media.getPublisherId())
                     .rule(Rule.builder()
@@ -123,12 +196,6 @@ public class OpenPricingPrecondition {
                                     .build())
                             .build())
                     .build();
-
-            this.response = openPricingService.createOpenPricing(openPricingRequest);
-            this.openPricingResponse = response.as(OpenPricing.class);
-            this.responseCode = response.getStatusCode();
-
-            return this;
         }
 
         public OpenPricingPreconditionBuilder export(int publisherId) {

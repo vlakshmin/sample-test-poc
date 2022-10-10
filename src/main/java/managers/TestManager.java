@@ -537,8 +537,10 @@ public final class TestManager {
             return this;
         }
 
-        public TestManagerBuilder uploadFileFromDialog(String relativeFilePath) {
-            $("input[type='file']").uploadFile(new File(relativeFilePath));
+        public TestManagerBuilder uploadFileFromDialog(SelenideElement fileInput, String relativeFilePath) {
+
+            fileInput.uploadFile(new File(relativeFilePath));
+    //        $("input[type='file']").uploadFile(new File(relativeFilePath));
 
             return this;
         }
