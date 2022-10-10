@@ -44,7 +44,7 @@
             <class name="rx.yield.openpricing.OpenPricingChangePublisherTests"/>
             <class name="rx.yield.openpricing.CreateOpenPricingTest"/>
             <class name="rx.yield.openpricing.OpenPricingSortingTableTests"/>
-              <class name="rx.yield.openpricing.VerifyPublisherTests"/>
+           <!--   <class name="rx.yield.openpricing.VerifyPublisherTests"/> -->
                <class name="rx.yield.openpricing.OpenPricingTests"/>
         </classes>
     </test>
