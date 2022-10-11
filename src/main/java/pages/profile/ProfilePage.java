@@ -1,5 +1,6 @@
 package pages.profile;
 
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import groovyjarjarantlr4.v4.runtime.atn.PredicateEvalInfo;
 import lombok.Getter;
