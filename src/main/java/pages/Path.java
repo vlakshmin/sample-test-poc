@@ -9,7 +9,9 @@ public enum Path {
 
     MEDIA("/media"),
     AD_SPOT("/adspots"),
+    PROFILE("/profile"),
     DEALS("/sales/deals"),
+    DASHBIARD("/dashboard"),
     DEMAND("/admin/demand"),
     USER("/admin/publishers"),
     PROTECTIONS("/protections"),
