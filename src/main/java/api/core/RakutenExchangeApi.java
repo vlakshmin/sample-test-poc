@@ -74,7 +74,12 @@ public enum RakutenExchangeApi {
     GET_ALL_DEVICE_TYPES("/v2/device-types"),
 
     //Operating system
-    GET_ALL_OPERATING_SYSTEM("/v2/device-os");
+    GET_ALL_OPERATING_SYSTEM("/v2/device-os"),
+
+    //Deal
+    CREATE_DEAL("/v3/pmp/deals"),
+    UPDATE_DEAL("/v2/pmp/deals/");
+
 
     private String endpoint;
 
