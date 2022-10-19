@@ -1,6 +1,7 @@
 package rx.yield.openpricing;
 
 import api.dto.rx.admin.publisher.Publisher;
+import api.dto.rx.admin.user.UserDto;
 import api.dto.rx.yield.openpricing.OpenPricing;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.testng.ScreenShooter;
@@ -11,6 +12,7 @@ import org.testng.annotations.*;
 import pages.Path;
 import pages.yield.openpricing.OpenPricingPage;
 import rx.BaseTest;
+import widgets.errormessages.ErrorMessages;
 import widgets.yield.openPricing.sidebar.UpdateExistingOpenPricingRulesSidebar;
 import zutils.FileUtils;
 
@@ -20,26 +22,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import static api.preconditionbuilders.OpenPricingPrecondition.openPricing;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
+import static api.preconditionbuilders.UsersPrecondition.user;
 import static com.codeborne.selenide.Condition.*;
-import static configurations.User.TEST_USER;
-import static configurations.User.USER_FOR_DELETION;
+import static configurations.User.*;
 import static managers.TestManager.testStart;
 import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class OpenPricingUploadSidebarTests extends BaseTest {
+public class OpenPricingSingleAdminUploadSidebarTests extends BaseTest {
 
     private OpenPricingPage openPricingPage;
     private UpdateExistingOpenPricingRulesSidebar openPricingSidebar;
     private Publisher publisher;
-    private List<OpenPricing> rules = new ArrayList<>();
-    private Map<String, String> expectedRules = new HashMap<>();
+    private UserDto singleUser;
 
     private final String RESOURCES_DIRECTORY = "src/test/resources/csvfiles/openpricing/";
+
+    private List<OpenPricing> rules = new ArrayList<>();
+    private Map<String, String> expectedRules = new HashMap<>();
 
     Map<String, String> fileDataMap = new HashMap<>();
 
@@ -47,7 +50,11 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
     private final static String TEMPLATE_FILE_NAME = "open-pricing-template.csv";
     private final static String RULES_FILE_NAME = "open-pricing.csv";
 
-    public OpenPricingUploadSidebarTests() {
+    private final String UPLOAD_CSV_TEXT = "This action will analyze the CSV based on the rule names and will " +
+            "only overwrite the floor price for the selected publisher. " +
+            "In the case that there is not a matching Rule name, that rule will be ignored in the batch upload.";
+
+    public OpenPricingSingleAdminUploadSidebarTests() {
         openPricingPage = new OpenPricingPage();
         openPricingSidebar = new UpdateExistingOpenPricingRulesSidebar();
     }
@@ -59,9 +66,15 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
                 .build()
                 .getPublisherResponse();
 
-        rules.add(createOpenPricingRule(true, 12.00));
+        singleUser = user()
+                .createSinglePublisherUser(publisher.getId())
+                .build()
+                .getUserResponse();
+
+
+        rules.add(createOpenPricingRule(true, 15.00));
         rules.add(createOpenPricingRule(true, 0.00));
-        rules.add(createOpenPricingRule(true, 1.33));
+        rules.add(createOpenPricingRule(true, 6.33));
         rules.add(createOpenPricingRule(false, 999999.99));
 
         for (OpenPricing rule : rules) {
@@ -75,7 +88,7 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
         testStart()
                 .given("Open Open Pricing page")
                 .openDirectPath(Path.OPEN_PRICING)
-                .logIn(TEST_USER)
+                .logIn(TEMP_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
                 .and("Open Upload")
                 .clickOnWebElement(openPricingPage.getUploadOpenPricingButton())
@@ -85,17 +98,18 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
     }
 
 
-    @Test(description = "Check Upload slide elements by default (Admin)")
-    private void checkUploadSlideElementsByDefaultAdmin() {
+    @Test(description = "Single Admin: check elements on sidebar")
+    private void checkUploadSlideElementsByDefaultSingleAdmin() {
 
         testStart()
-                .then("Publisher Name dropdown is empty")
-                .validate(visible, openPricingSidebar.getPublisherInput())
-                .validate(openPricingSidebar.getPublisherInput().getText(), "")
+                .then(String.format("Publisher Name contains publisher name %s", publisher.getName()))
+                .validate(openPricingSidebar.getPublisherInput().getText(), publisher.getName())
+                .clickOnWebElement(openPricingSidebar.getPublisherNameDropdown())
+                .validate(openPricingSidebar.getPublisherNameDropdownItems().size(), 1)
                 .then("CSV template is visible")
                 .validate(visible, openPricingSidebar.getDownloadCSVTemplateButton())
-                .then("Download Existing Open Pricing Rules is not visible")
-                .validate(disabled, openPricingSidebar.getDownloadExistingOpenPricingRulesButton())
+                .then("Download Existing Open Pricing Rules should be visible")
+                .validate(visible, openPricingSidebar.getDownloadExistingOpenPricingRulesButton())
                 .then("'Upload your CSV file' text is present")
                 .validate(visible, openPricingSidebar.getUploadCSVText())
                 .then("File input is present")
@@ -109,9 +123,6 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
                 .and("Clear CSV input")
                 .clickOnWebElement(openPricingSidebar.getCsvFileClearIcon())
                 .validate(openPricingSidebar.getCsvFileInput().getText(), "")
-                .and("Close sidebar")
-                .clickOnWebElement(openPricingSidebar.getCloseIcon())
-                .waitSideBarClosed()
                 .testEnd();
     }
 
@@ -141,17 +152,29 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
         validateFileData(RULES_FILE_NAME);
     }
 
-    @AfterMethod
-    private void logout() {
+    @Test(description = "Negative: check errors if file is not selected")
+    private void checkRequiredFields() {
+        var errorsList = openPricingSidebar.getErrorAlert().getErrorsList();
 
         testStart()
-                .and("Close sidebar")
-                .clickOnWebElement(openPricingSidebar.getCloseIcon())
-                .waitSideBarClosed()
-                .logOut()
+                .and("Click 'Update Pricing Rules'")
+                .clickOnWebElement(openPricingSidebar.getUpdateExistingRulesButton())
+                .then("Validate errors for all required fields in Error Panel")
+                .waitAndValidate(visible, openPricingSidebar.getErrorAlert().getErrorPanel())
+                .validateListSize(errorsList, 1)
+                .validateList(errorsList, List.of(
+                        ErrorMessages.CSV_FILE_ERROR_ALERT.getText())
+                )
+                .then("Validate error under the 'Publisher' field")
+                .waitAndValidate(not(visible), openPricingSidebar.getErrorAlertByFieldName("Publisher Name"))
+                .validate(openPricingSidebar.getErrorAlertByFieldName("CSV"), ErrorMessages.CSV_FILE_ERROR_ALERT.getText())
+                .uploadFileFromDialog(openPricingSidebar.getCsvFile(), RESOURCES_DIRECTORY + "/by too large int.csv")
+                .then("Validate errors disappeared")
+                .waitAndValidate(not(visible), openPricingSidebar.getErrorAlertByFieldName("CSV"))
+                .waitAndValidate(not(visible), openPricingSidebar.getErrorAlertByFieldName("Publisher Name"))
+                .validate(not(visible), openPricingSidebar.getErrorAlert().getErrorPanel())
                 .testEnd();
     }
-
 
     @Step("Validate File Data")
     private void validateFileData(String filename) throws IOException {
@@ -160,6 +183,17 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
 
         testStart()
                 .validateMapsAreEqual(fileDataMap, expectedRules)
+                .testEnd();
+    }
+
+    @AfterMethod
+    private void logout() {
+
+        testStart()
+                .and("Close sidebar")
+                .clickOnWebElement(openPricingSidebar.getCloseIcon())
+                .waitSideBarClosed()
+                .logOut()
                 .testEnd();
     }
 
@@ -172,7 +206,9 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
                 .testEnd();
         deleteRules();
         deletePublisher(publisher.getId());
+        deleteUser(singleUser.getId());
     }
+
 
     private void deletePublisher(int id) {
         if (publisher()
@@ -181,6 +217,16 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
                 .build()
                 .getResponseCode() == HttpStatus.SC_NO_CONTENT)
             log.info(String.format("Deleted publisher %s", publisher.getId()));
+
+    }
+
+    private void deleteUser(int id) {
+        if (user()
+                .setCredentials(USER_FOR_DELETION)
+                .deleteUser(id)
+                .build()
+                .getResponseCode() == HttpStatus.SC_NO_CONTENT)
+            log.info(String.format("Deleted user %s", publisher.getId()));
 
     }
 
@@ -214,4 +260,5 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
             }
         }
     }
+
 }

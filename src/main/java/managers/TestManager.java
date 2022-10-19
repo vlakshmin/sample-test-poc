@@ -3,7 +3,8 @@ package managers;
 import com.codeborne.selenide.*;
 import com.codeborne.selenide.ex.ElementNotFound;
 import com.codeborne.selenide.testng.ScreenShooter;
-import com.sun.xml.bind.v2.TODO;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import configurations.ConfigurationLoader;
 import configurations.User;
 import lombok.SneakyThrows;
@@ -19,14 +20,17 @@ import pages.LoginPage;
 import pages.Path;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.TableData;
+import zutils.FileUtils;
 
-import java.io.File;
+import java.io.*;
+import java.nio.channels.ScatteringByteChannel;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.Duration;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static api.core.client.HttpClient.getToken;
@@ -35,6 +39,8 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 import static java.lang.String.format;
+import static java.util.concurrent.TimeUnit.MINUTES;
+import static org.awaitility.Awaitility.await;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -398,8 +404,18 @@ public final class TestManager {
         public TestManagerBuilder validateAttribute(SelenideElement element, String attributeName, String attributeValue) {
             logEvent(format("Validating %s  has attribute '%s' with value '%s'",
                     element.getAlias(), attributeName, attributeValue));
-    //        element.shouldBe(exist, visible).hover().shouldHave(attribute(attributeName, attributeValue));
+            //        element.shouldBe(exist, visible).hover().shouldHave(attribute(attributeName, attributeValue));
             element.shouldHave(attribute(attributeName, attributeValue));
+
+            return this;
+        }
+
+        public TestManagerBuilder validateMapsAreEqual(Map<String, String> first, Map<String, String> second) {
+            logEvent(format("Validating %s has size equals to %s", first.size(), second.size()));
+            assertEquals(first.size(), second.size());
+
+            first.entrySet().stream()
+                    .allMatch(e -> e.getValue().equals(second.get(e.getKey())));
 
             return this;
         }
@@ -540,7 +556,30 @@ public final class TestManager {
         public TestManagerBuilder uploadFileFromDialog(SelenideElement fileInput, String relativeFilePath) {
 
             fileInput.uploadFile(new File(relativeFilePath));
-    //        $("input[type='file']").uploadFile(new File(relativeFilePath));
+
+            return this;
+        }
+
+        public TestManagerBuilder validateFileHeader(String filename, String expectedFileHeader[]) {
+
+            logEvent(String.format("Download File and check Header. Header should be %s", expectedFileHeader));
+
+            String[] header = FileUtils.getHeader(filename);
+            assertEquals(header, expectedFileHeader);
+
+            return this;
+        }
+
+        public TestManagerBuilder waitFileDownloading(String filename) throws IOException {
+
+            FileUtils.waitFileDownloading(filename);
+
+            return this;
+        }
+
+        public TestManagerBuilder deleteFilesByName(String filename) throws IOException {
+
+            FileUtils.deleteFileByName(filename);
 
             return this;
         }
@@ -599,5 +638,6 @@ public final class TestManager {
 
             return new TestManager(this);
         }
+
     }
 }

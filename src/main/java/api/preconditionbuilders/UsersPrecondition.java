@@ -55,7 +55,7 @@ public class UsersPrecondition {
 
         public UsersPreconditionBuilder createNewUser(UserRole role) {
             this.userRequest = UserRequest.builder()
-                    .name(captionWithSuffix(role.getDefinition()))
+                    .name(captionWithSuffix("auto "+role.getDefinition()))
                     .mail(randomMail())
                     .role(role.getRole())
                     .publisherId(role.getRole() == 0 ? 4 : null)
@@ -70,6 +70,22 @@ public class UsersPrecondition {
             return this;
         }
 
+        public UsersPreconditionBuilder createSinglePublisherUser(Integer publisherId) {
+            this.userRequest = UserRequest.builder()
+                    .name("auto Single")
+                    .mail(User.TEMP_USER.getMail())
+                    .role(UserRole.SINGLE_PUBLISHER.getRole())
+                    .publisherId(publisherId)
+                    .password(User.TEMP_USER.getPassword())
+                    .isEnabled(true)
+                    .build();
+
+            this.response = userService.createUser(userRequest);
+            this.userResponse = response.as(UserDto.class);
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
         public UsersPreconditionBuilder updateUser(UserDto user) {
             this.userResponse = UserDto.builder()
                     .id(user.getId())

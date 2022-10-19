@@ -3,8 +3,6 @@ package rx.yield.openpricing;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.yield.openpricing.OpenPricing;
 import com.codeborne.selenide.testng.ScreenShooter;
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -13,12 +11,11 @@ import pages.Path;
 import pages.yield.openpricing.OpenPricingPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
+import widgets.errormessages.ErrorMessages;
 import widgets.yield.openPricing.sidebar.EditOpenPricingSidebar;
 import widgets.yield.openPricing.sidebar.UpdateExistingOpenPricingRulesSidebar;
 
-import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,12 +31,11 @@ import static zutils.FakerUtils.captionWithSuffix;
 @Listeners({ScreenShooter.class})
 public class OpenPricingUploadNegtiveTests extends BaseTest {
 
-    private OpenPricingPage openPricingPage;
-    private UpdateExistingOpenPricingRulesSidebar openPricingUploadSidebar;
-    private EditOpenPricingSidebar openPricingSidebar;
     private Publisher publisher;
+    private OpenPricingPage openPricingPage;
     private List<OpenPricing> openPricingList;
-    private Map<String, String> fileData;
+    private EditOpenPricingSidebar openPricingSidebar;
+    private UpdateExistingOpenPricingRulesSidebar openPricingUploadSidebar;
 
     private final String RESOURCES_DIRECTORY = "src/test/resources/csvfiles/openpricing/";
 
@@ -128,6 +124,45 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
         checkDataIsNotChanged(openPricingList.get(2).getName());
     }
 
+    @Test(description = "Negative: check errors if required fields are not selected")
+    private void checkRequiredFields() {
+        var errorsList = openPricingUploadSidebar.getErrorAlert().getErrorsList();
+
+        testStart()
+                .and("Open Upload sidebar")
+                .clickOnWebElement(openPricingPage.getUploadOpenPricingButton())
+                .clickOnWebElement(openPricingPage.getUpdateOpenPricingLink())
+                .waitSideBarOpened()
+                .and("Click 'Update Pricing Rules'")
+                .clickOnWebElement(openPricingUploadSidebar.getUpdateExistingRulesButton())
+                .then("Validate errors for all required fields in Error Panel")
+                .waitAndValidate(visible, openPricingUploadSidebar.getErrorAlert().getErrorPanel())
+                .validateListSize(errorsList, 2)
+                .validateList(errorsList, List.of(
+                        ErrorMessages.PUBLISHER_NAME_ERROR_ALERT.getText(),
+                        ErrorMessages.CSV_FILE_ERROR_ALERT.getText())
+                )
+                .then("Validate error under the 'Publisher' field")
+                .waitAndValidate(visible, openPricingUploadSidebar.getErrorAlertByFieldName("Publisher Name"))
+                .validate(openPricingUploadSidebar.getErrorAlertByFieldName("Publisher Name"), ErrorMessages.PUBLISHER_NAME_ERROR_ALERT.getText())
+                .validate(openPricingUploadSidebar.getErrorAlertByFieldName("CSV"), ErrorMessages.CSV_FILE_ERROR_ALERT.getText())
+                .and(String.format("Select Publisher '%s'", publisher.getName()))
+                .selectFromDropdown(openPricingUploadSidebar.getPublisherInput(),
+                        openPricingUploadSidebar.getPublisherNameDropdownItems(), publisher.getName())
+                .then("Validate error under the 'Publisher field' disappeared")
+                .waitAndValidate(not(visible), openPricingUploadSidebar.getErrorAlertByFieldName("Publisher Name"))
+                .validateListSize(errorsList, 1)
+                .validateList(errorsList, List.of(
+                        ErrorMessages.CSV_FILE_ERROR_ALERT.getText())
+                )
+                .uploadFileFromDialog(openPricingUploadSidebar.getCsvFileInput(), RESOURCES_DIRECTORY + "/by too large int.csv")
+                .then("Validate errors disappeared")
+                .waitAndValidate(not(visible), openPricingUploadSidebar.getErrorAlertByFieldName("CSV"))
+                .waitAndValidate(not(visible), openPricingUploadSidebar.getErrorAlertByFieldName("Publisher Name"))
+                .validate(not(visible), openPricingUploadSidebar.getErrorAlert().getErrorPanel())
+                .testEnd();
+    }
+
     @Step("Check Error Message")
     private void checkErrorAlert(String errorMsg) {
 
@@ -178,11 +213,8 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
                 .clickOnWebElement(openPricingUploadSidebar.getCloseIcon())
                 .waitSideBarClosed()
                 .testEnd();
-
     }
 
-
-    // @AfterMethod(alwaysRun = true)
     private void closeSideBar() {
 
         testStart()
