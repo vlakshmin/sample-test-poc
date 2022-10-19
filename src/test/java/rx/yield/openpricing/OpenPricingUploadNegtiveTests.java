@@ -70,42 +70,24 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
     @DataProvider(name = "Negative Upload")
     public Object[][] uploadFilesNegative() {
         return new Object[][]{
-                {"by too large decimal.csv", "Upload CSV update zero floorPrice by too large decimal", "{ \"status\": \"No records were imported due to errors\", " +
-                        "\"errors\": [ \"Row 3, Floor Price '9999999.99': A valid price is between 0.00 and 999,999.99\" ] }"},
-                {"by too large int.csv", "Upload CSV update zero floorPrice by too large int", "{ \"status\": \"No records were imported due to errors\", " +
-                        "\"errors\": [ \"Row 3, Floor Price '99999999.00': A valid price is between 0.00 and 999,999.99\" ] }"},
-                {"by negative integer.csv", "Upload CSV update zero floorPrice by negative int", "{ \"status\": \"No records were imported due to errors\", " +
-                        "\"errors\": [ \"Row 3, Floor Price '-999999.00': A valid price is between 0.00 and 999,999.99\" ] }"},
-                {"by negative decimal.csv", "Upload CSV update zero floorPrice by negative decimal", "{ \"status\": \"No records were imported due to errors\", " +
-                        "\"errors\": [ \"Row 3, Floor Price '-9999.99': A valid price is between 0.00 and 999,999.99\" ] }"},
-                {"by negative zero.csv", "Upload CSV update zero floorPrice by negative zero", "{ \"status\": \"No records were imported due to errors\", " +
-                        "\"errors\": [ \"Row 3, Floor Price '-0.01': A valid price is between 0.00 and 999,999.99\" ] }"},
-                {"by string value.csv", "Upload CSV update zero floorPrice by String value", "{ \"code\": 400, \"message\": \"bad request\", " +
-                        "\"error\": \"the CSV file is incorrectly formatted\" }"},
-                {"by empty floor price.csv", "Upload CSV update floorPrice by empty value", "{ \"status\": \"No records were imported due to errors\", " +
-                        "\"errors\": [ \"Row 3, Floor Price '': not a valid value\" ] }"},
-                {"by empty open pricing name.csv", "Upload CSV update by empty open-pricing-name value", "{ \"status\": \"No records were imported due to errors\", " +
-                        "\"errors\": [ \"Row 3, Rule Name '': could not match the open pricing Rule Name to the publisher\" ] }"},
-                {"by null floor price.csv", "Upload CSV update floorPrice by null value", "{ \"status\": \"No records were imported due to errors\", " +
-                        "\"errors\": [ \"Row 3, Floor Price 'null': not a valid value\" ] }"},
-                {"by empty floor price header.csv", "Upload CSV incorrect floor price header", "{ \"code\": 400, \"message\": \"bad request\"," +
-                        " \"error\": \"the CSV file has incorrect headers\" }"},
-                {"by incorrect quantity of headers.csv", "Upload CSV incorrect quantity of headers", "{ \"code\": 400, \"message\": \"bad request\"," +
-                        " \"error\": \"the CSV file is incorrectly formatted\" }"},
-                {"by incorrect quantity of colunms.csv", "Upload CSV incorrect quantity of columns", "{ \"code\": 400, \"message\": \"bad request\", " +
-                        "\"error\": \"the CSV file does not have the correct number of columns\" }"},
-                {"by empty CSV file.csv", "Upload empty CSV file", "{ \"code\": 400, \"message\": \"bad request\", " +
-                        "\"error\": \"the CSV file is empty\" }"},
-                {"by no data.csv", "Upload CSV file with no data", "{ \"code\": 400, \"message\": \"bad request\"," +
-                        " \"error\": \"the CSV file contains no data\" }"},
-                {"non-csv.shell", "Upload CSV update by non-csv file", "{ \"code\": 415, \"message\": \"unsupported media type\", " +
-                        "\"error\": \"The uploaded file is not a CSV file\" }"},
-                {"by non-existent among others.csv", "Upload CSV update by non-existent pricing among others", "{ \"status\": \"No records were imported due to errors\", " +
-                        "\"errors\": [ \"Row 4, Rule Name 'upload auto four': could not match the open pricing Rule Name to the publisher\" ] }"},
-                {"by empty pricing name header.csv", "Upload CSV with empty pricing name header", "{ \"code\": 400, \"message\": \"bad request\", " +
-                        "\"error\": \"the CSV file has incorrect headers\" }"},
-                {"duplicated rule names.csv", "Upload CSV update by duplicated pricing names", "{ \"status\": \"No records were imported due to errors\", " +
-                        "\"errors\": [ \"Row 3, Floor Price 'upload auto one': the same Rule Name already exists in row 2\" ] }"},
+                {"by too large decimal.csv", "Upload CSV update zero floorPrice by too large decimal", "Row 3, Floor Price '9999999.99': A valid price is between 0.00 and 999,999.99"},
+                {"by too large int.csv", "Upload CSV update zero floorPrice by too large int", "Row 3, Floor Price '99999999.00': A valid price is between 0.00 and 999,999.99"},
+                {"by negative integer.csv", "Upload CSV update zero floorPrice by negative int", "Row 3, Floor Price '-999999.00': A valid price is between 0.00 and 999,999.99"},
+                {"by negative decimal.csv", "Upload CSV update zero floorPrice by negative decimal", "Row 3, Floor Price '-9999.99': A valid price is between 0.00 and 999,999.99"},
+                {"by negative zero.csv", "Upload CSV update zero floorPrice by negative zero", "Row 3, Floor Price '-0.01': A valid price is between 0.00 and 999,999.99"},
+                {"by string value.csv", "Upload CSV update zero floorPrice by String value", "the CSV file is incorrectly formatted"},
+                {"by empty floor price.csv", "Upload CSV update floorPrice by empty value", "Row 3, Floor Price '': not a valid value"},
+                {"by empty open pricing name.csv", "Upload CSV update by empty open-pricing-name value", "Row 3, Rule Name '': could not match the open pricing Rule Name to the publisher"},
+                {"by null floor price.csv", "Upload CSV update floorPrice by null value", "Row 3, Floor Price 'null': not a valid value"},
+                {"by empty floor price header.csv", "Upload CSV incorrect floor price header", "the CSV file has incorrect headers"},
+                {"by incorrect quantity of headers.csv", "Upload CSV incorrect quantity of headers", "the CSV file is incorrectly formatted"},
+                {"by incorrect quantity of colunms.csv", "Upload CSV incorrect quantity of columns", "the CSV file does not have the correct number of columns"},
+                {"by empty CSV file.csv", "Upload empty CSV file", "the CSV file is empty"},
+                {"by no data.csv", "Upload CSV file with no data", "the CSV file contains no data"},
+                {"by non-existent among others.csv", "Upload CSV update by non-existent pricing among others",
+                        "Row 4, Rule Name 'upload auto four': could not match the open pricing Rule Name to the publisher"},
+                {"by empty pricing name header.csv", "Upload CSV with empty pricing name header", "the CSV file has incorrect headers"},
+                {"duplicated rule names.csv", "Upload CSV update by duplicated pricing names", "Row 3, Floor Price 'upload auto one': the same Rule Name already exists in row 2"},
         };
     }
 
@@ -119,9 +101,27 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
         checkErrorAlert(errorMsg);
         closeSideBar();
 
-        checkDataIsNotChanged(openPricingList.get(0).getName());
-        checkDataIsNotChanged(openPricingList.get(1).getName());
-        checkDataIsNotChanged(openPricingList.get(2).getName());
+        openPricingList
+                .stream()
+                .forEach(e ->
+                        checkDataIsNotChanged(e.getName()));
+    }
+
+    @Test(description = "Negative: The uploaded file is not a CSV file")
+    private void uploadIsNotCSVNegative() {
+
+        uploadData("non-csv.shell");
+
+        testStart()
+                .waitAndValidate(visible, openPricingPage.getToasterMessage().getPanelError())
+                .clickOnWebElement(openPricingPage.getToasterMessage().getViewErrorDetails())
+                .validate(openPricingPage.getToasterMessage().getMessageError(), "{ \"code\": 415, \"message\": \"unsupported media type\", " +
+                        "\"error\": \"The uploaded file is not a CSV file\" }")
+                .clickOnWebElement(openPricingPage.getToasterMessage().getRemoveIcon())
+                .waitAndValidate(not(visible), openPricingPage.getToasterMessage().getPanelError())
+                .testEnd();
+
+        closeSideBar();
     }
 
     @Test(description = "Negative: check errors if required fields are not selected")
@@ -165,13 +165,13 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
 
     @Step("Check Error Message")
     private void checkErrorAlert(String errorMsg) {
+        var errorsList = openPricingUploadSidebar.getErrorAlert().getErrorsList();
 
         testStart()
-                .waitAndValidate(not(visible), openPricingPage.getToasterMessage().getPanelError())
-                .clickOnWebElement(openPricingPage.getToasterMessage().getViewErrorDetails())
-                .validate(openPricingPage.getToasterMessage().getMessageError(), errorMsg)
-                .clickOnWebElement(openPricingPage.getToasterMessage().getRemoveIcon())
-                .waitAndValidate(visible, openPricingPage.getToasterMessage().getPanelError())
+                .then("Validate errors in Error Panel")
+                .waitAndValidate(visible, openPricingUploadSidebar.getErrorAlert().getErrorPanel())
+                .validateListSize(errorsList, 1)
+                .validateList(errorsList, List.of(errorMsg))
                 .testEnd();
     }
 
@@ -186,7 +186,7 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
                 .and(String.format("Select Publisher %s", publisher.getName()))
                 .selectFromDropdown(openPricingUploadSidebar.getPublisherNameDropdown(),
                         openPricingUploadSidebar.getPublisherNameDropdownItems(), publisher.getName())
-                .uploadFileFromDialog(openPricingUploadSidebar.getCsvFileInput(), RESOURCES_DIRECTORY + filename)
+                .uploadFileFromDialog(openPricingUploadSidebar.getCsvFile(), RESOURCES_DIRECTORY + filename)
                 .and("Click 'Update Existing Open Pricing Rules'")
                 .clickOnWebElement(openPricingUploadSidebar.getUpdateExistingRulesButton())
                 .testEnd();
@@ -239,13 +239,15 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
 
     private void deleteOpenPricingRules() {
 
-        for (OpenPricing rule : openPricingList) {
-            if (openPricing()
-                    .setCredentials(USER_FOR_DELETION)
-                    .deleteOpenPricing(rule.getId())
-                    .build()
-                    .getResponseCode() == HttpStatus.SC_NO_CONTENT)
-                log.info(String.format("Deleted open pricing %s", rule.getId()));
+        if (openPricingList.size() > 0) {
+            for (OpenPricing rule : openPricingList) {
+                if (openPricing()
+                        .setCredentials(USER_FOR_DELETION)
+                        .deleteOpenPricing(rule.getId())
+                        .build()
+                        .getResponseCode() == HttpStatus.SC_NO_CONTENT)
+                    log.info(String.format("Deleted open pricing %s", rule.getId()));
+            }
         }
     }
 

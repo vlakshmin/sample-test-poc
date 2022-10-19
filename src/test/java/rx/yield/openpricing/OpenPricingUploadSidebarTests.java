@@ -181,7 +181,6 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
                 .build()
                 .getResponseCode() == HttpStatus.SC_NO_CONTENT)
             log.info(String.format("Deleted publisher %s", publisher.getId()));
-
     }
 
     private void deleteRules() {
