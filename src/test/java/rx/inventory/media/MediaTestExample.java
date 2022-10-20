@@ -29,17 +29,17 @@ public class MediaTestExample extends BaseTest {
     private EditMediaSidebar editMediaSidebar;
 
     public MediaTestExample() {
-        editMediaSidebar = new EditMediaSidebar();
         mediaPage = new MediaPage();
+        editMediaSidebar = new EditMediaSidebar();
     }
 
     @BeforeClass
     public void createNewMedia() {
         //Creating media to edit Using API
         media = MediaPrecondition.media()
-
                 .createNewMedia("auto", "http://localhost:8080")
-                .build().getMediaResponse();
+                .build()
+                .getMediaResponse();
     }
 
     @Test
@@ -102,10 +102,11 @@ public class MediaTestExample extends BaseTest {
 
     @AfterTest
     public void deleteMedia() {
-
-        MediaPrecondition.media().
-                setCredentials(USER_FOR_DELETION).
-                deleteMedia(media.getId());
+        //Deleting media to edit Using API
+        MediaPrecondition.media()
+                .setCredentials(USER_FOR_DELETION)
+                .deleteMedia(media.getId())
+                .build();
     }
 
 }

@@ -25,12 +25,12 @@ import static zutils.FakerUtils.captionWithSuffix;
 @Slf4j
 @Listeners({ScreenShooter.class})
 public class MediaCheckPaginationTests extends BaseTest {
-    private MediaPage mediaPage;
 
     private int totalMedia;
+    private Publisher publisher;
+    private MediaPage mediaPage;
     private List<Media> listMedia;
 
-    Publisher publisher;
 
     public MediaCheckPaginationTests() {
         mediaPage = new MediaPage();

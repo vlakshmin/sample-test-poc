@@ -124,6 +124,7 @@ public class MediaSortingTableTests extends BaseTest {
     private void login() {
         var table = mediaPage.getMediaTable().getTableOptions();
         var tableData = mediaPage.getMediaTable().getTableData();
+
         testStart()
                 .given()
                 .openDirectPath(Path.MEDIA)

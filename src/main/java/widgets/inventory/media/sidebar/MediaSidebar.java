@@ -23,15 +23,17 @@ public abstract class MediaSidebar {
     private SelenideElement closeIcon = $x(CLOSE_ICON.getSelector()).as(CLOSE_ICON.getAlias());
     private SelenideElement categories = $x(CATEGORIES.getSelector()).as(CATEGORIES.getAlias());
     private SelenideElement saveButton = $x(SAVE_BUTTON.getSelector()).as(SAVE_BUTTON.getAlias());
-    private SelenideElement mediaType = $x(MEDIA_TYPE.getSelector()).as(MEDIA_TYPE.getAlias());
     private SelenideElement appStoreURL = $x(APP_STORE_URL.getSelector()).as(APP_STORE_URL.getAlias());
     private SelenideElement activeToggle = $x(ACTIVE_TOGGLE.getSelector()).as(ACTIVE_TOGGLE.getAlias());
+    private SelenideElement platformInput = $x(PLATFORM_INPUT.getSelector()).as(PLATFORM_INPUT.getAlias());
     private SelenideElement publisherInput = $x(PUBLISHER_NAME.getSelector()).as(PUBLISHER_NAME.getAlias());
-    private SelenideElement mediaTypeInput = $x(MEDIA_TYPE_INPUT.getSelector()).as(MEDIA_TYPE_INPUT.getAlias());
     private SelenideElement categoriesInput = $x(CATEGORIES_INPUT.getSelector()).as(CATEGORIES_INPUT.getAlias());
-    private ElementsCollection publisherItems = $$x(PUBLISHER_ITEMS.getSelector()).as(PUBLISHER_ITEMS.getAlias());
-    private ElementsCollection mediaTypeItems = $$x(MEDIA_TYPE_ITEMS.getSelector()).as(MEDIA_TYPE_ITEMS.getAlias());
+    private SelenideElement platformDropdown = $x(PLATFORM_DROPDOWN.getSelector()).as(PLATFORM_DROPDOWN.getAlias());
     private SelenideElement publisherNameInput = $x(PUBLISHER_NAME_INPUT.getSelector()).as(PUBLISHER_NAME_INPUT.getAlias());
+    private ElementsCollection platformDropdownItems = $$x(PLATFORM_DROPDOWN_ITEMS.getSelector()).as(PLATFORM_DROPDOWN_ITEMS.getAlias());
+    private ElementsCollection publisherDropdownItems = $$x(PUBLISHER_DROPDOWN_ITEMS.getSelector()).as(PUBLISHER_DROPDOWN_ITEMS.getAlias());
+
+
     private ValidationBottomAlert errorAlert = new ValidationBottomAlert();
     private CategoriesListPanel categoriesPanel = new CategoriesListPanel();
 
