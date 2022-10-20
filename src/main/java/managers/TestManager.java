@@ -3,8 +3,6 @@ package managers;
 import com.codeborne.selenide.*;
 import com.codeborne.selenide.ex.ElementNotFound;
 import com.codeborne.selenide.testng.ScreenShooter;
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
 import configurations.ConfigurationLoader;
 import configurations.User;
 import lombok.SneakyThrows;
@@ -24,14 +22,9 @@ import widgets.common.table.TableData;
 import zutils.FileUtils;
 
 import java.io.*;
-import java.nio.channels.ScatteringByteChannel;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.*;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static api.core.client.HttpClient.getToken;
@@ -40,8 +33,6 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 import static java.lang.String.format;
-import static java.util.concurrent.TimeUnit.MINUTES;
-import static org.awaitility.Awaitility.await;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
