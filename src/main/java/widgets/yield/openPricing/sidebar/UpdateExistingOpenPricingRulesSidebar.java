@@ -7,7 +7,6 @@ import widgets.common.validationalert.ValidationBottomAlert;
 
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
-import static widgets.inventory.media.sidebar.MediaSidebarElements.ERROR_ALERT_BY_FIELD_NAME;
 import static widgets.yield.openPricing.sidebar.UpdateExistingOpenPricingRulesSidebarElements.*;
 
 /**

@@ -118,12 +118,14 @@ public final class FileUtils {
         return data;
     }
 
-    public static String[] getHeader(String filename) {
+    public static String[] getHeader(String dir, String filename) throws IOException {
+
+        File file = getFileByName(dir, filename);
 
         String[] header = {};
 
         try {
-            FileReader filereader = new FileReader(filename);
+            FileReader filereader = new FileReader(file.getPath());
             CSVReader csvReader = new CSVReaderBuilder(filereader)
                     .build();
             List<String[]> allData = csvReader.readAll();

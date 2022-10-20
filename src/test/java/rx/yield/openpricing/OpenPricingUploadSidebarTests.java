@@ -109,9 +109,6 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
                 .and("Clear CSV input")
                 .clickOnWebElement(openPricingSidebar.getCsvFileClearIcon())
                 .validate(openPricingSidebar.getCsvFileInput().getText(), "")
-                .and("Close sidebar")
-                .clickOnWebElement(openPricingSidebar.getCloseIcon())
-                .waitSideBarClosed()
                 .testEnd();
     }
 

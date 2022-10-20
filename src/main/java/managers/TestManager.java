@@ -560,11 +560,11 @@ public final class TestManager {
             return this;
         }
 
-        public TestManagerBuilder validateFileHeader(String filename, String expectedFileHeader[]) {
+        public TestManagerBuilder validateFileHeader(String filename, String expectedFileHeader[]) throws IOException {
 
             logEvent(String.format("Download File and check Header. Header should be %s", expectedFileHeader));
 
-            String[] header = FileUtils.getHeader(filename);
+            String[] header = FileUtils.getHeader(Configuration.downloadsFolder,filename);
             assertEquals(header, expectedFileHeader);
 
             return this;

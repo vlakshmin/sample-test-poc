@@ -2,6 +2,7 @@ package rx.yield.openpricing;
 
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.yield.openpricing.OpenPricing;
+import api.preconditionbuilders.OpenPricingPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +17,8 @@ import widgets.yield.openPricing.sidebar.EditOpenPricingSidebar;
 import widgets.yield.openPricing.sidebar.UpdateExistingOpenPricingRulesSidebar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static api.preconditionbuilders.OpenPricingPrecondition.openPricing;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
@@ -37,6 +38,8 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
     private EditOpenPricingSidebar openPricingSidebar;
     private UpdateExistingOpenPricingRulesSidebar openPricingUploadSidebar;
 
+    private List<String> rulesName = new ArrayList<>();
+
     private final String RESOURCES_DIRECTORY = "src/test/resources/csvfiles/openpricing/";
 
     public OpenPricingUploadNegtiveTests() {
@@ -54,6 +57,8 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
                 .getPublisherResponse();
 
         openPricingList = new ArrayList<>();
+
+        deleteRulesIfExist(List.of("upload auto one", "upload auto two", "upload auto three"));
 
         openPricingList.add(createOpenPricing("upload auto one", 4.44));
         openPricingList.add(createOpenPricing("upload auto two", 4.44));
@@ -79,11 +84,11 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
                 {"by empty floor price.csv", "Upload CSV update floorPrice by empty value", "Row 3, Floor Price '': not a valid value"},
                 {"by empty open pricing name.csv", "Upload CSV update by empty open-pricing-name value", "Row 3, Rule Name '': could not match the open pricing Rule Name to the publisher"},
                 {"by null floor price.csv", "Upload CSV update floorPrice by null value", "Row 3, Floor Price 'null': not a valid value"},
-                {"by empty floor price header.csv", "Upload CSV incorrect floor price header", "the CSV file has incorrect headers"},
-                {"by incorrect quantity of headers.csv", "Upload CSV incorrect quantity of headers", "the CSV file is incorrectly formatted"},
-                {"by incorrect quantity of colunms.csv", "Upload CSV incorrect quantity of columns", "the CSV file does not have the correct number of columns"},
-                {"by empty CSV file.csv", "Upload empty CSV file", "the CSV file is empty"},
-                {"by no data.csv", "Upload CSV file with no data", "the CSV file contains no data"},
+                {"by empty floor price header.csv", "Upload CSV incorrect floor price header", "The CSV file has incorrect headers"},
+                {"by incorrect quantity of headers.csv", "Upload CSV incorrect quantity of headers", "The CSV file is incorrectly formatted"},
+                {"by incorrect quantity of colunms.csv", "Upload CSV incorrect quantity of columns", "The CSV file does not have the correct number of columns"},
+                {"by empty CSV file.csv", "Upload empty CSV file", "The CSV file is empty"},
+                {"by no data.csv", "Upload CSV file with no data", "The CSV file contains no data"},
                 {"by non-existent among others.csv", "Upload CSV update by non-existent pricing among others",
                         "Row 4, Rule Name 'upload auto four': could not match the open pricing Rule Name to the publisher"},
                 {"by empty pricing name header.csv", "Upload CSV with empty pricing name header", "the CSV file has incorrect headers"},
@@ -97,7 +102,6 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
         log.info(descr);
 
         uploadData(filename);
-
         checkErrorAlert(errorMsg);
         closeSideBar();
 
@@ -120,7 +124,6 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
                 .clickOnWebElement(openPricingPage.getToasterMessage().getRemoveIcon())
                 .waitAndValidate(not(visible), openPricingPage.getToasterMessage().getPanelError())
                 .testEnd();
-
         closeSideBar();
     }
 
@@ -143,7 +146,6 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
                         ErrorMessages.CSV_FILE_ERROR_ALERT.getText())
                 )
                 .then("Validate error under the 'Publisher' field")
-                .waitAndValidate(visible, openPricingUploadSidebar.getErrorAlertByFieldName("Publisher Name"))
                 .validate(openPricingUploadSidebar.getErrorAlertByFieldName("Publisher Name"), ErrorMessages.PUBLISHER_NAME_ERROR_ALERT.getText())
                 .validate(openPricingUploadSidebar.getErrorAlertByFieldName("CSV"), ErrorMessages.CSV_FILE_ERROR_ALERT.getText())
                 .and(String.format("Select Publisher '%s'", publisher.getName()))
@@ -155,12 +157,41 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
                 .validateList(errorsList, List.of(
                         ErrorMessages.CSV_FILE_ERROR_ALERT.getText())
                 )
-                .uploadFileFromDialog(openPricingUploadSidebar.getCsvFileInput(), RESOURCES_DIRECTORY + "/by too large int.csv")
+                .uploadFileFromDialog(openPricingUploadSidebar.getCsvFile(), RESOURCES_DIRECTORY + "/by too large int.csv")
                 .then("Validate errors disappeared")
                 .waitAndValidate(not(visible), openPricingUploadSidebar.getErrorAlertByFieldName("CSV"))
                 .waitAndValidate(not(visible), openPricingUploadSidebar.getErrorAlertByFieldName("Publisher Name"))
                 .validate(not(visible), openPricingUploadSidebar.getErrorAlert().getErrorPanel())
                 .testEnd();
+        closeSideBar();
+    }
+
+    @Test(description = "Negative: check errors if reselect file")
+    private void checkErrorsDisappearAfterSelectedFile() {
+        var errorsList = openPricingUploadSidebar.getErrorAlert().getErrorsList();
+
+        testStart()
+                .and("Open Upload sidebar")
+                .clickOnWebElement(openPricingPage.getUploadOpenPricingButton())
+                .clickOnWebElement(openPricingPage.getUpdateOpenPricingLink())
+                .waitSideBarOpened()
+                .and(String.format("Select Publisher '%s'", publisher.getName()))
+                .selectFromDropdown(openPricingUploadSidebar.getPublisherInput(),
+                        openPricingUploadSidebar.getPublisherNameDropdownItems(), publisher.getName())
+                .uploadFileFromDialog(openPricingUploadSidebar.getCsvFile(), RESOURCES_DIRECTORY + "/by no data.csv")
+                .and("Click 'Update Pricing Rules'")
+                .clickOnWebElement(openPricingUploadSidebar.getUpdateExistingRulesButton())
+                .then("Validate error under the 'CSV' field appeared")
+                .validateListSize(errorsList, 1)
+                .validateList(errorsList, List.of(
+                        "the CSV file contains no data")
+                )
+                .and("Select CSV again")
+                .uploadFileFromDialog(openPricingUploadSidebar.getCsvFile(), RESOURCES_DIRECTORY + "/by too large int.csv")
+                .then("Validate errors disappeared")
+                .validate(not(visible), openPricingUploadSidebar.getErrorAlert().getErrorPanel())
+                .testEnd();
+        closeSideBar();
     }
 
     @Step("Check Error Message")
@@ -192,7 +223,6 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
                 .testEnd();
     }
 
-
     @Step("Check Floor Price is not changed")
     private void checkDataIsNotChanged(String ruleName) {
 
@@ -209,10 +239,8 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
                 .then("Check Floor Price")
                 .validateAttribute(openPricingSidebar.getFloorPriceField().getFloorPriceInput(), "value",
                         "4.44")
-                .and("Close sidebar")
-                .clickOnWebElement(openPricingUploadSidebar.getCloseIcon())
-                .waitSideBarClosed()
                 .testEnd();
+        closeSideBar();
     }
 
     private void closeSideBar() {
@@ -227,6 +255,10 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
     @AfterClass(alwaysRun = true)
     private void deletePublisher() {
 
+        testStart()
+                .logOut()
+                .testEnd();
+
         if (publisher()
                 .setCredentials(USER_FOR_DELETION)
                 .deletePublisher(publisher.getId())
@@ -236,6 +268,7 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
 
         deleteOpenPricingRules();
     }
+
 
     private void deleteOpenPricingRules() {
 
@@ -257,5 +290,33 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
                 .createNewOpenPricing(name, floorPrice, publisher)
                 .build()
                 .getOpenPricingResponse();
+    }
+
+    private void deleteOpenPricingRules(List<OpenPricing> rulesList) {
+
+        for (OpenPricing rule : rulesList) {
+            if (openPricing()
+                    .setCredentials(USER_FOR_DELETION)
+                    .deleteOpenPricing(rule.getId())
+                    .build()
+                    .getResponseCode() == HttpStatus.SC_NO_CONTENT)
+                log.info(String.format("Deleted open pricing %s", rule.getId()));
+        }
+    }
+
+    private void deleteRulesIfExist(List<String> rulesName){
+
+        for (String name : rulesName) {
+            HashMap<String, Object> queryParams = new HashMap<>();
+            queryParams.put("name", name);
+
+            List<OpenPricing> rules = OpenPricingPrecondition.openPricing()
+                    .getOpenPricingWithFilter(queryParams)
+                    .build()
+                    .getOpenPricingGetAllResponse()
+                    .getItems();
+
+            deleteOpenPricingRules(rules);
+        }
     }
 }

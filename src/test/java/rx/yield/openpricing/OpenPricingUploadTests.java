@@ -2,6 +2,7 @@ package rx.yield.openpricing;
 
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.yield.openpricing.OpenPricing;
+import api.preconditionbuilders.OpenPricingPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
@@ -74,7 +75,7 @@ public class OpenPricingUploadTests extends BaseTest {
                 {"zero decimal.csv", 0.00, "Upload CSV update by zero decimal floorPrice"},
                 {"zero to int.csv", 0.00, "Upload CSV update zero floorPrice to int"},
                 {"zero decimal.csv", 0.00, "Upload CSV update zero floorPrice to max decimal"},
-                {"zero decimal.csv", 0.00, "Upload CSV update zero floorPrice by Stringified number value"},
+                {"zero decimal.csv", 0.00, "Upload CSV update zero floorPrice by Stringfied number value"},
         };
     }
 
@@ -84,6 +85,7 @@ public class OpenPricingUploadTests extends BaseTest {
         log.info(descr);
 
         getDataFromFile(filename);
+        deleteIfExists();
         createOpenPricing(floorPrice);
         uploadData(filename);
 
@@ -136,7 +138,7 @@ public class OpenPricingUploadTests extends BaseTest {
 
     @AfterMethod(alwaysRun = true)
     private void deleteTestData() {
-        deleteOpenPricingRules();
+        deleteOpenPricingRules(openPricingList);
     }
 
     @AfterClass(alwaysRun = true)
@@ -150,9 +152,9 @@ public class OpenPricingUploadTests extends BaseTest {
             log.info(String.format("Deleted publisher %s", publisher.getId()));
     }
 
-    private void deleteOpenPricingRules() {
+    private void deleteOpenPricingRules(List<OpenPricing> rulesList) {
 
-        for (OpenPricing rule : openPricingList) {
+        for (OpenPricing rule : rulesList) {
             if (openPricing()
                     .setCredentials(USER_FOR_DELETION)
                     .deleteOpenPricing(rule.getId())
@@ -172,16 +174,41 @@ public class OpenPricingUploadTests extends BaseTest {
             }
         }
     }
-    
+
+    private void deleteIfExists(){
+        fileDataMap
+                .entrySet()
+                .stream()
+                .forEach(e -> findRuleAndDelete(e.getKey()));
+    }
+
+    private void findRuleAndDelete(String ruleName){
+
+        HashMap<String, Object> queryParams = new HashMap<>();
+        queryParams.put("name", ruleName);
+
+        List<OpenPricing> rules = OpenPricingPrecondition.openPricing()
+                .getOpenPricingWithFilter(queryParams)
+                .build()
+                .getOpenPricingGetAllResponse()
+                .getItems();
+
+        deleteOpenPricingRules(rules);
+    }
+
     private void createOpenPricing(Double floorPrice){
 
         fileDataMap
                 .entrySet()
                 .stream()
-                .forEach(e ->
-                        openPricing()
-                        .createNewOpenPricing(e.getKey(), floorPrice, publisher)
-                        .build()
-                        .getOpenPricingResponse());
+                .forEach(e -> createOpenPricing(e.getKey(), floorPrice, publisher));
+    }
+
+    private void createOpenPricing(String name, Double floorPrice, Publisher publisher){
+
+        openPricingList.add(openPricing()
+                .createNewOpenPricing(name, floorPrice, publisher)
+                .build()
+                .getOpenPricingResponse());
     }
 }
