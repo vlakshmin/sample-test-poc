@@ -27,8 +27,8 @@ public class DeleteGeneratedDataTest extends BaseTest {
     private static final String PREFIX_ADSPOTS = "auto";
     private static final String PREFIX_PUBLISHERS = "auto";
     private static final String PREFIX_OPEN_PRICING = "auto";
-  //  private static final String PREFIX_USERS = "Test Account";
-    private static final String PREFIX_USERS = "user";
+    private static final String PREFIX_USERS = "Test Account";
+    //private static final String PREFIX_USERS = "user";
     private static final String PREFIX_DYNAMIC_PRICING = "auto";
     private static final String PREFIX_PROTECTIONS_1 = "api";
     private static final String PREFIX_PROTECTIONS_2 = "auto";
