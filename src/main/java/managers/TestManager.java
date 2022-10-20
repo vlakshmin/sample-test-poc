@@ -18,6 +18,7 @@ import org.testng.annotations.Listeners;
 import pages.BasePage;
 import pages.LoginPage;
 import pages.Path;
+import pages.profile.ProfilePage;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.TableData;
 import zutils.FileUtils;
@@ -60,6 +61,7 @@ public final class TestManager {
 
         private final BasePage basePage = new BasePage();
         private final LoginPage loginPage = new LoginPage();
+        private final ProfilePage profilePage = new ProfilePage();
         private final String ELEMENT_BY_TEXT = "//*[contains(text(),'%s')]";
         private final String DIV_CONTAINS_TEXT = "//div[contains(text(),'%s')]";
 
@@ -614,8 +616,8 @@ public final class TestManager {
         public TestManagerBuilder logOut() {
 
             try {
-                this.clickOnWebElement($x("//div[contains(@class,'avatar')]"));
-                this.clickOnText("Logout");
+                this.clickOnWebElement(profilePage.getMenuSidebar().getProfileAvatar());
+                this.clickOnWebElement(profilePage.getLogoutButton());
             } catch (NoSuchElementException | ElementClickInterceptedException e) {
 
                 return this;
@@ -638,6 +640,5 @@ public final class TestManager {
 
             return new TestManager(this);
         }
-
     }
 }

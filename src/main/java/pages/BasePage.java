@@ -3,6 +3,7 @@ package pages;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import widgets.common.ToasterMessage;
+import widgets.common.menusidebar.MenuSidebar;
 import widgets.common.table.TableOptionsElements;
 
 import static com.codeborne.selenide.Selenide.$x;
@@ -14,6 +15,7 @@ import static pages.BasePageElements.*;
 @Getter
 public class BasePage {
 
+    private MenuSidebar menuSidebar = new MenuSidebar();
     private ToasterMessage toasterMessage = new ToasterMessage();
     private SelenideElement logo = $x(LOGO.getSelector()).as(LOGO.getAlias());
     private SelenideElement sidebar = $x(SIDEBAR.getSelector()).as(SIDEBAR.getAlias());
