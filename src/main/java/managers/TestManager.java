@@ -548,6 +548,7 @@ public final class TestManager {
 
         public TestManagerBuilder uploadFileFromDialog(SelenideElement fileInput, String relativeFilePath) {
 
+            logEvent(format("Upload file '%s' to %s", relativeFilePath, fileInput.getAlias()));
             fileInput.uploadFile(new File(relativeFilePath));
 
             return this;
@@ -565,6 +566,7 @@ public final class TestManager {
 
         public TestManagerBuilder waitFileDownloading(String filename) throws IOException {
 
+            logEvent(format("Waiting download file %s to %s", filename));
             FileUtils.waitFileDownloading(filename);
 
             return this;

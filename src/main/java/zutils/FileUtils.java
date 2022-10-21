@@ -63,8 +63,6 @@ public final class FileUtils {
         } catch (ConditionTimeoutException e) {
             System.out.println(String.format("File %s not found in the folder %s", fileName, filePath));
         }
-
-
     }
 
     private static List<Path> getFilesByName(String dir, String fileName) throws IOException {
