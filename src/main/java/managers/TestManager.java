@@ -403,12 +403,12 @@ public final class TestManager {
             return this;
         }
 
-        public TestManagerBuilder validateMapsAreEqual(Map<String, String> first, Map<String, String> second) {
-            logEvent(format("Validating %s has size equals to %s", first.size(), second.size()));
-            assertEquals(first.size(), second.size());
+        public TestManagerBuilder validateMapsAreEqual(Map<String, String> expectedMap, Map<String, String>  actualMap) {
+            logEvent(format("Validating maps have expected size %s and identical content", expectedMap.size()));
+            assertEquals(expectedMap.size(),  actualMap.size());
 
-            first.entrySet().stream()
-                    .allMatch(e -> e.getValue().equals(second.get(e.getKey())));
+            assertTrue(expectedMap.entrySet().stream()
+                    .allMatch(e -> e.getValue().equals( actualMap.get(e.getKey()))));
 
             return this;
         }
@@ -566,7 +566,7 @@ public final class TestManager {
 
         public TestManagerBuilder waitFileDownloading(String filename) throws IOException {
 
-            logEvent(format("Waiting download file %s to %s", filename));
+            logEvent(format("Waiting download file %s", filename));
             FileUtils.waitFileDownloading(filename);
 
             return this;
