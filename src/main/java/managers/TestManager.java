@@ -405,6 +405,12 @@ public final class TestManager {
 
         public TestManagerBuilder validateMapsAreEqual(Map<String, String> expectedMap, Map<String, String>  actualMap) {
             logEvent(format("Validating maps have expected size %s and identical content", expectedMap.size()));
+
+            actualMap
+                    .entrySet()
+                    .stream()
+                    .forEach(e -> logEvent(actualMap.get(e.getKey())));
+
             assertEquals(expectedMap.size(),  actualMap.size());
 
             assertTrue(expectedMap.entrySet().stream()
