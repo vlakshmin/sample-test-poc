@@ -409,17 +409,18 @@ public final class TestManager {
             actualMap
                     .entrySet()
                     .stream()
-                    .forEach(e -> logEvent(actualMap.get(e.getKey())));
+                    .forEach(e -> logEvent(String.format("Actual map: %s ",actualMap.get(e.getKey()))));
+
 
             expectedMap
                     .entrySet()
                     .stream()
-                    .forEach(e -> logEvent(expectedMap.get(e.getKey())));
+                    .forEach(e -> logEvent(String.format("Expected map: %s ",expectedMap.get(e.getKey()))));
 
             assertEquals(expectedMap.size(),  actualMap.size());
 
             assertTrue(expectedMap.entrySet().stream()
-                    .allMatch(e -> e.getValue().equals( actualMap.get(e.getKey()))));
+                    .allMatch(e -> e.getValue().equals(actualMap.get(e.getKey()))));
 
             return this;
         }
