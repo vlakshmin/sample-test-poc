@@ -52,7 +52,7 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
     private void createTestData() {
 
         publisher = publisher()
-                .createNewPublisher(captionWithSuffix("00000000autoPub2"))
+                .createNewPublisher(captionWithSuffix("0000000000autoPub2"))
                 .build()
                 .getPublisherResponse();
 
