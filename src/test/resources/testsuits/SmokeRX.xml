@@ -1,105 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="Regression" parallel="false">
-<!--   <test name="0Precondition. Delete records with 'auto' substring">-->
-<!--        <classes>-->
-<!--            <class name="rx.pipelines.DeleteGeneratedDataTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-<!--    <test name="Media">-->
-<!--        <classes>-->
-<!--            <class name="rx.inventory.media.MediaCheckFieldsTests"/>-->
-<!--            <class name="rx.inventory.media.MediaCreateTests"/>-->
-<!--            <class name="rx.inventory.media.MediaEditTests"/>-->
-<!--            <class name="rx.inventory.media.MediaActivateDeactivateTableTests"/>-->
-<!--            <class name="rx.inventory.media.MediaSearchTableTests"/>-->
-<!--            <class name="rx.inventory.media.MediaSortingTableTests"/>-->
-<!--            <class name="rx.inventory.media.MediaCheckColumnsTests"/>-->
-<!--            <class name="rx.inventory.media.MediaCheckPaginationTests"/>-->
-<!--            <class name="rx.inventory.media.MediaCheckTooltipsTests"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-<!--    <test name="Ad Spot">-->
-<!--        <classes>-->
-<!--            <class name="rx.inventory.adspot.AdSpotCheckPaginationTests"/>-->
-<!--            <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>-->
-<!--            <class name="rx.inventory.adspot.AdSpotEditTests"/>-->
-<!--            <class name="rx.inventory.adspot.AdSpotSearchTableTests"/>-->
-<!--            <class name="rx.inventory.adspot.AdSpotCheckColumnsTests"/>-->
-<!--            <class name="rx.inventory.adspot.AdSpotCheckTooltipsTests"/>-->
-<!--            <class name="rx.inventory.adspot.AdSpotSortingTableTests"/>-->
-<!--            <class name="rx.inventory.adspot.AdSpotCheckFieldsTests"/>-->
-<!--            <class name="rx.inventory.adspot.ChangingPublisherInSidebarTests"/>-->
-<!--            <class name="rx.inventory.adspot.AdSpotBannerCardCreateTests"/>-->
-<!--            <class name="rx.inventory.adspot.AdSpotNativeCardCreateTests"/>-->
-<!--            <class name="rx.inventory.adspot.AdSpotRequiredFieldsOnlyCreateTests"/>-->
-<!--            <class name="rx.inventory.adspot.AdSpotAllFieldsCreateTests"/>-->
-<!--            <class name="rx.inventory.adspot.AdSpotCheckTooltipsTests"/>-->
-<!--            <class name="rx.inventory.adspot.AdSpotVideoCardCreateTests"/>-->
-<!--            <class name="rx.inventory.adspot.AdSpotCheckRelatedMediaListTests"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-<!--    <test name="Open Pricing">-->
-<!--        <classes>-->
-<!--            <class name="rx.yield.openpricing.OpenPricingChangePublisherTests"/>-->
-<!--            <class name="rx.yield.openpricing.CreateOpenPricingTest"/>-->
-<!--            <class name="rx.yield.openpricing.OpenPricingSortingTableTests"/>-->
-<!--              <class name="rx.yield.openpricing.VerifyPublisherTests"/>-->
-<!--&lt;!&ndash;               <class name="rx.yield.openpricing.OpenPricingTests"/>&ndash;&gt;-->
-<!--            <class name="rx.yield.openpricing.OpenPricingUploadNegtiveTests"/>-->
-<!--            <class name="rx.yield.openpricing.OpenPricingUploadTests"/>-->
-<!--            <class name="rx.yield.openpricing.OpenPricingUploadSidebarTests"/>-->
-<!--            <class name="rx.yield.openpricing.OpenPricingSingleAdminUploadSidebarTests"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-<!--    <test name="Protections Feature">-->
-<!--        <classes>-->
-<!--            <class name="rx.protections.ProtectionsCheckPaginationTests"/>-->
-<!--            <class name="rx.protections.ProtectionsTest"/>-->
-<!--            <class name="rx.protections.ProtectionsSortingTableTests"/>-->
-<!--            <class name="rx.protections.ProtectionsInventoryMultipaneTests"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-<!--    <test name="Deals Feature">-->
-<!--        <classes>-->
-<!--            <class name="rx.sales.deals.DealsTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-<!--    <test name="Login Feature">-->
-<!--        <classes>-->
-<!--            <class name="rx.login.LoginPositiveTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-<!--    <test name="Components Tests">-->
-<!--        <classes>-->
-<!--            <class name="rx.component.multipane.MultipaneTest"/>-->
-<!--            <class name="rx.component.table.TableDataTests"/>-->
-<!--            <class name="rx.component.categories.CategoriesSelectionTests"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-<!--    <test name="Publisher Feature">-->
-<!--        <classes>-->
-<!--            <class name="rx.admin.publishers.PublisherTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-
-<!--    <test name="Demand Source Feature">-->
-<!--        <classes>-->
-<!--            <class name="rx.admin.demand.EditDemandSourceTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-
-    <test name="Open Pricing. Upload">
+   <test name="0Precondition. Delete records with 'auto' substring">
         <classes>
+            <class name="rx.pipelines.DeleteGeneratedDataTest"/>
+        </classes>
+    </test>
+    <test name="Media">
+        <classes>
+            <class name="rx.inventory.media.MediaCheckFieldsTests"/>
+            <class name="rx.inventory.media.MediaCreateTests"/>
+            <class name="rx.inventory.media.MediaEditTests"/>
+            <class name="rx.inventory.media.MediaActivateDeactivateTableTests"/>
+            <class name="rx.inventory.media.MediaSearchTableTests"/>
+            <class name="rx.inventory.media.MediaSortingTableTests"/>
+            <class name="rx.inventory.media.MediaCheckColumnsTests"/>
+            <class name="rx.inventory.media.MediaCheckPaginationTests"/>
+            <class name="rx.inventory.media.MediaCheckTooltipsTests"/>
+        </classes>
+    </test>
+    <test name="Ad Spot">
+        <classes>
+            <class name="rx.inventory.adspot.AdSpotCheckPaginationTests"/>
+            <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
+            <class name="rx.inventory.adspot.AdSpotEditTests"/>
+            <class name="rx.inventory.adspot.AdSpotSearchTableTests"/>
+            <class name="rx.inventory.adspot.AdSpotCheckColumnsTests"/>
+            <class name="rx.inventory.adspot.AdSpotCheckTooltipsTests"/>
+            <class name="rx.inventory.adspot.AdSpotSortingTableTests"/>
+            <class name="rx.inventory.adspot.AdSpotCheckFieldsTests"/>
+            <class name="rx.inventory.adspot.ChangingPublisherInSidebarTests"/>
+            <class name="rx.inventory.adspot.AdSpotBannerCardCreateTests"/>
+            <class name="rx.inventory.adspot.AdSpotNativeCardCreateTests"/>
+            <class name="rx.inventory.adspot.AdSpotRequiredFieldsOnlyCreateTests"/>
+            <class name="rx.inventory.adspot.AdSpotAllFieldsCreateTests"/>
+            <class name="rx.inventory.adspot.AdSpotCheckTooltipsTests"/>
+            <class name="rx.inventory.adspot.AdSpotVideoCardCreateTests"/>
+            <class name="rx.inventory.adspot.AdSpotCheckRelatedMediaListTests"/>
+        </classes>
+    </test>
+    <test name="Open Pricing">
+        <classes>
+            <class name="rx.yield.openpricing.OpenPricingChangePublisherTests"/>
+            <class name="rx.yield.openpricing.CreateOpenPricingTest"/>
+            <class name="rx.yield.openpricing.OpenPricingSortingTableTests"/>
+            <class name="rx.yield.openpricing.VerifyPublisherTests"/>
             <class name="rx.yield.openpricing.OpenPricingUploadNegtiveTests"/>
             <class name="rx.yield.openpricing.OpenPricingUploadTests"/>
             <class name="rx.yield.openpricing.OpenPricingUploadSidebarTests"/>
             <class name="rx.yield.openpricing.OpenPricingSingleAdminUploadSidebarTests"/>
         </classes>
     </test>
-<!--    <test name="XPost-conditions. Delete records with 'auto' substring">-->
-<!--        <classes>-->
-<!--            <class name="rx.pipelines.DeleteGeneratedDataTest"/>-->
-<!--        </classes>-->
-<!-- </test>-->
+    <test name="Protections Feature">
+        <classes>
+            <class name="rx.protections.ProtectionsCheckPaginationTests"/>
+            <class name="rx.protections.ProtectionsTest"/>
+            <class name="rx.protections.ProtectionsSortingTableTests"/>
+            <class name="rx.protections.ProtectionsInventoryMultipaneTests"/>
+        </classes>
+    </test>
+    <test name="Deals Feature">
+        <classes>
+            <class name="rx.sales.deals.DealsTest"/>
+        </classes>
+    </test>
+    <test name="Login Feature">
+        <classes>
+            <class name="rx.login.LoginPositiveTest"/>
+        </classes>
+    </test>
+    <test name="Components Tests">
+        <classes>
+            <class name="rx.component.multipane.MultipaneTest"/>
+            <class name="rx.component.table.TableDataTests"/>
+            <class name="rx.component.categories.CategoriesSelectionTests"/>
+        </classes>
+    </test>
+    <test name="Publisher Feature">
+        <classes>
+            <class name="rx.admin.publishers.PublisherTest"/>
+        </classes>
+    </test>
+
+    <test name="Demand Source Feature">
+        <classes>
+            <class name="rx.admin.demand.EditDemandSourceTest"/>
+        </classes>
+    </test>
+    <test name="XPost-conditions. Delete records with 'auto' substring">
+        <classes>
+            <class name="rx.pipelines.DeleteGeneratedDataTest"/>
+        </classes>
+ </test>
 </suite>
