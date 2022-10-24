@@ -411,6 +411,11 @@ public final class TestManager {
                     .stream()
                     .forEach(e -> logEvent(actualMap.get(e.getKey())));
 
+            expectedMap
+                    .entrySet()
+                    .stream()
+                    .forEach(e -> logEvent(expectedMap.get(e.getKey())));
+
             assertEquals(expectedMap.size(),  actualMap.size());
 
             assertTrue(expectedMap.entrySet().stream()
