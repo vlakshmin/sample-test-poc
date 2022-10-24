@@ -15,6 +15,7 @@ import widgets.yield.openPricing.sidebar.UpdateExistingOpenPricingRulesSidebar;
 import zutils.FileUtils;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +66,7 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
         rules.add(createOpenPricingRule(false, 999999.99));
 
         for (OpenPricing rule : rules) {
-            expectedRules.put(rule.getName(), rule.getFloorPrice().toString());
+            expectedRules.put(rule.getName(), convertFloorPrice(rule.getFloorPrice().toString()));
         }
     }
 
@@ -206,8 +207,14 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
         for (String[] row : fileData) {
             System.out.println(row[0]);
             if (!row[0].isEmpty()) {
-                fileDataMap.put(row[0], row[1]);
+                fileDataMap.put(row[0], convertFloorPrice(row[1]));
             }
         }
+    }
+
+    @Step("Convert floor price value")
+    private String convertFloorPrice(String floorPrice){
+        DecimalFormat format = new DecimalFormat("0.##");
+        return format.format(Double.parseDouble(floorPrice));
     }
 }
