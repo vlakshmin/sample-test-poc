@@ -17,6 +17,8 @@ import rx.BaseTest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import static configurations.User.USER_FOR_DELETION;
 
@@ -27,62 +29,63 @@ public class DeleteGeneratedDataTest extends BaseTest {
     private static final String PREFIX_ADSPOTS = "auto";
     private static final String PREFIX_PUBLISHERS = "auto";
     private static final String PREFIX_OPEN_PRICING = "auto";
-    private static final String PREFIX_USERS = "Test Account";
-    private static final String PREFIX_DYNAMIC_PRICING = "auto";
     private static final String PREFIX_PROTECTIONS_1 = "api";
     private static final String PREFIX_PROTECTIONS_2 = "auto";
+    private static final String PREFIX_USERS = "Test Account";
+    private static final String PREFIX_DYNAMIC_PRICING = "auto";
 
     @Test(priority = 1)
     public void deleteProtectionsByPrefix() {
-
         deleteProtections(PREFIX_PROTECTIONS_1);
         deleteProtections(PREFIX_PROTECTIONS_2);
     }
 
     @Step("Delete Protections")
-    private void deleteProtections(String prefix){
-
-        var protections = getAllProtectionsByParams(prefix);
-        int deleted = 0;
-        for (Protection pr : protections) {
-            if (ProtectionsPrecondition.protection()
-                    .setCredentials(USER_FOR_DELETION)
-                    .deleteProtection(pr.getId())
-                    .build()
-                    .getResponseCode() == HttpStatus.SC_NO_CONTENT)
-                deleted++;
-        }
-        log.info(String.format("Deleted protections items %s of %s", deleted, protections.size()));
-    }
-
-    @Test(priority = 3)
-    public void deleteAdSpots() {
-        var adSpots = getAllAdSpotsByParams();
-        int deleted = 0;
-        for (AdSpot as : adSpots) {
-            if (AdSpotPrecondition.adSpot()
-                    .setCredentials(USER_FOR_DELETION)
-                    .deleteAdSpot(as.getId())
-                    .build()
-                    .getResponseCode() == HttpStatus.SC_NO_CONTENT)
-                deleted++;
-        }
-        log.info(String.format("Deleted ad spots items %s of %s", deleted, adSpots.size()));
+    private void deleteProtections(String prefix) {
+        final var deleted = new AtomicInteger(0);
+        getAllProtectionIdsByParams(prefix).forEach(
+                protectionId -> {
+                    if (ProtectionsPrecondition.protection()
+                            .setCredentials(USER_FOR_DELETION)
+                            .deleteProtection(protectionId)
+                            .build()
+                            .getResponseCode() == HttpStatus.SC_NO_CONTENT) {
+                        deleted.getAndIncrement();
+                    }
+                });
+        log.info(String.format("Deleted %s protections items", deleted);
     }
 
     @Test(priority = 2)
+    public void deleteAdSpots() {
+        final var deleted = new AtomicInteger(0);
+        getAllAdSpotIdsByParams().forEach(
+                adSpotId -> {
+                    if (AdSpotPrecondition.adSpot()
+                            .setCredentials(USER_FOR_DELETION)
+                            .deleteAdSpot(adSpotId)
+                            .build()
+                            .getResponseCode() == HttpStatus.SC_NO_CONTENT) {
+                        deleted.getAndIncrement();
+                    }
+                });
+        log.info(String.format("Deleted ad spots items %s", deleted));
+    }
+
+    @Test(priority = 3)
     public void deleteMedia() {
-        var media = getAllMediaByParams();
-        int deleted = 0;
-        for (Media m : media) {
-            if (MediaPrecondition.media().
-                    setCredentials(USER_FOR_DELETION).
-                    deleteMedia(m.getId())
-                    .build()
-                    .getResponseCode() == HttpStatus.SC_NO_CONTENT)
-                deleted++;
-        }
-        log.info(String.format("Deleted media items %s of %s", deleted, media.size()));
+        final var deleted = new AtomicInteger(0);
+        getAllMediaIdsByParams().forEach(
+                mediaId -> {
+                    if (MediaPrecondition.media().
+                            setCredentials(USER_FOR_DELETION).
+                            deleteMedia(mediaId)
+                            .build()
+                            .getResponseCode() == HttpStatus.SC_NO_CONTENT) {
+                        deleted.getAndIncrement();
+                    }
+                });
+        log.info(String.format("Deleted media items %s", deleted);
     }
 
     @Test(priority = 4)
@@ -116,18 +119,37 @@ public class DeleteGeneratedDataTest extends BaseTest {
     }
 
     @Test(priority = 6)
-    public void deletePublishers() {
-        var publishers = getAllPublishersByParams();
+    public void deleteUsers() {
+        var users = getAllUsersByParams();
         int deleted = 0;
-        for (Publisher p : publishers) {
-            if (PublisherPrecondition.publisher()
+        for (UserDto user : users) {
+            if (UsersPrecondition.user()
                     .setCredentials(USER_FOR_DELETION)
-                    .deletePublisher(p.getId())
+                    .deleteUser(user.getId())
                     .build()
                     .getResponseCode() == HttpStatus.SC_NO_CONTENT)
                 deleted++;
         }
-        log.info(String.format("Deleted publishers items %s of %s", deleted, publishers.size()));
+        log.info(String.format("Deleted users items %s of %s", deleted, users.size()));
+    }
+
+
+    @Test(priority = 6)
+    public void deletePublishers() {
+        final var deleted = new AtomicInteger(0);
+        getAllPublishersByParams().stream()
+                .filter(pubId -> !getRelatedToPrivateAuctionsPublisherIds().contains(pubId))
+                .forEach(
+                        publisherId -> {
+                            if (PublisherPrecondition.publisher()
+                                    .setCredentials(USER_FOR_DELETION)
+                                    .deletePublisher(publisherId)
+                                    .build()
+                                    .getResponseCode() == HttpStatus.SC_NO_CONTENT) {
+                                deleted.getAndIncrement();
+                            }
+                        });
+        log.info(String.format("Deleted publishers items %s", deleted));
     }
 
     @Test(priority = 8)
@@ -137,6 +159,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
         Publisher pub;
 
         for (Publisher p : publishers) {
+            pub.setIsEnabled(false);
             pub = Publisher.builder()
                     .id(p.getId())
                     .name(p.getName())
@@ -161,43 +184,26 @@ public class DeleteGeneratedDataTest extends BaseTest {
         log.info(String.format("Updated publishers items %s of %s", updated, publishers.size()));
     }
 
-    @Test(priority = 7)
-    public void deleteUsers() {
-        var users = getAllUsersByParams();
-        int deleted = 0;
-        for (UserDto user : users) {
-            if (UsersPrecondition.user()
-                    .setCredentials(USER_FOR_DELETION)
-                    .deleteUser(user.getId())
-                    .build()
-                    .getResponseCode() == HttpStatus.SC_NO_CONTENT)
-                deleted++;
-        }
-        log.info(String.format("Deleted users items %s of %s", deleted, users.size()));
-    }
-
-    private List<Media> getAllMediaByParams() {
-        Map<String, Object> queryParams = new HashMap<>();
-        queryParams.put("search", PREFIX_MEDIA);
-        queryParams.put("sort", "id-desc");
+    private List<Integer> getAllMediaIdsByParams() {
 
         return MediaPrecondition.media()
-                .getMediaWithFilter(queryParams)
+                .getMediaWithFilter(Map.of("search", PREFIX_MEDIA, "sort", "id-desc"))
                 .build()
                 .getMediaGetAllResponse()
-                .getItems();
+                .getItems().stream()
+                .map(Media::getId)
+                .collect(Collectors.toList());
     }
 
-    private List<AdSpot> getAllAdSpotsByParams() {
-        Map<String, Object> queryParams = new HashMap<>();
-        queryParams.put("search", PREFIX_ADSPOTS);
-        queryParams.put("sort", "id-desc");
+    private List<Integer> getAllAdSpotIdsByParams() {
 
         return AdSpotPrecondition.adSpot()
-                .getAdSpotsWithFilter(queryParams)
+                .getAdSpotsWithFilter(Map.of("search", PREFIX_ADSPOTS, "sort", "id-desc"))
                 .build()
                 .getAdSpotsGetAllResponse()
-                .getItems();
+                .getItems().stream()
+                .map(AdSpot::getId)
+                .collect(Collectors.toList());
     }
 
     private List<OpenPricing> getAllPricingByParams() {
@@ -224,28 +230,31 @@ public class DeleteGeneratedDataTest extends BaseTest {
                 .getItems();
     }
 
-    private List<Protection> getAllProtectionsByParams(String prefix) {
-        Map<String, Object> queryParams = new HashMap<>();
-        queryParams.put("search", prefix);
-        queryParams.put("sort", "id-desc");
+    private List<Integer> getAllProtectionIdsByParams(String prefix) {
 
         return ProtectionsPrecondition.protection()
-                .getProtectionsWithFilter(queryParams)
+                .getProtectionsWithFilter(Map.of("search", prefix, "sort", "id-desc"))
                 .build()
                 .getProtectionsGetAllResponse()
-                .getItems();
+                .getItems().stream()
+                .map(Protection::getId)
+                .collect(Collectors.toList());
     }
 
-    private List<Publisher> getAllPublishersByParams() {
-        Map<String, Object> queryParams = new HashMap<>();
-        queryParams.put("search", PREFIX_PUBLISHERS);
-        queryParams.put("sort", "id-desc");
+    private List<Integer> getRelatedToPrivateAuctionsPublisherIds(){
+
+        return //Create task for Private Auction precondiiton builder
+    }
+
+    private List<Integer> getAllPublishersByParams() {
 
         return PublisherPrecondition.publisher()
-                .getPublisherWithFilter(queryParams)
+                .getPublisherWithFilter(Map.of("search", PREFIX_PUBLISHERS, "sort", "id-desc"))
                 .build()
                 .getPublisherGetAllResponse()
-                .getItems();
+                .getItems().stream()
+                .map(Publisher::getId)
+                .collect(Collectors.toList());
     }
 
     private List<UserDto> getAllUsersByParams() {
