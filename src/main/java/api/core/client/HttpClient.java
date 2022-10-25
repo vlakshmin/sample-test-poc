@@ -106,7 +106,7 @@ public class HttpClient {
     public static void setCredentials(User user) {
         mail = user.getMail();
         password = user.getPassword();
-        setToken();
+        //setToken();
     }
 
     public static String getToken(){
