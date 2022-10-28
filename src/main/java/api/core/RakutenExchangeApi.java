@@ -77,7 +77,12 @@ public enum RakutenExchangeApi {
     GET_ALL_OPERATING_SYSTEM("/v2/device-os"),
 
     //Private auction system
-    GET_ALL_PRIVATE_AUCTIONS("/v2/pmp/private-auctions");
+    GET_ALL_PRIVATE_AUCTIONS("/v2/pmp/private-auctions"),
+
+    //Deal
+    CREATE_DEAL("/v3/pmp/deals"),
+    UPDATE_DEAL("/v2/pmp/deals/");
+
 
     private String endpoint;
 
