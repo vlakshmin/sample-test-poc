@@ -35,7 +35,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
     private static final String PREFIX_DYNAMIC_PRICING = "auto";
     private static final String PREFIX_PRIVATE_AUCTIONS = "auto";
 
-    @Test(priority = 1)
+    @Test(priority = 4)
     public void deleteProtectionsByPrefix() {
         deleteProtections(PREFIX_PROTECTIONS_1);
         deleteProtections(PREFIX_PROTECTIONS_2);
@@ -73,7 +73,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
         log.info(String.format("Deleted ad spots items %s", deleted));
     }
 
-    @Test(priority = 4)
+    @Test(priority = 5)
     public void deleteMedia() {
         var deleted = new AtomicInteger(0);
         getAllMediaIdsByParams().forEach(
@@ -135,7 +135,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
     }
 
 
-    @Test(priority = 6)
+    @Test(priority = 7)
     public void deletePublishers() {
         var deleted = new AtomicInteger(0);
         var relatedToPrivateAuctionsPublisherIds = getRelatedToPrivateAuctionsPublisherIds();
