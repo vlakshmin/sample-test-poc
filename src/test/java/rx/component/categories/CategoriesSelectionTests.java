@@ -13,7 +13,7 @@ import rx.BaseTest;
 import widgets.common.categories.CategoriesList;
 import widgets.common.table.ColumnNames;
 import widgets.inventory.media.sidebar.EditMediaSidebar;
-import widgets.inventory.media.sidebar.MediaTypes;
+import widgets.inventory.media.sidebar.PlatformType;
 import pages.inventory.media.*;
 
 import java.util.List;
@@ -61,7 +61,6 @@ public class CategoriesSelectionTests extends BaseTest {
     private void createMedia() {
         var mediaName = captionWithSuffix("autoMedia");
         var tableData = mediaPage.getMediaTable().getTableData();
-        var tableOptions = mediaPage.getMediaTable().getTableOptions();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
         var categories = editMediaSidebar.getCategoriesPanel();
 
@@ -69,11 +68,11 @@ public class CategoriesSelectionTests extends BaseTest {
                 .clickOnWebElement(mediaPage.getCreateMediaButton())
                 .waitSideBarOpened()
                 .selectFromDropdown(editMediaSidebar.getPublisherInput(),
-                        editMediaSidebar.getPublisherItems(), publisher.getName())
+                        editMediaSidebar.getPublisherDropdownItems(), publisher.getName())
                 .and("Fill Name")
                 .setValueWithClean(editMediaSidebar.getNameInput(), mediaName)
-                .selectFromDropdown(editMediaSidebar.getMediaType(),
-                        editMediaSidebar.getMediaTypeItems(), MediaTypes.MOBILE_WEB.getName())
+                .selectFromDropdown(editMediaSidebar.getPlatformDropdown(),
+                        editMediaSidebar.getPlatformDropdownItems(), PlatformType.MOBILE_WEB.getName())
 
                 .setValueWithClean(editMediaSidebar.getSiteURL(), "http://testCategory.yy")
                 .clickOnWebElement(editMediaSidebar.getCategories())
@@ -99,7 +98,7 @@ public class CategoriesSelectionTests extends BaseTest {
                 .then("Check all fields")
                 .validate(editMediaSidebar.getPublisherInput(), publisher.getName())
                 .validateAttribute(editMediaSidebar.getNameInput(), "value", mediaName)
-                .validate(editMediaSidebar.getMediaType(), MediaTypes.MOBILE_WEB.getName())
+                .validate(editMediaSidebar.getPlatformDropdown(), PlatformType.MOBILE_WEB.getName())
                 .validateList(categories.getCategoriesSelectedItems(), List.of(CategoriesList.AUTO_REPAIR.getName(),
                         CategoriesList.EDUCATION.getName()))
                 .clickOnWebElement(editMediaSidebar.getCloseIcon())

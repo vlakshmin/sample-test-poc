@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum MediaTypes {
+public enum PlatformType {
 
     IOS("IOS"),
     ANDROID("Android"),

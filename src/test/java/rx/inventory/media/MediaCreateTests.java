@@ -10,8 +10,9 @@ import pages.inventory.media.*;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.Statuses;
+import widgets.inventory.media.sidebar.CreateMediaSidebar;
 import widgets.inventory.media.sidebar.EditMediaSidebar;
-import widgets.inventory.media.sidebar.MediaTypes;
+import widgets.inventory.media.sidebar.PlatformType;
 
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.*;
@@ -22,13 +23,14 @@ import static zutils.FakerUtils.captionWithSuffix;
 @Slf4j
 @Listeners({ScreenShooter.class})
 public class MediaCreateTests extends BaseTest {
+    
     private MediaPage mediaPage;
-    private EditMediaSidebar editMediaSidebar;
+    private CreateMediaSidebar createMediaSidebar;
     private Publisher publisher;
 
     public MediaCreateTests() {
         mediaPage = new MediaPage();
-        editMediaSidebar = new EditMediaSidebar();
+        createMediaSidebar = new CreateMediaSidebar();
     }
 
     @BeforeClass
@@ -48,55 +50,55 @@ public class MediaCreateTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Create Media with 'IOS' media type")
-    private void createMediaIOSMediaType() {
+    @Test(description = "Create Media with 'IOS' platform type")
+    private void createMediaIOSPlatformType() {
         var mediaName = captionWithSuffix("autoMediaIOS");
         var appStoreURL = "https://play.google.com/store/apps/";
         var bundle = "com.viber.voip";
-        createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, MediaTypes.IOS.getName());
+        createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, PlatformType.IOS.getName());
     }
 
-    @Test(description = "Create Media with 'IOS Web View' media type")
-    private void createMediaIOSWebViewMediaType() {
+    @Test(description = "Create Media with 'IOS Web View' platform type")
+    private void createMediaIOSWebViewPlatformType() {
         var mediaName = captionWithSuffix("autoMediaIOSWebView");
         var appStoreURL = "https://play.google.com/store/apps/";
         var bundle = "com.viber.voip";
-        createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, MediaTypes.IOS_WEB_VIEW.getName());
+        createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, PlatformType.IOS_WEB_VIEW.getName());
     }
 
-    @Test(description = "Create Media with 'Android' media type")
-    private void createMediaAndroidMediaType() {
+    @Test(description = "Create Media with 'Android' platform type")
+    private void createMediaAndroidPlatformType() {
         var mediaName = captionWithSuffix("autoMediaAndroid");
         var appStoreURL = "https://play.google.com/store/apps/";
         var bundle = "com.viber.voip";
-        createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, MediaTypes.ANDROID.getName());
+        createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, PlatformType.ANDROID.getName());
     }
 
-    @Test(description = "Create Media with 'Android Web View' media type")
-    private void createMediaAndroidWebViewMediaType() {
+    @Test(description = "Create Media with 'Android Web View' platform type")
+    private void createMediaAndroidWebViewPlatformType() {
         var mediaName = captionWithSuffix("autoMediaAndroidWebView");
         var appStoreURL = "https://play.google.com/store/apps/";
         var bundle = "com.viber.voip";
-        createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, MediaTypes.ANDROID_WEB_VIEW.getName());
+        createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, PlatformType.ANDROID_WEB_VIEW.getName());
     }
 
-    @Test(description = "Create Media with 'PC Web' media type")
-    private void createMediaPCWebViewMediaType() {
+    @Test(description = "Create Media with 'PC Web' platform type")
+    private void createMediaPCWebViewPlatformType() {
         var mediaName = captionWithSuffix("autoMediaPCWeb");
         var appStoreURL = "https://checkmedia.com";
-        createAndCheckCreatedMedia(mediaName, appStoreURL, "", MediaTypes.PC_WEB.getName());
+        createAndCheckCreatedMedia(mediaName, appStoreURL, "", PlatformType.PC_WEB.getName());
     }
 
-    @Test(description = "Create Media with 'Mobile Web' media type")
-    private void createMediaMobileWebViewMediaType() {
+    @Test(description = "Create Media with 'Mobile Web' platform type")
+    private void createMediaMobileWebViewPlatformType() {
         var mediaName = captionWithSuffix("autoMediaMobileWeb");
         var appStoreURL = "https://checkmedia.com";
-        createAndCheckCreatedMedia(mediaName, appStoreURL, "", MediaTypes.MOBILE_WEB.getName());
+        createAndCheckCreatedMedia(mediaName, appStoreURL, "", PlatformType.MOBILE_WEB.getName());
     }
 
 
-    @Step("Create Media {0} with media type {1}")
-    private void createAndCheckCreatedMedia(String mediaName, String url, String bundle, String mediaType) {
+    @Step("Create Media {0} with platform type {1}")
+    private void createAndCheckCreatedMedia(String mediaName, String url, String bundle, String platformType) {
         var tableData = mediaPage.getMediaTable().getTableData();
         var tableOptions = mediaPage.getMediaTable().getTableOptions();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
@@ -104,30 +106,30 @@ public class MediaCreateTests extends BaseTest {
         testStart()
                 .clickOnWebElement(mediaPage.getCreateMediaButton())
                 .waitSideBarOpened()
-                .selectFromDropdown(editMediaSidebar.getPublisherInput(),
-                        editMediaSidebar.getPublisherItems(), publisher.getName())
+                .selectFromDropdown(createMediaSidebar.getPublisherInput(),
+                        createMediaSidebar.getPublisherDropdownItems(), publisher.getName())
                 .and("Fill Name")
-                .setValueWithClean(editMediaSidebar.getNameInput(), mediaName)
-                .selectFromDropdown(editMediaSidebar.getMediaType(),
-                        editMediaSidebar.getMediaTypeItems(), mediaType)
+                .setValueWithClean(createMediaSidebar.getNameInput(), mediaName)
+                .selectFromDropdown(createMediaSidebar.getPlatformDropdown(),
+                        createMediaSidebar.getPlatformDropdownItems(), platformType)
 
                 .testEnd();
 
-        if (!mediaType.equals("PC Web") && (!mediaType.equals("Mobile Web"))) {
+        if (!platformType.equals("PC Web") && (!platformType.equals("Mobile Web"))) {
             testStart()
-                    .setValueWithClean(editMediaSidebar.getAppStoreURL(), url)
-                    .setValueWithClean(editMediaSidebar.getBundleInput(), bundle)
+                    .setValueWithClean(createMediaSidebar.getAppStoreURL(), url)
+                    .setValueWithClean(createMediaSidebar.getBundleInput(), bundle)
                     .testEnd();
         } else {
             testStart()
-                    .setValueWithClean(editMediaSidebar.getSiteURL(), url)
+                    .setValueWithClean(createMediaSidebar.getSiteURL(), url)
                     .testEnd();
         }
 
         testStart()
-                .clickOnWebElement(editMediaSidebar.getSaveButton())
+                .clickOnWebElement(createMediaSidebar.getSaveButton())
                 .and("Error message is absent")
-                .waitAndValidate(not(visible), editMediaSidebar.getErrorAlert().getErrorPanel())
+                .waitAndValidate(not(visible), createMediaSidebar.getErrorAlert().getErrorPanel())
                 .waitAndValidate(not(visible), mediaPage.getToasterMessage().getPanelError())
                 .waitSideBarClosed()
                 .and("Toaster Error message is absent")
@@ -141,26 +143,26 @@ public class MediaCreateTests extends BaseTest {
                 .clickOnTableCellLink(tableData, ColumnNames.MEDIA_NAME, mediaName)
                 .waitSideBarOpened()
                 .then("Check all fields")
-                .validate(editMediaSidebar.getPublisherInput(), publisher.getName())
-                .validateAttribute(editMediaSidebar.getNameInput(), "value", mediaName)
-                .validate(editMediaSidebar.getMediaType(), mediaType)
+                .validate(createMediaSidebar.getPublisherInput(), publisher.getName())
+                .validateAttribute(createMediaSidebar.getNameInput(), "value", mediaName)
+                .validate(createMediaSidebar.getPlatformDropdown(), platformType)
                 .testEnd();
 
-        if (!mediaType.equals("PC Web") && (!mediaType.equals("Mobile Web"))) {
+        if (!platformType.equals("PC Web") && (!platformType.equals("Mobile Web"))) {
             testStart()
-                    .validateAttribute(editMediaSidebar.getAppStoreURL(), "value", url)
-                    .validateAttribute(editMediaSidebar.getBundleInput(), "value", bundle)
+                    .validateAttribute(createMediaSidebar.getAppStoreURL(), "value", url)
+                    .validateAttribute(createMediaSidebar.getBundleInput(), "value", bundle)
                     .testEnd();
         } else {
             testStart()
-                    .validateAttribute(editMediaSidebar.getSiteURL(), "value", url)
+                    .validateAttribute(createMediaSidebar.getSiteURL(), "value", url)
                     .testEnd();
         }
         testStart()
 
                 .and("Click Save")
-                .clickOnWebElement(editMediaSidebar.getSaveButton())
-                .waitAndValidate(not(visible), editMediaSidebar.getErrorAlert().getErrorPanel())
+                .clickOnWebElement(createMediaSidebar.getSaveButton())
+                .waitAndValidate(not(visible), createMediaSidebar.getErrorAlert().getErrorPanel())
                 .waitAndValidate(not(visible), mediaPage.getToasterMessage().getPanelError())
                 .waitSideBarClosed()
                 .and("Toaster Error message is absent")
@@ -171,7 +173,7 @@ public class MediaCreateTests extends BaseTest {
                 .then("Validate data in table")
                 .validate(tableData.getCellByRowValue(ColumnNames.STATUS, ColumnNames.MEDIA_NAME, mediaName), Statuses.ACTIVE.getStatus())
                 .validate(tableData.getCellByRowValue(ColumnNames.PUBLISHER, ColumnNames.MEDIA_NAME, mediaName), publisher.getName())
-                .validate(tableData.getCellByRowValue(ColumnNames.PLATFORM, ColumnNames.MEDIA_NAME, mediaName), mediaType)
+                .validate(tableData.getCellByRowValue(ColumnNames.PLATFORM, ColumnNames.MEDIA_NAME, mediaName), platformType)
                 .validate(tableData.getCellByRowValue(ColumnNames.SITE_APP_STORE_URL, ColumnNames.MEDIA_NAME, mediaName), url)
                 .clickOnWebElement(tableData.getClear())
                 .then("Validate that text in table footer '1-20 of X")

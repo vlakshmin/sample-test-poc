@@ -29,7 +29,6 @@ import static managers.TestManager.testStart;
 @Listeners({ScreenShooter.class})
 public class MediaSearchTableTests extends BaseTest {
 
-    private Publisher publisher;
     private MediaPage mediaPage;
     private List<String> searchByA;
     private List<String> searchBoth;

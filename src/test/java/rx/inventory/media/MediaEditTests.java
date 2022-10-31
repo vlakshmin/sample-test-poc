@@ -15,7 +15,7 @@ import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.Statuses;
 import widgets.inventory.media.sidebar.EditMediaSidebar;
-import widgets.inventory.media.sidebar.MediaTypes;
+import widgets.inventory.media.sidebar.PlatformType;
 
 import static api.preconditionbuilders.MediaPrecondition.media;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
@@ -27,13 +27,14 @@ import static zutils.FakerUtils.captionWithSuffix;
 @Slf4j
 @Listeners({ScreenShooter.class})
 public class MediaEditTests extends BaseTest {
+
+    private Media media;
     private MediaPage mediaPage;
     private EditMediaSidebar editMediaSidebar;
-    private Publisher publisher;
-    private Media media;
 
-    private static String URL = "https://play.google.com/store/apps/";
-    private static String BUNDLE = "com.viber.voip";
+    private static final String BUNDLE = "com.viber.voip";
+    private static final String URL = "https://play.google.com/store/apps/";
+
 
     public MediaEditTests() {
         mediaPage = new MediaPage();
@@ -41,82 +42,75 @@ public class MediaEditTests extends BaseTest {
     }
 
     @BeforeClass
-    private void initAndLogin() {
-        publisher = publisher()
-                .createNewPublisher(captionWithSuffix("01autoPub"))
-                .build()
-                .getPublisherResponse();
-
+    public void initAndLogin() {
         testStart()
                 .given()
                 .openDirectPath(Path.MEDIA)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .testEnd();
-
     }
 
     @Test(description = "Create Media with 'IOS' media type")
-    private void editMediaIOSMediaType() {
+    public void editMediaIOSMediaType() {
         var mediaName = captionWithSuffix("autoMediaIOS");
-        media = createMedia(mediaName, MediaTypes.IOS.getName(), URL, BUNDLE);
+        media = createMedia(mediaName, PlatformType.IOS.getName(), URL, BUNDLE);
 
-        editMedia(media, MediaTypes.IOS.getName(), MediaTypes.MOBILE_WEB.getName(),
+        editMedia(media, PlatformType.IOS.getName(), PlatformType.MOBILE_WEB.getName(),
                 mediaName + "Updated1", URL + "Updated1", "");
     }
 
     @Test(description = "Edit Media with 'IOS Web View' media type")
-    private void editMediaIOSWebViewMediaType() {
+    public void editMediaIOSWebViewMediaType() {
         var mediaName = captionWithSuffix("autoMediaIOSWebView");
-        media = createMedia(mediaName, MediaTypes.IOS_WEB_VIEW.getName(), URL, BUNDLE);
+        media = createMedia(mediaName, PlatformType.IOS_WEB_VIEW.getName(), URL, BUNDLE);
 
-        editMedia(media, MediaTypes.IOS_WEB_VIEW.getName(), MediaTypes.MOBILE_WEB.getName(),
+        editMedia(media, PlatformType.IOS_WEB_VIEW.getName(), PlatformType.MOBILE_WEB.getName(),
                 mediaName + "Updated2", URL + "Updated2", "com.app.updated");
     }
 
     @Test(description = "Edit Media with 'Android' media type")
-    private void createMediaAndroidMediaType() {
+    public void createMediaAndroidMediaType() {
         var mediaName = captionWithSuffix("autoMediaAndroid");
-        media = createMedia(mediaName, MediaTypes.ANDROID.getName(), URL, BUNDLE);
+        media = createMedia(mediaName, PlatformType.ANDROID.getName(), URL, BUNDLE);
 
-        editMedia(media, MediaTypes.ANDROID.getName(), MediaTypes.MOBILE_WEB.getName(),
+        editMedia(media, PlatformType.ANDROID.getName(), PlatformType.MOBILE_WEB.getName(),
                 mediaName + "Updated3", URL + "Updated3", "com.app.updated");
     }
 
     @Test(description = "Edit Media with 'Android Web View' media type")
-    private void editMediaAndroidWebViewMediaType() {
+    public void editMediaAndroidWebViewMediaType() {
         var mediaName = captionWithSuffix("autoMediaAndroidWebView");
-        media = createMedia(mediaName, MediaTypes.ANDROID_WEB_VIEW.getName(), URL, BUNDLE);
+        media = createMedia(mediaName, PlatformType.ANDROID_WEB_VIEW.getName(), URL, BUNDLE);
 
-        editMedia(media, MediaTypes.ANDROID_WEB_VIEW.getName(), MediaTypes.MOBILE_WEB.getName(),
+        editMedia(media, PlatformType.ANDROID_WEB_VIEW.getName(), PlatformType.MOBILE_WEB.getName(),
                 mediaName + "Updated4", URL + "Updated4", "com.app.updated");
     }
 
     @Test(description = "Edit Media with 'PC Web' media type")
-    private void editMediaPCWebViewMediaType() {
+    public void editMediaPCWebViewMediaType() {
         var mediaName = captionWithSuffix("autoMediaPCWeb");
 
-        media = createMedia(mediaName, MediaTypes.PC_WEB.getName(), URL, BUNDLE);
+        media = createMedia(mediaName, PlatformType.PC_WEB.getName(), URL, BUNDLE);
 
-        editMedia(media, MediaTypes.PC_WEB.getName(), MediaTypes.ANDROID.getName(),
+        editMedia(media, PlatformType.PC_WEB.getName(), PlatformType.ANDROID.getName(),
                 mediaName + "Updated5", URL + "Updated5", "com.app.updated");
     }
 
     @Test(description = "Edit Media with 'Mobile Web' media type")
-    private void editMediaMobileWebViewMediaType() {
+    public void editMediaMobileWebViewMediaType() {
         var mediaName = captionWithSuffix("autoMediaMobileWeb");
         var appStoreURL = "https://checkmedia.com";
 
-        media = createMedia(mediaName, MediaTypes.MOBILE_WEB.getName(), URL, BUNDLE);
+        media = createMedia(mediaName, PlatformType.MOBILE_WEB.getName(), URL, BUNDLE);
 
-        editMedia(media, MediaTypes.MOBILE_WEB.getName(), MediaTypes.ANDROID.getName(),
+        editMedia(media, PlatformType.MOBILE_WEB.getName(), PlatformType.ANDROID.getName(),
                 mediaName + "Updated6", URL + "Updated6", "com.app.updated");
     }
 
 
     @Step("Create Media via Api")
     private Media createMedia(String name, String mediaType, String url, String bundle) {
-
 
         return media()
                 .createNewMedia(name, mediaType, url, bundle, true)
@@ -146,7 +140,7 @@ public class MediaEditTests extends BaseTest {
                 .validate(disabled, editMediaSidebar.getPublisherNameInput())
                 .validate(editMediaSidebar.getPublisherInput(), media.getPublisherName())
                 .validateAttribute(editMediaSidebar.getNameInput(), "value", media.getName())
-                .validate(editMediaSidebar.getMediaType(), mediaType)
+                .validate(editMediaSidebar.getPlatformDropdown(), mediaType)
                 .testEnd();
 
         if (!mediaType.equals("PC Web") && (!mediaType.equals("Mobile Web"))) {
@@ -163,8 +157,8 @@ public class MediaEditTests extends BaseTest {
                 .then("Edit all fields")
                 .turnToggleOff(editMediaSidebar.getActiveToggle())
                 .setValueWithClean(editMediaSidebar.getNameInput(), mediaNameUpdated)
-                .selectFromDropdown(editMediaSidebar.getMediaType(),
-                        editMediaSidebar.getMediaTypeItems(), mediaTypeUpdated)
+                .selectFromDropdown(editMediaSidebar.getPlatformDropdown(),
+                        editMediaSidebar.getPlatformDropdownItems(), mediaTypeUpdated)
 
                 .testEnd();
 
@@ -201,7 +195,7 @@ public class MediaEditTests extends BaseTest {
                 .validate(disabled, editMediaSidebar.getPublisherNameInput())
                 .validate(editMediaSidebar.getPublisherInput(), media.getPublisherName())
                 .validateAttribute(editMediaSidebar.getNameInput(), "value", mediaNameUpdated)
-                .validate(editMediaSidebar.getMediaType(), mediaTypeUpdated)
+                .validate(editMediaSidebar.getPlatformDropdown(), mediaTypeUpdated)
                 .testEnd();
 
         if (!mediaTypeUpdated.equals("PC Web") && (!mediaTypeUpdated.equals("Mobile Web"))) {
@@ -238,9 +232,8 @@ public class MediaEditTests extends BaseTest {
                 .testEnd();
     }
 
-
     @AfterClass
-    private void logout() {
+    public void logout() {
         testStart()
                 .logOut()
                 .testEnd();
