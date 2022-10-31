@@ -13,7 +13,6 @@ import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.Statuses;
 import widgets.inventory.media.sidebar.CreateMediaSidebar;
-import widgets.inventory.media.sidebar.EditMediaSidebar;
 import widgets.inventory.media.sidebar.PlatformType;
 
 import static api.preconditionbuilders.PublisherPrecondition.publisher;

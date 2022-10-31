@@ -1,8 +1,9 @@
 package rx.inventory.media;
 
-import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
@@ -18,7 +19,6 @@ import widgets.inventory.media.sidebar.EditMediaSidebar;
 import widgets.inventory.media.sidebar.PlatformType;
 
 import static api.preconditionbuilders.MediaPrecondition.media;
-import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
 import static managers.TestManager.testStart;
