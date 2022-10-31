@@ -3,6 +3,7 @@ package rx.inventory.media;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 @Slf4j
 @Listeners({ScreenShooter.class})
 @Link("https://rakutenadvertising.atlassian.net/browse/GS-3017")
+@Epic("v1.26.0/GS-3017")
 public class MediaEditTests extends BaseTest {
     private MediaPage mediaPage;
     private EditMediaSidebar editMediaSidebar;
