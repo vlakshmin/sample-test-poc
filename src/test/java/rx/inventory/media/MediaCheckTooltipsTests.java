@@ -3,6 +3,7 @@ package rx.inventory.media;
 import api.dto.rx.admin.publisher.Publisher;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -22,6 +23,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Link("https://rakutenadvertising.atlassian.net/browse/GS-3017")
 public class MediaCheckTooltipsTests extends BaseTest {
     private MediaPage mediaPage;
     private EditMediaSidebar editMediaSidebar;
@@ -37,7 +39,7 @@ public class MediaCheckTooltipsTests extends BaseTest {
     @BeforeClass
     private void init() {
         publisher = publisher()
-                .createNewPublisher(captionWithSuffix("02autoPub"))
+                .createNewPublisher(captionWithSuffix("0002autoPub"))
                 .build()
                 .getPublisherResponse();
     }

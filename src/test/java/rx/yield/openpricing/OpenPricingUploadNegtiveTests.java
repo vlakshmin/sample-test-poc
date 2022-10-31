@@ -4,6 +4,7 @@ import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.OpenPricingPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -30,6 +31,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Link("https://rakutenadvertising.atlassian.net/browse/GS-3083")
 public class OpenPricingUploadNegtiveTests extends BaseTest {
 
     private Publisher publisher;
@@ -52,7 +54,7 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
     private void createTestData() {
 
         publisher = publisher()
-                .createNewPublisher(captionWithSuffix("0000000000autoPub2"))
+                .createNewPublisher(captionWithSuffix("000000autoPub2"))
                 .build()
                 .getPublisherResponse();
 

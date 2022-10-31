@@ -2,6 +2,7 @@ package rx.inventory.media;
 
 import api.dto.rx.admin.publisher.Publisher;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -24,6 +25,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Link("https://rakutenadvertising.atlassian.net/browse/GS-3017")
 public class MediaCheckFieldsTests extends BaseTest {
     private MediaPage mediaPage;
     private EditMediaSidebar editMediaSidebar;
