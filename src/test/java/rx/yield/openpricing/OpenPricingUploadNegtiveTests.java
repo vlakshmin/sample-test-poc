@@ -32,8 +32,6 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Link("https://rakutenadvertising.atlassian.net/browse/GS-3083")
-@Epic("v1.26.0/GS-3083")
 public class OpenPricingUploadNegtiveTests extends BaseTest {
 
     private Publisher publisher;
@@ -100,6 +98,7 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
         };
     }
 
+    @Epic("v1.26.0/GS-3083")
     @Test(description = "Negative: Update existing open pricing rules", dataProvider = "Negative Upload")
     private void updateExistingOpenPricingRulesNegative(String filename, String descr, String errorMsg) {
 
@@ -115,6 +114,7 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
                         checkDataIsNotChanged(e.getName()));
     }
 
+    @Epic("v1.26.0/GS-3083")
     @Test(description = "Negative: The uploaded file is not a CSV file")
     private void uploadIsNotCSVNegative() {
 
@@ -131,6 +131,7 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
         closeSideBar();
     }
 
+    @Epic("v1.26.0/GS-3083")
     @Test(description = "Negative: check errors if required fields are not selected")
     private void checkRequiredFields() {
         var errorsList = openPricingUploadSidebar.getErrorAlert().getErrorsList();
@@ -170,6 +171,7 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
         closeSideBar();
     }
 
+    @Epic("v1.26.0/GS-3083")
     @Test(description = "Negative: check errors if reselect file")
     private void checkErrorsDisappearAfterSelectedFile() {
         var errorsList = openPricingUploadSidebar.getErrorAlert().getErrorsList();

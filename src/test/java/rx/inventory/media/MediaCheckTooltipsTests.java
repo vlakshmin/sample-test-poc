@@ -24,8 +24,6 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Link("https://rakutenadvertising.atlassian.net/browse/GS-3017")
-@Epic("v1.26.0/GS-3017")
 public class MediaCheckTooltipsTests extends BaseTest {
 
     private MediaPage mediaPage;
@@ -63,6 +61,7 @@ public class MediaCheckTooltipsTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.26.0/GS-3017")
     @Test(description = "'Categories' Tooltip Text",alwaysRun = true)
     private void categoriesTooltip() {
         verifyTooltip(mediaTooltipSidebar.getTooltipCategories(), PlatformType.ANDROID.getName(),
@@ -79,6 +78,7 @@ public class MediaCheckTooltipsTests extends BaseTest {
                 MediaTooltipText.CATEGORIES.getText());
     }
 
+    @Epic("v1.26.0/GS-3017")
     @Test(description = "'Site URL' Tooltip Text",alwaysRun = true)
     private void siteURLTooltip() {
         verifyTooltip(mediaTooltipSidebar.getTooltipSiteURL(), PlatformType.MOBILE_WEB.getName(),
@@ -87,6 +87,7 @@ public class MediaCheckTooltipsTests extends BaseTest {
                 MediaTooltipText.SITE_URL.getText());
     }
 
+    @Epic("v1.26.0/GS-3017")
     @Test(description = "'Bundle' Tooltip Text",alwaysRun = true)
     private void bundleTooltip(){
         verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), PlatformType.ANDROID.getName(),
@@ -98,7 +99,7 @@ public class MediaCheckTooltipsTests extends BaseTest {
         verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), PlatformType.ANDROID_WEB_VIEW.getName(),
                 MediaTooltipText.BUNDLE.getText());
     }
-
+    @Epic("v1.26.0/GS-3017")
     @Test(description = "'App Store URL' Tooltip Text",alwaysRun = true)
     private void appStoreURLTooltip() {
         verifyTooltip(mediaTooltipSidebar.getTooltipAppStoreURL(), PlatformType.ANDROID.getName(),

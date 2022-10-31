@@ -27,7 +27,6 @@ import static zutils.FakerUtils.captionWithSuffix;
 @Slf4j
 @Listeners({ScreenShooter.class})
 @Link("https://rakutenadvertising.atlassian.net/browse/GS-3017")
-@Epic("v1.26.0/GS-3017")
 public class MediaCheckFieldsTests extends BaseTest {
 
     private MediaPage mediaPage;
@@ -64,6 +63,7 @@ public class MediaCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.26.0/GS-3017")
     @Test(description = "Check fields by default")
     public void checkDefaultFields() {
         testStart()
@@ -82,6 +82,7 @@ public class MediaCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.26.0/GS-3017")
     @Test(description = "Check required fields")
     public void checkRequiredFields() {
         var errorsList = editMediaSidebar.getErrorAlert().getErrorsList();
@@ -171,7 +172,7 @@ public class MediaCheckFieldsTests extends BaseTest {
 
                 .testEnd();
     }
-
+    @Epic("v1.26.0/GS-3017")
     @Test(description = "Check errors then switch Platform")
     private void switchPlatformTypeAndCheckError() {
         var errorsList = editMediaSidebar.getErrorAlert().getErrorsList();
