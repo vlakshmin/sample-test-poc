@@ -4,6 +4,7 @@ import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
@@ -121,7 +122,8 @@ public class OpenPricingChangePublisherTests extends BaseTest {
     }
 
     @Issue("https://rakutenadvertising.atlassian.net/browse/GS-3102")
-    @Test(description = "Change Publisher and check selected items multipan")
+    @Epic("Is not included in v.1.26.0/GS-3102")
+    @Test(description = "Change Publisher and check selected items multipane")
     private void changePublisherAndCheckSelectedItemsMultipane() {
         testStart()
                 .clickBrowserRefreshButton()
