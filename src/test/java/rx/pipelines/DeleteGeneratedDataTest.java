@@ -6,6 +6,7 @@ import api.dto.rx.inventory.adspot.AdSpot;
 import api.dto.rx.inventory.media.Media;
 import api.dto.rx.privateauction.PrivateAuction;
 import api.dto.rx.protection.Protection;
+import api.dto.rx.sales.deals.Deal;
 import api.dto.rx.yield.dynamicpricing.DynamicPricing;
 import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.*;
@@ -138,9 +139,24 @@ public class DeleteGeneratedDataTest extends BaseTest {
     @Test(priority = 7)
     public void deletePublishers() {
         var deleted = new AtomicInteger(0);
+        var relatedToUsersPublisherIds = getRelatedToUserPublisherIds();
+        var relatedToDealsPublisherIds = getRelatedToDealsPublisherIds();
+        var relatedToMediaPublisherIds = getRelatedToMediaPublisherIds();
+        var relatedToAdSpotsPublisherIds = getRelatedToAdSpotsPublisherIds();
+        var relatedToProtectionsPublisherIds = getRelatedToProtectionPublisherIds();
+        var relatedToOpenPricingPublisherIds = getRelatedToOpenPricingPublisherIds();
+        var relatedToDynamicPricingPublisherIds = getRelatedToDynamicPricingPublisherIds();
         var relatedToPrivateAuctionsPublisherIds = getRelatedToPrivateAuctionsPublisherIds();
+
         getAllPublisherIdsByParams().stream()
-                .filter(pubId -> !relatedToPrivateAuctionsPublisherIds.contains(pubId))
+                .filter(pubId -> !relatedToPrivateAuctionsPublisherIds.contains(pubId) &&
+                        !relatedToUsersPublisherIds.contains(pubId) &&
+                        !relatedToMediaPublisherIds.contains(pubId) &&
+                        !relatedToDealsPublisherIds.contains(pubId) &&
+                        !relatedToAdSpotsPublisherIds.contains(pubId) &&
+                        !relatedToProtectionsPublisherIds.contains(pubId) &&
+                        !relatedToOpenPricingPublisherIds.contains(pubId) &&
+                        !relatedToDynamicPricingPublisherIds.contains(pubId))
                 .collect(Collectors.toList())
                 .forEach(publisherId -> {
                             if (PublisherPrecondition.publisher()
@@ -157,15 +173,17 @@ public class DeleteGeneratedDataTest extends BaseTest {
     @Test(priority = 8)
     public void updatePublishers() {
         var updated = new AtomicInteger(0);
-        getAllPublishersByParams().forEach(publisher -> {
-            publisher.setIsEnabled(false);
-            if (PublisherPrecondition.publisher()
-                    .updatePublisher(publisher)
-                    .build()
-                    .getResponseCode() == HttpStatus.SC_NO_CONTENT) {
-                updated.getAndIncrement();
-            }
-        });
+        getAllPublishersByParams().stream()
+                .filter(publisher-> publisher.getIsEnabled().equals(true))
+                .forEach(publisher -> {
+                    publisher.setIsEnabled(false);
+                    if (PublisherPrecondition.publisher()
+                            .updatePublisher(publisher)
+                            .build()
+                            .getResponseCode() == HttpStatus.SC_NO_CONTENT) {
+                        updated.getAndIncrement();
+                    }
+                });
 
         log.info(String.format("Updated publishers items %s ", updated));
     }
@@ -225,6 +243,18 @@ public class DeleteGeneratedDataTest extends BaseTest {
                 .collect(Collectors.toList());
     }
 
+    private List<Integer> getRelatedToDealsPublisherIds() {
+
+        return DealPrecondition.deal()
+                .getAllDealsList()
+                .build()
+                .getDealGetAllResponse()
+                .getItems().stream()
+                .filter(deal -> deal.getName().contains(PREFIX_PRIVATE_AUCTIONS))
+                .map(Deal::getPublisherId)
+                .collect(Collectors.toList());
+    }
+
     private List<Integer> getRelatedToPrivateAuctionsPublisherIds() {
 
         return PrivateAuctionPrecondition.privateAuction()
@@ -237,9 +267,90 @@ public class DeleteGeneratedDataTest extends BaseTest {
                 .collect(Collectors.toList());
     }
 
+    private List<Integer> getRelatedToAdSpotsPublisherIds() {
+
+        return AdSpotPrecondition.adSpot()
+                .getAllAdSpotsList()
+                .build()
+                .getAdSpotsGetAllResponse()
+                .getItems().stream()
+                .filter(adSpot -> adSpot.getName().contains(PREFIX_ADSPOTS))
+                .map(AdSpot::getPublisherId)
+                .collect(Collectors.toList());
+    }
+
+    private List<Integer> getRelatedToMediaPublisherIds() {
+
+        return MediaPrecondition.media()
+                .getAllMediaList()
+                .build()
+                .getMediaGetAllResponse()
+                .getItems().stream()
+                .filter(media -> media.getName().contains(PREFIX_MEDIA))
+                .map(Media::getPublisherId)
+                .collect(Collectors.toList());
+    }
+
+    private List<Integer> getRelatedToProtectionPublisherIds() {
+
+        return ProtectionsPrecondition.protection()
+                .getAllProtectionsList()
+                .build()
+                .getProtectionsGetAllResponse()
+                .getItems().stream()
+                .filter(protection -> protection.getName().contains(PREFIX_PROTECTIONS_1) ||
+                                protection.getName().contains(PREFIX_PROTECTIONS_2))
+                .map(Protection::getPublisherId)
+                .collect(Collectors.toList());
+    }
+
+    private List<Integer> getRelatedToUserPublisherIds() {
+
+        return UsersPrecondition.user()
+                .getAllUsers()
+                .build()
+                .getUserGetAllResponse()
+                .getItems().stream()
+                .filter(user -> user.getName().contains(PREFIX_USERS) )
+                .map(UserDto::getPublisherId)
+                .collect(Collectors.toList());
+    }
+
+    private List<Integer> getRelatedToOpenPricingPublisherIds() {
+
+        return OpenPricingPrecondition.openPricing()
+                .getOpenPricingList()
+                .build()
+                .getOpenPricingGetAllResponse()
+                .getItems().stream()
+                .filter(op -> op.getName().contains(PREFIX_USERS) )
+                .map(OpenPricing::getPublisherId)
+                .collect(Collectors.toList());
+    }
+
+    private List<Integer> getRelatedToDynamicPricingPublisherIds() {
+
+        return DynamicPricingPrecondition.dynamicPricing()
+                .getDynamicPricingList()
+                .build()
+                .getDynamicPricingGetAllResponse()
+                .getItems().stream()
+                .filter(dp -> dp.getName().contains(PREFIX_USERS) )
+                .map(DynamicPricing::getPublisherId)
+                .collect(Collectors.toList());
+    }
+
     private List<Integer> getAllPublisherIdsByParams() {
 
         return getAllPublishersByParams().stream()
+                .map(Publisher::getId)
+                .collect(Collectors.toList());
+    }
+
+    private List<Integer> getAllDisabledPublisherIds() {
+
+        return getAllPublishersByParams().stream()
+                .filter(publisher -> publisher.getIsEnabled().equals(false))
                 .map(Publisher::getId)
                 .collect(Collectors.toList());
     }
