@@ -11,7 +11,6 @@ public enum ErrorMessages {
     PUBLISHER_IS_DISABLED("Publisher is Disabled message","Publisher is disabled and cannot be used"),
     //Media
     MEDIA_NAME_ERROR_ALERT("'Media Name' Error Alert Text", "The Media Name field is required"),
-    MEDIA_TYPE_ERROR_ALERT("'Media Type' Error Alert Text", "The Media Type field is required"),
     SITE_URL_ERROR_ALERT("'Site URL' Error Alert Text", "The Site URL field must be a valid url"),
     SITE_URL_REQUIRED_ERROR_ALERT("'Site URL' Error Alert Text", "The Site URL field is required"),
     PUBLISHER_NAME_ERROR_ALERT("'Publisher Name' Error Alert Text", "The Publisher Name field is required"),
@@ -51,13 +50,13 @@ public enum ErrorMessages {
 
     //DSP
     FORMAT_ERROR_ALERT("Format Error Alert Text", "The Format field is required"),
-    PLATFORM_ERROR_ALERT("Platform Error Alert Text", "The Platform field is required"),
     ENDPOINT_ERROR_ALERT("Endpoint Error Alert Text", "Endpoint URI has no selections"),
 
     //Open Pricing
     CSV_FILE_ERROR_ALERT("The CSV Error Alert Text", "The CSV field is required"),
 
     //COMMON
+    PLATFORM_ERROR_ALERT("Platform Error Alert Text", "The Platform field is required"),
     MIN_MAX_VALUE_FLOOR_PRICE("Min/Max Value Floor Price Alert Text", "A valid price is between 0.00 and 999,999.99 inclusive"),
     MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE("Min/Max Value Floor Price Alert Text", "A valid price is between 0.01 and 999,999.99 inclusive");
 

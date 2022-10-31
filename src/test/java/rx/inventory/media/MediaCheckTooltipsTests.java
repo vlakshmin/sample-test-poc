@@ -27,6 +27,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 @Link("https://rakutenadvertising.atlassian.net/browse/GS-3017")
 @Epic("v1.26.0/GS-3017")
 public class MediaCheckTooltipsTests extends BaseTest {
+
     private MediaPage mediaPage;
     private EditMediaSidebar editMediaSidebar;
     private MediaTooltipSidebar mediaTooltipSidebar;
@@ -58,63 +59,63 @@ public class MediaCheckTooltipsTests extends BaseTest {
                 .clickOnWebElement(mediaPage.getCreateMediaButton())
                 .waitSideBarOpened()
                 .selectFromDropdown(editMediaSidebar.getPublisherInput(),
-                        editMediaSidebar.getPublisherItems(), publisher.getName())
+                        editMediaSidebar.getPublisherDropdownItems(), publisher.getName())
                 .testEnd();
     }
 
     @Test(description = "'Categories' Tooltip Text",alwaysRun = true)
     private void categoriesTooltip() {
-        verifyTooltip(mediaTooltipSidebar.getTooltipCategories(), MediaTypes.ANDROID.getName(),
+        verifyTooltip(mediaTooltipSidebar.getTooltipCategories(), PlatformType.ANDROID.getName(),
                 MediaTooltipText.CATEGORIES.getText());
-        verifyTooltip(mediaTooltipSidebar.getTooltipCategories(), MediaTypes.IOS.getName(),
+        verifyTooltip(mediaTooltipSidebar.getTooltipCategories(), PlatformType.IOS.getName(),
                 MediaTooltipText.CATEGORIES.getText());
-        verifyTooltip(mediaTooltipSidebar.getTooltipCategories(), MediaTypes.MOBILE_WEB.getName(),
+        verifyTooltip(mediaTooltipSidebar.getTooltipCategories(), PlatformType.MOBILE_WEB.getName(),
                 MediaTooltipText.CATEGORIES.getText());
-        verifyTooltip(mediaTooltipSidebar.getTooltipCategories(), MediaTypes.PC_WEB.getName(),
+        verifyTooltip(mediaTooltipSidebar.getTooltipCategories(), PlatformType.PC_WEB.getName(),
                 MediaTooltipText.CATEGORIES.getText());
-        verifyTooltip(mediaTooltipSidebar.getTooltipCategories(), MediaTypes.IOS_WEB_VIEW.getName(),
+        verifyTooltip(mediaTooltipSidebar.getTooltipCategories(), PlatformType.IOS_WEB_VIEW.getName(),
                 MediaTooltipText.CATEGORIES.getText());
-        verifyTooltip(mediaTooltipSidebar.getTooltipCategories(), MediaTypes.ANDROID_WEB_VIEW.getName(),
+        verifyTooltip(mediaTooltipSidebar.getTooltipCategories(), PlatformType.ANDROID_WEB_VIEW.getName(),
                 MediaTooltipText.CATEGORIES.getText());
     }
 
     @Test(description = "'Site URL' Tooltip Text",alwaysRun = true)
     private void siteURLTooltip() {
-        verifyTooltip(mediaTooltipSidebar.getTooltipSiteURL(), MediaTypes.MOBILE_WEB.getName(),
+        verifyTooltip(mediaTooltipSidebar.getTooltipSiteURL(), PlatformType.MOBILE_WEB.getName(),
                 MediaTooltipText.SITE_URL.getText());
-        verifyTooltip(mediaTooltipSidebar.getTooltipSiteURL(), MediaTypes.PC_WEB.getName(),
+        verifyTooltip(mediaTooltipSidebar.getTooltipSiteURL(), PlatformType.PC_WEB.getName(),
                 MediaTooltipText.SITE_URL.getText());
     }
 
     @Test(description = "'Bundle' Tooltip Text",alwaysRun = true)
     private void bundleTooltip(){
-        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.ANDROID.getName(),
+        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), PlatformType.ANDROID.getName(),
                 MediaTooltipText.BUNDLE.getText());
-        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.IOS.getName(),
+        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), PlatformType.IOS.getName(),
                 MediaTooltipText.BUNDLE.getText());
-        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.IOS_WEB_VIEW.getName(),
+        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), PlatformType.IOS_WEB_VIEW.getName(),
                 MediaTooltipText.BUNDLE.getText());
-        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), MediaTypes.ANDROID_WEB_VIEW.getName(),
+        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), PlatformType.ANDROID_WEB_VIEW.getName(),
                 MediaTooltipText.BUNDLE.getText());
     }
 
     @Test(description = "'App Store URL' Tooltip Text",alwaysRun = true)
     private void appStoreURLTooltip() {
-        verifyTooltip(mediaTooltipSidebar.getTooltipAppStoreURL(), MediaTypes.ANDROID.getName(),
+        verifyTooltip(mediaTooltipSidebar.getTooltipAppStoreURL(), PlatformType.ANDROID.getName(),
                 MediaTooltipText.APP_STORE_URL.getText());
-        verifyTooltip(mediaTooltipSidebar.getTooltipAppStoreURL(), MediaTypes.IOS.getName(),
+        verifyTooltip(mediaTooltipSidebar.getTooltipAppStoreURL(), PlatformType.IOS.getName(),
                 MediaTooltipText.APP_STORE_URL.getText());
-        verifyTooltip(mediaTooltipSidebar.getTooltipAppStoreURL(), MediaTypes.IOS_WEB_VIEW.getName(),
+        verifyTooltip(mediaTooltipSidebar.getTooltipAppStoreURL(), PlatformType.IOS_WEB_VIEW.getName(),
                 MediaTooltipText.APP_STORE_URL.getText());
-        verifyTooltip(mediaTooltipSidebar.getTooltipAppStoreURL(), MediaTypes.ANDROID_WEB_VIEW.getName(),
+        verifyTooltip(mediaTooltipSidebar.getTooltipAppStoreURL(), PlatformType.ANDROID_WEB_VIEW.getName(),
                 MediaTooltipText.APP_STORE_URL.getText());
     }
 
     @Step("Verify Tooltip Text")
-    private void verifyTooltip(SelenideElement field, String mediaType, String expectedText) {
+    private void verifyTooltip(SelenideElement field, String platformType, String expectedText) {
         testStart()
-                .selectFromDropdown(editMediaSidebar.getMediaType(),
-                        editMediaSidebar.getMediaTypeItems(), mediaType)
+                .selectFromDropdown(editMediaSidebar.getPlatformDropdown(),
+                        editMediaSidebar.getPlatformDropdownItems(), platformType)
                 .scrollIntoView(field)
                 .validateTooltip(field,
                         MediaTooltipSidebarElements.TOOLTIP_PLACEHOLDER.getSelector(), expectedText)

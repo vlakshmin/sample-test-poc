@@ -19,6 +19,7 @@ import static managers.TestManager.testStart;
 @Slf4j
 @Listeners({ScreenShooter.class})
 public class MediaCheckColumnsTests extends BaseTest {
+
     private MediaPage mediaPage;
 
     public MediaCheckColumnsTests() {

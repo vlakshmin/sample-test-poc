@@ -3,6 +3,7 @@ package rx.inventory.media;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
 import pages.Path;
@@ -48,9 +49,9 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
     private MediaPage mediaPage;
 
     private static final String PREFIX_MEDIA = captionWithSuffix("autoMediaSingle");
-    private static final String PREFIX_MEDIA_INACTIVE_PUBLISHER = captionWithSuffix("autoMediaInactivePub");
     private static final String PREFIX_MEDIA_BULK_1 = captionWithSuffix("autoMediaBulk1");
     private static final String PREFIX_MEDIA_BULK_2 = captionWithSuffix("autoMediaBulk2");
+    private static final String PREFIX_MEDIA_INACTIVE_PUBLISHER = captionWithSuffix("autoMediaInactivePub");
     private static final String CLASS_ATTRIBUTE_FOR_UNCHECKED_CHECKBOX = "v-icon notranslate mdi mdi-checkbox-blank-outline theme--light";
 
     public MediaActivateDeactivateTableTests() {
@@ -64,7 +65,6 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
         //Creating media Using API
         mediaActive1 = createMedia(PREFIX_MEDIA, true);
         mediaInActive1 = createMedia(PREFIX_MEDIA, false);
-
 
         mediaActiveBulkA1 = createMedia(PREFIX_MEDIA_BULK_1, true);
         mediaActiveBulkA2 = createMedia(PREFIX_MEDIA_BULK_1, true);
@@ -290,60 +290,54 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
     }
 
     private int getTotalMedia() {
-        Map<String, Object> queryParam = new HashMap<>();
-        queryParam.put("search", PREFIX_MEDIA);
 
         return media()
-                .getMediaWithFilter(queryParam)
+                .getMediaWithFilter(Map.of("search", PREFIX_MEDIA))
                 .build()
                 .getMediaGetAllResponse()
                 .getTotal();
     }
 
     private List<Media> getAllMediaItemsByParams(String strParams) {
-        Map<String, Object> queryParams = new HashMap();
-        queryParams.put("search", strParams);
 
         return media()
-                .getMediaWithFilter(queryParams)
+                .getMediaWithFilter(Map.of("search", strParams))
                 .build()
                 .getMediaGetAllResponse()
                 .getItems();
     }
 
     private List<Publisher> getAllPublishersItemsByParams(String strParams) {
-        Map<String, Object> queryParams = new HashMap();
-        queryParams.put("search", strParams);
 
         return publisher()
-                .getPublisherWithFilter(queryParams)
+                .getPublisherWithFilter(Map.of("search", strParams))
                 .build()
                 .getPublisherGetAllResponse()
                 .getItems();
     }
 
     @AfterMethod
-    private void logOut() {
+    public void logOut() {
         testStart()
-                .given()
                 .logOut()
                 .testEnd();
     }
 
     @AfterClass(alwaysRun = true)
-    private void cleanData() {
+    public void cleanData() {
         deleteMedia();
         deletePublishers();
     }
 
+    @Step("Deleting media")
     private void deleteMedia() {
-
         deleteMedia(getAllMediaItemsByParams(PREFIX_MEDIA));
         deleteMedia(getAllMediaItemsByParams(PREFIX_MEDIA_BULK_1));
         deleteMedia(getAllMediaItemsByParams(PREFIX_MEDIA_BULK_2));
         deleteMedia(getAllMediaItemsByParams(PREFIX_MEDIA_INACTIVE_PUBLISHER));
     }
 
+    @Step("Deleting media from media list")
     private void deleteMedia(List<Media> mediaList) {
 
         for (Media media : mediaList) {
@@ -354,10 +348,14 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
         }
     }
 
+    @Step("Deleting publisher by id")
     private void deactivatePublisher(Integer id) {
-        publisher().changePublisherStatus(id, false);
+        publisher()
+                .changePublisherStatus(id, false)
+                .build();
     }
 
+    @Step("Deleting publisher from publisher list")
     private void deletePublishers() {
         List<Publisher> publishersList = getAllPublishersItemsByParams("autoPublisher");
 
