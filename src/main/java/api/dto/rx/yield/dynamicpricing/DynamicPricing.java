@@ -17,15 +17,12 @@ public class DynamicPricing {
 
     private Integer id;
     private Rule rule;
-    private String name;
     private String notes;
     private Boolean active;
-    private Integer priority;
     private String createdAt;
     private String createdBy;
     private String updatedAt;
     private String updatedBy;
-    private Double floorPrice;
     private Integer publisherId;
     private String  publisherName;
 
