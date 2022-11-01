@@ -22,6 +22,7 @@ import static api.preconditionbuilders.AdSpotPrecondition.adSpot;
 import static api.preconditionbuilders.MediaPrecondition.media;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.disappear;
+import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
 import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
@@ -307,31 +308,59 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
 
 //    //:TODO
 //    @Ignore
-//    @Test(description = "Check Search Active Ad Spot", priority = 9)
-//    private void checkSearchActiveAdSpot() {
-//
-//        testStart()
-//                .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
-//                .selectFromDropdown(protectionSidebar.getPublisherInput(),
-//                        protectionSidebar.getPublisherItems(), publisherActive.getName())
-//                .and("Expand 'Inventory' multipane")
-//                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
-//                .and(String.format("Search inventory by Name = %s",adSpotActiveList_0.get(0).getName()))
-//                .setValueWithClean(protectionMultipane.getSearchInput(), adSpotActiveList_0.get(0).getName())
-//                .clickEnterButton(protectionMultipane.getSearchInput())
-//                .then("Validate item list")
-//                .validate(protectionMultipane.countSelectTableItems(), 1)
-//                .validate(protectionMultipane.getSelectTableItemByPositionInList(0).getName(), mediaActiveList.get(0).getName())
-//                .validate(protectionMultipane.getSelectTableItemByPositionInList(1).getName(), adSpotActiveList_0.get(0).getName())
-//                .and("Set 'Show Inactive' toggle OFF")
-//                .turnToggleOff(protectionMultipane.getShowInactive())
-//                .then("Validate item list includes only active inventory")
-//                .validate(protectionMultipane.countSelectTableItems(), 1)
-//                .validate(protectionMultipane.getSelectTableItemByPositionInList(1).getName(), adSpotActiveList_0.get(0).getName())
-//                .and("Collapse 'Inventory' multipane")
-//                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
-//                .testEnd();
-//    }
+    @Test(description = "Check Search Active Ad Spot", priority = 9)
+    private void checkSearchActiveAdSpot() {
+
+        testStart()
+                .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
+                .selectFromDropdown(protectionSidebar.getPublisherInput(),
+                        protectionSidebar.getPublisherItems(), publisherActive.getName())
+                .and("Expand 'Inventory' multipane")
+                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
+                .and(String.format("Search inventory by Name = %s",adSpotActiveList_0.get(0).getName()))
+                .setValueWithClean(protectionMultipane.getSearchInput(), adSpotActiveList_0.get(0).getName())
+                .clickEnterButton(protectionMultipane.getSearchInput())
+                .validateContainsText(protectionMultipane.getItemsQuantityString(), "(1 AD SPOT)")
+                .then("Validate item list")
+                .validate(protectionMultipane.countSelectTableItems(), 1)
+                .validate(protectionMultipane.getSelectTableItemByPositionInList(0).getName(),
+                        String.format("Media > %s",mediaActiveList.get(0).getName()))
+                .validate(protectionMultipane.getSelectTableItemByPositionInList(0).getName(),
+                        adSpotActiveList_0.get(0).getName())
+                .and("Set 'Show Inactive' toggle OFF")
+                .turnToggleOff(protectionMultipane.getShowInactive())
+                .then("Validate item list includes only active inventory")
+                .validate(protectionMultipane.countSelectTableItems(), 1)
+                .validate(protectionMultipane.getSelectTableItemByPositionInList(1).getName(), adSpotActiveList_0.get(0).getName())
+                .and("Collapse 'Inventory' multipane")
+                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
+                .testEnd();
+    }
+
+
+    @Test(description = "Check Multipane Text 'Include All'", priority = 10)
+    private void checkMultipaneText() {
+
+        testStart()
+                .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
+                .selectFromDropdown(protectionSidebar.getPublisherInput(),
+                        protectionSidebar.getPublisherItems(), publisherActive.getName())
+                .and("Expand 'Inventory' multipane")
+                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
+                .then("Validate text above items panel")
+                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
+                        "")
+                .and("Include All media")
+                .clickOnWebElement(protectionMultipane.getIncludeAllButton())
+                .then("Validate 'Selected' items panel")
+                .validate(protectionMultipane.countSelectTableItems(), protectionMultipane.countIncludedExcludedTableItems())
+                .then("Validate text above items panel")
+                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
+                        String.format("%s media are included",protectionMultipane.countSelectTableItems()))
+                .and("Collapse 'Inventory' multipane")
+                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
+                .testEnd();
+    }
 
     @AfterClass(alwaysRun = true)
     private void logout() {

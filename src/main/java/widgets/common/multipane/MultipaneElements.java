@@ -20,7 +20,7 @@ public enum MultipaneElements {
     SELECTION_INFO_LABEL("'Selection Info' Label in Multipane","//div[@class='selectionInfo']//span"),
     INCLUDE_ALL_BUTTON( "'Include All' button in Multipane", "//span/div[contains(text(),'Include All')]/.."),
     EXCLUDE_ALL_BUTTON( "'Exclude All' button in Multipane", "//span/div[contains(text(),'Exclude All')]/.."),
-    SELECTION_INFO_EXCLUDED_LABEL("'Selection Info' Label in Multipane","//div[@class='selectionInfo']//span[2]"),
+    SELECTION_INFO_EXCLUDED_LABEL("'Selection Info' Label in Multipane","//div[@class='selectionInfo']//span[1]"),
 
     SELECT_TABLE_ITEMS("Select Table Elements","//table[contains(@class,'select-table')]/tbody"),
     INCLUDED_EXCLUDED_TABLE_ITEMS("Included Excluded Table  Items", "//table[contains(@class,'included-table')]/tr"),

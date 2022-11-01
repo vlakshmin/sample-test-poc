@@ -145,7 +145,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
         var relatedToAdSpotsPublisherIds = getRelatedToAdSpotsPublisherIds();
         var relatedToProtectionsPublisherIds = getRelatedToProtectionPublisherIds();
         var relatedToOpenPricingPublisherIds = getRelatedToOpenPricingPublisherIds();
-        var relatedToDynamicPricingPublisherIds = getRelatedToDynamicPricingPublisherIds();
+  //      var relatedToDynamicPricingPublisherIds = getRelatedToDynamicPricingPublisherIds();
         var relatedToPrivateAuctionsPublisherIds = getRelatedToPrivateAuctionsPublisherIds();
 
         getAllPublisherIdsByParams().stream()
@@ -155,8 +155,8 @@ public class DeleteGeneratedDataTest extends BaseTest {
                         !relatedToDealsPublisherIds.contains(pubId) &&
                         !relatedToAdSpotsPublisherIds.contains(pubId) &&
                         !relatedToProtectionsPublisherIds.contains(pubId) &&
-                        !relatedToOpenPricingPublisherIds.contains(pubId) &&
-                        !relatedToDynamicPricingPublisherIds.contains(pubId))
+                        !relatedToOpenPricingPublisherIds.contains(pubId) )
+            //            !relatedToDynamicPricingPublisherIds.contains(pubId))
                 .collect(Collectors.toList())
                 .forEach(publisherId -> {
                             if (PublisherPrecondition.publisher()
