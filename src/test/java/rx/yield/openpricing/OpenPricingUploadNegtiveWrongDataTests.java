@@ -13,13 +13,13 @@ import pages.Path;
 import pages.yield.openpricing.OpenPricingPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
-import widgets.errormessages.ErrorMessages;
 import widgets.yield.openPricing.sidebar.EditOpenPricingSidebar;
 import widgets.yield.openPricing.sidebar.UpdateExistingOpenPricingRulesSidebar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static api.preconditionbuilders.OpenPricingPrecondition.openPricing;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
@@ -57,13 +57,11 @@ public class OpenPricingUploadNegtiveWrongDataTests extends BaseTest {
                 .build()
                 .getPublisherResponse();
 
-        openPricingList = new ArrayList<>();
-
         deleteRulesIfExist(List.of("upload auto one", "upload auto two", "upload auto three"));
 
-        openPricingList.add(createOpenPricing("upload auto one", 4.44));
-        openPricingList.add(createOpenPricing("upload auto two", 4.44));
-        openPricingList.add(createOpenPricing("upload auto three", 4.44));
+        openPricingList = List.of(createOpenPricing("upload auto one", 4.44),
+                                    createOpenPricing("upload auto two", 4.44),
+                                    createOpenPricing("upload auto three", 4.44));
 
         testStart()
                 .given("Open Open Pricing page")
@@ -99,7 +97,7 @@ public class OpenPricingUploadNegtiveWrongDataTests extends BaseTest {
 
     @Epic("v1.26.0/GS-3083")
     @Test(description = "Negative: Update existing open pricing rules", dataProvider = "Negative Upload")
-    private void updateExistingOpenPricingRulesNegative(String filename, String descr, String errorMsg) {
+    public void updateExistingOpenPricingRulesNegative(String filename, String descr, String errorMsg) {
 
         log.info(descr);
 
@@ -189,7 +187,6 @@ public class OpenPricingUploadNegtiveWrongDataTests extends BaseTest {
         deleteOpenPricingRules();
     }
 
-
     private void deleteOpenPricingRules() {
 
         if (openPricingList.size() > 0) {
@@ -228,11 +225,9 @@ public class OpenPricingUploadNegtiveWrongDataTests extends BaseTest {
     private void deleteRulesIfExist(List<String> rulesName){
 
         for (String name : rulesName) {
-            HashMap<String, Object> queryParams = new HashMap<>();
-            queryParams.put("name", name);
 
             List<OpenPricing> rules = OpenPricingPrecondition.openPricing()
-                    .getOpenPricingWithFilter(queryParams)
+                    .getOpenPricingWithFilter(Map.of("name",name))
                     .build()
                     .getOpenPricingGetAllResponse()
                     .getItems();

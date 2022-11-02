@@ -16,7 +16,6 @@ import widgets.errormessages.ErrorMessages;
 import widgets.yield.openPricing.sidebar.UpdateExistingOpenPricingRulesSidebar;
 import zutils.FileUtils;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +39,7 @@ public class OpenPricingSingleAdminUploadSidebarTests extends BaseTest {
     private Publisher publisher;
     private UserDto singleUser;
 
-    private final String RESOURCES_DIRECTORY = "src/test/resources/csvfiles/openpricing/";
+    private final static String RESOURCES_DIRECTORY = "src/test/resources/csvfiles/openpricing/";
 
     private List<OpenPricing> rules = new ArrayList<>();
     private Map<String, String> expectedRules = new HashMap<>();
@@ -50,10 +49,6 @@ public class OpenPricingSingleAdminUploadSidebarTests extends BaseTest {
     private final static String[] FILE_HEADER = {"Rule Name", "Floor Price"};
     private final static String TEMPLATE_FILE_NAME = "open-pricing-template.csv";
     private final static String RULES_FILE_NAME = "open-pricing.csv";
-
-    private final String UPLOAD_CSV_TEXT = "This action will analyze the CSV based on the rule names and will " +
-            "only overwrite the floor price for the selected publisher. " +
-            "In the case that there is not a matching Rule name, that rule will be ignored in the batch upload.";
 
     public OpenPricingSingleAdminUploadSidebarTests() {
         openPricingPage = new OpenPricingPage();
@@ -73,14 +68,12 @@ public class OpenPricingSingleAdminUploadSidebarTests extends BaseTest {
                 .getUserResponse();
 
 
-        rules.add(createOpenPricingRule(true, 15.00));
-        rules.add(createOpenPricingRule(true, 0.00));
-        rules.add(createOpenPricingRule(true, 6.33));
-        rules.add(createOpenPricingRule(false, 999999.99));
+        rules = List.of(createOpenPricingRule(true, 15.00),
+                        createOpenPricingRule(true, 0.00),
+                        createOpenPricingRule(true, 6.33),
+                        createOpenPricingRule(false, 999999.99));
 
-        for (OpenPricing rule : rules) {
-            expectedRules.put(rule.getName(), convertFloorPrice(rule.getFloorPrice().toString()));
-        }
+        rules.stream().forEach(rule -> expectedRules.put(rule.getName(), convertFloorPrice(rule.getFloorPrice().toString())));
     }
 
     @BeforeMethod
@@ -100,7 +93,7 @@ public class OpenPricingSingleAdminUploadSidebarTests extends BaseTest {
 
 
     @Test(description = "Single Admin: check elements on sidebar")
-    private void checkUploadSlideElementsByDefaultSingleAdmin() {
+    public void checkUploadSlideElementsByDefaultSingleAdmin() {
 
         testStart()
                 .then(String.format("Publisher Name contains publisher name %s", publisher.getName()))
@@ -128,7 +121,7 @@ public class OpenPricingSingleAdminUploadSidebarTests extends BaseTest {
     }
 
     @Test(description = "Download Template")
-    private void downloadTemplate() throws IOException {
+    public void downloadTemplate() {
 
         testStart()
                 .then("Select Publisher")
@@ -140,7 +133,7 @@ public class OpenPricingSingleAdminUploadSidebarTests extends BaseTest {
     }
 
     @Test(description = "Download Existing Open Pricing .csv")
-    private void downloadExistingOpenPricing() throws IOException {
+    public void downloadExistingOpenPricing() {
 
         testStart()
                 .and(String.format("Select Publisher %s", publisher.getName()))
@@ -154,7 +147,7 @@ public class OpenPricingSingleAdminUploadSidebarTests extends BaseTest {
     }
 
     @Test(description = "Negative: check errors if file is not selected")
-    private void checkRequiredFields() {
+    public void checkRequiredFields() {
         var errorsList = openPricingSidebar.getErrorAlert().getErrorsList();
 
         testStart()
@@ -163,9 +156,7 @@ public class OpenPricingSingleAdminUploadSidebarTests extends BaseTest {
                 .then("Validate errors for all required fields in Error Panel")
                 .waitAndValidate(visible, openPricingSidebar.getErrorAlert().getErrorPanel())
                 .validateListSize(errorsList, 1)
-                .validateList(errorsList, List.of(
-                        ErrorMessages.CSV_FILE_ERROR_ALERT.getText())
-                )
+                .validateList(errorsList, List.of(ErrorMessages.CSV_FILE_ERROR_ALERT.getText()))
                 .then("Validate error under the 'Publisher' field")
                 .waitAndValidate(not(visible), openPricingSidebar.getErrorAlertByFieldName("Publisher Name"))
                 .validate(openPricingSidebar.getErrorAlertByFieldName("CSV"), ErrorMessages.CSV_FILE_ERROR_ALERT.getText())
@@ -178,7 +169,7 @@ public class OpenPricingSingleAdminUploadSidebarTests extends BaseTest {
     }
 
     @Step("Validate File Data")
-    private void validateFileData(String filename) throws IOException {
+    private void validateFileData(String filename) {
 
         getDataFromFile(filename);
 
@@ -199,7 +190,7 @@ public class OpenPricingSingleAdminUploadSidebarTests extends BaseTest {
     }
 
     @AfterClass(alwaysRun = true)
-    private void deleteTestData() throws IOException {
+    private void deleteTestData() {
 
         testStart()
                 .deleteFilesByName(RULES_FILE_NAME)
@@ -212,23 +203,23 @@ public class OpenPricingSingleAdminUploadSidebarTests extends BaseTest {
 
 
     private void deletePublisher(int id) {
+
         if (publisher()
                 .setCredentials(USER_FOR_DELETION)
                 .deletePublisher(id)
                 .build()
                 .getResponseCode() == HttpStatus.SC_NO_CONTENT)
             log.info(String.format("Deleted publisher %s", publisher.getId()));
-
     }
 
     private void deleteUser(int id) {
+
         if (user()
                 .setCredentials(USER_FOR_DELETION)
                 .deleteUser(id)
                 .build()
                 .getResponseCode() == HttpStatus.SC_NO_CONTENT)
             log.info(String.format("Deleted user %s", publisher.getId()));
-
     }
 
     private void deleteRules() {
@@ -251,20 +242,19 @@ public class OpenPricingSingleAdminUploadSidebarTests extends BaseTest {
                 .getOpenPricingResponse();
     }
 
-    private void getDataFromFile(String fileName) throws IOException {
+    private void getDataFromFile(String fileName) {
 
         List<String[]> fileData = FileUtils.getAllDataFromCSVWithoutHeader(Configuration.downloadsFolder, fileName);
-        for (String[] row : fileData) {
-            System.out.println(row[0]);
-            if (!row[0].isEmpty()) {
-                fileDataMap.put(row[0], convertFloorPrice(row[1]));
-            }
-        }
+
+        fileData.stream().forEach(
+                row -> { log.info(row[0]);
+                    if (!row[0].isEmpty()) fileDataMap.put(row[0], convertFloorPrice(row[1]));
+        });
     }
 
     @Step("Convert floor price value")
     private String convertFloorPrice(String floorPrice){
-        DecimalFormat format = new DecimalFormat("0.##");
-        return format.format(Double.parseDouble(floorPrice));
+
+        return new DecimalFormat("0.##").format(Double.parseDouble(floorPrice));
     }
 }

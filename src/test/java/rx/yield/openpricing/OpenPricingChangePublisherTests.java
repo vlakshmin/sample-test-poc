@@ -97,7 +97,8 @@ public class OpenPricingChangePublisherTests extends BaseTest {
     }
 
     @Test(description = "Change Publisher and Click Accept")
-    private void changePublisherAndClickAccept() {
+    public void changePublisherAndClickAccept() {
+
         testStart()
                 .clickBrowserRefreshButton()
                 .and(String.format("Select Publisher %s", publisher1.getName()))
@@ -124,7 +125,8 @@ public class OpenPricingChangePublisherTests extends BaseTest {
     @Issue("https://rakutenadvertising.atlassian.net/browse/GS-3102")
     @Epic("Is not included in v.1.26.0/GS-3102")
     @Test(description = "Change Publisher and check selected items multipane")
-    private void changePublisherAndCheckSelectedItemsMultipane() {
+    public void changePublisherAndCheckSelectedItemsMultipane() {
+
         testStart()
                 .clickBrowserRefreshButton()
                 .and(String.format("Select Publisher %s", publisher1.getName()))
@@ -146,6 +148,7 @@ public class OpenPricingChangePublisherTests extends BaseTest {
 
     @Step("Fill all fields")
     private void fillAllFields() {
+
         testStart()
                 .waitAndValidate(enabled, openPricingSidebar.getNameInput())
                 .and(String.format("Fill Name %s", OPEN_PRICING_NAME))
@@ -174,7 +177,6 @@ public class OpenPricingChangePublisherTests extends BaseTest {
                 .clickOnWebElement(openPricingSidebar.getDemandSourcesMultipane().getPanelNameLabel())
                 .clickOnWebElement(openPricingSidebar.getDemandSourcesMultipane().getIncludeAllButton())
                 .testEnd();
-
     }
 
     @Step("Change Publisher on {0} and click Accept")
@@ -209,6 +211,7 @@ public class OpenPricingChangePublisherTests extends BaseTest {
 
     @Step("Validate all fields should be reseted")
     private void validateAllFieldsAreReseted() {
+
         testStart()
                 .then("Name should be cleaned")
                 .validate(openPricingSidebar.getNameInput(), "")
@@ -256,6 +259,7 @@ public class OpenPricingChangePublisherTests extends BaseTest {
 
     @Step("Validate Inventory List")
     private void validateListInventory(List<String> inventory) {
+
         testStart()
                 .and("Expand Inventory multipane and ensure that values in list corresponds with selected publisher")
                 .clickOnWebElement(openPricingSidebar.getInventoryMultipane().getPanelNameLabel())
@@ -266,6 +270,7 @@ public class OpenPricingChangePublisherTests extends BaseTest {
 
     @Step("Validate Demand Sources List")
     private void validateListDemandSources(List<String> dsp) {
+
         testStart()
                 .and("Expand  Demand Source multipane and ensure that values in list corresponds with selected publisher")
                 .clickOnWebElement(openPricingSidebar.getDemandSourcesMultipane().getPanelNameLabel())
@@ -277,6 +282,7 @@ public class OpenPricingChangePublisherTests extends BaseTest {
 
     @AfterMethod(alwaysRun = true)
     private void logout() {
+
         testStart()
                 .and("Close Ad Spot Sidebar")
                 .clickOnWebElement(openPricingSidebar.getCloseIcon())
@@ -289,30 +295,30 @@ public class OpenPricingChangePublisherTests extends BaseTest {
 
     @AfterClass(alwaysRun = true)
     private void deleteTestData() {
+
         deletePublisher(publisher1.getId());
         deletePublisher(publisher2.getId());
         deleteMedia(media1.getId());
         deleteMedia(media2.getId());
-
     }
 
     private void deletePublisher(int id) {
+
         if (publisher()
                 .setCredentials(USER_FOR_DELETION)
                 .deletePublisher(id)
                 .build()
                 .getResponseCode() == HttpStatus.SC_NO_CONTENT)
             log.info(String.format("Deleted publisher %s", id));
-
     }
 
     private void deleteMedia(int id) {
+
         if (media()
                 .setCredentials(USER_FOR_DELETION)
                 .deleteMedia(id)
                 .build()
                 .getResponseCode() == HttpStatus.SC_NO_CONTENT)
             log.info(String.format("Deleted media %s", id));
-
     }
 }

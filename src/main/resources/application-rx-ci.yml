@@ -9,7 +9,7 @@ holdBrowserOpen: false
 reopenBrowserOnFail: true
 screenshots: true
 headless: false
-downloadsDir: build/downloads/csv/
+downloadsFolder: build/downloads/csv/
 
 #Proxy enabling
 enableProxy: false

@@ -16,7 +16,6 @@ import widgets.yield.openPricing.sidebar.EditOpenPricingSidebar;
 import widgets.yield.openPricing.sidebar.UpdateExistingOpenPricingRulesSidebar;
 import zutils.FileUtils;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +40,7 @@ public class OpenPricingUploadTests extends BaseTest {
     private Publisher publisher;
     private List<OpenPricing> openPricingList;
     Map<String, String> fileDataMap = new HashMap<>();
-    private final String RESOURCES_DIRECTORY = "src/test/resources/csvfiles/openpricing/";
+    private final static String RESOURCES_DIRECTORY = "src/test/resources/csvfiles/openpricing/";
 
     public OpenPricingUploadTests() {
         openPricingPage = new OpenPricingPage();
@@ -81,7 +80,7 @@ public class OpenPricingUploadTests extends BaseTest {
     }
 
     @Test(description = "Positive: Update existing open pricing rules", dataProvider = "Positive Upload")
-    private void updateExistingOpenPricingRulesPositive(String filename, Double floorPrice, String descr) throws IOException {
+    public void updateExistingOpenPricingRulesPositive(String filename, Double floorPrice, String descr) {
 
         log.info(descr);
 
@@ -94,7 +93,7 @@ public class OpenPricingUploadTests extends BaseTest {
                 .entrySet()
                 .stream()
                 .forEach(e ->
-                       validateFloorPrice(e.getKey()));
+                        validateFloorPrice(e.getKey()));
     }
 
     @Step("Upload Data")
@@ -165,31 +164,28 @@ public class OpenPricingUploadTests extends BaseTest {
         }
     }
 
-    private void getDataFromFile(String fileName) throws IOException {
+    private void getDataFromFile(String fileName) {
 
         List<String[]> fileData = FileUtils.getAllDataFromCSVWithoutHeader(RESOURCES_DIRECTORY, fileName);
-        for (String[] row : fileData) {
-            System.out.println(row[0]);
-            if (!row[0].isEmpty()) {
-                fileDataMap.put(row[0], convertFloorPrice(row[1]));
-            }
-        }
+
+        fileData.stream().forEach(
+                row -> { log.info(row[0]);
+                    if (!row[0].isEmpty()) fileDataMap.put(row[0], convertFloorPrice(row[1]));
+                });
     }
 
-    private void deleteIfExists(){
+    private void deleteIfExists() {
+
         fileDataMap
                 .entrySet()
                 .stream()
                 .forEach(e -> findRuleAndDelete(e.getKey()));
     }
 
-    private void findRuleAndDelete(String ruleName){
-
-        HashMap<String, Object> queryParams = new HashMap<>();
-        queryParams.put("name", ruleName);
+    private void findRuleAndDelete(String ruleName) {
 
         List<OpenPricing> rules = OpenPricingPrecondition.openPricing()
-                .getOpenPricingWithFilter(queryParams)
+                .getOpenPricingWithFilter(Map.of("name",ruleName))
                 .build()
                 .getOpenPricingGetAllResponse()
                 .getItems();
@@ -197,7 +193,7 @@ public class OpenPricingUploadTests extends BaseTest {
         deleteOpenPricingRules(rules);
     }
 
-    private void createOpenPricing(Double floorPrice){
+    private void createOpenPricing(Double floorPrice) {
 
         fileDataMap
                 .entrySet()
@@ -205,7 +201,7 @@ public class OpenPricingUploadTests extends BaseTest {
                 .forEach(e -> createOpenPricing(e.getKey(), floorPrice, publisher));
     }
 
-    private void createOpenPricing(String name, Double floorPrice, Publisher publisher){
+    private void createOpenPricing(String name, Double floorPrice, Publisher publisher) {
 
         openPricingList.add(openPricing()
                 .createNewOpenPricing(name, floorPrice, publisher)
@@ -214,8 +210,8 @@ public class OpenPricingUploadTests extends BaseTest {
     }
 
     @Step("Convert floor price value")
-    private String convertFloorPrice(String floorPrice){
-        DecimalFormat format = new DecimalFormat("0.##");
-        return format.format(Double.parseDouble(floorPrice));
+    private String convertFloorPrice(String floorPrice) {
+
+        return new DecimalFormat("0.##").format(Double.parseDouble(floorPrice));
     }
 }

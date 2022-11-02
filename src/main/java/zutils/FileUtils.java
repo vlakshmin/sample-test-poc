@@ -3,6 +3,7 @@ package zutils;
 import com.codeborne.selenide.Configuration;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.awaitility.core.ConditionTimeoutException;
 
 import java.io.File;
@@ -19,9 +20,13 @@ import java.util.stream.Stream;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 
+@Slf4j
 public final class FileUtils {
 
-    public static File getFileByName(String dir, String fileName) throws IOException {
+    private Path path;
+    private File file;
+
+    public static File getFileByName(String dir, String fileName) {
 
         Path path = Paths.get(dir);
 
@@ -38,12 +43,14 @@ public final class FileUtils {
                     .filter(p -> p.getFileName().toString().equalsIgnoreCase(fileName))
                     .findFirst()
                     .get().toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         return file;
     }
 
-    public static void waitFileDownloading(String fileName) throws IOException {
+    public static void waitFileDownloading(String fileName) {
 
         Path filePath = Paths.get(Configuration.downloadsFolder);
 
@@ -61,11 +68,13 @@ public final class FileUtils {
                             .findFirst()
                             .get().toFile().toString()).exists()));
         } catch (ConditionTimeoutException e) {
-            System.out.println(String.format("File %s not found in the folder %s", fileName, filePath));
+            log.info(String.format("File %s not found in the folder %s", fileName, filePath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    private static List<Path> getFilesByName(String dir, String fileName) throws IOException {
+    private static List<Path> getFilesByName(String dir, String fileName) {
         Path path = Paths.get(dir);
         if (!Files.isDirectory(path)) {
             throw new IllegalArgumentException("Path must be a directory!");
@@ -79,28 +88,34 @@ public final class FileUtils {
                     .filter(Files::isRegularFile)
                     .filter(p -> p.getFileName().toString().equalsIgnoreCase(fileName))
                     .collect(Collectors.toList());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         return result;
     }
 
-    public static void deleteFileByName(String fileName) throws IOException {
+    public static void deleteFileByName(String fileName) {
 
         List<Path> result = getFilesByName(Configuration.downloadsFolder, fileName);
 
         for (Path filepath : result) {
-            if (!Files.deleteIfExists(filepath)) {
-                System.out.println(String.format("File %s is not deleted ", filepath));
+            try {
+                if (!Files.deleteIfExists(filepath)) {
+                    System.out.println(String.format("File %s is not deleted ", filepath));
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
-
     }
 
-    public static List<String[]> getAllDataFromCSVWithoutHeader(String dir, String filename) throws IOException {
+    public static List<String[]> getAllDataFromCSVWithoutHeader(String dir, String filename)  {
 
         List<String[]> data = new ArrayList<>();
 
-        File file = getFileByName(dir, filename);
+        File file = null;
+        file = getFileByName(dir, filename);
 
         try {
             FileReader filereader = new FileReader(file.getPath());
@@ -116,18 +131,18 @@ public final class FileUtils {
         return data;
     }
 
-    public static String[] getHeader(String dir, String filename) throws IOException {
+    public static String[] getHeader(String dir, String filename) {
 
-        File file = getFileByName(dir, filename);
+        File file = null;
+        file = getFileByName(dir, filename);
 
         String[] header = {};
 
         try {
-            FileReader filereader = new FileReader(file.getPath());
-            CSVReader csvReader = new CSVReaderBuilder(filereader)
-                    .build();
-            List<String[]> allData = csvReader.readAll();
-            header = allData.get(0);
+            header = new CSVReaderBuilder(new FileReader(file.getPath()))
+                    .build()
+                    .readAll()
+                    .get(0);
         } catch (Exception e) {
             e.printStackTrace();
         }

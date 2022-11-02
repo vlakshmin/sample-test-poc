@@ -403,21 +403,21 @@ public final class TestManager {
             return this;
         }
 
-        public TestManagerBuilder validateMapsAreEqual(Map<String, String> expectedMap, Map<String, String>  actualMap) {
+        public TestManagerBuilder validateMapsAreEqual(Map<String, String> expectedMap, Map<String, String> actualMap) {
             logEvent(format("Validating maps have expected size %s and identical content", expectedMap.size()));
 
             actualMap
                     .entrySet()
                     .stream()
-                    .forEach(e -> logEvent(String.format("Actual map: %s ",actualMap.get(e.getKey()))));
+                    .forEach(e -> logEvent(String.format("Actual map: %s ", actualMap.get(e.getKey()))));
 
 
             expectedMap
                     .entrySet()
                     .stream()
-                    .forEach(e -> logEvent(String.format("Expected map: %s ",expectedMap.get(e.getKey()))));
+                    .forEach(e -> logEvent(String.format("Expected map: %s ", expectedMap.get(e.getKey()))));
 
-            assertEquals(expectedMap.size(),  actualMap.size());
+            assertEquals(expectedMap.size(), actualMap.size());
 
             assertTrue(expectedMap.entrySet().stream()
                     .allMatch(e -> e.getValue().equals(actualMap.get(e.getKey()))));
@@ -566,17 +566,17 @@ public final class TestManager {
             return this;
         }
 
-        public TestManagerBuilder validateFileHeader(String filename, String expectedFileHeader[]) throws IOException {
+        public TestManagerBuilder validateFileHeader(String filename, String expectedFileHeader[]) {
 
             logEvent(String.format("Download File and check Header. Header should be %s", expectedFileHeader));
 
-            String[] header = FileUtils.getHeader(Configuration.downloadsFolder,filename);
+            String[] header = FileUtils.getHeader(Configuration.downloadsFolder, filename);
             assertEquals(header, expectedFileHeader);
 
             return this;
         }
 
-        public TestManagerBuilder waitFileDownloading(String filename) throws IOException {
+        public TestManagerBuilder waitFileDownloading(String filename) {
 
             logEvent(format("Waiting download file %s", filename));
             FileUtils.waitFileDownloading(filename);
@@ -584,7 +584,7 @@ public final class TestManager {
             return this;
         }
 
-        public TestManagerBuilder deleteFilesByName(String filename) throws IOException {
+        public TestManagerBuilder deleteFilesByName(String filename) {
 
             FileUtils.deleteFileByName(filename);
 

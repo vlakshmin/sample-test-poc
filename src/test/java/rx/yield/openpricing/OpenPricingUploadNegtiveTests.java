@@ -18,8 +18,8 @@ import widgets.yield.openPricing.sidebar.EditOpenPricingSidebar;
 import widgets.yield.openPricing.sidebar.UpdateExistingOpenPricingRulesSidebar;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static api.preconditionbuilders.OpenPricingPrecondition.openPricing;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
@@ -41,7 +41,12 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
 
     private List<String> rulesName = new ArrayList<>();
 
-    private final String RESOURCES_DIRECTORY = "src/test/resources/csvfiles/openpricing/";
+    private final static String RESOURCES_DIRECTORY = "src/test/resources/csvfiles/openpricing/";
+
+    private final static String NON_CSV_FILE = "non-csv.shell";
+
+    private final static String ERROR_UNSUPPORTED_MEDIA_TYPE = "{ \"code\": 415, \"message\": \"unsupported media type\", " +
+            "\"error\": \"The uploaded file is not a CSV file\" }";
 
     public OpenPricingUploadNegtiveTests() {
         openPricingPage = new OpenPricingPage();
@@ -50,20 +55,18 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
     }
 
     @BeforeClass
-    private void createTestData() {
+    public void createTestData() {
 
         publisher = publisher()
                 .createNewPublisher(captionWithSuffix("000000autoPub2"))
                 .build()
                 .getPublisherResponse();
 
-        openPricingList = new ArrayList<>();
-
         deleteRulesIfExist(List.of("upload auto one", "upload auto two", "upload auto three"));
 
-        openPricingList.add(createOpenPricing("upload auto one", 4.44));
-        openPricingList.add(createOpenPricing("upload auto two", 4.44));
-        openPricingList.add(createOpenPricing("upload auto three", 4.44));
+        openPricingList = List.of(createOpenPricing("upload auto one", 4.44),
+                createOpenPricing("upload auto two", 4.44),
+                createOpenPricing("upload auto three", 4.44));
 
         testStart()
                 .given("Open Open Pricing page")
@@ -75,15 +78,14 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
 
     @Epic("v1.26.0/GS-3083")
     @Test(description = "Negative: The uploaded file is not a CSV file")
-    private void uploadIsNotCSVNegative() {
+    public void uploadIsNotCSVNegative() {
 
-        uploadData("non-csv.shell");
+        uploadData(NON_CSV_FILE);
 
         testStart()
                 .waitAndValidate(visible, openPricingPage.getToasterMessage().getPanelError())
                 .clickOnWebElement(openPricingPage.getToasterMessage().getViewErrorDetails())
-                .validate(openPricingPage.getToasterMessage().getMessageError(), "{ \"code\": 415, \"message\": \"unsupported media type\", " +
-                        "\"error\": \"The uploaded file is not a CSV file\" }")
+                .validate(openPricingPage.getToasterMessage().getMessageError(), ERROR_UNSUPPORTED_MEDIA_TYPE)
                 .clickOnWebElement(openPricingPage.getToasterMessage().getRemoveIcon())
                 .waitAndValidate(not(visible), openPricingPage.getToasterMessage().getPanelError())
                 .testEnd();
@@ -92,7 +94,7 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
 
     @Epic("v1.26.0/GS-3083")
     @Test(description = "Negative: check errors if required fields are not selected")
-    private void checkRequiredFields() {
+    public void checkRequiredFields() {
         var errorsList = openPricingUploadSidebar.getErrorAlert().getErrorsList();
 
         testStart()
@@ -132,7 +134,7 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
 
     @Epic("v1.26.0/GS-3083")
     @Test(description = "Negative: check errors if reselect file")
-    private void checkErrorsDisappearAfterSelectedFile() {
+    public void checkErrorsDisappearAfterSelectedFile() {
         var errorsList = openPricingUploadSidebar.getErrorAlert().getErrorsList();
 
         testStart()
@@ -271,14 +273,12 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
     }
 
     @Step("Delete rules")
-    private void deleteRulesIfExist(List<String> rulesName){
+    private void deleteRulesIfExist(List<String> rulesName) {
 
         for (String name : rulesName) {
-            HashMap<String, Object> queryParams = new HashMap<>();
-            queryParams.put("name", name);
 
             List<OpenPricing> rules = OpenPricingPrecondition.openPricing()
-                    .getOpenPricingWithFilter(queryParams)
+                    .getOpenPricingWithFilter(Map.of("name",name))
                     .build()
                     .getOpenPricingGetAllResponse()
                     .getItems();

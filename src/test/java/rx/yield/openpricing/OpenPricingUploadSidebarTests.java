@@ -14,13 +14,11 @@ import rx.BaseTest;
 import widgets.yield.openPricing.sidebar.UpdateExistingOpenPricingRulesSidebar;
 import zutils.FileUtils;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 import static api.preconditionbuilders.OpenPricingPrecondition.openPricing;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
@@ -40,7 +38,7 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
     private List<OpenPricing> rules = new ArrayList<>();
     private Map<String, String> expectedRules = new HashMap<>();
 
-    private final String RESOURCES_DIRECTORY = "src/test/resources/csvfiles/openpricing/";
+    private final static String RESOURCES_DIRECTORY = "src/test/resources/csvfiles/openpricing/";
 
     Map<String, String> fileDataMap = new HashMap<>();
 
@@ -60,14 +58,12 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
                 .build()
                 .getPublisherResponse();
 
-        rules.add(createOpenPricingRule(true, 12.00));
-        rules.add(createOpenPricingRule(true, 0.00));
-        rules.add(createOpenPricingRule(true, 1.33));
-        rules.add(createOpenPricingRule(false, 999999.99));
+        rules = List.of(createOpenPricingRule(true, 12.00),
+                createOpenPricingRule(true, 0.00),
+                createOpenPricingRule(true, 1.33),
+                createOpenPricingRule(false, 999999.99));
 
-        for (OpenPricing rule : rules) {
-            expectedRules.put(rule.getName(), convertFloorPrice(rule.getFloorPrice().toString()));
-        }
+        rules.stream().forEach(rule -> expectedRules.put(rule.getName(), convertFloorPrice(rule.getFloorPrice().toString())));
     }
 
     @BeforeMethod
@@ -87,7 +83,7 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
 
 
     @Test(description = "Check Upload slide elements by default (Admin)")
-    private void checkUploadSlideElementsByDefaultAdmin() {
+    public void checkUploadSlideElementsByDefaultAdmin() {
 
         testStart()
                 .then("Publisher Name dropdown is empty")
@@ -114,7 +110,7 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
     }
 
     @Test(description = "Download Template")
-    private void downloadTemplate() throws IOException {
+    public void downloadTemplate() {
 
         testStart()
                 .then("Select Publisher")
@@ -126,7 +122,7 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
     }
 
     @Test(description = "Download Existing Open Pricing .csv")
-    private void downloadExistingOpenPricing() throws IOException {
+    public void downloadExistingOpenPricing() {
 
         testStart()
                 .and(String.format("Select Publisher %s", publisher.getName()))
@@ -152,7 +148,7 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
 
 
     @Step("Validate File Data")
-    private void validateFileData(String filename) throws IOException {
+    private void validateFileData(String filename) {
 
         getDataFromFile(filename);
 
@@ -162,7 +158,7 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
     }
 
     @AfterClass(alwaysRun = true)
-    private void deleteTestData() throws IOException {
+    private void deleteTestData() {
 
         testStart()
                 .deleteFilesByName(RULES_FILE_NAME)
@@ -173,6 +169,7 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
     }
 
     private void deletePublisher(int id) {
+
         if (publisher()
                 .setCredentials(USER_FOR_DELETION)
                 .deletePublisher(id)
@@ -201,20 +198,19 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
                 .getOpenPricingResponse();
     }
 
-    private void getDataFromFile(String fileName) throws IOException {
+    private void getDataFromFile(String fileName) {
 
         List<String[]> fileData = FileUtils.getAllDataFromCSVWithoutHeader(Configuration.downloadsFolder, fileName);
-        for (String[] row : fileData) {
-            System.out.println(row[0]);
-            if (!row[0].isEmpty()) {
-                fileDataMap.put(row[0], convertFloorPrice(row[1]));
-            }
-        }
+
+        fileData.stream().forEach(
+                row -> { log.info(row[0]);
+                        if (!row[0].isEmpty()) fileDataMap.put(row[0], convertFloorPrice(row[1]));
+                        });
     }
 
     @Step("Convert floor price value")
-    private String convertFloorPrice(String floorPrice){
-        DecimalFormat format = new DecimalFormat("0.##");
-        return format.format(Double.parseDouble(floorPrice));
+    private String convertFloorPrice(String floorPrice) {
+
+        return new DecimalFormat("0.##").format(Double.parseDouble(floorPrice));
     }
 }
