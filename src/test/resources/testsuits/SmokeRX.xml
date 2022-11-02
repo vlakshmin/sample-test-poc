@@ -76,6 +76,7 @@
     <test name="Publisher Feature">
         <classes>
             <class name="rx.admin.publishers.PublisherTest"/>
+            <class name="rx.admin.publishers.PublisherCheckPaginationTests"/>
         </classes>
     </test>
 
