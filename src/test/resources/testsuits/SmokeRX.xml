@@ -87,6 +87,11 @@
             <class name="rx.admin.demand.EditDemandSourceTest"/>
         </classes>
     </test>
+    <test name="Profile Feature">
+        <classes>
+            <class name="rx.profile.UserProfileSettingsTest"/>
+        </classes>
+    </test>
     <test name="XPost-conditions. Delete records with 'auto' substring">
         <classes>
             <class name="rx.pipelines.DeleteGeneratedDataTest"/>
