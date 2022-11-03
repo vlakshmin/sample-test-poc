@@ -19,13 +19,11 @@ import pages.Path;
 import pages.profile.ProfilePage;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.TableData;
+import zutils.FileUtils;
 
-import java.io.File;
+import java.io.*;
 import java.time.Duration;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -399,8 +397,30 @@ public final class TestManager {
         public TestManagerBuilder validateAttribute(SelenideElement element, String attributeName, String attributeValue) {
             logEvent(format("Validating %s  has attribute '%s' with value '%s'",
                     element.getAlias(), attributeName, attributeValue));
-    //        element.shouldBe(exist, visible).hover().shouldHave(attribute(attributeName, attributeValue));
+            //        element.shouldBe(exist, visible).hover().shouldHave(attribute(attributeName, attributeValue));
             element.shouldHave(attribute(attributeName, attributeValue));
+
+            return this;
+        }
+
+        public TestManagerBuilder validateMapsAreEqual(Map<String, String> expectedMap, Map<String, String> actualMap) {
+            logEvent(format("Validating maps have expected size %s and identical content", expectedMap.size()));
+
+            actualMap
+                    .entrySet()
+                    .stream()
+                    .forEach(e -> logEvent(String.format("Actual map: %s ", actualMap.get(e.getKey()))));
+
+
+            expectedMap
+                    .entrySet()
+                    .stream()
+                    .forEach(e -> logEvent(String.format("Expected map: %s ", expectedMap.get(e.getKey()))));
+
+            assertEquals(expectedMap.size(), actualMap.size());
+
+            assertTrue(expectedMap.entrySet().stream()
+                    .allMatch(e -> e.getValue().equals(actualMap.get(e.getKey()))));
 
             return this;
         }
@@ -538,8 +558,35 @@ public final class TestManager {
             return this;
         }
 
-        public TestManagerBuilder uploadFileFromDialog(String relativeFilePath) {
-            $("input[type='file']").uploadFile(new File(relativeFilePath));
+        public TestManagerBuilder uploadFileFromDialog(SelenideElement fileInput, String relativeFilePath) {
+
+            logEvent(format("Upload file '%s' to %s", relativeFilePath, fileInput.getAlias()));
+            fileInput.uploadFile(new File(relativeFilePath));
+
+            return this;
+        }
+
+        public TestManagerBuilder validateFileHeader(String filename, String expectedFileHeader[]) {
+
+            logEvent(String.format("Download File and check Header. Header should be %s", expectedFileHeader));
+
+            String[] header = FileUtils.getHeader(Configuration.downloadsFolder, filename);
+            assertEquals(header, expectedFileHeader);
+
+            return this;
+        }
+
+        public TestManagerBuilder waitFileDownloading(String filename) {
+
+            logEvent(format("Waiting download file %s", filename));
+            FileUtils.waitFileDownloading(filename);
+
+            return this;
+        }
+
+        public TestManagerBuilder deleteFilesByName(String filename) {
+
+            FileUtils.deleteFileByName(filename);
 
             return this;
         }

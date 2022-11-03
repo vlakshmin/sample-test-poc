@@ -2,6 +2,8 @@ package rx.inventory.media;
 
 import api.dto.rx.admin.publisher.Publisher;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -24,6 +26,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Link("https://rakutenadvertising.atlassian.net/browse/GS-3017")
 public class MediaCheckFieldsTests extends BaseTest {
 
     private MediaPage mediaPage;
@@ -60,6 +63,7 @@ public class MediaCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.26.0/GS-3017")
     @Test(description = "Check fields by default")
     public void checkDefaultFields() {
         testStart()
@@ -78,6 +82,7 @@ public class MediaCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.26.0/GS-3017")
     @Test(description = "Check required fields")
     public void checkRequiredFields() {
         var errorsList = editMediaSidebar.getErrorAlert().getErrorsList();
@@ -167,7 +172,7 @@ public class MediaCheckFieldsTests extends BaseTest {
 
                 .testEnd();
     }
-
+    @Epic("v1.26.0/GS-3017")
     @Test(description = "Check errors then switch Platform")
     private void switchPlatformTypeAndCheckError() {
         var errorsList = editMediaSidebar.getErrorAlert().getErrorsList();

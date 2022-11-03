@@ -19,7 +19,7 @@ public class OpenPricingRequest {
     private String name;
     private String notes;
     private Boolean active;
-    private Integer priority;
+    private Boolean priority;
     private Double floorPrice;
     private Integer publisherId;
     private String publisherName;

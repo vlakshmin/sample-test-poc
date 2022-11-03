@@ -52,6 +52,9 @@ public enum ErrorMessages {
     FORMAT_ERROR_ALERT("Format Error Alert Text", "The Format field is required"),
     ENDPOINT_ERROR_ALERT("Endpoint Error Alert Text", "Endpoint URI has no selections"),
 
+    //Open Pricing
+    CSV_FILE_ERROR_ALERT("The CSV Error Alert Text", "The CSV field is required"),
+
     //COMMON
     PLATFORM_ERROR_ALERT("Platform Error Alert Text", "The Platform field is required"),
     MIN_MAX_VALUE_FLOOR_PRICE("Min/Max Value Floor Price Alert Text", "A valid price is between 0.00 and 999,999.99 inclusive"),

@@ -2,6 +2,8 @@ package rx.inventory.media;
 
 import api.dto.rx.admin.publisher.Publisher;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
@@ -11,7 +13,6 @@ import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.Statuses;
 import widgets.inventory.media.sidebar.CreateMediaSidebar;
-import widgets.inventory.media.sidebar.EditMediaSidebar;
 import widgets.inventory.media.sidebar.PlatformType;
 
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
@@ -50,6 +51,7 @@ public class MediaCreateTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'IOS' platform type")
     private void createMediaIOSPlatformType() {
         var mediaName = captionWithSuffix("autoMediaIOS");
@@ -58,6 +60,7 @@ public class MediaCreateTests extends BaseTest {
         createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, PlatformType.IOS.getName());
     }
 
+    @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'IOS Web View' platform type")
     private void createMediaIOSWebViewPlatformType() {
         var mediaName = captionWithSuffix("autoMediaIOSWebView");
@@ -66,6 +69,7 @@ public class MediaCreateTests extends BaseTest {
         createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, PlatformType.IOS_WEB_VIEW.getName());
     }
 
+    @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'Android' platform type")
     private void createMediaAndroidPlatformType() {
         var mediaName = captionWithSuffix("autoMediaAndroid");
@@ -74,6 +78,7 @@ public class MediaCreateTests extends BaseTest {
         createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, PlatformType.ANDROID.getName());
     }
 
+    @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'Android Web View' platform type")
     private void createMediaAndroidWebViewPlatformType() {
         var mediaName = captionWithSuffix("autoMediaAndroidWebView");
@@ -82,6 +87,7 @@ public class MediaCreateTests extends BaseTest {
         createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, PlatformType.ANDROID_WEB_VIEW.getName());
     }
 
+    @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'PC Web' platform type")
     private void createMediaPCWebViewPlatformType() {
         var mediaName = captionWithSuffix("autoMediaPCWeb");
@@ -89,6 +95,7 @@ public class MediaCreateTests extends BaseTest {
         createAndCheckCreatedMedia(mediaName, appStoreURL, "", PlatformType.PC_WEB.getName());
     }
 
+    @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'Mobile Web' platform type")
     private void createMediaMobileWebViewPlatformType() {
         var mediaName = captionWithSuffix("autoMediaMobileWeb");
