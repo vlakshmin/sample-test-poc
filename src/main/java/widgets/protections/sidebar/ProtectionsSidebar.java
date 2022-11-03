@@ -5,6 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import widgets.common.multipane.Multipane;
 import widgets.common.multipane.MultipaneNameImpl;
+import widgets.common.warningbanner.ChangePublisherBanner;
 import widgets.protections.protectiontypemultipane.ProtectionTypeMultipane;
 import widgets.protections.protectiontypemultipane.ProtectionTypeNameImpl;
 
@@ -40,4 +41,6 @@ public abstract class ProtectionsSidebar {
 
     private Multipane advertiserTypeMultipane = new ProtectionTypeMultipane(ProtectionTypeNameImpl.ADVERTISER);
     private Multipane adCategoriesTypeMultipane = new ProtectionTypeMultipane(ProtectionTypeNameImpl.AD_CATEGORIES);
+
+    private ChangePublisherBanner changePublisherBanner = new ChangePublisherBanner();
 }
