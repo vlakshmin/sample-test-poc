@@ -157,6 +157,11 @@
 			<artifactId>netty-all</artifactId>
 			<version>${nettyup.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>5.7.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -191,7 +196,8 @@
 					<reportVersion>${allure.version}</reportVersion>
 				</configuration>
 			</plugin>
-		
+
+
 		
 <!--		-->
 <!--			<plugin>-->

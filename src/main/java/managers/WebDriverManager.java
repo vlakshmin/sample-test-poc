@@ -39,6 +39,8 @@ public class WebDriverManager {
         setProxyEnabled(config.getEnableProxy());
         Configuration.startMaximized = true;
         Configuration.driverManagerEnabled = true;
+
+        Configuration.downloadsFolder = config.getDownloadsDir();
         Configuration.browser = config.getBrowser();
     }
 
