@@ -48,7 +48,7 @@ public class MediaSortingTableTests extends BaseTest {
     }
 
     @BeforeClass
-    private void loginAndCreateExpectedResuts() {
+    private void loginAndCreateExpectedResults() {
 
         if (getTotalMedia() < 60) generateMedia();
 
