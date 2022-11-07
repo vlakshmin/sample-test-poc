@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public enum MultipaneConstants {
 
+    ALL_DEVICES_INCLUDED("All devices are included"),
+
     ONE_GEO_IS_INCLUDED("%s geo is included"),
     ONE_MEDIA_IS_INCLUDED("%s media is included"),
     ONE_AD_SIZE_IS_INCLUDED("%s ad size is included"),
