@@ -294,33 +294,26 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
         });
     }
 
-//    @Step("Exclude all items one by one")
-//    private void excludeOneByOneItems(List<Device> list){
-//        var updated = new AtomicInteger(0);
-//        list.stream().forEach( e ->
-//        {
-//            var selectedItem = protectionMultipane.getIncludedExcludedTableItemByPositionInList(updated.get());
-//            testStart()
-//                    .waiter(visible, selectedItem.getName())
-//                    .hoverMouseOnWebElement(selectedItem.getName())
-//                    .then()
-//                    //  .validate(not(visible), selectedItem.getExcludedIcon())
-//                    .validate(not(visible), selectedItem.getIncludedIcon())
-//                    .validate(not(visible), selectedItem.getActiveIcon())
-//                    .validate(not(visible), selectedItem.getInactiveIcon())
-//                    .validate(not(visible), selectedItem.getAssociatedWithPublisherIcon())
-//                    .validate(visible, selectedItem.getIncludeButton())
-//                    //  .validate(visible, selectedItem.getExcludeButton())
-//                    .and()
-//                    .clickOnWebElement(selectedItem.getIncludeButton())
-//                    .validate(protectionMultipane.getSelectionInfoExcludedLabel(), (updated.get() == 0)?
-//                            MultipaneConstants.ONE_DEVICE_IS_INCLUDED.setQuantity(1) :
-//                            MultipaneConstants.DEVICES_ARE_INCLUDED.setQuantity(updated.get()+1))
-//                    .validate(exist, selectedItem.getName())
-//                    .testEnd();
-//            updated.incrementAndGet();
-//        });
-//    }
+    @Step("Exclude all items one by one")
+    private void excludeOneByOneItems(List<Device> list){
+        var updated = new AtomicInteger(0);
+        list.stream().forEach( e ->
+        {
+            var selectedItem = protectionMultipane.getIncludedExcludedTableItemByPositionInList(updated.get());
+            testStart()
+                    .waiter(visible, selectedItem.getName())
+                    .hoverMouseOnWebElement(selectedItem.getName())
+                    .then()
+                    .validate(visible, selectedItem.getRemoveButton())
+                    .then()
+                    .validate(protectionMultipane.getSelectionInfoExcludedLabel(), (updated.get() == 0)?
+                            MultipaneConstants.ONE_DEVICE_IS_INCLUDED.setQuantity(1) :
+                            MultipaneConstants.DEVICES_ARE_INCLUDED.setQuantity(updated.get()-1))
+                    .validate(not(exist), selectedItem.getName())
+                    .testEnd();
+            updated.decrementAndGet();
+        });
+    }
 
     private void deleteTestData() {
 
