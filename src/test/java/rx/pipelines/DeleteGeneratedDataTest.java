@@ -145,7 +145,6 @@ public class DeleteGeneratedDataTest extends BaseTest {
         var relatedToAdSpotsPublisherIds = getRelatedToAdSpotsPublisherIds();
         var relatedToProtectionsPublisherIds = getRelatedToProtectionPublisherIds();
         var relatedToOpenPricingPublisherIds = getRelatedToOpenPricingPublisherIds();
-  //      var relatedToDynamicPricingPublisherIds = getRelatedToDynamicPricingPublisherIds();
         var relatedToPrivateAuctionsPublisherIds = getRelatedToPrivateAuctionsPublisherIds();
 
         getAllPublisherIdsByParams().stream()
@@ -155,8 +154,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
                         !relatedToDealsPublisherIds.contains(pubId) &&
                         !relatedToAdSpotsPublisherIds.contains(pubId) &&
                         !relatedToProtectionsPublisherIds.contains(pubId) &&
-                        !relatedToOpenPricingPublisherIds.contains(pubId) )
-            //            !relatedToDynamicPricingPublisherIds.contains(pubId))
+                        !relatedToOpenPricingPublisherIds.contains(pubId))
                 .collect(Collectors.toList())
                 .forEach(publisherId -> {
                             if (PublisherPrecondition.publisher()
@@ -328,29 +326,9 @@ public class DeleteGeneratedDataTest extends BaseTest {
                 .collect(Collectors.toList());
     }
 
-    private List<Integer> getRelatedToDynamicPricingPublisherIds() {
-
-        return DynamicPricingPrecondition.dynamicPricing()
-                .getDynamicPricingList()
-                .build()
-                .getDynamicPricingGetAllResponse()
-                .getItems().stream()
-                .filter(dp -> dp.getName().contains(PREFIX_USERS) )
-                .map(DynamicPricing::getPublisherId)
-                .collect(Collectors.toList());
-    }
-
     private List<Integer> getAllPublisherIdsByParams() {
 
         return getAllPublishersByParams().stream()
-                .map(Publisher::getId)
-                .collect(Collectors.toList());
-    }
-
-    private List<Integer> getAllDisabledPublisherIds() {
-
-        return getAllPublishersByParams().stream()
-                .filter(publisher -> publisher.getIsEnabled().equals(false))
                 .map(Publisher::getId)
                 .collect(Collectors.toList());
     }

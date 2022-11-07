@@ -4,6 +4,8 @@ import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -11,6 +13,8 @@ import org.testng.annotations.*;
 import pages.Path;
 import pages.yield.openpricing.OpenPricingPage;
 import rx.BaseTest;
+import widgets.common.multipane.Multipane;
+import widgets.common.multipane.MultipaneNameImpl;
 import widgets.yield.openPricing.sidebar.CreateOpenPricingSidebar;
 
 import java.util.List;
@@ -29,6 +33,7 @@ public class OpenPricingChangePublisherTests extends BaseTest {
 
     private OpenPricingPage openPricingPage;
     private CreateOpenPricingSidebar openPricingSidebar;
+    private Multipane pricingMultipane;
     private Media media1;
     private Media media2;
     private Publisher publisher1;
@@ -49,6 +54,7 @@ public class OpenPricingChangePublisherTests extends BaseTest {
     public OpenPricingChangePublisherTests() {
         openPricingPage = new OpenPricingPage();
         openPricingSidebar = new CreateOpenPricingSidebar();
+        pricingMultipane = new Multipane(MultipaneNameImpl.INVENTORY);
     }
 
     @BeforeClass
@@ -91,10 +97,11 @@ public class OpenPricingChangePublisherTests extends BaseTest {
     }
 
     @Test(description = "Change Publisher and Click Accept")
-    private void changePublisherAndClickAccept() {
+    public void changePublisherAndClickAccept() {
+
         testStart()
                 .clickBrowserRefreshButton()
-                .and(String.format("Select Publisher %s",publisher1.getName()))
+                .and(String.format("Select Publisher %s", publisher1.getName()))
                 .selectFromDropdown(openPricingSidebar.getPublisherNameDropdown(),
                         openPricingSidebar.getPublisherNameDropdownItems(), publisher1.getName())
                 .testEnd();
@@ -115,13 +122,38 @@ public class OpenPricingChangePublisherTests extends BaseTest {
 
     }
 
+    @Issue("https://rakutenadvertising.atlassian.net/browse/GS-3102")
+    @Epic("Is not included in v.1.26.0/GS-3102")
+    @Test(description = "Change Publisher and check selected items multipane")
+    public void changePublisherAndCheckSelectedItemsMultipane() {
+
+        testStart()
+                .clickBrowserRefreshButton()
+                .and(String.format("Select Publisher %s", publisher1.getName()))
+                .selectFromDropdown(openPricingSidebar.getPublisherNameDropdown(),
+                        openPricingSidebar.getPublisherNameDropdownItems(), publisher1.getName())
+                .and("Expand 'Inventory' multipane")
+                .clickOnWebElement(pricingMultipane.getPanelNameLabel())
+                .and("Select first item")
+                .then()
+                .clickOnWebElement(pricingMultipane.getIncludeAllButton())
+                .then("Validate selected inventory items list should not be empty")
+                .validate(pricingMultipane.countSelectTableItems(), 1)
+                .selectFromDropdown(openPricingSidebar.getPublisherNameDropdown(),
+                        openPricingSidebar.getPublisherNameDropdownItems(), publisher2.getName())
+                .then("Validate selected inventory items list should be empty")
+                .validate(pricingMultipane.countSelectTableItems(), 0)
+                .testEnd();
+    }
+
     @Step("Fill all fields")
     private void fillAllFields() {
+
         testStart()
                 .waitAndValidate(enabled, openPricingSidebar.getNameInput())
-                .and(String.format("Fill Name %s",OPEN_PRICING_NAME))
+                .and(String.format("Fill Name %s", OPEN_PRICING_NAME))
                 .setValueWithClean(openPricingSidebar.getNameInput(), OPEN_PRICING_NAME)
-                .and(String.format("Set Floor Price %s",FLOOR_PRICE))
+                .and(String.format("Set Floor Price %s", FLOOR_PRICE))
                 .setValueWithClean(openPricingSidebar.getFloorPriceField().getFloorPriceInput(), FLOOR_PRICE)
                 .and("Expand Inventory Multipane and include all")
                 .clickOnWebElement(openPricingSidebar.getInventoryMultipane().getPanelNameLabel())
@@ -145,7 +177,6 @@ public class OpenPricingChangePublisherTests extends BaseTest {
                 .clickOnWebElement(openPricingSidebar.getDemandSourcesMultipane().getPanelNameLabel())
                 .clickOnWebElement(openPricingSidebar.getDemandSourcesMultipane().getIncludeAllButton())
                 .testEnd();
-
     }
 
     @Step("Change Publisher on {0} and click Accept")
@@ -153,7 +184,7 @@ public class OpenPricingChangePublisherTests extends BaseTest {
         var changePublisherBanner = openPricingSidebar.getChangePublisherBanner();
 
         testStart()
-                .and(String.format("Select Publisher %s",publisherName))
+                .and(String.format("Select Publisher %s", publisherName))
                 .selectFromDropdown(openPricingSidebar.getPublisherNameDropdown(),
                         openPricingSidebar.getPublisherNameDropdownItems(), publisherName)
                 .then("Check that warning banner appears")
@@ -180,6 +211,7 @@ public class OpenPricingChangePublisherTests extends BaseTest {
 
     @Step("Validate all fields should be reseted")
     private void validateAllFieldsAreReseted() {
+
         testStart()
                 .then("Name should be cleaned")
                 .validate(openPricingSidebar.getNameInput(), "")
@@ -214,19 +246,20 @@ public class OpenPricingChangePublisherTests extends BaseTest {
         var changePublisherBanner = openPricingSidebar.getChangePublisherBanner();
 
         testStart()
-                .then(String.format("Publisher name should be %s",publisher.getName()))
+                .then(String.format("Publisher name should be %s", publisher.getName()))
                 .validate(openPricingSidebar.getPublisherNameDropdown().getText(), publisher.getName())
-                .then(String.format("Name should be %s",OPEN_PRICING_NAME))
+                .then(String.format("Name should be %s", OPEN_PRICING_NAME))
                 .validateAttribute(openPricingSidebar.getNameInput(), "value", OPEN_PRICING_NAME)
-                .then(String.format("Floor Price should be %s",FLOOR_PRICE))
+                .then(String.format("Floor Price should be %s", FLOOR_PRICE))
                 .validateAttribute(openPricingSidebar.getFloorPriceField().getFloorPriceInput(), "value", FLOOR_PRICE)
-                .then(String.format("Currency should be %s",publisher.getCurrency()))
+                .then(String.format("Currency should be %s", publisher.getCurrency()))
                 .validate(openPricingSidebar.getFloorPriceField().getFloorPricePrefix().getText(), publisher.getCurrency())
                 .testEnd();
     }
 
     @Step("Validate Inventory List")
     private void validateListInventory(List<String> inventory) {
+
         testStart()
                 .and("Expand Inventory multipane and ensure that values in list corresponds with selected publisher")
                 .clickOnWebElement(openPricingSidebar.getInventoryMultipane().getPanelNameLabel())
@@ -237,6 +270,7 @@ public class OpenPricingChangePublisherTests extends BaseTest {
 
     @Step("Validate Demand Sources List")
     private void validateListDemandSources(List<String> dsp) {
+
         testStart()
                 .and("Expand  Demand Source multipane and ensure that values in list corresponds with selected publisher")
                 .clickOnWebElement(openPricingSidebar.getDemandSourcesMultipane().getPanelNameLabel())
@@ -248,6 +282,7 @@ public class OpenPricingChangePublisherTests extends BaseTest {
 
     @AfterMethod(alwaysRun = true)
     private void logout() {
+
         testStart()
                 .and("Close Ad Spot Sidebar")
                 .clickOnWebElement(openPricingSidebar.getCloseIcon())
@@ -260,30 +295,30 @@ public class OpenPricingChangePublisherTests extends BaseTest {
 
     @AfterClass(alwaysRun = true)
     private void deleteTestData() {
+
         deletePublisher(publisher1.getId());
         deletePublisher(publisher2.getId());
         deleteMedia(media1.getId());
         deleteMedia(media2.getId());
-
     }
 
     private void deletePublisher(int id) {
+
         if (publisher()
                 .setCredentials(USER_FOR_DELETION)
                 .deletePublisher(id)
                 .build()
                 .getResponseCode() == HttpStatus.SC_NO_CONTENT)
-            log.info(String.format("Deleted publisher %s", publisher1.getId()));
-
+            log.info(String.format("Deleted publisher %s", id));
     }
 
     private void deleteMedia(int id) {
+
         if (media()
                 .setCredentials(USER_FOR_DELETION)
                 .deleteMedia(id)
                 .build()
                 .getResponseCode() == HttpStatus.SC_NO_CONTENT)
             log.info(String.format("Deleted media %s", id));
-
     }
 }

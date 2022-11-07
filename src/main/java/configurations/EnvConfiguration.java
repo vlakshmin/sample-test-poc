@@ -12,6 +12,7 @@ public  class EnvConfiguration {
     private String browserSize;
     private Boolean screenshots;
     private Boolean enableProxy;
+    private String downloadsDir;
     private String pageLoadStrategy;
     private Boolean holdBrowserOpen;
     private Boolean reopenBrowserOnFail;
