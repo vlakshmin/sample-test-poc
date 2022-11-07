@@ -195,6 +195,7 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
                 .and("Expand 'Device' multipane")
                 .clickOnWebElement(protectionMultipane.getPanelNameLabel())
                         .testEnd();
+
                 includeOneByOneItems(deviceList);
 
                 testStart()
@@ -296,21 +297,24 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
 
     @Step("Exclude all items one by one")
     private void excludeOneByOneItems(List<Device> list){
-        var updated = new AtomicInteger(0);
-        list.stream().forEach( e ->
+        var updated = new AtomicInteger(list.size());
+
+        list.stream().forEach( item ->
         {
-            var selectedItem = protectionMultipane.getIncludedExcludedTableItemByPositionInList(updated.get());
+            var selectedItem = protectionMultipane.getIncludedExcludedTableItemByName(item.getName());
+
             testStart()
                     .waiter(visible, selectedItem.getName())
                     .hoverMouseOnWebElement(selectedItem.getName())
                     .then()
-                    .validate(visible, selectedItem.getRemoveButton())
+                    .validateContainsText(protectionMultipane.getSelectionInfoExcludedLabel(), (updated.get() == 1)?
+                                    MultipaneConstants.ONE_DEVICE_IS_INCLUDED.setQuantity(1) :
+                                     MultipaneConstants.DEVICES_ARE_INCLUDED.setQuantity(updated.get()))
                     .then()
-                    .validate(protectionMultipane.getSelectionInfoExcludedLabel(), (updated.get() == 0)?
-                            MultipaneConstants.ONE_DEVICE_IS_INCLUDED.setQuantity(1) :
-                            MultipaneConstants.DEVICES_ARE_INCLUDED.setQuantity(updated.get()-1))
-                    .validate(not(exist), selectedItem.getName())
+                    .validate(visible, selectedItem.getRemoveButton())
+                    .clickOnWebElement(selectedItem.getRemoveButton())
                     .testEnd();
+
             updated.decrementAndGet();
         });
     }

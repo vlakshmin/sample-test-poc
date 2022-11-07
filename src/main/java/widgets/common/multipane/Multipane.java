@@ -232,7 +232,7 @@ public class Multipane {
         addIncludedExcludedTableItemsToList();
 
         return includedExcludedItemsList.stream()
-                .filter(pub -> requireNonNull(pub.getName().shouldBe(visible).getAttribute("title"))
+                .filter(pub -> requireNonNull(pub.getName().shouldBe(visible).getText())
                         .equalsIgnoreCase(selectItemName))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException(
