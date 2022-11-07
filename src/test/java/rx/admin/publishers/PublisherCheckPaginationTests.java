@@ -133,11 +133,8 @@ public class PublisherCheckPaginationTests extends BaseTest {
     @AfterClass(alwaysRun = true)
     private void deleteEntities() {
 
-        if (listOfPublishers != null) {
-            for (Publisher publisher : listOfPublishers) {
-                deletePublisher(publisher.getId());
-            }
-        }
+        if (listOfPublishers != null)
+            listOfPublishers.forEach(pub -> deletePublisher(pub.getId()));
     }
 
     private void deletePublisher(Integer id) {
@@ -162,12 +159,14 @@ public class PublisherCheckPaginationTests extends BaseTest {
                 .build()
                 .getPublisherResponse();
 
-        listOfPublishers = new ArrayList<>();
+        var listOfPublishers = new ArrayList<Publisher>();
+
         while (getTotalPublishers() < 210) {
-            Publisher publisher1 = publisher()
+
+            listOfPublishers.add(publisher()
                     .createNewPublisher()
                     .build()
-                    .getPublisherResponse();
+                    .getPublisherResponse());
         }
     }
 }
