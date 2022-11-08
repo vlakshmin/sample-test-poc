@@ -59,6 +59,9 @@ public enum RakutenExchangeApi {
     //Geos
     GET_ALL_GEOS("/v2/geos/countries"),
 
+    //Currencies
+    GET_ALL_CURRENCIES("/v2/currencies"),
+
     //Dsp
     GET_ALL_DSPS("/v2/dsps"),
     CREATE_DSP("/v3/dsps"),
