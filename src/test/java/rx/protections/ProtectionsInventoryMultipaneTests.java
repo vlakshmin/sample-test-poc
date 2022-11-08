@@ -16,8 +16,8 @@ import io.qameta.allure.Step;
 import rx.enums.MultipaneConstants;
 import widgets.common.multipane.Multipane;
 import widgets.common.multipane.MultipaneNameImpl;
-import widgets.common.multipane.item.SelectChildTableItem;
 import widgets.common.multipane.item.SelectTableItem;
+import widgets.common.multipane.item.included.IncludedTableItem;
 import widgets.protections.sidebar.CreateProtectionSidebar;
 
 import java.util.ArrayList;
@@ -94,11 +94,12 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .waitAndValidate(disappear, protectionsPage.getNuxtProgress())
                 .and("Press 'Create Protection' button")
                 .clickOnWebElement(protectionsPage.getCreateProtectionButton())
+                .waitSideBarClosed()
                 .testEnd();
     }
 
     @BeforeMethod
-    private void expandMultipane(){
+    private void expandMultipane() {
         testStart()
                 .and("Expand 'Inventory' multipane")
                 .clickOnWebElement(protectionMultipane.getPanelNameLabel())
@@ -126,7 +127,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .selectFromDropdown(protectionSidebar.getPublisherInput(),
                         protectionSidebar.getPublisherItems(), publisherActive.getName())
                 .then("Validate inventory items list should be empty")
-                .validateContainsText(protectionMultipane.getItemsQuantityString(),String.format("(%s MEDIA)",MEDIA_ACTIVE_COUNT))
+                .validateContainsText(protectionMultipane.getItemsQuantityString(), String.format("(%s MEDIA)", MEDIA_ACTIVE_COUNT))
                 .validate(protectionMultipane.countSelectTableItems(), MEDIA_ACTIVE_COUNT)
                 .testEnd();
 
@@ -233,6 +234,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .and("Set 'Show Inactive' toggle ON")
                 .turnToggleOn(protectionMultipane.getShowInactive())
                 .then("Validate item list includes inactive inventory")
+                .validateContainsText(protectionMultipane.getItemsQuantityString(),"(1)")
                 .validate(protectionMultipane.countSelectTableItems(), 1)
                 .validate(protectionMultipane.getSelectTableItemByPositionInList(0).getName(), mediaActiveList.get(0).getName())
                 .and("Set 'Show Inactive' toggle OFF")
@@ -267,7 +269,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .testEnd();
     }
 
-    //:TODO GS-
+    //:TODO GS-3135
 
     @Test(description = "Check Search Active Ad Spot", priority = 9, enabled = false)
     public void checkSearchActiveAdSpot() {
@@ -341,47 +343,26 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
                 .selectFromDropdown(protectionSidebar.getPublisherInput(),
                         protectionSidebar.getPublisherItems(), publisherActive.getName())
-                .and("Include 1 media")
-                .hoverMouseOnWebElement(protectionMultipane.getSelectTableItemByPositionInList(1).getName())
-                .waiter(visible, protectionMultipane.getSelectTableItemByPositionInList(1).getIncludeButton())
-                .clickOnWebElement(protectionMultipane.getSelectTableItemByPositionInList(1).getIncludeButton())
-                .then("Validate text above items panel")
-                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
-                        MultipaneConstants.ONE_MEDIA_IS_INCLUDED.setQuantity(1))
-                .and("Include 2 media")
-                .hoverMouseOnWebElement(protectionMultipane.getSelectTableItemByPositionInList(2).getName())
-                .waiter(visible, protectionMultipane.getSelectTableItemByPositionInList(2).getIncludeButton())
-                .clickOnWebElement(protectionMultipane.getSelectTableItemByPositionInList(2).getIncludeButton())
-                .then("Validate text above items panel")
-                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
-                        MultipaneConstants.MEDIA_ARE_INCLUDED.setQuantity(2))
-                .and("Include 3 media")
-                .hoverMouseOnWebElement(protectionMultipane.getSelectTableItemByPositionInList(3).getName())
-                .waiter(visible, protectionMultipane.getSelectTableItemByPositionInList(3).getIncludeButton())
-                .clickOnWebElement(protectionMultipane.getSelectTableItemByPositionInList(3).getIncludeButton())
-                .then("Validate text above items panel")
-                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
-                        MultipaneConstants.MEDIA_ARE_INCLUDED.setQuantity(3))
-
-                .and("Remove 1 media")
-                .clickOnWebElement(protectionMultipane.getIncludedExcludedTableItemByPositionInList(0).getRemoveButton())
-                .then("Validate text above items panel")
-                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
-                        MultipaneConstants.MEDIA_ARE_INCLUDED.setQuantity(2))
-                .and("Remove 2 media")
-                .clickOnWebElement(protectionMultipane.getIncludedExcludedTableItemByPositionInList(0).getRemoveButton())
-                .then("Validate text above items panel")
-                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
-                        MultipaneConstants.ONE_MEDIA_IS_INCLUDED.setQuantity(1))
-
-                .then("Validate text above items panel")
-                .and("Remove 3 media")
-                .clickOnWebElement(protectionMultipane.getIncludedExcludedTableItemByPositionInList(0).getRemoveButton())
-                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
-                        MultipaneConstants.ALL_INVENTORY_ARE_INCLUDED.setQuantity())
+                .validateContainsText(protectionMultipane.getItemsQuantityString(), String.format("(%s MEDIA)", MEDIA_ACTIVE_COUNT))
                 .testEnd();
+
+        selectMediaAndValidateSelectionInfoText(protectionMultipane.getSelectTableItemByPositionInList(1),
+                MultipaneConstants.ONE_MEDIA_IS_INCLUDED.setQuantity(1));
+        selectMediaAndValidateSelectionInfoText(protectionMultipane.getSelectTableItemByPositionInList(2),
+                MultipaneConstants.MEDIA_ARE_INCLUDED.setQuantity(2));
+        selectMediaAndValidateSelectionInfoText(protectionMultipane.getSelectTableItemByPositionInList(3),
+                MultipaneConstants.MEDIA_ARE_INCLUDED.setQuantity(3));
+
+        removeMediaAndValidateSelectionInfoText(protectionMultipane.getIncludedExcludedTableItemByPositionInList(0),
+                MultipaneConstants.MEDIA_ARE_INCLUDED.setQuantity(2));
+        removeMediaAndValidateSelectionInfoText(protectionMultipane.getIncludedExcludedTableItemByPositionInList(0),
+                MultipaneConstants.ONE_MEDIA_IS_INCLUDED.setQuantity(1));
+        removeMediaAndValidateSelectionInfoText(protectionMultipane.getIncludedExcludedTableItemByPositionInList(0),
+                MultipaneConstants.ALL_INVENTORY_ARE_INCLUDED.setQuantity());
     }
 
+    //TODO: MultipanItems "//td[2]/div"
+    @Ignore
     @Test(description = "Check Multipane Text 'N media is/are included, N Ad spot is/are included'", priority = 13)
     public void checkMultipaneTextMediaIncludedAdSpotIncluded() {
 
@@ -389,37 +370,22 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
                 .selectFromDropdown(protectionSidebar.getPublisherInput(),
                         protectionSidebar.getPublisherItems(), publisherActive.getName())
-                .validateContainsText(protectionMultipane.getItemsQuantityString(),String.format("(%s MEDIA)",MEDIA_ACTIVE_COUNT))
+                .validateContainsText(protectionMultipane.getItemsQuantityString(), String.format("(%s MEDIA)", MEDIA_ACTIVE_COUNT))
                 .testEnd();
 
-        selectMediaAndValidateSelectionInfoText(protectionMultipane.getSelectTableItemByPositionInList(1),
+        selectMediaAndValidateSelectionInfoText(protectionMultipane.getSelectTableItemByName(mediaActiveList.get(3).getName()),
                 MultipaneConstants.ONE_MEDIA_IS_INCLUDED.setQuantity(1));
-        selectMediaAndValidateSelectionInfoText(protectionMultipane.getSelectTableItemByPositionInList(2),
+        selectMediaAndValidateSelectionInfoText(protectionMultipane.getSelectTableItemByName(mediaActiveList.get(2).getName()),
                 MultipaneConstants.MEDIA_ARE_INCLUDED.setQuantity(2));
-
         selectAdSpotAndValidateSelectionInfoText(protectionMultipane.getSelectTableItemByName(mediaActiveList.get(0).getName()),
                 adSpotActiveListOne.get(0).getName(),
                 MultipaneConstants.MEDIA_ONE_AD_SPOT_ARE_INCLUDED.setQuantity(2, 1));
 
-//        testStart()
-//
-//                .and("Remove 1 media")
-//                .clickOnWebElement(protectionMultipane.getIncludedExcludedTableItemByPositionInList(0).getRemoveButton())
-//                .then("Validate text above items panel")
-//                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
-//                        MultipaneConstants.MEDIA_ARE_INCLUDED.setQuantity(2))
-//                .and("Remove 2 media")
-//                .clickOnWebElement(protectionMultipane.getIncludedExcludedTableItemByPositionInList(0).getRemoveButton())
-//                .then("Validate text above items panel")
-//                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
-//                        MultipaneConstants.ONE_MEDIA_IS_INCLUDED.setQuantity(1))
-//
-//                .then("Validate text above items panel")
-//                .and("Remove 3 media")
-//                .clickOnWebElement(protectionMultipane.getIncludedExcludedTableItemByPositionInList(0).getRemoveButton())
-//                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
-//                        MultipaneConstants.ALL_INVENTORY_ARE_INCLUDED.setQuantity())
-//                .testEnd();
+        removeMediaAndValidateSelectionInfoText(protectionMultipane.getIncludedExcludedTableItemByName(mediaActiveList.get(2).getName()),
+                MultipaneConstants.MEDIA_ONE_AD_SPOT_ARE_INCLUDED.setQuantity(1, 1));
+
+        removeMediaAndValidateSelectionInfoText(protectionMultipane.getIncludedExcludedTableItemByName(adSpotActiveListOne.get(0).getName()),
+                MultipaneConstants.ONE_MEDIA_IS_INCLUDED.setQuantity(1));
     }
 
     @AfterMethod(alwaysRun = true)
@@ -446,10 +412,20 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
     @Step("Select media {0} and validate label {1}")
     private void selectMediaAndValidateSelectionInfoText(SelectTableItem media, String selectionInfoText) {
         testStart()
-                .and(String.format("Include media %s",media.getName()))
+                .and(String.format("Include media %s", media.getName()))
                 .hoverMouseOnWebElement(media.getName())
                 .waiter(visible, media.getIncludeButton())
                 .clickOnWebElement(media.getIncludeButton())
+                .then("Validate text above items panel")
+                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(), selectionInfoText)
+                .testEnd();
+    }
+
+    @Step("Remove media {0} and validate label {1}")
+    private void removeMediaAndValidateSelectionInfoText(IncludedTableItem media, String selectionInfoText) {
+        testStart()
+                .and(String.format("Remove media %s", media.getName()))
+                .clickOnWebElement(media.getRemoveButton())
                 .then("Validate text above items panel")
                 .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(), selectionInfoText)
                 .testEnd();
@@ -459,6 +435,20 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
     private void selectAdSpotAndValidateSelectionInfoText(SelectTableItem media, String adSpot, String selectionInfoText) {
         testStart()
                 .and(String.format("Include ad spot %s", adSpot))
+                .clickOnWebElement(media.getName())
+                .waiter(visible, protectionMultipane.getSelectChildTableItemByName(adSpot).getName())
+                .hoverMouseOnWebElement(protectionMultipane.getSelectChildTableItemByName(adSpot).getName())
+                .waiter(visible, protectionMultipane.getSelectChildTableItemByName(adSpot).getIncludeButton())
+                .clickOnWebElement(protectionMultipane.getSelectChildTableItemByName(adSpot).getIncludeButton())
+                .then("Validate text above items panel")
+                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(), selectionInfoText)
+                .testEnd();
+    }
+
+    @Step("Remove ad spot {0} and validate label {1}")
+    private void removeAdSpotAndValidateSelectionInfoText(IncludedTableItem media, String adSpot, String selectionInfoText) {
+        testStart()
+                .and(String.format("Remove ad spot %s", adSpot))
                 .clickOnWebElement(media.getName())
                 .waiter(visible, protectionMultipane.getSelectChildTableItemByName(adSpot).getName())
                 .hoverMouseOnWebElement(protectionMultipane.getSelectChildTableItemByName(adSpot).getName())
@@ -597,7 +587,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .deletePublisher(id)
                 .build()
                 .getResponseCode() == HttpStatus.SC_NO_CONTENT) {
-              log.info(String.format("Deleted publisher %s",id));
+            log.info(String.format("Deleted publisher %s", id));
         }
     }
 

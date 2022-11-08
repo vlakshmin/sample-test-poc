@@ -6,10 +6,7 @@ import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.Path;
 import pages.protections.ProtectionsPage;
 import rx.BaseTest;
@@ -77,9 +74,7 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
                 .then("Validate device items list should not be empty")
                 .validate(protectionMultipane.countSelectTableItems(), deviceList.size())
                 .validate(disabled, protectionMultipane.getSearchInput())
-                .validate(disabled, protectionMultipane.getIncludeAllButton())
-                .and("Collapse 'Device' multipane")
-                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
+                .validateContainsText(protectionMultipane.getIncludeAllButton(),String.format("INCLUDE ALL\n(%s)",0))
                 .testEnd();
     }
 
@@ -97,11 +92,6 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
                 .testEnd();
 
         validateDeviceList(deviceList);
-
-        testStart()
-                .and("Collapse 'Device' multipane")
-                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
-                .testEnd();
     }
 
     @Test(description = "Check Search Device", priority = 2)
@@ -113,24 +103,20 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
                         protectionSidebar.getPublisherItems(), publisherActive.getName())
                 .and("Expand 'Device' multipane")
                 .clickOnWebElement(protectionMultipane.getPanelNameLabel())
-                .and(String.format("Search device by Name = %s",deviceList.get(0).getName()))
+                .and(String.format("Search device by Name = %s", deviceList.get(0).getName()))
                 .setValueWithClean(protectionMultipane.getSearchInput(), deviceList.get(0).getName())
                 .clickEnterButton(protectionMultipane.getSearchInput())
                 .then("Validate item list includes device")
+                .validateContainsText(protectionMultipane.getItemsQuantityString(),"(1)")
                 .validate(protectionMultipane.countSelectTableItems(), 1)
                 .validate(protectionMultipane.getSelectTableItemByPositionInList(0).getName(), deviceList.get(0).getName())
                 .and("Clear Search field")
-                .setValueWithClean(protectionMultipane.getSearchInput(),"")
+                .setValueWithClean(protectionMultipane.getSearchInput(), "")
                 .clickEnterButton(protectionMultipane.getSearchInput())
                 .validate(protectionMultipane.countSelectTableItems(), deviceList.size())
                 .testEnd();
 
         validateDeviceList(deviceList);
-
-        testStart()
-                .and("Collapse 'Device' multipane")
-                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
-                .testEnd();
     }
 
     @Test(description = "Check Multipane Text 'Include All'", priority = 3)
@@ -152,8 +138,6 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
                 .then("Validate text above items panel")
                 .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
                         MultipaneConstants.DEVICES_ARE_INCLUDED.setQuantity(deviceList.size()))
-                .and("Collapse 'Device' multipane")
-                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
                 .testEnd();
     }
 
@@ -172,11 +156,10 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
                 .validate(protectionMultipane.countSelectTableItems(), deviceList.size())
                 .and("Clear All devices")
                 .clickOnWebElement(protectionMultipane.getClearAllButton())
+                .then("Validate text above items panel")
                 .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(), MultipaneConstants.ALL_DEVICES_ARE_INCLUDED.setQuantity())
                 .validate(protectionMultipane.countSelectTableItems(), deviceList.size())
                 .validate(protectionMultipane.countIncludedExcludedTableItems(), 0)
-                .and("Collapse 'Device' multipane")
-                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
                 .testEnd();
     }
 
@@ -189,14 +172,9 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
                         protectionSidebar.getPublisherItems(), publisherActive.getName())
                 .and("Expand 'Device' multipane")
                 .clickOnWebElement(protectionMultipane.getPanelNameLabel())
-                        .testEnd();
-
-                includeOneByOneItems(deviceList);
-
-                testStart()
-                    .and("Collapse 'Device' multipane")
-                    .clickOnWebElement(protectionMultipane.getPanelNameLabel())
                 .testEnd();
+
+        includeOneByOneItems(deviceList);
     }
 
     @Test(description = "Check Multipane Text (exclude not all items)", priority = 5)
@@ -213,11 +191,6 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
                 .testEnd();
 
         excludeOneByOneItems(deviceList);
-
-        testStart()
-                .and("Collapse 'Device' multipane")
-                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
-                .testEnd();
     }
 
 
@@ -244,18 +217,17 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
 
     private List<Device> getDevices() {
 
-       return device()
-                    .getDeviceLList()
-                    .build()
-                    .getDeviceGetAllResponse()
-               .getItems();
+        return device()
+                .getDeviceLList()
+                .build()
+                .getDeviceGetAllResponse()
+                .getItems();
     }
 
     @Step("Validate Device List")
     private void validateDeviceList(List<Device> list) {
 
-        list.stream().forEach( e ->
-        {
+        list.forEach(e -> {
             testStart()
                     .validate(exist, protectionMultipane.getSelectTableItemByName(e.getName()).getName())
                     .testEnd();
@@ -263,27 +235,27 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
     }
 
     @Step("Include all items one by one")
-    private void includeOneByOneItems(List<Device> list){
+    private void includeOneByOneItems(List<Device> list) {
         var updated = new AtomicInteger(0);
-        list.stream().forEach( e ->
+        list.stream().forEach(e ->
         {
             var selectedItem = protectionMultipane.getSelectTableItemByPositionInList(updated.get());
             testStart()
                     .waiter(visible, selectedItem.getName())
                     .hoverMouseOnWebElement(selectedItem.getName())
                     .then()
-                  //  .validate(not(visible), selectedItem.getExcludedIcon())
+                    //  .validate(not(visible), selectedItem.getExcludedIcon())
                     .validate(not(visible), selectedItem.getIncludedIcon())
                     .validate(not(visible), selectedItem.getActiveIcon())
                     .validate(not(visible), selectedItem.getInactiveIcon())
                     .validate(not(visible), selectedItem.getAssociatedWithPublisherIcon())
                     .validate(visible, selectedItem.getIncludeButton())
-                  //  .validate(visible, selectedItem.getExcludeButton())
+                    //  .validate(visible, selectedItem.getExcludeButton())
                     .and()
                     .clickOnWebElement(selectedItem.getIncludeButton())
-                    .validate(protectionMultipane.getSelectionInfoExcludedLabel(), (updated.get() == 0)?
-                                    MultipaneConstants.ONE_DEVICE_IS_INCLUDED.setQuantity(1) :
-                                    MultipaneConstants.DEVICES_ARE_INCLUDED.setQuantity(updated.get()+1))
+                    .validate(protectionMultipane.getSelectionInfoExcludedLabel(), (updated.get() == 0) ?
+                            MultipaneConstants.ONE_DEVICE_IS_INCLUDED.setQuantity(1) :
+                            MultipaneConstants.DEVICES_ARE_INCLUDED.setQuantity(updated.get() + 1))
                     .validate(exist, selectedItem.getName())
                     .testEnd();
             updated.incrementAndGet();
@@ -291,22 +263,22 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
     }
 
     @Step("Exclude all items one by one")
-    private void excludeOneByOneItems(List<Device> list){
+    private void excludeOneByOneItems(List<Device> list) {
         var updated = new AtomicInteger(list.size());
 
-        list.stream().forEach( item ->
-        {
+        list.forEach(item -> {
             var selectedItem = protectionMultipane.getIncludedExcludedTableItemByName(item.getName());
 
             testStart()
                     .waiter(visible, selectedItem.getName())
                     .hoverMouseOnWebElement(selectedItem.getName())
                     .then()
-                    .validateContainsText(protectionMultipane.getSelectionInfoExcludedLabel(), (updated.get() == 1)?
-                                    MultipaneConstants.ONE_DEVICE_IS_INCLUDED.setQuantity(1) :
-                                     MultipaneConstants.DEVICES_ARE_INCLUDED.setQuantity(updated.get()))
+                    .validateContainsText(protectionMultipane.getSelectionInfoExcludedLabel(), (updated.get() == 1) ?
+                            MultipaneConstants.ONE_DEVICE_IS_INCLUDED.setQuantity(1) :
+                            MultipaneConstants.DEVICES_ARE_INCLUDED.setQuantity(updated.get()))
                     .then()
                     .validate(visible, selectedItem.getRemoveButton())
+                    .and(String.format("Remove selected item %s", selectedItem.getName()))
                     .clickOnWebElement(selectedItem.getRemoveButton())
                     .testEnd();
 
@@ -314,9 +286,17 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
         });
     }
 
+    @AfterMethod(alwaysRun = true)
+    private void collapseMultipane(){
+
+        testStart()
+                .and("Collapse 'Device' multipane")
+                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
+                .testEnd();
+    }
+
     private void deleteTestData() {
 
-        deleteMedia();
         deletePublisher(publisherEmpty.getId());
         deletePublisher(publisherActive.getId());
         deletePublisher(publisherInactive.getId());
@@ -331,8 +311,5 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
                 .getResponseCode() == HttpStatus.SC_NO_CONTENT) {
             //  log.info(String.format("Deleted publisher %s",id));
         }
-    }
-
-    private void deleteMedia() {
     }
 }
