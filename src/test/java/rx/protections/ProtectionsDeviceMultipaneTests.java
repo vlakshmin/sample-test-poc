@@ -2,8 +2,6 @@ package rx.protections;
 
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.device.Device;
-import api.dto.rx.inventory.adspot.AdSpot;
-import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
@@ -20,13 +18,10 @@ import widgets.common.multipane.Multipane;
 import widgets.common.multipane.MultipaneNameImpl;
 import widgets.protections.sidebar.CreateProtectionSidebar;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static api.preconditionbuilders.AdSpotPrecondition.adSpot;
 import static api.preconditionbuilders.DevicePrecondition.device;
-import static api.preconditionbuilders.MediaPrecondition.media;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
@@ -177,7 +172,7 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
                 .validate(protectionMultipane.countSelectTableItems(), deviceList.size())
                 .and("Clear All devices")
                 .clickOnWebElement(protectionMultipane.getClearAllButton())
-                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(), MultipaneConstants.ALL_DEVICES_INCLUDED.setQuantity())
+                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(), MultipaneConstants.ALL_DEVICES_ARE_INCLUDED.setQuantity())
                 .validate(protectionMultipane.countSelectTableItems(), deviceList.size())
                 .validate(protectionMultipane.countIncludedExcludedTableItems(), 0)
                 .and("Collapse 'Device' multipane")

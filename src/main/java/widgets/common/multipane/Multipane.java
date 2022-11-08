@@ -180,7 +180,7 @@ public class Multipane {
         addSelectChildTableItemsToList();
 
         return selectTableChildItemsList.stream()
-                .filter(pub -> requireNonNull(pub.getName().shouldBe(visible).getAttribute("title"))
+                .filter(pub -> requireNonNull(pub.getName().shouldBe(visible).getText())
                         .equalsIgnoreCase(selectItemName))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException(
