@@ -3,6 +3,8 @@ package rx.protections;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.inventory.adspot.AdSpot;
 import api.dto.rx.inventory.media.Media;
+import api.preconditionbuilders.AdSpotPrecondition;
+import api.preconditionbuilders.MediaPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -14,16 +16,18 @@ import io.qameta.allure.Step;
 import rx.enums.MultipaneConstants;
 import widgets.common.multipane.Multipane;
 import widgets.common.multipane.MultipaneNameImpl;
+import widgets.common.multipane.item.SelectChildTableItem;
+import widgets.common.multipane.item.SelectTableItem;
 import widgets.protections.sidebar.CreateProtectionSidebar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static api.preconditionbuilders.AdSpotPrecondition.adSpot;
 import static api.preconditionbuilders.MediaPrecondition.media;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
-import static com.codeborne.selenide.Condition.disappear;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
 import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
@@ -67,9 +71,9 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
     @BeforeClass
     private void login() {
 
-        publisherEmpty = createPublisher(captionWithSuffix("00autoPubProtections_empty"), true);
-        publisherActive = createPublisher(captionWithSuffix("00autoPubProtections_active"), true);
-        publisherInactive = createPublisher(captionWithSuffix("00autoPubProtections_inactive"), false);
+        publisherEmpty = createPublisher(captionWithSuffix("0000autoPubProtections_empty"), true);
+        publisherActive = createPublisher(captionWithSuffix("0000autoPubProtections_active"), true);
+        publisherInactive = createPublisher(captionWithSuffix("0000autoPubProtections_inactive"), false);
 
         mediaActiveList = createMedia(publisherActive, true, MEDIA_ACTIVE_COUNT);
         mediaInactiveList = createMedia(publisherActive, false, MEDIA_INACTIVE_COUNT);
@@ -103,7 +107,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
     }
 
     @Test(description = "Check Empty Inventory Items List", priority = 0)
-    private void checkEmptyInventoryList() {
+    public void checkEmptyInventoryList() {
 
         testStart()
                 .and(String.format("Select Publisher without Inventory '%s'", publisherEmpty.getName()))
@@ -115,13 +119,14 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
     }
 
     @Test(description = "Check Media Inventory Items List", priority = 1)
-    private void checkInventoryList() {
+    public void checkInventoryList() {
 
         testStart()
                 .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
                 .selectFromDropdown(protectionSidebar.getPublisherInput(),
                         protectionSidebar.getPublisherItems(), publisherActive.getName())
                 .then("Validate inventory items list should be empty")
+                .validateContainsText(protectionMultipane.getItemsQuantityString(),String.format("(%s MEDIA)",MEDIA_ACTIVE_COUNT))
                 .validate(protectionMultipane.countSelectTableItems(), MEDIA_ACTIVE_COUNT)
                 .testEnd();
 
@@ -129,7 +134,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
     }
 
     @Test(description = "Check Ad Spots Inventory Items List", priority = 2)
-    private void checkAdSpotInventoryList() {
+    public void checkAdSpotInventoryList() {
 
         testStart()
                 .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
@@ -144,7 +149,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
     }
 
     @Test(description = "Check Media Inventory Items List without Ad Spots should be empty", priority = 3)
-    private void checkAdSpotInventoryListWithoutAdSpots() {
+    public void checkAdSpotInventoryListWithoutAdSpots() {
 
         testStart()
                 .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
@@ -158,7 +163,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
     }
 
     @Test(description = "Check Media Inventory Inactive Items List", priority = 4)
-    private void checkMediaInactiveInventoryList() {
+    public void checkMediaInactiveInventoryList() {
 
         testStart()
                 .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
@@ -181,7 +186,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
     }
 
     @Test(description = "Check AdSpots Inventory Inactive Items List (Media is Active)", priority = 5)
-    private void checkAdSpotsInactiveInventoryListActiveMedia() {
+    public void checkAdSpotsInactiveInventoryListActiveMedia() {
 
         testStart()
                 .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
@@ -202,7 +207,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
     }
 
     @Test(description = "Check AdSpots Inventory Inactive Items List (Media is Inactive)", priority = 6)
-    private void checkAdSpotsInactiveInventoryListInactiveMedia() {
+    public void checkAdSpotsInactiveInventoryListInactiveMedia() {
 
         testStart()
                 .and(String.format("Select Publisher '%s'", publisherActive.getName()))
@@ -216,7 +221,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
     }
 
     @Test(description = "Check Search Active Media", priority = 7)
-    private void checkSearchActiveMedia() {
+    public void checkSearchActiveMedia() {
 
         testStart()
                 .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
@@ -240,7 +245,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
     }
 
     @Test(description = "Check Search Inactive Media", priority = 8)
-    private void checkSearchInactiveMedia() {
+    public void checkSearchInactiveMedia() {
 
         testStart()
                 .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
@@ -265,7 +270,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
     //:TODO GS-
 
     @Test(description = "Check Search Active Ad Spot", priority = 9, enabled = false)
-    private void checkSearchActiveAdSpot() {
+    public void checkSearchActiveAdSpot() {
 
         testStart()
                 .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
@@ -293,7 +298,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
 
 
     @Test(description = "Check Multipane Text 'Include All'", priority = 10)
-    private void checkMultipaneText() {
+    public void checkMultipaneText() {
 
         testStart()
                 .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
@@ -312,7 +317,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
     }
 
     @Test(description = "Check Multipane Text 'Clear All'", priority = 11)
-    private void checkMultipaneTextClearAll() {
+    public void checkMultipaneTextClearAll() {
 
         testStart()
                 .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
@@ -330,7 +335,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
     }
 
     @Test(description = "Check Multipane Text 'N media is/are included'", priority = 12)
-    private void checkMultipaneTextMediaIncluded() {
+    public void checkMultipaneTextMediaIncluded() {
 
         testStart()
                 .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
@@ -377,59 +382,44 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .testEnd();
     }
 
-    @Ignore
     @Test(description = "Check Multipane Text 'N media is/are included, N Ad spot is/are included'", priority = 13)
-    private void checkMultipaneTextMediaIncludedAdSpotIncluded() {
+    public void checkMultipaneTextMediaIncludedAdSpotIncluded() {
 
         testStart()
                 .and(String.format("Select Publisher without Inventory '%s'", publisherActive.getName()))
                 .selectFromDropdown(protectionSidebar.getPublisherInput(),
                         protectionSidebar.getPublisherItems(), publisherActive.getName())
-                .and("Include 1 media")
-                .hoverMouseOnWebElement(protectionMultipane.getSelectTableItemByPositionInList(1).getName())
-                .waiter(visible, protectionMultipane.getSelectTableItemByPositionInList(1).getIncludeButton())
-                .clickOnWebElement(protectionMultipane.getSelectTableItemByPositionInList(1).getIncludeButton())
-                .then("Validate text above items panel")
-                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
-                        MultipaneConstants.ONE_MEDIA_IS_INCLUDED.setQuantity(1))
-                .and("Include 2 media")
-                .hoverMouseOnWebElement(protectionMultipane.getSelectTableItemByPositionInList(2).getName())
-                .waiter(visible, protectionMultipane.getSelectTableItemByPositionInList(2).getIncludeButton())
-                .clickOnWebElement(protectionMultipane.getSelectTableItemByPositionInList(2).getIncludeButton())
-                .and("Include 3 media")
-                .hoverMouseOnWebElement(protectionMultipane.getSelectTableItemByPositionInList(0).getName())
-                .waiter(visible, protectionMultipane.getSelectTableItemByPositionInList(0).getIncludeButton())
-                .clickOnWebElement(protectionMultipane.getSelectTableItemByPositionInList(0).getIncludeButton())
-                .then("Validate text above items panel")
-                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
-                        MultipaneConstants.MEDIA_ARE_INCLUDED.setQuantity(2))
-                .and("Include 1 ad spot")
-                .clickOnWebElement(protectionMultipane.getSelectTableItemByName(mediaActiveList.get(0).getName()).getName())
-                .waiter(visible, protectionMultipane.getSelectChildTableItemByName(adSpotActiveListOne.get(0).getName()).getName())
-                .hoverMouseOnWebElement(protectionMultipane.getSelectChildTableItemByName(adSpotActiveListOne.get(0).getName()).getName())
-                .waiter(visible, protectionMultipane.getSelectChildTableItemByName(adSpotActiveListOne.get(0).getName()).getExcludeButton())
-                .clickOnWebElement(protectionMultipane.getSelectChildTableItemByName(adSpotActiveListOne.get(0).getName()).getExcludeButton())
-                .then("Validate text above items panel")
-                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
-                        MultipaneConstants.MEDIA_ARE_INCLUDED_AD_SPOT_IS_EXCLUDED.setQuantity(2, 1))
-
-                .and("Remove 1 media")
-                .clickOnWebElement(protectionMultipane.getIncludedExcludedTableItemByPositionInList(0).getRemoveButton())
-                .then("Validate text above items panel")
-                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
-                        MultipaneConstants.MEDIA_ARE_INCLUDED.setQuantity(2))
-                .and("Remove 2 media")
-                .clickOnWebElement(protectionMultipane.getIncludedExcludedTableItemByPositionInList(0).getRemoveButton())
-                .then("Validate text above items panel")
-                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
-                        MultipaneConstants.ONE_MEDIA_IS_INCLUDED.setQuantity(1))
-
-                .then("Validate text above items panel")
-                .and("Remove 3 media")
-                .clickOnWebElement(protectionMultipane.getIncludedExcludedTableItemByPositionInList(0).getRemoveButton())
-                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
-                        MultipaneConstants.ALL_INVENTORY_ARE_INCLUDED.setQuantity())
+                .validateContainsText(protectionMultipane.getItemsQuantityString(),String.format("(%s MEDIA)",MEDIA_ACTIVE_COUNT))
                 .testEnd();
+
+        selectMediaAndValidateSelectionInfoText(protectionMultipane.getSelectTableItemByPositionInList(1),
+                MultipaneConstants.ONE_MEDIA_IS_INCLUDED.setQuantity(1));
+        selectMediaAndValidateSelectionInfoText(protectionMultipane.getSelectTableItemByPositionInList(2),
+                MultipaneConstants.MEDIA_ARE_INCLUDED.setQuantity(2));
+
+        selectAdSpotAndValidateSelectionInfoText(protectionMultipane.getSelectTableItemByName(mediaActiveList.get(0).getName()),
+                adSpotActiveListOne.get(0).getName(),
+                MultipaneConstants.MEDIA_ONE_AD_SPOT_ARE_INCLUDED.setQuantity(2, 1));
+
+//        testStart()
+//
+//                .and("Remove 1 media")
+//                .clickOnWebElement(protectionMultipane.getIncludedExcludedTableItemByPositionInList(0).getRemoveButton())
+//                .then("Validate text above items panel")
+//                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
+//                        MultipaneConstants.MEDIA_ARE_INCLUDED.setQuantity(2))
+//                .and("Remove 2 media")
+//                .clickOnWebElement(protectionMultipane.getIncludedExcludedTableItemByPositionInList(0).getRemoveButton())
+//                .then("Validate text above items panel")
+//                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
+//                        MultipaneConstants.ONE_MEDIA_IS_INCLUDED.setQuantity(1))
+//
+//                .then("Validate text above items panel")
+//                .and("Remove 3 media")
+//                .clickOnWebElement(protectionMultipane.getIncludedExcludedTableItemByPositionInList(0).getRemoveButton())
+//                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(),
+//                        MultipaneConstants.ALL_INVENTORY_ARE_INCLUDED.setQuantity())
+//                .testEnd();
     }
 
     @AfterMethod(alwaysRun = true)
@@ -451,6 +441,32 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .testEnd();
 
         deleteTestData();
+    }
+
+    @Step("Select media {0} and validate label {1}")
+    private void selectMediaAndValidateSelectionInfoText(SelectTableItem media, String selectionInfoText) {
+        testStart()
+                .and(String.format("Include media %s",media.getName()))
+                .hoverMouseOnWebElement(media.getName())
+                .waiter(visible, media.getIncludeButton())
+                .clickOnWebElement(media.getIncludeButton())
+                .then("Validate text above items panel")
+                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(), selectionInfoText)
+                .testEnd();
+    }
+
+    @Step("Select ad spot {0} and validate label {1}")
+    private void selectAdSpotAndValidateSelectionInfoText(SelectTableItem media, String adSpot, String selectionInfoText) {
+        testStart()
+                .and(String.format("Include ad spot %s", adSpot))
+                .clickOnWebElement(media.getName())
+                .waiter(visible, protectionMultipane.getSelectChildTableItemByName(adSpot).getName())
+                .hoverMouseOnWebElement(protectionMultipane.getSelectChildTableItemByName(adSpot).getName())
+                .waiter(visible, protectionMultipane.getSelectChildTableItemByName(adSpot).getIncludeButton())
+                .clickOnWebElement(protectionMultipane.getSelectChildTableItemByName(adSpot).getIncludeButton())
+                .then("Validate text above items panel")
+                .validate(protectionMultipane.getSelectionInfoExcludedLabel().getText(), selectionInfoText)
+                .testEnd();
     }
 
     private Publisher createPublisher(String name, Boolean isEnabled) {
@@ -479,7 +495,6 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
         List<AdSpot> list = new ArrayList<>();
 
         while (list.size() < count) {
-
             list.add(adSpot()
                     .createNewAdSpot(captionWithSuffix("autoAdSpot"), media.getPublisherId(), media.getId(), isEnabled)
                     .build()
@@ -558,6 +573,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .testEnd();
     }
 
+    @Step("Delete test data")
     private void deleteTestData() {
 
         deleteAdSpots(adSpotActiveListTwo);
@@ -581,30 +597,39 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .deletePublisher(id)
                 .build()
                 .getResponseCode() == HttpStatus.SC_NO_CONTENT) {
-            //  log.info(String.format("Deleted publisher %s",id));
+              log.info(String.format("Deleted publisher %s",id));
         }
     }
 
-    private void deleteMedia(List<Media> list) {
-
-        list.stream().forEach(item -> {
-            if (media().deleteMedia(item.getId()).build().getResponseCode() == HttpStatus.SC_NO_CONTENT) {
-                log.info(String.format("Deleted media %s", item.getId()));
-            } else {
-                log.info(String.format("Can't delete media %s", item.getId()));
-            }
-        });
+    private void deleteMedia(List<Media> listMedia) {
+        var deleted = new AtomicInteger(0);
+        listMedia.forEach(
+                media -> {
+                    if (MediaPrecondition.media().
+                            setCredentials(USER_FOR_DELETION).
+                            deleteMedia(media.getId())
+                            .build()
+                            .getResponseCode() == HttpStatus.SC_NO_CONTENT) {
+                        deleted.getAndIncrement();
+                    }
+                });
+        log.info(String.format("Deleted media items %s", deleted));
     }
 
-    private void deleteAdSpots(List<AdSpot> adSpot) {
+    private void deleteAdSpots(List<AdSpot> listAdSpots) {
 
-        adSpot.stream().forEach(item -> {
-            if (adSpot().deleteAdSpot(item.getId()).build().getResponseCode() == HttpStatus.SC_NO_CONTENT) {
-                log.info(String.format("Deleted ad spot %s", item.getId()));
-            } else {
-                log.info(String.format("Can't delete ad spot %s", item.getId()));
-            }
-        });
+        final var deleted = new AtomicInteger(0);
+        listAdSpots.forEach(
+                adSpot -> {
+                    if (AdSpotPrecondition.adSpot()
+                            .setCredentials(USER_FOR_DELETION)
+                            .deleteAdSpot(adSpot.getId())
+                            .build()
+                            .getResponseCode() == HttpStatus.SC_NO_CONTENT) {
+                        deleted.getAndIncrement();
+                    }
+                });
+        log.info(String.format("Deleted ad spots items %s", deleted));
     }
 
 }
