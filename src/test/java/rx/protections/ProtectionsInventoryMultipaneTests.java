@@ -234,7 +234,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
                 .and("Set 'Show Inactive' toggle ON")
                 .turnToggleOn(protectionMultipane.getShowInactive())
                 .then("Validate item list includes inactive inventory")
-                .validateContainsText(protectionMultipane.getItemsQuantityString(),"(1)")
+                .validateContainsText(protectionMultipane.getItemsQuantityString(),"(1 MEDIA)")
                 .validate(protectionMultipane.countSelectTableItems(), 1)
                 .validate(protectionMultipane.getSelectTableItemByPositionInList(0).getName(), mediaActiveList.get(0).getName())
                 .and("Set 'Show Inactive' toggle OFF")
