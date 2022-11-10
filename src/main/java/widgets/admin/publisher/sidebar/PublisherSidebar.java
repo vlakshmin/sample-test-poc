@@ -18,17 +18,17 @@ import static widgets.inventory.media.sidebar.MediaSidebarElements.ERROR_ALERT_B
 @Getter
 public abstract class PublisherSidebar {
 
-    private SelenideElement adOpsEmail = $x(MAIL.getSelector()).as(MAIL.getAlias());
-    private SelenideElement closeIcon = $x(CLOSE_ICON.getSelector()).as(CLOSE_ICON.getAlias());
     private SelenideElement nameInput = $x(NAME.getSelector()).as(NAME.getAlias());
+    private SelenideElement adOpsEmail = $x(MAIL.getSelector()).as(MAIL.getAlias());
     private SelenideElement domainInput = $x(DOMAIN.getSelector()).as(DOMAIN.getAlias());
-    private SelenideElement categoriesInput = $x(CATEGORIES_INPUT.getSelector()).as(CATEGORIES_INPUT.getAlias());
     private SelenideElement currency = $x(CURRENCY.getSelector()).as(CURRENCY.getAlias());
+    private SelenideElement closeIcon = $x(CLOSE_ICON.getSelector()).as(CLOSE_ICON.getAlias());
     private SelenideElement saveButton = $x(SAVE_BUTTON.getSelector()).as(SAVE_BUTTON.getAlias());
-    private SelenideElement activeToggle = $x(ACTIVE_TOGGLE.getSelector()).as(ACTIVE_TOGGLE.getAlias());
     private SelenideElement adOpsPerson = $x(AD_OPS_PERSON.getSelector()).as(AD_OPS_PERSON.getAlias());
-    private ElementsCollection currencyDropdownItems = $$x(CURRENCY_DROPDOWN_ITEMS.getSelector()).as(CURRENCY_DROPDOWN_ITEMS.getAlias());
+    private SelenideElement activeToggle = $x(ACTIVE_TOGGLE.getSelector()).as(ACTIVE_TOGGLE.getAlias());
+    private SelenideElement categoriesInput = $x(CATEGORIES_INPUT.getSelector()).as(CATEGORIES_INPUT.getAlias());
     private SelenideElement currencyDropdown = $x(CURRENCY_DROPDOWN.getSelector()).as(CURRENCY_DROPDOWN.getAlias());
+    private ElementsCollection currencyDropdownItems = $$x(CURRENCY_DROPDOWN_ITEMS.getSelector()).as(CURRENCY_DROPDOWN_ITEMS.getAlias());
 
     private ValidationBottomAlert errorAlert = new ValidationBottomAlert();
 

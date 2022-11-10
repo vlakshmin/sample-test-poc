@@ -1,13 +1,12 @@
 package api.dto.rx.admin.publisher;
 
-import zutils.ObjectMapperUtils;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.List;
+import zutils.ObjectMapperUtils;
+import lombok.Data;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Data
 @Builder
@@ -21,12 +20,12 @@ public class Publisher {
     private String mail;
     private String domain;
     private String currency;
-    private String salesAccountName;
-    private List<Integer> categoryIds;
-    private List<Integer> dspIds;
-    private Boolean isEnabled;
     private String createdAt;
     private String updatedAt;
+    private Boolean isEnabled;
+    private String salesAccountName;
+    private List<Integer> dspIds;
+    private List<Integer> categoryIds;
 
     public String toJson() {
 

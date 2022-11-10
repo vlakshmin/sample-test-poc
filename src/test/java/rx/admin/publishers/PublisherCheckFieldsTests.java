@@ -1,25 +1,25 @@
 package rx.admin.publishers;
 
-import com.codeborne.selenide.testng.ScreenShooter;
+import pages.Path;
+import rx.BaseTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Link;
 import lombok.extern.slf4j.Slf4j;
+import org.testng.annotations.Test;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
-import pages.Path;
+import widgets.errormessages.ErrorMessages;
 import pages.admin.publisher.PublishersPage;
-import rx.BaseTest;
+import com.codeborne.selenide.testng.ScreenShooter;
 import widgets.admin.publisher.sidebar.CurrencyType;
 import widgets.admin.publisher.sidebar.EditPublisherSidebar;
-import widgets.errormessages.ErrorMessages;
 
 import java.util.List;
 
-import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
 import static managers.TestManager.testStart;
+import static com.codeborne.selenide.Condition.*;
 
 
 @Slf4j
@@ -28,10 +28,6 @@ import static managers.TestManager.testStart;
 public class PublisherCheckFieldsTests extends BaseTest {
 
     private PublishersPage publisherPage;
-
-    private static final String PUB_NAME = "randomAutoPubName";
-    private static final String AD_OPS_PERSON = "randomAutoPubPerson";
-    private static final String AD_OPS_EMAIL = "randomAutoPub@gmail.com";
     private EditPublisherSidebar editPublisherSidebar;
 
     public PublisherCheckFieldsTests() {
@@ -56,6 +52,7 @@ public class PublisherCheckFieldsTests extends BaseTest {
     @Epic("v?/GS-3100")
     @Test(description = "Check fields by default")
     public void checkDefaultFields() {
+
         testStart()
                 .then("Validate fields by default")
                 .validate(enabled, editPublisherSidebar.getActiveToggle())
@@ -89,7 +86,7 @@ public class PublisherCheckFieldsTests extends BaseTest {
                         ErrorMessages.ADD_OPS_PERSON_ERROR_ALERT.getText(),
                         ErrorMessages.ADD_OPS_EMAIL_ERROR_ALERT.getText(),
                         ErrorMessages.CURRENCY_ERROR_ALERT.getText()))
-                .setValue(editPublisherSidebar.getNameInput(), PUB_NAME)
+                .setValue(editPublisherSidebar.getNameInput(), "randomAutoPub")
                 .then("Validate error under the 'Publisher field' disappeared")
                 .waitAndValidate(not(visible), editPublisherSidebar.getErrorAlertByFieldName("Publisher Name"))
                 .and("Click 'Save'")
@@ -100,7 +97,7 @@ public class PublisherCheckFieldsTests extends BaseTest {
                         ErrorMessages.ADD_OPS_PERSON_ERROR_ALERT.getText(),
                         ErrorMessages.ADD_OPS_EMAIL_ERROR_ALERT.getText(),
                         ErrorMessages.CURRENCY_ERROR_ALERT.getText()))
-                .setValue(editPublisherSidebar.getAdOpsPerson(), AD_OPS_PERSON)
+                .setValue(editPublisherSidebar.getAdOpsPerson(), "randomAutoPerson")
                 .then("Validate error under the 'Ad Ops Person field' disappeared")
                 .waitAndValidate(not(visible), editPublisherSidebar.getErrorAlertByFieldName("Ad Ops Person"))
                 .and("Click 'Save'")
@@ -110,7 +107,7 @@ public class PublisherCheckFieldsTests extends BaseTest {
                 .validateList(errorsList, List.of(
                         ErrorMessages.ADD_OPS_EMAIL_ERROR_ALERT.getText(),
                         ErrorMessages.CURRENCY_ERROR_ALERT.getText()))
-                .setValue(editPublisherSidebar.getAdOpsEmail(), AD_OPS_EMAIL)
+                .setValue(editPublisherSidebar.getAdOpsEmail(), "randomAutoPub@gmail.com")
                 .then("Validate error under the 'Ad Ops Email field' disappeared")
                 .waitAndValidate(not(visible), editPublisherSidebar.getErrorAlertByFieldName("Ad Ops Email"))
                 .and("Click 'Save'")
@@ -120,6 +117,90 @@ public class PublisherCheckFieldsTests extends BaseTest {
                 .validateList(errorsList, List.of(
                         ErrorMessages.CURRENCY_ERROR_ALERT.getText()))
                 .then("Select Currency 'USD'")
+                .selectFromDropdown(editPublisherSidebar.getCurrencyDropdown(),
+                        editPublisherSidebar.getCurrencyDropdownItems(), CurrencyType.USD.getType())
+                .then("Validate error under the 'Currency' disappeared")
+                .waitAndValidate(not(visible), editPublisherSidebar.getErrorAlertByFieldName("Currency"))
+                .then("Select Currency 'EUR'")
+                .selectFromDropdown(editPublisherSidebar.getCurrencyDropdown(),
+                        editPublisherSidebar.getCurrencyDropdownItems(), CurrencyType.EUR.getType())
+                .then("Validate error under the 'Currency' disappeared")
+                .waitAndValidate(not(visible), editPublisherSidebar.getErrorAlertByFieldName("Currency"))
+                .then("Select Currency 'JPY'")
+                .selectFromDropdown(editPublisherSidebar.getCurrencyDropdown(),
+                        editPublisherSidebar.getCurrencyDropdownItems(), CurrencyType.JPY.getType())
+                .then("Validate error under the 'Currency' disappeared")
+                .waitAndValidate(not(visible), editPublisherSidebar.getErrorAlertByFieldName("Currency"))
+                .then("Select Currency 'RUB'")
+                .selectFromDropdown(editPublisherSidebar.getCurrencyDropdown(),
+                        editPublisherSidebar.getCurrencyDropdownItems(), CurrencyType.RUB.getType())
+                .then("Validate error under the 'Currency' disappeared")
+                .waitAndValidate(not(visible), editPublisherSidebar.getErrorAlertByFieldName("Currency"))
+                .testEnd();
+    }
+
+    @Epic("v?/GS-3100")
+    @Test(description = "Check required fields")
+    public void checkRequiredFieldsWithInvalidInputs() throws InterruptedException {
+        var errorsList = editPublisherSidebar.getErrorAlert().getErrorsList();
+
+        testStart()
+                .then("Validate required fields")
+                .and("Click 'Save' with all empty fields")
+                .clickOnWebElement(editPublisherSidebar.getSaveButton())
+                .then("Validate errors for all required fields in Error Panel (Publisher Name, Currency, Ad Ops Person, Ad Ops Email)")
+                .waitAndValidate(visible, editPublisherSidebar.getErrorAlert().getErrorPanel())
+                .validateListSize(errorsList, 4)
+                .validateList(errorsList, List.of(
+                        ErrorMessages.PUBLISHER_NAME_ERROR_ALERT.getText(),
+                        ErrorMessages.ADD_OPS_PERSON_ERROR_ALERT.getText(),
+                        ErrorMessages.ADD_OPS_EMAIL_ERROR_ALERT.getText(),
+                        ErrorMessages.CURRENCY_ERROR_ALERT.getText()))
+                .setValue(editPublisherSidebar.getNameInput(), "")
+                .then("Validate error under the 'Publisher field' remains ")
+                .waitAndValidate(visible, editPublisherSidebar.getErrorAlertByFieldName("Publisher Name"))
+                .setValue(editPublisherSidebar.getNameInput(), "randomAutoPub")
+                .then("Validate error under the 'Publisher field' disappeared ")
+                .waitAndValidate(not(visible), editPublisherSidebar.getErrorAlertByFieldName("Publisher Name"))
+                .and("Click 'Save'")
+                .clickOnWebElement(editPublisherSidebar.getSaveButton())
+                .then("Validate errors for 3 required fields in Error Panel (Currency, Ad Ops Person, Ad Ops Email)")
+                .validateListSize(errorsList, 3)
+                .validateList(errorsList, List.of(
+                        ErrorMessages.ADD_OPS_PERSON_ERROR_ALERT.getText(),
+                        ErrorMessages.ADD_OPS_EMAIL_ERROR_ALERT.getText(),
+                        ErrorMessages.CURRENCY_ERROR_ALERT.getText()))
+                .setValue(editPublisherSidebar.getAdOpsPerson(), "")
+                .then("Validate error under the 'Ad Ops Person field' remains")
+                .waitAndValidate(visible, editPublisherSidebar.getErrorAlertByFieldName("Ad Ops Person"))
+                .setValue(editPublisherSidebar.getAdOpsPerson(), "randomAutoPerson")
+                .then("Validate error under the 'Ad Ops Person field' disappeared")
+                .waitAndValidate(not(visible), editPublisherSidebar.getErrorAlertByFieldName("Ad Ops Person"))
+                .and("Click 'Save'")
+                .clickOnWebElement(editPublisherSidebar.getSaveButton())
+                .then("Validate errors for 2 required fields in Error Panel (Currency, Ad Ops Email)")
+                .validateListSize(errorsList, 2)
+                .validateList(errorsList, List.of(
+                        ErrorMessages.ADD_OPS_EMAIL_ERROR_ALERT.getText(),
+                        ErrorMessages.CURRENCY_ERROR_ALERT.getText()))
+                .setValue(editPublisherSidebar.getAdOpsEmail(), "randomAutoPub")
+                .then("Validate error under the 'Ad Ops Email field' remains")
+                .waitAndValidate(visible, editPublisherSidebar.getErrorAlertByFieldName("Ad Ops Email"))
+                .setValue(editPublisherSidebar.getAdOpsEmail(), "randomAutoPub@gmail.com")
+                .then("Validate error under the 'Ad Ops Email field' disappeared")
+                .waitAndValidate(not(visible), editPublisherSidebar.getErrorAlertByFieldName("Ad Ops Email"))
+                .and("Click 'Save'")
+                .clickOnWebElement(editPublisherSidebar.getSaveButton())
+                .then("Validate errors for 1 required fields in Error Panel (Currency)")
+                .validateListSize(errorsList, 1)
+                .validateList(errorsList, List.of(
+                        ErrorMessages.CURRENCY_ERROR_ALERT.getText()))
+                .setValue(editPublisherSidebar.getCurrency(), "CAD")
+                .then("Validate error under the 'Currency' remains")
+                .waitAndValidate(visible, editPublisherSidebar.getErrorAlertByFieldName("Currency"))
+                .then("Select Currency 'USD'")
+                .clearField(editPublisherSidebar.getCurrency())
+                .clickOnWebElement(editPublisherSidebar.getCurrencyDropdown())
                 .selectFromDropdown(editPublisherSidebar.getCurrencyDropdown(),
                         editPublisherSidebar.getCurrencyDropdownItems(), CurrencyType.USD.getType())
                 .then("Validate error under the 'Currency' disappeared")

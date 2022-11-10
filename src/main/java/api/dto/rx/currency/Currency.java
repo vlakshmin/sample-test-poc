@@ -1,11 +1,11 @@
 package api.dto.rx.currency;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import zutils.ObjectMapperUtils;
+import lombok.Data;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Data
 @Builder
@@ -14,8 +14,8 @@ import zutils.ObjectMapperUtils;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Currency {
 
-    private Integer code;
     private String name;
+    private Integer code;
     private String symbol;
 
     public String toJson() {
