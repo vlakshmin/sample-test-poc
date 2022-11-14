@@ -73,18 +73,18 @@ public class LoginPageTests extends BaseTest {
     public void loginFormValidationTest() {
         testStart()
                 .openUrl()
-                .then()
+                .then("Validate login page form fields and buttons")
                 .validate(Condition.visible, loginPage.getLoginInput())
                 .validate(Condition.visible, loginPage.getPasswordInput())
                 .validate(Condition.visible, loginPage.getLogInButton())
                 .validate(Condition.visible, loginPage.getSignupButton())
                 .validate(Condition.visible, loginPage.getForgotPasswordButton())
-                .when()
+                .when("Click on Forgot Password link")
                 .clickOnWebElement(loginPage.getForgotPasswordButton())
-                .then()
+                .then("Validate Forgot Password page form fields and buttons")
                 .validate(Condition.visible, forgotPasswordPage.getForgotpasswordSubmitButton())
                 .validate(Condition.visible, forgotPasswordPage.getForgotpasswordCancelButton())
-                .when()
+                .when("Click Cancel button in ForgotPassword page, return to the login page")
                 .clickOnWebElement(forgotPasswordPage.getForgotpasswordCancelButton())
                 .clickBrowserRefreshButton()
                 .setValueWithClean(loginPage.getLoginInput(),TEST_USER.getMail())
@@ -95,89 +95,56 @@ public class LoginPageTests extends BaseTest {
 
     @Test(description = "Verify Login Page with invalid Email", priority = 2)
     public void loginInvalidUserTest() {
+        loginMethod(WRONG_EMAIL_USER.getMail(), WRONG_EMAIL_USER.getPassword());
         testStart()
-                .openUrl()
-                .setValueWithClean(loginPage.getLoginInput(),WRONG_EMAIL_USER.getMail())
-                .setValueWithClean(loginPage.getPasswordInput(),WRONG_EMAIL_USER.getPassword())
-                .clickEnterButton(loginPage.getPasswordInput())
-                .then()
+                .then("Validate Failed button")
                 .validate(Condition.visible, loginPage.getFailedButton())
                 .validateContainsText(loginPage.getFailedButton(), "FAILED!")
                 .when()
                 .clickBrowserRefreshButton()
-                .setValueWithClean(loginPage.getLoginInput(),TEST_USER.getMail())
-                .setValueWithClean(loginPage.getPasswordInput(),TEST_USER.getPassword())
-                .clickEnterButton(loginPage.getPasswordInput())
                 .testEnd();
+        loginMethod(TEST_USER.getMail(), TEST_USER.getPassword());
     }
 
     @Test(description = "Verify Login Page with invalid Email", priority = 2)
     public void loginInvalidPasswordTest() {
+        loginMethod(WRONG_PASSWORD_USER.getMail(), WRONG_PASSWORD_USER.getPassword());
         testStart()
-                .openUrl()
-                .setValueWithClean(loginPage.getLoginInput(),WRONG_PASSWORD_USER.getMail())
-                .setValueWithClean(loginPage.getPasswordInput(),WRONG_PASSWORD_USER.getPassword())
-                .clickEnterButton(loginPage.getPasswordInput())
-                .then()
+                .then("Validate Failed button")
                 .validate(Condition.visible, loginPage.getFailedButton())
                 .validateContainsText(loginPage.getFailedButton(), "FAILED!")
                 .when()
                 .clickBrowserRefreshButton()
-                .setValueWithClean(loginPage.getLoginInput(),TEST_USER.getMail())
-                .setValueWithClean(loginPage.getPasswordInput(),TEST_USER.getPassword())
-                .clickEnterButton(loginPage.getPasswordInput())
                 .testEnd();
+        loginMethod(TEST_USER.getMail(), TEST_USER.getPassword());
     }
 
     @Test(description = "Verify Login Page with valid Single Publisher User", priority = 3)
     public void loginSinglePubUserTest() {
-        testStart()
-                .openUrl()
-                .setValueWithClean(loginPage.getLoginInput(),singleUser.getMail())
-                .setValueWithClean(loginPage.getPasswordInput(),"Password1")
-                .clickEnterButton(loginPage.getPasswordInput())
-                .testEnd();
+        loginMethod(singleUser.getMail(), "Password1");
         verifyLoginPage(singleUser, UserRole.SINGLE_PUBLISHER.getDefinition());
     }
 
     @Test(description = "Verify Login Page with valid Cross Publisher User", priority = 4)
     public void loginCrossPubUserTest() {
-        testStart()
-                .openUrl()
-                .setValueWithClean(loginPage.getLoginInput(),crossUser.getMail())
-                .setValueWithClean(loginPage.getPasswordInput(),"Password1")
-                .clickEnterButton(loginPage.getPasswordInput())
-                .testEnd();
-
+        loginMethod(crossUser.getMail(), "Password1");
         verifyLoginPage(crossUser, UserRole.CROSS_PUBLISHER.getDefinition());
     }
 
     @Test(description = "Verify Login Page with valid Admin Publisher User", alwaysRun = true, priority = 5)
     public void loginAdminPubUserTest() {
-        testStart()
-                .openUrl()
-                .setValueWithClean(loginPage.getLoginInput(),admin.getMail())
-                .setValueWithClean(loginPage.getPasswordInput(),"Password1")
-                .clickEnterButton(loginPage.getPasswordInput())
-                .testEnd();
-
+        loginMethod(admin.getMail(), "Password1");
         verifyLoginPage(admin, UserRole.ADMIN.getDefinition());
     }
 
     @Test(description = "Verify Success button after login", alwaysRun = true, priority = 6)
     public void verifySuccessButtonTest() {
+        loginMethod(TEST_USER.getMail(), TEST_USER.getPassword());
         testStart()
-                .openUrl()
-                .setValueWithClean(loginPage.getLoginInput(),TEST_USER.getMail())
-                .setValueWithClean(loginPage.getPasswordInput(),TEST_USER.getPassword())
-                .clickEnterButton(loginPage.getPasswordInput())
-                .then()
                 .validate(Condition.visible, loginPage.getSuccessButton())
                 .validateContainsText(loginPage.getSuccessButton(), "SUCCESS!")
                 .testEnd();
     }
-
-
     private void verifyLoginPage(UserDto user, String roleDefinition) {
         testStart()
                 .then()
@@ -212,7 +179,6 @@ public class LoginPageTests extends BaseTest {
     @AfterTest(alwaysRun = true)
     private void deleteEntities() {
         if (listUsers != null) {
-            System.out.println(listUsers.size());
             for (UserDto users : listUsers) {
                 System.out.println("User ID to delete : "+users.getId());
                 deleteUser(users.getId());
@@ -224,6 +190,15 @@ public class LoginPageTests extends BaseTest {
         user()
                 .setCredentials(USER_FOR_DELETION)
                 .deleteUser(id);
+    }
+
+    private void loginMethod(String userName, String password) {
+        testStart()
+                .openUrl()
+                .setValueWithClean(loginPage.getLoginInput(), userName)
+                .setValueWithClean(loginPage.getPasswordInput(),password)
+                .clickEnterButton(loginPage.getPasswordInput())
+                .testEnd();
     }
 
 }
