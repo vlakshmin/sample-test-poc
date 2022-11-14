@@ -180,7 +180,6 @@ public class LoginPageTests extends BaseTest {
     private void deleteEntities() {
         if (listUsers != null) {
             for (UserDto users : listUsers) {
-                System.out.println("User ID to delete : "+users.getId());
                 deleteUser(users.getId());
             }
         }
