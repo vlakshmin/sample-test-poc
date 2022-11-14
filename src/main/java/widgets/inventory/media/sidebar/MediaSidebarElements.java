@@ -27,7 +27,7 @@ public enum MediaSidebarElements {
             "//div[contains(@class,'menuable__content__activ')]//div[contains(@class,'v-list-item')]"),
     ACTIVE_TOGGLE("'Active' Toggle",  "//label[text()='Active']/..//input[@role='switch']/../input"),
     PUBLISHER_NAME_INPUT( "'Publisher Name' Input", "//label[text()='Publisher Name']/../div/input"),
-    CLOSE_ICON("'Close Media' Icon", "//div[@class='v-toolbar__content']/button[contains(@class,'v-btn--round theme--dark')]");
+    CLOSE_ICON("'Close Media' Icon", "//header/div/button/span/i");
 
     private String alias;
     private String selector;
