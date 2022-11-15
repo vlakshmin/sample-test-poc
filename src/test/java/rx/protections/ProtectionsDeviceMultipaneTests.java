@@ -36,13 +36,11 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
 
     private ProtectionsPage protectionsPage;
     private CreateProtectionSidebar protectionSidebar;
-    private Multipane protectionMultipane;
 
     public ProtectionsDeviceMultipaneTests() {
 
         protectionsPage = new ProtectionsPage();
         protectionSidebar = new CreateProtectionSidebar();
-        protectionMultipane = new Multipane(MultipaneNameImpl.DEVICE);
     }
 
     @BeforeClass
@@ -67,6 +65,7 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
 
     @Test(description = "Check Device Items List is filled and disabled by default", priority = 0)
     private void checkDefaultDeviceList() {
+        var protectionMultipane = protectionSidebar.getDeviceMultipane();
 
         testStart()
                 .and("Expand 'Device' multipane")
@@ -80,6 +79,7 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
 
     @Test(description = "Check Device Items List", priority = 1)
     private void checkDeviceList() {
+        var protectionMultipane = protectionSidebar.getDeviceMultipane();
 
         testStart()
                 .and(String.format("Select Publisher '%s'", publisherActive.getName()))
@@ -96,6 +96,7 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
 
     @Test(description = "Check Search Device", priority = 2)
     private void checkSearchDevice() {
+        var protectionMultipane = protectionSidebar.getDeviceMultipane();
 
         testStart()
                 .and(String.format("Select Publisher '%s'", publisherActive.getName()))
@@ -121,6 +122,7 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
 
     @Test(description = "Check Multipane Text 'Include All'", priority = 3)
     private void checkMultipaneText() {
+        var protectionMultipane = protectionSidebar.getDeviceMultipane();
 
         testStart()
                 .and(String.format("Select Publisher '%s'", publisherActive.getName()))
@@ -143,6 +145,7 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
 
     @Test(description = "Check Multipane Text 'Clear All'", priority = 4)
     private void checkMultipaneTextClearAll() {
+        var protectionMultipane = protectionSidebar.getDeviceMultipane();
 
         testStart()
                 .and(String.format("Select Publisher '%s'", publisherActive.getName()))
@@ -165,6 +168,7 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
 
     @Test(description = "Check Multipane Text (include not all items)", priority = 4)
     private void checkMultipaneTextNotAllItems() {
+        var protectionMultipane = protectionSidebar.getDeviceMultipane();
 
         testStart()
                 .and(String.format("Select Publisher '%s'", publisherActive.getName()))
@@ -179,6 +183,8 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
 
     @Test(description = "Check Multipane Text (exclude not all items)", priority = 5)
     private void checkMultipaneTextExcludeNotAllItems() {
+        var protectionMultipane = protectionSidebar.getDeviceMultipane();
+
 
         testStart()
                 .and(String.format("Select Publisher '%s'", publisherActive.getName()))
@@ -226,6 +232,7 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
 
     @Step("Validate Device List")
     private void validateDeviceList(List<Device> list) {
+        var protectionMultipane = protectionSidebar.getDeviceMultipane();
 
         list.forEach(e -> {
             testStart()
@@ -236,7 +243,9 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
 
     @Step("Include all items one by one")
     private void includeOneByOneItems(List<Device> list) {
+        var protectionMultipane = protectionSidebar.getDeviceMultipane();
         var updated = new AtomicInteger(0);
+
         list.stream().forEach(e ->
         {
             var selectedItem = protectionMultipane.getSelectTableItemByPositionInList(updated.get());
@@ -244,13 +253,12 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
                     .waiter(visible, selectedItem.getName())
                     .hoverMouseOnWebElement(selectedItem.getName())
                     .then()
-                    //  .validate(not(visible), selectedItem.getExcludedIcon())
+                    .validate(not(exist), selectedItem.getExcludedIcon())
                     .validate(not(visible), selectedItem.getIncludedIcon())
                     .validate(not(visible), selectedItem.getActiveIcon())
                     .validate(not(visible), selectedItem.getInactiveIcon())
                     .validate(not(visible), selectedItem.getAssociatedWithPublisherIcon())
                     .validate(visible, selectedItem.getIncludeButton())
-                    //  .validate(visible, selectedItem.getExcludeButton())
                     .and()
                     .clickOnWebElement(selectedItem.getIncludeButton())
                     .validate(protectionMultipane.getSelectionInfoExcludedLabel(), (updated.get() == 0) ?
@@ -265,6 +273,8 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
     @Step("Exclude all items one by one")
     private void excludeOneByOneItems(List<Device> list) {
         var updated = new AtomicInteger(list.size());
+        var protectionMultipane = protectionSidebar.getDeviceMultipane();
+
 
         list.forEach(item -> {
             var selectedItem = protectionMultipane.getIncludedExcludedTableItemByName(item.getName());
@@ -288,6 +298,7 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
 
     @AfterMethod(alwaysRun = true)
     private void collapseMultipane(){
+        var protectionMultipane = protectionSidebar.getDeviceMultipane();
 
         testStart()
                 .and("Collapse 'Device' multipane")
