@@ -141,13 +141,15 @@ public class UsersCheckPaginationTests extends BaseTest {
     private void deleteUser(Integer id) {
         user()
                 .setCredentials(USER_FOR_DELETION)
-                .deleteUser(id);
+                .deleteUser(id)
+                .build();
     }
 
     private void deletePublisher(Integer id) {
         publisher()
                 .setCredentials(USER_FOR_DELETION)
-                .deletePublisher(id);
+                .deletePublisher(id)
+                .build();
     }
 
     private int getTotalUsers() {

@@ -3,15 +3,13 @@ package rx.login;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.admin.user.UserDto;
 import api.dto.rx.admin.user.UserRole;
-import api.preconditionbuilders.PublisherPrecondition;
 import api.preconditionbuilders.UsersPrecondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.testng.ScreenShooter;
-import configurations.User;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
-import pages.LoginPage;
+import pages.login.LoginPage;
 import pages.Path;
 import pages.dashbord.DashboardPage;
 import pages.forgotpassword.ForgotPasswordPage;
@@ -82,10 +80,10 @@ public class LoginPageTests extends BaseTest {
                 .when("Click on Forgot Password link")
                 .clickOnWebElement(loginPage.getForgotPasswordButton())
                 .then("Validate Forgot Password page form fields and buttons")
-                .validate(Condition.visible, forgotPasswordPage.getForgotpasswordSubmitButton())
-                .validate(Condition.visible, forgotPasswordPage.getForgotpasswordCancelButton())
+                .validateContainsText(forgotPasswordPage.getForgotPasswordPageTitle(), "Forgot Password?")
+                .validate(Condition.visible, forgotPasswordPage.getForgotPasswordCancelButton())
                 .when("Click Cancel button in ForgotPassword page, return to the login page")
-                .clickOnWebElement(forgotPasswordPage.getForgotpasswordCancelButton())
+                .clickOnWebElement(forgotPasswordPage.getForgotPasswordCancelButton())
                 .clickBrowserRefreshButton()
                 .setValueWithClean(loginPage.getLoginInput(),TEST_USER.getMail())
                 .setValueWithClean(loginPage.getPasswordInput(),TEST_USER.getPassword())
@@ -98,8 +96,8 @@ public class LoginPageTests extends BaseTest {
         loginMethod(WRONG_EMAIL_USER.getMail(), WRONG_EMAIL_USER.getPassword());
         testStart()
                 .then("Validate Failed button")
-                .validate(Condition.visible, loginPage.getFailedButton())
-                .validateContainsText(loginPage.getFailedButton(), "FAILED!")
+                .validate(Condition.visible, loginPage.getLoginResultButton())
+                .validateContainsText(loginPage.getLoginResultButton(), "FAILED!")
                 .when()
                 .clickBrowserRefreshButton()
                 .testEnd();
@@ -111,8 +109,8 @@ public class LoginPageTests extends BaseTest {
         loginMethod(WRONG_PASSWORD_USER.getMail(), WRONG_PASSWORD_USER.getPassword());
         testStart()
                 .then("Validate Failed button")
-                .validate(Condition.visible, loginPage.getFailedButton())
-                .validateContainsText(loginPage.getFailedButton(), "FAILED!")
+                .validate(Condition.visible, loginPage.getLoginResultButton())
+                .validateContainsText(loginPage.getLoginResultButton(), "FAILED!")
                 .when()
                 .clickBrowserRefreshButton()
                 .testEnd();
@@ -141,8 +139,8 @@ public class LoginPageTests extends BaseTest {
     public void verifySuccessButtonTest() {
         loginMethod(TEST_USER.getMail(), TEST_USER.getPassword());
         testStart()
-                .validate(Condition.visible, loginPage.getSuccessButton())
-                .validateContainsText(loginPage.getSuccessButton(), "SUCCESS!")
+                .validate(Condition.visible, loginPage.getLoginResultButton())
+                .validateContainsText(loginPage.getLoginResultButton(), "SUCCESS!")
                 .testEnd();
     }
     private void verifyLoginPage(UserDto user, String roleDefinition) {
