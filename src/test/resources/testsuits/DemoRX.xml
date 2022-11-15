@@ -15,7 +15,7 @@
     </test>-->
     <test name="Ad Spots Feature">
         <classes>
-            <class name="rx.inventory.adspot.AdSpotCheckFieldsTests"/>
+            <class name="rx.protections.ProtectionsInventoryMultipaneTests"/>
        <!--     <class name="rx.inventory.adspot.AdSpotSortingTableTests"/>
             <class name="rx.inventory.adspot.AdSpotCheckPaginationTests"/>
             <class name="rx.inventory.adspot.AdSpotCheckTooltipsTests"/>-->

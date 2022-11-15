@@ -266,7 +266,7 @@ public class PublisherSortingTableTests extends BaseTest {
         queryParams.put("sort", strParams);
 
         return PublisherPrecondition.publisher()
-                .getPublisherWithFilter(queryParams)
+                .getPublisherWithFilter(Map.of("sort", strParams))
                 .build()
                 .getPublisherGetAllResponse()
                 .getItems();
