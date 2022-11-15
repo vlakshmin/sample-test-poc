@@ -277,14 +277,18 @@ public class ProtectionChangePublisherTests extends BaseTest {
     @Step("Validate Demand Sources List")
     private void validateListDemandSources(List<String> dsp) {
 
+    //    var actualValues = protectionSidebar.getDemandSourcesMultipane().g
+
         testStart()
                 .and("Expand  Demand Source multipane and ensure that values in list corresponds with selected publisher")
                 .clickOnWebElement(protectionSidebar.getDemandSourcesMultipane().getPanelNameLabel())
-             //   .validateList(dsp,protectionSidebar.getDemandSourcesMultipane().getSe)
+             //   .validate(dsp)
                 .validate(protectionSidebar.getDemandSourcesMultipane().getSelectTableItemByPositionInList(0).getName(), dsp.get(0))
                 .validate(protectionSidebar.getDemandSourcesMultipane().getSelectTableItemByPositionInList(1).getName(), dsp.get(1))
                 .validate(protectionSidebar.getDemandSourcesMultipane().getSelectTableItemByPositionInList(2).getName(), dsp.get(2))
                 .testEnd();
+
+
     }
 
     @AfterMethod(alwaysRun = true)
