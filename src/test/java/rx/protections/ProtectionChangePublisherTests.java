@@ -226,8 +226,6 @@ public class ProtectionChangePublisherTests extends BaseTest {
         testStart()
                 .then("Name should be cleaned")
                 .validate(protectionSidebar.getNameInput(), "")
-                .then("Floor Price should be cleaned")
-                .validate(protectionSidebar.getFloorPriceField().getFloorPriceInput(), "")
                 .then("Expand Inventory Multipane and ensure that included/excluded items list is empty")
                 .clickOnWebElement(protectionSidebar.getInventoryMultipane().getPanelNameLabel())
                 .validate(protectionSidebar.getInventoryMultipane().countIncludedExcludedTableItems(), 0)
