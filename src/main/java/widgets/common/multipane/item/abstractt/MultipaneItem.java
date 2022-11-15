@@ -19,8 +19,8 @@ import static widgets.common.multipane.item.abstractt.MultipaneItemElements.*;
 @Getter
 public abstract class MultipaneItem {
 
-    private SelenideElement name;
-    private SelenideElement type;
+    protected SelenideElement name;
+    protected SelenideElement type;
 
     @Getter(AccessLevel.NONE)
     private int position;
@@ -39,7 +39,6 @@ public abstract class MultipaneItem {
                 this.name = $x(buildXpath(INVENTORY_NAME.getSelector())).as(format("%s%s", INVENTORY_NAME.getAlias(), position));
                 this.type = $x(buildXpath(INVENTORY_TYPE.getSelector())).as(format("%s%s", INVENTORY_TYPE.getAlias(), position));
                 break;
-
             case DEMAND_SOURCES:
                 this.name = $x(buildXpath(DEMAND_SOURCES_NAME.getSelector())).as(format("%s%s", DEMAND_SOURCES_NAME.getAlias(), position));
                 break;

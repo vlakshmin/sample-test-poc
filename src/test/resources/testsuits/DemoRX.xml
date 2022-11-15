@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="3102 Change Publisher" parallel="false">
+<suite name="Demo Suite" parallel="false">
 <!--    <test name="Media">
         <classes>
             <class name="rx.inventory.media.MediaCheckFieldsTests"/>
@@ -13,10 +13,12 @@
             <class name="rx.admin.publishers.PublisherTest"/>
         </classes>
     </test>-->
-    <test name="3102 Change Publisher">
+    <test name="Ad Spots Feature">
         <classes>
-            <class name="rx.yield.openpricing.OpenPricingChangePublisherTests"/>
-            <class name="rx.protections.ProtectionChangePublisherTests"/>
+            <class name="rx.protections.ProtectionsInventoryMultipaneTests"/>
+       <!--     <class name="rx.inventory.adspot.AdSpotSortingTableTests"/>
+            <class name="rx.inventory.adspot.AdSpotCheckPaginationTests"/>
+            <class name="rx.inventory.adspot.AdSpotCheckTooltipsTests"/>-->
         </classes>
     </test>
 </suite>
