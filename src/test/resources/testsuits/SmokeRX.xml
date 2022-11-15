@@ -58,6 +58,7 @@
             <class name="rx.protections.ProtectionsTest"/>
             <class name="rx.protections.ProtectionsSortingTableTests"/>
             <class name="rx.protections.ProtectionsInventoryMultipaneTests"/>
+            <class name="rx.protections.ProtectionsDeviceMultipaneTests"/>
         </classes>
     </test>
     <test name="Deals Feature">

@@ -2,7 +2,6 @@ package api.preconditionbuilders;
 
 import api.core.client.HttpClient;
 import api.dto.GenericResponse;
-import api.dto.rx.adsize.AdSize;
 import api.dto.rx.geo.Geo;
 import api.services.GeoService;
 import configurations.User;
