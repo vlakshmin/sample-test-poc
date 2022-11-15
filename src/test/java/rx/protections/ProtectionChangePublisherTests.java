@@ -15,12 +15,14 @@ import pages.Path;
 import pages.protections.ProtectionsPage;
 import pages.yield.openpricing.OpenPricingPage;
 import rx.BaseTest;
+import rx.enums.MultipaneConstants;
 import widgets.common.multipane.Multipane;
 import widgets.common.multipane.MultipaneNameImpl;
 import widgets.protections.sidebar.CreateProtectionSidebar;
 import widgets.yield.openPricing.sidebar.CreateOpenPricingSidebar;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static api.preconditionbuilders.MediaPrecondition.media;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
@@ -97,6 +99,7 @@ public class ProtectionChangePublisherTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("https://rakutenadvertising.atlassian.net/browse/GS-3192")
     @Test(description = "Change Publisher and Click Accept")
     public void changePublisherAndClickAccept() {
 
@@ -105,21 +108,25 @@ public class ProtectionChangePublisherTests extends BaseTest {
                 .and(String.format("Select Publisher %s", publisher1.getName()))
                 .selectFromDropdown(protectionSidebar.getPublisherInput(),
                         protectionSidebar.getPublisherItems(),  publisher1.getName())
+                .and("Expand  Demand Source multipane and ensure that values in list corresponds with selected publisher")
+                .clickOnWebElement(protectionSidebar.getDemandSourcesMultipane().getPanelNameLabel())
+                .and("Expand  Inventory multipane and ensure that values in list corresponds with selected publisher")
+                .clickOnWebElement(protectionSidebar.getInventoryMultipane().getPanelNameLabel())
                 .testEnd();
         fillAllFields();
         changePublisherAndClickCancel(publisher2.getName());
         validateFieldsValuesShouldNotBeChanged(publisher1);
-        validateListInventory(List.of(media1.getName()));
-        validateListDemandSources(DSP_NAMES_PUBLISHER_1);
+        validateItemsList(List.of(media1.getName()),protectionSidebar.getInventoryMultipane());
+        validateItemsList(DSP_NAMES_PUBLISHER_1,protectionSidebar.getDemandSourcesMultipane() );
         changePublisherAndClickAccept(media2.getPublisherName());
         validateAllFieldsAreReseted();
-        validateListInventory(List.of(media2.getName()));
-        validateListDemandSources(DSP_NAMES_PUBLISHER_2);
+        validateItemsList(List.of(media2.getName()), protectionSidebar.getInventoryMultipane());
+        validateItemsList(DSP_NAMES_PUBLISHER_2, protectionSidebar.getDemandSourcesMultipane());
         fillAllFields();
         changePublisherAndClickAccept(publisher1.getName());
         validateAllFieldsAreReseted();
-        validateListInventory(List.of(media1.getName()));
-        validateListDemandSources(DSP_NAMES_PUBLISHER_1);
+        validateItemsList(List.of(media1.getName()),protectionSidebar.getInventoryMultipane());
+        validateItemsList(DSP_NAMES_PUBLISHER_1, protectionSidebar.getDemandSourcesMultipane());
 
     }
 
@@ -159,8 +166,6 @@ public class ProtectionChangePublisherTests extends BaseTest {
                 .waitAndValidate(enabled, protectionSidebar.getNameInput())
                 .and(String.format("Fill Name %s", PROTECTION_NAME))
                 .setValueWithClean(protectionSidebar.getNameInput(), PROTECTION_NAME)
-                .and(String.format("Set Floor Price %s", FLOOR_PRICE))
-                .setValueWithClean(protectionSidebar.getFloorPriceField().getFloorPriceInput(), FLOOR_PRICE)
                 .and("Expand Inventory Multipane and include all")
                 .clickOnWebElement(protectionSidebar.getInventoryMultipane().getPanelNameLabel())
                 .clickOnWebElement(protectionSidebar.getInventoryMultipane().getIncludeAllButton())
@@ -256,40 +261,22 @@ public class ProtectionChangePublisherTests extends BaseTest {
                 .validate(protectionSidebar.getPublisherNameDropdown().getText(), publisher.getName())
                 .then(String.format("Name should be %s", PROTECTION_NAME))
                 .validateAttribute(protectionSidebar.getNameInput(), "value", PROTECTION_NAME)
-                .then(String.format("Floor Price should be %s", FLOOR_PRICE))
-                .validateAttribute(protectionSidebar.getFloorPriceField().getFloorPriceInput(), "value", FLOOR_PRICE)
-                .then(String.format("Currency should be %s", publisher.getCurrency()))
-                .validate(protectionSidebar.getFloorPriceField().getFloorPricePrefix().getText(), publisher.getCurrency())
                 .testEnd();
-    }
-
-    @Step("Validate Inventory List")
-    private void validateListInventory(List<String> inventory) {
-
-        testStart()
-                .and("Expand Inventory multipane and ensure that values in list corresponds with selected publisher")
-                .clickOnWebElement(protectionSidebar.getInventoryMultipane().getPanelNameLabel())
-                .validate(protectionSidebar.getInventoryMultipane().getSelectTableItemByPositionInList(0).getName(), inventory.get(0))
-                .testEnd();
-
     }
 
     @Step("Validate Demand Sources List")
-    private void validateListDemandSources(List<String> dsp) {
+    private void validateItemsList(List<String> itemsList, Multipane multipane) {
+        var item = new AtomicInteger(0);
 
-    //    var actualValues = protectionSidebar.getDemandSourcesMultipane().g
-
-        testStart()
-                .and("Expand  Demand Source multipane and ensure that values in list corresponds with selected publisher")
-                .clickOnWebElement(protectionSidebar.getDemandSourcesMultipane().getPanelNameLabel())
-             //   .validate(dsp)
-                .validate(protectionSidebar.getDemandSourcesMultipane().getSelectTableItemByPositionInList(0).getName(), dsp.get(0))
-                .validate(protectionSidebar.getDemandSourcesMultipane().getSelectTableItemByPositionInList(1).getName(), dsp.get(1))
-                .validate(protectionSidebar.getDemandSourcesMultipane().getSelectTableItemByPositionInList(2).getName(), dsp.get(2))
-                .testEnd();
-
-
+        itemsList.forEach(e ->
+        {
+            var selectedItem = multipane.getSelectTableItemByPositionInList(item.get()).getName();
+                testStart()
+                        .validate(selectedItem, itemsList.get(item.getAndIncrement()))
+                    .testEnd();
+        });
     }
+
 
     @AfterMethod(alwaysRun = true)
     private void logout() {
