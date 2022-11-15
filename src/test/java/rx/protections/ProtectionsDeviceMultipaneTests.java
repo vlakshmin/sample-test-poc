@@ -262,11 +262,10 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
                     .and()
                     .clickOnWebElement(selectedItem.getIncludeButton())
                     .validate(protectionMultipane.getSelectionInfoExcludedLabel(), (updated.get() == 0) ?
-                            MultipaneConstants.ONE_DEVICE_IS_INCLUDED.setQuantity(1) :
-                            MultipaneConstants.DEVICES_ARE_INCLUDED.setQuantity(updated.get() + 1))
+                            MultipaneConstants.ONE_DEVICE_IS_INCLUDED.setQuantity(updated.incrementAndGet()) :
+                            MultipaneConstants.DEVICES_ARE_INCLUDED.setQuantity(updated.incrementAndGet()))
                     .validate(exist, selectedItem.getName())
                     .testEnd();
-            updated.incrementAndGet();
         });
     }
 
@@ -284,15 +283,13 @@ public class ProtectionsDeviceMultipaneTests extends BaseTest {
                     .hoverMouseOnWebElement(selectedItem.getName())
                     .then()
                     .validateContainsText(protectionMultipane.getSelectionInfoExcludedLabel(), (updated.get() == 1) ?
-                            MultipaneConstants.ONE_DEVICE_IS_INCLUDED.setQuantity(1) :
-                            MultipaneConstants.DEVICES_ARE_INCLUDED.setQuantity(updated.get()))
+                            MultipaneConstants.ONE_DEVICE_IS_INCLUDED.setQuantity(updated.getAndDecrement()) :
+                            MultipaneConstants.DEVICES_ARE_INCLUDED.setQuantity(updated.getAndDecrement()))
                     .then()
                     .validate(visible, selectedItem.getRemoveButton())
                     .and(String.format("Remove selected item %s", selectedItem.getName()))
                     .clickOnWebElement(selectedItem.getRemoveButton())
                     .testEnd();
-
-            updated.decrementAndGet();
         });
     }
 
