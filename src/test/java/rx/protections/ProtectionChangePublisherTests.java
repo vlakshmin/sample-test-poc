@@ -36,7 +36,6 @@ public class ProtectionChangePublisherTests extends BaseTest {
 
     private ProtectionsPage protectionPage;
     private CreateProtectionSidebar protectionSidebar;
-    private Multipane protectionMultipane;
     private Media media1;
     private Media media2;
     private Publisher publisher1;
@@ -57,7 +56,6 @@ public class ProtectionChangePublisherTests extends BaseTest {
     public ProtectionChangePublisherTests() {
         protectionPage = new ProtectionsPage();
         protectionSidebar = new CreateProtectionSidebar();
-        protectionMultipane = new Multipane(MultipaneNameImpl.INVENTORY);
     }
 
     @BeforeClass
@@ -129,6 +127,7 @@ public class ProtectionChangePublisherTests extends BaseTest {
     @Epic("Is not included in v.1.26.0/GS-3102")
     @Test(description = "Change Publisher and check selected items multipane")
     public void changePublisherAndCheckSelectedItemsMultipane() {
+        var protectionMultipane = protectionSidebar.getInventoryMultipane();
 
         testStart()
                 .clickBrowserRefreshButton()
@@ -154,13 +153,14 @@ public class ProtectionChangePublisherTests extends BaseTest {
 
     @Step("Fill all fields")
     private void fillAllFields() {
+        var protectionMultipane = protectionSidebar.getInventoryMultipane();
 
         testStart()
                 .waitAndValidate(enabled, protectionSidebar.getNameInput())
                 .and(String.format("Fill Name %s", PROTECTION_NAME))
                 .setValueWithClean(protectionSidebar.getNameInput(), PROTECTION_NAME)
-              //  .and(String.format("Set Floor Price %s", FLOOR_PRICE))
-              //  .setValueWithClean(protectionSidebar.getFloorPriceField().getFloorPriceInput(), FLOOR_PRICE)
+                .and(String.format("Set Floor Price %s", FLOOR_PRICE))
+                .setValueWithClean(protectionSidebar.getFloorPriceField().getFloorPriceInput(), FLOOR_PRICE)
                 .and("Expand Inventory Multipane and include all")
                 .clickOnWebElement(protectionSidebar.getInventoryMultipane().getPanelNameLabel())
                 .clickOnWebElement(protectionSidebar.getInventoryMultipane().getIncludeAllButton())
@@ -222,7 +222,7 @@ public class ProtectionChangePublisherTests extends BaseTest {
                 .then("Name should be cleaned")
                 .validate(protectionSidebar.getNameInput(), "")
                 .then("Floor Price should be cleaned")
-              //  .validate(protectionSidebar.getFloorPriceField().getFloorPriceInput(), "")
+                .validate(protectionSidebar.getFloorPriceField().getFloorPriceInput(), "")
                 .then("Expand Inventory Multipane and ensure that included/excluded items list is empty")
                 .clickOnWebElement(protectionSidebar.getInventoryMultipane().getPanelNameLabel())
                 .validate(protectionSidebar.getInventoryMultipane().countIncludedExcludedTableItems(), 0)
@@ -256,10 +256,10 @@ public class ProtectionChangePublisherTests extends BaseTest {
                 .validate(protectionSidebar.getPublisherNameDropdown().getText(), publisher.getName())
                 .then(String.format("Name should be %s", PROTECTION_NAME))
                 .validateAttribute(protectionSidebar.getNameInput(), "value", PROTECTION_NAME)
-              //  .then(String.format("Floor Price should be %s", FLOOR_PRICE))
-              //  .validateAttribute(protectionSidebar.getFloorPriceField().getFloorPriceInput(), "value", FLOOR_PRICE)
-             //   .then(String.format("Currency should be %s", publisher.getCurrency()))
-            //    .validate(protectionSidebar.getFloorPriceField().getFloorPricePrefix().getText(), publisher.getCurrency())
+                .then(String.format("Floor Price should be %s", FLOOR_PRICE))
+                .validateAttribute(protectionSidebar.getFloorPriceField().getFloorPriceInput(), "value", FLOOR_PRICE)
+                .then(String.format("Currency should be %s", publisher.getCurrency()))
+                .validate(protectionSidebar.getFloorPriceField().getFloorPricePrefix().getText(), publisher.getCurrency())
                 .testEnd();
     }
 
@@ -280,6 +280,7 @@ public class ProtectionChangePublisherTests extends BaseTest {
         testStart()
                 .and("Expand  Demand Source multipane and ensure that values in list corresponds with selected publisher")
                 .clickOnWebElement(protectionSidebar.getDemandSourcesMultipane().getPanelNameLabel())
+             //   .validateList(dsp,protectionSidebar.getDemandSourcesMultipane().getSe)
                 .validate(protectionSidebar.getDemandSourcesMultipane().getSelectTableItemByPositionInList(0).getName(), dsp.get(0))
                 .validate(protectionSidebar.getDemandSourcesMultipane().getSelectTableItemByPositionInList(1).getName(), dsp.get(1))
                 .validate(protectionSidebar.getDemandSourcesMultipane().getSelectTableItemByPositionInList(2).getName(), dsp.get(2))
