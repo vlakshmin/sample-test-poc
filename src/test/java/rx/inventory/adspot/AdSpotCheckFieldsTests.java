@@ -66,7 +66,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
     }
 
 
-    @Test(description = "Check fields by default", alwaysRun = true)
+    @Test(description = "Check fields by default")
     private void checkDefaultFields() {
         testStart()
                 .then("Validate fields by default")
@@ -88,7 +88,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check required fields", alwaysRun = true)
+    @Test(description = "Check required fields")
     private void checkRequiredFields() {
         var videoCard = adSpotSidebar.getVideoCard();
         var bannerCard = adSpotSidebar.getBannerCard();
@@ -231,7 +231,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Video Card fields", alwaysRun = true)
+    @Test(description = "Check Video Card fields")
     private void checkVideoCardFields() {
         var videoCard = adSpotSidebar.getVideoCard();
         var bannerCard = adSpotSidebar.getBannerCard();
@@ -279,7 +279,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Minimum Value Default Floor Price", alwaysRun = true)
+    @Test(description = "Check Minimum Value Default Floor Price")
     private void checkMinValueDefaultFloorPrice() {
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
 
@@ -305,7 +305,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Minimum Value Banner Floor Price", alwaysRun = true)
+    @Test(description = "Check Minimum Value Banner Floor Price")
     private void checkMinValueBannerFloorPrice() {
         var bannerCard = adSpotSidebar.getBannerCard();
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
@@ -335,7 +335,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
     }
 
 
-    @Test(description = "Check Minimum Value Native Floor Price", alwaysRun = true)
+    @Test(description = "Check Minimum Value Native Floor Price")
     private void checkMinValueNativeFloorPrice() {
         var nativeCard = adSpotSidebar.getNativeCard();
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
@@ -364,7 +364,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Minimum Value Video Floor Price", alwaysRun = true)
+    @Test(description = "Check Minimum Value Video Floor Price")
     private void checkMinValueVideoFloorPrice() {
         var videoCard = adSpotSidebar.getVideoCard();
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
@@ -400,7 +400,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Maximum Value Default Floor Price", alwaysRun = true)
+    @Test(description = "Check Maximum Value Default Floor Price")
     private void checkMaxValueDefaultFloorPrice() {
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
 
@@ -427,7 +427,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Maximum Value Banner Floor Price", alwaysRun = true)
+    @Test(description = "Check Maximum Value Banner Floor Price")
     private void checkMaxValueBannerFloorPrice() {
         var bannerCard = adSpotSidebar.getBannerCard();
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
@@ -456,7 +456,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Maximum Value Native Floor Price", alwaysRun = true)
+    @Test(description = "Check Maximum Value Native Floor Price")
     private void checkMaxValueNativeFloorPrice() {
         var nativeCard = adSpotSidebar.getNativeCard();
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
@@ -485,7 +485,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Maximum Value Video Floor Price", alwaysRun = true)
+    @Test(description = "Check Maximum Value Video Floor Price")
     private void checkMaxValueVideoFloorPrice() {
         var videoCard = adSpotSidebar.getVideoCard();
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
@@ -521,7 +521,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Minimum Video Duration Value", alwaysRun = true)
+    @Test(description = "Check Minimum Video Duration Value")
     private void checkMinVideoDurationValue() {
         var videoCard = adSpotSidebar.getVideoCard();
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();

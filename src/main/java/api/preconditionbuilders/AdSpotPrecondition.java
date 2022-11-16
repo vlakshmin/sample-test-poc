@@ -193,6 +193,7 @@ public class AdSpotPrecondition {
                     .floorPrice(23.00)
                     .maxDuration(10)
                     .enabled(true)
+                    .placementType(1)
                     .sizeIds(List.of(10))
                     .playbackMethodIds(List.of(1))
                     .build();

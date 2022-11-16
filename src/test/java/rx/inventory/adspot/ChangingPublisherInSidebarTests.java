@@ -93,7 +93,7 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
     }
 
 
-    @Test(description = "Change Publisher and check fields", alwaysRun = true)
+    @Test(description = "Change Publisher and check fields")
     public void adSpotChangePublisher() {
 
         testStart()

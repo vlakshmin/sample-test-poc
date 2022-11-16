@@ -302,11 +302,9 @@ public class MediaSortingTableTests extends BaseTest {
     }
 
     private List<Media> getAllItemsByParams(String strParams) {
-        Map<String, Object> queryParams = new HashMap<>();
-        queryParams.put("sort", strParams);
 
         return MediaPrecondition.media()
-                .getMediaWithFilter(queryParams)
+                .getMediaWithFilter(Map.of("sort", strParams))
                 .build()
                 .getMediaGetAllResponse()
                 .getItems();

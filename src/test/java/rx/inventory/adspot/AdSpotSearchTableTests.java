@@ -4,6 +4,7 @@ import api.dto.rx.inventory.adspot.AdSpot;
 import api.preconditionbuilders.AdSpotPrecondition;
 import api.preconditionbuilders.PublisherPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
 import pages.Path;
@@ -143,6 +144,8 @@ public class AdSpotSearchTableTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("GS-2943")
+    @Ignore
     @Test(testName = "Search by 'Publisher'", alwaysRun = true)
     public void adSpotsSearchByPublisher() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
@@ -165,6 +168,8 @@ public class AdSpotSearchTableTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("GS-2943")
+    @Ignore
     @Test(testName = "Search by 'A'", alwaysRun = true)
     public void adSpotsSearchWithPaginatinaton() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
@@ -203,6 +208,8 @@ public class AdSpotSearchTableTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("GS-2943")
+    @Ignore
     @Test(testName = "Search with filter by status", alwaysRun = true)
     public void adSpotsSearchWithFilterByStatus() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
