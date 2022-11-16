@@ -3,8 +3,10 @@ package widgets.protections.sidebar;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
+import widgets.common.floorprice.FloorPriceField;
 import widgets.common.multipane.Multipane;
 import widgets.common.multipane.MultipaneNameImpl;
+import widgets.common.warningbanner.ChangePublisherBanner;
 import widgets.protections.protectiontypemultipane.ProtectionTypeMultipane;
 import widgets.protections.protectiontypemultipane.ProtectionTypeNameImpl;
 
@@ -40,4 +42,7 @@ public abstract class ProtectionsSidebar {
 
     private Multipane advertiserTypeMultipane = new ProtectionTypeMultipane(ProtectionTypeNameImpl.ADVERTISER);
     private Multipane adCategoriesTypeMultipane = new ProtectionTypeMultipane(ProtectionTypeNameImpl.AD_CATEGORIES);
+
+    private FloorPriceField floorPriceField = new FloorPriceField();
+    private ChangePublisherBanner changePublisherBanner = new ChangePublisherBanner();
 }

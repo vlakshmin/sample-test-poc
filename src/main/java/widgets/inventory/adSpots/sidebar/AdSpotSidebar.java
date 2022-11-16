@@ -10,7 +10,7 @@ import widgets.common.warningbanner.ChangePublisherBanner;
 import widgets.inventory.adSpots.sidebar.card.banner.AdSpotBannerCardSidebar;
 import widgets.inventory.adSpots.sidebar.card.anative.AdSpotNativeCardSidebar;
 import widgets.inventory.adSpots.sidebar.card.video.AdSpotVideoCardSidebar;
-import widgets.yield.openPricing.floorprice.FloorPriceField;
+import widgets.common.floorprice.FloorPriceField;
 
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;

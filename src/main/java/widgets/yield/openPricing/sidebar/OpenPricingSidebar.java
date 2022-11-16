@@ -6,7 +6,7 @@ import lombok.Getter;
 import widgets.common.multipane.Multipane;
 import widgets.common.multipane.MultipaneNameImpl;
 import widgets.common.warningbanner.ChangePublisherBanner;
-import widgets.yield.openPricing.floorprice.FloorPriceField;
+import widgets.common.floorprice.FloorPriceField;
 
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
