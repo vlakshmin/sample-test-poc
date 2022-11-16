@@ -1,8 +1,9 @@
-package rx.yield.openpricing;
+package rx.protections;
 
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.media.Media;
+import api.dto.rx.protection.Protection;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
@@ -11,13 +12,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.*;
 import pages.Path;
+import pages.protections.ProtectionsPage;
 import pages.yield.openpricing.OpenPricingPage;
 import rx.BaseTest;
+import rx.enums.MultipaneConstants;
 import widgets.common.multipane.Multipane;
 import widgets.common.multipane.MultipaneNameImpl;
+import widgets.protections.sidebar.CreateProtectionSidebar;
 import widgets.yield.openPricing.sidebar.CreateOpenPricingSidebar;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static api.preconditionbuilders.MediaPrecondition.media;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
@@ -29,17 +34,16 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class OpenPricingChangePublisherTests extends BaseTest {
+public class ProtectionChangePublisherTests extends BaseTest {
 
-    private OpenPricingPage openPricingPage;
-    private CreateOpenPricingSidebar openPricingSidebar;
-    private Multipane pricingMultipane;
+    private ProtectionsPage protectionPage;
+    private CreateProtectionSidebar protectionSidebar;
     private Media media1;
     private Media media2;
     private Publisher publisher1;
     private Publisher publisher2;
 
-    private final static String OPEN_PRICING_NAME = captionWithSuffix("autoPricing");
+    private final static String PROTECTION_NAME = captionWithSuffix("autoProtection");
     private final static String FLOOR_PRICE = "15.00";
     private final static List<Integer> DSP_IDS_PUBLISHER_1 = List.of(6, 1, 2);
     private final static List<Integer> DSP_IDS_PUBLISHER_2 = List.of(9, 11, 13);
@@ -51,10 +55,9 @@ public class OpenPricingChangePublisherTests extends BaseTest {
     final private static String BANNER_TEXT =
             "By changing the Publisher the form will be reset and the previous changes will not be saved.";
 
-    public OpenPricingChangePublisherTests() {
-        openPricingPage = new OpenPricingPage();
-        openPricingSidebar = new CreateOpenPricingSidebar();
-        pricingMultipane = new Multipane(MultipaneNameImpl.INVENTORY);
+    public ProtectionChangePublisherTests() {
+        protectionPage = new ProtectionsPage();
+        protectionSidebar = new CreateProtectionSidebar();
     }
 
     @BeforeClass
@@ -88,37 +91,42 @@ public class OpenPricingChangePublisherTests extends BaseTest {
 
         testStart()
                 .given()
-                .openDirectPath(Path.OPEN_PRICING)
+                .openDirectPath(Path.PROTECTIONS)
                 .logIn(TEST_USER)
-                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .clickOnWebElement(openPricingPage.getCreateOpenPricingButton())
+                .waitAndValidate(disappear, protectionPage.getNuxtProgress())
+                .clickOnWebElement(protectionPage.getCreateProtectionButton())
                 .waitSideBarOpened()
                 .testEnd();
     }
 
+    @Epic("https://rakutenadvertising.atlassian.net/browse/GS-3192")
     @Test(description = "Change Publisher and Click Accept")
     public void changePublisherAndClickAccept() {
 
         testStart()
                 .clickBrowserRefreshButton()
                 .and(String.format("Select Publisher %s", publisher1.getName()))
-                .selectFromDropdown(openPricingSidebar.getPublisherNameDropdown(),
-                        openPricingSidebar.getPublisherNameDropdownItems(), publisher1.getName())
+                .selectFromDropdown(protectionSidebar.getPublisherInput(),
+                        protectionSidebar.getPublisherItems(),  publisher1.getName())
+                .and("Expand  Demand Source multipane and ensure that values in list corresponds with selected publisher")
+                .clickOnWebElement(protectionSidebar.getDemandSourcesMultipane().getPanelNameLabel())
+                .and("Expand  Inventory multipane and ensure that values in list corresponds with selected publisher")
+                .clickOnWebElement(protectionSidebar.getInventoryMultipane().getPanelNameLabel())
                 .testEnd();
         fillAllFields();
         changePublisherAndClickCancel(publisher2.getName());
         validateFieldsValuesShouldNotBeChanged(publisher1);
-        validateListInventory(List.of(media1.getName()));
-        validateListDemandSources(DSP_NAMES_PUBLISHER_1);
+        validateItemsList(List.of(media1.getName()),protectionSidebar.getInventoryMultipane());
+        validateItemsList(DSP_NAMES_PUBLISHER_1,protectionSidebar.getDemandSourcesMultipane() );
         changePublisherAndClickAccept(media2.getPublisherName());
         validateAllFieldsAreReseted();
-        validateListInventory(List.of(media2.getName()));
-        validateListDemandSources(DSP_NAMES_PUBLISHER_2);
+        validateItemsList(List.of(media2.getName()), protectionSidebar.getInventoryMultipane());
+        validateItemsList(DSP_NAMES_PUBLISHER_2, protectionSidebar.getDemandSourcesMultipane());
         fillAllFields();
         changePublisherAndClickAccept(publisher1.getName());
         validateAllFieldsAreReseted();
-        validateListInventory(List.of(media1.getName()));
-        validateListDemandSources(DSP_NAMES_PUBLISHER_1);
+        validateItemsList(List.of(media1.getName()),protectionSidebar.getInventoryMultipane());
+        validateItemsList(DSP_NAMES_PUBLISHER_1, protectionSidebar.getDemandSourcesMultipane());
 
     }
 
@@ -126,70 +134,70 @@ public class OpenPricingChangePublisherTests extends BaseTest {
     @Epic("Is not included in v.1.26.0/GS-3102")
     @Test(description = "Change Publisher and check selected items multipane")
     public void changePublisherAndCheckSelectedItemsMultipane() {
+        var protectionMultipane = protectionSidebar.getInventoryMultipane();
 
         testStart()
                 .clickBrowserRefreshButton()
                 .and(String.format("Select Publisher %s", publisher1.getName()))
-                .selectFromDropdown(openPricingSidebar.getPublisherNameDropdown(),
-                        openPricingSidebar.getPublisherNameDropdownItems(), publisher1.getName())
+                .selectFromDropdown(protectionSidebar.getPublisherInput(),
+                        protectionSidebar.getPublisherItems(), publisher1.getName())
                 .and("Expand 'Inventory' multipane")
-                .clickOnWebElement(pricingMultipane.getPanelNameLabel())
+                .clickOnWebElement(protectionMultipane.getPanelNameLabel())
                 .and("Select first item")
                 .then()
-                .clickOnWebElement(pricingMultipane.getIncludeAllButton())
+                .clickOnWebElement(protectionMultipane.getIncludeAllButton())
                 .then("Validate selected inventory items list should not be empty")
-                .validate(pricingMultipane.countSelectTableItems(), 1)
-                .selectFromDropdown(openPricingSidebar.getPublisherNameDropdown(),
-                        openPricingSidebar.getPublisherNameDropdownItems(), publisher2.getName())
+                .validate(protectionMultipane.countSelectTableItems(), 1)
+                .selectFromDropdown(protectionSidebar.getPublisherInput(),
+                        protectionSidebar.getPublisherItems(),  publisher2.getName())
                 .then(String.format("Validate selected inventory items list should contains items are belonged to %s",
                                 publisher1.getName()))
-                .validate(pricingMultipane.countSelectTableItems(), 1)
-                .validate(pricingMultipane.countIncludedExcludedTableItems(), 1)
+                .validate(protectionMultipane.countSelectTableItems(), 1)
+                .validate(protectionMultipane.countIncludedExcludedTableItems(), 1)
                 .testEnd();
 
     }
 
     @Step("Fill all fields")
     private void fillAllFields() {
+        var protectionMultipane = protectionSidebar.getInventoryMultipane();
 
         testStart()
-                .waitAndValidate(enabled, openPricingSidebar.getNameInput())
-                .and(String.format("Fill Name %s", OPEN_PRICING_NAME))
-                .setValueWithClean(openPricingSidebar.getNameInput(), OPEN_PRICING_NAME)
-                .and(String.format("Set Floor Price %s", FLOOR_PRICE))
-                .setValueWithClean(openPricingSidebar.getFloorPriceField().getFloorPriceInput(), FLOOR_PRICE)
+                .waitAndValidate(enabled, protectionSidebar.getNameInput())
+                .and(String.format("Fill Name %s", PROTECTION_NAME))
+                .setValueWithClean(protectionSidebar.getNameInput(), PROTECTION_NAME)
                 .and("Expand Inventory Multipane and include all")
-                .clickOnWebElement(openPricingSidebar.getInventoryMultipane().getPanelNameLabel())
-                .clickOnWebElement(openPricingSidebar.getInventoryMultipane().getIncludeAllButton())
+                .clickOnWebElement(protectionSidebar.getInventoryMultipane().getPanelNameLabel())
+                .clickOnWebElement(protectionSidebar.getInventoryMultipane().getIncludeAllButton())
                 .and("Expand Geo Multipane and include all")
-                .clickOnWebElement(openPricingSidebar.getGeoMultipane().getPanelNameLabel())
-                .clickOnWebElement(openPricingSidebar.getGeoMultipane().getIncludeAllButton())
+                .clickOnWebElement(protectionSidebar.getGeoMultipane().getPanelNameLabel())
+                .clickOnWebElement(protectionSidebar.getGeoMultipane().getIncludeAllButton())
                 .and("Expand Device Multipane and include all")
-                .clickOnWebElement(openPricingSidebar.getDeviceMultipane().getPanelNameLabel())
-                .clickOnWebElement(openPricingSidebar.getDeviceMultipane().getIncludeAllButton())
+                .clickOnWebElement(protectionSidebar.getDeviceMultipane().getPanelNameLabel())
+                .clickOnWebElement(protectionSidebar.getDeviceMultipane().getIncludeAllButton())
                 .and("Expand Operating System Multipane and include all")
-                .clickOnWebElement(openPricingSidebar.getOperatingSystemMultipane().getPanelNameLabel())
-                .clickOnWebElement(openPricingSidebar.getOperatingSystemMultipane().getIncludeAllButton())
+                .clickOnWebElement(protectionSidebar.getOperatingSystemMultipane().getPanelNameLabel())
+                .clickOnWebElement(protectionSidebar.getOperatingSystemMultipane().getIncludeAllButton())
                 .and("Expand Ad Format Multipane and include all")
-                .clickOnWebElement(openPricingSidebar.getAdFormatMultipane().getPanelNameLabel())
-                .clickOnWebElement(openPricingSidebar.getAdFormatMultipane().getIncludeAllButton())
+                .clickOnWebElement(protectionSidebar.getAdFormatMultipane().getPanelNameLabel())
+                .clickOnWebElement(protectionSidebar.getAdFormatMultipane().getIncludeAllButton())
                 .and("Expand Ad Size Multipane and include all")
-                .clickOnWebElement(openPricingSidebar.getAdSizeMultipane().getPanelNameLabel())
-                .clickOnWebElement(openPricingSidebar.getAdSizeMultipane().getIncludeAllButton())
+                .clickOnWebElement(protectionSidebar.getAdSizeMultipane().getPanelNameLabel())
+                .clickOnWebElement(protectionSidebar.getAdSizeMultipane().getIncludeAllButton())
                 .and("Expand Demand Source Multipane and include all")
-                .clickOnWebElement(openPricingSidebar.getDemandSourcesMultipane().getPanelNameLabel())
-                .clickOnWebElement(openPricingSidebar.getDemandSourcesMultipane().getIncludeAllButton())
+                .clickOnWebElement(protectionSidebar.getDemandSourcesMultipane().getPanelNameLabel())
+                .clickOnWebElement(protectionSidebar.getDemandSourcesMultipane().getIncludeAllButton())
                 .testEnd();
     }
 
     @Step("Change Publisher on {0} and click Accept")
     private void changePublisherAndClickAccept(String publisherName) {
-        var changePublisherBanner = openPricingSidebar.getChangePublisherBanner();
+        var changePublisherBanner = protectionSidebar.getChangePublisherBanner();
 
         testStart()
                 .and(String.format("Select Publisher %s", publisherName))
-                .selectFromDropdown(openPricingSidebar.getPublisherNameDropdown(),
-                        openPricingSidebar.getPublisherNameDropdownItems(), publisherName)
+                .selectFromDropdown(protectionSidebar.getPublisherInput(),
+                        protectionSidebar.getPublisherItems(), publisherName)
                 .then("Check that warning banner appears")
                 .validate(visible, changePublisherBanner.getBannerText(BANNER_TEXT))
                 .then("Click 'Accept' on Warning Banner")
@@ -199,12 +207,12 @@ public class OpenPricingChangePublisherTests extends BaseTest {
 
     @Step("Change Publisher on {0} and click Cancel")
     private void changePublisherAndClickCancel(String publisherName) {
-        var changePublisherBanner = openPricingSidebar.getChangePublisherBanner();
+        var changePublisherBanner = protectionSidebar.getChangePublisherBanner();
 
         testStart()
                 .and(String.format("Select Publisher %s", publisherName))
-                .selectFromDropdown(openPricingSidebar.getPublisherNameDropdown(),
-                        openPricingSidebar.getPublisherNameDropdownItems(), publisherName)
+                .selectFromDropdown(protectionSidebar.getPublisherInput(),
+                        protectionSidebar.getPublisherItems(),  publisherName)
                 .then("Check that warning banner appears")
                 .validate(visible, changePublisherBanner.getBannerText(BANNER_TEXT))
                 .then("Click 'Cancel' on Warning Banner")
@@ -217,78 +225,63 @@ public class OpenPricingChangePublisherTests extends BaseTest {
 
         testStart()
                 .then("Name should be cleaned")
-                .validate(openPricingSidebar.getNameInput(), "")
-                .then("Floor Price should be cleaned")
-                .validate(openPricingSidebar.getFloorPriceField().getFloorPriceInput(), "")
+                .validate(protectionSidebar.getNameInput(), "")
                 .then("Expand Inventory Multipane and ensure that included/excluded items list is empty")
-                .clickOnWebElement(openPricingSidebar.getInventoryMultipane().getPanelNameLabel())
-                .validate(openPricingSidebar.getInventoryMultipane().countIncludedExcludedTableItems(), 0)
+                .clickOnWebElement(protectionSidebar.getInventoryMultipane().getPanelNameLabel())
+                .validate(protectionSidebar.getInventoryMultipane().countIncludedExcludedTableItems(), 0)
                 .then("Expand Geo Multipane and ensure that included/excluded items list is empty")
-                .clickOnWebElement(openPricingSidebar.getGeoMultipane().getPanelNameLabel())
-                .validate(openPricingSidebar.getGeoMultipane().countIncludedExcludedTableItems(), 0)
+                .clickOnWebElement(protectionSidebar.getGeoMultipane().getPanelNameLabel())
+                .validate(protectionSidebar.getGeoMultipane().countIncludedExcludedTableItems(), 0)
                 .then("Expand Device Multipane and ensure that included/excluded items list is empty")
-                .clickOnWebElement(openPricingSidebar.getDeviceMultipane().getPanelNameLabel())
-                .validate(openPricingSidebar.getDeviceMultipane().countIncludedExcludedTableItems(), 0)
+                .clickOnWebElement(protectionSidebar.getDeviceMultipane().getPanelNameLabel())
+                .validate(protectionSidebar.getDeviceMultipane().countIncludedExcludedTableItems(), 0)
                 .then("Expand Operating System Multipane and ensure that included/excluded items list is empty")
-                .clickOnWebElement(openPricingSidebar.getOperatingSystemMultipane().getPanelNameLabel())
-                .validate(openPricingSidebar.getOperatingSystemMultipane().countIncludedExcludedTableItems(), 0)
+                .clickOnWebElement(protectionSidebar.getOperatingSystemMultipane().getPanelNameLabel())
+                .validate(protectionSidebar.getOperatingSystemMultipane().countIncludedExcludedTableItems(), 0)
                 .then("Expand Ad Format Multipane and ensure that included/excluded items list is empty")
-                .clickOnWebElement(openPricingSidebar.getAdFormatMultipane().getPanelNameLabel())
-                .validate(openPricingSidebar.getAdFormatMultipane().countIncludedExcludedTableItems(), 0)
+                .clickOnWebElement(protectionSidebar.getAdFormatMultipane().getPanelNameLabel())
+                .validate(protectionSidebar.getAdFormatMultipane().countIncludedExcludedTableItems(), 0)
                 .then("Expand Ad Sizes Multipane and ensure that included/excluded items list is empty")
-                .clickOnWebElement(openPricingSidebar.getAdSizeMultipane().getPanelNameLabel())
-                .validate(openPricingSidebar.getAdSizeMultipane().countIncludedExcludedTableItems(), 0)
+                .clickOnWebElement(protectionSidebar.getAdSizeMultipane().getPanelNameLabel())
+                .validate(protectionSidebar.getAdSizeMultipane().countIncludedExcludedTableItems(), 0)
                 .then("Expand Demand source Multipane and ensure that included/excluded items list is empty")
-                .clickOnWebElement(openPricingSidebar.getDemandSourcesMultipane().getPanelNameLabel())
-                .validate(openPricingSidebar.getDemandSourcesMultipane().countIncludedExcludedTableItems(), 0)
+                .clickOnWebElement(protectionSidebar.getDemandSourcesMultipane().getPanelNameLabel())
+                .validate(protectionSidebar.getDemandSourcesMultipane().countIncludedExcludedTableItems(), 0)
                 .testEnd();
     }
 
     @Step("Validate fields values should not be changed")
     private void validateFieldsValuesShouldNotBeChanged(Publisher publisher) {
-        var changePublisherBanner = openPricingSidebar.getChangePublisherBanner();
+        var changePublisherBanner = protectionSidebar.getChangePublisherBanner();
 
         testStart()
                 .then(String.format("Publisher name should be %s", publisher.getName()))
-                .validate(openPricingSidebar.getPublisherNameDropdown().getText(), publisher.getName())
-                .then(String.format("Name should be %s", OPEN_PRICING_NAME))
-                .validateAttribute(openPricingSidebar.getNameInput(), "value", OPEN_PRICING_NAME)
-                .then(String.format("Floor Price should be %s", FLOOR_PRICE))
-                .validateAttribute(openPricingSidebar.getFloorPriceField().getFloorPriceInput(), "value", FLOOR_PRICE)
-                .then(String.format("Currency should be %s", publisher.getCurrency()))
-                .validate(openPricingSidebar.getFloorPriceField().getFloorPricePrefix().getText(), publisher.getCurrency())
+                .validate(protectionSidebar.getPublisherNameDropdown().getText(), publisher.getName())
+                .then(String.format("Name should be %s", PROTECTION_NAME))
+                .validateAttribute(protectionSidebar.getNameInput(), "value", PROTECTION_NAME)
                 .testEnd();
-    }
-
-    @Step("Validate Inventory List")
-    private void validateListInventory(List<String> inventory) {
-
-        testStart()
-                .and("Expand Inventory multipane and ensure that values in list corresponds with selected publisher")
-                .clickOnWebElement(openPricingSidebar.getInventoryMultipane().getPanelNameLabel())
-                .validate(openPricingSidebar.getInventoryMultipane().getSelectTableItemByPositionInList(0).getName(), inventory.get(0))
-                .testEnd();
-
     }
 
     @Step("Validate Demand Sources List")
-    private void validateListDemandSources(List<String> dsp) {
+    private void validateItemsList(List<String> itemsList, Multipane multipane) {
+        var item = new AtomicInteger(0);
 
-        testStart()
-                .and("Expand  Demand Source multipane and ensure that values in list corresponds with selected publisher")
-                .clickOnWebElement(openPricingSidebar.getDemandSourcesMultipane().getPanelNameLabel())
-                .validate(openPricingSidebar.getDemandSourcesMultipane().getSelectTableItemByPositionInList(0).getName(), dsp.get(0))
-                .validate(openPricingSidebar.getDemandSourcesMultipane().getSelectTableItemByPositionInList(1).getName(), dsp.get(1))
-                .validate(openPricingSidebar.getDemandSourcesMultipane().getSelectTableItemByPositionInList(2).getName(), dsp.get(2))
-                .testEnd();
+        itemsList.forEach(e ->
+        {
+            var selectedItem = multipane.getSelectTableItemByPositionInList(item.get()).getName();
+                testStart()
+                        .validate(selectedItem, itemsList.get(item.getAndIncrement()))
+                    .testEnd();
+        });
     }
+
 
     @AfterMethod(alwaysRun = true)
     private void logout() {
 
         testStart()
                 .and("Close Ad Spot Sidebar")
-                .clickOnWebElement(openPricingSidebar.getCloseIcon())
+                .clickOnWebElement(protectionSidebar.getCloseIcon())
                 .waitSideBarClosed()
                 .and("Logout")
                 .logOut()
