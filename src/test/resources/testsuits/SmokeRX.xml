@@ -41,7 +41,7 @@
             <class name="rx.inventory.adspot.AdSpotCheckRelatedMediaListTests"/>
         </classes>
     </test>
-
+  
     <test name="Open Pricing">
         <classes>
             <class name="rx.yield.openpricing.OpenPricingChangePublisherTests"/>
@@ -92,6 +92,7 @@
             <class name="rx.admin.publishers.PublisherTest"/>
             <class name="rx.admin.publishers.PublisherSortingTableTests"/>
             <class name="rx.admin.publishers.PublisherCheckPaginationTests"/>
+            <class name="rx.admin.publishers.PublisherCheckColumnsTests"/>
         </classes>
     </test>
 

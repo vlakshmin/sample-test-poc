@@ -105,12 +105,12 @@ public class AdSpotEditTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Save existing Ad Spot without changes", alwaysRun = true, priority = 1)
+    @Test(description = "Save existing Ad Spot without changes", priority = 1)
     public void saveAdSpotWithoutChanges() {
 
      }
 
-    @Test(description = "Change all enabled fields and save", alwaysRun = true, priority = 3)
+    @Test(description = "Change all enabled fields and save", priority = 3)
     private void changeAllFieldsAndSave() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotPage.getAdSpotsTable().getTablePagination();

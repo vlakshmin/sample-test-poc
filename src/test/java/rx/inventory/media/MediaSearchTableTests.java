@@ -5,6 +5,7 @@ import api.dto.rx.inventory.media.Media;
 import api.preconditionbuilders.MediaPrecondition;
 import api.preconditionbuilders.PublisherPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
 import pages.Path;
@@ -142,6 +143,8 @@ public class MediaSearchTableTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("GS-2946")
+    @Ignore
     @Test(testName = "Search by 'Publisher'")
     public void mediaSearchByPublisher() {
         var tableData = mediaPage.getMediaTable().getTableData();
@@ -164,6 +167,8 @@ public class MediaSearchTableTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("GS-2946")
+    @Ignore
     @Test(testName = "Search by 'A'")
     public void mediaSearchWithPaginatinaton() {
         var tableData = mediaPage.getMediaTable().getTableData();
@@ -202,6 +207,8 @@ public class MediaSearchTableTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("GS-2946")
+    @Ignore
     @Test(testName = "Search with filter by status")
     public void mediaSearchWithFilterByStatus() {
         var tableData = mediaPage.getMediaTable().getTableData();
