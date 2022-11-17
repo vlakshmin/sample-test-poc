@@ -1,5 +1,5 @@
 
-package widgets.yield.openPricing.floorprice;
+package widgets.common.floorprice;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

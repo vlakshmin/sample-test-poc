@@ -101,7 +101,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Create Ad Spot with all filled fields", priority = 0, alwaysRun = true)
+    @Test(description = "Create Ad Spot with all filled fields")
     private void createAdSpotWithAllFields() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotPage.getAdSpotsTable().getTablePagination();

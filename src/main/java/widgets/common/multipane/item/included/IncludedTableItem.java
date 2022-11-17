@@ -3,12 +3,14 @@ package widgets.common.multipane.item.included;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import widgets.common.multipane.MultipaneName;
+import widgets.common.multipane.MultipaneNameImpl;
 import widgets.common.multipane.item.abstractt.MultipaneItem;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static java.lang.String.format;
-import static widgets.common.multipane.item.included.IncludedTableItemElements.PARENT_LABEL;
-import static widgets.common.multipane.item.included.IncludedTableItemElements.REMOVE_BUTTON;
+import static widgets.common.multipane.item.abstractt.MultipaneItemElements.*;
+import static widgets.common.multipane.item.abstractt.MultipaneItemElements.NAME;
+import static widgets.common.multipane.item.included.IncludedTableItemElements.*;
 
 /**
  * Keep Selectors of UI elements in {@link IncludedTableItemElements}
@@ -24,6 +26,14 @@ public class IncludedTableItem extends MultipaneItem {
 
     public IncludedTableItem(int position, MultipaneName multipaneName) {
         super(position, INCLUDE_EXCLUDE_TABLE_ITEM, multipaneName);
+
+//        switch ((MultipaneNameImpl) multipaneName) {
+//            case INVENTORY:
+//                super.name = $x(buildXpath(NAME_CHILD.getSelector())).as(format("%s%s", NAME_CHILD.getAlias(), position));
+//                break;
+//            default:
+//                this.name = $x(buildXpath(NAME.getSelector())).as(format("%s%s", NAME.getAlias(), position));
+//        }
 
         this.parentLabel = $x(buildXpath(PARENT_LABEL.getSelector())).as(format("%s%s", PARENT_LABEL.getAlias(), position));
         this.removeButton = $x(buildXpath(REMOVE_BUTTON.getSelector())).as(format("%s%s", REMOVE_BUTTON.getAlias(), position));
