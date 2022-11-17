@@ -6,6 +6,7 @@
             <class name="rx.pipelines.DeleteGeneratedDataTest"/>
         </classes>
     </test>
+
     <test name="Media">
         <classes>
             <class name="rx.inventory.media.MediaCheckFieldsTests"/>
@@ -19,6 +20,7 @@
             <class name="rx.inventory.media.MediaCheckTooltipsTests"/>
         </classes>
     </test>
+
     <test name="Ad Spot">
         <classes>
             <class name="rx.inventory.adspot.AdSpotCheckPaginationTests"/>
@@ -39,6 +41,7 @@
             <class name="rx.inventory.adspot.AdSpotCheckRelatedMediaListTests"/>
         </classes>
     </test>
+
     <test name="Open Pricing">
         <classes>
             <class name="rx.yield.openpricing.OpenPricingChangePublisherTests"/>
@@ -52,6 +55,7 @@
             <class name="rx.yield.openpricing.OpenPricingSingleAdminUploadSidebarTests"/>
         </classes>
     </test>
+
     <test name="Protections Feature">
         <classes>
             <class name="rx.protections.ProtectionsCheckPaginationTests"/>
@@ -61,16 +65,20 @@
             <class name="rx.protections.ProtectionsDeviceMultipaneTests"/>
         </classes>
     </test>
+
     <test name="Deals Feature">
         <classes>
             <class name="rx.sales.deals.DealsTest"/>
         </classes>
     </test>
+
     <test name="Login Feature">
         <classes>
             <class name="rx.login.LoginPositiveTest"/>
+            <class name="rx.login.LoginPageTests"/>
         </classes>
     </test>
+
     <test name="Components Tests">
         <classes>
             <class name="rx.component.multipane.MultipaneTest"/>
@@ -78,6 +86,7 @@
             <class name="rx.component.categories.CategoriesSelectionTests"/>
         </classes>
     </test>
+
     <test name="Publisher Feature">
         <classes>
             <class name="rx.admin.publishers.PublisherTest"/>
@@ -98,9 +107,17 @@
         </classes>
     </test>
 
+    <test name="Users">
+        <classes>
+            <class name="rx.admin.users.UsersSortingTableTests"/>
+            <class name="rx.admin.users.UsersCheckPaginationTests"/>
+        </classes>
+    </test>
+
     <test name="XPost-conditions. Delete records with 'auto' substring">
         <classes>
             <class name="rx.pipelines.DeleteGeneratedDataTest"/>
         </classes>
     </test>
+
 </suite>
