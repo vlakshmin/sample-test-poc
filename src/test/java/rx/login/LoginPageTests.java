@@ -186,7 +186,8 @@ public class LoginPageTests extends BaseTest {
     private void deleteUser(Integer id) {
         user()
                 .setCredentials(USER_FOR_DELETION)
-                .deleteUser(id);
+                .deleteUser(id)
+                .build();
     }
 
     private void loginMethod(String userName, String password) {
