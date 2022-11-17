@@ -83,6 +83,7 @@
             <class name="rx.admin.publishers.PublisherTest"/>
             <class name="rx.admin.publishers.PublisherSortingTableTests"/>
             <class name="rx.admin.publishers.PublisherCheckPaginationTests"/>
+            <class name="rx.admin.publishers.PublisherCheckColumnsTests"/>
             <class name="rx.admin.publishers.PublisherCheckFieldsTests"/>
         </classes>
     </test>
