@@ -135,8 +135,8 @@ public class AdSpotRequiredFieldsOnlyCreateTests extends BaseTest {
 
         testStart()
                 .and("'Show' all columns")
-                .scrollIntoView(tableOptions.getTableOptionsBtn())
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .scrollIntoView(tableOptions.getShowHideColumnsBtn())
+                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ID))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DETAILS))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.AD_SPOT_NAME))

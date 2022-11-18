@@ -52,7 +52,7 @@ public class TableDataTests extends BaseTest {
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, publishersPage.getNuxtProgress())
                 .and()
-                .clickOnWebElement(table.getTableOptionsBtn())
+                .clickOnWebElement(table.getShowHideColumnsBtn())
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.PUBLISHER))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.CATEGORY))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.ACTIVE))
@@ -61,7 +61,7 @@ public class TableDataTests extends BaseTest {
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.CURRENCY))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.AD_OPS_PERSON))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.MAIL))
-                .clickOnWebElement(table.getTableOptionsBtn())
+                .clickOnWebElement(table.getShowHideColumnsBtn())
                 .then()
                 .validateListSize((ElementsCollection) tableData.getColumns(),
                         ColumnNames.PUBLISHER.getName(),
@@ -73,7 +73,7 @@ public class TableDataTests extends BaseTest {
                         ColumnNames.AD_OPS_PERSON.getName(),
                         ColumnNames.MAIL.getName())
 
-                .clickOnWebElement(table.getTableOptionsBtn())
+                .clickOnWebElement(table.getShowHideColumnsBtn())
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.PUBLISHER))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.CATEGORY))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.ACTIVE))
@@ -91,7 +91,7 @@ public class TableDataTests extends BaseTest {
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.MAIL.getName()))
                 .validate(visible, tableData.getColumnHeader(ColumnNames.ID.getName()))
                 .and()
-                .clickOnWebElement(table.getTableOptionsBtn())
+                .clickOnWebElement(table.getShowHideColumnsBtn())
                 .logOut()
                 .testEnd();
 
@@ -108,9 +108,9 @@ public class TableDataTests extends BaseTest {
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, publishersPage.getNuxtProgress())
                 .and()
-                .clickOnWebElement(table.getTableOptionsBtn())
+                .clickOnWebElement(table.getShowHideColumnsBtn())
                 .selectRadioButton(table.getStatusItemRadio(Statuses.ACTIVE))
-                .clickOnWebElement(table.getTableOptionsBtn())
+                .clickOnWebElement(table.getShowHideColumnsBtn())
                 .selectFromDropdown(tablePagenation.getPageMenu(), tablePagenation.getRowNumbersList(), "10")
                 .waitLoading(visible, publishersPage.getTableProgressBar())
                 .waitLoading(disappear, publishersPage.getTableProgressBar())

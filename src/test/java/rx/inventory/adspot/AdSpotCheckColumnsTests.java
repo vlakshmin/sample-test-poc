@@ -49,8 +49,8 @@ public class AdSpotCheckColumnsTests extends BaseTest {
                 .selectFromDropdown(tablePagination.getPageMenu(),
                         tablePagination.getRowNumbersList(), "10")
                 .and("'Show' all columns")
-                .scrollIntoView(tableOptions.getTableOptionsBtn())
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .scrollIntoView(tableOptions.getShowHideColumnsBtn())
+                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ID))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DETAILS))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.AD_SPOT_NAME))

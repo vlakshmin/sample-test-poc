@@ -12,7 +12,7 @@ public enum TableOptionsElements {
     TABLE_OPTIONS_ELEMENTS( "'Table Options' Elements", "//div[@role='menuitem']"),
     TABLE_OPTIONS_MENU( "Table Options Menu", "//*[@class='v-list v-sheet theme--light']"),
     OPTIONS_LIST( "'Table Options' List", "//*[@class='v-menu__content theme--light menuable__content__active']"),
-    TABLE_OPTIONS_COMPONENTS_BUTTON( "'Table Options' button", "//button/span[contains(text(),'Show/Hide Columns')]/.."),
+    SHOW_HIDE_COLUMNS_COMPONENTS_BUTTON( "'Show/Hide Columns' button", "//button/span[contains(text(),'Show/Hide Columns')]/.."),
     ITEM_STATUS_RADIO( "Menu item 'Status' RadioButton", "//div[@role='radiogroup']//label[text()='%s']/..//input"),
     MENU_ITEM( "Menu item", "//*[@class='v-list v-sheet theme--light']//*[@class='v-input__slot']/label[text()='%s']/../div");
 

@@ -126,8 +126,8 @@ public class OpenPricingTests extends BaseTest {
                 .validate((tableData.getColumns()).get(4), ColumnNames.ACTIVE_INACTIVE.getName())
                 .validate((tableData.getColumns()).get(5), ColumnNames.FLOOR_PRICE.getName())
                 .and()
-                .scrollIntoView(tableOptions.getTableOptionsBtn())
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())//
+                .scrollIntoView(tableOptions.getShowHideColumnsBtn())
+                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())//
                 .and()
                 .validateListSize(tableOptions.getOptionItems(),
                         ColumnNames.ID.getName(),
@@ -160,7 +160,7 @@ public class OpenPricingTests extends BaseTest {
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
                 .validateContainsText(tablePagination.getPaginationPanel(), "1-10 of ")
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ID))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.ID.getName()))
                 .then()

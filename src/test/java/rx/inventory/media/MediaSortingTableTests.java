@@ -130,10 +130,10 @@ public class MediaSortingTableTests extends BaseTest {
                 .openDirectPath(Path.MEDIA)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-                .clickOnWebElement(table.getTableOptionsBtn())
+                .clickOnWebElement(table.getShowHideColumnsBtn())
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))
                 .validate(visible, tableData.getColumnHeader(ColumnNames.SITE_APP_STORE_URL.getName()))
-                .clickOnWebElement(table.getTableOptionsBtn())
+                .clickOnWebElement(table.getShowHideColumnsBtn())
                 .testEnd();
     }
 

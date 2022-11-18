@@ -1,5 +1,5 @@
 
-package widgets.common.filter.abstractt;
+package widgets.common.table.filter.abstractt;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
