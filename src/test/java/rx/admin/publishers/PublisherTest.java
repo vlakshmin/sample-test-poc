@@ -76,7 +76,7 @@ public class PublisherTest extends BaseTest {
                 .validateAttribute(createPublisherSidebar.getCurrency(), "disabled", "true")
                 .and()
                 .setValueWithClean(createPublisherSidebar.getNameInput(), PUBLISHER_NAME_EDITED)
-                .setValueWithClean(createPublisherSidebar.getAdOpsInput(), PUBLISHER_AD_OPS_EDITED)
+                .setValueWithClean(createPublisherSidebar.getAdOpsPerson(), PUBLISHER_AD_OPS_EDITED)
                 .clickOnWebElement(createPublisherSidebar.getSaveButton())
                 .waitSideBarClosed()
                 .then()
@@ -88,7 +88,7 @@ public class PublisherTest extends BaseTest {
                 .waitSideBarOpened()
                 .then()
                 .validateAttribute(editPublisherSidebar.getNameInput(), "value", PUBLISHER_NAME_EDITED)
-                .validateAttribute(editPublisherSidebar.getAdOpsInput(), "value", PUBLISHER_AD_OPS_EDITED)
+                .validateAttribute(editPublisherSidebar.getAdOpsPerson(), "value", PUBLISHER_AD_OPS_EDITED)
                 .testEnd();
     }
 
