@@ -1,11 +1,11 @@
 package api.dto.rx.admin.publisher;
 
 import zutils.ObjectMapperUtils;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
@@ -21,8 +21,8 @@ public class PublisherRequest {
     private String domain;
     private String currency;
     private Boolean isEnabled;
-    private List<Integer> dspIds;
     private String salesAccountName;
+    private List<Integer> dspIds;
     private List<Integer> categoryIds;
 
     public String toJson() {
