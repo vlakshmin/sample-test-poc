@@ -9,7 +9,7 @@ import managers.WebDriverManager;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.asserts.SoftAssert;
-import pages.LoginPage;
+import pages.login.LoginPage;
 
 @Slf4j
 public abstract class BaseTest {
