@@ -14,7 +14,7 @@ import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Listeners;
 import pages.BasePage;
-import pages.LoginPage;
+import pages.login.LoginPage;
 import pages.Path;
 import pages.profile.ProfilePage;
 import widgets.common.table.ColumnNames;
