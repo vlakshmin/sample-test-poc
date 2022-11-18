@@ -53,7 +53,7 @@ public class MediaCreateTests extends BaseTest {
 
     @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'IOS' platform type")
-    private void createMediaIOSPlatformType() {
+    public void createMediaIOSPlatformType() {
         var mediaName = captionWithSuffix("autoMediaIOS");
         var appStoreURL = "https://play.google.com/store/apps/";
         var bundle = "com.viber.voip";
