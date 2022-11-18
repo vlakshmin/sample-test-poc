@@ -6,7 +6,6 @@ import api.dto.rx.inventory.media.Media;
 import api.dto.rx.os.OperatingSystem;
 import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.DevicePrecondition;
-import api.preconditionbuilders.MediaPrecondition;
 import api.preconditionbuilders.OpenPricingPrecondition;
 import api.preconditionbuilders.OperatingSystemPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
@@ -179,9 +178,9 @@ public class CreateOpenPricingTest extends BaseTest {
 
         testStart()
                 .and("Adding 'createdBy' column in to Pricing  Table")
-                .clickOnWebElement(pricingTable.getTableOptions().getTableOptionsBtn())
+                .clickOnWebElement(pricingTable.getTableOptions().getShowHideColumnsBtn())
                 .selectCheckBox(pricingTable.getTableOptions().getMenuItemCheckbox(ColumnNames.CREATED_BY))
-                .clickOnWebElement(pricingTable.getTableOptions().getTableOptionsBtn())
+                .clickOnWebElement(pricingTable.getTableOptions().getShowHideColumnsBtn())
                 .then("Check that user under testing is presented in table")
                 .validate(tableData.getCustomCells(ColumnNames.CREATED_BY).get(0), TEST_USER.getMail())
                 .testEnd();
@@ -195,7 +194,7 @@ public class CreateOpenPricingTest extends BaseTest {
 
         testStart()
                 .and("Adding 'updatedBy' column in to Pricing  Table")
-                .clickOnWebElement(pricingTable.getTableOptions().getTableOptionsBtn())
+                .clickOnWebElement(pricingTable.getTableOptions().getShowHideColumnsBtn())
                 .selectCheckBox(pricingTable.getTableOptions().getMenuItemCheckbox(ColumnNames.UPDATED_BY))
                 .then("Check that user under testing is not presented in table")
                 .validate(tableData.getCustomCells(ColumnNames.UPDATED_BY).get(0), EMPTY_STRING)

@@ -1,4 +1,4 @@
-package widgets.common.singlepanefilter.item;
+package widgets.common.table.filter.singlepanefilter.item;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

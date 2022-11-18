@@ -3,7 +3,6 @@ package rx.inventory.media;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Epic;
-import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
@@ -221,7 +220,7 @@ public class MediaEditTests extends BaseTest {
                 .waitAndValidate(not(visible), mediaPage.getToasterMessage().getPanelError())
                 .waitSideBarClosed()
                 .and("Show column 'Site/App Store URL'")
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))
                 .and("Toaster Error message is absent")
                 .waitAndValidate(not(visible), mediaPage.getToasterMessage().getPanelError())

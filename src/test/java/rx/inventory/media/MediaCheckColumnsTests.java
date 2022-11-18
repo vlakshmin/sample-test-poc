@@ -44,8 +44,8 @@ public class MediaCheckColumnsTests extends BaseTest {
         var tableData = mediaPage.getMediaTable().getTableData();
         testStart()
                 .and("'Show' all columns")
-                .scrollIntoView(table.getTableOptionsBtn())
-                .clickOnWebElement(table.getTableOptionsBtn())
+                .scrollIntoView(table.getShowHideColumnsBtn())
+                .clickOnWebElement(table.getShowHideColumnsBtn())
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.ID))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.MEDIA_NAME))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))

@@ -1,7 +1,7 @@
-package widgets.common.singlepanefilter.item;
+package widgets.common.table.filter.singlepanefilter.item;
 
 import com.codeborne.selenide.SelenideElement;
-import widgets.common.singlepanefilter.Singlepane;
+import widgets.common.table.filter.singlepanefilter.Singlepane;
 
 /**
  * Keep Selectors of UI elements in {@link SinglepaneItemElements}

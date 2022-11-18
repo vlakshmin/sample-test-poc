@@ -1,8 +1,8 @@
-package widgets.common.singlepanefilter;
+package widgets.common.table.filter.singlepanefilter;
 
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
-import widgets.common.filter.abstractt.BaseFilter;
+import widgets.common.table.filter.abstractt.BaseFilter;
 
 /**
  * Keep Selectors of UI elements in {@link SinglepaneElements}
