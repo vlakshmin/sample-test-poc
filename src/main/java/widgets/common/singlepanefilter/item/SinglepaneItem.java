@@ -8,7 +8,7 @@ import widgets.common.singlepanefilter.Singlepane;
  */
 public class SinglepaneItem extends Singlepane {
 
-    private SelenideElement name;
     private SelenideElement id;
+    private SelenideElement name;
     private SelenideElement includeIcon;
 }

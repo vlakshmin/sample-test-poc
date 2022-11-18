@@ -2,22 +2,18 @@ package widgets.common.singlepanefilter;
 
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
+import widgets.common.filter.abstractt.BaseFilter;
 
 /**
  * Keep Selectors of UI elements in {@link SinglepaneElements}
  */
 
 @Getter
-public class Singlepane {
+public class Singlepane extends BaseFilter {
 
-
-    protected SinglepaneName singlepaneName;
 
     private SelenideElement searchInput;
-    private SelenideElement excludedIcon;
     private SelenideElement includedIcon;
-    private SelenideElement showInactive;
-    private SelenideElement excludedBanner;
     private SelenideElement includedBanner;
     private SelenideElement panelNameLabel;
     private SelenideElement clearAllButton;
