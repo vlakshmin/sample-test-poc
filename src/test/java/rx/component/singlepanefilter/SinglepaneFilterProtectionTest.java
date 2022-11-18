@@ -9,4 +9,6 @@ import org.testng.annotations.Listeners;
 @Listeners({ScreenShooter.class})
 @Feature(value = "Checking Singlepane Filter Component in Protections Tab")
 public class SinglepaneFilterProtectionTest {
+
+
 }
