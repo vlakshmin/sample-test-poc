@@ -6,13 +6,13 @@ import lombok.Getter;
 
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
-import static widgets.common.table.TableOptionsElements.*;
+import static widgets.common.table.ShowHideColumnsElements.*;
 
 /**
- * Keep Selectors of UI elements in {@link TableOptionsElements}
+ * Keep Selectors of UI elements in {@link ShowHideColumnsElements}
  */
 @Getter
-public class TableOptions {
+public class ShowHideColumns {
 
     private SelenideElement optionsList = $x(OPTIONS_LIST.getSelector()).as(OPTIONS_LIST.getAlias());
     private SelenideElement menuOptions = $x(TABLE_OPTIONS_MENU.getSelector()).as(TABLE_OPTIONS_MENU.getAlias());

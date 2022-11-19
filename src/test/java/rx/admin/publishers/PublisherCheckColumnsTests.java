@@ -37,7 +37,7 @@ public class PublisherCheckColumnsTests extends BaseTest {
 
     @Test
     public void checkColumns() {
-        var tableOptions = publisherPage.getTable().getTableOptions();
+        var tableOptions = publisherPage.getTable().getShowHideColumns();
         var tableData = publisherPage.getTable().getTableData();
         var tablePagination = publisherPage.getTable().getTablePagination();
         testStart()

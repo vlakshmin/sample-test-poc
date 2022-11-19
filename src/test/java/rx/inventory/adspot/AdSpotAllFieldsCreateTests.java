@@ -141,7 +141,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
             dependsOnMethods = "createAdSpotWithAllFields")
     private void checkTableColumns() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
-        var tableOptions = adSpotPage.getAdSpotsTable().getTableOptions();
+        var tableOptions = adSpotPage.getAdSpotsTable().getShowHideColumns();
 
         testStart()
                 .and("'Show' all columns")

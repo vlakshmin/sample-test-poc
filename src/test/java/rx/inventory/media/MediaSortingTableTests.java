@@ -122,7 +122,7 @@ public class MediaSortingTableTests extends BaseTest {
 
     @BeforeMethod
     private void login() {
-        var table = mediaPage.getMediaTable().getTableOptions();
+        var table = mediaPage.getMediaTable().getShowHideColumns();
         var tableData = mediaPage.getMediaTable().getTableData();
 
         testStart()

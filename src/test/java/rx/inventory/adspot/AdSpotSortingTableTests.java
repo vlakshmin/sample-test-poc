@@ -11,7 +11,6 @@ import pages.inventory.adspots.AdSpotsPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -138,7 +137,7 @@ public class AdSpotSortingTableTests extends BaseTest {
 
     @BeforeMethod
     private void login() {
-        var table = adSpotsPage.getAdSpotsTable().getTableOptions();
+        var table = adSpotsPage.getAdSpotsTable().getShowHideColumns();
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         testStart()
                 .given()

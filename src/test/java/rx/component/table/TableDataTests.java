@@ -44,7 +44,7 @@ public class TableDataTests extends BaseTest {
 
     @Test
     public void checkColumns() {
-        var table = publishersPage.getTable().getTableOptions();
+        var table = publishersPage.getTable().getShowHideColumns();
         var tableData = publishersPage.getTable().getTableData();
         testStart()
                 .given()
@@ -99,7 +99,7 @@ public class TableDataTests extends BaseTest {
 
     @Test
     public void checkPagination() {
-        var table = publishersPage.getTable().getTableOptions();
+        var table = publishersPage.getTable().getShowHideColumns();
         var tableData = publishersPage.getTable().getTableData();
         var tablePagenation = publishersPage.getTable().getTablePagination();
         testStart()
@@ -129,7 +129,7 @@ public class TableDataTests extends BaseTest {
 
     @Test
     public void checkSearch() {
-        var table = publishersPage.getTable().getTableOptions();
+        var table = publishersPage.getTable().getShowHideColumns();
         var tableData = publishersPage.getTable().getTableData();
         testStart()
                 .given()

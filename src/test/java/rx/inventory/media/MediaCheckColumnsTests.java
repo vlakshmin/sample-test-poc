@@ -40,7 +40,7 @@ public class MediaCheckColumnsTests extends BaseTest {
 
     @Test
     public void checkColumns() {
-        var table = mediaPage.getMediaTable().getTableOptions();
+        var table = mediaPage.getMediaTable().getShowHideColumns();
         var tableData = mediaPage.getMediaTable().getTableData();
         testStart()
                 .and("'Show' all columns")

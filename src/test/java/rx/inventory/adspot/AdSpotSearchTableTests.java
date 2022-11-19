@@ -213,7 +213,7 @@ public class AdSpotSearchTableTests extends BaseTest {
     @Test(testName = "Search with filter by status", alwaysRun = true)
     public void adSpotsSearchWithFilterByStatus() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
-        var tableOptions = adSpotsPage.getAdSpotsTable().getTableOptions();
+        var tableOptions = adSpotsPage.getAdSpotsTable().getShowHideColumns();
 
         testStart()
                 .given()

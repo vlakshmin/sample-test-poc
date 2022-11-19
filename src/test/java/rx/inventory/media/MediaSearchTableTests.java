@@ -212,7 +212,7 @@ public class MediaSearchTableTests extends BaseTest {
     @Test(testName = "Search with filter by status")
     public void mediaSearchWithFilterByStatus() {
         var tableData = mediaPage.getMediaTable().getTableData();
-        var tableOptions = mediaPage.getMediaTable().getTableOptions();
+        var tableOptions = mediaPage.getMediaTable().getShowHideColumns();
 
         testStart()
                 .given()

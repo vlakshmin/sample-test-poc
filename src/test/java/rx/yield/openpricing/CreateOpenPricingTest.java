@@ -178,9 +178,9 @@ public class CreateOpenPricingTest extends BaseTest {
 
         testStart()
                 .and("Adding 'createdBy' column in to Pricing  Table")
-                .clickOnWebElement(pricingTable.getTableOptions().getShowHideColumnsBtn())
-                .selectCheckBox(pricingTable.getTableOptions().getMenuItemCheckbox(ColumnNames.CREATED_BY))
-                .clickOnWebElement(pricingTable.getTableOptions().getShowHideColumnsBtn())
+                .clickOnWebElement(pricingTable.getShowHideColumns().getShowHideColumnsBtn())
+                .selectCheckBox(pricingTable.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_BY))
+                .clickOnWebElement(pricingTable.getShowHideColumns().getShowHideColumnsBtn())
                 .then("Check that user under testing is presented in table")
                 .validate(tableData.getCustomCells(ColumnNames.CREATED_BY).get(0), TEST_USER.getMail())
                 .testEnd();
@@ -194,8 +194,8 @@ public class CreateOpenPricingTest extends BaseTest {
 
         testStart()
                 .and("Adding 'updatedBy' column in to Pricing  Table")
-                .clickOnWebElement(pricingTable.getTableOptions().getShowHideColumnsBtn())
-                .selectCheckBox(pricingTable.getTableOptions().getMenuItemCheckbox(ColumnNames.UPDATED_BY))
+                .clickOnWebElement(pricingTable.getShowHideColumns().getShowHideColumnsBtn())
+                .selectCheckBox(pricingTable.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_BY))
                 .then("Check that user under testing is not presented in table")
                 .validate(tableData.getCustomCells(ColumnNames.UPDATED_BY).get(0), EMPTY_STRING)
                 .testEnd();

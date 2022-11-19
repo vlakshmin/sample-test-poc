@@ -99,7 +99,7 @@ public class PublisherSortingTableTests extends BaseTest {
 
     @BeforeMethod
     private void login() {
-        var table = publishersPage.getTable().getTableOptions();
+        var table = publishersPage.getTable().getShowHideColumns();
         var tableData = publishersPage.getTable().getTableData();
         testStart()
                 .given()

@@ -128,7 +128,7 @@ public class MediaEditTests extends BaseTest {
 
         var tableData = mediaPage.getMediaTable().getTableData();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
-        var tableOptions = mediaPage.getMediaTable().getTableOptions();
+        var tableOptions = mediaPage.getMediaTable().getShowHideColumns();
 
         testStart()
                 .and(String.format("Search media %s", media.getName()))
