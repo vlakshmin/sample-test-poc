@@ -1,6 +1,7 @@
 package widgets.common.table;
 
 import lombok.Getter;
+import widgets.common.table.filter.FilterOptions;
 
 @Getter
 public class Table {

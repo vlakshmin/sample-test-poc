@@ -4,6 +4,9 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import widgets.common.table.ColumnNames;
+import widgets.common.table.filter.activebooleanfilter.ActiveBooleanFilter;
+import widgets.common.table.filter.booleanfilter.BooleanFilter;
+import widgets.common.table.filter.singlepanefilter.Singlepane;
 
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
