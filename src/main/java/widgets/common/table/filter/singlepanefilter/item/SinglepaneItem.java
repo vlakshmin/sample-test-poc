@@ -18,19 +18,27 @@ public class SinglepaneItem {
 
     private SelenideElement id;
     private SelenideElement name;
-    private SelenideElement includeIcon;
+    private SelenideElement includeButton;
 
     @Getter(AccessLevel.NONE)
     private int position;
     @Getter(AccessLevel.NONE)
     protected String singlepaneItem;
 
-    public SinglepaneItem(int position) {
+    public SinglepaneItem(int position, String columnFilterName) {
 
         this.position = position;
-        this.id = $x(buildXpath(ID.getSelector())).as(format("%s", ID.getAlias(), position));
-        this.name = $x(buildXpath(NAME.getSelector())).as(format("%s", NAME.getAlias(), position));
-        this.includeIcon = $x(buildXpath(INCLUDE_ICON.getSelector())).as(format("%s", INCLUDE_ICON.getAlias(), position));
+
+        switch (columnFilterName) {
+            case "ID":
+                this.id = $x(buildXpath(format(ID.getSelector(), 2))).as(ID.getAlias());
+                this.name = $x(buildXpath(format(NAME.getSelector(), 3))).as(NAME.getAlias());
+                this.includeButton = $x(buildXpath(format(INCLUDE_ICON.getSelector(), 4))).as(INCLUDE_ICON.getAlias());
+                break;
+            default:
+                this.name = $x(buildXpath(format(NAME.getSelector(), 2))).as(NAME.getAlias());
+                this.includeButton = $x(buildXpath(format(INCLUDE_ICON.getSelector(), 3))).as(INCLUDE_ICON.getAlias());
+        }
     }
 
     protected String buildXpath(String elementXpath) {

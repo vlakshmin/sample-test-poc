@@ -5,6 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import org.openqa.selenium.WebElement;
+import widgets.common.table.ColumnNames;
 import widgets.common.table.filter.abstractt.BaseFilter;
 import widgets.common.table.filter.singlepanefilter.item.SinglepaneItem;
 
@@ -28,19 +29,26 @@ import static widgets.common.table.filter.singlepanefilter.SinglepaneElements.*;
 @Getter
 public class Singlepane extends BaseFilter {
 
+    protected String singlepaneName;
+
     private SelenideElement searchInput = $x(SEARCH_INPUT.getSelector()).as(SEARCH_INPUT.getAlias());
     private SelenideElement includedIcon = $x(INCLUDE_ALL_BUTTON.getSelector()).as(INCLUDE_ALL_BUTTON.getAlias());
     private SelenideElement clearAllButton = $x(CLEAR_ALL_BUTTON.getSelector()).as(CLEAR_ALL_BUTTON.getAlias());
     private SelenideElement searchIcon = $x(SEARCH_ICON.getSelector()).as(SEARCH_ICON.getAlias());
     ;
     private SelenideElement includeAllButton = $x(INCLUDE_ALL_BUTTON.getSelector()).as(INCLUDE_ALL_BUTTON.getAlias());
-    private SelenideElement itemsQuantityString = $x(INCLUDED_ITEMS_QUANTITY_STRING.getSelector()).as(INCLUDED_ITEMS_QUANTITY_STRING.getAlias());
-    ;
+    private SelenideElement itemsTotalQuantityString = $x(TOTAL_ITEMS_QUANTITY_STRING.getSelector()).as(TOTAL_ITEMS_QUANTITY_STRING.getAlias());
+    private SelenideElement itemsIncludedQuantityString = $x(INCLUDED_ITEMS_QUANTITY_STRING.getSelector()).as(INCLUDED_ITEMS_QUANTITY_STRING.getAlias());
+
 
     private ElementsCollection filterItems = $$x(FILTER_ITEMS.getSelector()).as(FILTER_ITEMS.getAlias());
-    ;
+
     @Getter
     private List<SinglepaneItem> filterItemsList = new ArrayList<>();
+
+    public Singlepane(ColumnNames singlepaneName) {
+        this.singlepaneName = singlepaneName.getName();
+    }
 
     public SinglepaneItem getFilterItemByPositionInList(int position) {
 
@@ -67,7 +75,7 @@ public class Singlepane extends BaseFilter {
             filterItemsList.clear();
         }
         filterItemsList.addAll(filterItems.stream()
-                .map(e -> new SinglepaneItem(position.getAndIncrement()))
+                .map(e -> new SinglepaneItem(position.getAndIncrement(), singlepaneName))
                 .collect(Collectors.toList()));
     }
 

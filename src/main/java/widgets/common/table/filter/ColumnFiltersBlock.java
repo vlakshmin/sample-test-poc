@@ -21,9 +21,9 @@ public class ColumnFiltersBlock {
     private SelenideElement filterOptionsMenu = $x(FILTER_OPTIONS_MENU.getSelector()).as(FILTER_OPTIONS_MENU.getAlias());
     private ElementsCollection filterOptionItems = $$x(FILTER_OPTIONS_ITEMS.getSelector()).as(FILTER_OPTIONS_ITEMS.getAlias());
     private SelenideElement columnFiltersButton = $x(COLUMN_FILTERS_BUTTON.getSelector()).as(COLUMN_FILTERS_BUTTON.getAlias());
-    private Singlepane singlepane = new Singlepane();
+    private Singlepane singlepaneID = new Singlepane(ColumnNames.ID);
+    private Singlepane singlepane = new Singlepane(ColumnNames.NAME);
 
-    Singlepane singlepane = new Singlepane();
     BooleanFilter booleanFilter = new BooleanFilter();
     //Todo add platform wirget
     ActiveBooleanFilter activeBooleanFilter = new ActiveBooleanFilter();
