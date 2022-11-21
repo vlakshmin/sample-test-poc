@@ -3,7 +3,6 @@ package rx.inventory.media;
 import api.dto.rx.admin.publisher.Publisher;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Epic;
-import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
@@ -53,7 +52,7 @@ public class MediaCreateTests extends BaseTest {
 
     @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'IOS' platform type")
-    private void createMediaIOSPlatformType() {
+    public void createMediaIOSPlatformType() {
         var mediaName = captionWithSuffix("autoMediaIOS");
         var appStoreURL = "https://play.google.com/store/apps/";
         var bundle = "com.viber.voip";
@@ -107,7 +106,7 @@ public class MediaCreateTests extends BaseTest {
     @Step("Create Media {0} with platform type {1}")
     private void createAndCheckCreatedMedia(String mediaName, String url, String bundle, String platformType) {
         var tableData = mediaPage.getMediaTable().getTableData();
-        var tableOptions = mediaPage.getMediaTable().getTableOptions();
+        var tableOptions = mediaPage.getMediaTable().getShowHideColumns();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
 
         testStart()
@@ -175,7 +174,7 @@ public class MediaCreateTests extends BaseTest {
                 .and("Toaster Error message is absent")
                 .waitAndValidate(not(visible), mediaPage.getToasterMessage().getPanelError())
                 .and("Show column 'Site/App Store URL'")
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))
                 .then("Validate data in table")
                 .validate(tableData.getCellByRowValue(ColumnNames.STATUS, ColumnNames.MEDIA_NAME, mediaName), Statuses.ACTIVE.getStatus())

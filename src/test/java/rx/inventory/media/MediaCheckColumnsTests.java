@@ -40,12 +40,12 @@ public class MediaCheckColumnsTests extends BaseTest {
 
     @Test
     public void checkColumns() {
-        var table = mediaPage.getMediaTable().getTableOptions();
+        var table = mediaPage.getMediaTable().getShowHideColumns();
         var tableData = mediaPage.getMediaTable().getTableData();
         testStart()
                 .and("'Show' all columns")
-                .scrollIntoView(table.getTableOptionsBtn())
-                .clickOnWebElement(table.getTableOptionsBtn())
+                .scrollIntoView(table.getShowHideColumnsBtn())
+                .clickOnWebElement(table.getShowHideColumnsBtn())
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.ID))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.MEDIA_NAME))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))

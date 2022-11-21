@@ -40,7 +40,7 @@ public class VerifyPublisherTests extends BaseTest {
     @Test(enabled = true)
     public void verifySingleDeactivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
+        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
         var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
         testStart()
                 .given()
@@ -61,7 +61,7 @@ public class VerifyPublisherTests extends BaseTest {
     @Test(enabled = true)
     public void verifySingleActivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
+        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
         var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
         testStart()
                 .given()
@@ -101,7 +101,7 @@ public class VerifyPublisherTests extends BaseTest {
     @Test(enabled = true)
     public void verifyBulkActivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
+        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
         var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
         testStart()
                 .given()
@@ -126,7 +126,7 @@ public class VerifyPublisherTests extends BaseTest {
     @Test(enabled = true)
     public void verifySingleDeactivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
+        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
         var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
         testStart()
                 .given()
@@ -148,7 +148,7 @@ public class VerifyPublisherTests extends BaseTest {
     @Test(enabled = true)
     public void verifySingleActivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
+        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
         var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
         testStart()
                 .given()
@@ -167,7 +167,7 @@ public class VerifyPublisherTests extends BaseTest {
     @Test(enabled = true)
     public void verifyBulkDeactivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
+        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
         var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
         testStart()
                 .given()
@@ -201,7 +201,7 @@ public class VerifyPublisherTests extends BaseTest {
     @Test(enabled = true)
     public void verifyBulkActivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
+        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
         var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
         testStart()
                 .given()

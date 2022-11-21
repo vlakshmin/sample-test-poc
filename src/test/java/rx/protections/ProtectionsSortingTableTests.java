@@ -1,7 +1,6 @@
 package rx.protections;
 
 import api.dto.rx.protection.Protection;
-import api.preconditionbuilders.ProtectionsPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +20,6 @@ import static api.preconditionbuilders.ProtectionsPrecondition.protection;
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
-import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
 
 
@@ -88,7 +86,7 @@ public class ProtectionsSortingTableTests extends BaseTest {
 
     @BeforeMethod
     private void login() {
-        var table = protectionsPage.getProtectionsTable().getTableOptions();
+        var table = protectionsPage.getProtectionsTable().getShowHideColumns();
         var tableData = protectionsPage.getProtectionsTable().getTableData();
         testStart()
                 .given()

@@ -1,5 +1,5 @@
 
-package widgets.common.filter.activebooleanfilter;
+package widgets.common.table.filter.activebooleanfilter;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
