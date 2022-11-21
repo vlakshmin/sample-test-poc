@@ -213,6 +213,7 @@ public class MediaSearchTableTests extends BaseTest {
     public void mediaSearchWithFilterByStatus() {
         var tableData = mediaPage.getMediaTable().getTableData();
         var tableOptions = mediaPage.getMediaTable().getShowHideColumns();
+        var filterOptions = mediaPage.getMediaTable().getColumnFiltersBlock();
 
         testStart()
                 .given()
@@ -228,16 +229,19 @@ public class MediaSearchTableTests extends BaseTest {
                 .waitAndValidate(disappear, mediaPage.getTableProgressBar())
                 .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME), searchBoth)
                 .and("Set filter 'Active'")
-                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
-                .selectRadioButton(tableOptions.getStatusItemRadio(Statuses.ACTIVE))
+                .clickOnWebElement(filterOptions.getColumnFiltersButton())
+                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
+                .selectRadioButton(filterOptions.getActiveBooleanFilter().getActiveRadioButton())
+                .clickOnWebElement(filterOptions.getActiveBooleanFilter().getSubmitButton())
                 .scrollIntoView(tableData.getSearch())
-                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .waitAndValidate(disappear, mediaPage.getTableProgressBar())
                 .then(String.format("Validate data in column 'Media Name' should contain '%s'", FILTER_SEARCH))
                 .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME), searchActive)
                 .and("Set filter 'Inactive'")
-                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
-                .selectRadioButton(tableOptions.getStatusItemRadio(Statuses.INACTIVE))
+                .clickOnWebElement(filterOptions.getColumnFiltersButton())
+                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
+                .selectRadioButton(filterOptions.getActiveBooleanFilter().getInactiveRadioButton())
+                .clickOnWebElement(filterOptions.getActiveBooleanFilter().getSubmitButton())
                 .scrollIntoView(tableData.getSearch())
                 .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .waitAndValidate(disappear, mediaPage.getTableProgressBar())
