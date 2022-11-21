@@ -226,7 +226,7 @@ public class MediaEditTests extends BaseTest {
                 .waitAndValidate(not(visible), mediaPage.getToasterMessage().getPanelError())
                 .then("Validate data in table")
                 .validate(tableData.getCellByRowValue(ColumnNames.ID, ColumnNames.MEDIA_NAME, mediaNameUpdated), media.getId().toString())
-                .validate(tableData.getCellByRowValue(ColumnNames.STATUS, ColumnNames.MEDIA_NAME, mediaNameUpdated), Statuses.INACTIVE.getStatus())
+                .validate(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE, ColumnNames.MEDIA_NAME, mediaNameUpdated), Statuses.INACTIVE.getStatus())
                 .validate(tableData.getCellByRowValue(ColumnNames.PUBLISHER, ColumnNames.MEDIA_NAME, mediaNameUpdated), media.getPublisherName())
                 .validate(tableData.getCellByRowValue(ColumnNames.PLATFORM, ColumnNames.MEDIA_NAME, mediaNameUpdated), mediaTypeUpdated)
                 .validate(tableData.getCellByRowValue(ColumnNames.SITE_APP_STORE_URL, ColumnNames.MEDIA_NAME, mediaNameUpdated), urlUpdated)
