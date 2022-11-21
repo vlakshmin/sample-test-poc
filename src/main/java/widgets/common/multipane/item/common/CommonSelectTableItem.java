@@ -3,7 +3,6 @@ package widgets.common.multipane.item.common;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import widgets.common.multipane.MultipaneName;
-import widgets.common.multipane.MultipaneNameImpl;
 import widgets.common.multipane.item.abstractt.MultipaneItem;
 
 import static com.codeborne.selenide.Selenide.$x;

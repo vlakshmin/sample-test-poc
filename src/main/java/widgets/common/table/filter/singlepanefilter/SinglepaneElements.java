@@ -14,7 +14,7 @@ public enum SinglepaneElements {
     TOTAL_ITEMS_QUANTITY_STRING("'Total Items Quantity' String in Singlepane", "//span/div[contains(text(),'Include All')]/../div[@class='item-count']"),
     INCLUDED_ITEMS_QUANTITY_STRING("'Included Items Quantity' String in Singlepane", "//span/div[contains(text(),'Clear All')]/../div[@class='item-count']"),
 
-    SELECT_TABLE_ITEMS("Select Table Elements","//table[contains(@class,'select-table')]/tbody");
+    FILTER_ITEMS("Select Filter Elements","//table[contains(@class,'select-table')]/tbody");
 
     private String alias;
     private String selector;
