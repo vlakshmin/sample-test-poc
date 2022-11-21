@@ -139,7 +139,6 @@ public class LoginPageTests extends BaseTest {
     public void verifySuccessButtonTest() {
         loginMethod(TEST_USER.getMail(), TEST_USER.getPassword());
         testStart()
-                .validate(Condition.visible, loginPage.getLoginResultButton())
                 .validateContainsText(loginPage.getLoginResultButton(), "SUCCESS!")
                 .testEnd();
     }
