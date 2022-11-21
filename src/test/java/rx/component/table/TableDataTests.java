@@ -2,7 +2,6 @@ package rx.component.table;
 
 import api.dto.rx.admin.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
@@ -46,7 +45,7 @@ public class TableDataTests extends BaseTest {
     public void checkColumns() {
         var tableData = publishersPage.getTable().getTableData();
         var table = publishersPage.getTable().getShowHideColumns();
-        var filterOptions = publishersPage.getTable().getFilterOptions();
+        var filterOptions = publishersPage.getTable().getColumnFiltersBlock();
 
         testStart()
                 .given()
@@ -107,7 +106,7 @@ public class TableDataTests extends BaseTest {
     @Test
     public void checkPagination() {
         var tableData = publishersPage.getTable().getTableData();
-        var filterOptions = publishersPage.getTable().getFilterOptions();
+        var filterOptions = publishersPage.getTable().getColumnFiltersBlock();
         var tablePagenation = publishersPage.getTable().getTablePagination();
         testStart()
                 .given()
