@@ -287,7 +287,7 @@ public class MediaSearchTableTests extends BaseTest {
         Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("search", strParams);
         queryParams.put("sort", "name-asc");
-        if (isEnabled != null) queryParams.put("enabled", isEnabled);
+        if (isEnabled != null) queryParams.put("active", isEnabled);
 
         return MediaPrecondition.media()
                 .getMediaWithFilter(queryParams)
