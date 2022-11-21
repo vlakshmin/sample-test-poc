@@ -4,7 +4,6 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import widgets.common.table.ColumnNames;
-import widgets.common.table.filter.singlepanefilter.Singlepane;
 
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
@@ -20,6 +19,9 @@ public class FilterOptions {
     private ElementsCollection filterOptionItems = $$x(FILTER_OPTIONS_ITEMS.getSelector()).as(FILTER_OPTIONS_ITEMS.getAlias());
     private SelenideElement columnFiltersButton = $x(COLUMN_FILTERS_BUTTON.getSelector()).as(COLUMN_FILTERS_BUTTON.getAlias());
     private Singlepane singlepane = new Singlepane();
+
+    BooleanFilter booleanFilter = new BooleanFilter();
+    ActiveBooleanFilter activeBooleanFilter = new ActiveBooleanFilter();
 
     public SelenideElement getFilterOptionByName(ColumnNames column) {
 

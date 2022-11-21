@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum TableOptionsElements {
+public enum ShowHideColumnsElements {
 
     MENU_ITEM_CHECKBOX( "Menu Item Checkbox", "//label[text()='%s']/..//i"),
     CHECKBOX_PARENT("Checkbox Parent Element", "//label[text()='%s']/../div"),

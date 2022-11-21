@@ -4,7 +4,6 @@ import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 import widgets.common.ToasterMessage;
 import widgets.common.menusidebar.MenuSidebar;
-import widgets.common.table.TableOptionsElements;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static pages.BasePageElements.*;

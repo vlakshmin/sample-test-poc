@@ -40,7 +40,7 @@ public class AdSpotCheckColumnsTests extends BaseTest {
 
     @Test
     public void checkColumns() {
-        var tableOptions = adSpotsPage.getAdSpotsTable().getTableOptions();
+        var tableOptions = adSpotsPage.getAdSpotsTable().getShowHideColumns();
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
         testStart()

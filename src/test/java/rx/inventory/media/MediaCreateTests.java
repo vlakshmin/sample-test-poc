@@ -106,7 +106,7 @@ public class MediaCreateTests extends BaseTest {
     @Step("Create Media {0} with platform type {1}")
     private void createAndCheckCreatedMedia(String mediaName, String url, String bundle, String platformType) {
         var tableData = mediaPage.getMediaTable().getTableData();
-        var tableOptions = mediaPage.getMediaTable().getTableOptions();
+        var tableOptions = mediaPage.getMediaTable().getShowHideColumns();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
 
         testStart()
