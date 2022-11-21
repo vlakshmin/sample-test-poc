@@ -1,6 +1,5 @@
 package rx.inventory.media;
 
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
@@ -42,7 +41,7 @@ public class MediaCheckColumnsTests extends BaseTest {
     public void checkColumns() {
         var tableData = mediaPage.getMediaTable().getTableData();
         var table = mediaPage.getMediaTable().getShowHideColumns();
-        var filterOptions = mediaPage.getMediaTable().getFilterOptions();
+        var filterOptions = mediaPage.getMediaTable().getColumnFiltersBlock();
         testStart()
                 .and("'Show' all columns")
                 .scrollIntoView(table.getShowHideColumnsBtn())

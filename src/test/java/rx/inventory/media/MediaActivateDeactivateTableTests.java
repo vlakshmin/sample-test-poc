@@ -210,7 +210,7 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
     @Test(testName = "Activate bulk media")
     public void activateBulkMedia() {
         var tableData = mediaPage.getMediaTable().getTableData();
-        var filterOptions = mediaPage.getMediaTable().getFilterOptions();
+        var filterOptions = mediaPage.getMediaTable().getColumnFiltersBlock();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
 
         testStart()
