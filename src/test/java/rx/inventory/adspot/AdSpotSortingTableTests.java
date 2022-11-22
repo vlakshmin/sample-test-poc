@@ -50,7 +50,9 @@ public class AdSpotSortingTableTests extends BaseTest {
     @BeforeClass
     private void loginAndCreateExpectedResuts() {
 
-        if (getTotalAdSpots() < 60) generateAdSpots();
+        if (getTotalAdSpots() < 60) {
+            generateAdSpots();
+        }
 
         totalAdSpots = getTotalAdSpots();
 

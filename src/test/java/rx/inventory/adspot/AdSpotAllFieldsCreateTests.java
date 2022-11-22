@@ -38,6 +38,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 @Slf4j
 @Listeners({ScreenShooter.class})
 public class AdSpotAllFieldsCreateTests extends BaseTest {
+
     private Media media;
     private Publisher publisher;
     private AdSpotsPage adSpotPage;
@@ -67,9 +68,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
 
     final private static String AD_SPOT_NAME = captionWithSuffix("4autoAdSpot");
 
-    private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-    private static Date date = new Date();
-    final private static String currentDate = formatter.format(date);
+    final private static String currentDate = new SimpleDateFormat("MMM dd yyyy").format( new Date());
 
 
     public AdSpotAllFieldsCreateTests() {
