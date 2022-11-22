@@ -1,7 +1,9 @@
 package rx.protections;
 
 import api.dto.rx.protection.Protection;
+import api.dto.rx.sales.deals.Deal;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.AfterClass;
@@ -10,6 +12,9 @@ import org.testng.annotations.Test;
 import pages.dashbord.DashboardPage;
 import pages.protections.ProtectionsPage;
 import rx.BaseTest;
+
+import java.text.SimpleDateFormat;
+import java.util.Map;
 
 import static api.preconditionbuilders.ProtectionsPrecondition.protection;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
@@ -76,5 +81,4 @@ public class ProtectionsTest extends BaseTest {
               log.info(String.format("Deleted publisher %s",protectionResponse.getPublisherId()));
         }
     }
-
 }
