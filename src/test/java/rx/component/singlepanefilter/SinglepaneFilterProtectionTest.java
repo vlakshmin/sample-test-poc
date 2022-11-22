@@ -42,9 +42,9 @@ public class SinglepaneFilterProtectionTest extends BaseTest {
     @BeforeClass
     private void login(){
 
-        countItems = getCountItems();
+        countItems = countProtectionItems();
         countPublishers = getCountPublishers();
-        countFilteredPublishers = getCountFilteredPublishers();
+        countFilteredPublishers = getCountFilteredPublishers("rakuten");
 
         testStart()
                 .given()
@@ -76,37 +76,37 @@ public class SinglepaneFilterProtectionTest extends BaseTest {
                 .then("Validate Column Filter Header")
                 .validate(filter.getSinglepane().getFilterHeaderLabel(), StringUtils.getFilterHeader(ColumnNames.PUBLISHER.getName()))
                 .then("Validate Include All Count items")
-                .validate(filter.getSinglepane().getItemsTotalQuantityString(),format("(%s)",countPublishers))
+                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(),format("(%s)",countPublishers))
                 .then("Validate Included Count items")
-                .validate(filter.getSinglepane().getItemsIncludedQuantityString(),format("(%s)",0))
+                .validate(filter.getSinglepane().getItemsIncludedQuantityLabel(),format("(%s)",0))
                 .and("Search publisher")
                 .setValueWithClean(filter.getSinglepane().getSearchInput(), "rakuten")
                 .validate(visible, protectionPage.getTableProgressBar())
                 .validate(not(visible),protectionPage.getTableProgressBar())
                 .clickOnWebElement(filter.getSinglepane().getFilterItemByName(PUBLISHER_NAME).getName())
                 .then("Validate Include All Filtered items")
-                .validate(filter.getSinglepane().getItemsTotalQuantityString(),format("(%s)",countFilteredPublishers))
+                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(),format("(%s)",countFilteredPublishers))
                 .then("Validate Included Count items")
-                .validate(filter.getSinglepane().getItemsIncludedQuantityString(),"(1)")
+                .validate(filter.getSinglepane().getItemsIncludedQuantityLabel(),"(1)")
                 .validate(visible, filter.getSinglepane().getFilterItemByPositionInList(1).getIncludeButton())
                 .and("Click on Include All")
                 .clickOnWebElement(filter.getSinglepane().getIncludeAllButton())
                 .then("Validate Include All Count items")
-                .validate(filter.getSinglepane().getItemsTotalQuantityString(),format("(%s)",countFilteredPublishers))
+                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(),format("(%s)",countFilteredPublishers))
                 .then("Validate Included Count items")
-                .validate(filter.getSinglepane().getItemsIncludedQuantityString(),format("(%s)",countFilteredPublishers))
+                .validate(filter.getSinglepane().getItemsIncludedQuantityLabel(),format("(%s)",countFilteredPublishers))
                 .clickOnWebElement(filter.getSinglepane().getClearAllButton())
                 .then("Validate Include All Count items")
-                .validate(filter.getSinglepane().getItemsTotalQuantityString(),format("(%s)",countFilteredPublishers))
+                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(),format("(%s)",countFilteredPublishers))
                 .then("Validate Included Count items")
-                .validate(filter.getSinglepane().getItemsIncludedQuantityString(),format("(%s)",0))
+                .validate(filter.getSinglepane().getItemsIncludedQuantityLabel(),format("(%s)",0))
                 .clickOnWebElement(filter.getSinglepane().getSubmitButton())
                 .then("ColumnsFilter widget is closed")
                 .validate(not(visible),filter.getFilterOptionsMenu())
                 .testEnd();
     }
 
-    private Integer getCountItems(){
+    private Integer countProtectionItems(){
 
         return protection()
                 .setCredentials(TEST_USER)
@@ -126,11 +126,11 @@ public class SinglepaneFilterProtectionTest extends BaseTest {
                 .getTotal();
     }
 
-    private Integer getCountFilteredPublishers(){
+    private Integer getCountFilteredPublishers(String publishersName){
 
         return publisher()
                 .setCredentials(TEST_USER)
-                .getPublisherWithFilter(Map.of("name","rakuten"))
+                .getPublisherWithFilter(Map.of("name",publishersName))
                 .build()
                 .getPublisherGetAllResponse()
                 .getTotal();

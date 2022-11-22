@@ -18,7 +18,9 @@ public class SinglepaneItem {
 
     private SelenideElement id;
     private SelenideElement name;
+    private SelenideElement includeIcon;
     private SelenideElement includeButton;
+
 
     @Getter(AccessLevel.NONE)
     private int position;

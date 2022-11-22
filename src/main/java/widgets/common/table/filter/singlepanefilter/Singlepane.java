@@ -3,10 +3,11 @@ package widgets.common.table.filter.singlepanefilter;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import lombok.AccessLevel;
 import lombok.Getter;
 import org.openqa.selenium.WebElement;
 import widgets.common.table.ColumnNames;
-import widgets.common.table.filter.abstractt.BaseFilter;
+import widgets.common.table.filter.abstractt.SinglePaneFilter;
 import widgets.common.table.filter.singlepanefilter.item.SinglepaneItem;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import static widgets.common.table.filter.singlepanefilter.SinglepaneElements.*;
  */
 
 @Getter
-public class Singlepane extends BaseFilter {
+public class Singlepane extends SinglePaneFilter {
 
     protected String singlepaneName;
 
@@ -37,10 +38,10 @@ public class Singlepane extends BaseFilter {
     private SelenideElement searchIcon = $x(SEARCH_ICON.getSelector()).as(SEARCH_ICON.getAlias());
     ;
     private SelenideElement includeAllButton = $x(INCLUDE_ALL_BUTTON.getSelector()).as(INCLUDE_ALL_BUTTON.getAlias());
-    private SelenideElement itemsTotalQuantityString = $x(TOTAL_ITEMS_QUANTITY_STRING.getSelector()).as(TOTAL_ITEMS_QUANTITY_STRING.getAlias());
-    private SelenideElement itemsIncludedQuantityString = $x(INCLUDED_ITEMS_QUANTITY_STRING.getSelector()).as(INCLUDED_ITEMS_QUANTITY_STRING.getAlias());
+    private SelenideElement itemsTotalQuantityLabel = $x(TOTAL_ITEMS_QUANTITY_LABEL.getSelector()).as(TOTAL_ITEMS_QUANTITY_LABEL.getAlias());
+    private SelenideElement itemsIncludedQuantityLabel = $x(INCLUDED_ITEMS_QUANTITY_LABEL.getSelector()).as(INCLUDED_ITEMS_QUANTITY_LABEL.getAlias());
 
-
+    @Getter(AccessLevel.NONE)
     private ElementsCollection filterItems = $$x(FILTER_ITEMS.getSelector()).as(FILTER_ITEMS.getAlias());
 
     @Getter
