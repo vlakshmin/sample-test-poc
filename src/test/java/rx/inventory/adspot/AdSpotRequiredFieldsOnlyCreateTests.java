@@ -39,6 +39,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 @Slf4j
 @Listeners({ScreenShooter.class})
 public class AdSpotRequiredFieldsOnlyCreateTests extends BaseTest {
+
     private Media media;
     private Publisher publisher;
     private AdSpotsPage adSpotPage;
@@ -57,9 +58,7 @@ public class AdSpotRequiredFieldsOnlyCreateTests extends BaseTest {
 
     final private static String AD_SPOT_NAME = captionWithSuffix("4autoAdSpot");
 
-    private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-    private static Date date = new Date();
-    final private static String currentDate = formatter.format(date);
+    final private static String currentDate = new SimpleDateFormat("MMM dd yyyy").format( new Date());
 
 
     public AdSpotRequiredFieldsOnlyCreateTests() {
@@ -131,12 +130,12 @@ public class AdSpotRequiredFieldsOnlyCreateTests extends BaseTest {
             dependsOnMethods = "createAdSpotWithAllFields")
     private void checkTableColumns() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
-        var tableOptions = adSpotPage.getAdSpotsTable().getTableOptions();
+        var tableOptions = adSpotPage.getAdSpotsTable().getShowHideColumns();
 
         testStart()
                 .and("'Show' all columns")
-                .scrollIntoView(tableOptions.getTableOptionsBtn())
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .scrollIntoView(tableOptions.getShowHideColumnsBtn())
+                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ID))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DETAILS))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.AD_SPOT_NAME))

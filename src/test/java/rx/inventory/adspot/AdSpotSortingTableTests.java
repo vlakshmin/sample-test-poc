@@ -3,6 +3,7 @@ package rx.inventory.adspot;
 import api.dto.rx.inventory.adspot.AdSpot;
 import api.preconditionbuilders.AdSpotPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Flaky;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
@@ -11,7 +12,6 @@ import pages.inventory.adspots.AdSpotsPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -50,7 +50,9 @@ public class AdSpotSortingTableTests extends BaseTest {
     @BeforeClass
     private void loginAndCreateExpectedResuts() {
 
-        if (getTotalAdSpots() < 60) generateAdSpots();
+        if (getTotalAdSpots() < 60) {
+            generateAdSpots();
+        }
 
         totalAdSpots = getTotalAdSpots();
 
@@ -124,12 +126,14 @@ public class AdSpotSortingTableTests extends BaseTest {
         validateSortData(ColumnNames.RELATED_MEDIA, ASC, sortRelatedMediaByAsc);
     }
 
+    @Flaky
     @Test(testName = "Sorting 'Active/Inactive' column by descending")
     public void adSpotSortingByStatusDesc() {
         sortByDescColumnByName(ColumnNames.ACTIVE_INACTIVE);
         validateSortData(ColumnNames.ID, DESC, sortStatusByDesc);
     }
 
+    @Flaky
     @Test(testName = "Sorting 'Active/Inactive' column by ascending")
     public void adSpotSortingByStatusAsc() {
         sortByAscColumnByName(ColumnNames.ACTIVE_INACTIVE);
@@ -138,7 +142,7 @@ public class AdSpotSortingTableTests extends BaseTest {
 
     @BeforeMethod
     private void login() {
-        var table = adSpotsPage.getAdSpotsTable().getTableOptions();
+        var table = adSpotsPage.getAdSpotsTable().getShowHideColumns();
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         testStart()
                 .given()

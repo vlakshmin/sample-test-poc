@@ -3,7 +3,6 @@ package rx.inventory.media;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Epic;
-import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
@@ -129,7 +128,7 @@ public class MediaEditTests extends BaseTest {
 
         var tableData = mediaPage.getMediaTable().getTableData();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
-        var tableOptions = mediaPage.getMediaTable().getTableOptions();
+        var tableOptions = mediaPage.getMediaTable().getShowHideColumns();
 
         testStart()
                 .and(String.format("Search media %s", media.getName()))
@@ -221,13 +220,13 @@ public class MediaEditTests extends BaseTest {
                 .waitAndValidate(not(visible), mediaPage.getToasterMessage().getPanelError())
                 .waitSideBarClosed()
                 .and("Show column 'Site/App Store URL'")
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))
                 .and("Toaster Error message is absent")
                 .waitAndValidate(not(visible), mediaPage.getToasterMessage().getPanelError())
                 .then("Validate data in table")
                 .validate(tableData.getCellByRowValue(ColumnNames.ID, ColumnNames.MEDIA_NAME, mediaNameUpdated), media.getId().toString())
-                .validate(tableData.getCellByRowValue(ColumnNames.STATUS, ColumnNames.MEDIA_NAME, mediaNameUpdated), Statuses.INACTIVE.getStatus())
+                .validate(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE, ColumnNames.MEDIA_NAME, mediaNameUpdated), Statuses.INACTIVE.getStatus())
                 .validate(tableData.getCellByRowValue(ColumnNames.PUBLISHER, ColumnNames.MEDIA_NAME, mediaNameUpdated), media.getPublisherName())
                 .validate(tableData.getCellByRowValue(ColumnNames.PLATFORM, ColumnNames.MEDIA_NAME, mediaNameUpdated), mediaTypeUpdated)
                 .validate(tableData.getCellByRowValue(ColumnNames.SITE_APP_STORE_URL, ColumnNames.MEDIA_NAME, mediaNameUpdated), urlUpdated)

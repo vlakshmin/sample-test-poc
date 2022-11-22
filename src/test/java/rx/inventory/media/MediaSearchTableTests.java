@@ -212,7 +212,8 @@ public class MediaSearchTableTests extends BaseTest {
     @Test(testName = "Search with filter by status")
     public void mediaSearchWithFilterByStatus() {
         var tableData = mediaPage.getMediaTable().getTableData();
-        var tableOptions = mediaPage.getMediaTable().getTableOptions();
+        var tableOptions = mediaPage.getMediaTable().getShowHideColumns();
+        var filterOptions = mediaPage.getMediaTable().getColumnFiltersBlock();
 
         testStart()
                 .given()
@@ -228,18 +229,21 @@ public class MediaSearchTableTests extends BaseTest {
                 .waitAndValidate(disappear, mediaPage.getTableProgressBar())
                 .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME), searchBoth)
                 .and("Set filter 'Active'")
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
-                .selectRadioButton(tableOptions.getStatusItemRadio(Statuses.ACTIVE))
+                .clickOnWebElement(filterOptions.getColumnFiltersButton())
+                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
+                .selectRadioButton(filterOptions.getActiveBooleanFilter().getActiveRadioButton())
+                .clickOnWebElement(filterOptions.getActiveBooleanFilter().getSubmitButton())
                 .scrollIntoView(tableData.getSearch())
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
                 .waitAndValidate(disappear, mediaPage.getTableProgressBar())
                 .then(String.format("Validate data in column 'Media Name' should contain '%s'", FILTER_SEARCH))
                 .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME), searchActive)
                 .and("Set filter 'Inactive'")
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
-                .selectRadioButton(tableOptions.getStatusItemRadio(Statuses.INACTIVE))
+                .clickOnWebElement(filterOptions.getColumnFiltersButton())
+                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
+                .selectRadioButton(filterOptions.getActiveBooleanFilter().getInactiveRadioButton())
+                .clickOnWebElement(filterOptions.getActiveBooleanFilter().getSubmitButton())
                 .scrollIntoView(tableData.getSearch())
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .waitAndValidate(disappear, mediaPage.getTableProgressBar())
                 .then(String.format("Validate data in column 'Media Name' should contain '%s'", FILTER_SEARCH))
                 .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME), searchInactive)
@@ -283,7 +287,7 @@ public class MediaSearchTableTests extends BaseTest {
         Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("search", strParams);
         queryParams.put("sort", "name-asc");
-        if (isEnabled != null) queryParams.put("enabled", isEnabled);
+        if (isEnabled != null) queryParams.put("active", isEnabled);
 
         return MediaPrecondition.media()
                 .getMediaWithFilter(queryParams)

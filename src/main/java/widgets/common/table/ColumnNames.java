@@ -54,7 +54,7 @@ public enum ColumnNames {
     OPTIMIZE("Optimize", false),
 
     //Protections
-    MANAGE_BY_SYSTEM_ADMIN("Manage by system admin", false),
+    MANAGED_BY_SYSTEM_ADMIN("Managed by system admin", false),
 
     //Users
     ROLE("Role", false),

@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Map;
 import java.util.List;
@@ -66,6 +65,9 @@ public class DealsSortingTableTests extends BaseTest {
     private static final String ASC = "ascending";
     private static final String DESC = "descending";
 
+    private final SimpleDateFormat incomingSdf = new SimpleDateFormat("yyyy-MM-dd");
+    private final SimpleDateFormat outgoingSdf = new SimpleDateFormat("MMM d yyyy");
+
     public DealsSortingTableTests() {
         dealsPage = new DealsPage();
     }
@@ -73,59 +75,59 @@ public class DealsSortingTableTests extends BaseTest {
     @BeforeClass
     private void loginAndCreateExpectedResults() {
 
-//        if (getTotalDeals() < 60) generateDeals();
+        if (getTotalDeals() < 60) generateDeals();
 
         totalDeals = getTotalDeals();
-//
-//        sortIdsByAsc = getIdsByAsc();
-//        sortIdsByDesc = getIdsByDesc();
-//
-//        sortNamesByAsc = getNamesByAsc();
-//        sortNamesByDesc = getNamesByDesc();
-//
-//        sortPublisherNameByAsc = getPublisherNameByAsc();
-//        sortPublisherNameByDesc = getPublisherNameByDesc();
-//
-//        sortPrivateAuctionByAsc = getPrivateAuctionByAsc();
-//        sortPrivateAuctionByDesc = getPrivateAuctionByDesc();
-//
-//        sortStatusByAsc = getStatusByAsc();
-//        sortStatusByDesc = getStatusByDesc();
-//
-//        sortDSPByAsc = getDSPByAsc();
-//        sortDSPByDesc = getDSPByDesc();
-//
-//        sortPriceValueByAsc = getPriceValueByAsc();
-//        sortPriceValueByDesc = getPriceValueByDesc();
-//
-//        sortPriceCurrencyByAsc = getPriceCurrencyByAsc();
-//        sortPriceCurrencyByDesc = getPriceCurrencyByDesc();
-//
-//        sortAlwaysOnByAsc = getAlwaysOnByAsc();
-//        sortAlwaysOnByDesc = getAlwaysOnByDesc();
 
-//        sortStartDateByAsc = getStartDateByAsc(); // failing
-//        sortStartDateByDesc = getStartDateByDesc();// failing
+        sortIdsByAsc = getIdsByAsc();
+        sortIdsByDesc = getIdsByDesc();
 
-//        sortEndDateByAsc = getEndDateByAsc(); //failing
-//        sortEndDateByDesc = getEndDateByDesc();  // failing
-//
+        sortNamesByAsc = getNamesByAsc();
+        sortNamesByDesc = getNamesByDesc();
+
+        sortPublisherNameByAsc = getPublisherNameByAsc();
+        sortPublisherNameByDesc = getPublisherNameByDesc();
+
+        sortPrivateAuctionByAsc = getPrivateAuctionByAsc();
+        sortPrivateAuctionByDesc = getPrivateAuctionByDesc();
+
+        sortStatusByAsc = getStatusByAsc();
+        sortStatusByDesc = getStatusByDesc();
+
+        sortDSPByAsc = getDSPByAsc();
+        sortDSPByDesc = getDSPByDesc();
+
+        sortPriceValueByAsc = getPriceValueByAsc();
+        sortPriceValueByDesc = getPriceValueByDesc();
+
+        sortPriceCurrencyByAsc = getPriceCurrencyByAsc();
+        sortPriceCurrencyByDesc = getPriceCurrencyByDesc();
+
+        sortAlwaysOnByAsc = getAlwaysOnByAsc();
+        sortAlwaysOnByDesc = getAlwaysOnByDesc();
+
+        sortStartDateByAsc = getStartDateByAsc();
+        sortStartDateByDesc = getStartDateByDesc();
+
+        sortEndDateByAsc = getEndDateByAsc();
+        sortEndDateByDesc = getEndDateByDesc();
+
         sortCreatedDateByAsc = getCreatedAtByAsc();
         sortCreatedDateByDesc = getCreatedAtByDesc();
 
-//        sortCreatedByByAsc = getCreatedByByAsc();
-//        sortCreatedByByDesc = getCreatedByByDesc();
-//
-//        sortUpdatedDateByAsc = getUpdatedAtByAsc();
-//        sortUpdatedDateByDesc = getUpdatedAtByDesc();
-//
-//        sortUpdatedByByAsc = getUpdatedByByAsc();
-//        sortUpdatedByByDesc = getUpdatedByByDesc();
+        sortCreatedByByAsc = getCreatedByByAsc();
+        sortCreatedByByDesc = getCreatedByByDesc();
+
+        sortUpdatedDateByAsc = getUpdatedAtByAsc();
+        sortUpdatedDateByDesc = getUpdatedAtByDesc();
+
+        sortUpdatedByByAsc = getUpdatedByByAsc();
+        sortUpdatedByByDesc = getUpdatedByByDesc();
     }
 
     @BeforeMethod
     private void login() {
-        var table = dealsPage.getDealsTable().getTableOptions();
+        var table = dealsPage.getDealsTable().getShowHideColumns();
         var tableData = dealsPage.getDealsTable().getTableData();
         testStart()
                 .given()
@@ -135,78 +137,78 @@ public class DealsSortingTableTests extends BaseTest {
                 .testEnd();
     }
 
-//    @Test(testName = "Sorting 'ID' column by ascending")
-//    public void adSpotSortingByIdAsc() {
-//
-//        sortByAscColumnByName(ColumnNames.ID);
-//        validateSortData(ColumnNames.ID, ASC, sortIdsByAsc);
-//    }
-//
-//    @Test(testName = "Sorting 'ID' column by descending")
-//    public void adSpotSortingByIdDesc() {
-//        sortByDescColumnByName(ColumnNames.ID);
-//        validateSortData(ColumnNames.ID, DESC, sortIdsByDesc);
-//    }
-//
-//    @Test(testName = "Sorting 'Deal Name' column by ascending")
-//    public void adSpotSortingByDealNameAsc() {
-//        sortByAscColumnByName(ColumnNames.NAME);
-//        validateSortData(ColumnNames.NAME, ASC, sortNamesByAsc);
-//    }
-//
-//    @Test(testName = "Sorting 'Deal Name' column by descending")
-//    public void adSpotSortingByDealNameDesc() {
-//        sortByDescColumnByName(ColumnNames.NAME);
-//        validateSortData(ColumnNames.NAME, DESC, sortNamesByDesc);
-//    }
-//
-//    @Test(testName = "Sorting 'Publisher' column by ascending")
-//    public void adSpotSortingByPublisherNameAsc() {
-//        sortByAscColumnByName(ColumnNames.PUBLISHER);
-//        validateSortData(ColumnNames.PUBLISHER, ASC, sortPublisherNameByAsc);
-//    }
-//
-//    @Test(testName = "Sorting 'Publisher' column by descending")
-//    public void adSpotSortingByPublisherNameDesc() {
-//        sortByDescColumnByName(ColumnNames.PUBLISHER);
-//        validateSortData(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
-//    }
-//
-//    @Test(testName = "Sorting 'Active/Inactive' column by ascending")
-//    public void adSpotSortingByStatusAsc() {
-//        sortByAscColumnByName(ColumnNames.ACTIVE_INACTIVE);
-//        validateSortData(ColumnNames.ACTIVE_INACTIVE, ASC, sortStatusByAsc);
-//    }
-//
-//    @Test(testName = "Sorting 'Active/Inactive' column by descending")
-//    public void adSpotSortingByStatusDesc() {
-//        sortByDescColumnByName(ColumnNames.ACTIVE_INACTIVE);
-//        validateSortData(ColumnNames.ACTIVE_INACTIVE, DESC, sortStatusByDesc);
-//    }
-//
-//    @Test(testName = "Sorting 'PrivateAuction' column by ascending")
-//    public void adSpotSortingByPrivateAuctionAsc() {
-//        sortByAscColumnByName(ColumnNames.PRIVATE_AUCTION);
-//        validateSortData(ColumnNames.PRIVATE_AUCTION, ASC, sortPrivateAuctionByAsc);
-//    }
-//
-//    @Test(testName = "Sorting 'PrivateAuction' column by descending")
-//    public void adSpotSortingByPrivateAuctionDesc() {
-//        sortByDescColumnByName(ColumnNames.PRIVATE_AUCTION);
-//        validateSortData(ColumnNames.PRIVATE_AUCTION, DESC, sortPrivateAuctionByDesc);
-//    }
-//
-//    @Test(testName = "Sorting 'DSP' column by ascending")
-//    public void adSpotSortingByDSPAsc() {
-//        sortByAscColumnByName(ColumnNames.DSP);
-//        validateSortData(ColumnNames.DSP, ASC, sortDSPByAsc);
-//    }
-//
-//    @Test(testName = "Sorting 'DSP' column by descending")
-//    public void adSpotSortingByDSPDesc() {
-//        sortByDescColumnByName(ColumnNames.DSP);
-//        validateSortData(ColumnNames.DSP, DESC, sortDSPByDesc);
-//    }
+    @Test(testName = "Sorting 'ID' column by ascending")
+    public void adSpotSortingByIdAsc() {
+
+        sortByAscColumnByName(ColumnNames.ID);
+        validateSortData(ColumnNames.ID, ASC, sortIdsByAsc);
+    }
+
+    @Test(testName = "Sorting 'ID' column by descending")
+    public void adSpotSortingByIdDesc() {
+        sortByDescColumnByName(ColumnNames.ID);
+        validateSortData(ColumnNames.ID, DESC, sortIdsByDesc);
+    }
+
+    @Test(testName = "Sorting 'Deal Name' column by ascending")
+    public void adSpotSortingByDealNameAsc() {
+        sortByAscColumnByName(ColumnNames.NAME);
+        validateSortData(ColumnNames.NAME, ASC, sortNamesByAsc);
+    }
+
+    @Test(testName = "Sorting 'Deal Name' column by descending")
+    public void adSpotSortingByDealNameDesc() {
+        sortByDescColumnByName(ColumnNames.NAME);
+        validateSortData(ColumnNames.NAME, DESC, sortNamesByDesc);
+    }
+
+    @Test(testName = "Sorting 'Publisher' column by ascending")
+    public void adSpotSortingByPublisherNameAsc() {
+        sortByAscColumnByName(ColumnNames.PUBLISHER);
+        validateSortData(ColumnNames.PUBLISHER, ASC, sortPublisherNameByAsc);
+    }
+
+    @Test(testName = "Sorting 'Publisher' column by descending")
+    public void adSpotSortingByPublisherNameDesc() {
+        sortByDescColumnByName(ColumnNames.PUBLISHER);
+        validateSortData(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
+    }
+
+    @Test(testName = "Sorting 'Active/Inactive' column by ascending")
+    public void adSpotSortingByStatusAsc() {
+        sortByAscColumnByName(ColumnNames.ACTIVE_INACTIVE);
+        validateSortData(ColumnNames.ACTIVE_INACTIVE, ASC, sortStatusByAsc);
+    }
+
+    @Test(testName = "Sorting 'Active/Inactive' column by descending")
+    public void adSpotSortingByStatusDesc() {
+        sortByDescColumnByName(ColumnNames.ACTIVE_INACTIVE);
+        validateSortData(ColumnNames.ACTIVE_INACTIVE, DESC, sortStatusByDesc);
+    }
+
+    @Test(testName = "Sorting 'PrivateAuction' column by ascending")
+    public void adSpotSortingByPrivateAuctionAsc() {
+        sortByAscColumnByName(ColumnNames.PRIVATE_AUCTION);
+        validateSortData(ColumnNames.PRIVATE_AUCTION, ASC, sortPrivateAuctionByAsc);
+    }
+
+    @Test(testName = "Sorting 'PrivateAuction' column by descending")
+    public void adSpotSortingByPrivateAuctionDesc() {
+        sortByDescColumnByName(ColumnNames.PRIVATE_AUCTION);
+        validateSortData(ColumnNames.PRIVATE_AUCTION, DESC, sortPrivateAuctionByDesc);
+    }
+
+    @Test(testName = "Sorting 'DSP' column by ascending")
+    public void adSpotSortingByDSPAsc() {
+        sortByAscColumnByName(ColumnNames.DSP);
+        validateSortData(ColumnNames.DSP, ASC, sortDSPByAsc);
+    }
+
+    @Test(testName = "Sorting 'DSP' column by descending")
+    public void adSpotSortingByDSPDesc() {
+        sortByDescColumnByName(ColumnNames.DSP);
+        validateSortData(ColumnNames.DSP, DESC, sortDSPByDesc);
+    }
 
     @Test(testName = "Sorting 'Price/Value' column by ascending")
     public void adSpotSortingByPriceValueAsc() {
@@ -226,28 +228,28 @@ public class DealsSortingTableTests extends BaseTest {
         validateSortData(ColumnNames.PRICE_CURRENCY, ASC, sortPriceCurrencyByAsc);
     }
 
-//    @Test(testName = "Sorting 'Price/Currency' column by descending")
-//    public void adSpotSortingByPriceCurrencyDesc() {
-//        sortByDescColumnByName(ColumnNames.PRICE_CURRENCY);
-//        validateSortData(ColumnNames.PRICE_CURRENCY, DESC, sortPriceCurrencyByDesc);
-//    }
-//
-//    @Test(testName = "Sorting 'AlwaysOn' column by ascending")
-//    public void adSpotSortingByAlwaysOnAsc() {
-//        sortByAscColumnByName(ColumnNames.ALWAYS_ON);
-//        validateSortData(ColumnNames.ALWAYS_ON, ASC, sortAlwaysOnByAsc);
-//    }
-//
-//    @Test(testName = "Sorting 'AlwaysOn' column by descending")
-//    public void adSpotSortingByAlwaysOnDesc() {
-//        sortByDescColumnByName(ColumnNames.ALWAYS_ON);
-//        validateSortData(ColumnNames.ALWAYS_ON, DESC, sortAlwaysOnByDesc);
-//    }
+    @Test(testName = "Sorting 'Price/Currency' column by descending")
+    public void adSpotSortingByPriceCurrencyDesc() {
+        sortByDescColumnByName(ColumnNames.PRICE_CURRENCY);
+        validateSortData(ColumnNames.PRICE_CURRENCY, DESC, sortPriceCurrencyByDesc);
+    }
+
+    @Test(testName = "Sorting 'AlwaysOn' column by ascending")
+    public void adSpotSortingByAlwaysOnAsc() {
+        sortByAscColumnByName(ColumnNames.ALWAYS_ON);
+        validateSortData(ColumnNames.ALWAYS_ON, ASC, sortAlwaysOnByAsc);
+    }
+
+    @Test(testName = "Sorting 'AlwaysOn' column by descending")
+    public void adSpotSortingByAlwaysOnDesc() {
+        sortByDescColumnByName(ColumnNames.ALWAYS_ON);
+        validateSortData(ColumnNames.ALWAYS_ON, DESC, sortAlwaysOnByDesc);
+    }
 
     @Test(testName = "Sorting 'StartDate' column by ascending")
     public void adSpotSortingByStartDateAsc() {
-        sortByAscColumnByName(ColumnNames.ALWAYS_ON);
-        validateSortData(ColumnNames.ALWAYS_ON, ASC, sortStartDateByAsc);
+        sortByAscColumnByName(ColumnNames.START_DATE);
+        validateSortData(ColumnNames.START_DATE, ASC, sortStartDateByAsc);
     }
 
     @Test(testName = "Sorting 'StartDate' column by descending")
@@ -280,17 +282,17 @@ public class DealsSortingTableTests extends BaseTest {
         validateSortData(ColumnNames.CREATED_DATE, DESC, sortCreatedDateByDesc);
     }
 
-//    @Test(testName = "Sorting 'CreatedBy' column by ascending")
-//    public void adSpotSortingByCreatedByAsc() {
-//        sortByAscColumnByName(ColumnNames.CREATED_BY);
-//        validateSortData(ColumnNames.CREATED_BY, ASC, sortCreatedByByAsc);
-//    }
-//
-//    @Test(testName = "Sorting 'CreatedBy' column by descending")
-//    public void adSpotSortingByCreatedByDesc() {
-//        sortByDescColumnByName(ColumnNames.CREATED_BY);
-//        validateSortData(ColumnNames.CREATED_BY, DESC, sortCreatedByByDesc);
-//    }
+    @Test(testName = "Sorting 'CreatedBy' column by ascending")
+    public void adSpotSortingByCreatedByAsc() {
+        sortByAscColumnByName(ColumnNames.CREATED_BY);
+        validateSortData(ColumnNames.CREATED_BY, ASC, sortCreatedByByAsc);
+    }
+
+    @Test(testName = "Sorting 'CreatedBy' column by descending")
+    public void adSpotSortingByCreatedByDesc() {
+        sortByDescColumnByName(ColumnNames.CREATED_BY);
+        validateSortData(ColumnNames.CREATED_BY, DESC, sortCreatedByByDesc);
+    }
 
     @Test(testName = "Sorting 'UpdateDate' column by ascending")
     public void adSpotSortingByUpdateDateAsc() {
@@ -304,17 +306,6 @@ public class DealsSortingTableTests extends BaseTest {
         validateSortData(ColumnNames.UPDATED_DATE, DESC, sortUpdatedDateByDesc);
     }
 
-//    @Test(testName = "Sorting 'UpdatedBy' column by ascending")
-//    public void adSpotSortingByUpdatedByAsc() {
-//        sortByAscColumnByName(ColumnNames.UPDATED_BY);
-//        validateSortData(ColumnNames.UPDATED_BY, ASC, sortUpdatedByByAsc);
-//    }
-//
-//    @Test(testName = "Sorting 'UpdatedBy' column by descending")
-//    public void adSpotSortingByUpdatedByDesc() {
-//        sortByDescColumnByName(ColumnNames.UPDATED_BY);
-//        validateSortData(ColumnNames.UPDATED_BY, DESC, sortUpdatedByByDesc);
-//    }
 
     @AfterMethod(alwaysRun = true)
     private void logOut() {
@@ -327,19 +318,19 @@ public class DealsSortingTableTests extends BaseTest {
     @Step("Sort column {0} by DESC")
     private void sortByDescColumnByName(ColumnNames columnName) {
         var tableData = dealsPage.getDealsTable().getTableData();
-        var tableOptions = dealsPage.getDealsTable().getTableOptions();
+        var tableOptions = dealsPage.getDealsTable().getShowHideColumns();
 
 
         testStart()
                 .given()
                 .and("'Show' all columns")
-                .scrollIntoView(tableOptions.getTableOptionsBtn())
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .scrollIntoView(tableOptions.getShowHideColumnsBtn())
+                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CREATED_BY))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_BY))
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .and(String.format("Sort column '%s'", columnName))
                 .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
                 .testEnd();
@@ -365,18 +356,18 @@ public class DealsSortingTableTests extends BaseTest {
     @Step("Sort column {0} by ASC")
     private void sortByAscColumnByName(ColumnNames columnName) {
         var tableData = dealsPage.getDealsTable().getTableData();
-        var tableOptions = dealsPage.getDealsTable().getTableOptions();
+        var tableOptions = dealsPage.getDealsTable().getShowHideColumns();
 
         testStart()
                 .given()
                 .and("'Show' all columns")
-                .scrollIntoView(tableOptions.getTableOptionsBtn())
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .scrollIntoView(tableOptions.getShowHideColumnsBtn())
+                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CREATED_BY))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_BY))
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .and(String.format("Sort column '%s'", columnName))
                 .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
                 .testEnd();
@@ -400,18 +391,18 @@ public class DealsSortingTableTests extends BaseTest {
     private void validateSortData(ColumnNames columnName, String sortType, List<String> expectedResultList) {
         var tableData = dealsPage.getDealsTable().getTableData();
         var tablePagination = dealsPage.getDealsTable().getTablePagination();
-        var tableOptions = dealsPage.getDealsTable().getTableOptions();
+        var tableOptions = dealsPage.getDealsTable().getShowHideColumns();
 
         testStart()
                 .given()
                 .waitAndValidate(disappear, dealsPage.getNuxtProgress())
-                .scrollIntoView(tableOptions.getTableOptionsBtn())
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .scrollIntoView(tableOptions.getShowHideColumnsBtn())
+                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CREATED_BY))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_BY))
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .and("Select 50 row per page")
                 .scrollIntoView(tablePagination.getPageMenu())
                 .selectFromDropdown(tablePagination.getPageMenu(),
@@ -545,7 +536,7 @@ public class DealsSortingTableTests extends BaseTest {
 
         return getAllItemsByParams("floor_price-asc").stream()
                 .map(Deal::getFloorPrice)
-                .map(Object::toString)
+                .map(DealsSortingTableTests::formatDecimalZeros)
                 .collect(Collectors.toList());
     }
 
@@ -553,7 +544,7 @@ public class DealsSortingTableTests extends BaseTest {
 
         return getAllItemsByParams("floor_price-desc").stream()
                 .map(Deal::getFloorPrice)
-                .map(Object::toString)
+                .map(DealsSortingTableTests::formatDecimalZeros)
                 .collect(Collectors.toList());
     }
 
@@ -577,7 +568,7 @@ public class DealsSortingTableTests extends BaseTest {
         return getAllItemsByParams("no_end_date-asc").stream()
                 .map(Deal::getNoEndDate)
                 .map(Object::toString)
-                .map(s -> s.equals("True") ? "Yes" : "No")
+                .map(s -> s.equals("true") ? "yes" : "no")
                 .collect(Collectors.toList());
     }
 
@@ -593,28 +584,32 @@ public class DealsSortingTableTests extends BaseTest {
     private List<String> getStartDateByAsc() {
 
         return getAllItemsByParams("start_date-asc").stream()
-                .map(Deal::getStartDate)
+                .map(Deal::getCreatedAt)
+                .map(this::parsedDate)
                 .collect(Collectors.toList());
     }
 
     private List<String> getStartDateByDesc() {
 
         return getAllItemsByParams("start_date-desc").stream()
-                .map(Deal::getStartDate)
+                .map(Deal::getCreatedAt)
+                .map(this::parsedDate)
                 .collect(Collectors.toList());
     }
 
     private List<String> getEndDateByAsc() {
 
         return getAllItemsByParams("end_date-asc").stream()
-                .map(Deal::getEndDate)
+                .map(Deal::getCreatedAt)
+                .map(this::parsedDate)
                 .collect(Collectors.toList());
     }
 
     private List<String> getEndDateByDesc() {
 
         return getAllItemsByParams("end_date-desc").stream()
-                .map(Deal::getEndDate)
+                .map(Deal::getCreatedAt)
+                .map(this::parsedDate)
                 .collect(Collectors.toList());
     }
 
@@ -622,15 +617,7 @@ public class DealsSortingTableTests extends BaseTest {
 
         return getAllItemsByParams("created_at-asc").stream()
                 .map(Deal::getCreatedAt)
-                .map(date -> {
-                    try {
-                        return new SimpleDateFormat("MMM d yyyy").parse(date);
-                    } catch (ParseException error) {
-                        error.printStackTrace();
-                        throw new RuntimeException(error);
-                    }
-                })
-                .map(Objects::toString)
+                .map(this::parsedDate)
                 .collect(Collectors.toList());
     }
 
@@ -638,16 +625,7 @@ public class DealsSortingTableTests extends BaseTest {
 
         return getAllItemsByParams("created_at-desc").stream()
                 .map(Deal::getCreatedAt)
-                .map(date -> {
-                    try {
-                        return new SimpleDateFormat("MM-dd-yyyy").parse(date);
-                    } catch (ParseException error) {
-                        error.printStackTrace();
-                        throw new RuntimeException(error);
-                    }
-                })
-                .map(Objects::toString)
-                .map(parsedDate -> parsedDate.substring(0, 10))
+                .map(this::parsedDate)
                 .collect(Collectors.toList());
     }
 
@@ -670,16 +648,16 @@ public class DealsSortingTableTests extends BaseTest {
     private List<String> getUpdatedAtByAsc() {
 
         return getAllItemsByParams("updated_at-asc").stream()
-                .map(Deal::getUpdatedAt)
-                .map(Object::toString)
+                .map(Deal::getCreatedAt)
+                .map(this::parsedDate)
                 .collect(Collectors.toList());
     }
 
     private List<String> getUpdatedAtByDesc() {
 
         return getAllItemsByParams("updated_by-asc").stream()
-                .map(Deal::getUpdatedAt)
-                .map(Object::toString)
+                .map(Deal::getCreatedAt)
+                .map(this::parsedDate)
                 .collect(Collectors.toList());
     }
 
@@ -715,4 +693,23 @@ public class DealsSortingTableTests extends BaseTest {
                     .build();
         }
     }
+
+    private static String formatDecimalZeros(double num) {
+        if (num == (long) num) {
+            return String.format("%d", (long) num);
+        } else {
+            return String.format("%s", num);
+        }
+    }
+
+    private String parsedDate(String date) {
+        try {
+            Date formattedDate = incomingSdf.parse(date);
+            return outgoingSdf.format(formattedDate);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
+

@@ -12,7 +12,6 @@ import pages.admin.users.UsersPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,7 +102,7 @@ public class UsersSortingTableTests extends BaseTest {
 
     @BeforeMethod
     private void login() {
-        var table = usersPage.getUsersTable().getTableOptions();
+        var table = usersPage.getUsersTable().getShowHideColumns();
         var tableData = usersPage.getUsersTable().getTableData();
         testStart()
                 .given()

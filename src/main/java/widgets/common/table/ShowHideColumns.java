@@ -6,18 +6,18 @@ import lombok.Getter;
 
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
-import static widgets.common.table.TableOptionsElements.*;
+import static widgets.common.table.ShowHideColumnsElements.*;
 
 /**
- * Keep Selectors of UI elements in {@link TableOptionsElements}
+ * Keep Selectors of UI elements in {@link ShowHideColumnsElements}
  */
 @Getter
-public class TableOptions {
+public class ShowHideColumns {
 
     private SelenideElement optionsList = $x(OPTIONS_LIST.getSelector()).as(OPTIONS_LIST.getAlias());
     private SelenideElement menuOptions = $x(TABLE_OPTIONS_MENU.getSelector()).as(TABLE_OPTIONS_MENU.getAlias());
     private ElementsCollection optionItems = $$x(TABLE_OPTIONS_ELEMENTS.getSelector()).as(TABLE_OPTIONS_ELEMENTS.getAlias());
-    private SelenideElement tableOptionsBtn = $x(TABLE_OPTIONS_COMPONENTS_BUTTON.getSelector()).as(TABLE_OPTIONS_COMPONENTS_BUTTON.getAlias());
+    private SelenideElement showHideColumnsBtn = $x(SHOW_HIDE_COLUMNS_COMPONENTS_BUTTON.getSelector()).as(SHOW_HIDE_COLUMNS_COMPONENTS_BUTTON.getAlias());
 
     public SelenideElement getMenuItemCheckbox(ColumnNames column) {
 

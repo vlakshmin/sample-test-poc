@@ -37,7 +37,7 @@ public class PublisherCheckColumnsTests extends BaseTest {
 
     @Test
     public void checkColumns() {
-        var tableOptions = publisherPage.getTable().getTableOptions();
+        var tableOptions = publisherPage.getTable().getShowHideColumns();
         var tableData = publisherPage.getTable().getTableData();
         var tablePagination = publisherPage.getTable().getTablePagination();
         testStart()
@@ -46,8 +46,8 @@ public class PublisherCheckColumnsTests extends BaseTest {
                 .selectFromDropdown(tablePagination.getPageMenu(),
                         tablePagination.getRowNumbersList(), "10")
                 .and("'Show' all columns")
-                .scrollIntoView(tableOptions.getTableOptionsBtn())
-                .clickOnWebElement(tableOptions.getTableOptionsBtn())
+                .scrollIntoView(tableOptions.getShowHideColumnsBtn())
+                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ID))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PUBLISHER))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CATEGORY))

@@ -2,7 +2,6 @@ package rx.component.table;
 
 import api.dto.rx.admin.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
@@ -44,26 +43,31 @@ public class TableDataTests extends BaseTest {
 
     @Test
     public void checkColumns() {
-        var table = publishersPage.getTable().getTableOptions();
         var tableData = publishersPage.getTable().getTableData();
+        var table = publishersPage.getTable().getShowHideColumns();
+        var filterOptions = publishersPage.getTable().getColumnFiltersBlock();
+
         testStart()
                 .given()
                 .openDirectPath(Path.PUBLISHER)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, publishersPage.getNuxtProgress())
                 .and()
-                .clickOnWebElement(table.getTableOptionsBtn())
+                .clickOnWebElement(table.getShowHideColumnsBtn())
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.PUBLISHER))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.CATEGORY))
-                .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.ACTIVE))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.ID))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.DOMAIN))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.CURRENCY))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.AD_OPS_PERSON))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.MAIL))
-                .clickOnWebElement(table.getTableOptionsBtn())
+                .clickOnWebElement(table.getShowHideColumnsBtn())
+                .clickOnWebElement(filterOptions.getColumnFiltersButton())
+                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
+                .selectRadioButton(filterOptions.getActiveBooleanFilter().getActiveRadioButton())
+                .clickOnWebElement(filterOptions.getActiveBooleanFilter().getSubmitButton())
                 .then()
-                .validateListSize((ElementsCollection) tableData.getColumns(),
+                .validateListSize(tableData.getColumns(),
                         ColumnNames.PUBLISHER.getName(),
                         ColumnNames.CATEGORY.getName(),
                         ColumnNames.ACTIVE.getName(),
@@ -72,15 +76,17 @@ public class TableDataTests extends BaseTest {
                         ColumnNames.CURRENCY.getName(),
                         ColumnNames.AD_OPS_PERSON.getName(),
                         ColumnNames.MAIL.getName())
-
-                .clickOnWebElement(table.getTableOptionsBtn())
+                .clickOnWebElement(table.getShowHideColumnsBtn())
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.PUBLISHER))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.CATEGORY))
-                .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.ACTIVE))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.DOMAIN))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.CURRENCY))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.AD_OPS_PERSON))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.MAIL))
+                .clickOnWebElement(filterOptions.getColumnFiltersButton())
+                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
+                .selectRadioButton(filterOptions.getActiveBooleanFilter().getInactiveRadioButton())
+                .clickOnWebElement(filterOptions.getActiveBooleanFilter().getSubmitButton())
                 .then()
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.CATEGORY.getName()))
@@ -91,7 +97,7 @@ public class TableDataTests extends BaseTest {
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.MAIL.getName()))
                 .validate(visible, tableData.getColumnHeader(ColumnNames.ID.getName()))
                 .and()
-                .clickOnWebElement(table.getTableOptionsBtn())
+                .clickOnWebElement(table.getShowHideColumnsBtn())
                 .logOut()
                 .testEnd();
 
@@ -99,8 +105,8 @@ public class TableDataTests extends BaseTest {
 
     @Test
     public void checkPagination() {
-        var table = publishersPage.getTable().getTableOptions();
         var tableData = publishersPage.getTable().getTableData();
+        var filterOptions = publishersPage.getTable().getColumnFiltersBlock();
         var tablePagenation = publishersPage.getTable().getTablePagination();
         testStart()
                 .given()
@@ -108,9 +114,10 @@ public class TableDataTests extends BaseTest {
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, publishersPage.getNuxtProgress())
                 .and()
-                .clickOnWebElement(table.getTableOptionsBtn())
-                .selectRadioButton(table.getStatusItemRadio(Statuses.ACTIVE))
-                .clickOnWebElement(table.getTableOptionsBtn())
+                .clickOnWebElement(filterOptions.getColumnFiltersButton())
+                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
+                .selectRadioButton(filterOptions.getActiveBooleanFilter().getActiveRadioButton())
+                .clickOnWebElement(filterOptions.getActiveBooleanFilter().getSubmitButton())
                 .selectFromDropdown(tablePagenation.getPageMenu(), tablePagenation.getRowNumbersList(), "10")
                 .waitLoading(visible, publishersPage.getTableProgressBar())
                 .waitLoading(disappear, publishersPage.getTableProgressBar())
@@ -129,7 +136,6 @@ public class TableDataTests extends BaseTest {
 
     @Test
     public void checkSearch() {
-        var table = publishersPage.getTable().getTableOptions();
         var tableData = publishersPage.getTable().getTableData();
         testStart()
                 .given()
@@ -152,8 +158,5 @@ public class TableDataTests extends BaseTest {
                 .waitSideBarClosed()
                 .logOut()
                 .testEnd();
-
     }
-
-
 }

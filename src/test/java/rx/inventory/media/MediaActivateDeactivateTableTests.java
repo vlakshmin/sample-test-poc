@@ -111,7 +111,7 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
                 .and("Click 'Deactivate' button")
                 .clickOnWebElement(mediaPage.getDeactivateMediaButton())
                 .then("Validate media status should be changed on 'Inactive'")
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.MEDIA_NAME, mediaActive1.getName()),
                         Statuses.INACTIVE.getStatus())
                 .testEnd();
@@ -144,7 +144,7 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
                 .and("Close toaster message")
                 .clickOnWebElement(toasterPanel.getRemoveIcon())
                 .then("Validate media status should not be changed on 'Inactive'")
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.MEDIA_NAME, mediaActiveWithInactivePublisher.getName()),
                         Statuses.ACTIVE.getStatus())
                 .testEnd();
@@ -175,7 +175,7 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
                 .and("Close toaster message")
                 .clickOnWebElement(toasterPanel.getRemoveIcon())
                 .then("Validate media status should not be changed on 'Active'")
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.MEDIA_NAME,
                                 mediaInActiveWithInactivePublisher.getName()),
                         Statuses.INACTIVE.getStatus())
@@ -201,7 +201,7 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
                 .then("Validate media status should be changed on 'Active'")
                 .waitAndValidate(disappear, mediaPage.getTableProgressBar())
                 .and(String.format("Search media by name '%s'", mediaInActive1))
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.MEDIA_NAME, mediaInActive1.getName()),
                         Statuses.ACTIVE.getStatus())
                 .testEnd();
@@ -210,6 +210,7 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
     @Test(testName = "Activate bulk media")
     public void activateBulkMedia() {
         var tableData = mediaPage.getMediaTable().getTableData();
+        var filterOptions = mediaPage.getMediaTable().getColumnFiltersBlock();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
 
         testStart()
@@ -226,22 +227,22 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
                 .then("Validate media status should be changed on 'Active'")
                 .waitAndValidate(visible, tableData.getCheckbox(1)
                         .shouldHave(attributeMatching("class", CLASS_ATTRIBUTE_FOR_UNCHECKED_CHECKBOX)))
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.MEDIA_NAME, mediaInActiveBulkA1.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.MEDIA_NAME, mediaInActiveBulkA2.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.MEDIA_NAME, mediaInActiveBulkA3.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.MEDIA_NAME, mediaActiveBulkA1.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.MEDIA_NAME, mediaActiveBulkA2.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.MEDIA_NAME, mediaActiveBulkA3.getName()),
                         Statuses.ACTIVE.getStatus())
                 .validate(not(exist), mediaPage.getToasterMessage().getPanelError())
@@ -267,22 +268,22 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
                 .then("Validate media status should be changed on 'Inactive'")
                 .waitAndValidate(visible, tableData.getCheckbox(1)
                         .shouldHave(attributeMatching("class", CLASS_ATTRIBUTE_FOR_UNCHECKED_CHECKBOX)))
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.MEDIA_NAME, mediaInActiveBulkD1.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.MEDIA_NAME, mediaInActiveBulkD2.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.MEDIA_NAME, mediaInActiveBulkD3.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.MEDIA_NAME, mediaActiveBulkD1.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.MEDIA_NAME, mediaActiveBulkD2.getName()),
                         Statuses.ACTIVE.getStatus())
-                .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
+                .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
                                 ColumnNames.MEDIA_NAME, mediaActiveBulkD3.getName()),
                         Statuses.ACTIVE.getStatus())
                 .validate(not(exist), mediaPage.getToasterMessage().getPanelError())
