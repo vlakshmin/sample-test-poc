@@ -7,7 +7,7 @@ import widgets.common.table.filter.ColumnFiltersBlock;
 public class Table {
 
     TableData tableData = new TableData();
-    ColumnFiltersBlock columnFiltersBlock = new ColumnFiltersBlock();
     ShowHideColumns showHideColumns = new ShowHideColumns();
     TablePagination tablePagination = new TablePagination();
+    ColumnFiltersBlock columnFiltersBlock = new ColumnFiltersBlock();
 }
