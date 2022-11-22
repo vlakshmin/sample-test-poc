@@ -32,11 +32,10 @@ public class Singlepane extends SinglePaneFilter {
 
     protected String singlepaneName;
 
-    private SelenideElement searchInput = $x(SEARCH_INPUT.getSelector()).as(SEARCH_INPUT.getAlias());
-    private SelenideElement includedIcon = $x(INCLUDE_ALL_BUTTON.getSelector()).as(INCLUDE_ALL_BUTTON.getAlias());
-    private SelenideElement clearAllButton = $x(CLEAR_ALL_BUTTON.getSelector()).as(CLEAR_ALL_BUTTON.getAlias());
     private SelenideElement searchIcon = $x(SEARCH_ICON.getSelector()).as(SEARCH_ICON.getAlias());
-    ;
+    private SelenideElement searchInput = $x(SEARCH_INPUT.getSelector()).as(SEARCH_INPUT.getAlias());
+    private SelenideElement clearAllButton = $x(CLEAR_ALL_BUTTON.getSelector()).as(CLEAR_ALL_BUTTON.getAlias());
+
     private SelenideElement includeAllButton = $x(INCLUDE_ALL_BUTTON.getSelector()).as(INCLUDE_ALL_BUTTON.getAlias());
     private SelenideElement itemsTotalQuantityLabel = $x(TOTAL_ITEMS_QUANTITY_LABEL.getSelector()).as(TOTAL_ITEMS_QUANTITY_LABEL.getAlias());
     private SelenideElement itemsIncludedQuantityLabel = $x(INCLUDED_ITEMS_QUANTITY_LABEL.getSelector()).as(INCLUDED_ITEMS_QUANTITY_LABEL.getAlias());
@@ -44,14 +43,19 @@ public class Singlepane extends SinglePaneFilter {
     @Getter(AccessLevel.NONE)
     private ElementsCollection filterItems = $$x(FILTER_ITEMS.getSelector()).as(FILTER_ITEMS.getAlias());
 
-    @Getter
+    @Getter(AccessLevel.NONE)
     private List<SinglepaneItem> filterItemsList = new ArrayList<>();
 
     public Singlepane(ColumnNames singlepaneName) {
         this.singlepaneName = singlepaneName.getName();
     }
 
+    public Singlepane() {
+        this.singlepaneName = ColumnNames.NAME.getName();
+    }
+
     public SinglepaneItem getFilterItemByPositionInList(int position) {
+        addIncludeFilterItemsToList();
 
         return filterItemsList.get(position);
     }
@@ -59,12 +63,11 @@ public class Singlepane extends SinglePaneFilter {
     public int countIncludedItems() {
         int count = 0;
 
-        if (filterItems.size() > 0)
-            count = (int) filterItems.shouldBe(CollectionCondition.allMatch("Wait to collection element to be visible",
-                            WebElement::isDisplayed))
-                    .stream()
-                    .map(se -> se.shouldBe(exist).scrollTo().shouldBe(visible))
-                    .count();
+        count = (int) filterItems.shouldBe(CollectionCondition.allMatch("Wait to collection element to be visible",
+                        WebElement::isDisplayed))
+                .stream()
+                .map(se -> se.shouldBe(exist).scrollTo().shouldBe(visible))
+                .count();
 
         return count;
     }
