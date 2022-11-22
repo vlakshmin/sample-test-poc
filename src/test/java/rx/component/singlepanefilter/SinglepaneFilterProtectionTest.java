@@ -81,7 +81,6 @@ public class SinglepaneFilterProtectionTest extends BaseTest {
                 .validate(filter.getSinglepane().getItemsIncludedQuantityLabel(),format("(%s)",0))
                 .and("Search publisher")
                 .setValueWithClean(filter.getSinglepane().getSearchInput(), "rakuten")
-                .validate(visible, protectionPage.getTableProgressBar())
                 .validate(not(visible),protectionPage.getTableProgressBar())
                 .clickOnWebElement(filter.getSinglepane().getFilterItemByName(PUBLISHER_NAME).getName())
                 .then("Validate Include All Filtered items")
