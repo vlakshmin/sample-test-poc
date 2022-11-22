@@ -1,21 +1,21 @@
 package api.preconditionbuilders;
 
-import api.core.client.HttpClient;
-import api.dto.GenericResponse;
-import api.dto.rx.admin.publisher.Publisher;
-import api.dto.rx.sales.deals.Deal;
-import api.dto.rx.sales.deals.DealRequest;
-import api.services.DealService;
 import configurations.User;
-import io.restassured.common.mapper.TypeRef;
+import api.dto.GenericResponse;
+import api.services.DealService;
+import api.core.client.HttpClient;
+import api.dto.rx.sales.deals.Deal;
 import io.restassured.response.Response;
+import api.dto.rx.sales.deals.DealRequest;
+import io.restassured.common.mapper.TypeRef;
+import api.dto.rx.admin.publisher.Publisher;
+import lombok.extern.slf4j.Slf4j;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 
+import java.util.Map;
 import java.util.List;
 
-import static api.preconditionbuilders.DealPrecondition.deal;
 import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
@@ -29,9 +29,9 @@ public class DealPrecondition {
     private GenericResponse<Deal> dealGetAllResponse;
 
     private DealPrecondition(DealPreconditionBuilder builder) {
-        this.responseCode = builder.responseCode;
         this.dealRequest = builder.dealRequest;
         this.dealResponse = builder.dealResponse;
+        this.responseCode = builder.responseCode;
         this.dealGetAllResponse = builder.dealGetAllResponse;
     }
 
@@ -51,7 +51,7 @@ public class DealPrecondition {
 
         public DealPreconditionBuilder createNewDeal() {
 
-            this.dealRequest = createDealRequest("DealAuto");
+            this.dealRequest = createDealRequest(captionWithSuffix("deal_auto"));
             this.response = dealsService.createDeal(dealRequest);
             this.dealResponse = response.as(Deal.class);
             this.responseCode = response.getStatusCode();
@@ -59,9 +59,18 @@ public class DealPrecondition {
             return this;
         }
 
+        public DealPreconditionBuilder getDealWithFilter(Map<String, Object> queryParams) {
+
+            this.response = dealsService.getDealWithFilter(queryParams);
+            this.dealGetAllResponse = this.response.as(new TypeRef<>() {});
+            this.responseCode = response.getStatusCode();
+
+            return this;
+        }
+
         public DealPreconditionBuilder getAllDealsList() {
             this.response = dealsService.getAll();
-            this.dealGetAllResponse = this.response.as(new TypeRef<GenericResponse<Deal>>() {});
+            this.dealGetAllResponse = this.response.as(new TypeRef<>() {});
             this.responseCode = response.getStatusCode();
 
             return this;
