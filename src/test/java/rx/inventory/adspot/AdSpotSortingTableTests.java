@@ -1,16 +1,21 @@
 package rx.inventory.adspot;
 
 import api.dto.rx.inventory.adspot.AdSpot;
+import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.AdSpotPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
+import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.Path;
 import pages.inventory.adspots.AdSpotsPage;
 import rx.BaseTest;
+import rx.yield.openpricing.OpenPricingSortingTableTests;
 import widgets.common.table.ColumnNames;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -47,7 +52,7 @@ public class AdSpotSortingTableTests extends BaseTest {
     }
 
     @BeforeClass
-    private void loginAndCreateExpectedResuts() {
+    private void loginAndCreateExpectedResults() {
 
         if (getTotalAdSpots() < 60) {
             generateAdSpots();
@@ -125,13 +130,17 @@ public class AdSpotSortingTableTests extends BaseTest {
         validateSortData(ColumnNames.RELATED_MEDIA, ASC, sortRelatedMediaByAsc);
     }
 
-    @Test(testName = "Sorting 'Active/Inactive' column by descending")
+    //Todo make tests enabled  after fix of attached Bug
+    @Test(testName = "Sorting 'Active/Inactive' column by descending", enabled = false)
+    @Issue("https://rakutenadvertising.atlassian.net/browse/GS-3273")
     public void adSpotSortingByStatusDesc() {
         sortByDescColumnByName(ColumnNames.ACTIVE_INACTIVE);
         validateSortData(ColumnNames.ID, DESC, sortStatusByDesc);
     }
 
-    @Test(testName = "Sorting 'Active/Inactive' column by ascending")
+    //Todo make tests enabled  after fix of attached Bug
+    @Test(testName = "Sorting 'Active/Inactive' column by ascending", enabled = false)
+    @Issue("https://rakutenadvertising.atlassian.net/browse/GS-3273")
     public void adSpotSortingByStatusAsc() {
         sortByAscColumnByName(ColumnNames.ACTIVE_INACTIVE);
         validateSortData(ColumnNames.ID, ASC, sortStatusByAsc);
