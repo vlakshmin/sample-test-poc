@@ -3,7 +3,9 @@ package widgets.common.table;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
+import widgets.common.table.filter.chip.ChipItem;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Selenide.$$x;
@@ -24,7 +26,7 @@ public class TableData {
     private final SelenideElement search = $x(SEARCH.getSelector()).as(SEARCH.getAlias());
     private final ElementsCollection columns = $$x(COLUMNS.getSelector()).as(COLUMNS.getAlias());
     private final ElementsCollection cellByColumn = $$x(CELL_BY_COLUMN.getSelector()).as(CELL_BY_COLUMN.getAlias());
-
+    private List<ChipItem> filterChips;
 
     public SelenideElement getCheckbox(int row) {
 

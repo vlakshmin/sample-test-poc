@@ -25,7 +25,7 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Feature(value = "Checking Singlepane Filter Component in Protections Tab")
+@Feature(value = "Components")
 public class SinglepaneFilterProtectionTest extends BaseTest {
     private ProtectionsPage protectionPage;
 

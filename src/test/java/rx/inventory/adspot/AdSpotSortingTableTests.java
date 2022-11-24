@@ -351,18 +351,4 @@ public class AdSpotSortingTableTests extends BaseTest {
                     .build();
         }
     }
-
-    @Test
-    public void testDate(){
-        List list =  getCreatedAtByAsc();
-        System.out.println(list);
-    }
-    private List<String> getCreatedAtByAsc() {
-
-        return getAllItemsByParams("created_at-asc").stream()
-                .map(AdSpot::getCreatedAt)
-
-            //    .map(x -> new SimpleDateFormat("MMM dd yyyy").format(x.substring(0,10)))
-                .collect(Collectors.toList());
-    }
 }

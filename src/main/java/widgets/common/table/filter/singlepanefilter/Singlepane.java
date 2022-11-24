@@ -60,6 +60,14 @@ public class Singlepane extends SinglePaneFilter {
         return filterItemsList.get(position);
     }
 
+    public List<SinglepaneItem> getIncludedItems(){
+
+        return filterItemsList
+                .stream()
+                .filter(e -> e.getIncludedIcon().exists())
+                .collect(Collectors.toList());
+    }
+
     public int countIncludedItems() {
         int count = 0;
 
