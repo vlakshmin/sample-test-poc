@@ -1,8 +1,9 @@
 package rx.component.table;
 
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -15,6 +16,7 @@ import widgets.common.table.ColumnNames;
 import widgets.common.table.filter.singlepanefilter.item.SinglepaneItem;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Condition.*;
@@ -30,7 +32,7 @@ public class FilterChipTests extends BaseTest {
 
     private ProtectionsPage protectionPage;
 
-    private List<SelenideElement> selectedPublishers;
+    private List<String> selectedPublishers;
 
     public FilterChipTests() {
         protectionPage = new ProtectionsPage();
@@ -52,6 +54,8 @@ public class FilterChipTests extends BaseTest {
 
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var table = protectionPage.getProtectionsTable().getTableData();
+        var publisherChip = table.getChipItemByName(ColumnNames.PUBLISHER.getName());
+
         testStart()
                 .and("Select Column Filter 'PUBLISHER'")
                 .clickOnWebElement(filter.getColumnFiltersButton())
@@ -67,6 +71,7 @@ public class FilterChipTests extends BaseTest {
                 .getIncludedItems()
                 .stream()
                 .map(SinglepaneItem::getName)
+                .map(e -> e.getText())
                 .collect(Collectors.toList());
 
         testStart()
@@ -74,10 +79,29 @@ public class FilterChipTests extends BaseTest {
                 .clickOnWebElement(filter.getSinglepane().getSubmitButton())
                 .then("ColumnsFilter widget is closed")
                 .validate(not(visible), filter.getFilterOptionsMenu())
-                .then()
-                .validate(table.getFilterChips().size(),1)
-
+                .validate(visible, table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getHeaderLabel())
+                .validateListSize(publisherChip.getChipItems(), selectedPublishers.size())
                 .testEnd();
+        validateChipContent(publisherChip.getChipItems());
+
+        testStart()
+                .and(format("Reset filter %s", ColumnNames.PUBLISHER.getName()))
+                .clickOnWebElement(publisherChip.getCloseIcon())
+                .then(format("Chip '%s' should be disabled", ColumnNames.PUBLISHER.getName()))
+                .validate(not(visible), publisherChip.getHeaderLabel())
+                .testEnd();
+    }
+
+    @Step("Validate Filter Chip Content")
+    private void validateChipContent(ElementsCollection list) {
+        AtomicInteger index = new AtomicInteger(0);
+
+        list.stream().forEach(item -> {
+            testStart()
+                    .then(format("Value '%s' should be presented in chip", selectedPublishers.get(index.get())))
+                    .validate(item.getText(), selectedPublishers.get(index.getAndIncrement()))
+                    .testEnd();
+        });
     }
 
     @AfterClass
