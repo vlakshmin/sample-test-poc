@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="Regression" parallel="false">
-   <test name="0Precondition. Delete records with 'auto' substring">
+<!--   <test name="0Precondition. Delete records with 'auto' substring">
         <classes>
             <class name="rx.pipelines.DeleteGeneratedDataTest"/>
         </classes>
@@ -43,9 +43,9 @@
     </test>
 
     <test name="Open Pricing">
-        <classes>
+        <classes>-->
 <!--            <class name="rx.yield.openpricing.VerifyPublisherTests"/>-->
-            <class name="rx.yield.openpricing.CreateOpenPricingTest"/>
+    <!-- <class name="rx.yield.openpricing.CreateOpenPricingTest"/>
             <class name="rx.yield.openpricing.OpenPricingUploadTests"/>
             <class name="rx.yield.openpricing.OpenPricingSortingTableTests"/>
             <class name="rx.yield.openpricing.OpenPricingUploadNegtiveTests"/>
@@ -70,7 +70,7 @@
         <classes>
             <class name="rx.sales.deals.DealsTest"/>
         </classes>
-    </test>
+    </test>-->
 
     <test name="Login Feature">
         <classes>
@@ -79,7 +79,7 @@
         </classes>
     </test>
 
-    <test name="Components Tests">
+<!--    <test name="Components Tests">
         <classes>
             <class name="rx.component.table.TableDataTests"/>
             <class name="rx.component.multipane.MultipaneTest"/>
@@ -120,6 +120,6 @@
         <classes>
             <class name="rx.pipelines.DeleteGeneratedDataTest"/>
         </classes>
-    </test>
+    </test>-->
 
 </suite>
