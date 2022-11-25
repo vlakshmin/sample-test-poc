@@ -26,10 +26,10 @@ import static configurations.User.USER_FOR_DELETION;
 @Slf4j
 public class DeleteGeneratedDataTest extends BaseTest {
 
-    private static final String PREFIX_MEDIA = "test";
+    private static final String PREFIX_MEDIA = "auto";
     private static final String PREFIX_ADSPOTS = "auto";
     private static final String PREFIX_PUBLISHERS = "auto";
-    private static final String PREFIX_OPEN_PRICING = "asd";
+    private static final String PREFIX_OPEN_PRICING = "auto";
     private static final String PREFIX_PROTECTIONS_1 = "api";
     private static final String PREFIX_PROTECTIONS_2 = "auto";
     private static final String PREFIX_USERS = "Test Account";
