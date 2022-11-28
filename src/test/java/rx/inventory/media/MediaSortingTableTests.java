@@ -4,6 +4,8 @@ package rx.inventory.media;
 import api.dto.rx.inventory.media.Media;
 import api.preconditionbuilders.MediaPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
@@ -23,6 +25,8 @@ import static zutils.FakerUtils.*;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Epic("Waiting for separate QA env")
+@Link("https://rakutenadvertising.atlassian.net/browse/GS-3280")
 public class MediaSortingTableTests extends BaseTest {
 
     private int totalMedia;
@@ -201,7 +205,8 @@ public class MediaSortingTableTests extends BaseTest {
     private void validateSortData(ColumnNames columnName, String sortType, List<String> expectedResultList) {
         var tableData = mediaPage.getMediaTable().getTableData();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
-
+        //Todo Add checking of total quantity in pagination test when
+        // https://rakutenadvertising.atlassian.net/browse/GS-3280 will be ready
         testStart()
                 .given()
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
