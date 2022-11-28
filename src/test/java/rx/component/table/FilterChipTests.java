@@ -84,7 +84,19 @@ public class FilterChipTests extends BaseTest {
         validateChipContent(table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getChipItems());
 
         testStart()
+
+                .and("Select Column Filter 'ID'")
+                .clickOnWebElement(filter.getColumnFiltersButton())
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.ID))
+                .and("Select Item by ID")
+                .clickOnWebElement(filter.getSinglepane().getFilterItemByPositionInList(1).getName())
+                .and("Click on Submit")
+                .clickOnWebElement(filter.getSinglepane().getSubmitButton())
+                .then("ColumnsFilter widget is closed")
+                .validate(not(visible), filter.getFilterOptionsMenu())
+
                 .and(format("Reset filter %s", ColumnNames.PUBLISHER.getName()))
+
                 .clickOnWebElement(table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getCloseIcon())
                 .then(format("Chip '%s' should be disabled", ColumnNames.PUBLISHER.getName()))
                 .validate(table.getFilterChips().size(),0)
