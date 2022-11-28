@@ -85,6 +85,7 @@ public class FilterChipTests extends BaseTest {
 
         testStart()
                 .and(format("Reset filter %s", ColumnNames.PUBLISHER.getName()))
+
                 .clickOnWebElement(table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getCloseIcon())
                 .then(format("Chip '%s' should be disabled", ColumnNames.PUBLISHER.getName()))
                 .validate(table.getFilterChips().size(),0)
