@@ -17,7 +17,6 @@ import static pages.yield.openpricing.OpenPricingPageElements.*;
 @Getter
 public class OpenPricingPage extends BasePage {
 
-    @Getter(AccessLevel.NONE)
     private SelenideElement pageTitle = $x(OPEN_PRICE_PAGE_TITLE.getSelector()).as(OPEN_PRICE_PAGE_TITLE.getAlias());
     private ElementsCollection openPricingItems = $$x(OPEN_PRICING_ITEMS.getSelector()).as(OPEN_PRICING_ITEMS.getAlias());
     private SelenideElement activateButton = $x(ACTIVATE_OPEN_PRICING_BUTTON.getSelector()).as(ACTIVATE_OPEN_PRICING_BUTTON.getAlias());

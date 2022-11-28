@@ -89,7 +89,8 @@ public class ProtectionsCheckPaginationTests extends BaseTest {
         var tableData = protectionsPage.getProtectionsTable().getTableData();
         //Todo Add checking of total qauntity in pagination test when
         // https://rakutenadvertising.atlassian.net/browse/GS-3280 will be ready
-        testStart().and(String.format("Select %s rows per page", rowsPerPage))
+        testStart()
+                .and(String.format("Select %s rows per page", rowsPerPage))
                 .scrollIntoView(tablePagination.getPageMenu())
                 .selectFromDropdown(tablePagination.getPageMenu(),
                         tablePagination.getRowNumbersList(),
