@@ -13,7 +13,7 @@ public enum MediaSidebarElements {
     MEDIA_NAME("'Media Name' Input", "//label[text()='Media Name']/../input"),
     ERROR_ALERT_BY_FIELD_NAME("Error Alert under Field '%s'",
             "//label[text()='%s']/../../..//child::div[@class='v-messages__message']"),
-    PUBLISHER_NAME( "'Publisher Name'", "//label[text()='Publisher Name']/../div"),
+    PUBLISHER_NAME( "'Publisher Name'", "//label[contains(text(),'Publisher')]/../div"),
     PLATFORM_INPUT("'Platform' Input", "//label[text()='Platform']/../div/input"),
     PLATFORM_DROPDOWN("'Platform' Dropdown", "//label[text()='Platform']/../div"),
     TOOLTIP_ICON_BY_FIELD_NAME("Tooltip '%s' Icon",
@@ -26,7 +26,7 @@ public enum MediaSidebarElements {
     PLATFORM_DROPDOWN_ITEMS("'Platform' Dropdown Items'",
             "//div[contains(@class,'menuable__content__activ')]//div[contains(@class,'v-list-item')]"),
     ACTIVE_TOGGLE("'Active' Toggle",  "//label[text()='Active']/..//input[@role='switch']/../input"),
-    PUBLISHER_NAME_INPUT( "'Publisher Name' Input", "//label[text()='Publisher Name']/../div/input"),
+    PUBLISHER_NAME_INPUT( "'Publisher Name' Input", "//label[contains(text(),'Publisher')]/../div/input"),
     CLOSE_ICON("'Close Media' Icon", "//header/div/button/span/i");
 
     private String alias;
