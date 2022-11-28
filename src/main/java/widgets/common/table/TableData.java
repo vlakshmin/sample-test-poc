@@ -1,16 +1,20 @@
 package widgets.common.table;
 
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import lombok.AccessLevel;
 import lombok.Getter;
-import org.checkerframework.checker.units.qual.C;
+import org.openqa.selenium.WebElement;
 import widgets.common.table.filter.chip.ChipItem;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
@@ -31,7 +35,8 @@ public class TableData {
     private final ElementsCollection columns = $$x(COLUMNS.getSelector()).as(COLUMNS.getAlias());
     private final ElementsCollection filterChips = $$x(FILTER_CHIPS.getSelector()).as(FILTER_CHIPS.getAlias());
     private final ElementsCollection cellByColumn = $$x(CELL_BY_COLUMN.getSelector()).as(CELL_BY_COLUMN.getAlias());
-
+    @Getter(AccessLevel.NONE)
+    private List<ChipItem> filterChipsList = new ArrayList<>();
     public SelenideElement getCheckbox(int row) {
 
         return $x(String.format(CHECKBOX.getSelector(), row)).as(CHECKBOX.getAlias());
@@ -81,8 +86,33 @@ public class TableData {
                 .indexOf(rowValue) + 1;
     }
 
-    public ChipItem getChipItemByName(String name) {
+    public int countFilterChipsItems() {
 
-        return new ChipItem(name);
+        return (int) filterChips
+                .stream()
+                .map(se -> se.shouldBe(exist,visible))
+                .count();
+    }
+
+    private void countFilterChipsItemsOnPage() {
+        countFilterChipsItems();
+
+        var position = new AtomicInteger(1);
+        if (filterChipsList.size() != 0) {
+            filterChipsList.clear();
+        }
+        filterChipsList.addAll(filterChips.stream()
+                .map(chip -> new ChipItem(position.getAndIncrement()))
+               .collect(Collectors.toList()));
+    }
+
+    public ChipItem getChipItemByName(String name) {
+        countFilterChipsItemsOnPage();
+
+         return filterChipsList.stream()
+                    .filter(chip -> chip.getHeaderLabel().shouldBe(visible).getText().contains(name))
+                    .findFirst()
+                    .orElseThrow(() -> new NoSuchElementException(
+                            format("The Filter Chip with name '%s' isn't presented in the list of chips", name)));
     }
 }

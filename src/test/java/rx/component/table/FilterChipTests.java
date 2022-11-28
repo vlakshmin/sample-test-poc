@@ -54,7 +54,6 @@ public class FilterChipTests extends BaseTest {
 
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var table = protectionPage.getProtectionsTable().getTableData();
-        var publisherChip = table.getChipItemByName(ColumnNames.PUBLISHER.getName());
 
         testStart()
                 .and("Select Column Filter 'PUBLISHER'")
@@ -80,15 +79,15 @@ public class FilterChipTests extends BaseTest {
                 .then("ColumnsFilter widget is closed")
                 .validate(not(visible), filter.getFilterOptionsMenu())
                 .validate(visible, table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getHeaderLabel())
-                .validateListSize(publisherChip.getChipItems(), selectedPublishers.size())
+                .validateListSize(table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getChipItems(), selectedPublishers.size())
                 .testEnd();
-        validateChipContent(publisherChip.getChipItems());
+        validateChipContent(table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getChipItems());
 
         testStart()
                 .and(format("Reset filter %s", ColumnNames.PUBLISHER.getName()))
-                .clickOnWebElement(publisherChip.getCloseIcon())
+                .clickOnWebElement(table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getCloseIcon())
                 .then(format("Chip '%s' should be disabled", ColumnNames.PUBLISHER.getName()))
-                .validate(not(visible), publisherChip.getHeaderLabel())
+                .validate(table.getFilterChips().size(),0)
                 .testEnd();
     }
 
