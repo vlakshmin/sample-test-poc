@@ -210,14 +210,10 @@ public class MediaSortingTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '1-50 of %s'",
-                        totalMedia))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-50 of %s", totalMedia))
-                .then(String.format("Validate data in column '%s' should be sorted by $s",
-                        columnName.getName(), sortType))
-                .validateList(tableData.getCustomCells(columnName),
-                        expectedResultList.subList(0, 50))
+                .then("Validate that text in table footer '1-50 of")
+                .validateContainsText(tablePagination.getPaginationPanel(), "1-50 of")
+                .then(String.format("Validate data in column '%s' should be sorted by %s", columnName.getName(), sortType))
+                .validateList(tableData.getCustomCells(columnName), expectedResultList.subList(0, 50))
                 .and("Check next page")
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, mediaPage.getTableProgressBar())
@@ -225,7 +221,7 @@ public class MediaSortingTableTests extends BaseTest {
                 .then(String.format("Validate that text in table footer '51-%s of %s'",
                         Math.min(100, totalMedia), totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-%s of %s", Math.min(100, totalMedia), totalMedia))
+                        String.format("51-%s of", Math.min(100, totalMedia)))
                 .then(String.format("Validate data in column '%s' should be sorted by %s", columnName.getName(), sortType))
                 .validateList(tableData.getCustomCells(columnName),
                         expectedResultList.subList(50, Math.min(100, totalMedia)))
