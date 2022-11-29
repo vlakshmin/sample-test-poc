@@ -16,11 +16,9 @@ import static widgets.common.table.filter.singlepanefilter.item.SinglepaneItemEl
 @Getter
 public class SinglepaneItem {
 
-    private SelenideElement id;
     private SelenideElement name;
     private SelenideElement includedIcon;
     private SelenideElement includeButton;
-
 
     @Getter(AccessLevel.NONE)
     private int position;
