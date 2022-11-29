@@ -9,7 +9,7 @@ public enum PublisherSidebarElements {
 
     DOMAIN("'Publisher Domain' Input", "//label[text()='Domain']/../input"),
     MAIL("'Publisher Mail' Input", "//label[text()='Ad Ops Email']/../input"),
-    NAME("'Publisher Name' Input", "//label[text()='Publisher Name']/../input"),
+    NAME("'Publisher Name' Input", "//label[text()='Name']/../input"),
     CURRENCY_DROPDOWN("'Currency' Dropdown", "//label[text()='Currency']/../div"),
     CURRENCY("'Publisher Currency' Input", "//label[text()='Currency']/../input"),
     AD_OPS_PERSON("'Ad Ops Person' Input", "//label[text()='Ad Ops Person']/../input"),

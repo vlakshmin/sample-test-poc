@@ -607,7 +607,7 @@ public final class TestManager {
 
         //TODO: use stream instead for
         public TestManagerBuilder selectAllRowsByColumnCellValue(TableData table, ColumnNames column, String cellValue) {
-            logEvent(format("Select row in column %s with value %s", column.getName(), cellValue));
+            logEvent(format("Select row in column '%s' with value '%s'", column.getName(), cellValue));
             ElementsCollection rows = table.getCustomCells(column);
             for (int i = 0; i < rows.size(); i++) {
                 if (rows.get(i).getText().contains(cellValue)) {
