@@ -27,22 +27,12 @@ public class SinglepaneItem {
     @Getter(AccessLevel.NONE)
     protected String singlepaneItem;
 
-    public SinglepaneItem(int position, String columnFilterName) {
+    public SinglepaneItem(int position) {
 
         this.position = position;
-
-        switch (columnFilterName) {
-            case "ID":
-                this.id = $x(buildXpath(format(ID.getSelector(), 2))).as(ID.getAlias());
-                this.name = $x(buildXpath(format(NAME.getSelector(), 3))).as(NAME.getAlias());
-                this.includedIcon = $x(buildXpath(format(INCLUDED_ICON.getSelector(), 4))).as(INCLUDED_ICON.getAlias());
-                this.includeButton = $x(buildXpath(format(INCLUDE_BUTTON.getSelector(), 4))).as(INCLUDE_BUTTON.getAlias());
-                break;
-            default:
-                this.name = $x(buildXpath(format(NAME.getSelector(), 2))).as(NAME.getAlias());
-                this.includedIcon = $x(buildXpath(format(INCLUDED_ICON.getSelector(), 3))).as(INCLUDED_ICON.getAlias());
-                this.includeButton = $x(buildXpath(format(INCLUDE_BUTTON.getSelector(), 3))).as(INCLUDE_BUTTON.getAlias());
-        }
+        this.name = $x(buildXpath(format(NAME.getSelector(), 2))).as(NAME.getAlias());
+        this.includedIcon = $x(buildXpath(format(INCLUDED_ICON.getSelector(), 3))).as(INCLUDED_ICON.getAlias());
+        this.includeButton = $x(buildXpath(format(INCLUDE_BUTTON.getSelector(), 3))).as(INCLUDE_BUTTON.getAlias());
     }
 
     protected String buildXpath(String elementXpath) {

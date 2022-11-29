@@ -1,12 +1,10 @@
 package widgets.common.table;
 
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.AccessLevel;
 import lombok.Getter;
-import org.openqa.selenium.WebElement;
-import widgets.common.table.filter.chip.ChipItem;
+import widgets.common.table.filter.chip.ChipFilterOptionsItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +34,7 @@ public class TableData {
     private final ElementsCollection filterChips = $$x(FILTER_CHIPS.getSelector()).as(FILTER_CHIPS.getAlias());
     private final ElementsCollection cellByColumn = $$x(CELL_BY_COLUMN.getSelector()).as(CELL_BY_COLUMN.getAlias());
     @Getter(AccessLevel.NONE)
-    private List<ChipItem> filterChipsList = new ArrayList<>();
+    private List<ChipFilterOptionsItem> filterChipsList = new ArrayList<>();
     public SelenideElement getCheckbox(int row) {
 
         return $x(String.format(CHECKBOX.getSelector(), row)).as(CHECKBOX.getAlias());
@@ -87,11 +85,16 @@ public class TableData {
     }
 
     public int countFilterChipsItems() {
+        int count = 0;
 
-        return (int) filterChips
-                .stream()
-                .map(se -> se.shouldBe(exist,visible))
-                .count();
+        if (filterChips.size()>0) {
+            count = (int) filterChips
+                    .stream()
+                    .map(se -> se.shouldBe(exist, visible))
+                    .count();
+        }
+
+        return count;
     }
 
     private void countFilterChipsItemsOnPage() {
@@ -102,11 +105,11 @@ public class TableData {
             filterChipsList.clear();
         }
         filterChipsList.addAll(filterChips.stream()
-                .map(chip -> new ChipItem(position.getAndIncrement()))
+                .map(chip -> new ChipFilterOptionsItem(position.getAndIncrement()))
                .collect(Collectors.toList()));
     }
 
-    public ChipItem getChipItemByName(String name) {
+    public ChipFilterOptionsItem getChipItemByName(String name) {
         countFilterChipsItemsOnPage();
 
          return filterChipsList.stream()

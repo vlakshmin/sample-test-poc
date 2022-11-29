@@ -46,10 +46,6 @@ public class Singlepane extends SinglePaneFilter {
     @Getter(AccessLevel.NONE)
     private List<SinglepaneItem> filterItemsList = new ArrayList<>();
 
-    public Singlepane(ColumnNames singlepaneName) {
-        this.singlepaneName = singlepaneName.getName();
-    }
-
     public Singlepane() {
         this.singlepaneName = ColumnNames.NAME.getName();
     }
@@ -58,14 +54,6 @@ public class Singlepane extends SinglePaneFilter {
         addIncludeFilterItemsToList();
 
         return filterItemsList.get(position);
-    }
-
-    public List<SinglepaneItem> getIncludedItems(){
-
-        return filterItemsList
-                .stream()
-                .filter(e -> e.getIncludedIcon().exists())
-                .collect(Collectors.toList());
     }
 
     public int countIncludedItems() {
@@ -87,7 +75,7 @@ public class Singlepane extends SinglePaneFilter {
             filterItemsList.clear();
         }
         filterItemsList.addAll(filterItems.stream()
-                .map(e -> new SinglepaneItem(position.getAndIncrement(), singlepaneName))
+                .map(e -> new SinglepaneItem(position.getAndIncrement()))
                 .collect(Collectors.toList()));
     }
 

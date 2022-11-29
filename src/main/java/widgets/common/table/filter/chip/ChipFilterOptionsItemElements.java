@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum ChipItemElements {
+public enum ChipFilterOptionsItemElements {
 
     CLOSE_ICON("Close Icon","span/button"),
     HEADER_LABEL("Header Label","span"),

@@ -1,9 +1,7 @@
 package rx.component.table;
 
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Feature;
-import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -13,12 +11,12 @@ import pages.Path;
 import pages.protections.ProtectionsPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
-import widgets.common.table.filter.singlepanefilter.item.SinglepaneItem;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
@@ -32,7 +30,11 @@ public class FilterChipTests extends BaseTest {
 
     private ProtectionsPage protectionPage;
 
-    private List<String> selectedPublishers;
+    private List<String> selectedPublishersNameList;
+    private List<String> expectedSearchPublisherNamesList;
+
+    private final static String PUBLISHER_NAME = "Rakuten";
+    private Integer totalPublishers;
 
     public FilterChipTests() {
         protectionPage = new ProtectionsPage();
@@ -40,6 +42,9 @@ public class FilterChipTests extends BaseTest {
 
     @BeforeClass
     private void login() {
+
+        expectedSearchPublisherNamesList = getFilterPublishersListFromBE(PUBLISHER_NAME);
+        totalPublishers = getTotalPublishersFromBE();
 
         testStart()
                 .given()
@@ -49,15 +54,45 @@ public class FilterChipTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Filter Chip widget")
-    public void testFilterChipWidgetComponent() {
+    @Test(description = "Check Search in the filter singlepane")
+    public void testSearchColumnsFilterComponent() {
 
+        var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
+
+        testStart()
+                .and("Select Column Filter 'PUBLISHER'")
+                .clickOnWebElement(filter.getColumnFiltersButton())
+                .waitAndValidate(visible, filter.getFilterOptionsMenu())
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.PUBLISHER))
+                .and(format("Search by Name '%s'", PUBLISHER_NAME))
+                .setValueWithClean(filter.getSinglepane().getSearchInput(), PUBLISHER_NAME)
+                .clickEnterButton(filter.getSinglepane().getSearchInput())
+                .validate(filter.getSinglepane().countIncludedItems(), expectedSearchPublisherNamesList.size())
+                .testEnd();
+
+        expectedSearchPublisherNamesList.forEach(e -> {
+            testStart()
+                    .validate(exist, filter.getSinglepane().getFilterItemByName(e).getName())
+                    .testEnd();
+        });
+
+        testStart()
+                .and("Clear Search")
+                .clearField(filter.getSinglepane().getSearchInput())
+                .then("Check total publishers count, search result should be reset")
+                .validate(filter.getSinglepane().countIncludedItems(), getTotalPublishersFromBE())
+                .clickOnWebElement(filter.getSinglepane().getBackButton())
+                .waitAndValidate(visible, filter.getFilterOptionsMenu())
+                .testEnd();
+    }
+
+    @Test(description = "Check Chip Widget Component", dependsOnMethods = "testSearchColumnsFilterComponent")
+    public void testChipWidgetComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var table = protectionPage.getProtectionsTable().getTableData();
 
         testStart()
                 .and("Select Column Filter 'PUBLISHER'")
-                .clickOnWebElement(filter.getColumnFiltersButton())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.PUBLISHER))
                 .and("Select Publishers")
                 .clickOnWebElement(filter.getSinglepane().getFilterItemByPositionInList(1).getName())
@@ -65,13 +100,9 @@ public class FilterChipTests extends BaseTest {
                 .clickOnWebElement(filter.getSinglepane().getFilterItemByPositionInList(3).getName())
                 .testEnd();
 
-        selectedPublishers = filter
-                .getSinglepane()
-                .getIncludedItems()
-                .stream()
-                .map(SinglepaneItem::getName)
-                .map(e -> e.getText())
-                .collect(Collectors.toList());
+        selectedPublishersNameList = List.of(filter.getSinglepane().getFilterItemByPositionInList(1).getName().text(),
+                filter.getSinglepane().getFilterItemByPositionInList(2).getName().text(),
+                filter.getSinglepane().getFilterItemByPositionInList(3).getName().text());
 
         testStart()
                 .and("Click on Submit")
@@ -79,29 +110,47 @@ public class FilterChipTests extends BaseTest {
                 .then("ColumnsFilter widget is closed")
                 .validate(not(visible), filter.getFilterOptionsMenu())
                 .validate(visible, table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getHeaderLabel())
-                .validateListSize(table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getChipItems(), selectedPublishers.size())
+                .validate(table.countFilterChipsItems(), 1)
+                .then("Validate list of selected publishers")
+                .validate(table.getChipItemByName(ColumnNames.PUBLISHER.getName()).countFilterOptionsChipItems(), 3)
                 .testEnd();
-        validateChipContent(table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getChipItems());
+
+        selectedPublishersNameList.forEach(e -> {
+            testStart()
+                    .validate(exist, table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getChipFilterOptionItemByName(e))
+                    .testEnd();
+        });
+    }
+
+    @Test(description = "Check Reset Chip Widget Component", dependsOnMethods = "testChipWidgetComponent")
+    public void testResetChipWidgetComponent() {
+        var table = protectionPage.getProtectionsTable().getTableData();
 
         testStart()
                 .and(format("Reset filter %s", ColumnNames.PUBLISHER.getName()))
-
                 .clickOnWebElement(table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getCloseIcon())
                 .then(format("Chip '%s' should be disabled", ColumnNames.PUBLISHER.getName()))
-                .validate(table.getFilterChips().size(),0)
+                .validate(disappear, table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getHeaderLabel())
+                .validate(table.getFilterChips().size(), 0)
                 .testEnd();
     }
 
-    @Step("Validate Filter Chip Content")
-    private void validateChipContent(ElementsCollection list) {
-        AtomicInteger index = new AtomicInteger(0);
+    private List<String> getFilterPublishersListFromBE(String name) {
 
-        list.stream().forEach(item -> {
-            testStart()
-                    .then(format("Value '%s' should be presented in chip", selectedPublishers.get(index.get())))
-                    .validate(item.getText(), selectedPublishers.get(index.getAndIncrement()))
-                    .testEnd();
-        });
+        return publisher()
+                .getPublisherWithFilter(Map.of("name", name))
+                .build()
+                .getPublisherGetAllResponse()
+                .getItems().stream().map(pub -> pub.getName()).collect(Collectors.toList());
+    }
+
+    private Integer getTotalPublishersFromBE() {
+
+        return publisher()
+                .getPublishersList()
+                .build()
+                .getPublisherGetAllResponse()
+                .getTotal();
     }
 
     @AfterClass
