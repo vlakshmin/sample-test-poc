@@ -58,19 +58,12 @@ public class SinglepaneFilterProtectionTest extends BaseTest {
     @Test(description = "Check Singlepane widget")
     public void testSinglepaneWidgetComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
-        var filterID = filter.getSinglepaneID();
 
         testStart()
-                .and("Select Column Filter 'ID'")
+                .and("click on Columns Filter button")
                 .clickOnWebElement(filter.getColumnFiltersButton())
-                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.ID))
-                .then("Validate Column Filter Header")
-                .validate(filterID.getFilterHeaderLabel(), StringUtils.getFilterHeader(ColumnNames.ID.getName()))
-                .and("Click on 'Back'")
-                .clickOnWebElement(filter.getSinglepane().getBackButton())
                 .then("Validate Columns Filter List by default")
-                .validateList(filter.getFilterOptionItems(), List.of(ColumnNames.ID.getName(),
-                        ColumnNames.PUBLISHER.getName(),
+                .validateList(filter.getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
                         ColumnNames.ACTIVE_INACTIVE.getName(),
                         ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName()))
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.PUBLISHER))
@@ -83,6 +76,7 @@ public class SinglepaneFilterProtectionTest extends BaseTest {
                 .and("Search publisher")
                 .setValueWithClean(filter.getSinglepane().getSearchInput(), "rakuten")
                 .validate(not(visible), protectionPage.getTableProgressBar())
+                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(),format("(%s)",countFilteredPublishers))
                 .clickOnWebElement(filter.getSinglepane().getFilterItemByName(PUBLISHER_NAME).getName())
                 .then("Included Icon should be visible")
                 .validate(visible, filter.getSinglepane().getFilterItemByName(PUBLISHER_NAME).getIncludedIcon())

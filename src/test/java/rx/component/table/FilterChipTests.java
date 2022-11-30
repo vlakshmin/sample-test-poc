@@ -80,7 +80,8 @@ public class FilterChipTests extends BaseTest {
                 .and("Clear Search")
                 .clearField(filter.getSinglepane().getSearchInput())
                 .then("Check total publishers count, search result should be reset")
-                .validate(filter.getSinglepane().countIncludedItems(), getTotalPublishersFromBE())
+                .validate(not(visible), protectionPage.getTableProgressBar())
+                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalPublishers))
                 .clickOnWebElement(filter.getSinglepane().getBackButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .testEnd();
@@ -113,6 +114,19 @@ public class FilterChipTests extends BaseTest {
                 .validate(table.countFilterChipsItems(), 1)
                 .then("Validate list of selected publishers")
                 .validate(table.getChipItemByName(ColumnNames.PUBLISHER.getName()).countFilterOptionsChipItems(), 3)
+                .and("Select Column Filter 'Active/Inactive'")
+                .clickOnWebElement(filter.getColumnFiltersButton())
+                .validate(visible, filter.getFilterOptionsMenu())
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
+                .and("Select Active")
+                .clickOnWebElement(filter.getActiveBooleanFilter().getActiveRadioButton())
+                .clickOnWebElement(filter.getActiveBooleanFilter().getSubmitButton())
+                .validate(not(visible), filter.getFilterOptionsMenu())
+                .then("ColumnsFilter widget is closed")
+                .validate(not(visible), filter.getFilterOptionsMenu())
+                .validate(visible, table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getHeaderLabel())
+                .validate(table.countFilterChipsItems(), 2)
+                .validate(exist, table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getChipFilterOptionItemByName("Active"))
                 .testEnd();
 
         selectedPublishersNameList.forEach(e -> {
@@ -130,8 +144,8 @@ public class FilterChipTests extends BaseTest {
                 .and(format("Reset filter %s", ColumnNames.PUBLISHER.getName()))
                 .clickOnWebElement(table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getCloseIcon())
                 .then(format("Chip '%s' should be disabled", ColumnNames.PUBLISHER.getName()))
-                .validate(disappear, table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getHeaderLabel())
-                .validate(table.getFilterChips().size(), 0)
+                .validate(table.getFilterChips().size(), 1)
+                .validate(visible, table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getHeaderLabel())
                 .testEnd();
     }
 
