@@ -170,7 +170,7 @@ public class CreateOpenPricingTest extends BaseTest {
                 .testEnd();
     }
 
-    @Test(priority = 9, dependsOnMethods = "saveOpenPricingTest")
+    @Test(priority = 9, dependsOnMethods = "saveOpenPricingTest", enabled = false)
     @Step("Verify 'createdBy' column in  Pricing in table")
     public void checkCreatedByTest() {
         var pricingTable = openPricingPage.getOpenPricingTable();
@@ -187,7 +187,7 @@ public class CreateOpenPricingTest extends BaseTest {
                 .testEnd();
     }
 
-    @Test(priority = 10, dependsOnMethods = "saveOpenPricingTest")
+    @Test(priority = 10, dependsOnMethods = "saveOpenPricingTest", enabled = false)
     @Step("Verify 'updatedBy' column  Pricing in table")
     public void checkUpdatedByTest() {
         var pricingTable = openPricingPage.getOpenPricingTable();

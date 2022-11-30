@@ -55,7 +55,7 @@ public class SinglepaneFilterProtectionTest extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Singlepane widget")
+    @Test(description = "Check Singlepane widget", enabled = false)
     public void testSinglepaneWidgetComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var filterID = filter.getSinglepaneID();
