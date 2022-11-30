@@ -77,16 +77,16 @@ public class PublisherSortingTableTests extends BaseTest {
         validateSortData(ColumnNames.ID, ASC, sortIdsByAsc);
     }
 
-    @Test(testName = "Sorting 'Publisher' column by ascending", alwaysRun = true)
+    @Test(testName = "Sorting 'Name' column by ascending", alwaysRun = true)
     public void publisherSortingByPublisherNameAsc() {
-        sortByAscColumnByName(ColumnNames.PUBLISHER);
-        validateSortData(ColumnNames.PUBLISHER, ASC, sortPublisherNameByAsc);
+        sortByAscColumnByName(ColumnNames.NAME);
+        validateSortData(ColumnNames.NAME, ASC, sortPublisherNameByAsc);
     }
 
-    @Test(testName = "Sorting 'Publisher' column by descending", alwaysRun = true)
+    @Test(testName = "Sorting 'Name' column by descending", alwaysRun = true)
     public void publisherSortingByPublisherNameDesc() {
-        sortByDescColumnByName(ColumnNames.PUBLISHER);
-        validateSortData(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
+        sortByDescColumnByName(ColumnNames.NAME);
+        validateSortData(ColumnNames.NAME, DESC, sortPublisherNameByDesc);
     }
 
     @Test(testName = "Sorting 'Publisher Mail' column by ascending", alwaysRun = true)

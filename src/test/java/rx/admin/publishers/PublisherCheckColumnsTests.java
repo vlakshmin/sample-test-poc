@@ -49,7 +49,7 @@ public class PublisherCheckColumnsTests extends BaseTest {
                 .scrollIntoView(tableOptions.getShowHideColumnsBtn())
                 .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ID))
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PUBLISHER))
+                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.NAME))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CATEGORY))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE_INACTIVE))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DOMAIN))
@@ -63,7 +63,7 @@ public class PublisherCheckColumnsTests extends BaseTest {
                 .then("All columns should be shown")
                 .validateListSize(tableData.getColumns(),
                         ColumnNames.ID.getName(),
-                        ColumnNames.PUBLISHER.getName(),
+                        ColumnNames.NAME.getName(),
                         ColumnNames.CATEGORY.getName(),
                         ColumnNames.ACTIVE_INACTIVE.getName(),
                         ColumnNames.DOMAIN.getName(),
@@ -76,7 +76,7 @@ public class PublisherCheckColumnsTests extends BaseTest {
                         ColumnNames.UPDATED_BY.getName())
                 .and("Hide all columns")
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ID))
-                .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PUBLISHER))
+                .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.NAME))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CATEGORY))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE_INACTIVE))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DOMAIN))
@@ -89,7 +89,7 @@ public class PublisherCheckColumnsTests extends BaseTest {
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_BY))
                 .then("All columns should be hidden")
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.ID.getName()))
-                .validate(not(visible), tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()))
+                .validate(not(visible), tableData.getColumnHeader(ColumnNames.NAME.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.CATEGORY.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.ACTIVE_INACTIVE.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.DOMAIN.getName()))

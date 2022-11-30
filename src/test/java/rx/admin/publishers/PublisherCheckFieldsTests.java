@@ -82,7 +82,7 @@ public class PublisherCheckFieldsTests extends BaseTest {
                 .waitAndValidate(visible, editPublisherSidebar.getErrorAlert().getErrorPanel())
                 .validateListSize(errorsList, 4)
                 .validateList(errorsList, List.of(
-                        ErrorMessages.PUBLISHER_NAME_ERROR_ALERT.getText(),
+                        ErrorMessages.NAME_ERROR_ALERT.getText(),
                         ErrorMessages.ADD_OPS_PERSON_ERROR_ALERT.getText(),
                         ErrorMessages.ADD_OPS_EMAIL_ERROR_ALERT.getText(),
                         ErrorMessages.CURRENCY_ERROR_ALERT.getText()))
@@ -152,7 +152,7 @@ public class PublisherCheckFieldsTests extends BaseTest {
                 .waitAndValidate(visible, editPublisherSidebar.getErrorAlert().getErrorPanel())
                 .validateListSize(errorsList, 4)
                 .validateList(errorsList, List.of(
-                        ErrorMessages.PUBLISHER_NAME_ERROR_ALERT.getText(),
+                        ErrorMessages.NAME_ERROR_ALERT.getText(),
                         ErrorMessages.ADD_OPS_PERSON_ERROR_ALERT.getText(),
                         ErrorMessages.ADD_OPS_EMAIL_ERROR_ALERT.getText(),
                         ErrorMessages.CURRENCY_ERROR_ALERT.getText()))

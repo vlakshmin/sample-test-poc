@@ -48,7 +48,7 @@
     <class name="rx.yield.openpricing.CreateOpenPricingTest"/>
             <class name="rx.yield.openpricing.OpenPricingUploadTests"/>
             <class name="rx.yield.openpricing.OpenPricingSortingTableTests"/>
-            <class name="rx.yield.openpricing.OpenPricingUploadNegtiveTests"/>
+            <class name="rx.yield.openpricing.OpenPricingUploadNegativeTests"/>
             <class name="rx.yield.openpricing.OpenPricingUploadSidebarTests"/>
             <class name="rx.yield.openpricing.OpenPricingChangePublisherTests"/>
             <class name="rx.yield.openpricing.OpenPricingUploadNegtiveWrongDataTests"/>
