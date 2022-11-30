@@ -152,7 +152,7 @@ public class TableDataTests extends BaseTest {
                 .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.NAME),
                         publisher.getName())
                 .and()
-                .clickOnTableCellLink(tableData, ColumnNames.PUBLISHER, publisher.getName())
+                .clickOnTableCellLink(tableData, ColumnNames.NAME, publisher.getName())
                 .waitSideBarOpened()
                 .clickOnWebElement(editPublisherSidebar.getSaveButton())
                 .waitSideBarClosed()

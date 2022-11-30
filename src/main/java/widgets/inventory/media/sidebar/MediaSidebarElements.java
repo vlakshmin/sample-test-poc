@@ -10,7 +10,7 @@ public enum MediaSidebarElements {
     BUNDLE("'Bundle' Input", "//label[text()='Bundle']/../input"),
     SITE_URL( "'Site URL' Input", "//label[text()='Site URL']/../input"),
     CATEGORIES("'Categories' Field", "//label[text()='Categories']/../div"),
-    MEDIA_NAME("'Media Name' Input", "//label[text()='Media Name']/../input"),
+    MEDIA_NAME("'Media Name' Input", "//label[text()='Name']/../input"),
     ERROR_ALERT_BY_FIELD_NAME("Error Alert under Field '%s'",
             "//label[text()='%s']/../../..//child::div[@class='v-messages__message']"),
     PUBLISHER_NAME( "'Publisher Name'", "//label[text()='Publisher Name']/../div"),

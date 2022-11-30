@@ -135,13 +135,14 @@ public class LoginPageTests extends BaseTest {
         verifyLoginPage(admin, UserRole.ADMIN.getDefinition());
     }
 
-    @Test(description = "Verify Success button after login", alwaysRun = true, priority = 6)
-    public void verifySuccessButtonTest() {
-        loginMethod(TEST_USER.getMail(), TEST_USER.getPassword());
-        testStart()
-                .validateContainsText(loginPage.getLoginResultButton(), "SUCCESS!")
-                .testEnd();
-    }
+
+//    @Test(description = "Verify Success button after login", alwaysRun = true, priority = 6)
+//    public void verifySuccessButtonTest() {
+//        loginMethod(TEST_USER.getMail(), TEST_USER.getPassword());
+//        testStart()
+//                .validateContainsText(loginPage.getLoginResultButton(), "SUCCESS!")
+//                .testEnd();
+//    }
     private void verifyLoginPage(UserDto user, String roleDefinition) {
         testStart()
                 .then()
