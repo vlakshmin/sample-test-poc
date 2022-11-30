@@ -9,6 +9,7 @@ import lombok.Getter;
 public enum MenuSidebarOptions {
 
     USER("User"),
+    ADMIN("Admin"),
     SALES("Sales"),
     DEALS("Deals"),
     DASHBOARD("Dashboard"),
