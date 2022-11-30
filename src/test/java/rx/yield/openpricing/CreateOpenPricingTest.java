@@ -170,7 +170,7 @@ public class CreateOpenPricingTest extends BaseTest {
                 .testEnd();
     }
 
-    @Test(priority = 9, dependsOnMethods = "saveOpenPricingTest", enabled = false)
+    @Test(priority = 9, dependsOnMethods = "saveOpenPricingTest")
     @Step("Verify 'createdBy' column in  Pricing in table")
     public void checkCreatedByTest() {
         var pricingTable = openPricingPage.getOpenPricingTable();
@@ -180,7 +180,7 @@ public class CreateOpenPricingTest extends BaseTest {
                 .and("Adding 'createdBy' column in to Pricing  Table")
                 .clickOnWebElement(pricingTable.getShowHideColumns().getShowHideColumnsBtn())
                 .selectCheckBox(pricingTable.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_BY))
-                .scrollIntoView(tableData.getSearch())
+                .scrollIntoView(openPricingPage.getPageTitle())
                 .clickOnWebElement(tableData.getSearch())
                 .then("Check that user under testing is presented in table")
                 .validate(tableData.getCustomCells(ColumnNames.CREATED_BY).get(0), TEST_USER.getMail())
@@ -197,7 +197,7 @@ public class CreateOpenPricingTest extends BaseTest {
                 .and("Adding 'updatedBy' column in to Pricing  Table")
                 .clickOnWebElement(pricingTable.getShowHideColumns().getShowHideColumnsBtn())
                 .selectCheckBox(pricingTable.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_BY))
-                .scrollIntoView(tableData.getSearch())
+                .scrollIntoView(openPricingPage.getPageTitle())
                 .clickOnWebElement(tableData.getSearch())
                 .then("Check that user under testing is not presented in table")
                 .validate(tableData.getCustomCells(ColumnNames.UPDATED_BY).get(0), EMPTY_STRING)
