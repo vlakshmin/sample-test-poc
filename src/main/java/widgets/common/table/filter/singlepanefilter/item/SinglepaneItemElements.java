@@ -7,9 +7,12 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum SinglepaneItemElements {
 
-    ID("'ID' Label of row %s in table list in Singlepane", "//td[2]/div"),
-    NAME("'Name' Label of row %s in table list in Singlepane", "//td/div"),
-    INCLUDE_ICON("'Include' Label of row %s in table list in Multipane", "//tr[@class='select-row']/td[3]");
+    ID("'ID' Label of row %s in table list in Singlepane", "//td[%s]/div"),
+    NAME("'Name' Label of row %s in table list in Singlepane", "//td[%s]/div"),
+    INCLUDED_ICON("'Include' Label of row %s in table list in Singlepane",
+            "//tr[@class='select-row']/td[%s][contains(@class,'included')]"),
+    INCLUDE_BUTTON("'Include' Button of row %s in table list in Singlepane",
+            "//tr[@class='select-row']/td[%s]/div[contains(@class,'include')]/button[2]");
 
     private String alias;
     private String selector;

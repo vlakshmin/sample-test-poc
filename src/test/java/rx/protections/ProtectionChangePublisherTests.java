@@ -44,7 +44,6 @@ public class ProtectionChangePublisherTests extends BaseTest {
     private Publisher publisher2;
 
     private final static String PROTECTION_NAME = captionWithSuffix("autoProtection");
-    private final static String FLOOR_PRICE = "15.00";
     private final static List<Integer> DSP_IDS_PUBLISHER_1 = List.of(6, 1, 2);
     private final static List<Integer> DSP_IDS_PUBLISHER_2 = List.of(9, 11, 13);
     private final static List<Integer> CATEGORY_IDS = List.of(1, 9);
