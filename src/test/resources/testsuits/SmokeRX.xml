@@ -98,11 +98,11 @@
         </classes>
     </test>
 
-<!--    <test name="Demand Source Feature">-->
-<!--        <classes>-->
-<!--            <class name="rx.admin.demand.EditDemandSourceTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Demand Source Feature">
+        <classes>
+            <class name="rx.admin.demand.EditDemandSourceTest"/>
+        </classes>
+    </test>
 
     <test name="Profile Feature">
         <classes>
