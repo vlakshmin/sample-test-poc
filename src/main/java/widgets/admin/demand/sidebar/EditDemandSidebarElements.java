@@ -20,7 +20,7 @@ public enum EditDemandSidebarElements {
     SYNC_URL("'Sync Url' Input", "//label[text()='Sync Url']/../input"),
     FORMAT_LABEL("'Format' Label", "//header[text()='Format']"),
     CLOSE_ICON("'Close  Sidebar' Icon", "//header/div/button/span/i"),
-    BIDDER( "'Bidder' Input", "//label[text()='Bidder']/../input"),
+    BIDDER( "'Bidder' Input", "//label[text()='Name']/../input"),
     BANNER_CHECKBOX("'Banner' Checkbox", "//label[text()='Banner']/../../div//input"),
     NATIVE_CHECKBOX("'Native' Checkbox", "//label[text()='Native']/../../div//input"),
     VIDEO_CHECKBOX("'Video' Checkbox", "//label[text()='Video']/../../div//input"),

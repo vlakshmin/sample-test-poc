@@ -54,7 +54,7 @@ public class TableDataTests extends BaseTest {
                 .waitAndValidate(disappear, publishersPage.getNuxtProgress())
                 .and()
                 .clickOnWebElement(table.getShowHideColumnsBtn())
-                .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.PUBLISHER))
+                .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.NAME))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.CATEGORY))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.ID))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.DOMAIN))
@@ -68,7 +68,7 @@ public class TableDataTests extends BaseTest {
                 .clickOnWebElement(filterOptions.getActiveBooleanFilter().getSubmitButton())
                 .then()
                 .validateListSize(tableData.getColumns(),
-                        ColumnNames.PUBLISHER.getName(),
+                        ColumnNames.NAME.getName(),
                         ColumnNames.CATEGORY.getName(),
                         ColumnNames.ACTIVE.getName(),
                         ColumnNames.ID.getName(),
@@ -77,7 +77,7 @@ public class TableDataTests extends BaseTest {
                         ColumnNames.AD_OPS_PERSON.getName(),
                         ColumnNames.MAIL.getName())
                 .clickOnWebElement(table.getShowHideColumnsBtn())
-                .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.PUBLISHER))
+                .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.NAME))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.CATEGORY))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.DOMAIN))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.CURRENCY))
@@ -149,10 +149,10 @@ public class TableDataTests extends BaseTest {
                 .waitLoading(visible, publishersPage.getTableProgressBar())
                 .waitLoading(disappear, publishersPage.getTableProgressBar())
                 .then()
-                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.PUBLISHER),
+                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.NAME),
                         publisher.getName())
                 .and()
-                .clickOnTableCellLink(tableData, ColumnNames.PUBLISHER, publisher.getName())
+                .clickOnTableCellLink(tableData, ColumnNames.NAME, publisher.getName())
                 .waitSideBarOpened()
                 .clickOnWebElement(editPublisherSidebar.getSaveButton())
                 .waitSideBarClosed()

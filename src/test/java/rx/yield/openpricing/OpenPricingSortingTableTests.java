@@ -3,17 +3,19 @@ package rx.yield.openpricing;
 import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.OpenPricingPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Link;
+import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
 import pages.Path;
 import pages.yield.openpricing.OpenPricingPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
-import zutils.ObjectMapperUtils;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Condition.disappear;
@@ -23,6 +25,8 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Epic("Waiting for separate QA env")
+@Link("https://rakutenadvertising.atlassian.net/browse/GS-3280")
 public class OpenPricingSortingTableTests extends BaseTest {
     private int totalOpenPricing;
 
@@ -38,6 +42,9 @@ public class OpenPricingSortingTableTests extends BaseTest {
     private List<String> sortPublisherNameByDesc;
     private List<String> sortActiveInactiveByDesc;
     private List<String> sortActiveInactiveByAsc;
+
+    private static final String ASC = "ascending";
+    private static final String DESC = "descending";
 
     public OpenPricingSortingTableTests() {
         openPricingPage = new OpenPricingPage();
@@ -79,23 +86,25 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .collect(Collectors.toList());
 
         sortActiveInactiveByAsc = getAllItemsByParams("active-asc").stream()
-                .map(OpenPricing::getId)
+                .map(OpenPricing::getActive)
                 .map(Object::toString)
+                .map(elem -> elem.equals("true") ? "Active" : "Inactive")
                 .collect(Collectors.toList());
 
         sortActiveInactiveByDesc = getAllItemsByParams("active-desc").stream()
-                .map(OpenPricing::getId)
+                .map(OpenPricing::getActive)
                 .map(Object::toString)
+                .map(elem -> elem.equals("true") ? "Active" : "Inactive")
                 .collect(Collectors.toList());
 
         sortFloorPriceAsc = getAllItemsByParams("floor_price-asc").stream()
                 .map(OpenPricing::getFloorPrice)
-                .map(this::customFormat)
+                .map(this::getCustomFormat)
                 .collect(Collectors.toList());
 
         sortFloorPriceDesc = getAllItemsByParams("floor_price-desc").stream()
                 .map(OpenPricing::getFloorPrice)
-                .map(this::customFormat)
+                .map(this::getCustomFormat)
                 .collect(Collectors.toList());
     }
 
@@ -121,435 +130,158 @@ public class OpenPricingSortingTableTests extends BaseTest {
 
     @Test(testName = "Sorting 'Name' column by descending")
     public void OpenPricingSortingByNameDesc() {
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-
-        testStart()
-                .given()
-                .and("Sort column 'Name'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.NAME.getName()))
-                .then("Ensure that sort by descending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.NAME.getName()),
-                        "aria-sort", "ascending")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.NAME.getName()))
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.NAME.getName()),
-                        "aria-sort", "descending")
-                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Select 25 row per page")
-                .selectFromDropdown(tablePagination.getPageMenu(),
-                        tablePagination.getRowNumbersList(), "25")
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '1-25 of %s'",
-                        totalOpenPricing))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-25 of %s", totalOpenPricing))
-                .then("Validate data in column 'Name' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.NAME),
-                        sortNamesByDesc.subList(0, 25))
-                .and("Check next page")
-                .clickOnWebElement(tablePagination.getNext())
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '26-50 of %s'",
-                        totalOpenPricing))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("26-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Name' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.NAME),
-                        sortNamesByDesc.subList(25, 50))
-                .testEnd();
+        sortByDescColumnByName(ColumnNames.NAME);
+        validateSorting(ColumnNames.NAME, DESC,sortNamesByDesc);
     }
 
     @Test(testName = "Sorting 'Name' column by ascending")
     public void OpenPricingSortingByNameAsc() {
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-
-        testStart()
-                .given()
-                .and("Sort column 'Name'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.NAME.getName()))
-                .then("Ensure that sort by ascending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.NAME.getName()),
-                        "aria-sort", "ascending")
-                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Select 50 row per page")
-                .scrollIntoView(tablePagination.getPageMenu())
-                .selectFromDropdown(tablePagination.getPageMenu(),
-                        tablePagination.getRowNumbersList(), "50")
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '1-50 of %s'",
-                        totalOpenPricing))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Name' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.NAME),
-                        sortNamesByAsc.subList(0, 50))
-                .and("Check next page")
-                .clickOnWebElement(tablePagination.getNext())
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '51-100 of %s'",
-                        totalOpenPricing))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-100 of %s", totalOpenPricing))
-                .then("Validate data in column 'Name' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.NAME),
-                        sortNamesByAsc.subList(50, 100))
-                .and("Test Finished")
-                .testEnd();
+        sortByAscColumnByName(ColumnNames.NAME);
+        validateSorting(ColumnNames.NAME, ASC, sortNamesByAsc);
     }
 
     @Test(testName = "Sorting 'Publisher' column by descending")
     public void OpenPricingSortingByPublisherNameDesc() {
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-
-        testStart()
-                .given()
-                .and("Sort column 'Publisher'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()))
-                .then("Ensure that sort by descending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()),
-                        "aria-sort", "ascending")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()))
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()),
-                        "aria-sort", "descending")
-                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Select 50 row per page")
-                .selectFromDropdown(tablePagination.getPageMenu(),
-                        tablePagination.getRowNumbersList(), "50")
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '1-50 of %s'",
-                        totalOpenPricing))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Publisher' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.PUBLISHER),
-                        sortPublisherNameByDesc.subList(0, 50))
-                .and("Check next page")
-                .clickOnWebElement(tablePagination.getNext())
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '51-100 of %s'",
-                        totalOpenPricing))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-100 of %s", totalOpenPricing))
-                .then("Validate data in column 'Publisher' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.PUBLISHER),
-                        sortPublisherNameByDesc.subList(50, 100))
-                .and()
-                .testEnd();
+        sortByDescColumnByName(ColumnNames.PUBLISHER);
+        validateSorting(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
     }
 
     @Test(testName = "Sorting 'Publisher' column by ascending")
     public void OpenPricingSortingByPublisherNameAsc() {
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-
-        testStart()
-                .given()
-                .and("Sort column 'Publisher'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()))
-                .then("Ensure that sort by ascending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()),
-                        "aria-sort", "ascending")
-                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Select 50 row per page")
-                .selectFromDropdown(tablePagination.getPageMenu(),
-                        tablePagination.getRowNumbersList(), "50")
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '1-50 of %s'",
-                        totalOpenPricing))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Publisher' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.PUBLISHER),
-                        sortPublisherNameByAsc.subList(0, 50))
-                .and("Check next page")
-                .clickOnWebElement(tablePagination.getNext())
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '51-100 of %s'",
-                        totalOpenPricing))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-100 of %s", totalOpenPricing))
-                .then("Validate data in column 'Publisher' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.PUBLISHER),
-                        sortPublisherNameByAsc.subList(50, 100))
-                .and()
-                .testEnd();
+        sortByAscColumnByName(ColumnNames.PUBLISHER);
+        validateSorting(ColumnNames.PUBLISHER, ASC, sortPublisherNameByAsc);
     }
 
     @Test(testName = "Sorting 'ID' column by descending")
     public void OpenPricingSortingByIdDesc() {
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-
-        testStart()
-                .given()
-                .and("Sort column 'ID'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ID.getName()))
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ID.getName()))
-                .then("Ensure that sort by descending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.ID.getName()),
-                        "aria-sort", "ascending")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ID.getName()))
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.ID.getName()),
-                        "aria-sort", "descending")
-                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Select 50 row per page")
-                .selectFromDropdown(tablePagination.getPageMenu(),
-                        tablePagination.getRowNumbersList(), "50")
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '1-50 of %s'",
-                        totalOpenPricing))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'ID' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.ID),
-                        sortIdsByDesc.subList(0, 50))
-                .and("Check next page")
-                .clickOnWebElement(tablePagination.getNext())
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '51-100 of %s'",
-                        totalOpenPricing))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-100 of %s", totalOpenPricing))
-                .then("Validate data in column 'ID' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.ID),
-                        sortIdsByDesc.subList(50, 100))
-                .and()
-                .testEnd();
+        sortByDescColumnByName(ColumnNames.ID);
+        validateSorting(ColumnNames.ID, DESC, sortIdsByDesc);
     }
 
     @Test(testName = "Sorting 'ID' column by ascending")
     public void OpenPricingSortingByIdAsc() {
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-
-        testStart()
-                .given()
-                .and("Sort column 'ID'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ID.getName()))
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ID.getName()))
-                .then("Ensure that sort by descending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.ID.getName()),
-                        "aria-sort", "ascending")
-                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Select 50 row per page")
-                .selectFromDropdown(tablePagination.getPageMenu(),
-                        tablePagination.getRowNumbersList(), "50")
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '1-50 of %s'",
-                        totalOpenPricing))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'ID' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.ID),
-                        sortIdsByAsc.subList(0, 50))
-                .and("Check next page")
-                .clickOnWebElement(tablePagination.getNext())
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '51-100 of %s'",
-                        totalOpenPricing))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-100 of %s", totalOpenPricing))
-                .then("Validate data in column 'ID' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.ID),
-                        sortIdsByAsc.subList(50, 100))
-                .and()
-                .testEnd();
+        sortByAscColumnByName(ColumnNames.ID);
+        validateSorting(ColumnNames.ID, ASC, sortIdsByAsc);
     }
 
     @Test(testName = "Sorting 'Active/Inactive' column by descending")
     public void OpenPricingSortingByActiveInactiveDesc() {
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-
-        testStart()
-                .given()
-                .and("Sort column 'Active/Inactive'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ACTIVE_INACTIVE.getName()))
-                .then("Ensure that sort by descending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.ACTIVE_INACTIVE.getName()),
-                        "aria-sort", "ascending")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ACTIVE_INACTIVE.getName()))
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.ACTIVE_INACTIVE.getName()),
-                        "aria-sort", "descending")
-                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Select 50 row per page")
-                .selectFromDropdown(tablePagination.getPageMenu(),
-                        tablePagination.getRowNumbersList(), "50")
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '%s'",
-                        String.format("1-50 of %s", totalOpenPricing)))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Active/Inactive' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.ID),
-                        sortActiveInactiveByDesc.subList(0, 50))
-                .and("Check next page")
-                .clickOnWebElement(tablePagination.getNext())
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '51-100 of %s'",
-                        totalOpenPricing))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-100 of %s", totalOpenPricing))
-                .then("Validate data in column 'Active/Inactive' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.ID),
-                        sortActiveInactiveByDesc.subList(50, 100))
-                .and()
-                .testEnd();
+        sortByDescColumnByName(ColumnNames.ACTIVE_INACTIVE);
+        validateSorting(ColumnNames.ACTIVE_INACTIVE, DESC, sortActiveInactiveByDesc);
     }
 
     @Test(testName = "Sorting 'Active/Inactive' column by ascending")
     public void OpenPricingSortingByActiveInactiveAsc() {
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-
-        testStart()
-                .given()
-                .and("Sort column 'Active Inactive'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.ACTIVE_INACTIVE.getName()))
-                .then("Ensure that sort by descending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.ACTIVE_INACTIVE.getName()),
-                        "aria-sort", "ascending")
-                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Select 50 row per page")
-                .selectFromDropdown(tablePagination.getPageMenu(),
-                        tablePagination.getRowNumbersList(), "50")
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '1-50 of %s'",
-                        totalOpenPricing))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Active Inactive' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.ID),
-                        sortActiveInactiveByAsc.subList(0, 50))
-                .and("Check next page")
-                .clickOnWebElement(tablePagination.getNext())
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '51-100 of %s'",
-                        totalOpenPricing))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-100 of %s", totalOpenPricing))
-                .then("Validate data in column 'Active Inactive' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.ID),
-                        sortActiveInactiveByAsc.subList(50, 100))
-                .and()
-                .testEnd();
+        sortByAscColumnByName(ColumnNames.ACTIVE_INACTIVE);
+        validateSorting(ColumnNames.ACTIVE_INACTIVE, ASC, sortActiveInactiveByAsc);
     }
 
     @Test(testName = "Sorting 'Floor Price' column by descending")
     public void OpenPricingSortingByFloorPriceDesc() {
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-
-        testStart()
-                .given()
-                .and("Sort column 'Floor Price'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.FLOOR_PRICE.getName()))
-                .then("Ensure that sort by descending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.FLOOR_PRICE.getName()),
-                        "aria-sort", "ascending")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.FLOOR_PRICE.getName()))
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.FLOOR_PRICE.getName()),
-                        "aria-sort", "descending")
-                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .and("Select 50 row per page")
-                .selectFromDropdown(tablePagination.getPageMenu(),
-                        tablePagination.getRowNumbersList(), "50")
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '1-50 of %s'",
-                        totalOpenPricing))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Floor Price' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.FLOOR_PRICE),
-                        sortFloorPriceDesc.subList(0, 50))
-                .and("Check next page")
-                .clickOnWebElement(tablePagination.getNext())
-                .waitLoading(visible, openPricingPage.getTableProgressBar())
-                .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '51-100 of %s'",
-                        totalOpenPricing))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-100 of %s", totalOpenPricing))
-                .then("Validate data in column 'Floor Price' should be sorted by desc")
-                .validateList(tableData.getCustomCells(ColumnNames.FLOOR_PRICE),
-                        sortFloorPriceDesc.subList(50, 100))
-                .and("Test Finished")
-                .testEnd();
+        sortByDescColumnByName(ColumnNames.FLOOR_PRICE);
+        validateSorting(ColumnNames.FLOOR_PRICE, DESC, sortFloorPriceDesc);
     }
 
     @Test(testName = "Sorting 'Floor Price' column by ascending")
     public void OpenPricingSortingByFloorPriceAsc() {
+        sortByAscColumnByName(ColumnNames.FLOOR_PRICE);
+        validateSorting(ColumnNames.FLOOR_PRICE, ASC, sortFloorPriceAsc);
+    }
+    private void validateSorting(ColumnNames columnName, String sortType,List<String> expectedSortedList){
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-
+        //Todo Add checking of total qauntity in pagination test when
+        // https://rakutenadvertising.atlassian.net/browse/GS-3280 will be ready
         testStart()
                 .given()
-                .and("Sort column 'Floor price'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.FLOOR_PRICE.getName()))
-                .then("Ensure that sort by ascending: validate column attribute value")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.FLOOR_PRICE.getName()),
-                        "aria-sort", "ascending")
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
                 .and("Select 50 row per page")
                 .selectFromDropdown(tablePagination.getPageMenu(),
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer 1-50 of '%s'",
-                        totalOpenPricing))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-50 of %s", totalOpenPricing))
-                .then("Validate data in column 'Floor Price' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.FLOOR_PRICE),
-                        sortFloorPriceAsc.subList(0, 50))
+                .then("Validate that text in table footer '1-50")
+                .validateContainsText(tablePagination.getPaginationPanel(), "1-50 of")
+                .then(String.format("Validate data in column '%s' should be sorted by %s", columnName.getName(), sortType))
+                .validateList(tableData.getCustomCells(columnName), expectedSortedList.subList(0, 50))
                 .and("Check next page")
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, openPricingPage.getTableProgressBar())
                 .waitLoading(disappear, openPricingPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '51-100 of %s'",
-                        totalOpenPricing))
+                .then(String.format("Validate that text in table footer '51-%s of %s'",
+                        Math.min(100, totalOpenPricing), totalOpenPricing))
                 .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-100 of %s", totalOpenPricing))
-                .then("Validate data in column 'Floor Price' should be sorted by asc")
-                .validateList(tableData.getCustomCells(ColumnNames.FLOOR_PRICE),
-                        sortFloorPriceAsc.subList(50, 100))
+                        String.format("51-%s of", Math.min(100, totalOpenPricing)))
+                .then(String.format("Validate data in column '%s' should be sorted by %s", columnName.getName(), sortType))
+                .validateList(tableData.getCustomCells(columnName),
+                        expectedSortedList.subList(50, Math.min(100, totalOpenPricing)))
                 .and("Test Finished")
                 .testEnd();
     }
 
+    @Step("Sort column {0} by DESC")
+    private void sortByDescColumnByName(ColumnNames columnName) {
+        var tableData = openPricingPage.getOpenPricingTable().getTableData();
+
+        testStart()
+                .given()
+                .and(String.format("Sort column '%s'", columnName))
+                .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
+                .testEnd();
+
+        if (columnName.getName().equals("ID")) {
+            testStart()
+                    .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
+                    .testEnd();
+        }
+
+        testStart()
+                .then("Ensure that sort by descending: validate column attribute value")
+                .validateAttribute(tableData.getColumnHeader(columnName.getName()),
+                        "aria-sort", ASC)
+                .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
+                .validateAttribute(tableData.getColumnHeader(columnName.getName()),
+                        "aria-sort", DESC)
+                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
+                .testEnd();
+    }
+
+    @Step("Sort column {0} by ASC")
+    private void sortByAscColumnByName(ColumnNames columnName) {
+        var tableData = openPricingPage.getOpenPricingTable().getTableData();
+        testStart()
+                .given()
+                .and(String.format("Sort column '%s'", columnName))
+                .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
+                .testEnd();
+
+        if (columnName.getName().equals("ID")) {
+            testStart()
+                    .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
+                    .testEnd();
+        }
+
+        testStart()
+                .then("Ensure that sort by ascending: validate column attribute value")
+                .validateAttribute(tableData.getColumnHeader(columnName.getName()),
+                        "aria-sort", ASC)
+                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
+                .testEnd();
+
+    }
+
     private List<OpenPricing> getAllItemsByParams(String strParams) {
-        HashMap<String, Object> queryParams = new HashMap<>();
-        queryParams.put("sort", strParams);
 
         return OpenPricingPrecondition.openPricing()
-                .getOpenPricingWithFilter(queryParams)
+                .getOpenPricingWithFilter(Map.of("sort", strParams))
                 .build()
                 .getOpenPricingGetAllResponse()
                 .getItems();
     }
 
-    private String customFormat(Double value) {
-        DecimalFormat myFormatter = new DecimalFormat("###,###.###");
+    private String getCustomFormat(Double value) {
 
-        return myFormatter.format(value);
+        return new DecimalFormat("###,###.###").format(value);
     }
 
 }

@@ -29,7 +29,6 @@ public enum ErrorMessages {
 
     //Private Auction / Deal
     DSP_ERROR_ALERT("DSP Error Alert Text", "The DSP field is required"),
-    NAME_ERROR_ALERT("Name Error Alert Text", "The Name field is required"),
     VALUE_ERROR_ALERT("Value Error Alert Text", "The Value field is required"),
     CURRENCY_ERROR_ALERT("Currency Error Alert Text", "The Currency field is required"),
     DATE_RANGE_ERROR_ALERT("'Date Range' Error Alert Text", "The Date Range field is required"),
@@ -56,6 +55,7 @@ public enum ErrorMessages {
     CSV_FILE_ERROR_ALERT("The CSV Error Alert Text", "The CSV field is required"),
 
     //COMMON
+    NAME_ERROR_ALERT("Name Error Alert Text", "The Name field is required"),
     PLATFORM_ERROR_ALERT("Platform Error Alert Text", "The Platform field is required"),
     MIN_MAX_VALUE_FLOOR_PRICE("Min/Max Value Floor Price Alert Text", "A valid price is between 0.00 and 999,999.99 inclusive"),
     MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE("Min/Max Value Floor Price Alert Text", "A valid price is between 0.01 and 999,999.99 inclusive");

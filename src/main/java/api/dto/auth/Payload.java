@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.xml.transform.sax.SAXResult;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -20,6 +22,8 @@ public class Payload {
     private String loginId;
     private String updatedAt;
     private String createdAt;
+    private String createdBy;
+    private String updatedBy;
     private Boolean isEnabled;
     private Integer publisherId;
     private String publisherName;

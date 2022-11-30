@@ -271,7 +271,7 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .clickEnterButton(tableData.getSearch())
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         "1-6 of 6")
-                .selectAllRowsByColumnCellValue(tableData, ColumnNames.AD_SPOT_NAME,
+                .selectAllRowsByColumnCellValue(tableData, ColumnNames.NAME,
                         PREFIX_AD_SPOT_BULK_1)
                 .and("Click 'Activate' button")
                 .clickOnWebElement(adSpotsPage.getActivateAdSpotButton())
@@ -279,22 +279,22 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .waitAndValidate(visible, tableData.getCheckbox(1)
                         .shouldHave(attributeMatching("class", CLASS_ATTRIBUTE_FOR_UNCHECKED_CHECKBOX)))
                 .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
-                                ColumnNames.AD_SPOT_NAME, adSpotInActiveBulkA1.getName()),
+                                ColumnNames.NAME, adSpotInActiveBulkA1.getName()),
                         Statuses.ACTIVE.getStatus())
                 .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
-                                ColumnNames.AD_SPOT_NAME, adSpotInActiveBulkA2.getName()),
+                                ColumnNames.NAME, adSpotInActiveBulkA2.getName()),
                         Statuses.ACTIVE.getStatus())
                 .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
-                                ColumnNames.AD_SPOT_NAME, adSpotInActiveBulkA3.getName()),
+                                ColumnNames.NAME, adSpotInActiveBulkA3.getName()),
                         Statuses.ACTIVE.getStatus())
                 .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
-                                ColumnNames.AD_SPOT_NAME, adSpotActiveBulkA1.getName()),
+                                ColumnNames.NAME, adSpotActiveBulkA1.getName()),
                         Statuses.ACTIVE.getStatus())
                 .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
-                                ColumnNames.AD_SPOT_NAME, adSpotActiveBulkA2.getName()),
+                                ColumnNames.NAME, adSpotActiveBulkA2.getName()),
                         Statuses.ACTIVE.getStatus())
                 .validateContainsText(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE,
-                                ColumnNames.AD_SPOT_NAME, adSpotActiveBulkA3.getName()),
+                                ColumnNames.NAME, adSpotActiveBulkA3.getName()),
                         Statuses.ACTIVE.getStatus())
                 .validate(not(exist), adSpotsPage.getToasterMessage().getPanelError())
                 .testEnd();
