@@ -13,7 +13,6 @@ import rx.BaseTest;
 import widgets.admin.users.sidebar.CreateUserSidebar;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.Statuses;
-import widgets.inventory.media.sidebar.CreateMediaSidebar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +31,6 @@ public class UsersCreationTests extends BaseTest {
 
     private List<UserDto> listUsers = new ArrayList<>();
     private Publisher publisher;
-    private CreateMediaSidebar createMediaSidebar;
-
 
     private CreateUserSidebar createUserSidebar;
 
@@ -41,7 +38,6 @@ public class UsersCreationTests extends BaseTest {
     public UsersCreationTests() {
     	usersPage = new UsersPage();
         createUserSidebar = new CreateUserSidebar();
-        createMediaSidebar = new CreateMediaSidebar();
     }
 
     @BeforeClass
@@ -123,8 +119,8 @@ public class UsersCreationTests extends BaseTest {
 
         if (userType.equals(UserRole.SINGLE_PUBLISHER.getDefinition())) {
             testStart()
-                    .selectFromDropdown(createMediaSidebar.getPublisherInput(),
-                            createMediaSidebar.getPublisherDropdownItems(), publisher.getName())
+                    .selectFromDropdown(createUserSidebar.getPublisherInput(),
+                            createUserSidebar.getPublisherDropdownItems(), publisher.getName())
                     .and("Fill Name")
                     .testEnd();
         } else if (userType.equals(UserRole.CROSS_PUBLISHER.getDefinition())) {
@@ -160,7 +156,7 @@ public class UsersCreationTests extends BaseTest {
 
         if (userType.equals(UserRole.SINGLE_PUBLISHER.getDefinition())) {
             testStart()
-                    .validate(createMediaSidebar.getPublisherInput(), publisher.getName())
+                    .validate(createUserSidebar.getPublisherInput(), publisher.getName())
                     .testEnd();
         }
         testStart()

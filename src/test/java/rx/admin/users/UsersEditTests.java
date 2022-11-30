@@ -13,7 +13,6 @@ import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import widgets.admin.users.sidebar.EditUserSidebar;
 import widgets.common.table.Statuses;
-import widgets.inventory.media.sidebar.EditMediaSidebar;
 
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static api.preconditionbuilders.UsersPrecondition.*;
@@ -30,14 +29,11 @@ public class UsersEditTests extends BaseTest {
     private UsersPage usersPage;
     private UserDto user;
     private Publisher publisher;
-    private EditMediaSidebar editMediaSidebar;
     private EditUserSidebar editUserSidebar;
 
 
     public UsersEditTests() {
         usersPage = new UsersPage();
-        user = new UserDto();
-        editMediaSidebar = new EditMediaSidebar();
         editUserSidebar = new EditUserSidebar();
     }
 
@@ -53,59 +49,57 @@ public class UsersEditTests extends BaseTest {
 
     @Test(description = "Create Single-publisher Active User and update to Cross-Publisher and deactivate user")
     public void editSinglePublisherUserToCross() {
-        user = createUser(UserRole.SINGLE_PUBLISHER);
+        user = createSingleUser();
         editUser(user, UserRole.SINGLE_PUBLISHER, UserRole.CROSS_PUBLISHER);
     }
 
     @Test(description = "Create Single-publisher Active User and update to Admin-Publisher and deactivate user")
     public void editSinglePublisherUserToAdmin() {
-        user = createUser(UserRole.SINGLE_PUBLISHER);
+        user = createSingleUser();
         editUser(user, UserRole.SINGLE_PUBLISHER, UserRole.ADMIN);
     }
 
     @Test(description = "Create Cross-publisher Active User and update to Admin-Publisher and deactivate user")
     public void editCrossPublisherUserToAdmin() {
-        user = createUser(UserRole.CROSS_PUBLISHER);
+        user = createAdminUser(UserRole.CROSS_PUBLISHER);
         editUser(user, UserRole.CROSS_PUBLISHER, UserRole.ADMIN);
     }
 
     @Test(description = "Create Cross-publisher Active User and update to Single-Publisher and deactivate user")
     public void editCrossPublisherUserToSingle() {
-        user = createUser(UserRole.CROSS_PUBLISHER);
+        user = createAdminUser(UserRole.CROSS_PUBLISHER);
         editUser(user, UserRole.CROSS_PUBLISHER, UserRole.SINGLE_PUBLISHER);
     }
 
     @Test(description = "Create Admin-publisher Active User and update to Cross-Publisher and deactivate user")
     public void editAdminPublisherUserToCross() {
-        user = createUser(UserRole.ADMIN);
+        user = createAdminUser(UserRole.ADMIN);
         editUser(user, UserRole.ADMIN, UserRole.CROSS_PUBLISHER);
     }
 
     @Test(description = "Create Cross-publisher Active User and update to Single-Publisher and deactivate user")
     public void editAdminPublisherUserToSingle() {
-        user = createUser(UserRole.ADMIN);
+        user = createAdminUser(UserRole.ADMIN);
         editUser(user, UserRole.ADMIN, UserRole.SINGLE_PUBLISHER);
     }
 
     @Step("Create Media via Api")
-    private UserDto createUser(UserRole role) {
-        if (role.equals(UserRole.SINGLE_PUBLISHER.getDefinition())) {
-            publisher = publisher()
-                    .createNewPublisher(captionWithSuffix("00003-autoPub"))
-                    .build()
-                    .getPublisherResponse();
+    private UserDto createSingleUser() {
+        publisher = publisher()
+                .createNewPublisher(captionWithSuffix("00003-autoPub"))
+                .build()
+                .getPublisherResponse();
 
-            return user()
-                    .createSinglePublisherUser(publisher.getId())
-                    .build()
-                    .getUserResponse();
-        }
-        else {
+        return user()
+                .createSinglePublisherUser(publisher.getId())
+                .build()
+                .getUserResponse();
+    }
+    private UserDto createAdminUser(UserRole role) {
             return user()
                     .createNewUser(role)
                     .build()
                     .getUserResponse();
-        }
     }
 
     @Step("Edit User")
@@ -135,8 +129,8 @@ public class UsersEditTests extends BaseTest {
         if (role.getRole().equals(UserRole.SINGLE_PUBLISHER)) {
             testStart()
                     .validate(checked, editUserSidebar.getSinglePublisherRadioButton())
-                    .validate(enabled, editMediaSidebar.getPublisherNameInput())
-                    .validate(editMediaSidebar.getPublisherInput(), user.getPublisherName())
+                    .validate(enabled, editUserSidebar.getPublisherNameInput())
+                    .validate(editUserSidebar.getPublisherInput(), user.getPublisherName())
                     .testEnd();
         }
 
@@ -155,8 +149,8 @@ public class UsersEditTests extends BaseTest {
 
             testStart()
                     .selectRadioButton(editUserSidebar.getSinglePublisherRadioButton())
-                    .selectFromDropdown(editMediaSidebar.getPublisherInput(),
-                    editMediaSidebar.getPublisherDropdownItems(), publisher.getName())
+                    .selectFromDropdown(editUserSidebar.getPublisherInput(),
+                            editUserSidebar.getPublisherDropdownItems(), publisher.getName())
                     .testEnd();
         }
         else if (updatedRole.equals(UserRole.CROSS_PUBLISHER)) {
