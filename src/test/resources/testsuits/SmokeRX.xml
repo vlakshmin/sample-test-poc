@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="Regression" parallel="false">
-<!--   <test name="0Precondition. Delete records with 'auto' substring">
+   <test name="0Precondition. Delete records with 'auto' substring">
         <classes>
             <class name="rx.pipelines.DeleteGeneratedDataTest"/>
         </classes>
@@ -41,12 +41,12 @@
             <class name="rx.inventory.adspot.AdSpotRequiredFieldsOnlyCreateTests"/>
         </classes>
     </test>
--->
+
     <test name="Open Pricing">
         <classes>
 <!--            <class name="rx.yield.openpricing.VerifyPublisherTests"/>-->
     <class name="rx.yield.openpricing.CreateOpenPricingTest"/>
-<!--            <class name="rx.yield.openpricing.OpenPricingUploadTests"/>
+            <class name="rx.yield.openpricing.OpenPricingUploadTests"/>
             <class name="rx.yield.openpricing.OpenPricingSortingTableTests"/>
             <class name="rx.yield.openpricing.OpenPricingUploadNegativeTests"/>
             <class name="rx.yield.openpricing.OpenPricingUploadSidebarTests"/>
@@ -119,7 +119,7 @@
 
     <test name="XPost-conditions. Delete records with 'auto' substring">
         <classes>
-            <class name="rx.pipelines.DeleteGeneratedDataTest"/>-->
+            <class name="rx.pipelines.DeleteGeneratedDataTest"/>
         </classes>
     </test>
 
