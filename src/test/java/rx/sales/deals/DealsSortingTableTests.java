@@ -1,5 +1,6 @@
 package rx.sales.deals;
 
+import org.jsoup.internal.StringUtil;
 import pages.Path;
 import rx.BaseTest;
 import org.testng.annotations.*;
@@ -10,6 +11,7 @@ import api.preconditionbuilders.DealPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
+import zutils.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -582,10 +584,9 @@ public class DealsSortingTableTests extends BaseTest {
     }
 
     private List<String> getStartDateByAsc() {
-
         return getAllItemsByParams("start_date-asc").stream()
                 .map(Deal::getCreatedAt)
-                .map(this::parsedDate)
+                .map(StringUtils::parsedDate)
                 .collect(Collectors.toList());
     }
 
@@ -593,7 +594,7 @@ public class DealsSortingTableTests extends BaseTest {
 
         return getAllItemsByParams("start_date-desc").stream()
                 .map(Deal::getCreatedAt)
-                .map(this::parsedDate)
+                .map(StringUtils::parsedDate)
                 .collect(Collectors.toList());
     }
 
@@ -601,7 +602,7 @@ public class DealsSortingTableTests extends BaseTest {
 
         return getAllItemsByParams("end_date-asc").stream()
                 .map(Deal::getCreatedAt)
-                .map(this::parsedDate)
+                .map(StringUtils::parsedDate)
                 .collect(Collectors.toList());
     }
 
@@ -609,7 +610,7 @@ public class DealsSortingTableTests extends BaseTest {
 
         return getAllItemsByParams("end_date-desc").stream()
                 .map(Deal::getCreatedAt)
-                .map(this::parsedDate)
+                .map(StringUtils::parsedDate)
                 .collect(Collectors.toList());
     }
 
@@ -617,7 +618,7 @@ public class DealsSortingTableTests extends BaseTest {
 
         return getAllItemsByParams("created_at-asc").stream()
                 .map(Deal::getCreatedAt)
-                .map(this::parsedDate)
+                .map(StringUtils::parsedDate)
                 .collect(Collectors.toList());
     }
 
@@ -625,7 +626,7 @@ public class DealsSortingTableTests extends BaseTest {
 
         return getAllItemsByParams("created_at-desc").stream()
                 .map(Deal::getCreatedAt)
-                .map(this::parsedDate)
+                .map(StringUtils::parsedDate)
                 .collect(Collectors.toList());
     }
 
@@ -649,7 +650,7 @@ public class DealsSortingTableTests extends BaseTest {
 
         return getAllItemsByParams("updated_at-asc").stream()
                 .map(Deal::getCreatedAt)
-                .map(this::parsedDate)
+                .map(StringUtils::parsedDate)
                 .collect(Collectors.toList());
     }
 
@@ -657,7 +658,7 @@ public class DealsSortingTableTests extends BaseTest {
 
         return getAllItemsByParams("updated_by-asc").stream()
                 .map(Deal::getCreatedAt)
-                .map(this::parsedDate)
+                .map(StringUtils::parsedDate)
                 .collect(Collectors.toList());
     }
 
@@ -696,18 +697,11 @@ public class DealsSortingTableTests extends BaseTest {
 
     private static String formatDecimalZeros(double num) {
         if (num == (long) num) {
+
             return String.format("%d", (long) num);
         } else {
-            return String.format("%s", num);
-        }
-    }
 
-    private String parsedDate(String date) {
-        try {
-            Date formattedDate = incomingSdf.parse(date);
-            return outgoingSdf.format(formattedDate);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+            return String.format("%s", num);
         }
     }
 
