@@ -37,11 +37,11 @@ public enum ColumnNames {
 
     //Media
     PLATFORM("Platform", true),
-    MEDIA_NAME("Media Name", true),
+    MEDIA_NAME("Name", true),
     SITE_APP_STORE_URL("Site / App Store URL", true),
 
     //Ad Spot Name
-    AD_SPOT_NAME("Ad Spot Name", true),
+    AD_SPOT_NAME("Name", true),
     RELATED_MEDIA("Related Media", true),
 
     FILTER("Filter", false),

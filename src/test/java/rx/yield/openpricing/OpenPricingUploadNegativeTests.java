@@ -31,7 +31,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-public class OpenPricingUploadNegtiveTests extends BaseTest {
+public class OpenPricingUploadNegativeTests extends BaseTest {
 
     private Publisher publisher;
     private OpenPricingPage openPricingPage;
@@ -48,7 +48,7 @@ public class OpenPricingUploadNegtiveTests extends BaseTest {
     private final static String ERROR_UNSUPPORTED_MEDIA_TYPE = "{ \"code\": 415, \"message\": \"unsupported media type\", " +
             "\"error\": \"The uploaded file is not a CSV file\" }";
 
-    public OpenPricingUploadNegtiveTests() {
+    public OpenPricingUploadNegativeTests() {
         openPricingPage = new OpenPricingPage();
         openPricingUploadSidebar = new UpdateExistingOpenPricingRulesSidebar();
         openPricingSidebar = new EditOpenPricingSidebar();

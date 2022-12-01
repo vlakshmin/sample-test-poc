@@ -14,7 +14,7 @@ public enum AdSpotSidebarElements {
     //TODO: child does not work , need to investigate GS-3029
     ERROR_ALERT_BY_FIELD_NAME("Error Alert under Field '%s'",
             "//label[text()='%s']/../../../div[2]/div/div/div"),
-    AD_SPOT_NAME("'Ad Spot Name' Input", "//label[text()='Ad Spot Name']/../input"),
+    AD_SPOT_NAME("'Ad Spot Name' Input", "//label[text()='Name']/../input"),
     PUBLISHER_NAME("'Publisher Name' Input", "//label[text()='Publisher Name']/../div"),
     CATEGORIES_INPUT("'Categories' Input", "//label[text()='Categories']/../div/input"),
     SAVE_BUTTON("'Save Ad Spot' Button", "//button/span[contains(text(),'Save Ad Spot')]"),

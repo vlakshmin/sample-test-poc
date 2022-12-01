@@ -1,12 +1,9 @@
 package rx.admin.demand;
 
 import api.dto.rx.demandsource.DemandSource;
-import api.preconditionbuilders.DemandSourcePrecondition;
-import api.preconditionbuilders.PublisherPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpStatus;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
@@ -15,15 +12,10 @@ import pages.Path;
 import pages.admin.demand.DemandPage;
 import rx.BaseTest;
 import widgets.admin.demand.sidebar.EditDemandSidebar;
-import widgets.admin.publisher.sidebar.CreatePublisherSidebar;
-import widgets.admin.publisher.sidebar.EditPublisherSidebar;
 import widgets.common.table.ColumnNames;
-import zutils.FakerUtils;
 
 import static api.preconditionbuilders.DemandSourcePrecondition.demandSource;
-import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.disappear;
-import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
 import static configurations.User.USER_FOR_DELETION;
 import static java.lang.String.valueOf;
@@ -68,7 +60,7 @@ public class EditDemandSourceTest extends BaseTest {
                 .setValueWithClean(demandPage.getDemandTable().getTableData().getSearch(),
                         demandSource.getCorp())
                 .clickEnterButton(demandPage.getDemandTable().getTableData().getSearch())
-                .clickOnTableCellLink(demandPage.getDemandTable().getTableData(), ColumnNames.BIDDER, demandSource.getCorp())
+                .clickOnTableCellLink(demandPage.getDemandTable().getTableData(), ColumnNames.NAME, demandSource.getCorp())
                 .then("Wait till Demand Source sidebar will be opened")
                 .waitSideBarOpened()
                 .then("Validate All Settings of Demand Source sidebar")
@@ -100,7 +92,7 @@ public class EditDemandSourceTest extends BaseTest {
                 .testEnd();
     }
 
-    @AfterClass
+    @AfterClass()
     private void logOutAndDeleteData(){
         deleteDsp(demandSource.getId());
         logout();
