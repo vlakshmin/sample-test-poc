@@ -28,14 +28,12 @@ public abstract class AbstractUserSidebar {
     private SelenideElement usernameInput = $x(USERNAME_INPUT.getSelector()).as(USERNAME_INPUT.getAlias());
     private SelenideElement passwordInput = $x(PASSWORD_INPUT.getSelector()).as(PASSWORD_INPUT.getAlias());
     private SelenideElement adminRadioButton = $x(ADMIN_RADIOBUTTON.getSelector()).as(ADMIN_RADIOBUTTON.getAlias());
-    private SelenideElement createUserSidebar = $x(CREATE_USER_SIDEBAR.getSelector()).as(CREATE_USER_SIDEBAR.getAlias());
-    private SelenideElement createUserActive = $x(CREATE_USER_ACTIVE.getSelector()).as(CREATE_USER_ACTIVE.getAlias());
-    private SelenideElement createUserName = $x(CREATE_USER_USERNAME.getSelector()).as(CREATE_USER_USERNAME.getAlias());
+    private SelenideElement userSideBar = $x(USER_SIDEBAR.getSelector()).as(USER_SIDEBAR.getAlias());
     private SelenideElement publisherInput = $x(PUBLISHER_NAME.getSelector()).as(PUBLISHER_NAME.getAlias());
     private SelenideElement publisherNameInput = $x(PUBLISHER_NAME_INPUT.getSelector()).as(PUBLISHER_NAME_INPUT.getAlias());
     private ElementsCollection publisherDropdownItems = $$x(PUBLISHER_DROPDOWN_ITEMS.getSelector()).as(PUBLISHER_DROPDOWN_ITEMS.getAlias());
-    private SelenideElement createUserSidebarTitle = $x(CREATE_USER_SIDEBAR_TITLE.getSelector()).as(CREATE_USER_SIDEBAR_TITLE.getAlias());
-    private SelenideElement createUserSidebarClose = $x(CREATE_USER_SIDEBAR_CLOSE.getSelector()).as(CREATE_USER_SIDEBAR_CLOSE.getAlias());
+    private SelenideElement userSideBarTitle = $x(USER_SIDEBAR_TITLE.getSelector()).as(USER_SIDEBAR_TITLE.getAlias());
+    private SelenideElement userSideBarClose = $x(USER_SIDEBAR_CLOSE.getSelector()).as(USER_SIDEBAR_CLOSE.getAlias());
     private SelenideElement crossPublisherRadioButton = $x(CROSS_PUBLISHER_RADIOBUTTON.getSelector()).as(CROSS_PUBLISHER_RADIOBUTTON.getAlias());
     private SelenideElement singlePublisherRadioButton = $x(SINGLE_PUBLISHER_RADIOBUTTON.getSelector()).as(SINGLE_PUBLISHER_RADIOBUTTON.getAlias());
 

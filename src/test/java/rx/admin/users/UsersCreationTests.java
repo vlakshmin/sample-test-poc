@@ -28,12 +28,9 @@ import static zutils.FakerUtils.randomMail;
 @Listeners({ScreenShooter.class})
 public class UsersCreationTests extends BaseTest {
     private UsersPage usersPage;
-
     private List<UserDto> listUsers = new ArrayList<>();
     private Publisher publisher;
-
     private CreateUserSidebar createUserSidebar;
-
 
     public UsersCreationTests() {
     	usersPage = new UsersPage();
@@ -55,58 +52,72 @@ public class UsersCreationTests extends BaseTest {
     @Test(description = "Create Single-Publisher active User")
     public void createActiveSingleUser() {
         var userName = captionWithSuffix("autoUserSingle");
-        createAndCheckCreatedUser(userName, UserRole.SINGLE_PUBLISHER.getDefinition(), randomMail(), Statuses.ACTIVE.name());
+        var emailAddress = randomMail();
+        var status = Statuses.ACTIVE.name();
+
+        createSingleUser(userName, emailAddress, status);
+        validateSingleUser(userName, emailAddress, status);
     }
 
     @Test(description = "Create Cross-Publisher active User")
     public void createActiveCrossUser() {
         var userName = captionWithSuffix("autoUserCross");
-        createAndCheckCreatedUser(userName, UserRole.CROSS_PUBLISHER.getDefinition(), randomMail(), Statuses.ACTIVE.name());
+        var emailAddress = randomMail();
+        var status = Statuses.ACTIVE.name();
+
+        createCrossUser(userName, emailAddress, status);
+        validateNonSingleUser(userName, emailAddress, status, "Cross-Publishers");
     }
 
     @Test(description = "Create Admin-Publisher active User")
     public void createActiveAdminUser() {
         var userName = captionWithSuffix("autoUserAdmin");
-        createAndCheckCreatedUser(userName, UserRole.ADMIN.getDefinition(), randomMail(), Statuses.ACTIVE.name());
+        var emailAddress = randomMail();
+        var status = Statuses.ACTIVE.name();
+
+        createAdminUser(userName, emailAddress, status);
+        validateNonSingleUser(userName, emailAddress, status, "Admin");
     }
 
     @Test(description = "Create Single-Publisher inactive User")
     public void createInactiveSingleUser() {
         var userName = captionWithSuffix("autoUserSingleInactive");
-        createAndCheckCreatedUser(userName, UserRole.SINGLE_PUBLISHER.getDefinition(), randomMail(), Statuses.INACTIVE.name());
+        var emailAddress = randomMail();
+        var status = Statuses.INACTIVE.name();
+
+        createSingleUser(userName, emailAddress, status);
+        validateSingleUser(userName, emailAddress, status);
     }
 
     @Test(description = "Create Cross-Publisher active User")
     public void createInactiveCrossUser() {
         var userName = captionWithSuffix("autoUserCrossInactive");
-        createAndCheckCreatedUser(userName, UserRole.CROSS_PUBLISHER.getDefinition(), randomMail(), Statuses.INACTIVE.name());
+        var emailAddress = randomMail();
+        var status = Statuses.INACTIVE.name();
+        createCrossUser(userName, emailAddress, status);
+        validateNonSingleUser(userName, emailAddress, status, "Cross-Publishers");
     }
 
     @Test(description = "Create Admin-Publisher active User")
     public void createInactiveAdminUser() {
         var userName = captionWithSuffix("autoUserAdminInactive");
-        createAndCheckCreatedUser(userName, UserRole.ADMIN.getDefinition(), randomMail(), Statuses.INACTIVE.name());
+        var emailAddress = randomMail();
+        var status = Statuses.INACTIVE.name();
+        createAdminUser(userName, emailAddress, status);
+        validateNonSingleUser(userName, emailAddress, status, "Admin");
     }
 
-    @Step("Create User {0} with user type {1} and status {3}")
-    private void createAndCheckCreatedUser(String userName, String userType, String emailAddress, String status) {
-        var tableData = usersPage.getUsersTable().getTableData();
-        var tableOptions = usersPage.getUsersTable().getShowHideColumns();
-        var tablePagination = usersPage.getUsersTable().getTablePagination();
-
-        if (userType.equals(UserRole.SINGLE_PUBLISHER.getDefinition())) {
-            publisher = publisher()
-                    .createNewPublisher(captionWithSuffix("00003-autoPub"))
-                    .build()
-                    .getPublisherResponse();
-        }
-
+    private void createSingleUser(String userName, String emailAddress, String status) {
+        publisher = createPublisher();
         testStart()
                 .clickOnWebElement(usersPage.getCreateUserButton())
                 .waitSideBarOpened()
                 .setValueWithClean(createUserSidebar.getUsernameInput(), userName)
                 .setValueWithClean(createUserSidebar.getEmailInput(), emailAddress)
                 .setValueWithClean(createUserSidebar.getPasswordInput(), "Password1")
+                .selectFromDropdown(createUserSidebar.getPublisherInput(),
+                        createUserSidebar.getPublisherDropdownItems(), publisher.getName())
+                .and("Fill Name")
                 .testEnd();
 
         if(status.equals(Statuses.INACTIVE.name()))
@@ -116,22 +127,34 @@ public class UsersCreationTests extends BaseTest {
                     .testEnd();
 
         }
+        testStart()
+                .clickOnWebElement(createUserSidebar.getSaveButton())
+                .and("Error message is absent")
+                .waitAndValidate(not(visible), createUserSidebar.getErrorAlert().getErrorPanel())
+                .waitAndValidate(not(visible), usersPage.getToasterMessage().getPanelError())
+                .waitSideBarClosed()
+                .and("Toaster Error message is absent")
+                .waitAndValidate(not(visible), usersPage.getToasterMessage().getPanelError())
+                .testEnd();
+    }
 
-        if (userType.equals(UserRole.SINGLE_PUBLISHER.getDefinition())) {
+    private void createCrossUser(String userName, String emailAddress, String status) {
+        publisher = createPublisher();
+        testStart()
+                .clickOnWebElement(usersPage.getCreateUserButton())
+                .waitSideBarOpened()
+                .setValueWithClean(createUserSidebar.getUsernameInput(), userName)
+                .setValueWithClean(createUserSidebar.getEmailInput(), emailAddress)
+                .setValueWithClean(createUserSidebar.getPasswordInput(), "Password1")
+                .selectRadioButton(createUserSidebar.getCrossPublisherRadioButton())
+                .testEnd();
+
+        if(status.equals(Statuses.INACTIVE.name()))
+        {
             testStart()
-                    .selectFromDropdown(createUserSidebar.getPublisherInput(),
-                            createUserSidebar.getPublisherDropdownItems(), publisher.getName())
-                    .and("Fill Name")
+                    .turnToggleOff(createUserSidebar.getActiveToggle())
                     .testEnd();
-        } else if (userType.equals(UserRole.CROSS_PUBLISHER.getDefinition())) {
-            testStart()
-                    .selectRadioButton(createUserSidebar.getCrossPublisherRadioButton())
-                    .testEnd();
-        }
-        else {
-            testStart()
-                    .selectRadioButton(createUserSidebar.getAdminRadioButton())
-                    .testEnd();
+
         }
         testStart()
                 .clickOnWebElement(createUserSidebar.getSaveButton())
@@ -141,7 +164,45 @@ public class UsersCreationTests extends BaseTest {
                 .waitSideBarClosed()
                 .and("Toaster Error message is absent")
                 .waitAndValidate(not(visible), usersPage.getToasterMessage().getPanelError())
-                .and("Search new media")
+                .testEnd();
+    }
+
+    private void createAdminUser(String userName, String emailAddress, String status) {
+        publisher = createPublisher();
+        testStart()
+                .clickOnWebElement(usersPage.getCreateUserButton())
+                .waitSideBarOpened()
+                .setValueWithClean(createUserSidebar.getUsernameInput(), userName)
+                .setValueWithClean(createUserSidebar.getEmailInput(), emailAddress)
+                .setValueWithClean(createUserSidebar.getPasswordInput(), "Password1")
+                .selectRadioButton(createUserSidebar.getAdminRadioButton())
+                .testEnd();
+        if(status.equals(Statuses.INACTIVE.name()))
+        {
+            testStart()
+                    .turnToggleOff(createUserSidebar.getActiveToggle())
+                    .testEnd();
+
+        }
+        testStart()
+                .clickOnWebElement(createUserSidebar.getSaveButton())
+                .and("Error message is absent")
+                .waitAndValidate(not(visible), createUserSidebar.getErrorAlert().getErrorPanel())
+                .waitAndValidate(not(visible), usersPage.getToasterMessage().getPanelError())
+                .waitSideBarClosed()
+                .and("Toaster Error message is absent")
+                .waitAndValidate(not(visible), usersPage.getToasterMessage().getPanelError())
+                .testEnd();
+    }
+
+    @Step("Create User {0} with user type {1} and status {3}")
+    private void validateSingleUser(String userName, String emailAddress, String status) {
+        var tableData = usersPage.getUsersTable().getTableData();
+        var tableOptions = usersPage.getUsersTable().getShowHideColumns();
+        var tablePagination = usersPage.getUsersTable().getTablePagination();
+
+        testStart()
+                .when("Search new user")
                 .setValueWithClean(tableData.getSearch(), userName)
                 .clickEnterButton(tableData.getSearch())
                 .then("Validate that text in table footer '1-1 of 1")
@@ -152,14 +213,7 @@ public class UsersCreationTests extends BaseTest {
                 .then("Check all fields")
                 .validateAttribute(createUserSidebar.getUsernameInput(), "value", userName)
                 .validateAttribute(createUserSidebar.getEmailInput(), "value", emailAddress)
-                .testEnd();
-
-        if (userType.equals(UserRole.SINGLE_PUBLISHER.getDefinition())) {
-            testStart()
-                    .validate(createUserSidebar.getPublisherInput(), publisher.getName())
-                    .testEnd();
-        }
-        testStart()
+                .validate(createUserSidebar.getPublisherInput(), publisher.getName())
                 .and("Click Save")
                 .clickOnWebElement(createUserSidebar.getSaveButton())
                 .waitAndValidate(not(visible), createUserSidebar.getErrorAlert().getErrorPanel())
@@ -172,23 +226,59 @@ public class UsersCreationTests extends BaseTest {
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .then("Validate data in table")
                 .validate(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE, ColumnNames.NAME, userName), status)
-                .testEnd();
-
-        if (userType.equals(UserRole.SINGLE_PUBLISHER.getDefinition())) {
-            testStart()
-                    .validate(tableData.getCellByRowValue(ColumnNames.PUBLISHER, ColumnNames.NAME, userName), publisher.getName())
-                    .testEnd();
-        }
-
-        testStart()
+                .validate(tableData.getCellByRowValue(ColumnNames.PUBLISHER, ColumnNames.NAME, userName), publisher.getName())
                 .validate(tableData.getCellByRowValue(ColumnNames.EMAIL, ColumnNames.NAME, userName), emailAddress)
-                .validate(tableData.getCellByRowValue(ColumnNames.ROLE, ColumnNames.NAME, userName), userType)
+                .validate(tableData.getCellByRowValue(ColumnNames.ROLE, ColumnNames.NAME, userName), UserRole.SINGLE_PUBLISHER.getDefinition())
                 .clickOnWebElement(tableData.getClear())
                 .then("Validate that text in table footer '1-20 of X")
                 .validateContainsText(tablePagination.getPaginationPanel(), "1-20 of ")
                 .testEnd();
     }
 
+    @Step("Create User {0} with user type {1} and status {3}")
+    private void validateNonSingleUser(String userName, String emailAddress, String status, String role) {
+        var tableData = usersPage.getUsersTable().getTableData();
+        var tableOptions = usersPage.getUsersTable().getShowHideColumns();
+        var tablePagination = usersPage.getUsersTable().getTablePagination();
+
+        testStart()
+                .when("Search new user")
+                .setValueWithClean(tableData.getSearch(), userName)
+                .clickEnterButton(tableData.getSearch())
+                .then("Validate that text in table footer '1-1 of 1")
+                .validateContainsText(tablePagination.getPaginationPanel(), "1-1 of 1")
+                .and("Open Sidebar and check data")
+                .clickOnTableCellLink(tableData, ColumnNames.NAME, userName)
+                .waitSideBarOpened()
+                .then("Check all fields")
+                .validateAttribute(createUserSidebar.getUsernameInput(), "value", userName)
+                .validateAttribute(createUserSidebar.getEmailInput(), "value", emailAddress)
+                .and("Click Save")
+                .clickOnWebElement(createUserSidebar.getSaveButton())
+                .waitAndValidate(not(visible), createUserSidebar.getErrorAlert().getErrorPanel())
+                .waitAndValidate(not(visible), usersPage.getToasterMessage().getPanelError())
+                .waitSideBarClosed()
+                .and("Toaster Error message is absent")
+                .waitAndValidate(not(visible), usersPage.getToasterMessage().getPanelError())
+                .and("Show column 'Created Date'")
+                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
+                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
+                .then("Validate data in table")
+                .validate(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE, ColumnNames.NAME, userName), status)
+                .validate(tableData.getCellByRowValue(ColumnNames.EMAIL, ColumnNames.NAME, userName), emailAddress)
+                .validate(tableData.getCellByRowValue(ColumnNames.ROLE, ColumnNames.NAME, userName), role)
+                .clickOnWebElement(tableData.getClear())
+                .then("Validate that text in table footer '1-20 of X")
+                .validateContainsText(tablePagination.getPaginationPanel(), "1-20 of ")
+                .testEnd();
+    }
+
+    private Publisher createPublisher() {
+        return publisher()
+                .createNewPublisher(captionWithSuffix("00003-autoPub"))
+                .build()
+                .getPublisherResponse();
+    }
 
     @AfterClass(alwaysRun = true)
     public void logout(){

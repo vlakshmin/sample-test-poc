@@ -15,7 +15,7 @@ public enum TableElements {
     CELL_BY_COLUMN_ROW( "Cell By Column", "//tbody/tr[%s]/td[%s]"),
     CHECKBOX( "Row Checkbox", "//table//tr[%s]/td[1]/div/div[1]/i"),
     CLEAR( "Clear Icon", "//*[@class='v-input__icon v-input__icon--clear']/button"),
-    SEARCH( "Search Textbox", "//*[@class='v-text-field__slot']/label[text()='Search by name']/../input"),
+    SEARCH( "Search Textbox", "//*[@class='v-text-field__slot']/label[text()='Search']/../input"),
     COLUMN_HEADER( "Column Header", "//div[@class='v-data-table__wrapper']//thead//th/span[text()='%s']/parent::th");
 
     private String alias;

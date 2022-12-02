@@ -13,6 +13,7 @@ import io.restassured.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.keycloak.common.util.Time;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,7 +56,7 @@ public class UsersPrecondition {
 
         public UsersPreconditionBuilder createNewUser(UserRole role) {
             this.userRequest = UserRequest.builder()
-                    .name(captionWithSuffix("auto "+role.getDefinition()))
+                    .name(captionWithSuffix("auto_"+role.getDefinition()+"_"+Time.currentTime()))
                     .mail(randomMail())
                     .role(role.getRole())
                     .publisherId(role.getRole() == 0 ? 4 : null)
@@ -72,7 +73,7 @@ public class UsersPrecondition {
 
         public UsersPreconditionBuilder createSinglePublisherUser(Integer publisherId) {
             this.userRequest = UserRequest.builder()
-                    .name("auto Single")
+                    .name("auto_single_"+ Time.currentTime())
                     .mail(User.TEMP_USER.getMail())
                     .role(UserRole.SINGLE_PUBLISHER.getRole())
                     .publisherId(publisherId)

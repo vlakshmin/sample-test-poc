@@ -50,121 +50,229 @@ public class UsersEditTests extends BaseTest {
     @Test(description = "Create Single-publisher Active User and update to Cross-Publisher and deactivate user")
     public void editSinglePublisherUserToCross() {
         user = createSingleUser();
-        editUser(user, UserRole.SINGLE_PUBLISHER, UserRole.CROSS_PUBLISHER);
+        editUserToCrossPublisher(user);
     }
 
     @Test(description = "Create Single-publisher Active User and update to Admin-Publisher and deactivate user")
     public void editSinglePublisherUserToAdmin() {
         user = createSingleUser();
-        editUser(user, UserRole.SINGLE_PUBLISHER, UserRole.ADMIN);
+        editUserToAdminPublisher(user);
     }
 
     @Test(description = "Create Cross-publisher Active User and update to Admin-Publisher and deactivate user")
     public void editCrossPublisherUserToAdmin() {
-        user = createAdminUser(UserRole.CROSS_PUBLISHER);
-        editUser(user, UserRole.CROSS_PUBLISHER, UserRole.ADMIN);
+        user = createUser(UserRole.CROSS_PUBLISHER);
+        editUserToAdminPublisher(user);
     }
 
     @Test(description = "Create Cross-publisher Active User and update to Single-Publisher and deactivate user")
     public void editCrossPublisherUserToSingle() {
-        user = createAdminUser(UserRole.CROSS_PUBLISHER);
-        editUser(user, UserRole.CROSS_PUBLISHER, UserRole.SINGLE_PUBLISHER);
+        user = createUser(UserRole.CROSS_PUBLISHER);
+        editUserToSinglePublish(user);
     }
 
     @Test(description = "Create Admin-publisher Active User and update to Cross-Publisher and deactivate user")
     public void editAdminPublisherUserToCross() {
-        user = createAdminUser(UserRole.ADMIN);
-        editUser(user, UserRole.ADMIN, UserRole.CROSS_PUBLISHER);
+        user = createUser(UserRole.ADMIN);
+        editUserToCrossPublisher(user);
     }
 
     @Test(description = "Create Cross-publisher Active User and update to Single-Publisher and deactivate user")
     public void editAdminPublisherUserToSingle() {
-        user = createAdminUser(UserRole.ADMIN);
-        editUser(user, UserRole.ADMIN, UserRole.SINGLE_PUBLISHER);
+        user = createUser(UserRole.ADMIN);
+        editUserToSinglePublish(user);
     }
 
-    @Step("Create Media via Api")
+    @Step("Create Single User via Api")
     private UserDto createSingleUser() {
-        publisher = publisher()
-                .createNewPublisher(captionWithSuffix("00003-autoPub"))
-                .build()
-                .getPublisherResponse();
+        publisher = createPublisher();
 
         return user()
                 .createSinglePublisherUser(publisher.getId())
                 .build()
                 .getUserResponse();
     }
-    private UserDto createAdminUser(UserRole role) {
+    private UserDto createUser(UserRole role) {
             return user()
                     .createNewUser(role)
                     .build()
                     .getUserResponse();
     }
 
-    @Step("Edit User")
-    private void editUser(UserDto user, UserRole role, UserRole updatedRole) {
+    private Publisher createPublisher() {
+        return publisher()
+                .createNewPublisher(captionWithSuffix("00001-autoPub"))
+                .build()
+                .getPublisherResponse();
+    }
+
+    @Step("Edit User to single publisher user")
+    private void editUserToSinglePublish(UserDto user) {
 
         var tableData = usersPage.getUsersTable().getTableData();
         var tablePagination = usersPage.getUsersTable().getTablePagination();
-        var tableOptions = usersPage.getUsersTable().getShowHideColumns();
         var userNameUpdated = user.getName()+"updated";
         var emailUpdated = user.getMail().split("@")[0]+"updated@test.com";
-
+        publisher = createPublisher();
 
         testStart()
                 .and(String.format("Search user %s", user.getName()))
                 .setValueWithClean(tableData.getSearch(), user.getName())
                 .clickEnterButton(tableData.getSearch())
+                .and("Open Sidebar and check data")
                 .then("Validate that text in table footer '1-1 of 1")
                 .validateContainsText(tablePagination.getPaginationPanel(), "1-1 of 1")
-                .and("Open Sidebar and check data")
                 .clickOnTableCellLink(tableData, ColumnNames.NAME, user.getName())
                 .waitSideBarOpened()
                 .then("Check all fields")
                 .validateAttribute(editUserSidebar.getActiveToggle(), "aria-checked", "true")
                 .validateAttribute(editUserSidebar.getUsernameInput(), "value", user.getName())
                 .validate(editUserSidebar.getEmailInput().getText(), user.getMail())
+                .clickOnWebElement(editUserSidebar.getSaveButton())
+                .and("Error message is absent")
+                .waitAndValidate(not(visible), editUserSidebar.getErrorAlert().getErrorPanel())
+                .waitAndValidate(not(visible), usersPage.getToasterMessage().getPanelError())
+                .waitSideBarClosed()
+                .clickBrowserRefreshButton()
+                .setValueWithClean(tableData.getSearch(), user.getName())
+                .clickEnterButton(tableData.getSearch())
+                .and("Open Sidebar and check data")
+                .clickOnTableCellLink(tableData, ColumnNames.NAME, user.getName())
+                .waitSideBarOpened()
+                .then("Edit all fields")
+                .selectRadioButton(editUserSidebar.getSinglePublisherRadioButton())
+                .setValueWithClean(editUserSidebar.getUsernameInput(), userNameUpdated)
+                .setValueWithClean(editUserSidebar.getEmailInput(), emailUpdated)
+                .selectFromDropdown(editUserSidebar.getPublisherInput(),
+                        editUserSidebar.getPublisherDropdownItems(), publisher.getName())
+                .turnToggleOff(editUserSidebar.getActiveToggle())
+                .clickOnWebElement(editUserSidebar.getSaveButton())
+                .and("Error message is absent")
+                .waitAndValidate(not(visible), editUserSidebar.getErrorAlert().getErrorPanel())
+                .waitAndValidate(not(visible), usersPage.getToasterMessage().getPanelError())
+                .waitSideBarClosed()
+                .and("Toaster Error message is absent")
+                .waitAndValidate(not(visible), usersPage.getToasterMessage().getPanelError())
+                .and("Search updated user")
+                .setValueWithClean(tableData.getSearch(), userNameUpdated)
+                .clickEnterButton(tableData.getSearch())
+                .and("Open Sidebar and check data")
+                .clickOnTableCellLink(tableData, ColumnNames.NAME, userNameUpdated)
+                .waitSideBarOpened()
+                .then("Check all fields")
+                .validateAttribute(editUserSidebar.getActiveToggle(), "aria-checked", "false")
+                .validateAttribute(editUserSidebar.getUsernameInput(), "value", userNameUpdated)
+                .and("Click Save")
+                .clickOnWebElement(editUserSidebar.getSaveButton())
+                .waitAndValidate(not(visible), editUserSidebar.getErrorAlert().getErrorPanel())
+                .waitAndValidate(not(visible), usersPage.getToasterMessage().getPanelError())
+                .waitSideBarClosed()
                 .testEnd();
-        if (role.getRole().equals(UserRole.SINGLE_PUBLISHER)) {
-            testStart()
-                    .validate(checked, editUserSidebar.getSinglePublisherRadioButton())
-                    .validate(enabled, editUserSidebar.getPublisherNameInput())
-                    .validate(editUserSidebar.getPublisherInput(), user.getPublisherName())
-                    .testEnd();
-        }
+    }
+
+    @Step("Edit User to cross-publisher user")
+    private void editUserToCrossPublisher(UserDto user) {
+
+        var tableData = usersPage.getUsersTable().getTableData();
+        var tablePagination = usersPage.getUsersTable().getTablePagination();
+        var userNameUpdated = user.getName()+"updated";
+        var emailUpdated = user.getMail().split("@")[0]+"updated@test.com";
 
         testStart()
-                .then("Edit all fields")
+                .and(String.format("Search user %s", user.getName()))
+                .setValueWithClean(tableData.getSearch(), user.getName())
+                .clickEnterButton(tableData.getSearch())
+                .and("Open Sidebar and check data")
+                .then("Validate that text in table footer '1-1 of 1")
+                .validateContainsText(tablePagination.getPaginationPanel(), "1-1 of 1")
+                .clickOnTableCellLink(tableData, ColumnNames.NAME, user.getName())
+                .waitSideBarOpened()
+                .then("Check all fields")
+                .validateAttribute(editUserSidebar.getActiveToggle(), "aria-checked", "true")
+                .validateAttribute(editUserSidebar.getUsernameInput(), "value", user.getName())
+                .validate(editUserSidebar.getEmailInput().getText(), user.getMail())
+                .clickOnWebElement(editUserSidebar.getSaveButton())
+                .and("Error message is absent")
+                .waitAndValidate(not(visible), editUserSidebar.getErrorAlert().getErrorPanel())
+                .waitAndValidate(not(visible), usersPage.getToasterMessage().getPanelError())
+                .waitSideBarClosed()
+                .clickBrowserRefreshButton()
+                .setValueWithClean(tableData.getSearch(), user.getName())
+                .clickEnterButton(tableData.getSearch())
+                .and("Open Sidebar and check data")
+                .clickOnTableCellLink(tableData, ColumnNames.NAME, user.getName())
+                .waitSideBarOpened()
+                .and("Edit all fields")
                 .turnToggleOff(editUserSidebar.getActiveToggle())
                 .setValueWithClean(editUserSidebar.getUsernameInput(), userNameUpdated)
                 .setValueWithClean(editUserSidebar.getEmailInput(), emailUpdated)
                 .selectRadioButton(editUserSidebar.getCrossPublisherRadioButton())
+                .selectRadioButton(editUserSidebar.getCrossPublisherRadioButton())
+                .clickOnWebElement(editUserSidebar.getSaveButton())
+                .and("Error message is absent")
+                .waitAndValidate(not(visible), editUserSidebar.getErrorAlert().getErrorPanel())
+                .waitAndValidate(not(visible), usersPage.getToasterMessage().getPanelError())
+                .waitSideBarClosed()
+                .and("Toaster Error message is absent")
+                .waitAndValidate(not(visible), usersPage.getToasterMessage().getPanelError())
+                .and("Search updated user")
+                .setValueWithClean(tableData.getSearch(), userNameUpdated)
+                .clickEnterButton(tableData.getSearch())
+                .and("Open Sidebar and check data")
+                .clickOnTableCellLink(tableData, ColumnNames.NAME, userNameUpdated)
+                .waitSideBarOpened()
+                .then("Check all fields")
+                .validateAttribute(editUserSidebar.getActiveToggle(), "aria-checked", "false")
+                .validateAttribute(editUserSidebar.getUsernameInput(), "value", userNameUpdated)
+                .and("Click Save")
+                .clickOnWebElement(editUserSidebar.getSaveButton())
+                .waitAndValidate(not(visible), editUserSidebar.getErrorAlert().getErrorPanel())
+                .waitAndValidate(not(visible), usersPage.getToasterMessage().getPanelError())
+                .waitSideBarClosed()
+                .clickOnWebElement(tableData.getClear())
+                .then("Validate that text in table footer '1-20 of X")
+                .validateContainsText(tablePagination.getPaginationPanel(), "1-20 of ")
                 .testEnd();
-        if (updatedRole.equals(UserRole.SINGLE_PUBLISHER.getDefinition())) {
-            publisher = publisher()
-                    .createNewPublisher(captionWithSuffix("00003-autoPub"))
-                    .build()
-                    .getPublisherResponse();
+    }
 
-            testStart()
-                    .selectRadioButton(editUserSidebar.getSinglePublisherRadioButton())
-                    .selectFromDropdown(editUserSidebar.getPublisherInput(),
-                            editUserSidebar.getPublisherDropdownItems(), publisher.getName())
-                    .testEnd();
-        }
-        else if (updatedRole.equals(UserRole.CROSS_PUBLISHER)) {
-            testStart()
-                    .selectRadioButton(editUserSidebar.getCrossPublisherRadioButton())
-                    .testEnd();
-        }
-        else {
-            testStart()
-                    .selectRadioButton(editUserSidebar.getAdminRadioButton())
-                    .testEnd();
-        }
+    @Step("Edit User")
+    private void editUserToAdminPublisher(UserDto user) {
+
+        var tableData = usersPage.getUsersTable().getTableData();
+        var tablePagination = usersPage.getUsersTable().getTablePagination();
+        var userNameUpdated = user.getName()+"updated";
+        var emailUpdated = user.getMail().split("@")[0]+"updated@test.com";
 
         testStart()
+                .and(String.format("Search user %s", user.getName()))
+                .setValueWithClean(tableData.getSearch(), user.getName())
+                .clickEnterButton(tableData.getSearch())
+                .and("Open Sidebar and check data")
+                .then("Validate that text in table footer '1-1 of 1")
+                .validateContainsText(tablePagination.getPaginationPanel(), "1-1 of 1")
+                .clickOnTableCellLink(tableData, ColumnNames.NAME, user.getName())
+                .waitSideBarOpened()
+                .then("Check all fields")
+                .validateAttribute(editUserSidebar.getActiveToggle(), "aria-checked", "true")
+                .validateAttribute(editUserSidebar.getUsernameInput(), "value", user.getName())
+                .validate(editUserSidebar.getEmailInput().getText(), user.getMail())
+                .clickOnWebElement(editUserSidebar.getSaveButton())
+                .and("Error message is absent")
+                .waitAndValidate(not(visible), editUserSidebar.getErrorAlert().getErrorPanel())
+                .waitAndValidate(not(visible), usersPage.getToasterMessage().getPanelError())
+                .waitSideBarClosed()
+                .clickBrowserRefreshButton()
+                .setValueWithClean(tableData.getSearch(), user.getName())
+                .clickEnterButton(tableData.getSearch())
+                .and("Open Sidebar and check data")
+                .clickOnTableCellLink(tableData, ColumnNames.NAME, user.getName())
+                .waitSideBarOpened()
+                .and("Edit all fields")
+                .turnToggleOff(editUserSidebar.getActiveToggle())
+                .setValueWithClean(editUserSidebar.getUsernameInput(), userNameUpdated)
+                .setValueWithClean(editUserSidebar.getEmailInput(), emailUpdated)
+                .selectRadioButton(editUserSidebar.getCrossPublisherRadioButton())
+                .selectRadioButton(editUserSidebar.getAdminRadioButton())
                 .clickOnWebElement(editUserSidebar.getSaveButton())
                 .and("Error message is absent")
                 .waitAndValidate(not(visible), editUserSidebar.getErrorAlert().getErrorPanel())
@@ -175,34 +283,17 @@ public class UsersEditTests extends BaseTest {
                 .and("Search new media")
                 .setValueWithClean(tableData.getSearch(), userNameUpdated)
                 .clickEnterButton(tableData.getSearch())
-                .then("Validate that text in table footer '1-1 of 1")
-                .validateContainsText(tablePagination.getPaginationPanel(), "1-1 of 1")
                 .and("Open Sidebar and check data")
                 .clickOnTableCellLink(tableData, ColumnNames.NAME, userNameUpdated)
                 .waitSideBarOpened()
                 .then("Check all fields")
                 .validateAttribute(editUserSidebar.getActiveToggle(), "aria-checked", "false")
                 .validateAttribute(editUserSidebar.getUsernameInput(), "value", userNameUpdated)
-                .testEnd();
-
-        testStart()
                 .and("Click Save")
                 .clickOnWebElement(editUserSidebar.getSaveButton())
                 .waitAndValidate(not(visible), editUserSidebar.getErrorAlert().getErrorPanel())
                 .waitAndValidate(not(visible), usersPage.getToasterMessage().getPanelError())
                 .waitSideBarClosed()
-                .validate(tableData.getCellByRowValue(ColumnNames.ID, ColumnNames.NAME, userNameUpdated), user.getId().toString())
-                .validate(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE, ColumnNames.NAME, userNameUpdated), Statuses.INACTIVE.getStatus())
-                .validate(tableData.getCellByRowValue(ColumnNames.NAME, ColumnNames.NAME, userNameUpdated), userNameUpdated)
-                .testEnd();
-
-        if (updatedRole.equals(UserRole.SINGLE_PUBLISHER.getDefinition())) {
-            testStart()
-                    .validate(tableData.getCellByRowValue(ColumnNames.PUBLISHER, ColumnNames.NAME, userNameUpdated), user.getPublisherName())
-                    .testEnd();
-        }
-
-        testStart()
                 .clickOnWebElement(tableData.getClear())
                 .then("Validate that text in table footer '1-20 of X")
                 .validateContainsText(tablePagination.getPaginationPanel(), "1-20 of ")
@@ -212,12 +303,20 @@ public class UsersEditTests extends BaseTest {
     @AfterTest(alwaysRun = true)
     private void deleteEntities() {
         deleteUser(user.getId());
+        if(publisher != null)
+           deletePublisher(publisher.getId());
     }
 
     private void deleteUser(Integer id) {
         user()
                 .setCredentials(USER_FOR_DELETION)
                 .deleteUser(id)
+                .build();
+    }
+    private void deletePublisher(int id) {
+        publisher()
+                .setCredentials(USER_FOR_DELETION)
+                .deletePublisher(id)
                 .build();
     }
 
