@@ -28,7 +28,6 @@ import static zutils.FakerUtils.randomMail;
 @Listeners({ScreenShooter.class})
 public class UsersCreationTests extends BaseTest {
     private UsersPage usersPage;
-    private List<UserDto> listUsers = new ArrayList<>();
     private Publisher publisher;
     private CreateUserSidebar createUserSidebar;
 
