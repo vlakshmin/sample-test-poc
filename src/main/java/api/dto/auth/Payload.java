@@ -21,6 +21,8 @@ public class Payload {
     private Integer role;
     private String loginId;
     private String updatedAt;
+    private String createdBy;
+    private String updatedBy;
     private String createdAt;
     private String createdBy;
     private String updatedBy;

@@ -1,7 +1,7 @@
 package widgets.common.table;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.AllArgsConstructor;
 
 @Getter
 @AllArgsConstructor
@@ -15,11 +15,10 @@ public enum ColumnNames {
     UPDATED_BY("Updated By", true),
     UPDATED_DATE("Updated Date", true),
     CREATED_DATE("Created Date", true),
-
     NAME("Name", true),
     STATUS("Status", true),
     END_DATE("End Date", true),
-    ALWAYS_ON("Always on", true),
+    ALWAYS_ON("Always On", true),
     START_DATE("Start Date", true),
     ACTIVE_INACTIVE("Active/Inactive", true),
 
