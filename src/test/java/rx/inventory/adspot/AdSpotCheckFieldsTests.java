@@ -28,10 +28,12 @@ import static zutils.FakerUtils.captionWithSuffix;
 @Slf4j
 @Listeners({ScreenShooter.class})
 public class AdSpotCheckFieldsTests extends BaseTest {
-    private AdSpotsPage adSpotPage;
-    private EditAdSpotSidebar adSpotSidebar;
+
     private Media media1;
     private Publisher publisher;
+    private AdSpotsPage adSpotPage;
+    private EditAdSpotSidebar adSpotSidebar;
+
 
     public AdSpotCheckFieldsTests() {
         adSpotPage = new AdSpotsPage();
@@ -89,7 +91,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
     }
 
     @Test(description = "Check required fields")
-    private void checkRequiredFields() {
+    public void checkRequiredFields() {
         var videoCard = adSpotSidebar.getVideoCard();
         var bannerCard = adSpotSidebar.getBannerCard();
         var nativeCard = adSpotSidebar.getNativeCard();
@@ -111,7 +113,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .validateListSize(errorsList, 6)
                 .validateList(errorsList, List.of(
                         ErrorMessages.PUBLISHER_NAME_ERROR_ALERT.getText(),
-                        ErrorMessages.AD_SPOT_NAME_ERROR_ALERT.getText(),
+                        ErrorMessages.NAME_ERROR_ALERT.getText(),
                         ErrorMessages.RELATED_MEDIA_TYPE_ERROR_ALERT.getText(),
                         ErrorMessages.POSITION_ERROR_ALERT.getText(),
                         ErrorMessages.DEFAULT_AD_SIZE_TYPE_ERROR_ALERT.getText(),
@@ -129,7 +131,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .and("Click 'Save'")
                 .clickOnWebElement(adSpotSidebar.getSaveButton())
                 .then("Validate error under the 'Ad Spot Name' field")
-                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Ad Spot Name"))
+                .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Name"))
                 .then("Validate error under the 'Related Media' field")
                 .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Related Media"))
                 .then("Validate error under the 'Position' field")
@@ -140,7 +142,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
                 .validateListSize(errorsList, 5)
                 .validateList(errorsList, List.of(
-                        ErrorMessages.AD_SPOT_NAME_ERROR_ALERT.getText(),
+                        ErrorMessages.NAME_ERROR_ALERT.getText(),
                         ErrorMessages.RELATED_MEDIA_TYPE_ERROR_ALERT.getText(),
                         ErrorMessages.POSITION_ERROR_ALERT.getText(),
                         ErrorMessages.DEFAULT_AD_SIZE_TYPE_ERROR_ALERT.getText(),
@@ -522,7 +524,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
     }
 
     @Test(description = "Check Minimum Video Duration Value")
-    private void checkMinVideoDurationValue() {
+    public void checkMinVideoDurationValue() {
         var videoCard = adSpotSidebar.getVideoCard();
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
 
@@ -537,7 +539,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .scrollIntoView(videoCard.getVideoPlaybackMethods())
                 .selectFromDropdown(videoCard.getVideoPlaybackMethods(),
                         videoCard.getVideoPlaybackMethodsItems(), "Click Sound On")
-                .clickOnText("Video")
+                .clickOnWebElement(videoCard.getFloorPriceField().getFloorPricePrefix())
                 .setValueWithClean(videoCard.getMinVideoDuration(), "-1")
                 .clickOnText("Banner")
                 .then("Validate error under the 'Minimum Video Duration' field")

@@ -4,6 +4,8 @@ package rx.inventory.media;
 import api.dto.rx.inventory.media.Media;
 import api.preconditionbuilders.MediaPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
@@ -23,6 +25,8 @@ import static zutils.FakerUtils.*;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Epic("Waiting for separate QA env")
+@Link("https://rakutenadvertising.atlassian.net/browse/GS-3280")
 public class MediaSortingTableTests extends BaseTest {
 
     private int totalMedia;
@@ -201,7 +205,8 @@ public class MediaSortingTableTests extends BaseTest {
     private void validateSortData(ColumnNames columnName, String sortType, List<String> expectedResultList) {
         var tableData = mediaPage.getMediaTable().getTableData();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
-
+        //Todo Add checking of total quantity in pagination test when
+        // https://rakutenadvertising.atlassian.net/browse/GS-3280 will be ready
         testStart()
                 .given()
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
@@ -210,14 +215,10 @@ public class MediaSortingTableTests extends BaseTest {
                         tablePagination.getRowNumbersList(), "50")
                 .waitLoading(visible, mediaPage.getTableProgressBar())
                 .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '1-50 of %s'",
-                        totalMedia))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("1-50 of %s", totalMedia))
-                .then(String.format("Validate data in column '%s' should be sorted by $s",
-                        columnName.getName(), sortType))
-                .validateList(tableData.getCustomCells(columnName),
-                        expectedResultList.subList(0, 50))
+                .then("Validate that text in table footer '1-50 of")
+                .validateContainsText(tablePagination.getPaginationPanel(), "1-50 of")
+                .then(String.format("Validate data in column '%s' should be sorted by %s", columnName.getName(), sortType))
+                .validateList(tableData.getCustomCells(columnName), expectedResultList.subList(0, 50))
                 .and("Check next page")
                 .clickOnWebElement(tablePagination.getNext())
                 .waitLoading(visible, mediaPage.getTableProgressBar())
@@ -225,7 +226,7 @@ public class MediaSortingTableTests extends BaseTest {
                 .then(String.format("Validate that text in table footer '51-%s of %s'",
                         Math.min(100, totalMedia), totalMedia))
                 .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-%s of %s", Math.min(100, totalMedia), totalMedia))
+                        String.format("51-%s of", Math.min(100, totalMedia)))
                 .then(String.format("Validate data in column '%s' should be sorted by %s", columnName.getName(), sortType))
                 .validateList(tableData.getCustomCells(columnName),
                         expectedResultList.subList(50, Math.min(100, totalMedia)))

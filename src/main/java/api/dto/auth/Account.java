@@ -20,6 +20,8 @@ public class Account {
     private String updatedBy;
     private String updatedAt;
     private String createdAt;
+    private String createdBy;
+    private String updatedBy;
     private Boolean isEnabled;
     private Integer publisherId;
     private String publisherName;

@@ -96,7 +96,7 @@ public class MediaCheckFieldsTests extends BaseTest {
                 .validateListSize(errorsList, 4)
                 .validateList(errorsList, List.of(
                         ErrorMessages.PUBLISHER_NAME_ERROR_ALERT.getText(),
-                        ErrorMessages.MEDIA_NAME_ERROR_ALERT.getText(),
+                        ErrorMessages.NAME_ERROR_ALERT.getText(),
                         ErrorMessages.PLATFORM_ERROR_ALERT.getText(),
                         ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText())
                 )
@@ -113,13 +113,13 @@ public class MediaCheckFieldsTests extends BaseTest {
                 .then("Validate errors for 3 required fields in Error Panel (Media Name, Platform, Site URL)")
                 .validateListSize(errorsList, 3)
                 .validateList(errorsList, List.of(
-                        ErrorMessages.MEDIA_NAME_ERROR_ALERT.getText(),
+                        ErrorMessages.NAME_ERROR_ALERT.getText(),
                         ErrorMessages.PLATFORM_ERROR_ALERT.getText(),
                         ErrorMessages.SITE_URL_REQUIRED_ERROR_ALERT.getText())
                 )
                 .then("Validate error under the 'Media Name' field")
-                .waitAndValidate(visible, editMediaSidebar.getErrorAlertByFieldName("Media Name"))
-                .validate(editMediaSidebar.getErrorAlertByFieldName("Media Name"), ErrorMessages.MEDIA_NAME_ERROR_ALERT.getText())
+                .waitAndValidate(visible, editMediaSidebar.getErrorAlertByFieldName("Name"))
+                .validate(editMediaSidebar.getErrorAlertByFieldName("Name"), ErrorMessages.NAME_ERROR_ALERT.getText())
                 .then("Validate error under the 'Platform Type' field")
                 .waitAndValidate(visible, editMediaSidebar.getErrorAlertByFieldName("Platform"))
                 .validate(editMediaSidebar.getErrorAlertByFieldName("Platform"), ErrorMessages.PLATFORM_ERROR_ALERT.getText())
@@ -129,7 +129,7 @@ public class MediaCheckFieldsTests extends BaseTest {
                 .and(String.format("Fill Name with value %s", "mediaName"))
                 .setValueWithClean(editMediaSidebar.getNameInput(), "mediaName")
                 .then("Validate error under the 'Media Name' disappeared")
-                .waitAndValidate(not(visible), editMediaSidebar.getErrorAlertByFieldName("Media Name"))
+                .waitAndValidate(not(visible), editMediaSidebar.getErrorAlertByFieldName("Name"))
                 .then("Validate errors for 3 required fields in Error Panel (Platform, Site URL)")
                 .validateListSize(errorsList, 2)
                 .validateList(errorsList, List.of(
