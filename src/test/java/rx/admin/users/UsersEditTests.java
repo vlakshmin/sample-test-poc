@@ -12,7 +12,6 @@ import pages.admin.users.UsersPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import widgets.admin.users.sidebar.EditUserSidebar;
-import widgets.common.table.Statuses;
 
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static api.preconditionbuilders.UsersPrecondition.*;
