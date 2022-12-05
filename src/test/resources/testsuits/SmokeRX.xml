@@ -85,6 +85,7 @@
             <class name="rx.component.multipane.MultipaneTest"/>
             <class name="rx.component.categories.CategoriesSelectionTests"/>
             <class name="rx.component.singlepanefilter.SinglepaneFilterProtectionTest"/>
+            <class name="rx.component.table.FilterChipTests"/>
         </classes>
     </test>
 

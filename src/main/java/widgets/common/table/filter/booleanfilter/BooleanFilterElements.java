@@ -8,8 +8,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum BooleanFilterElements {
 
-    NO_RADIO_BUTTON("'No' button in in 'Active/Inactive' Filter","//div[@role='menu']//label[text()='No']/..//input"),
-    YES_RADIO_BUTTON("'Yes' button in in 'Active/Inactive' Filter","//div[@role='menu']//label[text()='Yes']/..//input");
+    NO_RADIO_BUTTON("'No' button in 'Active/Inactive' Filter","//div[@role='menu']//label[text()='No']/..//input"),
+    YES_RADIO_BUTTON("'Yes' button in 'Active/Inactive' Filter","//div[@role='menu']//label[text()='Yes']/..//input");
 
     private String alias;
     private String selector;

@@ -84,6 +84,8 @@ public enum RakutenExchangeApi {
 
     //Deal
     CREATE_DEAL("/v3/pmp/deals"),
+    GET_ALL_DEALS("/v3/pmp/deals"),
+
     UPDATE_DEAL("/v2/pmp/deals/");
 
 

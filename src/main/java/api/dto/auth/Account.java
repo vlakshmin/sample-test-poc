@@ -16,10 +16,10 @@ public class Account {
     private String name;
     private Integer role;
     private String loginId;
-    private String updatedAt;
-    private String createdAt;
     private String createdBy;
     private String updatedBy;
+    private String updatedAt;
+    private String createdAt;
     private Boolean isEnabled;
     private Integer publisherId;
     private String publisherName;
