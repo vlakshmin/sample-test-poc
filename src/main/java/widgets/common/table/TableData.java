@@ -2,10 +2,18 @@ package widgets.common.table;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import lombok.AccessLevel;
 import lombok.Getter;
+import widgets.common.table.filter.chip.ChipFilterOptionsItem;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 import static java.lang.String.format;
@@ -23,9 +31,10 @@ public class TableData {
     private final SelenideElement tableBody = $x(BODY.getSelector()).as(BODY.getAlias());
     private final SelenideElement search = $x(SEARCH.getSelector()).as(SEARCH.getAlias());
     private final ElementsCollection columns = $$x(COLUMNS.getSelector()).as(COLUMNS.getAlias());
+    private final ElementsCollection filterChips = $$x(FILTER_CHIPS.getSelector()).as(FILTER_CHIPS.getAlias());
     private final ElementsCollection cellByColumn = $$x(CELL_BY_COLUMN.getSelector()).as(CELL_BY_COLUMN.getAlias());
-
-
+    @Getter(AccessLevel.NONE)
+    private List<ChipFilterOptionsItem> filterChipsList = new ArrayList<>();
     public SelenideElement getCheckbox(int row) {
 
         return $x(String.format(CHECKBOX.getSelector(), row)).as(CHECKBOX.getAlias());
@@ -73,5 +82,40 @@ public class TableData {
                 .map(x -> x.getText())
                 .collect(Collectors.toList())
                 .indexOf(rowValue) + 1;
+    }
+
+    public int countFilterChipsItems() {
+        int count = 0;
+
+        if (filterChips.size()>0) {
+            count = (int) filterChips
+                    .stream()
+                    .map(se -> se.shouldBe(exist, visible))
+                    .count();
+        }
+
+        return count;
+    }
+
+    private void countFilterChipsItemsOnPage() {
+        countFilterChipsItems();
+
+        var position = new AtomicInteger(1);
+        if (filterChipsList.size() != 0) {
+            filterChipsList.clear();
+        }
+        filterChipsList.addAll(filterChips.stream()
+                .map(chip -> new ChipFilterOptionsItem(position.getAndIncrement()))
+               .collect(Collectors.toList()));
+    }
+
+    public ChipFilterOptionsItem getChipItemByName(String name) {
+        countFilterChipsItemsOnPage();
+
+         return filterChipsList.stream()
+                    .filter(chip -> chip.getHeaderLabel().shouldBe(visible).getText().contains(name))
+                    .findFirst()
+                    .orElseThrow(() -> new NoSuchElementException(
+                            format("The Filter Chip with name '%s' isn't presented in the list of chips", name)));
     }
 }

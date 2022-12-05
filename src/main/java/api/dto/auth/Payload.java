@@ -20,6 +20,8 @@ public class Payload {
     private String name;
     private Integer role;
     private String loginId;
+    private String updatedBy;
+    private String createdBy;
     private String updatedAt;
     private String createdBy;
     private String updatedBy;
@@ -27,7 +29,6 @@ public class Payload {
     private Boolean isEnabled;
     private Integer publisherId;
     private String publisherName;
-
     public String toJson() {
         return ObjectMapperUtils.toJson(this);
     }
