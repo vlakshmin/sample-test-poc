@@ -68,7 +68,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
 
     final private static String AD_SPOT_NAME = captionWithSuffix("4autoAdSpot");
 
-    final private static String currentDate = new SimpleDateFormat("MMM dd yyyy").format( new Date());
+    final private static String currentDate = new SimpleDateFormat("MMM d yyyy").format( new Date());
 
 
     public AdSpotAllFieldsCreateTests() {
@@ -101,7 +101,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     }
 
     @Test(description = "Create Ad Spot with all filled fields")
-    private void createAdSpotWithAllFields() {
+    public void createAdSpotWithAllFields() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotPage.getAdSpotsTable().getTablePagination();
 
@@ -138,7 +138,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
 
     @Test(description = "Check columns data in the Ad Spots table for created Ad Spot",
             dependsOnMethods = "createAdSpotWithAllFields")
-    private void checkTableColumns() {
+    public void checkTableColumns() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
         var tableOptions = adSpotPage.getAdSpotsTable().getShowHideColumns();
 
@@ -176,7 +176,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     }
 
     @Test(description = "Check details info: Native Floor Price", dependsOnMethods = "createAdSpotWithAllFields")
-    private void checkInfoNativeFloorPricePanel() {
+    public void checkInfoNativeFloorPricePanel() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
         var nativeDetailsSection = adSpotTableDetailsMenu.getNativeDetailsSection();
 
@@ -189,7 +189,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     }
 
     @Test(description = "Check details info: Banner Ad Size", dependsOnMethods = "createAdSpotWithAllFields")
-    private void checkInfoBannerAdSize() {
+    public void checkInfoBannerAdSize() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
         var bannerDetailsSection = adSpotTableDetailsMenu.getBannerAdSizeDetailsSection();
 
@@ -201,7 +201,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     }
 
     @Test(description = "Check details info: Banner Floor Price", dependsOnMethods = "createAdSpotWithAllFields")
-    private void checkInfoBannerFloorPrice() {
+    public void checkInfoBannerFloorPrice() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
         var bannerDetailsSection = adSpotTableDetailsMenu.getBannerFloorPriceDetailsSection();
 
@@ -214,7 +214,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     }
 
     @Test(description = "Check details info: Video Floor Price", dependsOnMethods = "createAdSpotWithAllFields")
-    private void checkInfoVideoFloorPrice() {
+    public void checkInfoVideoFloorPrice() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
         var videoFloorPriceDetailsSection = adSpotTableDetailsMenu.getVideoFloorPriceDetailsSection();
 
@@ -227,7 +227,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     }
 
     @Test(description = "Check details info: Video Min Duration", dependsOnMethods = "createAdSpotWithAllFields")
-    private void checkInfoMinDurationPrice() {
+    public void checkInfoMinDurationPrice() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
         var videoMinDurationDetailsSection = adSpotTableDetailsMenu.getVideoMinDurationDetailsSection();
 
@@ -239,7 +239,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     }
 
     @Test(description = "Check details info: Video Max Duration", dependsOnMethods = "createAdSpotWithAllFields")
-    private void checkInfoMaxDurationPrice() {
+    public void checkInfoMaxDurationPrice() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
         var videoMaxDurationDetailsSection = adSpotTableDetailsMenu.getVideoMaxDurationDetailsSection();
 
@@ -251,7 +251,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     }
 
     @Test(description = "Check details info: Video Playback Method", dependsOnMethods = "createAdSpotWithAllFields")
-    private void checkInfoPlaybackMethodPrice() {
+    public void checkInfoPlaybackMethodPrice() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
         var videoPlaybackMethodDetailsSection = adSpotTableDetailsMenu.getVideoPlaybackMethodDetailsSection();
 
@@ -263,7 +263,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     }
 
     @Test(description = "Check details info: Video Placement Type Method", dependsOnMethods = "createAdSpotWithAllFields")
-    private void checkInfoPlacementTypePrice() {
+    public void checkInfoPlacementTypePrice() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
         var videoPlacementTypeDetailsSection = adSpotTableDetailsMenu.getVideoPlacementTypeDetailsSection();
 
