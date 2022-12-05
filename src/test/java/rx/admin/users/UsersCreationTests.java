@@ -14,12 +14,11 @@ import widgets.admin.users.sidebar.CreateUserSidebar;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.Statuses;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
+import static api.preconditionbuilders.UsersPrecondition.user;
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
+import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
 import static zutils.FakerUtils.captionWithSuffix;
 import static zutils.FakerUtils.randomMail;
@@ -277,6 +276,19 @@ public class UsersCreationTests extends BaseTest {
                 .createNewPublisher(captionWithSuffix("00003-autoPub"))
                 .build()
                 .getPublisherResponse();
+    }
+
+    @AfterTest(alwaysRun = true)
+    private void deleteEntities() {
+        if(publisher != null)
+            deletePublisher(publisher.getId());
+    }
+
+    private void deletePublisher(int id) {
+        publisher()
+                .setCredentials(USER_FOR_DELETION)
+                .deletePublisher(id)
+                .build();
     }
 
     @AfterClass(alwaysRun = true)

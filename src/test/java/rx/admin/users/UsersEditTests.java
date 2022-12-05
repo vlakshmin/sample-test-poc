@@ -115,6 +115,7 @@ public class UsersEditTests extends BaseTest {
         publisher = createPublisher();
 
         testStart()
+                .clickBrowserRefreshButton()
                 .and(String.format("Search user %s", user.getName()))
                 .setValueWithClean(tableData.getSearch(), user.getName())
                 .clickEnterButton(tableData.getSearch())
@@ -175,9 +176,10 @@ public class UsersEditTests extends BaseTest {
         var tableData = usersPage.getUsersTable().getTableData();
         var tablePagination = usersPage.getUsersTable().getTablePagination();
         var userNameUpdated = user.getName()+"updated";
-        var emailUpdated = user.getMail().split("@")[0]+"updated@test.com";
+        var emailUpdated = user.getName()+"updated@test.com";
 
         testStart()
+                .clickBrowserRefreshButton()
                 .and(String.format("Search user %s", user.getName()))
                 .setValueWithClean(tableData.getSearch(), user.getName())
                 .clickEnterButton(tableData.getSearch())
@@ -243,6 +245,7 @@ public class UsersEditTests extends BaseTest {
         var emailUpdated = user.getMail().split("@")[0]+"updated@test.com";
 
         testStart()
+                .clickBrowserRefreshButton()
                 .and(String.format("Search user %s", user.getName()))
                 .setValueWithClean(tableData.getSearch(), user.getName())
                 .clickEnterButton(tableData.getSearch())
