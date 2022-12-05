@@ -113,8 +113,6 @@
 
     <test name="Users">
         <classes>
-            <class name="rx.admin.users.UsersSortingTableTests"/>
-            <class name="rx.admin.users.UsersCheckPaginationTests"/>
             <class name="rx.admin.users.UsersCreationTests"/>
             <class name="rx.admin.users.UsersEditTests"/>
         </classes>
