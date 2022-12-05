@@ -45,10 +45,10 @@
     <test name="Open Pricing">
         <classes>
 <!--            <class name="rx.yield.openpricing.VerifyPublisherTests"/>-->
-            <class name="rx.yield.openpricing.CreateOpenPricingTest"/>
+    <class name="rx.yield.openpricing.CreateOpenPricingTest"/>
             <class name="rx.yield.openpricing.OpenPricingUploadTests"/>
             <class name="rx.yield.openpricing.OpenPricingSortingTableTests"/>
-            <class name="rx.yield.openpricing.OpenPricingUploadNegtiveTests"/>
+            <class name="rx.yield.openpricing.OpenPricingUploadNegativeTests"/>
             <class name="rx.yield.openpricing.OpenPricingUploadSidebarTests"/>
             <class name="rx.yield.openpricing.OpenPricingChangePublisherTests"/>
             <class name="rx.yield.openpricing.OpenPricingUploadNegtiveWrongDataTests"/>
@@ -85,6 +85,7 @@
             <class name="rx.component.multipane.MultipaneTest"/>
             <class name="rx.component.categories.CategoriesSelectionTests"/>
             <class name="rx.component.singlepanefilter.SinglepaneFilterProtectionTest"/>
+            <class name="rx.component.table.FilterChipTests"/>
         </classes>
     </test>
 

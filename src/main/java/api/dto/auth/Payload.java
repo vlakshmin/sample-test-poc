@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.xml.transform.sax.SAXResult;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,6 +20,8 @@ public class Payload {
     private String name;
     private Integer role;
     private String loginId;
+    private String updatedBy;
+    private String createdBy;
     private String updatedAt;
     private String createdAt;
     private String createdBy;
@@ -25,7 +29,6 @@ public class Payload {
     private Boolean isEnabled;
     private Integer publisherId;
     private String publisherName;
-
     public String toJson() {
         return ObjectMapperUtils.toJson(this);
     }

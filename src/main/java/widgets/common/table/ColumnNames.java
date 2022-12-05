@@ -1,7 +1,7 @@
 package widgets.common.table;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.AllArgsConstructor;
 
 @Getter
 @AllArgsConstructor
@@ -15,11 +15,10 @@ public enum ColumnNames {
     UPDATED_BY("Updated By", true),
     UPDATED_DATE("Updated Date", true),
     CREATED_DATE("Created Date", true),
-
     NAME("Name", true),
     STATUS("Status", true),
     END_DATE("End Date", true),
-    ALWAYS_ON("Always on", true),
+    ALWAYS_ON("Always On", true),
     START_DATE("Start Date", true),
     ACTIVE_INACTIVE("Active/Inactive", true),
 
@@ -38,11 +37,11 @@ public enum ColumnNames {
 
     //Media
     PLATFORM("Platform", true),
-    MEDIA_NAME("Media Name", true),
+    MEDIA_NAME("Name", true),
     SITE_APP_STORE_URL("Site / App Store URL", true),
 
     //Ad Spot Name
-    AD_SPOT_NAME("Ad Spot Name", true),
+    AD_SPOT_NAME("Name", true),
     RELATED_MEDIA("Related Media", true),
 
     FILTER("Filter", false),

@@ -1,11 +1,12 @@
 package api.services;
 
 import api.dto.rx.sales.deals.Deal;
-import api.dto.rx.sales.deals.DealRequest;
 import io.restassured.response.Response;
+import api.dto.rx.sales.deals.DealRequest;
 
-import static api.core.RakutenExchangeApi.CREATE_DEAL;
-import static api.core.RakutenExchangeApi.UPDATE_DEAL;
+import java.util.Map;
+
+import static api.core.RakutenExchangeApi.*;
 import static api.core.client.HttpClient.*;
 
 public class DealService extends BaseService {
@@ -32,6 +33,12 @@ public class DealService extends BaseService {
         URL = initURL(UPDATE_DEAL.setParameters(deal.getId()));
 
         return put(URL, deal.toJson());
+    }
+
+    public Response getDealWithFilter(Map<String, Object> queryParams) {
+        URL = initURL(GET_ALL_DEALS);
+
+        return get(URL,queryParams);
     }
 
 }

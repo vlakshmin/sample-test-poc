@@ -3,6 +3,8 @@ package rx.admin.publishers;
 import api.dto.rx.admin.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
@@ -24,6 +26,8 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Epic("Waiting for separate QA env")
+@Link("https://rakutenadvertising.atlassian.net/browse/GS-3280")
 public class PublisherSortingTableTests extends BaseTest {
 
     private int totalPublishers;
@@ -73,16 +77,16 @@ public class PublisherSortingTableTests extends BaseTest {
         validateSortData(ColumnNames.ID, ASC, sortIdsByAsc);
     }
 
-    @Test(testName = "Sorting 'Publisher' column by ascending", alwaysRun = true)
+    @Test(testName = "Sorting 'Name' column by ascending", alwaysRun = true)
     public void publisherSortingByPublisherNameAsc() {
-        sortByAscColumnByName(ColumnNames.PUBLISHER);
-        validateSortData(ColumnNames.PUBLISHER, ASC, sortPublisherNameByAsc);
+        sortByAscColumnByName(ColumnNames.NAME);
+        validateSortData(ColumnNames.NAME, ASC, sortPublisherNameByAsc);
     }
 
-    @Test(testName = "Sorting 'Publisher' column by descending", alwaysRun = true)
+    @Test(testName = "Sorting 'Name' column by descending", alwaysRun = true)
     public void publisherSortingByPublisherNameDesc() {
-        sortByDescColumnByName(ColumnNames.PUBLISHER);
-        validateSortData(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
+        sortByDescColumnByName(ColumnNames.NAME);
+        validateSortData(ColumnNames.NAME, DESC, sortPublisherNameByDesc);
     }
 
     @Test(testName = "Sorting 'Publisher Mail' column by ascending", alwaysRun = true)
@@ -173,7 +177,8 @@ public class PublisherSortingTableTests extends BaseTest {
     private void validateSortData(ColumnNames columnName, String sortType, List<String> expectedResultList) {
         var tableData = publishersPage.getTable().getTableData();
         var tablePagination = publishersPage.getTable().getTablePagination();
-
+        //Todo Add checking of total qauntity in pagination test when
+        // https://rakutenadvertising.atlassian.net/browse/GS-3280 will be ready
         testStart()
                 .given()
                 .waitAndValidate(disappear, publishersPage.getNuxtProgress())
@@ -187,7 +192,7 @@ public class PublisherSortingTableTests extends BaseTest {
                         totalPublishers))
                 .validateContainsText(tablePagination.getPaginationPanel(),
                         String.format("1-50 of %s", totalPublishers))
-                .then(String.format("Validate data in column '%s' should be sorted by $s",
+                .then(String.format("Validate data in column '%s' should be sorted by %ss",
                         columnName.getName(), sortType))
                 .validateList(tableData.getCustomCells(columnName),
                         expectedResultList.subList(0, 50))
@@ -197,8 +202,6 @@ public class PublisherSortingTableTests extends BaseTest {
                 .waitLoading(disappear, publishersPage.getTableProgressBar())
                 .then(String.format("Validate that text in table footer '51-%s of %s'",
                         Math.min(100, totalPublishers), totalPublishers))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("51-%s of %s", Math.min(100, totalPublishers), totalPublishers))
                 .then(String.format("Validate data in column '%s' should be sorted by %s", columnName.getName(), sortType))
                 .validateList(tableData.getCustomCells(columnName),
                         expectedResultList.subList(50, Math.min(100, totalPublishers)))

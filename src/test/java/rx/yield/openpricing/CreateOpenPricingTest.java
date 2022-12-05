@@ -20,6 +20,7 @@ import pages.yield.openpricing.OpenPricingPage;
 import rx.BaseTest;
 import widgets.common.detailsmenu.menu.TableItemDetailsMenu;
 import widgets.common.detailsmenu.menu.sections.DetailsSection;
+import widgets.common.menusidebar.MenuSidebarOptions;
 import widgets.common.multipane.Multipane;
 import widgets.common.multipane.MultipaneNameImpl;
 import widgets.common.table.ColumnNames;
@@ -180,13 +181,13 @@ public class CreateOpenPricingTest extends BaseTest {
                 .and("Adding 'createdBy' column in to Pricing  Table")
                 .clickOnWebElement(pricingTable.getShowHideColumns().getShowHideColumnsBtn())
                 .selectCheckBox(pricingTable.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_BY))
-                .clickOnWebElement(pricingTable.getShowHideColumns().getShowHideColumnsBtn())
+                .clickOnWebElement(openPricingPage.getMenuSidebar().getSidebarOptionByValue(MenuSidebarOptions.ADMIN))
                 .then("Check that user under testing is presented in table")
                 .validate(tableData.getCustomCells(ColumnNames.CREATED_BY).get(0), TEST_USER.getMail())
                 .testEnd();
     }
 
-    @Test(priority = 10, dependsOnMethods = "saveOpenPricingTest")
+    @Test(priority = 10, dependsOnMethods = "saveOpenPricingTest", enabled = false)
     @Step("Verify 'updatedBy' column  Pricing in table")
     public void checkUpdatedByTest() {
         var pricingTable = openPricingPage.getOpenPricingTable();
@@ -196,7 +197,7 @@ public class CreateOpenPricingTest extends BaseTest {
                 .and("Adding 'updatedBy' column in to Pricing  Table")
                 .clickOnWebElement(pricingTable.getShowHideColumns().getShowHideColumnsBtn())
                 .selectCheckBox(pricingTable.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_BY))
-                .clickOnWebElement(pricingTable.getShowHideColumns().getShowHideColumnsBtn())
+                .clickOnWebElement(openPricingPage.getMenuSidebar().getSidebarOptionByValue(MenuSidebarOptions.ADMIN))
                 .then("Check that user under testing is not presented in table")
                 .validate(tableData.getCustomCells(ColumnNames.UPDATED_BY).get(0), EMPTY_STRING)
                 .testEnd();

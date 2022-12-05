@@ -76,5 +76,4 @@ public class ProtectionsTest extends BaseTest {
               log.info(String.format("Deleted publisher %s",protectionResponse.getPublisherId()));
         }
     }
-
 }

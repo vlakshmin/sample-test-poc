@@ -1,11 +1,11 @@
 package api.dto.rx.sales.deals;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import zutils.ObjectMapperUtils;
+import lombok.Data;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
@@ -17,23 +17,25 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Deal {
     private Integer id;
+    private String name;
     private String token;
-    private Boolean enabled;
-    private Double floorPrice;
-    private String currency;
-    private Integer publisherId;
-    private String publisherName;
     private Integer dspId;
     private String dspName;
-    private Integer privateAuctionId;
-    private String privateAuctionName;
-    private String startDate;
     private String endDate;
+    private Boolean enabled;
+    private String currency;
+    private String startDate;
     private String createdBy;
+    private String createdAt;
+    private String updatedAt;
     private String updatedBy;
+    private Double floorPrice;
+    private String noEndDate;
     private List<Buyers> buyers;
-    private String name;
-    private Boolean noEndDate;
+    private Integer publisherId;
+    private String publisherName;
+    private String privateAuctionName;
+    private Integer privateAuctionId;
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);
