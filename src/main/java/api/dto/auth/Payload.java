@@ -23,8 +23,6 @@ public class Payload {
     private String updatedBy;
     private String createdBy;
     private String updatedAt;
-    private String createdBy;
-    private String updatedBy;
     private String createdAt;
     private Boolean isEnabled;
     private Integer publisherId;
