@@ -126,7 +126,7 @@ public class FilterChipTests extends BaseTest {
                 .validate(not(visible), filter.getFilterOptionsMenu())
                 .validate(visible, table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getHeaderLabel())
                 .validate(table.countFilterChipsItems(), 2)
-                .validate(exist, table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getChipFilterOptionItemByName("Active"))
+                .validate(visible, table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getChipFilterOptionItemByName("Active"))
                 .testEnd();
 
         selectedPublishersNameList.forEach(e -> {
