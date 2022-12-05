@@ -24,7 +24,7 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Feature(value = "Checking Multipane Component in Device Tab")
+@Feature(value = "Components")
 public class MultipaneTest extends BaseTest {
 
     private Multipane deviceMultipane;

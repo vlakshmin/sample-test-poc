@@ -1,7 +1,6 @@
 package rx.inventory.adspot;
 
 import api.dto.rx.inventory.adspot.AdSpot;
-import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.AdSpotPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Epic;
@@ -9,15 +8,12 @@ import io.qameta.allure.Issue;
 import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.Path;
 import pages.inventory.adspots.AdSpotsPage;
 import rx.BaseTest;
-import rx.yield.openpricing.OpenPricingSortingTableTests;
 import widgets.common.table.ColumnNames;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
