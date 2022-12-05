@@ -122,7 +122,7 @@ public class AdSpotSearchTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(testName = "Search by 'Ad Spot Name'", alwaysRun = true)
+    @Test(testName = "Search by 'Ad Spot Name'")
     public void adSpotsSearchByAdSpotName() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
 
@@ -144,7 +144,7 @@ public class AdSpotSearchTableTests extends BaseTest {
 
     @Epic("GS-2943")
     @Ignore
-    @Test(testName = "Search by 'Publisher'", alwaysRun = true)
+    @Test(testName = "Search by 'Publisher'", enabled = false)
     public void adSpotsSearchByPublisher() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
 
@@ -167,9 +167,8 @@ public class AdSpotSearchTableTests extends BaseTest {
     }
 
     @Epic("GS-2943")
-    @Ignore
-    @Test(testName = "Search by 'A'", alwaysRun = true)
-    public void adSpotsSearchWithPaginatinaton() {
+    @Test(testName = "Search by 'A'", enabled = false)
+    public void adSpotsSearchWithPagination() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
 
@@ -207,8 +206,7 @@ public class AdSpotSearchTableTests extends BaseTest {
     }
 
     @Epic("GS-2943")
-    @Ignore
-    @Test(testName = "Search with filter by status")
+    @Test(testName = "Search with filter by status", enabled = false)
     public void adSpotsSearchWithFilterByStatus() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tableOptions = adSpotsPage.getAdSpotsTable().getShowHideColumns();
@@ -249,7 +247,7 @@ public class AdSpotSearchTableTests extends BaseTest {
                 .testEnd();
     }
 
-    //@AfterTest(alwaysRun = true)
+    @AfterTest(alwaysRun = true)
     private void deleteEntities() {
 
         for (Integer adSpotId : adSpotIds) {
