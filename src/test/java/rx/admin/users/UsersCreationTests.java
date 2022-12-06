@@ -31,6 +31,7 @@ public class UsersCreationTests extends BaseTest {
     private CreateUserSidebar createUserSidebar;
 
     public UsersCreationTests() {
+
     	usersPage = new UsersPage();
         createUserSidebar = new CreateUserSidebar();
     }
@@ -272,6 +273,7 @@ public class UsersCreationTests extends BaseTest {
     }
 
     private Publisher createPublisher() {
+
         return publisher()
                 .createNewPublisher(captionWithSuffix("00003-autoPub"))
                 .build()

@@ -92,6 +92,7 @@ public class UsersEditTests extends BaseTest {
                 .getUserResponse();
     }
     private UserDto createUser(UserRole role) {
+
             return user()
                     .createNewUser(role)
                     .build()
@@ -99,6 +100,7 @@ public class UsersEditTests extends BaseTest {
     }
 
     private Publisher createPublisher() {
+
         return publisher()
                 .createNewPublisher(captionWithSuffix("00001-autoPub"))
                 .build()
@@ -110,8 +112,8 @@ public class UsersEditTests extends BaseTest {
 
         var tableData = usersPage.getUsersTable().getTableData();
         var tablePagination = usersPage.getUsersTable().getTablePagination();
-        var userNameUpdated = user.getName()+"updated";
-        var emailUpdated = user.getMail().split("@")[0]+"updated@test.com";
+        var userNameUpdated = String.format("%s_%s", user.getName(), "updated");
+        var emailUpdated = String.format("%s_%s", user.getName(), "updated@test.com");
         publisher = createPublisher();
 
         testStart()
@@ -175,8 +177,8 @@ public class UsersEditTests extends BaseTest {
 
         var tableData = usersPage.getUsersTable().getTableData();
         var tablePagination = usersPage.getUsersTable().getTablePagination();
-        var userNameUpdated = user.getName()+"updated";
-        var emailUpdated = user.getName()+"updated@test.com";
+        var userNameUpdated = String.format("%s_%s", user.getName(), "updated");
+        var emailUpdated = String.format("%s_%s", user.getName(), "updated@test.com");
 
         testStart()
                 .clickBrowserRefreshButton()
@@ -241,8 +243,8 @@ public class UsersEditTests extends BaseTest {
 
         var tableData = usersPage.getUsersTable().getTableData();
         var tablePagination = usersPage.getUsersTable().getTablePagination();
-        var userNameUpdated = user.getName()+"updated";
-        var emailUpdated = user.getMail().split("@")[0]+"updated@test.com";
+        var userNameUpdated = String.format("%s_%s", user.getName(), "updated");
+        var emailUpdated = String.format("%s_%s", user.getName(), "updated@test.com");
 
         testStart()
                 .clickBrowserRefreshButton()
@@ -327,7 +329,6 @@ public class UsersEditTests extends BaseTest {
         testStart()
                 .logOut()
                 .testEnd();
-
     }
 }
 
