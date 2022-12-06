@@ -109,6 +109,7 @@ public class UsersCreationTests extends BaseTest {
     private void createSingleUser(String userName, String emailAddress, String status) {
         publisher = createPublisher();
         testStart()
+                .clickBrowserRefreshButton()
                 .clickOnWebElement(usersPage.getCreateUserButton())
                 .waitSideBarOpened()
                 .setValueWithClean(createUserSidebar.getUsernameInput(), userName)
