@@ -27,12 +27,13 @@ import static configurations.User.USER_FOR_DELETION;
 public class DeleteGeneratedDataTest extends BaseTest {
 
     private static final String PREFIX_MEDIA = "auto";
-    private static final String PREFIX_ADSPOTS = "auto";
+    private static final String PREFIX_USERS_2 = "auto";
+    private static final String PREFIX_AD_SPOTS = "auto";
     private static final String PREFIX_PUBLISHERS = "auto";
     private static final String PREFIX_OPEN_PRICING = "auto";
     private static final String PREFIX_PROTECTIONS_1 = "api";
     private static final String PREFIX_PROTECTIONS_2 = "auto";
-    private static final String PREFIX_USERS = "Test Account";
+    private static final String PREFIX_USERS_1 = "Test Account";
     private static final String PREFIX_DYNAMIC_PRICING = "auto";
     private static final String PREFIX_PRIVATE_AUCTIONS = "auto";
 
@@ -123,7 +124,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
     @Test(priority = 6)
     public void deleteUsers() {
         var deleted = new AtomicInteger(0);
-        getAllUserIdsByParams().forEach(userId -> {
+        getAllUserIds().forEach(userId -> {
             if (UsersPrecondition.user()
                     .setCredentials(USER_FOR_DELETION)
                     .deleteUser(userId)
@@ -200,7 +201,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
     private List<Integer> getAllAdSpotIdsByParams() {
 
         return AdSpotPrecondition.adSpot()
-                .getAdSpotsWithFilter(Map.of("search", PREFIX_ADSPOTS, "sort", "id-desc"))
+                .getAdSpotsWithFilter(Map.of("search", PREFIX_AD_SPOTS, "sort", "id-desc"))
                 .build()
                 .getAdSpotsGetAllResponse()
                 .getItems().stream()
@@ -272,7 +273,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
                 .build()
                 .getAdSpotsGetAllResponse()
                 .getItems().stream()
-                .filter(adSpot -> adSpot.getName().contains(PREFIX_ADSPOTS))
+                .filter(adSpot -> adSpot.getName().contains(PREFIX_AD_SPOTS))
                 .map(AdSpot::getPublisherId)
                 .collect(Collectors.toList());
     }
@@ -309,7 +310,8 @@ public class DeleteGeneratedDataTest extends BaseTest {
                 .build()
                 .getUserGetAllResponse()
                 .getItems().stream()
-                .filter(user -> user.getName().contains(PREFIX_USERS) )
+                .filter(user -> user.getName().contains(PREFIX_USERS_1) ||
+                        user.getName().contains(PREFIX_USERS_2))
                 .map(UserDto::getPublisherId)
                 .collect(Collectors.toList());
     }
@@ -321,7 +323,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
                 .build()
                 .getOpenPricingGetAllResponse()
                 .getItems().stream()
-                .filter(op -> op.getName().contains(PREFIX_USERS) )
+                .filter(op -> op.getName().contains(PREFIX_PUBLISHERS))
                 .map(OpenPricing::getPublisherId)
                 .collect(Collectors.toList());
     }
@@ -342,13 +344,15 @@ public class DeleteGeneratedDataTest extends BaseTest {
                 .getItems();
     }
 
-    private List<Integer> getAllUserIdsByParams() {
+    private List<Integer> getAllUserIds() {
 
         return UsersPrecondition.user()
-                .getUsersWithFilter(Map.of("search", PREFIX_USERS, "sort", "id-desc"))
+                .getAllUsers()
                 .build()
                 .getUserGetAllResponse()
                 .getItems().stream()
+                .filter(user -> user.getName().contains(PREFIX_USERS_1) ||
+                        user.getName().contains(PREFIX_USERS_2))
                 .map(UserDto::getId)
                 .collect(Collectors.toList());
     }
