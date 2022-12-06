@@ -17,6 +17,7 @@ import org.testng.annotations.Test;
 import rx.BaseTest;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -311,7 +312,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
                 .getUserGetAllResponse()
                 .getItems().stream()
                 .filter(user -> user.getName().contains(PREFIX_USERS_1) ||
-                        user.getName().contains(PREFIX_USERS_2))
+                        user.getName().toLowerCase().contains(PREFIX_USERS_2))
                 .map(UserDto::getPublisherId)
                 .collect(Collectors.toList());
     }
@@ -352,7 +353,7 @@ public class DeleteGeneratedDataTest extends BaseTest {
                 .getUserGetAllResponse()
                 .getItems().stream()
                 .filter(user -> user.getName().contains(PREFIX_USERS_1) ||
-                        user.getName().contains(PREFIX_USERS_2))
+                        user.getName().toLowerCase().contains(PREFIX_USERS_2))
                 .map(UserDto::getId)
                 .collect(Collectors.toList());
     }
