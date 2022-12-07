@@ -11,7 +11,6 @@ import pages.Path;
 import pages.inventory.adspots.AdSpotsPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
-import widgets.common.table.Statuses;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -95,7 +94,7 @@ public class AdSpotSearchTableTests extends BaseTest {
                 .map(AdSpot::getName)
                 .collect(Collectors.toList());
 
-        searchInactive = getAllItemsByParams(FILTER_SEARCH, SORT_PARAM, ENABLED_ASC ).stream()
+        searchInactive = getAllItemsByParams(String.format("%s?%s=%s", FILTER_SEARCH, SORT_PARAM, ENABLED_ASC)).stream()
                 .map(AdSpot::getName)
                 .collect(Collectors.toList());
 
@@ -123,29 +122,28 @@ public class AdSpotSearchTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(testName = "Search by 'Ad Spot Name'", alwaysRun = true)
-    public void adspotsSearchByAdSpotName() {
+    @Test(testName = "Search by 'Ad Spot Name'")
+    public void adSpotsSearchByAdSpotName() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
 
-//        testStart()
-//                .given()
-//                .waitAndValidate(disappear, adSpotsPage.getNuxtProgress())
-//                .setValueWithClean(tableData.getSearch(), AD_SPOT_NAME)
-//                .clickEnterButton(tableData.getSearch())
-//                .waitAndValidate(disappear, adSpotsPage.getTableProgressBar())
-//                .and("Sort column 'Ad spot Name'")
-//                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.AD_SPOT_NAME.getName()))
-//                .then(String.format("Validate data in column 'Ad spot Name' should contain '%s'", AD_SPOT_NAME))
-//                .validateAttribute(tableData.getColumnHeader(ColumnNames.AD_SPOT_NAME.getName()),
-//                        "aria-sort", "ascending")
-//                .validateList(tableData.getCustomCells(ColumnNames.AD_SPOT_NAME), adSpotNamesByAsc)
-//                .and("End Test")
-//                .testEnd();
+        testStart()
+                .given()
+                .waitAndValidate(disappear, adSpotsPage.getNuxtProgress())
+                .setValueWithClean(tableData.getSearch(), AD_SPOT_NAME)
+                .clickEnterButton(tableData.getSearch())
+                .waitAndValidate(disappear, adSpotsPage.getTableProgressBar())
+                .and("Sort column 'Ad spot Name'")
+                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.NAME.getName()))
+                .then(String.format("Validate data in column 'Ad spot Name' should contain '%s'", AD_SPOT_NAME))
+                .validateAttribute(tableData.getColumnHeader(ColumnNames.NAME.getName()),
+                        "aria-sort", "ascending")
+                .validateList(tableData.getCustomCells(ColumnNames.NAME), adSpotNamesByAsc)
+                .and("End Test")
+                .testEnd();
     }
 
     @Epic("GS-2943")
-    @Ignore
-    @Test(testName = "Search by 'Publisher'", alwaysRun = true)
+    @Test(testName = "Search by 'Publisher'", enabled = false)
     public void adSpotsSearchByPublisher() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
 
@@ -168,9 +166,8 @@ public class AdSpotSearchTableTests extends BaseTest {
     }
 
     @Epic("GS-2943")
-    @Ignore
-    @Test(testName = "Search by 'A'", alwaysRun = true)
-    public void adSpotsSearchWithPaginatinaton() {
+    @Test(testName = "Search by 'A'", enabled = false)
+    public void adSpotsSearchWithPagination() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
 
@@ -208,8 +205,7 @@ public class AdSpotSearchTableTests extends BaseTest {
     }
 
     @Epic("GS-2943")
-    @Ignore
-    @Test(testName = "Search with filter by status")
+    @Test(testName = "Search with filter by status", enabled = false)
     public void adSpotsSearchWithFilterByStatus() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tableOptions = adSpotsPage.getAdSpotsTable().getShowHideColumns();
@@ -250,7 +246,7 @@ public class AdSpotSearchTableTests extends BaseTest {
                 .testEnd();
     }
 
-    //@AfterTest(alwaysRun = true)
+    @AfterTest(alwaysRun = true)
     private void deleteEntities() {
 
         for (Integer adSpotId : adSpotIds) {
@@ -274,11 +270,10 @@ public class AdSpotSearchTableTests extends BaseTest {
                 .getAdSpotResponse();
     }
 
-    private List<AdSpot> getAllItemsByParams(String ... strParams) {
+    private List<AdSpot> getAllItemsByParams(String strParams) {
 
-        //Todo fix tests in this place
         return AdSpotPrecondition.adSpot()
-                .getAdSpotsWithFilter(Map.of("search", Arrays.toString(strParams)))
+                .getAdSpotsWithFilter(Map.of("search", strParams))
                 .build()
                 .getAdSpotsGetAllResponse()
                 .getItems();

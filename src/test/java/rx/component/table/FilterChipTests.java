@@ -119,7 +119,7 @@ public class FilterChipTests extends BaseTest {
                 .validate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
                 .and("Select Active")
-                .clickOnWebElement(filter.getActiveBooleanFilter().getActiveRadioButton())
+                .selectRadioButton(filter.getActiveBooleanFilter().getActiveRadioButton())
                 .clickOnWebElement(filter.getActiveBooleanFilter().getSubmitButton())
                 .validate(not(visible), filter.getFilterOptionsMenu())
                 .then("ColumnsFilter widget is closed")
@@ -168,7 +168,7 @@ public class FilterChipTests extends BaseTest {
                 .getTotal();
     }
 
-    @AfterClass
+   // @AfterClass
     private void logout() {
         testStart()
                 .logOut()
