@@ -144,8 +144,7 @@ public class MediaSearchTableTests extends BaseTest {
     }
 
     @Epic("GS-2946")
-    @Ignore
-    @Test(testName = "Search by 'Publisher'")
+    @Test(testName = "Search by 'Publisher'", enabled = false)
     public void mediaSearchByPublisher() {
         var tableData = mediaPage.getMediaTable().getTableData();
 
@@ -168,8 +167,7 @@ public class MediaSearchTableTests extends BaseTest {
     }
 
     @Epic("GS-2946")
-    @Ignore
-    @Test(testName = "Search by 'A'")
+    @Test(testName = "Search by 'A'", enabled = false)
     public void mediaSearchWithPaginatinaton() {
         var tableData = mediaPage.getMediaTable().getTableData();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
@@ -208,8 +206,7 @@ public class MediaSearchTableTests extends BaseTest {
     }
 
     @Epic("GS-2946")
-    @Ignore
-    @Test(testName = "Search with filter by status")
+    @Test(testName = "Search with filter by status", enabled = false)
     public void mediaSearchWithFilterByStatus() {
         var tableData = mediaPage.getMediaTable().getTableData();
         var tableOptions = mediaPage.getMediaTable().getShowHideColumns();

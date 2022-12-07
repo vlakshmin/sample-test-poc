@@ -362,8 +362,7 @@ public class ProtectionsInventoryMultipaneTests extends BaseTest {
     }
 
     //TODO: MultipanItems "//td[2]/div"
-    @Ignore
-    @Test(description = "Check Multipane Text 'N media is/are included, N Ad spot is/are included'", priority = 13)
+    @Test(description = "Check Multipane Text 'N media is/are included, N Ad spot is/are included'", priority = 13, enabled = false)
     public void checkMultipaneTextMediaIncludedAdSpotIncluded() {
 
         testStart()

@@ -143,7 +143,6 @@ public class AdSpotSearchTableTests extends BaseTest {
     }
 
     @Epic("GS-2943")
-    @Ignore
     @Test(testName = "Search by 'Publisher'", enabled = false)
     public void adSpotsSearchByPublisher() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
