@@ -58,7 +58,7 @@ public class AdSpotRequiredFieldsOnlyCreateTests extends BaseTest {
 
     final private static String AD_SPOT_NAME = captionWithSuffix("4autoAdSpot");
 
-    final private static String currentDate = new SimpleDateFormat("MMM dd yyyy").format( new Date());
+    final private static String currentDate = new SimpleDateFormat("MMM d yyyy").format( new Date());
 
 
     public AdSpotRequiredFieldsOnlyCreateTests() {
