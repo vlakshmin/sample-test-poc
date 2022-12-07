@@ -13,7 +13,9 @@ import static com.codeborne.selenide.Selenide.$x;
 @Getter
 public class ActiveBooleanFilter extends SinglePaneFilter {
 
-    private SelenideElement activeRadioButton = $x(ActiveBooleanFilterElements.ACTIVE_RADIO_BUTTON.getSelector()).as(ActiveBooleanFilterElements.ACTIVE_RADIO_BUTTON.getAlias());
-    private SelenideElement inactiveRadioButton = $x(ActiveBooleanFilterElements.INACTIVE_RADIO_BUTTON.getSelector()).as(ActiveBooleanFilterElements.INACTIVE_RADIO_BUTTON.getAlias());
+    private SelenideElement activeRadioButton = $x(ActiveBooleanFilterElements.ACTIVE_RADIO_BUTTON.getSelector())
+            .as(ActiveBooleanFilterElements.ACTIVE_RADIO_BUTTON.getAlias());
+    private SelenideElement inactiveRadioButton = $x(ActiveBooleanFilterElements.INACTIVE_RADIO_BUTTON.getSelector())
+            .as(ActiveBooleanFilterElements.INACTIVE_RADIO_BUTTON.getAlias());
 
 }
