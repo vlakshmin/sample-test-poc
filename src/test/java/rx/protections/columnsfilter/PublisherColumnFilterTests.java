@@ -52,13 +52,14 @@ public class PublisherColumnFilterTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Search in the filter singlepane")
-    public void testSearchColumnsFilterComponent() {
+    @Test(description = "Check Search Publisher")
+    public void testSearchPublisherColumnsFilterComponent() {
 
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
 
         testStart()
                 .and("Select Column Filter 'PUBLISHER'")
+                .scrollIntoView(filter.getColumnFiltersButton())
                 .clickOnWebElement(filter.getColumnFiltersButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.PUBLISHER))
@@ -80,12 +81,13 @@ public class PublisherColumnFilterTests extends BaseTest {
                 .then("Check total publishers count, search result should be reset")
                 .validate(not(visible), protectionPage.getTableProgressBar())
                 .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalPublishers))
+                .scrollIntoView(filter.getSinglepane().getBackButton())
                 .clickOnWebElement(filter.getSinglepane().getBackButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .testEnd();
     }
 
-    @Test(description = "Check Chip Widget Component", dependsOnMethods = "testSearchColumnsFilterComponent")
+    @Test(description = "Check Chip Widget Component", dependsOnMethods = "testSearchPublisherColumnsFilterComponent")
     public void testChipWidgetComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var table = protectionPage.getProtectionsTable().getTableData();
@@ -112,19 +114,6 @@ public class PublisherColumnFilterTests extends BaseTest {
                 .validate(table.countFilterChipsItems(), 1)
                 .then("Validate list of selected publishers")
                 .validate(table.getChipItemByName(ColumnNames.PUBLISHER.getName()).countFilterOptionsChipItems(), 3)
-                .and("Select Column Filter 'Active/Inactive'")
-                .clickOnWebElement(filter.getColumnFiltersButton())
-                .validate(visible, filter.getFilterOptionsMenu())
-                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
-                .and("Select Active")
-                .selectRadioButton(filter.getActiveBooleanFilter().getActiveRadioButton())
-                .clickOnWebElement(filter.getActiveBooleanFilter().getSubmitButton())
-                .validate(not(visible), filter.getFilterOptionsMenu())
-                .then("ColumnsFilter widget is closed")
-                .validate(not(visible), filter.getFilterOptionsMenu())
-                .validate(visible, table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getHeaderLabel())
-                .validate(table.countFilterChipsItems(), 2)
-                .validate(visible, table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getChipFilterOptionItemByName("Active"))
                 .testEnd();
 
         selectedPublishersNameList.forEach(e -> {
@@ -132,20 +121,6 @@ public class PublisherColumnFilterTests extends BaseTest {
                     .validate(exist, table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getChipFilterOptionItemByName(e))
                     .testEnd();
         });
-    }
-
-    @Test(description = "Check Reset Chip Widget Component", dependsOnMethods = "testChipWidgetComponent")
-    public void testResetChipWidgetComponent() {
-        var table = protectionPage.getProtectionsTable().getTableData();
-
-        testStart()
-                .and(format("Reset filter %s", ColumnNames.ACTIVE_INACTIVE.getName()))
-                .scrollIntoView(table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getCloseIcon())
-                .clickOnWebElement(table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getCloseIcon())
-                .then(format("Chip '%s' should be disabled", ColumnNames.ACTIVE_INACTIVE.getName()))
-                .validate(table.getFilterChips().size(), 1)
-                .validate(visible, table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getHeaderLabel())
-                .testEnd();
     }
 
     private List<String> getFilterPublishersListFromBE(String name) {
