@@ -12,7 +12,6 @@ import pages.Path;
 import pages.inventory.media.*;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
-import widgets.common.table.Statuses;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -226,7 +225,7 @@ public class MediaSearchTableTests extends BaseTest {
                 .waitAndValidate(disappear, mediaPage.getTableProgressBar())
                 .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME), searchBoth)
                 .and("Set filter 'Active'")
-                .clickOnWebElement(filterOptions.getColumnFiltersButton())
+                .clickOnWebElement(filterOptions.getColumnsFilterButton())
                 .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
                 .selectRadioButton(filterOptions.getActiveBooleanFilter().getActiveRadioButton())
                 .clickOnWebElement(filterOptions.getActiveBooleanFilter().getSubmitButton())
@@ -235,7 +234,7 @@ public class MediaSearchTableTests extends BaseTest {
                 .then(String.format("Validate data in column 'Media Name' should contain '%s'", FILTER_SEARCH))
                 .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME), searchActive)
                 .and("Set filter 'Inactive'")
-                .clickOnWebElement(filterOptions.getColumnFiltersButton())
+                .clickOnWebElement(filterOptions.getColumnsFilterButton())
                 .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
                 .selectRadioButton(filterOptions.getActiveBooleanFilter().getInactiveRadioButton())
                 .clickOnWebElement(filterOptions.getActiveBooleanFilter().getSubmitButton())

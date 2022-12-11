@@ -59,8 +59,8 @@ public class PublisherColumnFilterTests extends BaseTest {
 
         testStart()
                 .and("Select Column Filter 'PUBLISHER'")
-                .scrollIntoView(filter.getColumnFiltersButton())
-                .clickOnWebElement(filter.getColumnFiltersButton())
+                .scrollIntoView(protectionPage.getLogo())
+                .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.PUBLISHER))
                 .and(format("Search by Name '%s'", PUBLISHER_NAME))

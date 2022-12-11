@@ -3,7 +3,6 @@ package rx.component.table;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -61,7 +60,7 @@ public class FilterChipTests extends BaseTest {
 
         testStart()
                 .and("Select Column Filter 'PUBLISHER'")
-                .clickOnWebElement(filter.getColumnFiltersButton())
+                .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.PUBLISHER))
                 .and(format("Search by Name '%s'", PUBLISHER_NAME))
@@ -115,7 +114,7 @@ public class FilterChipTests extends BaseTest {
                 .then("Validate list of selected publishers")
                 .validate(table.getChipItemByName(ColumnNames.PUBLISHER.getName()).countFilterOptionsChipItems(), 3)
                 .and("Select Column Filter 'Active/Inactive'")
-                .clickOnWebElement(filter.getColumnFiltersButton())
+                .clickOnWebElement(filter.getColumnsFilterButton())
                 .validate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
                 .and("Select Active")
