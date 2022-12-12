@@ -141,16 +141,16 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .then("Title should be displayed")
                 .validate(filter.getActiveBooleanFilter().getFilterHeaderLabel(), StringUtils.getFilterHeader(ColumnNames.ACTIVE_INACTIVE.getName()))
                 .then("All options should be unselected")
-                .validate(filter.getActiveBooleanFilter().getActiveRadioButton().getAttribute("aria-checked"),"false")
-                .validate(filter.getActiveBooleanFilter().getInactiveRadioButton().getAttribute("aria-checked"),"false")
+                .validateAttribute(filter.getActiveBooleanFilter().getActiveRadioButton(),"aria-checked","false")
+                .validateAttribute(filter.getActiveBooleanFilter().getInactiveRadioButton(),"aria-checked","false")
                 .and("Select Active")
                 .clickOnWebElement(filter.getActiveBooleanFilter().getActiveRadioButton())
-                .validate(filter.getActiveBooleanFilter().getActiveRadioButton().getAttribute("aria-checked"),"true")
+                .validateAttribute(filter.getActiveBooleanFilter().getActiveRadioButton(),"aria-checked","true")
                 .and("Select Inactive")
                 .clickOnWebElement(filter.getActiveBooleanFilter().getInactiveRadioButton())
                 .then("Only one option should be selected")
-                .validate(filter.getActiveBooleanFilter().getActiveRadioButton().getAttribute("aria-checked"),"false")
-                .validate(filter.getActiveBooleanFilter().getInactiveRadioButton().getAttribute("aria-checked"),"true")
+                .validateAttribute(filter.getActiveBooleanFilter().getActiveRadioButton(),"aria-checked","false")
+                .validateAttribute(filter.getActiveBooleanFilter().getInactiveRadioButton(),"aria-checked","true")
                 .and("Click on Back")
                 .clickOnWebElement(filter.getActiveBooleanFilter().getBackButton())
                 .then("Columns Menu should appear")
@@ -160,11 +160,11 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .and("Select Column Filter 'Active/Inactive'")
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
                 .then("All options should be reset and unselected")
-                .validate(filter.getActiveBooleanFilter().getActiveRadioButton().getAttribute("aria-checked"),"false")
-                .validate(filter.getActiveBooleanFilter().getInactiveRadioButton().getAttribute("aria-checked"),"false")
+                .validateAttribute(filter.getActiveBooleanFilter().getActiveRadioButton(),"aria-checked","false")
+                .validateAttribute(filter.getActiveBooleanFilter().getInactiveRadioButton(),"aria-checked","false")
                 .and("Select Inactive")
                 .clickOnWebElement(filter.getActiveBooleanFilter().getInactiveRadioButton())
-                .validate(filter.getActiveBooleanFilter().getInactiveRadioButton().getAttribute("aria-checked"),"true")
+                .validateAttribute(filter.getActiveBooleanFilter().getInactiveRadioButton(),"aria-checked","true")
                 .and("Click on Submit")
                 .clickOnWebElement(filter.getActiveBooleanFilter().getSubmitButton())
                 .then("ColumnsFilter widget is closed")
@@ -190,6 +190,58 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .and("Select Column Filter 'Managed By System Admin'")
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.MANAGED_BY_SYSTEM_ADMIN))
+                .then("Title should be displayed")
+                .validate(filter.getBooleanFilter().getFilterHeaderLabel(), StringUtils.getFilterHeader(ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName()))
+                .then("All options should be unselected")
+                .validateAttribute(filter.getBooleanFilter().getYesRadioButton(),"aria-checked","false")
+                .validateAttribute(filter.getBooleanFilter().getNoRadioButton(),"aria-checked","false")
+                .and("Select Yes")
+                .clickOnWebElement(filter.getBooleanFilter().getYesRadioButton())
+                .validateAttribute(filter.getBooleanFilter().getYesRadioButton(),"aria-checked","true")
+                .and("Select No")
+                .clickOnWebElement(filter.getBooleanFilter().getNoRadioButton())
+                .then("Only one option should be selected")
+                .validateAttribute(filter.getBooleanFilter().getYesRadioButton(),"aria-checked","false")
+                .validateAttribute(filter.getBooleanFilter().getNoRadioButton(),"aria-checked","true")
+                .and("Click on Back")
+                .clickOnWebElement(filter.getBooleanFilter().getBackButton())
+                .then("Columns Menu should appear")
+                .validateList(filter.getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
+                        ColumnNames.ACTIVE_INACTIVE.getName(),
+                        ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName()))
+                .and("Select Column Filter 'Managed By System Admin'")
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.MANAGED_BY_SYSTEM_ADMIN))
+                .then("All options should be reset and unselected")
+                .validateAttribute(filter.getBooleanFilter().getYesRadioButton(),"aria-checked","false")
+                .validateAttribute(filter.getBooleanFilter().getNoRadioButton(),"aria-checked","false")
+                .and("Select No")
+                .clickOnWebElement(filter.getBooleanFilter().getNoRadioButton())
+                .validateAttribute(filter.getBooleanFilter().getNoRadioButton(),"aria-checked","true")
+                .and("Click on Submit")
+                .clickOnWebElement(filter.getBooleanFilter().getSubmitButton())
+                .then("ColumnsFilter widget is closed")
+                .validate(not(visible), filter.getFilterOptionsMenu())
+                .validate(visible, table.getChipItemByName(ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName()).getHeaderLabel())
+                .validate(table.countFilterChipsItems(), 1)
+                .then("Validate value on chip")
+                .validate(table.getChipItemByName(ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName()).getChipFilterOptionItemByName("No"))
+                .clickOnWebElement(table.getChipItemByName(ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName()).getCloseIcon())
+                .testEnd();
+    }
+
+    @Ignore
+    @Test(description = "Check 'Updated By' Chip Widget Component")
+    public void testUpdatedByChipWidgetComponent() {
+        var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
+        var table = protectionPage.getProtectionsTable().getTableData();
+
+        testStart()
+                .and("Click on 'Column Filters'")
+                .scrollIntoView(protectionPage.getLogo())
+                .clickOnWebElement(filter.getColumnsFilterButton())
+                .waitAndValidate(visible, filter.getFilterOptionsMenu())
+                .and("Select Column Filter 'Managed By System Admin'")
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.UPDATED_BY))
                 .then("Title should be displayed")
                 .validate(filter.getBooleanFilter().getFilterHeaderLabel(), StringUtils.getFilterHeader(ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName()))
                 .then("All options should be unselected")
@@ -228,6 +280,7 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .clickOnWebElement(table.getChipItemByName(ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName()).getCloseIcon())
                 .testEnd();
     }
+
 
     private List<String> getFilterPublishersListFromBE(String name) {
 
