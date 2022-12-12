@@ -125,7 +125,7 @@
 <!--    </test>-->
     <test name="Columns Filter Feature">
         <classes>
-            <class name="rx.protections.columnsfilter.PublisherColumnFilterTests"/>
+            <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterWidgetTests"/>
         </classes>
     </test>
 </suite>

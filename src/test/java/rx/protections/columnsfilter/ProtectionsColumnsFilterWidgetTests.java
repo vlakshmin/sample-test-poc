@@ -3,10 +3,7 @@ package rx.protections.columnsfilter;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.Path;
 import pages.protections.ProtectionsPage;
 import rx.BaseTest;
@@ -26,7 +23,7 @@ import static managers.TestManager.testStart;
 @Slf4j
 @Listeners({ScreenShooter.class})
 @Feature(value = "Components")
-public class PublisherColumnFilterTests extends BaseTest {
+public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
 
     private ProtectionsPage protectionPage;
 
@@ -36,7 +33,7 @@ public class PublisherColumnFilterTests extends BaseTest {
     private final static String PUBLISHER_NAME = "Rakuten";
     private Integer totalPublishers;
 
-    public PublisherColumnFilterTests() {
+    public ProtectionsColumnsFilterWidgetTests() {
         protectionPage = new ProtectionsPage();
     }
 
@@ -90,7 +87,7 @@ public class PublisherColumnFilterTests extends BaseTest {
     }
 
     @Test(description = "Check Chip Widget Component", dependsOnMethods = "testSearchPublisherColumnsFilterComponent")
-    public void testChipWidgetComponent() {
+    public void testPublisherChipWidgetComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var table = protectionPage.getProtectionsTable().getTableData();
 
@@ -123,6 +120,10 @@ public class PublisherColumnFilterTests extends BaseTest {
                     .validate(exist, table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getChipFilterOptionItemByName(e))
                     .testEnd();
         });
+
+        testStart()
+                .clickOnWebElement(table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getCloseIcon())
+                .testEnd();
     }
 
     @Test(description = "Check Active/Inactive Chip Widget Component")
