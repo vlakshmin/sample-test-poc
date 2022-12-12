@@ -3,6 +3,7 @@ package rx.protections.columnsfilter;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -10,6 +11,7 @@ import pages.Path;
 import pages.protections.ProtectionsPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
+import zutils.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -123,6 +125,52 @@ public class PublisherColumnFilterTests extends BaseTest {
         });
     }
 
+    @Test(description = "Check Active/Inactive Chip Widget Component")
+    public void testActiveInactiveChipWidgetComponent() {
+        var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
+        var table = protectionPage.getProtectionsTable().getTableData();
+
+        testStart()
+                .and("Select Column Filter 'Active/Inactive'")
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
+                .then("Title should be displayed")
+                .validate(filter.getActiveBooleanFilter().getFilterHeaderLabel(), StringUtils.getFilterHeader(ColumnNames.ACTIVE_INACTIVE.getName()))
+                .then("All options should be unselected")
+                .validate(filter.getActiveBooleanFilter().getActiveRadioButton().getAttribute("aria-checked"),"false")
+                .validate(filter.getActiveBooleanFilter().getActiveRadioButton().getAttribute("aria-checked"),"false")
+                .and("Select Active")
+                .clickOnWebElement(filter.getActiveBooleanFilter().getActiveRadioButton())
+                .validate(filter.getActiveBooleanFilter().getActiveRadioButton().getAttribute("aria-checked"),"true")
+                .and("Select Inactive")
+                .clickOnWebElement(filter.getActiveBooleanFilter().getInactiveRadioButton())
+                .then("Only one option should be selected")
+                .validate(filter.getActiveBooleanFilter().getActiveRadioButton().getAttribute("aria-checked"),"false")
+                .validate(filter.getActiveBooleanFilter().getActiveRadioButton().getAttribute("aria-checked"),"true")
+                .and("Click on Back")
+                .clickOnWebElement(filter.getBooleanFilter().getBackButton())
+                .then("Columns Menu should appear")
+                .validateList(filter.getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
+                        ColumnNames.ACTIVE_INACTIVE.getName(),
+                        ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName()))
+                .and("Select Column Filter 'Active/Inactive'")
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
+                .then("All options should be reset and unselected")
+                .validate(filter.getActiveBooleanFilter().getActiveRadioButton().getAttribute("aria-checked"),"false")
+                .validate(filter.getActiveBooleanFilter().getActiveRadioButton().getAttribute("aria-checked"),"false")
+                .and("Select Inactive")
+                .clickOnWebElement(filter.getActiveBooleanFilter().getInactiveRadioButton())
+                .validate(filter.getActiveBooleanFilter().getInactiveRadioButton().getAttribute("aria-checked"),"true")
+                .and("Click on Submit")
+                .clickOnWebElement(filter.getActiveBooleanFilter().getSubmitButton())
+                .then("ColumnsFilter widget is closed")
+                .validate(not(visible), filter.getFilterOptionsMenu())
+                .validate(visible, table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getHeaderLabel())
+                .validate(table.countFilterChipsItems(), 1)
+                .then("Validate value on chip")
+                .validate(table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getChipFilterOptionItemByName("Inactive"))
+                .testEnd();
+    }
+
     private List<String> getFilterPublishersListFromBE(String name) {
 
         return publisher()
@@ -141,7 +189,7 @@ public class PublisherColumnFilterTests extends BaseTest {
                 .getTotal();
     }
 
-   // @AfterClass
+    @AfterClass
     private void logout() {
         testStart()
                 .logOut()
