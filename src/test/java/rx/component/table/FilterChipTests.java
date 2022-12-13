@@ -60,7 +60,7 @@ public class FilterChipTests extends BaseTest {
 
         testStart()
                 .and("Select Column Filter 'PUBLISHER'")
-                .scrollIntoView(protectionPage.getLogo())
+                .scrollIntoView(protectionPage.getProtectionPageTitle())
                 .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.PUBLISHER))
@@ -82,7 +82,7 @@ public class FilterChipTests extends BaseTest {
                 .then("Check total publishers count, search result should be reset")
                 .validate(not(visible), protectionPage.getTableProgressBar())
                 .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalPublishers))
-                .scrollIntoView(protectionPage.getLogo())
+                .scrollIntoView(protectionPage.getProtectionPageTitle())
                 .clickOnWebElement(filter.getSinglepane().getBackButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .testEnd();
@@ -116,7 +116,7 @@ public class FilterChipTests extends BaseTest {
                 .then("Validate list of selected publishers")
                 .validate(table.getChipItemByName(ColumnNames.PUBLISHER.getName()).countFilterOptionsChipItems(), 3)
                 .and("Select Column Filter 'Active/Inactive'")
-                .scrollIntoView(protectionPage.getLogo())
+                .scrollIntoView(protectionPage.getProtectionPageTitle())
                 .clickOnWebElement(filter.getColumnsFilterButton())
                 .validate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
