@@ -9,12 +9,6 @@ import widgets.common.validationalert.ValidationBottomAlert;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 import static widgets.admin.users.sidebar.AbstractUserSidebarElements.*;
-import static widgets.inventory.media.sidebar.MediaSidebarElements.ACTIVE_TOGGLE;
-import static widgets.inventory.media.sidebar.MediaSidebarElements.PUBLISHER_NAME;
-import static widgets.inventory.media.sidebar.MediaSidebarElements.PUBLISHER_NAME_INPUT;
-import static widgets.inventory.media.sidebar.MediaSidebarElements.PUBLISHER_DROPDOWN_ITEMS;
-import static widgets.inventory.media.sidebar.MediaSidebarElements.TOOLTIP_ICON_BY_FIELD_NAME;
-import static widgets.inventory.media.sidebar.MediaSidebarElements.ERROR_ALERT_BY_FIELD_NAME;
 
 /**
  * Keep Selectors of UI elements in {@link AbstractUserSidebarElements}
@@ -30,7 +24,6 @@ public abstract class AbstractUserSidebar {
     private SelenideElement adminRadioButton = $x(ADMIN_RADIOBUTTON.getSelector()).as(ADMIN_RADIOBUTTON.getAlias());
     private SelenideElement userSideBar = $x(USER_SIDEBAR.getSelector()).as(USER_SIDEBAR.getAlias());
     private SelenideElement publisherNameInput = $x(PUBLISHER_NAME_INPUT.getSelector()).as(PUBLISHER_NAME_INPUT.getAlias());
-    private SelenideElement publisherInput = $x(PUBLISHER_NAME.getSelector()).as(PUBLISHER_NAME.getAlias());
     private ElementsCollection publisherDropdownItems = $$x(PUBLISHER_DROPDOWN_ITEMS.getSelector()).as(PUBLISHER_DROPDOWN_ITEMS.getAlias());
     private SelenideElement userSideBarTitle = $x(USER_SIDEBAR_TITLE.getSelector()).as(USER_SIDEBAR_TITLE.getAlias());
     private SelenideElement userSideBarClose = $x(USER_SIDEBAR_CLOSE.getSelector()).as(USER_SIDEBAR_CLOSE.getAlias());

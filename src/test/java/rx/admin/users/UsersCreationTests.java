@@ -1,7 +1,6 @@
 package rx.admin.users;
 
 import api.dto.rx.admin.publisher.Publisher;
-import api.dto.rx.admin.user.UserDto;
 import api.dto.rx.admin.user.UserRole;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
@@ -15,7 +14,6 @@ import widgets.common.table.ColumnNames;
 import widgets.common.table.Statuses;
 
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
-import static api.preconditionbuilders.UsersPrecondition.user;
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
 import static configurations.User.USER_FOR_DELETION;
@@ -115,7 +113,7 @@ public class UsersCreationTests extends BaseTest {
                 .setValueWithClean(createUserSidebar.getUsernameInput(), userName)
                 .setValueWithClean(createUserSidebar.getEmailInput(), emailAddress)
                 .setValueWithClean(createUserSidebar.getPasswordInput(), "Password1")
-                .selectFromDropdown(createUserSidebar.getPublisherInput(),
+                .selectFromDropdown(createUserSidebar.getPublisherNameInput(),
                         createUserSidebar.getPublisherDropdownItems(), publisher.getName())
                 .and("Fill Name")
                 .testEnd();
@@ -213,7 +211,7 @@ public class UsersCreationTests extends BaseTest {
                 .then("Check all fields")
                 .validateAttribute(createUserSidebar.getUsernameInput(), "value", userName)
                 .validateAttribute(createUserSidebar.getEmailInput(), "value", emailAddress)
-                .validate(createUserSidebar.getPublisherInput(), publisher.getName())
+                .validate(createUserSidebar.getPublisherNameInput(), publisher.getName())
                 .and("Click Save")
                 .clickOnWebElement(createUserSidebar.getSaveButton())
                 .waitAndValidate(not(visible), createUserSidebar.getErrorAlert().getErrorPanel())

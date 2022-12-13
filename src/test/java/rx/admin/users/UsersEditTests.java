@@ -145,7 +145,7 @@ public class UsersEditTests extends BaseTest {
                 .selectRadioButton(editUserSidebar.getSinglePublisherRadioButton())
                 .setValueWithClean(editUserSidebar.getUsernameInput(), userNameUpdated)
                 .setValueWithClean(editUserSidebar.getEmailInput(), emailUpdated)
-                .selectFromDropdown(editUserSidebar.getPublisherInput(),
+                .selectFromDropdown(editUserSidebar.getPublisherNameInput(),
                         editUserSidebar.getPublisherDropdownItems(), publisher.getName())
                 .turnToggleOff(editUserSidebar.getActiveToggle())
                 .clickOnWebElement(editUserSidebar.getSaveButton())
