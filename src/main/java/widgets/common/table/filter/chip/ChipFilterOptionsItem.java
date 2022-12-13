@@ -27,8 +27,8 @@ public class ChipFilterOptionsItem {
     @Getter(AccessLevel.NONE)
     private ElementsCollection chipItems;
 
-    private static final String CHIP_ITEM = "//div[contains(@class,'chip-container')]/span";
-
+ //   private static final String CHIP_ITEM = "//div[contains(@class,'chip-container')]/span";
+    private static final String CHIP_ITEM = "//span[contains(@class,'container-chip')]";
     public ChipFilterOptionsItem(int position) {
         this.position = position;
         this.closeIcon = $x(buildXpath(CLOSE_ICON.getSelector())).as(CLOSE_ICON.getAlias());
