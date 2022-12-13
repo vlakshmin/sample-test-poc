@@ -217,7 +217,11 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .then("Columns Menu should appear")
                 .validateList(filter.getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
                         ColumnNames.ACTIVE_INACTIVE.getName(),
-                        ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName()))
+                        ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName(),
+                        ColumnNames.CREATED_DATE.getName(),
+                        ColumnNames.CREATED_BY.getName(),
+                        ColumnNames.UPDATED_DATE.getName(),
+                        ColumnNames.UPDATED_BY.getName()))
                 .and("Select Column Filter 'Managed By System Admin'")
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.MANAGED_BY_SYSTEM_ADMIN))
                 .then("All options should be reset and unselected")
@@ -230,7 +234,7 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .clickOnWebElement(filter.getBooleanFilter().getSubmitButton())
                 .then("ColumnsFilter widget is closed")
                 .validate(not(visible), filter.getFilterOptionsMenu())
-                .validate(visible, table.getChipItemByName(ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName()).getHeaderLabel())
+                .waitAndValidate(visible, table.getChipItemByName(ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName()).getHeaderLabel())
                 .validate(table.countFilterChipsItems(), 1)
                 .then("Validate value on chip")
                 .validate(table.getChipItemByName(ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName()).getChipFilterOptionItemByName("No"))

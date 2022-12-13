@@ -27,7 +27,7 @@ public class ChipFilterOptionsItem {
     @Getter(AccessLevel.NONE)
     private ElementsCollection chipItems;
 
-    private static final String CHIP_ITEM = "//span[contains(@class,'container-chip align-self-center v-chip')]";
+    private static final String CHIP_ITEM = "//div[contains(@class,'chip-container')]/span";
 
     public ChipFilterOptionsItem(int position) {
         this.position = position;

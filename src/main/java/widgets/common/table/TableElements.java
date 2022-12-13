@@ -16,7 +16,7 @@ public enum TableElements {
     CHECKBOX( "Row Checkbox", "//table//tr[%s]/td[1]/div/div[1]/i"),
     CLEAR( "Clear Icon", "//*[@class='v-input__icon v-input__icon--clear']/button"),
     SEARCH( "Search Textbox", "//*[@class='v-text-field__slot']/label[text()='Search by name']/../input"),
-    FILTER_CHIPS("Filter chips toolbar","//span[contains(@class,'container-chip align-self-center v-chip')]"),
+    FILTER_CHIPS("Filter chips toolbar","//div[contains(@class,'chip-container')]/span"),
     COLUMN_HEADER( "Column Header", "//div[@class='v-data-table__wrapper']//thead//th/span[text()='%s']/parent::th");
 
     private String alias;
