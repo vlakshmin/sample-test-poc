@@ -50,8 +50,10 @@ public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .scrollIntoView(protectionPage.getProtectionPageTitle())
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
-                .scrollIntoView(protectionPage.getProtectionPageTitle())
-                .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
+                .and("Select 10 rows per page")
+                .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
+                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "10")
                 .testEnd();
     }
 
