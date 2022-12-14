@@ -85,6 +85,7 @@ public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
 
         testStart()
                 .and("Click on the Next Month button")
+                .scrollIntoView(calendar.getNextMonthButton())
                 .clickOnWebElement(calendar.getNextMonthButton())
                 .then("Should be displayed next month")
                 .validate(calendar.getMonthOrYearHeaderButton().getText(), format("%s %s",

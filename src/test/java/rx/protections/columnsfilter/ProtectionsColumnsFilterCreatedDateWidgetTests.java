@@ -158,9 +158,6 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
         LocalDate secondDate = LocalDate.of(currentDate.getYear(), currentDate.getMonth(), 25);
 
         testStart()
-//                .and("Select Column Filter 'Created Date'")
-//                .scrollIntoView(protectionPage.getProtectionPageTitle())
-//                .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_DATE))
                 .and("Select Period Date of the month")
