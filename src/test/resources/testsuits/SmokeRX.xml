@@ -79,15 +79,15 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-    <test name="Components Tests">
-        <classes>
-<!--            <class name="rx.component.table.TableDataTests"/>-->
-<!--            <class name="rx.component.multipane.MultipaneTest"/>-->
-<!--            <class name="rx.component.categories.CategoriesSelectionTests"/>-->
-            <class name="rx.component.singlepanefilter.SinglepaneFilterProtectionTest"/>
-            <class name="rx.component.table.FilterChipTests"/>
-       </classes>
-    </test>
+<!--    <test name="Components Tests">-->
+<!--        <classes>-->
+<!--&lt;!&ndash;            <class name="rx.component.table.TableDataTests"/>&ndash;&gt;-->
+<!--&lt;!&ndash;            <class name="rx.component.multipane.MultipaneTest"/>&ndash;&gt;-->
+<!--&lt;!&ndash;            <class name="rx.component.categories.CategoriesSelectionTests"/>&ndash;&gt;-->
+<!--            <class name="rx.component.singlepanefilter.SinglepaneFilterProtectionTest"/>-->
+<!--            <class name="rx.component.table.FilterChipTests"/>-->
+<!--       </classes>-->
+<!--    </test>-->
 
 <!--    <test name="Publisher Feature">-->
 <!--        <classes>-->
@@ -123,9 +123,10 @@
 <!--            <class name="rx.pipelines.DeleteGeneratedDataTest"/>-->
 <!--        </classes>-->
 <!--    </test>-->
-<!--    <test name="Columns Filter Feature">-->
-<!--        <classes>-->
-<!--        <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterWidgetTests"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Columns Filter Feature">
+        <classes>
+            <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterWidgetTests"/>
+            <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterCalendarWidgetTests"/>
+        </classes>
+    </test>
 </suite>
