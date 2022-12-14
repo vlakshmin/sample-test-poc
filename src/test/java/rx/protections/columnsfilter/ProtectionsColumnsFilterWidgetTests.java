@@ -55,8 +55,6 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_BY))
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.UPDATED_BY))
                 .scrollIntoView(protectionPage.getProtectionPageTitle())
-                .validate(visible,tableColumns.getShowHideColumnsBtn())
-                .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
                 .testEnd();
     }
 
@@ -67,7 +65,6 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
 
         testStart()
                 .and("Select Column Filter 'PUBLISHER'")
-                .scrollIntoView(protectionPage.getLogo())
                 .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.PUBLISHER))
