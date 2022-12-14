@@ -123,14 +123,16 @@ public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var calendar = filter.getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
+        var previousMonth =  format("%s %s",
+                currentDate.minusMonths(1).getMonth().getDisplayName(TextStyle.FULL, Locale.US),
+                currentDate.getMonth().getValue() == 1 ? currentDate.getYear() - 1 : currentDate.getYear());
 
         testStart()
                 .and("Click on the Previous Month button")
                 .clickOnWebElement(calendar.getPreviousMonthButton())
+                .waitAndValidate(visible, calendar.getMonthOrYearHeaderButton())
                 .then("Should be displayed previous month")
-                .validate(calendar.getMonthOrYearHeaderButton().getText(), format("%s %s",
-                        currentDate.minusMonths(1).getMonth().getDisplayName(TextStyle.FULL, Locale.US),
-                        currentDate.getMonth().getValue() == 1 ? currentDate.getYear() - 1 : currentDate.getYear()))
+                .validate(calendar.getMonthOrYearHeaderButton().getText(),previousMonth)
                 .testEnd();
     }
 

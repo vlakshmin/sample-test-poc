@@ -81,14 +81,16 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
     public void testPreviousMonthColumnsFilterComponent() {
         var calendar = protectionPage.getProtectionsTable().getColumnFiltersBlock().getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
+        var previousMonth = format("%s %s",
+                currentDate.minusMonths(1).getMonth().getDisplayName(TextStyle.FULL, Locale.US),
+                currentDate.getMonth().getValue() == 1 ? currentDate.getYear() - 1 : currentDate.getYear());
 
         testStart()
                 .and("Click on the Previous Month button")
                 .clickOnWebElement(calendar.getPreviousMonthButton())
+                .waitAndValidate(visible, calendar.getMonthOrYearHeaderButton())
                 .then("Should be displayed previous month")
-                .validate(calendar.getMonthOrYearHeaderButton().getText(), format("%s %s",
-                        currentDate.minusMonths(1).getMonth().getDisplayName(TextStyle.FULL, Locale.US),
-                        currentDate.getMonth().getValue() == 1 ? currentDate.getYear() - 1 : currentDate.getYear()))
+                .validate(calendar.getMonthOrYearHeaderButton().getText(), previousMonth)
                 .testEnd();
     }
 
@@ -120,14 +122,16 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var calendar = filter.getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
+        var nextMonth =  format("%s %s",
+                currentDate.plusMonths(1).getMonth().getDisplayName(TextStyle.FULL, Locale.US),
+                currentDate.getMonth().getValue() == 12 ? currentDate.getYear() + 1 : currentDate.getYear());
 
         testStart()
                 .and("Click on the Next Month button")
                 .clickOnWebElement(calendar.getNextMonthButton())
+                .waitAndValidate(visible, calendar.getMonthOrYearHeaderButton())
                 .then("Should be displayed next month")
-                .validate(calendar.getMonthOrYearHeaderButton().getText(), format("%s %s",
-                        currentDate.plusMonths(1).getMonth().getDisplayName(TextStyle.FULL, Locale.US),
-                        currentDate.getMonth().getValue() == 12 ? currentDate.getYear() + 1 : currentDate.getYear()))
+                .validate(calendar.getMonthOrYearHeaderButton().getText(),nextMonth)
                 .testEnd();
     }
 
