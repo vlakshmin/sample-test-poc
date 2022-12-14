@@ -46,10 +46,11 @@ public class ProtectionsColumnsFilterCalendarWidgetTests extends BaseTest {
                 .openDirectPath(Path.PROTECTIONS)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, protectionPage.getNuxtProgress())
-                .scrollIntoView(tableColumns.getShowHideColumnsBtn())
+                .scrollIntoView(protectionPage.getProtectionPageTitle())
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
+                .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
                 .testEnd();
     }
 
