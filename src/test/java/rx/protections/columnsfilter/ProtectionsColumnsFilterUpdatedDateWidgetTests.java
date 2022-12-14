@@ -211,10 +211,10 @@ public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .validate(table.countFilterChipsItems(), 1)
                 .then("Validate list of selected date")
                 .validate(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).countFilterOptionsChipItems(), 2)
-                .validate(exist, table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getChipFilterOptionItemByName(
-                        firstDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"))))
 //                .validate(exist, table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getChipFilterOptionItemByName(
-//                        secondDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"))))
+//                        firstDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"))))
+                .validate(exist, table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getChipFilterOptionItemByName(
+                        secondDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"))))
                 .testEnd();
     }
 
