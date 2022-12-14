@@ -18,7 +18,8 @@ public enum Path {
     PUBLISHER("/admin/publishers"),
     OPEN_PRICING("/yield/open-pricing"),
     CREATE_PROTECTION("/protections/create"),
-    CREATE_OPEN_PRICING("/yield/open-pricing/create");
+    CREATE_OPEN_PRICING("/yield/open-pricing/create"),
+    CREATE_USER("/admin/users/create");
 
     private String path;
 }

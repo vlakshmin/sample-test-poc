@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="Regression" parallel="false">
+
    <test name="0Precondition. Delete records with 'auto' substring">
         <classes>
             <class name="rx.pipelines.DeleteGeneratedDataTest"/>
@@ -99,6 +100,15 @@
         </classes>
     </test>
 
+    <test name="Users">
+        <classes>
+            <class name="rx.admin.users.UsersSortingTableTests"/>
+            <class name="rx.admin.users.UsersCheckPaginationTests"/>
+            <class name="rx.admin.users.UsersCreationTests"/>
+            <class name="rx.admin.users.UsersEditTests"/>
+        </classes>
+    </test>
+
     <test name="Demand Source Feature">
         <classes>
             <class name="rx.admin.demand.EditDemandSourceTest"/>
@@ -108,13 +118,6 @@
     <test name="Profile Feature">
         <classes>
             <class name="rx.profile.UserProfileSettingsTest"/>
-        </classes>
-    </test>
-
-    <test name="Users">
-        <classes>
-            <class name="rx.admin.users.UsersSortingTableTests"/>
-            <class name="rx.admin.users.UsersCheckPaginationTests"/>
         </classes>
     </test>
 

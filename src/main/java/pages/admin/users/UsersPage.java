@@ -22,5 +22,6 @@ public class UsersPage extends BasePage {
     private SelenideElement createUserButton = $x(CREATE_USER_BUTTON.getSelector()).as(CREATE_USER_BUTTON.getAlias());
     private SelenideElement activateUserButton = $x(ACTIVATE_USER_BUTTON.getSelector()).as(ACTIVATE_USER_BUTTON.getAlias());
     private SelenideElement deactivateUserButton = $x(DEACTIVATE_USER_BUTTON.getSelector()).as(DEACTIVATE_USER_BUTTON.getAlias());
+
     private Table usersTable = new Table();
 }

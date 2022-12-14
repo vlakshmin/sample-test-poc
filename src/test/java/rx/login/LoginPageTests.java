@@ -68,7 +68,7 @@ public class LoginPageTests extends BaseTest {
     }
 
     @Test(description = "Verify Login Form", priority = 1)
-    public void loginFormValidationTest() {
+    public void createUserFormValidationTest() {
         testStart()
                 .openUrl()
                 .then("Validate login page form fields and buttons")
