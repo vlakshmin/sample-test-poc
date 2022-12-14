@@ -55,6 +55,7 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_BY))
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.UPDATED_BY))
                 .scrollIntoView(protectionPage.getProtectionPageTitle())
+                .validate(visible,tableColumns.getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
                 .testEnd();
     }
