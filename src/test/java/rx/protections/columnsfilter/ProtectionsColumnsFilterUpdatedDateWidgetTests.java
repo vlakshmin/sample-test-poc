@@ -82,15 +82,16 @@ public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
     public void testNextMonthColumnsFilterComponent() {
         var calendar = protectionPage.getProtectionsTable().getColumnFiltersBlock().getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
+        var nextMonth = format("%s %s",
+                currentDate.plusMonths(1).getMonth().getDisplayName(TextStyle.FULL, Locale.US),
+                currentDate.getMonth().getValue() == 12 ? currentDate.getYear() + 1 : currentDate.getYear());
 
         testStart()
-                .and("Click on the Next Month button")
-                .scrollIntoView(calendar.getNextMonthButton())
+                .and("Click on the Next Month button >")
                 .clickOnWebElement(calendar.getNextMonthButton())
-                .then("Should be displayed next month")
-                .validate(calendar.getMonthOrYearHeaderButton().getText(), format("%s %s",
-                        currentDate.plusMonths(1).getMonth().getDisplayName(TextStyle.FULL, Locale.US),
-                        currentDate.getMonth().getValue() == 12 ? currentDate.getYear() + 1 : currentDate.getYear()))
+                .waitAndValidate(visible, calendar.getMonthOrYearHeaderButton())
+                .then(format("Should be displayed next month %s", nextMonth))
+                .validate(calendar.getMonthOrYearHeaderButton().getText(), nextMonth)
                 .testEnd();
     }
 

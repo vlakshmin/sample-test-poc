@@ -125,7 +125,7 @@
 <!--    </test>-->
     <test name="Columns Filter Feature">
         <classes>
-            <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterWidgetTests"/>
+  <!--          <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterWidgetTests"/> -->
             <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterUpdatedDateWidgetTests"/>
             <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterCreatedDateWidgetTests"/>
         </classes>
