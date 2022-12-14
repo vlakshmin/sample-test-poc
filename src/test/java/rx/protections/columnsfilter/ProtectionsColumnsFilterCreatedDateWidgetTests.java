@@ -87,6 +87,7 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
 
         testStart()
                 .and("Click on the Previous Month button")
+                .waitAndValidate(visible, calendar.getPreviousMonthButton())
                 .clickOnWebElement(calendar.getPreviousMonthButton())
                 .waitAndValidate(visible, calendar.getMonthOrYearHeaderButton())
                 .then("Should be displayed previous month")
