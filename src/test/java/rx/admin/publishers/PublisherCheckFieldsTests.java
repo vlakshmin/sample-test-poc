@@ -150,11 +150,12 @@ public class PublisherCheckFieldsTests extends BaseTest {
                 .clickOnWebElement(editPublisherSidebar.getSaveButton())
                 .then("Validate errors for all required fields in Error Panel (Publisher Name, Currency, Ad Ops Person, Ad Ops Email)")
                 .waitAndValidate(visible, editPublisherSidebar.getErrorAlert().getErrorPanel())
-                .validateListSize(errorsList, 4)
+                .validateListSize(errorsList, 5)
                 .validateList(errorsList, List.of(
                         ErrorMessages.NAME_ERROR_ALERT.getText(),
                         ErrorMessages.ADD_OPS_PERSON_ERROR_ALERT.getText(),
                         ErrorMessages.ADD_OPS_EMAIL_ERROR_ALERT.getText(),
+                        ErrorMessages.DOMAIN_ERROR_ALERT.getText(),
                         ErrorMessages.CURRENCY_ERROR_ALERT.getText()))
                 .setValue(editPublisherSidebar.getNameInput(), "")
                 .then("Validate error under the 'Publisher field' remains ")
@@ -164,11 +165,12 @@ public class PublisherCheckFieldsTests extends BaseTest {
                 .waitAndValidate(not(visible), editPublisherSidebar.getErrorAlertByFieldName("Name"))
                 .and("Click 'Save'")
                 .clickOnWebElement(editPublisherSidebar.getSaveButton())
-                .then("Validate errors for 3 required fields in Error Panel (Currency, Ad Ops Person, Ad Ops Email)")
-                .validateListSize(errorsList, 3)
+                .then("Validate errors for 4 required fields in Error Panel (Currency, Ad Ops Person, Domain, Ad Ops Email)")
+                .validateListSize(errorsList, 4)
                 .validateList(errorsList, List.of(
                         ErrorMessages.ADD_OPS_PERSON_ERROR_ALERT.getText(),
                         ErrorMessages.ADD_OPS_EMAIL_ERROR_ALERT.getText(),
+                        ErrorMessages.DOMAIN_ERROR_ALERT.getText(),
                         ErrorMessages.CURRENCY_ERROR_ALERT.getText()))
                 .setValue(editPublisherSidebar.getAdOpsPerson(), "")
                 .then("Validate error under the 'Ad Ops Person field' remains")
@@ -178,10 +180,11 @@ public class PublisherCheckFieldsTests extends BaseTest {
                 .waitAndValidate(not(visible), editPublisherSidebar.getErrorAlertByFieldName("Ad Ops Person"))
                 .and("Click 'Save'")
                 .clickOnWebElement(editPublisherSidebar.getSaveButton())
-                .then("Validate errors for 2 required fields in Error Panel (Currency, Ad Ops Email)")
-                .validateListSize(errorsList, 2)
+                .then("Validate errors for 2 required fields in Error Panel (Currency, Domain, Ad Ops Email)")
+                .validateListSize(errorsList, 3)
                 .validateList(errorsList, List.of(
                         ErrorMessages.ADD_OPS_EMAIL_ERROR_ALERT.getText(),
+                        ErrorMessages.DOMAIN_ERROR_ALERT.getText(),
                         ErrorMessages.CURRENCY_ERROR_ALERT.getText()))
                 .setValue(editPublisherSidebar.getAdOpsEmail(), "randomAutoPub")
                 .then("Validate error under the 'Ad Ops Email field' remains")
