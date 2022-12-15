@@ -11,6 +11,7 @@ import pages.Path;
 import pages.protections.ProtectionsPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
+import zutils.StringUtils;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -62,7 +63,7 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var calendar = filter.getCalendarFilter().getCalendar();
 
-        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
+        ZonedDateTime currentDate = StringUtils.getUTCZonedCurrentDate();
 
         testStart()
                 .and("Select Column Filter 'Created Date'")
@@ -80,7 +81,7 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
     @Test(description = "Check Previous Month", dependsOnMethods = "testDefaultStateColumnsFilterComponent")
     public void testPreviousMonthColumnsFilterComponent() {
         var calendar = protectionPage.getProtectionsTable().getColumnFiltersBlock().getCalendarFilter().getCalendar();
-        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
+        ZonedDateTime currentDate = StringUtils.getUTCZonedCurrentDate();
         var previousMonth = format("%s %s",
                 currentDate.minusMonths(1).getMonth().getDisplayName(TextStyle.FULL, Locale.US),
                 currentDate.getMonth().getValue() == 1 ? currentDate.getYear() - 1 : currentDate.getYear());
@@ -89,9 +90,8 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .and("Click on the Previous Month button")
                 .waitAndValidate(visible, calendar.getPreviousMonthButton())
                 .clickOnWebElement(calendar.getPreviousMonthButton())
-                .waitAndValidate(visible, calendar.getMonthOrYearHeaderButton())
                 .then("Should be displayed previous month")
-                .validate(calendar.getMonthOrYearHeaderButton().getText(), previousMonth)
+                .validateContainsText(calendar.getMonthOrYearHeaderButton(), previousMonth)
                 .testEnd();
     }
 
@@ -99,14 +99,14 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
     public void testBackButtonColumnsFilterComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var calendar = filter.getCalendarFilter().getCalendar();
-        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
+        ZonedDateTime currentDate = StringUtils.getUTCZonedCurrentDate();
 
         testStart()
                 .and("Click on Back button")
                 .clickOnWebElement(filter.getCalendarFilter().getBackButton())
                 .then("Columns Menu should appear")
                 .validateList(filter.getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
-                        ColumnNames.ACTIVE_INACTIVE.getName(),
+                        ColumnNames.STATUS.getName(),
                         ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName(),
                         ColumnNames.CREATED_DATE.getName()))
                 .and("Select Column Filter 'Created Date'")
@@ -114,7 +114,7 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .then("Current date should be selected by default")
                 .validate(calendar.getMonthOrYearHeaderButton().getText(), format("%s %s",
                         currentDate.getMonth().getDisplayName(TextStyle.FULL, Locale.US), currentDate.getYear()))
-                .validate(calendar.getSelectedDayButton(), Integer.toString(currentDate.getDayOfMonth()))
+                .validate(calendar.getSelectedDayButton(), String.valueOf(currentDate.getDayOfMonth()))
                 .testEnd();
     }
 
@@ -122,7 +122,7 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
     public void testNextMonthColumnsFilterComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var calendar = filter.getCalendarFilter().getCalendar();
-        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
+        ZonedDateTime currentDate = StringUtils.getUTCZonedCurrentDate();
         var nextMonth =  format("%s %s",
                 currentDate.plusMonths(1).getMonth().getDisplayName(TextStyle.FULL, Locale.US),
                 currentDate.getMonth().getValue() == 12 ? currentDate.getYear() + 1 : currentDate.getYear());
@@ -130,9 +130,8 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
         testStart()
                 .and("Click on the Next Month button")
                 .clickOnWebElement(calendar.getNextMonthButton())
-                .waitAndValidate(visible, calendar.getMonthOrYearHeaderButton())
                 .then("Should be displayed next month")
-                .validate(calendar.getMonthOrYearHeaderButton().getText(),nextMonth)
+                .validateContainsText(calendar.getMonthOrYearHeaderButton(),nextMonth)
                 .testEnd();
     }
 
@@ -141,7 +140,7 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var table = protectionPage.getProtectionsTable().getTableData();
         var calendar = filter.getCalendarFilter().getCalendar();
-        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
+        ZonedDateTime currentDate = StringUtils.getUTCZonedCurrentDate();
 
         testStart()
                 .and("Select 1 day of the month and Click on Cancel button")
@@ -158,7 +157,7 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var table = protectionPage.getProtectionsTable().getTableData();
         var calendar = filter.getCalendarFilter().getCalendar();
-        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
+        ZonedDateTime currentDate = StringUtils.getUTCZonedCurrentDate();
         LocalDate firstDate = LocalDate.of(currentDate.getYear(), currentDate.getMonth(), 15);
         LocalDate secondDate = LocalDate.of(currentDate.getYear(), currentDate.getMonth(), 25);
 
@@ -179,9 +178,9 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .validate(table.countFilterChipsItems(), 1)
                 .then("Validate list of selected date")
                 .validate(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).countFilterOptionsChipItems(), 2)
-                .validate(exist, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getChipFilterOptionItemByName(
+                .validate(visible, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getChipFilterOptionItemByName(
                         firstDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"))))
-                .validate(exist, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getChipFilterOptionItemByName(
+                .validate(visible, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getChipFilterOptionItemByName(
                         secondDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"))))
                 .testEnd();
     }
@@ -191,7 +190,7 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var table = protectionPage.getProtectionsTable().getTableData();
         var calendar = filter.getCalendarFilter().getCalendar();
-        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
+        ZonedDateTime currentDate = StringUtils.getUTCZonedCurrentDate();
         LocalDate initial = LocalDate.of(currentDate.getYear(), currentDate.getMonth(), currentDate.getDayOfMonth());
 
         testStart()
@@ -213,7 +212,7 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .validate(table.countFilterChipsItems(), 1)
                 .then("Validate list of selected date")
                 .validate(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).countFilterOptionsChipItems(), 1)
-                .validate(exist, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getChipFilterOptionItemByName(
+                .validate(visible, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getChipFilterOptionItemByName(
                         initial.with(lastDayOfMonth()).format(DateTimeFormatter.ofPattern("MMM dd yyyy"))))
                 .testEnd();
     }

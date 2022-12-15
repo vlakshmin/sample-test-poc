@@ -374,8 +374,6 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
         testStart()
                 .and("Select Column Filter 'Created By'")
                 .scrollIntoView(protectionPage.getProtectionPageTitle())
-//                .clickOnWebElement(filter.getColumnsFilterButton())
-//                .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_BY))
                 .and()
                 .setValueWithClean(filter.getSinglepane().getSearchInput(), "abc")

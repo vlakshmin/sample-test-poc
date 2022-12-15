@@ -2,6 +2,8 @@ package zutils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 public final class StringUtils {
@@ -23,6 +25,11 @@ public final class StringUtils {
 
             throw new RuntimeException(e);
         }
+    }
+
+    public static ZonedDateTime getUTCZonedCurrentDate(){
+
+        return  ZonedDateTime.now(ZoneId.of("UTC"));
     }
 
 }
