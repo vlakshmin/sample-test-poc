@@ -29,10 +29,6 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
     private ProtectionsPage protectionPage;
 
     private List<String> selectedPublishersNameList;
-    private List<String> expectedSearchPublisherNamesList;
-
-    private final static String PUBLISHER_NAME = "Rakuten";
-    private Integer totalPublishers;
 
     public ProtectionsColumnsFilterWidgetTests() {
         protectionPage = new ProtectionsPage();
@@ -40,10 +36,7 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
 
     @BeforeClass
     private void login() {
-
-        expectedSearchPublisherNamesList = getFilterPublishersListFromBE(PUBLISHER_NAME);
         var tableColumns = protectionPage.getProtectionsTable().getShowHideColumns();
-        totalPublishers = getTotalPublishersFromBE();
 
         testStart()
                 .given()
@@ -66,21 +59,24 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
     public void testSearchPublisherColumnsFilterComponent() {
 
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
+        var searchPubName = "rak";
+        var expectedPubNameList = getFilterPublishersListFromBE(searchPubName);
+        var totalPublishers = getTotalPublishersFromBE();
 
         testStart()
                 .and("Select Column Filter 'PUBLISHER'")
                 .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.PUBLISHER))
-                .and(format("Search by Name '%s'", PUBLISHER_NAME))
-                .setValueWithClean(filter.getSinglepane().getSearchInput(), PUBLISHER_NAME)
+                .and(format("Search by Name '%s'",searchPubName))
+                .setValueWithClean(filter.getSinglepane().getSearchInput(), searchPubName)
                 .clickEnterButton(filter.getSinglepane().getSearchInput())
-                .validate(filter.getSinglepane().countIncludedItems(), expectedSearchPublisherNamesList.size())
+                .validate(filter.getSinglepane().countIncludedItems(), expectedPubNameList.size())
                 .testEnd();
 
-        expectedSearchPublisherNamesList.forEach(e -> {
+        expectedPubNameList.forEach(e -> {
             testStart()
-                    .validate(exist, filter.getSinglepane().getFilterItemByName(e).getName())
+                    .validate(visible, filter.getSinglepane().getFilterItemByName(e).getName())
                     .testEnd();
         });
 
@@ -127,7 +123,7 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
 
         selectedPublishersNameList.forEach(e -> {
             testStart()
-                    .validate(exist, table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getChipFilterOptionItemByName(e))
+                    .validate(visible, table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getChipFilterOptionItemByName(e))
                     .testEnd();
         });
 
@@ -136,20 +132,20 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Active/Inactive Chip Widget Component")
+    @Test(description = "Check Active/Inactive Chip Widget Component", dependsOnMethods = "testCreatedByChipWidgetComponent")
     public void testActiveInactiveChipWidgetComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var table = protectionPage.getProtectionsTable().getTableData();
 
         testStart()
                 .and("Click on 'Column Filters'")
-                .scrollIntoView(protectionPage.getLogo())
+                .scrollIntoView(protectionPage.getProtectionPageTitle())
                 .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .and("Select Column Filter 'Active/Inactive'")
-                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.STATUS))
                 .then("Title should be displayed")
-                .validate(filter.getActiveBooleanFilter().getFilterHeaderLabel(), StringUtils.getFilterHeader(ColumnNames.ACTIVE_INACTIVE.getName()))
+                .validate(filter.getActiveBooleanFilter().getFilterHeaderLabel(), StringUtils.getFilterHeader(ColumnNames.STATUS.getName()))
                 .then("All options should be unselected")
                 .validateAttribute(filter.getActiveBooleanFilter().getActiveRadioButton(),"aria-checked","false")
                 .validateAttribute(filter.getActiveBooleanFilter().getInactiveRadioButton(),"aria-checked","false")
@@ -165,12 +161,12 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .clickOnWebElement(filter.getActiveBooleanFilter().getBackButton())
                 .then("Columns Menu should appear")
                 .validateList(filter.getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
-                        ColumnNames.ACTIVE_INACTIVE.getName(),
+                        ColumnNames.STATUS.getName(),
                         ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName(),
                         ColumnNames.CREATED_BY.getName(),
                         ColumnNames.UPDATED_BY.getName()))
                 .and("Select Column Filter 'Active/Inactive'")
-                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.STATUS))
                 .then("All options should be reset and unselected")
                 .validateAttribute(filter.getActiveBooleanFilter().getActiveRadioButton(),"aria-checked","false")
                 .validateAttribute(filter.getActiveBooleanFilter().getInactiveRadioButton(),"aria-checked","false")
@@ -181,22 +177,22 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .clickOnWebElement(filter.getActiveBooleanFilter().getSubmitButton())
                 .then("ColumnsFilter widget is closed")
                 .validate(not(visible), filter.getFilterOptionsMenu())
-                .validate(visible, table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getHeaderLabel())
+                .validate(visible, table.getChipItemByName(ColumnNames.STATUS.getName()).getHeaderLabel())
                 .validate(table.countFilterChipsItems(), 1)
                 .then("Validate value on chip")
-                .validate(table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getChipFilterOptionItemByName("Inactive"))
-                .clickOnWebElement(table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getCloseIcon())
+                .validate(table.getChipItemByName(ColumnNames.STATUS.getName()).getChipFilterOptionItemByName("Inactive"))
+                .clickOnWebElement(table.getChipItemByName(ColumnNames.STATUS.getName()).getCloseIcon())
                 .testEnd();
     }
 
-    @Test(description = "Check 'Managed By System Admin' Chip Widget Component")
+    @Test(description = "Check 'Managed By System Admin' Chip Widget Component", dependsOnMethods = "testActiveInactiveChipWidgetComponent")
     public void testManageBySystemAdminChipWidgetComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var table = protectionPage.getProtectionsTable().getTableData();
 
         testStart()
                 .and("Click on 'Column Filters'")
-                .scrollIntoView(protectionPage.getLogo())
+                .scrollIntoView(protectionPage.getProtectionPageTitle())
                 .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .and("Select Column Filter 'Managed By System Admin'")
@@ -218,7 +214,7 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .clickOnWebElement(filter.getBooleanFilter().getBackButton())
                 .then("Columns Menu should appear")
                 .validateList(filter.getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
-                        ColumnNames.ACTIVE_INACTIVE.getName(),
+                        ColumnNames.STATUS.getName(),
                         ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName(),
                         ColumnNames.CREATED_BY.getName(),
                         ColumnNames.UPDATED_BY.getName()))
@@ -271,7 +267,7 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
 
         expectedUserNameList.forEach(e -> {
             testStart()
-                    .validate(exist, filter.getSinglepane().getFilterItemByName(e).getName())
+                    .validate(visible, filter.getSinglepane().getFilterItemByName(e).getName())
                     .testEnd();
         });
 
@@ -313,7 +309,7 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
 
         selectedPublishersNameList.forEach(e -> {
             testStart()
-                    .validate(exist, table.getChipItemByName(ColumnNames.UPDATED_BY.getName()).getChipFilterOptionItemByName(e))
+                    .validate(visible, table.getChipItemByName(ColumnNames.UPDATED_BY.getName()).getChipFilterOptionItemByName(e))
                     .testEnd();
         });
 
@@ -322,7 +318,7 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Search Created By")
+    @Test(description = "Check Search Created By", dependsOnMethods = "testUpdatedByChipWidgetComponent")
     public void testSearchCreatedByColumnsFilterComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var userNameList = getCreatedByListFromBE();
@@ -332,15 +328,16 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
 
         testStart()
                 .and("Select Column Filter 'Created By'")
-                .scrollIntoView(protectionPage.getLogo())
+                .scrollIntoView(protectionPage.getProtectionPageTitle())
                 .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_BY))
-                .and("")
+                .and()
                 .setValueWithClean(filter.getSinglepane().getSearchInput(), "abc")
                 .clickOnWebElement(filter.getSinglepane().getBackButton())
                 .waitAndValidate(appear, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_BY))
+                .then("Search params should be reset")
                 .validate(filter.getSinglepane().getSearchInput(),"")
                 .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
                 .and(format("Search by Name '%s'", searchName))
@@ -351,7 +348,53 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
 
         expectedUserNameList.forEach(e -> {
             testStart()
-                    .validate(exist, filter.getSinglepane().getFilterItemByName(e).getName())
+                    .validate(visible, filter.getSinglepane().getFilterItemByName(e).getName())
+                    .testEnd();
+        });
+
+        testStart()
+                .and("Clear Search")
+                .setValueWithClean(filter.getSinglepane().getSearchInput(),"")
+                .then("Check total users count, search result should be reset")
+                .validate(not(visible), protectionPage.getTableProgressBar())
+                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
+                .and()
+                .clickOnWebElement(filter.getSinglepane().getCancelButton())
+                .testEnd();
+    }
+
+    @Test(description = "Check Back Created By filter", dependsOnMethods = "testSearchCreatedByColumnsFilterComponent")
+    public void testBackCreatedByColumnsFilterComponent() {
+        var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
+        var userNameList = getCreatedByListFromBE();
+        var searchName = userNameList.get(1).substring(5);
+        var expectedUserNameList = getUsersListFromBE(searchName);
+        var totalUsers = getTotalUsersFromBE();
+
+        testStart()
+                .and("Select Column Filter 'Created By'")
+                .scrollIntoView(protectionPage.getProtectionPageTitle())
+//                .clickOnWebElement(filter.getColumnsFilterButton())
+//                .waitAndValidate(visible, filter.getFilterOptionsMenu())
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_BY))
+                .and()
+                .setValueWithClean(filter.getSinglepane().getSearchInput(), "abc")
+                .and("Click on Back")
+                .clickOnWebElement(filter.getSinglepane().getBackButton())
+                .waitAndValidate(appear, filter.getFilterOptionsMenu())
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_BY))
+                .then("Search params should be reset")
+                .validate(filter.getSinglepane().getSearchInput(),"")
+                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
+                .and(format("Search by Name '%s'", searchName))
+                .setValueWithClean(filter.getSinglepane().getSearchInput(), searchName)
+                .clickEnterButton(filter.getSinglepane().getSearchInput())
+                .validate(filter.getSinglepane().countIncludedItems(), expectedUserNameList.size())
+                .testEnd();
+
+        expectedUserNameList.forEach(e -> {
+            testStart()
+                    .validate(visible, filter.getSinglepane().getFilterItemByName(e).getName())
                     .testEnd();
         });
 
@@ -393,7 +436,7 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
 
         selectedPublishersNameList.forEach(e -> {
             testStart()
-                    .validate(exist, table.getChipItemByName(ColumnNames.CREATED_BY.getName()).getChipFilterOptionItemByName(e))
+                    .validate(visible, table.getChipItemByName(ColumnNames.CREATED_BY.getName()).getChipFilterOptionItemByName(e))
                     .testEnd();
         });
 
@@ -448,6 +491,7 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .getItems()
                 .stream().map(e -> e.getCreatedBy()).distinct().collect(Collectors.toList());
     }
+
     private List<String> getUsersListFromBE(String name) {
 
         return user()
