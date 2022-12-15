@@ -120,13 +120,13 @@ public class PublisherCheckFieldsTests extends BaseTest {
                 .validateList(errorsList, List.of(
                         ErrorMessages.DOMAIN_ERROR_ALERT.getText(),
                         ErrorMessages.CURRENCY_ERROR_ALERT.getText()))
-                .then("Validate errors for 1 required field in Error Panel (Currency)")
-                .validateListSize(errorsList, 1)
-                .validateList(errorsList, List.of(
-                        ErrorMessages.CURRENCY_ERROR_ALERT.getText()))
                 .then("Select Currency 'USD'")
                 .selectFromDropdown(editPublisherSidebar.getCurrencyDropdown(),
                         editPublisherSidebar.getCurrencyDropdownItems(), CurrencyType.USD.getType())
+                .then("Validate errors for 1 required field in Error Panel (Currency)")
+                .validateListSize(errorsList, 1)
+                .validateList(errorsList, List.of(
+                        ErrorMessages.DOMAIN_ERROR_ALERT.getText()))
                 .then("Validate error under the 'Currency' disappeared")
                 .waitAndValidate(not(visible), editPublisherSidebar.getErrorAlertByFieldName("Currency"))
                 .then("Select Currency 'EUR'")
@@ -188,7 +188,7 @@ public class PublisherCheckFieldsTests extends BaseTest {
                 .waitAndValidate(not(visible), editPublisherSidebar.getErrorAlertByFieldName("Ad Ops Person"))
                 .and("Click 'Save'")
                 .clickOnWebElement(editPublisherSidebar.getSaveButton())
-                .then("Validate errors for 2 required fields in Error Panel (Currency, Domain, Ad Ops Email)")
+                .then("Validate errors for 3 required fields in Error Panel (Currency, Domain, Ad Ops Email)")
                 .validateListSize(errorsList, 3)
                 .validateList(errorsList, List.of(
                         ErrorMessages.ADD_OPS_EMAIL_ERROR_ALERT.getText(),
@@ -202,9 +202,10 @@ public class PublisherCheckFieldsTests extends BaseTest {
                 .waitAndValidate(not(visible), editPublisherSidebar.getErrorAlertByFieldName("Ad Ops Email"))
                 .and("Click 'Save'")
                 .clickOnWebElement(editPublisherSidebar.getSaveButton())
-                .then("Validate errors for 1 required fields in Error Panel (Currency)")
-                .validateListSize(errorsList, 1)
+                .then("Validate errors for 2 required fields in Error Panel (Currency, Domain)")
+                .validateListSize(errorsList, 2)
                 .validateList(errorsList, List.of(
+                        ErrorMessages.DOMAIN_ERROR_ALERT.getText(),
                         ErrorMessages.CURRENCY_ERROR_ALERT.getText()))
                 .setValue(editPublisherSidebar.getCurrency(), "CAD")
                 .then("Validate error under the 'Currency' remains")

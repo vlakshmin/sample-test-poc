@@ -39,7 +39,7 @@ public enum ErrorMessages {
     PROTECTION_TYPE_ERROR_ALERT("Protection Type Error Alert Text", "Protection Type field is required"),
 
     //Publisher
-    DOMAIN_ERROR_ALERT("Ad Ops Email Error Alert Text", "The Ad Ops Email field is required"),
+    DOMAIN_ERROR_ALERT("Ad Ops Email Error Alert Text", "The Domain field is required"),
     ADD_OPS_EMAIL_ERROR_ALERT("Ad Ops Email Error Alert Text", "The Ad Ops Email field is required"),
     ADD_OPS_PERSON_ERROR_ALERT("Ad Ops Person Error Alert Text", "The Ad Ops Person field is required"),
 
