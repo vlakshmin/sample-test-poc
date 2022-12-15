@@ -6,6 +6,6 @@ import lombok.Getter;
  * Keep Selectors of UI elements in {@link AbstractUserSidebarElements}
  */
 @Getter
-public class CreateUserSidebar extends AbstractUserSidebar {
+public class CreateUserSidebar extends AbstractUserSidebar{
 
 }

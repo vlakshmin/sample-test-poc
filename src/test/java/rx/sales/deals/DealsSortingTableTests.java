@@ -538,7 +538,7 @@ public class DealsSortingTableTests extends BaseTest {
 
         return getAllItemsByParams("floor_price-asc").stream()
                 .map(Deal::getFloorPrice)
-                .map(DealsSortingTableTests::formatDecimalZeros)
+                .map(Objects::toString)
                 .collect(Collectors.toList());
     }
 
@@ -546,7 +546,7 @@ public class DealsSortingTableTests extends BaseTest {
 
         return getAllItemsByParams("floor_price-desc").stream()
                 .map(Deal::getFloorPrice)
-                .map(DealsSortingTableTests::formatDecimalZeros)
+                .map(Objects::toString)
                 .collect(Collectors.toList());
     }
 
@@ -692,16 +692,6 @@ public class DealsSortingTableTests extends BaseTest {
             DealPrecondition.deal()
                     .createNewDeal()
                     .build();
-        }
-    }
-
-    private static String formatDecimalZeros(double num) {
-        if (num == (long) num) {
-
-            return String.format("%d", (long) num);
-        } else {
-
-            return String.format("%s", num);
         }
     }
 
