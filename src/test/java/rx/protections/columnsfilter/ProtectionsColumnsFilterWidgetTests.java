@@ -23,7 +23,7 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Feature(value = "Components")
+@Feature(value = "Protections Columns Filter")
 public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
 
     private ProtectionsPage protectionPage;

@@ -12,7 +12,6 @@ import pages.Path;
 import pages.protections.ProtectionsPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
-import zutils.StringUtils;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -30,7 +29,7 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Feature(value = "Components")
+@Feature(value = "Protections Columns Filter")
 public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
 
     private ProtectionsPage protectionPage;
@@ -63,8 +62,7 @@ public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
     public void testDefaultStateColumnsFilterComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var calendar = filter.getCalendarFilter().getCalendar();
-
-        ZonedDateTime currentDate = StringUtils.getUTCZonedCurrentDate();
+        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
         testStart()
                 .and("Select Column Filter 'Updated Date'")
@@ -82,7 +80,7 @@ public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
     @Test(description = "Check Next Month", dependsOnMethods = "testDefaultStateColumnsFilterComponent")
     public void testNextMonthColumnsFilterComponent() {
         var calendar = protectionPage.getProtectionsTable().getColumnFiltersBlock().getCalendarFilter().getCalendar();
-        ZonedDateTime currentDate = StringUtils.getUTCZonedCurrentDate();
+        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
         var nextMonth = format("%s %s",
                 currentDate.plusMonths(1).getMonth().getDisplayName(TextStyle.FULL, Locale.US),
                 currentDate.getMonth().getValue() == 12 ? currentDate.getYear() + 1 : currentDate.getYear());
@@ -100,7 +98,7 @@ public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
     public void testBackButtonColumnsFilterComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var calendar = filter.getCalendarFilter().getCalendar();
-        ZonedDateTime currentDate = StringUtils.getUTCZonedCurrentDate();
+        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
         testStart()
                 .and("Click on Back button")
@@ -123,7 +121,7 @@ public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
     public void testPreviousMonthColumnsFilterComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var calendar = filter.getCalendarFilter().getCalendar();
-        ZonedDateTime currentDate = StringUtils.getUTCZonedCurrentDate();
+        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
         var previousMonth =  format("%s %s",
                 currentDate.minusMonths(1).getMonth().getDisplayName(TextStyle.FULL, Locale.US),
                 currentDate.getMonth().getValue() == 1 ? currentDate.getYear() - 1 : currentDate.getYear());
@@ -142,7 +140,7 @@ public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var table = protectionPage.getProtectionsTable().getTableData();
         var calendar = filter.getCalendarFilter().getCalendar();
-        ZonedDateTime currentDate = StringUtils.getUTCZonedCurrentDate();
+        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
         testStart()
                 .and("Select 1 day of the month and Click on Cancel button")
@@ -159,7 +157,7 @@ public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var table = protectionPage.getProtectionsTable().getTableData();
         var calendar = filter.getCalendarFilter().getCalendar();
-        ZonedDateTime currentDate = StringUtils.getUTCZonedCurrentDate();
+        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
         LocalDate initial = LocalDate.of(currentDate.getYear(), currentDate.getMonth(), currentDate.getDayOfMonth());
 
         testStart()
