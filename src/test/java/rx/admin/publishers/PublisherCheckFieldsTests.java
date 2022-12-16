@@ -120,13 +120,21 @@ public class PublisherCheckFieldsTests extends BaseTest {
                 .validateList(errorsList, List.of(
                         ErrorMessages.DOMAIN_ERROR_ALERT.getText(),
                         ErrorMessages.CURRENCY_ERROR_ALERT.getText()))
+                .setValue(editPublisherSidebar.getDomainInput(), "randomDomain")
+                .then("Validate error under the 'Domain' field remains")
+                .waitAndValidate(visible, editPublisherSidebar.getErrorAlertByFieldName("Domain"))
+                .setValueWithClean(editPublisherSidebar.getDomainInput(), "https://gmail.com")
+                .then("Validate error under the 'Domain' field disappeared")
+                .waitAndValidate(not(visible), editPublisherSidebar.getErrorAlertByFieldName("Domain"))
+                .and("Click 'Save'")
+                .clickOnWebElement(editPublisherSidebar.getSaveButton())
+                .then("Validate errors for 1 required fields in Error Panel (Domain)")
+                .validateListSize(errorsList, 1)
+                .validateList(errorsList, List.of(
+                        ErrorMessages.CURRENCY_ERROR_ALERT.getText()))
                 .then("Select Currency 'USD'")
                 .selectFromDropdown(editPublisherSidebar.getCurrencyDropdown(),
                         editPublisherSidebar.getCurrencyDropdownItems(), CurrencyType.USD.getType())
-                .then("Validate errors for 1 required field in Error Panel (Currency)")
-                .validateListSize(errorsList, 1)
-                .validateList(errorsList, List.of(
-                        ErrorMessages.DOMAIN_ERROR_ALERT.getText()))
                 .then("Validate error under the 'Currency' disappeared")
                 .waitAndValidate(not(visible), editPublisherSidebar.getErrorAlertByFieldName("Currency"))
                 .then("Select Currency 'EUR'")
@@ -206,6 +214,18 @@ public class PublisherCheckFieldsTests extends BaseTest {
                 .validateListSize(errorsList, 2)
                 .validateList(errorsList, List.of(
                         ErrorMessages.DOMAIN_ERROR_ALERT.getText(),
+                        ErrorMessages.CURRENCY_ERROR_ALERT.getText()))
+                .setValue(editPublisherSidebar.getDomainInput(), "randomDomain")
+                .then("Validate error under the 'Domain' field remains")
+                .waitAndValidate(visible, editPublisherSidebar.getErrorAlertByFieldName("Domain"))
+                .setValueWithClean(editPublisherSidebar.getDomainInput(), "https://gmail.com")
+                .then("Validate error under the 'Domain' field disappeared")
+                .waitAndValidate(not(visible), editPublisherSidebar.getErrorAlertByFieldName("Domain"))
+                .and("Click 'Save'")
+                .clickOnWebElement(editPublisherSidebar.getSaveButton())
+                .then("Validate errors for 1 required fields in Error Panel (Domain)")
+                .validateListSize(errorsList, 1)
+                .validateList(errorsList, List.of(
                         ErrorMessages.CURRENCY_ERROR_ALERT.getText()))
                 .setValue(editPublisherSidebar.getCurrency(), "CAD")
                 .then("Validate error under the 'Currency' remains")
