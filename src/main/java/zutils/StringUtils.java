@@ -3,7 +3,7 @@ package zutils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.Month;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
@@ -34,31 +34,31 @@ public final class StringUtils {
         }
     }
 
-    public static String getStringLastDayOfTheCurrentMonth(){
-        ZonedDateTime currentDate = getUTCZonedCurrentDate("UTC");
-        LocalDate initial = LocalDate.of(currentDate.getYear(), currentDate.getMonth(), currentDate.getDayOfMonth());
+    public static String getStringMonthYear(Month month, int year){
 
-        return String.valueOf(initial.with(lastDayOfMonth()).format(DateTimeFormatter.ofPattern("MMM dd yyyy")));
+      return   format("%s %s", month.getDisplayName(TextStyle.FULL, Locale.US), year);
     }
 
-    public static String getStringPreviousMonth(){
-        ZonedDateTime currentDate = getUTCZonedCurrentDate("UTC");
-
-        return format("%s %s",
-                currentDate.minusMonths(1).getMonth().getDisplayName(TextStyle.FULL, Locale.US),
-                currentDate.getMonth().getValue() == 1 ? currentDate.getYear() - 1 : currentDate.getYear());
-    }
-
-    public static String getStringCurrentDate(){
-        ZonedDateTime currentDate = getUTCZonedCurrentDate("UTC");
+    public static String getStringForDate(ZonedDateTime currentDate){
 
         return format("%s %s",
                 currentDate.getMonth().getDisplayName(TextStyle.FULL, Locale.US), currentDate.getYear());
-
     }
 
-    private static ZonedDateTime getUTCZonedCurrentDate(String timeZone){
+    public static String getDateAsString(int year, Month month, int day){
 
-        return  ZonedDateTime.now(ZoneId.of(timeZone));
+        return  LocalDate.of(year, month, day).format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
     }
+
+    public static String getLastDayOfTheMonthDateAsString(int year, Month month){
+
+        return  LocalDate.of(year, month, 1).with(lastDayOfMonth()).format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+    }
+
+    public static String getLastDayOfMonth(int year, Month month){
+
+        return String.valueOf(LocalDate.of(year, month, 1).with(lastDayOfMonth()).getDayOfMonth());
+    }
+
 }
+
