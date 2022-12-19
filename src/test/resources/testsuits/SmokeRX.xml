@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="Regression" parallel="false">
-<!--   <test name="0Precondition. Delete records with 'auto' substring">-->
+
+<!--    <test name="0Precondition. Delete records with 'auto' substring">-->
 <!--        <classes>-->
 <!--            <class name="rx.pipelines.DeleteGeneratedDataTest"/>-->
 <!--        </classes>-->
@@ -44,8 +45,8 @@
 
 <!--    <test name="Open Pricing">-->
 <!--        <classes>-->
-<!--&lt;!&ndash;            <class name="rx.yield.openpricing.VerifyPublisherTests"/>&ndash;&gt;-->
-<!--    <class name="rx.yield.openpricing.CreateOpenPricingTest"/>-->
+<!--            &lt;!&ndash;            <class name="rx.yield.openpricing.VerifyPublisherTests"/>&ndash;&gt;-->
+<!--            <class name="rx.yield.openpricing.CreateOpenPricingTest"/>-->
 <!--            <class name="rx.yield.openpricing.OpenPricingUploadTests"/>-->
 <!--            <class name="rx.yield.openpricing.OpenPricingSortingTableTests"/>-->
 <!--            <class name="rx.yield.openpricing.OpenPricingUploadNegativeTests"/>-->
@@ -98,7 +99,7 @@
 <!--            <class name="rx.admin.publishers.PublisherCheckPaginationTests"/>-->
 <!--        </classes>-->
 <!--    </test>-->
-
+<!-- -->
 <!--    <test name="Users">-->
 <!--        <classes>-->
 <!--            <class name="rx.admin.users.UsersSortingTableTests"/>-->
@@ -107,10 +108,15 @@
 <!--            <class name="rx.admin.users.UsersEditTests"/>-->
 <!--        </classes>-->
 <!--    </test>-->
-
+<!-- -->
 <!--    <test name="Demand Source Feature">-->
 <!--        <classes>-->
 <!--            <class name="rx.admin.demand.EditDemandSourceTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="Profile Feature">-->
+<!--        <classes>-->
+<!--            <class name="rx.profile.UserProfileSettingsTest"/>-->
 <!--        </classes>-->
 <!--    </test>-->
 
@@ -123,4 +129,10 @@
             <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterCreatedDateWidgetTests"/>
         </classes>
     </test>
+
+<!--    <test name="XPost-conditions. Delete records with 'auto' substring">-->
+<!--        <classes>-->
+<!--            <class name="rx.pipelines.DeleteGeneratedDataTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 </suite>
