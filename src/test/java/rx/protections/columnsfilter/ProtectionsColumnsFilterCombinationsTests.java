@@ -22,6 +22,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static api.preconditionbuilders.ProtectionsPrecondition.protection;
+import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
 import static java.lang.String.format;
@@ -67,7 +68,7 @@ public class ProtectionsColumnsFilterCombinationsTests extends BaseTest {
     public void activeProtectionsCombinationFilters() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var tableData = protectionPage.getProtectionsTable().getTableData();
-        var publishersActiveProtectionsList = getPublishersWithProtectionFilter(Map.of("active", true));
+        var publishersActiveProtectionsList = getPublisherNamesFromProtection(Map.of("active", true));
 
         testStart()
                 .and("Select Column Filter 'Status'")
@@ -98,22 +99,21 @@ public class ProtectionsColumnsFilterCombinationsTests extends BaseTest {
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.PUBLISHER))
                 .and("Search 1 publisher")
-                .setValueWithClean(filter.getSinglepane().getSearchInput(), publishersActiveProtectionsList.get(0).getPublisherName())
+                .setValueWithClean(filter.getSinglepane().getSearchInput(), publishersActiveProtectionsList.get(0))
                 .validate(not(visible), protectionPage.getTableProgressBar())
-                .waitAndValidate(visible, filter.getSinglepane().getFilterItemByName(publishersActiveProtectionsList.get(0).getPublisherName()).getName())
+                .waitAndValidate(visible, filter.getSinglepane().getFilterItemByName(publishersActiveProtectionsList.get(0)).getName())
                 .validate(not(visible), protectionPage.getTableProgressBar())
                 .clickOnWebElement(filter.getSinglepane()
-                        .getFilterItemByName(publishersActiveProtectionsList.get(0).getPublisherName()).getName())
+                        .getFilterItemByName(publishersActiveProtectionsList.get(0)).getName())
                 .and("Search 2 publisher")
-                .setValueWithClean(filter.getSinglepane().getSearchInput(), publishersActiveProtectionsList.get(1).getPublisherName())
-                .validate(not(visible), protectionPage.getTableProgressBar())
-             //   .waitAndValidate(not(visible), filter.getSinglepane().getFilterItemByName(publishersActiveProtectionsList.get(0).getPublisherName()).getName())
-             //   .validate(not(visible), protectionPage.getTableProgressBar())
-                .waitAndValidate(visible, filter.getSinglepane().getFilterItemByName(publishersActiveProtectionsList.get(1).getPublisherName()).getName())
+                .setValueWithClean(filter.getSinglepane().getSearchInput(), publishersActiveProtectionsList.get(1))
+                .validate(disappear, protectionPage.getTableProgressBar())
+                .waitAndValidate(not(visible), filter.getSinglepane().getFilterItemByName(publishersActiveProtectionsList.get(0)).getName())
                 .validateContainsText(filter.getSinglepane().getItemsTotalQuantityLabel(), "(1)")
+                .waitAndValidate(visible, filter.getSinglepane().getFilterItemByName(publishersActiveProtectionsList.get(1)).getName())
                 .validate(not(visible), protectionPage.getTableProgressBar())
                 .clickOnWebElement(filter.getSinglepane()
-                        .getFilterItemByName(publishersActiveProtectionsList.get(1).getPublisherName()).getName())
+                        .getFilterItemByName(publishersActiveProtectionsList.get(1)).getName())
                 .clickOnWebElement(filter.getSinglepane().getSubmitButton())
                 .and("Select 100 rows per page")
                 .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
@@ -122,13 +122,14 @@ public class ProtectionsColumnsFilterCombinationsTests extends BaseTest {
                 .validateAttribute(tableData.getColumnHeader(ColumnNames.ID.getName()),
                         "aria-sort", "ascending")
                 .then("Check filtered data")
+                //TODO:
                 .validateList(tableData.getCustomCells(ColumnNames.ID),
                         getProtectionsIdsWithFilterBE(Map.of(
                                 "active", true,
                                 "limit", 25,
                                 "sort", "id-asc",
-                                format("publisher_id=%s&publisher_id", publishersActiveProtectionsList.get(1).getPublisherId()),
-                                publishersActiveProtectionsList.get(0).getPublisherId())))
+                                format("publisher_id=%s&publisher_id", getPublisherIdByName(publishersActiveProtectionsList.get(1))),
+                                getPublisherIdByName(publishersActiveProtectionsList.get(0)))))
                 .testEnd();
     }
 
@@ -151,7 +152,7 @@ public class ProtectionsColumnsFilterCombinationsTests extends BaseTest {
                 .stream().map(e -> String.valueOf(e.getId())).collect(Collectors.toList());
     }
 
-    private List<Protection> getPublishersWithProtectionFilter(Map params) {
+    private List<String> getPublisherNamesFromProtection(Map params) {
 
         return protection()
                 .getProtectionsWithFilter(params)
@@ -159,15 +160,18 @@ public class ProtectionsColumnsFilterCombinationsTests extends BaseTest {
                 .getProtectionsGetAllResponse()
                 .getItems()
                 .stream()
-                .filter(distinctByKey(Protection::getPublisherId))
+                .map(e -> e.getPublisherName())
+                .distinct()
                 .collect(Collectors.toList());
     }
 
-    private static <T> Predicate<T> distinctByKey(
-            Function<? super T, ?> keyExtractor) {
+    private String getPublisherIdByName(String name) {
 
-        Map<Object, Boolean> seen = new ConcurrentHashMap<>();
-        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+        return publisher()
+                .getPublisherWithFilter(Map.of("name",name))
+                .build()
+                .getPublisherResponse()
+                .getId().toString();
     }
 
     @AfterClass

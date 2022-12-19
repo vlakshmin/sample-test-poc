@@ -27,6 +27,7 @@ public class ChipFilterOptionsItem {
     @Getter(AccessLevel.NONE)
     private ElementsCollection chipItems;
 
+    //TODO: need to remove after dev merge
    private static final String CHIP_ITEM = "//div[contains(@class,'chip-container')]/span";
   //  private static final String CHIP_ITEM = "//span[contains(@class,'container-chip')]";
     public ChipFilterOptionsItem(int position) {
