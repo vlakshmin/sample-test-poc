@@ -40,6 +40,7 @@ public class ProtectionsColumnsFilterCombinationsTests extends BaseTest {
         protectionPage = new ProtectionsPage();
     }
 
+    //TODO: need to add more cases, is not finished
     @BeforeClass
     private void login() {
         var tableColumns = protectionPage.getProtectionsTable().getShowHideColumns();
