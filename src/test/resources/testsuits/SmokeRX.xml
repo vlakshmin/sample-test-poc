@@ -122,10 +122,11 @@
 
     <test name="Columns Filter Tests">
         <classes>
-            <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterWidgetTests"/>
-            <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterTableTests"/>
-            <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterUpdatedDateWidgetTests"/>
-            <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterCreatedDateWidgetTests"/>
+            <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterCombinationsTests"/>
+<!--            <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterWidgetTests"/>-->
+<!--            <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterTableTests"/>-->
+<!--            <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterUpdatedDateWidgetTests"/>-->
+<!--            <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterCreatedDateWidgetTests"/>-->
         </classes>
     </test>
 

@@ -106,6 +106,7 @@ public class ProtectionsColumnsFilterCombinationsTests extends BaseTest {
                 .setValueWithClean(filter.getSinglepane().getSearchInput(), publishersActiveProtectionsList.get(1).getPublisherName())
                 .validate(not(visible), protectionPage.getTableProgressBar())
                 .waitAndValidate(not(visible), filter.getSinglepane().getFilterItemByName(publishersActiveProtectionsList.get(0).getPublisherName()).getName())
+                .validate(not(visible), protectionPage.getTableProgressBar())
                 .waitAndValidate(visible, filter.getSinglepane().getFilterItemByName(publishersActiveProtectionsList.get(1).getPublisherName()).getName())
                 .validateContainsText(filter.getSinglepane().getItemsTotalQuantityLabel(), "(1)")
                 .validate(not(visible), protectionPage.getTableProgressBar())
