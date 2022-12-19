@@ -61,7 +61,7 @@ public class SinglepaneFilterProtectionTest extends BaseTest {
 
         testStart()
                 .and("click on Columns Filter button")
-                .clickOnWebElement(filter.getColumnFiltersButton())
+                .clickOnWebElement(filter.getColumnsFilterButton())
                 .then("Validate Columns Filter List by default")
                 .validateList(filter.getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
                         ColumnNames.ACTIVE_INACTIVE.getName(),

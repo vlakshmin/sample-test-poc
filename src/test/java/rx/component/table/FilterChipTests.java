@@ -3,7 +3,6 @@ package rx.component.table;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -61,7 +60,8 @@ public class FilterChipTests extends BaseTest {
 
         testStart()
                 .and("Select Column Filter 'PUBLISHER'")
-                .clickOnWebElement(filter.getColumnFiltersButton())
+                .scrollIntoView(protectionPage.getProtectionPageTitle())
+                .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.PUBLISHER))
                 .and(format("Search by Name '%s'", PUBLISHER_NAME))
@@ -82,6 +82,7 @@ public class FilterChipTests extends BaseTest {
                 .then("Check total publishers count, search result should be reset")
                 .validate(not(visible), protectionPage.getTableProgressBar())
                 .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalPublishers))
+                .scrollIntoView(protectionPage.getProtectionPageTitle())
                 .clickOnWebElement(filter.getSinglepane().getBackButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .testEnd();
@@ -111,22 +112,24 @@ public class FilterChipTests extends BaseTest {
                 .then("ColumnsFilter widget is closed")
                 .validate(not(visible), filter.getFilterOptionsMenu())
                 .validate(visible, table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getHeaderLabel())
+                .validateContainsText(table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getHeaderLabel(), format("%s:",ColumnNames.PUBLISHER.getName()))
                 .validate(table.countFilterChipsItems(), 1)
                 .then("Validate list of selected publishers")
                 .validate(table.getChipItemByName(ColumnNames.PUBLISHER.getName()).countFilterOptionsChipItems(), 3)
-                .and("Select Column Filter 'Active/Inactive'")
-                .clickOnWebElement(filter.getColumnFiltersButton())
+                .and("Select Column Filter 'Status'")
+                .scrollIntoView(protectionPage.getProtectionsTable().getTableData().getSearch())
+                .clickOnWebElement(filter.getColumnsFilterButton())
                 .validate(visible, filter.getFilterOptionsMenu())
-                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.STATUS))
                 .and("Select Active")
                 .selectRadioButton(filter.getActiveBooleanFilter().getActiveRadioButton())
                 .clickOnWebElement(filter.getActiveBooleanFilter().getSubmitButton())
                 .validate(not(visible), filter.getFilterOptionsMenu())
                 .then("ColumnsFilter widget is closed")
                 .validate(not(visible), filter.getFilterOptionsMenu())
-                .validate(visible, table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getHeaderLabel())
+                .validate(visible, table.getChipItemByName(ColumnNames.STATUS.getName()).getHeaderLabel())
                 .validate(table.countFilterChipsItems(), 2)
-                .validate(visible, table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getChipFilterOptionItemByName("Active"))
+                .validate(visible, table.getChipItemByName(ColumnNames.STATUS.getName()).getChipFilterOptionItemByName("Active"))
                 .testEnd();
 
         selectedPublishersNameList.forEach(e -> {

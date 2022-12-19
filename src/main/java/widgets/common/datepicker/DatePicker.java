@@ -1,13 +1,10 @@
 package widgets.common.datepicker;
 
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import lombok.AccessLevel;
 import lombok.Getter;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static widgets.common.datepicker.DatePickerElements.*;
-
 
 /**
  * Keep Selectors of UI elements in {@link DatePickerElements}
@@ -18,6 +15,7 @@ public class DatePicker {
     private SelenideElement dateRangeInput = $x(DATE_RANGE_INPUT.getSelector()).as(DATE_RANGE_INPUT.getAlias());
     private SelenideElement nextYearButton = $x(NEXT_YEAR_BUTTON.getSelector()).as(NEXT_YEAR_BUTTON.getAlias());
     private SelenideElement nextMonthButton = $x(NEXT_MONTH_BUTTON.getSelector()).as(NEXT_MONTH_BUTTON.getAlias());
+    private SelenideElement selectedDayButton = $x(SELECTED_DAY_BUTTON.getSelector()).as(SELECTED_DAY_BUTTON.getAlias());
     private SelenideElement previousYearButton = $x(PREVIOUS_YEAR_BUTTON.getSelector()).as(PREVIOUS_YEAR_BUTTON.getAlias());
     private SelenideElement previousMonthButton = $x(PREVIOUS_MONTH_BUTTON.getSelector()).as(PREVIOUS_MONTH_BUTTON.getAlias());
     private SelenideElement monthOrYearHeaderButton = $x(MONTH_YEAR_HEADER_BUTTON.getSelector()).as(MONTH_YEAR_HEADER_BUTTON.getAlias());
