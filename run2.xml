@@ -5,8 +5,9 @@
 </listeners>
 <test name="Regression Test">
 <classes>
-<class name="test/LoginTest.java" />
-<class name="test/SearchTest.java" />
+<class name="test.LoginTest.java" />
+<class name="test.SearchTest.java" />
+
 </classes>
 </test>
 </suite>
