@@ -130,6 +130,7 @@ public class PublishersColumnsFilterWidgetTests extends BaseTest {
                 .and(format("Search by Name '%s'", searchName))
                 .setValueWithClean(filter.getSinglepane().getSearchInput(), searchName)
                 .clickEnterButton(filter.getSinglepane().getSearchInput())
+                .and("Verify Search Count")
                 .validate(filter.getSinglepane().countIncludedItems(), expectedUserNameList.size())
                 .testEnd();
 
@@ -211,6 +212,7 @@ public class PublishersColumnsFilterWidgetTests extends BaseTest {
                 .and(format("Search by Name '%s'", searchName))
                 .setValueWithClean(filter.getSinglepane().getSearchInput(), searchName)
                 .clickEnterButton(filter.getSinglepane().getSearchInput())
+                .and("Verify Search Count")
                 .validate(filter.getSinglepane().countIncludedItems(), expectedUserNameList.size())
                 .testEnd();
 
