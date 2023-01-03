@@ -18,7 +18,7 @@
         <classes>
             <class name="rx.protections.ProtectionsCheckPaginationTests"/>
         </classes>
-    </test>
+    </test>-->
     <test name="Ad Spots Feature">
         <classes>
             <class name="rx.inventory.adspot.AdSpotCheckColumnsTests"/>
@@ -30,7 +30,7 @@
 
             <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
         </classes>
-    </test>-->
+    </test>
     <test name="Publishers Column Filter">
         <classes>
             <class name="rx.publishers.columnsfilter.PublishersColumnsFilterCreatedDateWidgetTests"/>
