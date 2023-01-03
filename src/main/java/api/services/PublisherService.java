@@ -1,6 +1,5 @@
 package api.services;
 
-import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.admin.publisher.PublisherRequest;
 import io.restassured.response.Response;
 
@@ -17,8 +16,8 @@ public class PublisherService extends BaseService {
         return post(URL, body.toJson());
     }
 
-    public Response updatePublisher(Publisher publisher) {
-        URL = initURL(UPDATE_PUBLISHER.setParameters(publisher.getId()));
+    public Response updatePublisher(PublisherRequest publisher, int publisherId) {
+        URL = initURL(UPDATE_PUBLISHER.setParameters(publisherId));
 
         return put(URL, publisher.toJson());
     }
