@@ -96,8 +96,7 @@ public class PublisherPrecondition {
 
         public PublisherPreconditionBuilder updatePublisher(Publisher publisher) {
 
-            var updatePublisherRequest = Publisher.builder()
-                    .id(publisher.getId())
+            var updatePublisherRequest = PublisherRequest.builder()
                     .name(publisher.getName())
                     .salesAccountName(publisher.getSalesAccountName())
                     .mail(publisher.getMail())
@@ -107,7 +106,7 @@ public class PublisherPrecondition {
                     .categoryIds(publisher.getCategoryIds())
                     .dspIds(publisher.getDspIds())
                     .build();
-            this.response = publisherService.updatePublisher(updatePublisherRequest);
+            this.response = publisherService.updatePublisher(updatePublisherRequest, publisher.getId());
             this.responseCode = response.getStatusCode();
 
             return this;
@@ -146,10 +145,11 @@ public class PublisherPrecondition {
         public PublisherPreconditionBuilder changePublisherStatus(int id, Boolean isEnabled) {
             this.response = publisherService.getPublisher(id);
             this.publisherResponse = this.response.as(Publisher.class);
+            this.publisherRequest = this.response.as(PublisherRequest.class);
 
             this.publisherResponse.setIsEnabled(isEnabled);
 
-            this.response = publisherService.updatePublisher(this.publisherResponse);
+            this.response = publisherService.updatePublisher(this.publisherRequest, id);
             this.responseCode = response.getStatusCode();
 
             return this;
