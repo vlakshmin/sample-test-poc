@@ -3,14 +3,13 @@ package widgets.admin.publisher.sidebar;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
+import widgets.common.categories.CategoriesListPanel;
 import widgets.common.validationalert.ValidationBottomAlert;
 
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 import static widgets.admin.publisher.sidebar.PublisherSidebarElements.*;
 import static widgets.admin.publisher.sidebar.PublisherSidebarElements.AD_OPS_PERSON;
-import static widgets.inventory.media.sidebar.MediaSidebarElements.CATEGORIES_INPUT;
-import static widgets.inventory.media.sidebar.MediaSidebarElements.ERROR_ALERT_BY_FIELD_NAME;
 
 /**
  * Keep Selectors of UI elements in {@link PublisherSidebarElements}
@@ -31,6 +30,7 @@ public abstract class PublisherSidebar {
     private ElementsCollection currencyDropdownItems = $$x(CURRENCY_DROPDOWN_ITEMS.getSelector()).as(CURRENCY_DROPDOWN_ITEMS.getAlias());
 
     private ValidationBottomAlert errorAlert = new ValidationBottomAlert();
+    private CategoriesListPanel categoriesPanel = new CategoriesListPanel();
 
     public SelenideElement getErrorAlertByFieldName(String fieldName) {
 

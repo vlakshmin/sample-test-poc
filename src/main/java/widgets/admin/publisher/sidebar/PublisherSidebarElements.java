@@ -13,7 +13,7 @@ public enum PublisherSidebarElements {
     CURRENCY_DROPDOWN("'Currency' Dropdown", "//label[text()='Currency']/../div"),
     CURRENCY("'Publisher Currency' Input", "//label[text()='Currency']/../input"),
     AD_OPS_PERSON("'Ad Ops Person' Input", "//label[text()='Ad Ops Person']/../input"),
-    CATEGORIES_INPUT("'Categories' Input", "//label[text()='Categories']/../div/input"),
+    CATEGORIES_INPUT("'Categories' Input", "//label[text()='Categories']"),
     SAVE_BUTTON("'Save Publisher' Button", "//button/span[contains(text(),'Save Publisher')]"),
     ACTIVE_TOGGLE("'Active' Toggle", "//label[text()='Active']/..//input[@role='switch']/../input"),
     CLOSE_ICON("'Close Publisher' Icon", "//header/div/button/span/i"),
