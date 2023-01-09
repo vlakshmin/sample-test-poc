@@ -27,7 +27,7 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Feature(value = "Publishers Columns Filter")
+@Feature(value = "OpenPricing Columns Filter")
 public class OpenPricingColumnsFilterWidgetTests extends BaseTest {
 
     private OpenPricingPage openPricingPage;
@@ -316,15 +316,6 @@ public class OpenPricingColumnsFilterWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    private Integer getTotalPublishersFromBE() {
-
-        return publisher()
-                .getPublishersList()
-                .build()
-                .getPublisherGetAllResponse()
-                .getTotal();
-    }
-
     private Integer getTotalUsersFromBE() {
 
         return user()
@@ -355,16 +346,6 @@ public class OpenPricingColumnsFilterWidgetTests extends BaseTest {
     }
 
     private List<String> getUsersListFromBE(String name) {
-
-        return user()
-                .getUsersWithFilter(Map.of("mail",name))
-                .build()
-                .getUserGetAllResponse()
-                .getItems()
-                .stream().map(e -> e.getMail()).collect(Collectors.toList());
-    }
-
-    private List<String> getPublishersListFromBE(String name) {
 
         return user()
                 .getUsersWithFilter(Map.of("mail",name))
