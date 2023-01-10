@@ -7,6 +7,7 @@ import widgets.common.table.ColumnNames;
 import widgets.common.table.filter.activebooleanfilter.ActiveBooleanFilter;
 import widgets.common.table.filter.booleanfilter.BooleanFilter;
 import widgets.common.table.filter.calendarFilter.CalendarFilter;
+import widgets.common.table.filter.rolefilter.RoleFilter;
 import widgets.common.table.filter.singlepanefilter.Singlepane;
 
 import static com.codeborne.selenide.Selenide.$$x;
@@ -24,6 +25,7 @@ public class ColumnFiltersBlock {
     private SelenideElement columnsFilterButton = $x(COLUMNS_FILTER_BUTTON.getSelector()).as(COLUMNS_FILTER_BUTTON.getAlias());
     private Singlepane singlepane = new Singlepane();
 
+    RoleFilter roleFilter = new RoleFilter();
     BooleanFilter booleanFilter = new BooleanFilter();
     CalendarFilter calendarFilter = new CalendarFilter();
     //Todo add platform widget
