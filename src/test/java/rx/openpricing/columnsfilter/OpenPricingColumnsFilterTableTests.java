@@ -63,6 +63,9 @@ public class OpenPricingColumnsFilterTableTests extends BaseTest {
         var tableColumns = openPricingPage.getOpenPricingTable();
 
         testStart()
+                .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
+                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "10")
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_BY))
@@ -77,8 +80,8 @@ public class OpenPricingColumnsFilterTableTests extends BaseTest {
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
                 .then("Validate options list")
-                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.STATUS.getName(),
-                        ColumnNames.CURRENCY.getName(),
+                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
+                        ColumnNames.STATUS.getName(),
                         ColumnNames.CREATED_DATE.getName(),
                         ColumnNames.CREATED_BY.getName(),
                         ColumnNames.UPDATED_DATE.getName(),
@@ -159,13 +162,15 @@ public class OpenPricingColumnsFilterTableTests extends BaseTest {
                 .and("Navigate to Open Pricing page")
                 .openDirectPath(Path.OPEN_PRICING)
                 .and("Navigate to Protection page again")
-                .openDirectPath(Path.PUBLISHER)
-                .scrollIntoView(openPricingPage.getPageTitle())
+                .openDirectPath(Path.OPEN_PRICING)
+                .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
+                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "10")
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
                 .then("Validate options list")
-                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.STATUS.getName(),
-                        ColumnNames.CURRENCY.getName()))
+                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
+                        ColumnNames.STATUS.getName()))
                 .testEnd();
     }
 
