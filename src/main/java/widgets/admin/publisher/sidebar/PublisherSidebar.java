@@ -3,6 +3,7 @@ package widgets.admin.publisher.sidebar;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
+import widgets.common.categories.CategoriesListPanel;
 import widgets.common.validationalert.ValidationBottomAlert;
 
 import static com.codeborne.selenide.Selenide.$$x;
@@ -31,6 +32,7 @@ public abstract class PublisherSidebar {
     private ElementsCollection currencyDropdownItems = $$x(CURRENCY_DROPDOWN_ITEMS.getSelector()).as(CURRENCY_DROPDOWN_ITEMS.getAlias());
 
     private ValidationBottomAlert errorAlert = new ValidationBottomAlert();
+    private CategoriesListPanel categoriesPanel = new CategoriesListPanel();
 
     public SelenideElement getErrorAlertByFieldName(String fieldName) {
 
