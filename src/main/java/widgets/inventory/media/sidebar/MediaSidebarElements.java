@@ -18,7 +18,7 @@ public enum MediaSidebarElements {
     PLATFORM_DROPDOWN("'Platform' Dropdown", "//label[text()='Platform']/../div"),
     TOOLTIP_ICON_BY_FIELD_NAME("Tooltip '%s' Icon",
             "//label[text()='%s']/../div/span[@class='v-tooltip v-tooltip--bottom']/../i"),
-    CATEGORIES_INPUT("'Categories' Input", "//label[text()='Categories']/../div/input"),
+    CATEGORIES_INPUT("'Categories' Input", "//label[text()='Categories']/../div[1]"),
     APP_STORE_URL( "'App Store URL' Input", "//label[text()='App Store URL']/../input"),
     SAVE_BUTTON("'Save Media' Button",  "//button/span[contains(text(),'Save Media')]"),
     PUBLISHER_DROPDOWN_ITEMS( "'Publisher's Items' Input",
