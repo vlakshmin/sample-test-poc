@@ -104,6 +104,80 @@ public class UsersColumnsFilterWidgetTests extends BaseTest {
                 .testEnd();
     }
 
+    @Test(description = "Check Active/Inactive Chip Widget Component", dependsOnMethods = "testActiveInactiveChipWidgetComponent")
+    public void testRoleChipWidgetComponent() {
+        var filter = usersPage.getUsersTable().getColumnFiltersBlock();
+        var table = usersPage.getUsersTable().getTableData();
+
+        testStart()
+                .and("Click on 'Column Filters'")
+                .scrollIntoView(usersPage.getPageTitle())
+                .clickOnWebElement(filter.getColumnsFilterButton())
+                .waitAndValidate(visible, filter.getFilterOptionsMenu())
+                .and("Select Column Filter 'Role'")
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.ROLE))
+                .then("Title should be displayed")
+                .validate(filter.getRoleFilter().getFilterHeaderLabel(), StringUtils.getFilterHeader(ColumnNames.ROLE.getName()))
+                .then("All options should be unselected")
+                .validateAttribute(filter.getRoleFilter().getAdminPublisherCheckBox(),"aria-checked","false")
+                .validateAttribute(filter.getRoleFilter().getCrossPublisherCheckBox(),"aria-checked","false")
+                .validateAttribute(filter.getRoleFilter().getSinglePublisherCheckBox(),"aria-checked","false")
+                .and("Select Admin")
+                .clickOnWebElement(filter.getRoleFilter().getAdminPublisherCheckBox())
+                .validateAttribute(filter.getRoleFilter().getAdminPublisherCheckBox(),"aria-checked","true")
+                .and("Select Cross Publisher")
+                .clickOnWebElement(filter.getRoleFilter().getCrossPublisherCheckBox())
+                .then("Both Admin and Cross Publisher options should be selected")
+                .validateAttribute(filter.getRoleFilter().getAdminPublisherCheckBox(),"aria-checked","true")
+                .validateAttribute(filter.getRoleFilter().getCrossPublisherCheckBox(),"aria-checked","true")
+                .and("Select Single Publisher")
+                .clickOnWebElement(filter.getRoleFilter().getSinglePublisherCheckBox())
+                .then("All Admin, Cross Publisher and Single Publisher options should be selected")
+                .validateAttribute(filter.getRoleFilter().getAdminPublisherCheckBox(),"aria-checked","true")
+                .validateAttribute(filter.getRoleFilter().getCrossPublisherCheckBox(),"aria-checked","true")
+                .validateAttribute(filter.getRoleFilter().getSinglePublisherCheckBox(),"aria-checked","true")
+                .and("Click on Back")
+                .clickOnWebElement(filter.getRoleFilter().getBackButton())
+                .then("Columns Menu should appear")
+                .validateList(filter.getFilterOptionItems(), List.of(ColumnNames.ROLE.getName(),
+                        ColumnNames.STATUS.getName(),
+                        ColumnNames.PUBLISHER.getName(),
+                        ColumnNames.CREATED_DATE.getName(),
+                        ColumnNames.UPDATED_DATE.getName()))
+                .and("Select Column Filter 'Role'")
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.ROLE))
+                .then("All options should be reset and unselected")
+                .validateAttribute(filter.getRoleFilter().getAdminPublisherCheckBox(),"aria-checked","false")
+                .validateAttribute(filter.getRoleFilter().getCrossPublisherCheckBox(),"aria-checked","false")
+                .validateAttribute(filter.getRoleFilter().getSinglePublisherCheckBox(),"aria-checked","false")
+                .and("Select Admin")
+                .selectRadioButton(filter.getRoleFilter().getAdminPublisherCheckBox())
+                .validateAttribute(filter.getRoleFilter().getAdminPublisherCheckBox(),"aria-checked","true")
+                .and("Click on Submit")
+                .clickOnWebElement(filter.getRoleFilter().getSubmitButton())
+                .then("ColumnsFilter widget is closed")
+                .validate(not(visible), filter.getFilterOptionsMenu())
+                .validate(visible, table.getChipItemByName(ColumnNames.ROLE.getName()).getHeaderLabel())
+                .validate(table.countFilterChipsItems(), 1)
+                .then("Validate value on chip")
+                .validate(table.getChipItemByName(ColumnNames.ROLE.getName()).getChipFilterOptionItemByName("Admin"))
+                //.clickOnWebElement(table.getChipItemByName(ColumnNames.ROLE.getName()).getCloseIcon())
+                .and("Select Cross Publisher")
+                .selectRadioButton(filter.getRoleFilter().getCrossPublisherCheckBox())
+                .validateAttribute(filter.getRoleFilter().getCrossPublisherCheckBox(),"aria-checked","true")
+                .and("Click on Submit")
+                .clickOnWebElement(filter.getRoleFilter().getSubmitButton())
+                .then("ColumnsFilter widget is closed")
+                .validate(not(visible), filter.getFilterOptionsMenu())
+                .validate(visible, table.getChipItemByName(ColumnNames.ROLE.getName()).getHeaderLabel())
+                .validate(table.countFilterChipsItems(), 2)
+                .then("Validate value on chip")
+                .validate(table.getChipItemByName(ColumnNames.ROLE.getName()).getChipFilterOptionItemByName("Admin"))
+                .validate(table.getChipItemByName(ColumnNames.ROLE.getName()).getChipFilterOptionItemByName("Cross-Publisher"))
+                .clickOnWebElement(table.getChipItemByName(ColumnNames.ROLE.getName()).getCloseIcon())
+                .testEnd();
+    }
+
     @AfterClass
     private void logout() {
         testStart()
