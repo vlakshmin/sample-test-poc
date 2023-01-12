@@ -1,5 +1,6 @@
 package rx.admin.publishers;
 
+import io.qameta.allure.Feature;
 import pages.Path;
 import rx.BaseTest;
 import org.testng.annotations.*;
@@ -10,8 +11,6 @@ import api.dto.rx.admin.publisher.Publisher;
 import widgets.common.categories.CategoriesList;
 import com.codeborne.selenide.testng.ScreenShooter;
 import widgets.admin.publisher.sidebar.EditPublisherSidebar;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,8 +22,7 @@ import static api.preconditionbuilders.PublisherPrecondition.publisher;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Link("https://rakutenadvertising.atlassian.net/browse/GS-3155")
-
+@Feature("Publishers")
 public class PublisherEditTests extends BaseTest {
     private Publisher publisher;
     private PublishersPage publishersPage;
@@ -48,7 +46,6 @@ public class PublisherEditTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v?/GS-3155")
     @Test(description = "Create Active Publisher without category Test", priority = 1)
     private void createActivePublisherWithoutCategory() {
 
@@ -58,7 +55,6 @@ public class PublisherEditTests extends BaseTest {
         editAndValidateEditedPublisher(publisherName, true, false);
     }
 
-    @Epic("v?/GS-3155")
     @Test(description = "Create Inactive Publisher with category Test", priority = 2)
     private void createInactivePublisherWithCategory() {
 
@@ -68,7 +64,6 @@ public class PublisherEditTests extends BaseTest {
         editAndValidateEditedPublisher(publisherName, false, true);
     }
 
-    @Epic("v?/GS-3155")
     @Test(description = "Create inactive Publisher without category Test", priority = 3)
     private void createInactivePublisherWithoutCategory() {
 
@@ -78,7 +73,6 @@ public class PublisherEditTests extends BaseTest {
         editAndValidateEditedPublisher(publisherName, false, false);
     }
 
-    @Epic("v?/GS-3155")
     @Test(description = "Create active Publisher with category Test", priority = 4)
     private void createActivePublisherWithCategory() {
 
