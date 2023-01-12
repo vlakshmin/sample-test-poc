@@ -46,7 +46,7 @@ public class PublisherEditTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Create Active Publisher without category Test", priority = 1)
+    @Test(description = "Create Active Publisher without category", priority = 1)
     private void createActivePublisherWithoutCategory() {
 
         String publisherName = captionWithSuffix("autoPub");
@@ -55,7 +55,7 @@ public class PublisherEditTests extends BaseTest {
         editAndValidateEditedPublisher(publisherName, true, false);
     }
 
-    @Test(description = "Create Inactive Publisher with category Test", priority = 2)
+    @Test(description = "Create Inactive Publisher with category", priority = 2)
     private void createInactivePublisherWithCategory() {
 
         String publisherName = captionWithSuffix("autoPublisher");
@@ -64,7 +64,7 @@ public class PublisherEditTests extends BaseTest {
         editAndValidateEditedPublisher(publisherName, false, true);
     }
 
-    @Test(description = "Create inactive Publisher without category Test", priority = 3)
+    @Test(description = "Create inactive Publisher without category", priority = 3)
     private void createInactivePublisherWithoutCategory() {
 
         String publisherName = captionWithSuffix("autoPublisher");
@@ -73,7 +73,7 @@ public class PublisherEditTests extends BaseTest {
         editAndValidateEditedPublisher(publisherName, false, false);
     }
 
-    @Test(description = "Create active Publisher with category Test", priority = 4)
+    @Test(description = "Create active Publisher with category", priority = 4)
     private void createActivePublisherWithCategory() {
 
         String publisherName = captionWithSuffix("autoPublisher");
