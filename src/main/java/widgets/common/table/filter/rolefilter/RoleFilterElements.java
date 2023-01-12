@@ -8,9 +8,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum RoleFilterElements {
 
-    ADMIN_ROLE_CHECkBOX("'Admin' role checkbox in 'Role' Filter","//div[@class='v-item-group theme--light v-list-item-group']/div[1]"),
-    CROSS_PUBLISHER_ROLE_CHECkBOX("'Cross-Publisher' role checkbox in 'Role' Filter","//div[@class='v-item-group theme--light v-list-item-group']/div[2]"),
-    SINGLE_PUBLISHER_ROLE_CHECkBOX("'Single Publisher' role checkbox in 'Role' Filter","//div[@class='v-item-group theme--light v-list-item-group']/div[3]");
+    ADMIN_ROLE_CHECkBOX("'Admin' role checkbox in 'Role' Filter","//div[contains(text(),'Admin')]/../..//input/../div"),
+    CROSS_PUBLISHER_ROLE_CHECkBOX("'Cross-Publisher' role checkbox in 'Role' Filter","//div[contains(text(),'Cross')]/../..//input/../div"),
+    SINGLE_PUBLISHER_ROLE_CHECkBOX("'Single Publisher' role checkbox in 'Role' Filter","//div[contains(text(),'Single')]/../..//input/../div");
 
     private String alias;
     private String selector;
