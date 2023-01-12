@@ -5,6 +5,7 @@ import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import pages.admin.publisher.PublishersPage;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 import org.testng.annotations.Listeners;
@@ -17,6 +18,7 @@ import static com.codeborne.selenide.Condition.*;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Feature("Publishers")
 public class PublisherCheckColumnsTests extends BaseTest {
     private PublishersPage publisherPage;
 
