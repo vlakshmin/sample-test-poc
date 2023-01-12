@@ -1,8 +1,10 @@
 package rx.admin.publishers;
 
+import zutils.FakerUtils;
 import api.dto.rx.admin.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.AfterClass;
@@ -15,7 +17,6 @@ import pages.dashbord.DashboardPage;
 import rx.BaseTest;
 import widgets.admin.publisher.sidebar.CreatePublisherSidebar;
 import widgets.admin.publisher.sidebar.EditPublisherSidebar;
-import zutils.FakerUtils;
 
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.disappear;
@@ -27,6 +28,7 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Feature("Publishers")
 public class PublisherTest extends BaseTest {
 
     private Publisher publisher;

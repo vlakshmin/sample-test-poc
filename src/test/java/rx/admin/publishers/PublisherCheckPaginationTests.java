@@ -1,15 +1,14 @@
 package rx.admin.publishers;
 
+import pages.Path;
+import rx.BaseTest;
+import io.qameta.allure.Step;
+import io.qameta.allure.Feature;
+import org.testng.annotations.*;
+import lombok.extern.slf4j.Slf4j;
+import pages.admin.publisher.PublishersPage;
 import api.dto.rx.admin.publisher.Publisher;
 import com.codeborne.selenide.testng.ScreenShooter;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Link;
-import io.qameta.allure.Step;
-import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.*;
-import pages.Path;
-import pages.admin.publisher.PublishersPage;
-import rx.BaseTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +18,10 @@ import static com.codeborne.selenide.Condition.disappear;
 import static configurations.User.TEST_USER;
 import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
-import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Epic("Waiting for separate QA env")
-@Link("https://rakutenadvertising.atlassian.net/browse/GS-3280")
+@Feature("Publishers")
 public class PublisherCheckPaginationTests extends BaseTest {
 
     private PublishersPage publishersPage;

@@ -2,6 +2,7 @@ package rx.admin.publishers;
 
 import pages.Path;
 import rx.BaseTest;
+import io.qameta.allure.Feature;
 import widgets.common.table.Statuses;
 import widgets.common.table.ColumnNames;
 import pages.admin.publisher.PublishersPage;
@@ -9,8 +10,6 @@ import widgets.common.categories.CategoriesList;
 import com.codeborne.selenide.testng.ScreenShooter;
 import widgets.admin.publisher.sidebar.CurrencyType;
 import widgets.admin.publisher.sidebar.CreatePublisherSidebar;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
@@ -24,7 +23,7 @@ import static com.codeborne.selenide.Condition.*;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Link("https://rakutenadvertising.atlassian.net/browse/GS-3155")
+@Feature("Publishers")
 
 public class PublisherCreateTests extends BaseTest {
     private String pubName = "randomAutoPub";
@@ -53,28 +52,24 @@ public class PublisherCreateTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v?/GS-3155")
     @Test(description = "Create Active Publisher without category Test", priority = 1)
     private void createActivePublisherWithoutCategory() {
 
         createAndValidatedCreatedPublisher(pubName, true, false);
     }
 
-    @Epic("v?/GS-3155")
     @Test(description = "Create Inactive Publisher with category Test", priority = 2)
     private void createInactivePublisherWithCategory() {
 
         createAndValidatedCreatedPublisher(pubName, false, true);
     }
 
-    @Epic("v?/GS-3155")
     @Test(description = "Create inactive Publisher without category Test", priority = 3)
     private void createInactivePublisherWithoutCategory() {
 
         createAndValidatedCreatedPublisher(pubName, false, false);
     }
 
-    @Epic("v?/GS-3155")
     @Test(description = "Create active Publisher with category Test", priority = 4)
     private void createActivePublisherWithCategory() {
 
