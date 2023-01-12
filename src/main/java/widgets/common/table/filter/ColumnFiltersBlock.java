@@ -8,7 +8,7 @@ import widgets.common.table.filter.activebooleanfilter.ActiveBooleanFilter;
 import widgets.common.table.filter.booleanfilter.BooleanFilter;
 import widgets.common.table.filter.calendarFilter.CalendarFilter;
 import widgets.common.table.filter.rolefilter.RoleFilter;
-import widgets.common.table.filter.singlepanefilter.Singlepane;
+import widgets.common.table.filter.singlepanefilter.SinglepaneFilter;
 
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
@@ -23,7 +23,7 @@ public class ColumnFiltersBlock {
     private SelenideElement filterOptionsMenu = $x(FILTER_OPTIONS_MENU.getSelector()).as(FILTER_OPTIONS_MENU.getAlias());
     private ElementsCollection filterOptionItems = $$x(FILTER_OPTIONS_ITEMS.getSelector()).as(FILTER_OPTIONS_ITEMS.getAlias());
     private SelenideElement columnsFilterButton = $x(COLUMNS_FILTER_BUTTON.getSelector()).as(COLUMNS_FILTER_BUTTON.getAlias());
-    private Singlepane singlepane = new Singlepane();
+    private SinglepaneFilter singlepaneFilter = new SinglepaneFilter();
 
     RoleFilter roleFilter = new RoleFilter();
     BooleanFilter booleanFilter = new BooleanFilter();
