@@ -144,4 +144,14 @@
 
         </classes>
     </test>
+
+    <test name="Users Column Filter">
+        <classes>
+            <class name="rx.users.columnsfilter.UsersColumnsFilterCreatedDateWidgetTests"/>
+            <class name="rx.users.columnsfilter.UsersColumnsFilterTableTests"/>
+            <class name="rx.users.columnsfilter.UsersColumnsFilterUpdatedDateWidgetTests"/>
+            <class name="rx.users.columnsfilter.UsersColumnsFilterWidgetTests"/>
+
+        </classes>
+    </test>
 </suite>
