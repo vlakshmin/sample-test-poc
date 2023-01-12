@@ -1,17 +1,14 @@
 package widgets.admin.publisher.sidebar;
 
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import lombok.Getter;
+import com.codeborne.selenide.ElementsCollection;
 import widgets.common.categories.CategoriesListPanel;
 import widgets.common.validationalert.ValidationBottomAlert;
+import lombok.Getter;
 
-import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.$$x;
 import static widgets.admin.publisher.sidebar.PublisherSidebarElements.*;
-import static widgets.admin.publisher.sidebar.PublisherSidebarElements.AD_OPS_PERSON;
-import static widgets.inventory.media.sidebar.MediaSidebarElements.CATEGORIES_INPUT;
-import static widgets.inventory.media.sidebar.MediaSidebarElements.ERROR_ALERT_BY_FIELD_NAME;
 
 /**
  * Keep Selectors of UI elements in {@link PublisherSidebarElements}
