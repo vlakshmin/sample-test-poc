@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="GS-3320" parallel="false">
+<suite name="GS-3220" parallel="false">
 
 <!--    <test name="0Precondition. Delete records with 'auto' substring">-->
 <!--        <classes>-->
@@ -8,8 +8,8 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-    <test name="Media">
-        <classes>
+<!--    <test name="Media">-->
+<!--        <classes>-->
 <!--            <class name="rx.inventory.media.MediaEditTests"/>-->
 <!--            <class name="rx.inventory.media.MediaCreateTests"/>-->
 <!--            <class name="rx.inventory.media.MediaCheckFieldsTests"/>-->
@@ -18,12 +18,12 @@
 <!--            <class name="rx.inventory.media.MediaSortingTableTests"/>-->
 <!--            <class name="rx.inventory.media.MediaCheckTooltipsTests"/>-->
 <!--            <class name="rx.inventory.media.MediaCheckPaginationTests"/>-->
-            <class name="rx.inventory.media.MediaActivateDeactivateTableTests"/>
-        </classes>
-    </test>
+<!--            <class name="rx.inventory.media.MediaActivateDeactivateTableTests"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
-    <test name="Ad Spot">
-        <classes>
+<!--    <test name="Ad Spot">-->
+<!--        <classes>-->
 <!--            <class name="rx.inventory.adspot.AdSpotEditTests"/>-->
 <!--            <class name="rx.inventory.adspot.AdSpotSearchTableTests"/>-->
 <!--            <class name="rx.inventory.adspot.AdSpotCheckFieldsTests"/>-->
@@ -39,12 +39,12 @@
 <!--            <class name="rx.inventory.adspot.ChangingPublisherInSidebarTests"/>-->
 <!--            <class name="rx.inventory.adspot.AdSpotCheckRelatedMediaListTests"/>-->
 <!--            <class name="rx.inventory.adspot.AdSpotRequiredFieldsOnlyCreateTests"/>-->
-            <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>
-        </classes>
-    </test>
+<!--            <class name="rx.inventory.adspot.AdSpotActivateDeactivateTableTests"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
-    <test name="Open Pricing">
-        <classes>
+<!--    <test name="Open Pricing">-->
+<!--        <classes>-->
             <!--            <class name="rx.yield.openpricing.VerifyPublisherTests"/>-->
 <!--            <class name="rx.yield.openpricing.CreateOpenPricingTest"/>-->
 <!--            <class name="rx.yield.openpricing.OpenPricingUploadTests"/>-->
@@ -54,60 +54,62 @@
 <!--            <class name="rx.yield.openpricing.OpenPricingChangePublisherTests"/>-->
 <!--            <class name="rx.yield.openpricing.OpenPricingUploadNegtiveWrongDataTests"/>-->
 <!--            <class name="rx.yield.openpricing.OpenPricingSingleAdminUploadSidebarTests"/>-->
-        </classes>
-    </test>
+<!--        </classes>-->
+<!--    </test>-->
 
-    <test name="Protections Feature">
-        <classes>
+<!--    <test name="Protections Feature">-->
+<!--        <classes>-->
 <!--            <class name="rx.protections.ProtectionsTest"/>-->
 <!--            <class name="rx.protections.ProtectionsSortingTableTests"/>-->
 <!--            <class name="rx.protections.ProtectionsCheckPaginationTests"/>-->
 <!--            <class name="rx.protections.ProtectionsDeviceMultipaneTests"/>-->
 <!--            <class name="rx.protections.ProtectionsInventoryMultipaneTests"/>-->
-        </classes>
-    </test>
+<!--        </classes>-->
+<!--    </test>-->
 
-    <test name="Deals Feature">
-        <classes>
-            <class name="rx.sales.deals.DealsTest"/>
-        </classes>
-    </test>
+<!--    <test name="Deals Feature">-->
+<!--        <classes>-->
+<!--            <class name="rx.sales.deals.DealsTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
-    <test name="Login Feature">
-        <classes>
-            <class name="rx.login.LoginPageTests"/>
-            <class name="rx.login.LoginPositiveTest"/>
-        </classes>
-    </test>
+<!--    <test name="Login Feature">-->
+<!--        <classes>-->
+<!--            <class name="rx.login.LoginPageTests"/>-->
+<!--            <class name="rx.login.LoginPositiveTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
-    <test name="Components Tests">
-        <classes>
+<!--    <test name="Components Tests">-->
+<!--        <classes>-->
 <!--            <class name="rx.component.table.TableDataTests"/>-->
 <!--            <class name="rx.component.multipane.MultipaneTest"/>-->
 <!--            <class name="rx.component.categories.CategoriesSelectionTests"/>-->
 <!--            <class name="rx.component.singlepanefilter.SinglepaneFilterProtectionTest"/>-->
 <!--            <class name="rx.component.table.FilterChipTests"/>-->
-        </classes>
-    </test>
+<!--        </classes>-->
+<!--    </test>-->
 
     <test name="Publisher Feature">
         <classes>
-<!--            <class name="rx.admin.publishers.PublisherTest"/>-->
-<!--            <class name="rx.admin.publishers.PublisherCheckFieldsTests"/>-->
-<!--            <class name="rx.admin.publishers.PublisherCheckColumnsTests"/>-->
-<!--            <class name="rx.admin.publishers.PublisherSortingTableTests"/>-->
-<!--            <class name="rx.admin.publishers.PublisherCheckPaginationTests"/>-->
+            <class name="rx.admin.publishers.PublisherTest"/>
+            <class name="rx.admin.publishers.PublisherCheckFieldsTests"/>
+            <class name="rx.admin.publishers.PublisherCheckColumnsTests"/>
+            <class name="rx.admin.publishers.PublisherSortingTableTests"/>
+            <class name="rx.admin.publishers.PublisherCheckPaginationTests"/>
+            <class name="rx.admin.publishers.PublisherCreateTests"/>
+            <class name="rx.admin.publishers.PublisherEditTests"/>
         </classes>
     </test>
 
-    <test name="Users">
-        <classes>
-<!--            <class name="rx.admin.users.UsersSortingTableTests"/>-->
-<!--            <class name="rx.admin.users.UsersCheckPaginationTests"/>-->
-<!--            <class name="rx.admin.users.UsersCreationTests"/>-->
-<!--            <class name="rx.admin.users.UsersEditTests"/>-->
-        </classes>
-    </test>
+<!--    <test name="Users">-->
+<!--        <classes>-->
+<!--&lt;!&ndash;            <class name="rx.admin.users.UsersSortingTableTests"/>&ndash;&gt;-->
+<!--&lt;!&ndash;            <class name="rx.admin.users.UsersCheckPaginationTests"/>&ndash;&gt;-->
+<!--&lt;!&ndash;            <class name="rx.admin.users.UsersCreationTests"/>&ndash;&gt;-->
+<!--&lt;!&ndash;            <class name="rx.admin.users.UsersEditTests"/>&ndash;&gt;-->
+<!--        </classes>-->
+<!--    </test>-->
 
 <!--    <test name="Demand Source Feature">-->
 <!--        <classes>-->
@@ -135,14 +137,14 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-<!--    <test name="Publishers Column Filter">-->
-<!--        <classes>-->
-<!--            <class name="rx.admin.publishers.columnsfilter.PublishersColumnsFilterCreatedDateWidgetTests"/>-->
-<!--            <class name="rx.admin.publishers.columnsfilter.PublishersColumnsFilterTableTests"/>-->
-<!--            <class name="rx.admin.publishers.columnsfilter.PublishersColumnsFilterUpdatedDateWidgetTests"/>-->
-<!--            <class name="rx.admin.publishers.columnsfilter.PublishersColumnsFilterWidgetTests"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Publishers Column Filter">
+        <classes>
+            <class name="rx.admin.publishers.columnsfilter.PublishersColumnsFilterCreatedDateWidgetTests"/>
+            <class name="rx.admin.publishers.columnsfilter.PublishersColumnsFilterTableTests"/>
+            <class name="rx.admin.publishers.columnsfilter.PublishersColumnsFilterUpdatedDateWidgetTests"/>
+            <class name="rx.admin.publishers.columnsfilter.PublishersColumnsFilterWidgetTests"/>
+        </classes>
+    </test>
 
 <!--    <test name="Openpricing Column Filter">-->
 <!--        <classes>-->
@@ -161,4 +163,9 @@
 <!--            <class name="rx.admin.users.columnsfilter.UsersColumnsFilterWidgetTests"/>-->
 <!--        </classes>-->
 <!--    </test>-->
+        <test name="0Precondition. Delete records with 'auto' substring">
+            <classes>
+                <class name="rx.pipelines.DeleteGeneratedDataTest"/>
+            </classes>
+        </test>
 </suite>
