@@ -134,7 +134,7 @@ public class AdSpotSortingTableTests extends BaseTest {
     @Test(testName = "Sorting 'Active/Inactive' column by descending", enabled = false)
     @Issue("https://rakutenadvertising.atlassian.net/browse/GS-3273")
     public void adSpotSortingByStatusDesc() {
-        sortByDescColumnByName(ColumnNames.ACTIVE_INACTIVE);
+        sortByDescColumnByName(ColumnNames.STATUS);
         validateSortData(ColumnNames.ID, DESC, sortStatusByDesc);
     }
 
@@ -142,7 +142,7 @@ public class AdSpotSortingTableTests extends BaseTest {
     @Test(testName = "Sorting 'Active/Inactive' column by ascending", enabled = false)
     @Issue("https://rakutenadvertising.atlassian.net/browse/GS-3273")
     public void adSpotSortingByStatusAsc() {
-        sortByAscColumnByName(ColumnNames.ACTIVE_INACTIVE);
+        sortByAscColumnByName(ColumnNames.STATUS);
         validateSortData(ColumnNames.ID, ASC, sortStatusByAsc);
     }
 

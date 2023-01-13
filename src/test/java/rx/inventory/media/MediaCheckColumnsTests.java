@@ -49,7 +49,7 @@ public class MediaCheckColumnsTests extends BaseTest {
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.ID))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.MEDIA_NAME))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))
-                .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.ACTIVE_INACTIVE))
+                .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.STATUS))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.PUBLISHER))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.PLATFORM))
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
@@ -60,7 +60,7 @@ public class MediaCheckColumnsTests extends BaseTest {
                         ColumnNames.MEDIA_NAME.getName(),
                         ColumnNames.SITE_APP_STORE_URL.getName(),
                         ColumnNames.PUBLISHER.getName(),
-                        ColumnNames.ACTIVE_INACTIVE.getName(),
+                        ColumnNames.STATUS.getName(),
                         ColumnNames.PLATFORM.getName(),
                         ColumnNames.CREATED_DATE.getName(),
                         ColumnNames.UPDATED_DATE.getName())
@@ -70,7 +70,7 @@ public class MediaCheckColumnsTests extends BaseTest {
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.PUBLISHER))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.PLATFORM))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))
-                .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.ACTIVE_INACTIVE))
+                .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.STATUS))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .then("All columns should be hidden")
@@ -78,7 +78,7 @@ public class MediaCheckColumnsTests extends BaseTest {
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.PLATFORM.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()))
-                .validate(not(visible), tableData.getColumnHeader(ColumnNames.ACTIVE_INACTIVE.getName()))
+                .validate(not(visible), tableData.getColumnHeader(ColumnNames.STATUS.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.SITE_APP_STORE_URL.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.CREATED_DATE.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.UPDATED_DATE.getName()))

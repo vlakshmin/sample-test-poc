@@ -2,7 +2,6 @@ package rx.inventory.adspot;
 
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.common.Currency;
-import api.dto.rx.demandsource.DemandSource;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Step;
@@ -16,11 +15,8 @@ import widgets.common.adSizes.AdSizesList;
 import widgets.common.categories.CategoriesList;
 import widgets.inventory.adSpots.sidebar.EditAdSpotSidebar;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static api.preconditionbuilders.DemandSourcePrecondition.demandSource;
 import static api.preconditionbuilders.MediaPrecondition.media;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.*;
@@ -333,6 +329,5 @@ public class ChangingPublisherInSidebarTests extends BaseTest {
                 .build()
                 .getResponseCode() == HttpStatus.SC_NO_CONTENT)
             log.info(String.format("Deleted media %s", id));
-
     }
 }

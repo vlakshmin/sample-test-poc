@@ -51,7 +51,7 @@ public class VerifyPublisherTests extends BaseTest {
                 .waitAndValidate(appear, tableData.getCheckbox(1))
                 .clickOnWebElement(tableData.getCheckbox(1))
                 .clickOnWebElement(openPricingPage.getDeactivateButton())
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Inactive")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Inactive")
                 .then()
                 .testEnd();
 
@@ -72,7 +72,7 @@ public class VerifyPublisherTests extends BaseTest {
                 .waitAndValidate(appear, tableData.getCheckbox(1))
                 .clickOnWebElement(tableData.getCheckbox(1))
                 .clickOnWebElement(openPricingPage.getActivateButton())
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Active")
                 .then()
                 .testEnd();
     }
@@ -91,9 +91,9 @@ public class VerifyPublisherTests extends BaseTest {
                 .clickOnWebElement(tableData.getCheckbox(2))
                 .clickOnWebElement(tableData.getCheckbox(3))
                 .clickOnWebElement(openPricingPage.getDeactivateButton())
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Inactive")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(1), "Inactive")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(2), "Inactive")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Inactive")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(1), "Inactive")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(2), "Inactive")
                 .then()
                 .testEnd();
     }
@@ -115,10 +115,10 @@ public class VerifyPublisherTests extends BaseTest {
                 .clickOnWebElement(tableData.getCheckbox(3))
                 .clickOnWebElement(tableData.getCheckbox(4))
                 .clickOnWebElement(openPricingPage.getActivateButton())
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(1), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(2), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(3), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(1), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(2), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(3), "Active")
                 .then()
                 .testEnd();
     }
@@ -139,7 +139,7 @@ public class VerifyPublisherTests extends BaseTest {
                 .clickOnWebElement(tableData.getCheckbox(1))
 //                .scrollIntoView(openPricingPage.getDeactivateButton())
                 .clickOnWebElement(openPricingPage.getDeactivateButton())
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Inactive")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Inactive")
                 .then()
                 .testEnd();
 
@@ -159,7 +159,7 @@ public class VerifyPublisherTests extends BaseTest {
                 .waitAndValidate(appear, tableData.getCheckbox(1))
                 .clickOnWebElement(tableData.getCheckbox(1))
                 .clickOnWebElement(openPricingPage.getActivateButton())
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Active")
                 .then()
                 .testEnd();
     }
@@ -187,13 +187,13 @@ public class VerifyPublisherTests extends BaseTest {
                 .and()
                 .clickOnWebElement(openPricingPage.getDeactivateButton())
                 .then()
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(1), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(2), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(3), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(4), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(5), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(6), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(1), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(2), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(3), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(4), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(5), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(6), "Active")
                 .then()
                 .testEnd();
     }
@@ -220,13 +220,13 @@ public class VerifyPublisherTests extends BaseTest {
                 .clickOnWebElement(tableData.getCheckbox(7))
                 .clickOnWebElement(openPricingPage.getActivateButton())
                 .then()
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(1), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(2), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(3), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(4), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(5), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(6), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(1), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(2), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(3), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(4), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(5), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(6), "Active")
                 .then()
                 .testEnd();
     }

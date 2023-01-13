@@ -167,7 +167,7 @@ public class CreateOpenPricingTest extends BaseTest {
                 .validate(tableData.getCustomCells(ColumnNames.NAME).get(0), PRICING_NAME)
                 .validate(tableData.getCustomCells(ColumnNames.PUBLISHER).get(0), publisher.getName())
                 .validate(tableData.getCustomCells(ColumnNames.FLOOR_PRICE).get(0), String.format("%s %s", FLOOR_PRICE, publisher.getCurrency()))
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Active")
                 .testEnd();
     }
 

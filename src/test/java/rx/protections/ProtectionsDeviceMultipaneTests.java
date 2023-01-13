@@ -11,8 +11,6 @@ import pages.Path;
 import pages.protections.ProtectionsPage;
 import rx.BaseTest;
 import rx.enums.MultipaneConstants;
-import widgets.common.multipane.Multipane;
-import widgets.common.multipane.MultipaneNameImpl;
 import widgets.protections.sidebar.CreateProtectionSidebar;
 
 import java.util.List;

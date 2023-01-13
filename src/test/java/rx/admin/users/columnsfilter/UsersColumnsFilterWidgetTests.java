@@ -1,4 +1,4 @@
-package rx.users.columnsfilter;
+package rx.admin.users.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
 import com.sun.xml.bind.v2.TODO;

@@ -33,10 +33,10 @@
     </test>
     <test name="Publishers Column Filter">
         <classes>
-            <class name="rx.publishers.columnsfilter.PublishersColumnsFilterCreatedDateWidgetTests"/>
-            <class name="rx.publishers.columnsfilter.PublishersColumnsFilterTableTests"/>
-            <class name="rx.publishers.columnsfilter.PublishersColumnsFilterUpdatedDateWidgetTests"/>
-            <class name="rx.publishers.columnsfilter.PublishersColumnsFilterWidgetTests"/>
+            <class name="rx.admin.publishers.columnsfilter.PublishersColumnsFilterCreatedDateWidgetTests"/>
+            <class name="rx.admin.publishers.columnsfilter.PublishersColumnsFilterTableTests"/>
+            <class name="rx.admin.publishers.columnsfilter.PublishersColumnsFilterUpdatedDateWidgetTests"/>
+            <class name="rx.admin.publishers.columnsfilter.PublishersColumnsFilterWidgetTests"/>
 
         </classes>
     </test>

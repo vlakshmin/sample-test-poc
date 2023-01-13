@@ -144,10 +144,10 @@ public class FilterChipTests extends BaseTest {
         var table = protectionPage.getProtectionsTable().getTableData();
 
         testStart()
-                .and(format("Reset filter %s", ColumnNames.ACTIVE_INACTIVE.getName()))
-                .scrollIntoView(table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getCloseIcon())
-                .clickOnWebElement(table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getCloseIcon())
-                .then(format("Chip '%s' should be disabled", ColumnNames.ACTIVE_INACTIVE.getName()))
+                .and(format("Reset filter %s", ColumnNames.STATUS.getName()))
+                .scrollIntoView(table.getChipItemByName(ColumnNames.STATUS.getName()).getCloseIcon())
+                .clickOnWebElement(table.getChipItemByName(ColumnNames.STATUS.getName()).getCloseIcon())
+                .then(format("Chip '%s' should be disabled", ColumnNames.STATUS.getName()))
                 .validate(table.getFilterChips().size(), 1)
                 .validate(visible, table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getHeaderLabel())
                 .testEnd();

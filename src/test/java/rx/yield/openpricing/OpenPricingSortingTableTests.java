@@ -166,14 +166,14 @@ public class OpenPricingSortingTableTests extends BaseTest {
 
     @Test(testName = "Sorting 'Active/Inactive' column by descending")
     public void OpenPricingSortingByActiveInactiveDesc() {
-        sortByDescColumnByName(ColumnNames.ACTIVE_INACTIVE);
-        validateSorting(ColumnNames.ACTIVE_INACTIVE, DESC, sortActiveInactiveByDesc);
+        sortByDescColumnByName(ColumnNames.STATUS);
+        validateSorting(ColumnNames.STATUS, DESC, sortActiveInactiveByDesc);
     }
 
     @Test(testName = "Sorting 'Active/Inactive' column by ascending")
     public void OpenPricingSortingByActiveInactiveAsc() {
-        sortByAscColumnByName(ColumnNames.ACTIVE_INACTIVE);
-        validateSorting(ColumnNames.ACTIVE_INACTIVE, ASC, sortActiveInactiveByAsc);
+        sortByAscColumnByName(ColumnNames.STATUS);
+        validateSorting(ColumnNames.STATUS, ASC, sortActiveInactiveByAsc);
     }
 
     @Test(testName = "Sorting 'Floor Price' column by descending")

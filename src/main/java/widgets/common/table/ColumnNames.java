@@ -20,7 +20,7 @@ public enum ColumnNames {
     END_DATE("End Date", true),
     ALWAYS_ON("Always On", true),
     START_DATE("Start Date", true),
-    ACTIVE_INACTIVE("Active/Inactive", true),
+    //ACTIVE_INACTIVE("Active/Inactive", true),
 
     //Demand Source
     BIDDER("Bidder", true),

@@ -117,13 +117,13 @@ public class OpenPricingTests extends BaseTest {
                         ColumnNames.DETAILS.getName(),
                         ColumnNames.NAME.getName(),
                         ColumnNames.PUBLISHER.getName(),
-                        ColumnNames.ACTIVE_INACTIVE.getName(),
+                        ColumnNames.STATUS.getName(),
                         ColumnNames.FLOOR_PRICE.getName())
                 .validate((tableData.getColumns()).get(0), ColumnNames.ID.getName())
                 .validate((tableData.getColumns()).get(1), ColumnNames.DETAILS.getName())
                 .validate((tableData.getColumns()).get(2), ColumnNames.NAME.getName())
                 .validate((tableData.getColumns()).get(3), ColumnNames.PUBLISHER.getName())
-                .validate((tableData.getColumns()).get(4), ColumnNames.ACTIVE_INACTIVE.getName())
+                .validate((tableData.getColumns()).get(4), ColumnNames.STATUS.getName())
                 .validate((tableData.getColumns()).get(5), ColumnNames.FLOOR_PRICE.getName())
                 .and()
                 .scrollIntoView(tableOptions.getShowHideColumnsBtn())
@@ -134,7 +134,7 @@ public class OpenPricingTests extends BaseTest {
                         ColumnNames.DETAILS.getName(),
                         ColumnNames.NAME.getName(),
                         ColumnNames.PUBLISHER.getName(),
-                        ColumnNames.ACTIVE_INACTIVE.getName(),
+                        ColumnNames.STATUS.getName(),
                         ColumnNames.FLOOR_PRICE.getName(),
                         ColumnNames.CREATED_DATE.getName(),
                         ColumnNames.CREATED_BY.getName(),
@@ -173,8 +173,8 @@ public class OpenPricingTests extends BaseTest {
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PUBLISHER))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()))
                 .then()
-                .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE_INACTIVE))
-                .validate(not(visible), tableData.getColumnHeader(ColumnNames.ACTIVE_INACTIVE.getName()))
+                .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.STATUS))
+                .validate(not(visible), tableData.getColumnHeader(ColumnNames.STATUS.getName()))
                 .then()
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.FLOOR_PRICE))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.FLOOR_PRICE.getName()))
@@ -196,7 +196,7 @@ public class OpenPricingTests extends BaseTest {
                         ColumnNames.DETAILS.getName(),
                         ColumnNames.NAME.getName(),
                         ColumnNames.PUBLISHER.getName(),
-                        ColumnNames.ACTIVE_INACTIVE.getName(),
+                        ColumnNames.STATUS.getName(),
                         ColumnNames.FLOOR_PRICE.getName(),
                         ColumnNames.CREATED_DATE.getName(),
                         ColumnNames.CREATED_BY.getName(),
@@ -206,228 +206,10 @@ public class OpenPricingTests extends BaseTest {
                 .testEnd();
     }
 
-//    @Test(enabled = true)
-//    public void verifySortingID() {
-//        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-//        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-//        var tableHeader = openPricingPage.getOpenPricingTable().getTableHeader();
-//        testStart()
-//                .given()
-//                .openDirectPath(Path.OPEN_PRICING)
-//                .logIn(TEST_USER)
-//                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-//                .and()
-//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.ID, TableHeader.SortOrder.DESCENDING),
-//                        TableHeader.SortOrder.DESCENDING)
-//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ID), TableHeader.SortOrder.DESCENDING, tableData.getRows())
-//                .scrollIntoView(tablePagination.getNext())
-//                .clickOnWebElement(tablePagination.getNext())
-//                .scrollToTop(tablePagination.getNext())
-//                .and()
-//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ID), TableHeader.SortOrder.DESCENDING, tableData.getRows())
-//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.ID, TableHeader.SortOrder.ASCENDING),
-//                        TableHeader.SortOrder.ASCENDING)
-//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ID), TableHeader.SortOrder.ASCENDING, tableData.getRows())
-//                .scrollIntoView(tablePagination.getNext())
-//                .clickOnWebElement(tablePagination.getNext())
-//                .scrollToTop(tablePagination.getNext())
-//                .and()
-//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ID), TableHeader.SortOrder.ASCENDING, tableData.getRows())
-//                .then()
-//                .testEnd();
-//    }
-
-//    @Test(enabled = true)
-//    public void verifySortingName() {
-//        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-//        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-//        var tableHeader = openPricingPage.getOpenPricingTable().getTableHeader();
-//        testStart()
-//                .given()
-//                .openDirectPath(Path.OPEN_PRICING)
-//                .logIn(TEST_USER)
-//                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-//                .and()
-//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.NAME, TableHeader.SortOrder.DESCENDING),
-//                        TableHeader.SortOrder.DESCENDING)
-//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.NAME), TableHeader.SortOrder.DESCENDING, tableData.getRows())
-//                .scrollIntoView(tablePagination.getNext())
-//                .clickOnWebElement(tablePagination.getNext())
-//                .scrollToTop(tablePagination.getNext())
-//                .and()
-//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.NAME), TableHeader.SortOrder.DESCENDING, tableData.getRows())
-//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.NAME, TableHeader.SortOrder.ASCENDING),
-//                        TableHeader.SortOrder.ASCENDING)
-//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.NAME), TableHeader.SortOrder.ASCENDING, tableData.getRows())
-//                .scrollIntoView(tablePagination.getNext())
-//                .clickOnWebElement(tablePagination.getNext())
-//                .scrollToTop(tablePagination.getNext())
-//                .and()
-//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.NAME), TableHeader.SortOrder.ASCENDING, tableData.getRows())
-//                .then()
-//                .testEnd();
-//    }
-
-//    @Test(enabled = true)
-//    public void verifySortingPublisher() {
-//        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-//        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-//        var tableHeader = openPricingPage.getOpenPricingTable().getTableHeader();
-//        testStart()
-//                .given()
-//                .openDirectPath(Path.OPEN_PRICING)
-//                .logIn(TEST_USER)
-//                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-//                .and()
-//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.PUBLISHER, TableHeader.SortOrder.DESCENDING),
-//                        TableHeader.SortOrder.DESCENDING)
-//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.PUBLISHER), TableHeader.SortOrder.DESCENDING, tableData.getRows())
-//                .scrollIntoView(tablePagination.getNext())
-//                .clickOnWebElement(tablePagination.getNext())
-//                .scrollToTop(tablePagination.getNext())
-//                .and()
-//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.PUBLISHER), TableHeader.SortOrder.DESCENDING, tableData.getRows())
-//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.PUBLISHER, TableHeader.SortOrder.ASCENDING),
-//                        TableHeader.SortOrder.ASCENDING)
-//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.PUBLISHER), TableHeader.SortOrder.ASCENDING, tableData.getRows())
-//                .scrollIntoView(tablePagination.getNext())
-//                .clickOnWebElement(tablePagination.getNext())
-//                .scrollToTop(tablePagination.getNext())
-//                .and()
-//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.PUBLISHER), TableHeader.SortOrder.ASCENDING, tableData.getRows())
-//                .then()
-//                .testEnd();
-//    }
-
-//    @Test(enabled = true)
-//    public void verifySortingActiveInactive() {
-//        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-//        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-//        var tableHeader = openPricingPage.getOpenPricingTable().getTableHeader();
-//        testStart()
-//                .given()
-//                .openDirectPath(Path.OPEN_PRICING)
-//                .logIn(TEST_USER)
-//                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-//                .and()
-//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.ACTIVE_INACTIVE, TableHeader.SortOrder.DESCENDING),
-//                        TableHeader.SortOrder.DESCENDING)
-//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE), TableHeader.SortOrder.DESCENDING, tableData.getRows())
-//                .scrollIntoView(tablePagination.getNext())
-//                .clickOnWebElement(tablePagination.getNext())
-//                .scrollToTop(tablePagination.getNext())
-//                .and()
-//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE), TableHeader.SortOrder.DESCENDING, tableData.getRows())
-//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.ACTIVE_INACTIVE, TableHeader.SortOrder.ASCENDING),
-//                        TableHeader.SortOrder.ASCENDING)
-//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE), TableHeader.SortOrder.ASCENDING, tableData.getRows())
-//                .scrollIntoView(tablePagination.getNext())
-//                .clickOnWebElement(tablePagination.getNext())
-//                .scrollToTop(tablePagination.getNext())
-//                .and()
-//                .validateSortingOrderTableRows(tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE), TableHeader.SortOrder.ASCENDING, tableData.getRows())
-//                .then()
-//                .testEnd();
-//    }
-
-//    @Test(enabled = true)
-//    public void verifySortingFloorPrice() {
-//        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-//        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-//        var tableHeader = openPricingPage.getOpenPricingTable().getTableHeader();
-//
-//        testStart()
-//                .given()
-//                .openDirectPath(Path.OPEN_PRICING)
-//                .logIn(TEST_USER)
-//                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-//                .and()
-//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.FLOOR_PRICE, TableHeader.SortOrder.ASCENDING),
-//                        TableHeader.SortOrder.ASCENDING)
-//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.FLOOR_PRICE, TableHeader.SortOrder.DESCENDING),
-//                        TableHeader.SortOrder.DESCENDING)
-//                .then()
-//                .scrollIntoView(tablePagination.getNext())
-//                .clickOnWebElement(tablePagination.getNext())
-//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.FLOOR_PRICE, TableHeader.SortOrder.ASCENDING),
-//                        TableHeader.SortOrder.ASCENDING)
-//                .then()
-//                .scrollIntoView(tablePagination.getNext())
-//                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.FLOOR_PRICE.getName()))
-//                .validateSortingOrderLabel(tableHeader.changeSortOrder(ColumnNames.FLOOR_PRICE, TableHeader.SortOrder.ASCENDING),
-//                        TableHeader.SortOrder.ASCENDING)
-//                .then()
-//                .testEnd();
-//    }
-
-//    @Test(enabled = true)
-//    public void verifyFilter() {
-//        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-//        var tableOptions = openPricingPage.getOpenPricingTable().getTableOptions();
-//        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-//        var tableHeader = openPricingPage.getOpenPricingTable().getTableHeader();
-//        testStart()
-//                .given()
-//                .openDirectPath(Path.OPEN_PRICING)
-//                .logIn(TEST_USER)
-//                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-//                .and()
-//                .clickOnWebElement(tableOptions.getTableOptionsBtn())
-//                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE))
-//                .then()
-//                .validateTableContainsOnlyFilteredData(
-//                        tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
-//                        ColumnNames.ACTIVE.getName(),
-//                        tableData.getRows())
-//                .and()
-//                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.INACTIVE))
-//                .validateTableContainsOnlyFilteredData(
-//                        tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
-//                        ColumnNames.INACTIVE.getName(),
-//                        tableData.getRows())
-//                .then()
-//                .scrollIntoView(tablePagination.getNext())
-//                .clickOnWebElement(tablePagination.getNext())
-//                .validateTableContainsOnlyFilteredData(
-//                        tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
-//                        ColumnNames.INACTIVE.getName(),
-//                        tableData.getRows())
-//                .then()
-//                .scrollIntoView(tableOptions.getTableOptionsBtn())
-//                .clickOnWebElement(tableOptions.getTableOptionsBtn())
-//                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE))
-//                .validateTableContainsOnlyFilteredData(
-//                        tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
-//                        ColumnNames.ACTIVE.getName(),
-//                        tableData.getRows())
-//                .then()
-//                .scrollIntoView(tablePagination.getPrevious())
-//                .clickOnWebElement(tablePagination.getNext())
-//                .clickOnWebElement(tablePagination.getPrevious())
-//                .validateTableContainsOnlyFilteredData(
-//                        tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
-//                        ColumnNames.ACTIVE.getName(),
-//                        tableData.getRows())
-//                .then()
-//                .scrollToTop(tablePagination.getNext())
-//                .clickOnWebElement(tableOptions.getTableOptionsBtn())
-//                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.BOTH))
-//                .validateTableHasSomeFilteredData(
-//                        tableHeader.getHeaderIndexByName(ColumnNames.ACTIVE_INACTIVE),
-//                        tableData.getRows(),
-//                        ColumnNames.ACTIVE.getName(), ColumnNames.INACTIVE.getName())
-//                .then()
-//                .testEnd()
-//        ;
-//
-//    }
-
     @Test(enabled = false)
     @Ignore
     public void verifySearch(){
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+
         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
@@ -440,8 +222,7 @@ public class OpenPricingTests extends BaseTest {
     @Ignore
     public void verifySingleDeactivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+
         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
@@ -451,7 +232,7 @@ public class OpenPricingTests extends BaseTest {
                 .waitAndValidate(appear, tableData.getCheckbox(1))
                 .clickOnWebElement(tableData.getCheckbox(1))
                 .clickOnWebElement(openPricingPage.getDeactivateButton())
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Inactive")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Inactive")
                 .then()
                 .testEnd();
 
@@ -473,7 +254,7 @@ public class OpenPricingTests extends BaseTest {
                 .waitAndValidate(appear, tableData.getCheckbox(1))
                 .clickOnWebElement(tableData.getCheckbox(1))
                 .clickOnWebElement(openPricingPage.getActivateButton())
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Active")
                 .then()
                 .testEnd();
     }
@@ -482,6 +263,7 @@ public class OpenPricingTests extends BaseTest {
     @Ignore
     public void verifyBulkDeactivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
+
         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
@@ -493,9 +275,9 @@ public class OpenPricingTests extends BaseTest {
                 .clickOnWebElement(tableData.getCheckbox(2))
                 .clickOnWebElement(tableData.getCheckbox(3))
                 .clickOnWebElement(openPricingPage.getDeactivateButton())
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Inactive")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(1), "Inactive")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(2), "Inactive")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Inactive")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(1), "Inactive")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(2), "Inactive")
                 .then()
                 .testEnd();
     }
@@ -504,9 +286,8 @@ public class OpenPricingTests extends BaseTest {
     @Ignore
     public void verifyBulkActivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
-        testStart()
+
+         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
@@ -518,10 +299,10 @@ public class OpenPricingTests extends BaseTest {
                 .clickOnWebElement(tableData.getCheckbox(3))
                 .clickOnWebElement(tableData.getCheckbox(4))
                 .clickOnWebElement(openPricingPage.getActivateButton())
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(1), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(2), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(3), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(1), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(2), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(3), "Active")
                 .then()
                 .testEnd();
     }
@@ -530,20 +311,17 @@ public class OpenPricingTests extends BaseTest {
     @Ignore
     public void verifySingleDeactivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+
         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
                 .and()
-//                .scrollIntoView(tableData.getCheckbox(1))tableData.getCheckbox(1)
                 .waitAndValidate(appear, tableData.getCheckbox(1))
                 .clickOnWebElement(tableData.getCheckbox(1))
-//                .scrollIntoView(openPricingPage.getDeactivateButton())
                 .clickOnWebElement(openPricingPage.getDeactivateButton())
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Inactive")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Inactive")
                 .then()
                 .testEnd();
 
@@ -553,8 +331,7 @@ public class OpenPricingTests extends BaseTest {
     @Ignore
     public void verifySingleActivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+
         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
@@ -564,7 +341,7 @@ public class OpenPricingTests extends BaseTest {
                 .waitAndValidate(appear, tableData.getCheckbox(1))
                 .clickOnWebElement(tableData.getCheckbox(1))
                 .clickOnWebElement(openPricingPage.getActivateButton())
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Active")
                 .then()
                 .testEnd();
     }
@@ -573,8 +350,7 @@ public class OpenPricingTests extends BaseTest {
     @Ignore
     public void verifyBulkDeactivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+
         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
@@ -593,13 +369,13 @@ public class OpenPricingTests extends BaseTest {
                 .and()
                 .clickOnWebElement(openPricingPage.getDeactivateButton())
                 .then()
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(1), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(2), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(3), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(4), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(5), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(6), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(1), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(2), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(3), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(4), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(5), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(6), "Active")
                 .then()
                 .testEnd();
     }
@@ -608,8 +384,7 @@ public class OpenPricingTests extends BaseTest {
     @Ignore
     public void verifyBulkActivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+
         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
@@ -627,13 +402,13 @@ public class OpenPricingTests extends BaseTest {
                 .clickOnWebElement(tableData.getCheckbox(7))
                 .clickOnWebElement(openPricingPage.getActivateButton())
                 .then()
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(1), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(2), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(3), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(4), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(5), "Active")
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(6), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(1), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(2), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(3), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(4), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(5), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(6), "Active")
                 .then()
                 .testEnd();
     }
@@ -641,9 +416,7 @@ public class OpenPricingTests extends BaseTest {
     @Test(enabled = false)
     @Ignore
     public void verifyRuleExpand() {
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+
         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
@@ -655,9 +428,7 @@ public class OpenPricingTests extends BaseTest {
     @Test(enabled = true)
     @Ignore
     public void verifyUserCreateOpenPricingRule() {
-        var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+
         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
@@ -669,8 +440,5 @@ public class OpenPricingTests extends BaseTest {
                 .and()
                 .waitAndValidate(appear,openPricingPage.getSidebar())
                 .then();
-
-
     }
-
 }

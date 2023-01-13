@@ -63,7 +63,7 @@ public class TableDataTests extends BaseTest {
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.MAIL))
                 .clickOnWebElement(table.getShowHideColumnsBtn())
                 .clickOnWebElement(filterOptions.getColumnsFilterButton())
-                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
+                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.STATUS))
                 .selectRadioButton(filterOptions.getActiveBooleanFilter().getActiveRadioButton())
                 .clickOnWebElement(filterOptions.getActiveBooleanFilter().getSubmitButton())
                 .then()
@@ -84,7 +84,7 @@ public class TableDataTests extends BaseTest {
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.AD_OPS_PERSON))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.MAIL))
                 .clickOnWebElement(filterOptions.getColumnsFilterButton())
-                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
+                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.STATUS))
                 .selectRadioButton(filterOptions.getActiveBooleanFilter().getInactiveRadioButton())
                 .clickOnWebElement(filterOptions.getActiveBooleanFilter().getSubmitButton())
                 .then()
@@ -115,19 +115,19 @@ public class TableDataTests extends BaseTest {
                 .waitAndValidate(disappear, publishersPage.getNuxtProgress())
                 .and()
                 .clickOnWebElement(filterOptions.getColumnsFilterButton())
-                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
+                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.STATUS))
                 .selectRadioButton(filterOptions.getActiveBooleanFilter().getActiveRadioButton())
                 .clickOnWebElement(filterOptions.getActiveBooleanFilter().getSubmitButton())
                 .selectFromDropdown(tablePagenation.getPageMenu(), tablePagenation.getRowNumbersList(), "10")
                 .waitLoading(visible, publishersPage.getTableProgressBar())
                 .waitLoading(disappear, publishersPage.getTableProgressBar())
                 .validateListSize(tableData.getRows(), 10)
-                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE),
+                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.STATUS),
                         Statuses.ACTIVE.getStatus())
                 .clickOnWebElement(tablePagenation.getNext())
                 .waitLoading(visible, publishersPage.getTableProgressBar())
                 .waitLoading(disappear, publishersPage.getTableProgressBar())
-                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE),
+                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.STATUS),
                         Statuses.ACTIVE.getStatus())
                 .logOut()
                 .testEnd();

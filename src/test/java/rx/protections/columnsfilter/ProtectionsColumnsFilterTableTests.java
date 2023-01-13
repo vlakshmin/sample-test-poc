@@ -11,18 +11,11 @@ import pages.Path;
 import pages.protections.ProtectionsPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
-import zutils.StringUtils;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-import static api.preconditionbuilders.ProtectionsPrecondition.protection;
-import static api.preconditionbuilders.PublisherPrecondition.publisher;
-import static api.preconditionbuilders.UsersPrecondition.user;
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
-import static java.lang.String.format;
 import static managers.TestManager.testStart;
 
 @Slf4j

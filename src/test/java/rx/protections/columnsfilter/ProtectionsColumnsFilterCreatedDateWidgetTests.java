@@ -13,7 +13,6 @@ import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import zutils.StringUtils;
 
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -21,7 +20,6 @@ import java.util.List;
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
 import static java.lang.String.format;
-import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 import static managers.TestManager.testStart;
 
 @Slf4j
@@ -84,8 +82,8 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .waitAndValidate(visible, calendar.getPreviousMonthButton())
                 .clickOnWebElement(calendar.getPreviousMonthButton())
                 .then("Should be displayed previous month")
-                .validateContainsText(calendar.getMonthOrYearHeaderButton(), StringUtils.getStringMonthYear(currentDate.minusMonths(1).getMonth(),
-                        currentDate.getYear()))
+                .validateContainsText(calendar.getMonthOrYearHeaderButton(),StringUtils.getStringMonthYear(currentDate.minusMonths(1).getMonth(),
+                        currentDate.getMonth().getValue() == 12 ? currentDate.getYear() - 1 : currentDate.getYear()))
                 .testEnd();
     }
 
