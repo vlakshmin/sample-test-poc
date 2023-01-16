@@ -24,7 +24,7 @@ public abstract class PublisherSidebar {
     private SelenideElement saveButton = $x(SAVE_BUTTON.getSelector()).as(SAVE_BUTTON.getAlias());
     private SelenideElement adOpsPerson = $x(AD_OPS_PERSON.getSelector()).as(AD_OPS_PERSON.getAlias());
     private SelenideElement activeToggle = $x(ACTIVE_TOGGLE.getSelector()).as(ACTIVE_TOGGLE.getAlias());
-    private SelenideElement categoriesInput = $x(CATEGORIES_INPUT.getSelector()).as(CATEGORIES_INPUT.getAlias());
+    private SelenideElement categories = $x(CATEGORIES.getSelector()).as(CATEGORIES.getAlias());
     private SelenideElement currencyDropdown = $x(CURRENCY_DROPDOWN.getSelector()).as(CURRENCY_DROPDOWN.getAlias());
     private ElementsCollection currencyDropdownItems = $$x(CURRENCY_DROPDOWN_ITEMS.getSelector()).as(CURRENCY_DROPDOWN_ITEMS.getAlias());
 

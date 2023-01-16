@@ -3,6 +3,7 @@ package rx.inventory.adspot;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -90,6 +91,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3288")
     @Test(description = "Check required fields")
     public void checkRequiredFields() {
         var videoCard = adSpotSidebar.getVideoCard();
@@ -224,7 +226,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
 
 
                 .and("Fill Default Floor Price")
-                .setValueWithClean(adSpotSidebar.getDefaultFloorPrice(), "0")
+                .setValueWithClean(adSpotSidebar.getDefaultFloorPrice(), "0.01")
                 .then("Validate error under the 'Default Floor Price' field disappeared")
                 .waitAndValidate(not(visible), adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
                 .then("Validate errors disappeared")
@@ -281,6 +283,8 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3288")
+    @Epic("?/GS-3445")
     @Test(description = "Check Minimum Value Default Floor Price")
     private void checkMinValueDefaultFloorPrice() {
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
@@ -293,10 +297,10 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .then("Validate error under the 'Default Floor Price' field")
                 .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
                 .validate(adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"),
-                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                        ErrorMessages.MIN_MAX_VALUE_FLOOR_PRICE.getText())
                 .validateListSize(errorsList, 1)
                 .validateList(errorsList, List.of(
-                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                        ErrorMessages.MIN_MAX_VALUE_FLOOR_PRICE.getText())
                 )
                 .setValueWithClean(adSpotSidebar.getDefaultFloorPrice(), "0.00")
                 .then("Validate error under the 'Default Floor Price' field disappeared")
@@ -307,6 +311,8 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3288")
+    @Epic("?/GS-3445")
     @Test(description = "Check Minimum Value Banner Floor Price")
     private void checkMinValueBannerFloorPrice() {
         var bannerCard = adSpotSidebar.getBannerCard();
@@ -322,10 +328,10 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .then("Validate error under the 'Floor Price' field")
                 .waitAndValidate(visible, bannerCard.getErrorAlertByFieldName("Floor Price"))
                 .validate(bannerCard.getErrorAlertByFieldName("Floor Price"),
-                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                        ErrorMessages.MIN_MAX_VALUE_FLOOR_PRICE.getText())
                 .validateListSize(errorsList, 1)
                 .validateList(errorsList, List.of(
-                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                        ErrorMessages.MIN_MAX_VALUE_FLOOR_PRICE.getText())
                 )
                 .setValueWithClean(bannerCard.getFloorPriceField().getFloorPriceInput(), "0.00")
                 .then("Validate error under the 'Floor Price' field disappeared")
@@ -337,6 +343,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
     }
 
 
+    @Epic("?/GS-3445")
     @Test(description = "Check Minimum Value Native Floor Price")
     private void checkMinValueNativeFloorPrice() {
         var nativeCard = adSpotSidebar.getNativeCard();
@@ -352,12 +359,12 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .then("Validate error under the 'Floor Price' field")
                 .waitAndValidate(visible, nativeCard.getErrorAlertByFieldName("Floor Price"))
                 .validate(nativeCard.getErrorAlertByFieldName("Floor Price"),
-                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                        ErrorMessages.MIN_MAX_VALUE_FLOOR_PRICE.getText())
                 .validateListSize(errorsList, 1)
                 .validateList(errorsList, List.of(
-                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                        ErrorMessages.MIN_MAX_VALUE_FLOOR_PRICE.getText())
                 )
-                .setValueWithClean(nativeCard.getFloorPriceField().getFloorPriceInput(), "0.00")
+                .setValueWithClean(nativeCard.getFloorPriceField().getFloorPriceInput(), "0.01")
                 .then("Validate error under the 'Floor Price' field disappeared")
                 .waitAndValidate(not(visible), nativeCard.getErrorAlertByFieldName("Floor Price"))
                 .then("Validate errors disappeared")
@@ -366,6 +373,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("?/GS-3445")
     @Test(description = "Check Minimum Value Video Floor Price")
     private void checkMinValueVideoFloorPrice() {
         var videoCard = adSpotSidebar.getVideoCard();
@@ -388,10 +396,10 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .then("Validate error under the 'Floor Price' field")
                 .waitAndValidate(visible, videoCard.getErrorAlertByFieldName("Floor Price"))
                 .validate(videoCard.getErrorAlertByFieldName("Floor Price"),
-                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                        ErrorMessages.MIN_MAX_VALUE_FLOOR_PRICE.getText())
                 .validateListSize(errorsList, 1)
                 .validateList(errorsList, List.of(
-                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                        ErrorMessages.MIN_MAX_VALUE_FLOOR_PRICE.getText())
                 )
                 .setValueWithClean(videoCard.getFloorPriceField().getFloorPriceInput(), "0.00")
                 .then("Validate error under the 'Floor Price' field disappeared")
@@ -414,10 +422,10 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .then("Validate error under the 'Default Floor Price' field")
                 .waitAndValidate(visible, adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"))
                 .validate(adSpotSidebar.getErrorAlertByFieldName("Default Floor Price"),
-                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                        ErrorMessages.MIN_MAX_VALUE_FLOOR_PRICE.getText())
                 .validateListSize(errorsList, 1)
                 .validateList(errorsList, List.of(
-                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                        ErrorMessages.MIN_MAX_VALUE_FLOOR_PRICE.getText())
                 )
                 .setValueWithClean(adSpotSidebar.getDefaultFloorPrice(), "")
                 .setValueWithClean(adSpotSidebar.getDefaultFloorPrice(), "0.00")
@@ -429,6 +437,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3288")
     @Test(description = "Check Maximum Value Banner Floor Price")
     private void checkMaxValueBannerFloorPrice() {
         var bannerCard = adSpotSidebar.getBannerCard();
@@ -458,6 +467,8 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3288")
+    @Epic("?/GS-3445")
     @Test(description = "Check Maximum Value Native Floor Price")
     private void checkMaxValueNativeFloorPrice() {
         var nativeCard = adSpotSidebar.getNativeCard();
@@ -473,10 +484,10 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .then("Validate error under the 'Floor Price' field")
                 .waitAndValidate(visible, nativeCard.getErrorAlertByFieldName("Floor Price"))
                 .validate(nativeCard.getErrorAlertByFieldName("Floor Price"),
-                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                        ErrorMessages.MIN_MAX_VALUE_FLOOR_PRICE.getText())
                 .validateListSize(errorsList, 1)
                 .validateList(errorsList, List.of(
-                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                        ErrorMessages.MIN_MAX_VALUE_FLOOR_PRICE.getText())
                 )
                 .setValueWithClean(nativeCard.getFloorPriceField().getFloorPriceInput(), "0.00")
                 .then("Validate error under the 'Floor Price' field disappeared")
@@ -487,6 +498,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3288")
     @Test(description = "Check Maximum Value Video Floor Price")
     private void checkMaxValueVideoFloorPrice() {
         var videoCard = adSpotSidebar.getVideoCard();
@@ -509,10 +521,10 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .then("Validate error under the 'Floor Price' field")
                 .waitAndValidate(visible, videoCard.getErrorAlertByFieldName("Floor Price"))
                 .validate(videoCard.getErrorAlertByFieldName("Floor Price"),
-                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                        ErrorMessages.MIN_MAX_VALUE_FLOOR_PRICE.getText())
                 .validateListSize(errorsList, 1)
                 .validateList(errorsList, List.of(
-                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+                        ErrorMessages.MIN_MAX_VALUE_FLOOR_PRICE.getText())
                 )
                 .setValueWithClean(videoCard.getFloorPriceField().getFloorPriceInput(), "999,999.99")
                 .then("Validate error under the 'Floor Price' field disappeared")
@@ -575,7 +587,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .clickOnWebElement(adSpotSidebar.getDefaultAdSizes())
                 .clickOnWebElement(adSpotSidebar.getAdSizesPanel().getAdSizeCheckbox(AdSizesList.A120x20))
                 .clickOnWebElement(adSpotSidebar.getNameInput())
-                .setValueWithClean(adSpotSidebar.getDefaultFloorPrice(), "0")
+                .setValueWithClean(adSpotSidebar.getDefaultFloorPrice(), "0.00")
                 .testEnd();
     }
 

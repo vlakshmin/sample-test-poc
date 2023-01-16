@@ -105,7 +105,7 @@ public class PublisherCreateTests extends BaseTest {
                 .and("select category");
         if (categorySelected)
             testStart()
-                    .clickOnWebElement(createPublisherSidebar.getCategoriesInput())
+                    .clickOnWebElement(createPublisherSidebar.getCategories())
                     .clickOnWebElement(categories.getCategoryCheckbox(CategoriesList.ART_ENTERTAIMENTS));
         testStart()
                 .and("click save button")

@@ -129,7 +129,7 @@ public class PublisherEditTests extends BaseTest {
                 .and("select category");
         if (categorySelected)
             testStart()
-                    .clickOnWebElement(editPublisherSideBar.getCategoriesInput())
+                    .clickOnWebElement(editPublisherSideBar.getCategories())
                     .clickOnWebElement(categories.getCategoryCheckbox(CategoriesList.EDUCATION));
         testStart()
                 .and("click save button")
