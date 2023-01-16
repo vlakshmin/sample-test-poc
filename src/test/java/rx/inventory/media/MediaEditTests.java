@@ -25,6 +25,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Epic("v1.28.0/GS-3298")
 public class MediaEditTests extends BaseTest {
 
     private Media media;
@@ -50,7 +51,6 @@ public class MediaEditTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'IOS' media type")
     public void editMediaIOSMediaType() {
         var mediaName = captionWithSuffix("autoMediaIOS");
@@ -60,7 +60,6 @@ public class MediaEditTests extends BaseTest {
                 mediaName + "Updated1", URL + "Updated1", "");
     }
 
-    @Epic("v1.26.0/GS-3017")
     @Test(description = "Edit Media with 'IOS Web View' media type")
     public void editMediaIOSWebViewMediaType() {
         var mediaName = captionWithSuffix("autoMediaIOSWebView");
@@ -70,7 +69,6 @@ public class MediaEditTests extends BaseTest {
                 mediaName + "Updated2", URL + "Updated2", "com.app.updated");
     }
 
-    @Epic("v1.26.0/GS-3017")
     @Test(description = "Edit Media with 'Android' media type")
     public void createMediaAndroidMediaType() {
         var mediaName = captionWithSuffix("autoMediaAndroid");
@@ -80,7 +78,6 @@ public class MediaEditTests extends BaseTest {
                 mediaName + "Updated3", URL + "Updated3", "com.app.updated");
     }
 
-    @Epic("v1.26.0/GS-3017")
     @Test(description = "Edit Media with 'Android Web View' media type")
     public void editMediaAndroidWebViewMediaType() {
         var mediaName = captionWithSuffix("autoMediaAndroidWebView");
@@ -90,7 +87,6 @@ public class MediaEditTests extends BaseTest {
                 mediaName + "Updated4", URL + "Updated4", "com.app.updated");
     }
 
-    @Epic("v1.26.0/GS-3017")
     @Test(description = "Edit Media with 'PC Web' media type")
     public void editMediaPCWebViewMediaType() {
         var mediaName = captionWithSuffix("autoMediaPCWeb");
@@ -101,7 +97,6 @@ public class MediaEditTests extends BaseTest {
                 mediaName + "Updated5", URL + "Updated5", "com.app.updated");
     }
 
-    @Epic("v1.26.0/GS-3017")
     @Test(description = "Edit Media with 'Mobile Web' media type")
     public void editMediaMobileWebViewMediaType() {
         var mediaName = captionWithSuffix("autoMediaMobileWeb");

@@ -175,12 +175,14 @@ public class DealsSortingTableTests extends BaseTest {
         validateSortData(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Sorting 'Active/Inactive' column by ascending")
     public void adSpotSortingByStatusAsc() {
         sortByAscColumnByName(ColumnNames.STATUS);
         validateSortData(ColumnNames.STATUS, ASC, sortStatusByAsc);
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Sorting 'Active/Inactive' column by descending")
     public void adSpotSortingByStatusDesc() {
         sortByDescColumnByName(ColumnNames.STATUS);

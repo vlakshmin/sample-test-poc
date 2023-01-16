@@ -3,6 +3,7 @@ package rx.yield.openpricing;
 import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.OpenPricingPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
@@ -37,6 +38,7 @@ public class VerifyPublisherTests extends BaseTest {
                 .getOpenPricingResponse();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(enabled = true)
     public void verifySingleDeactivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
@@ -58,6 +60,7 @@ public class VerifyPublisherTests extends BaseTest {
 
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(enabled = true)
     public void verifySingleActivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
@@ -77,6 +80,7 @@ public class VerifyPublisherTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(enabled = true)
     public void verifyBulkDeactivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
@@ -98,6 +102,7 @@ public class VerifyPublisherTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(enabled = true)
     public void verifyBulkActivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();

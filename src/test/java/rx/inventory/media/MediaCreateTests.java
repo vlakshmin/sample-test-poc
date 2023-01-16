@@ -22,6 +22,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Epic("v1.28.0/GS-3298")
 public class MediaCreateTests extends BaseTest {
     
     private MediaPage mediaPage;
@@ -50,7 +51,6 @@ public class MediaCreateTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'IOS' platform type")
     public void createMediaIOSPlatformType() {
         var mediaName = captionWithSuffix("autoMediaIOS");
@@ -59,7 +59,6 @@ public class MediaCreateTests extends BaseTest {
         createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, PlatformType.IOS.getName());
     }
 
-    @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'IOS Web View' platform type")
     private void createMediaIOSWebViewPlatformType() {
         var mediaName = captionWithSuffix("autoMediaIOSWebView");
@@ -68,7 +67,6 @@ public class MediaCreateTests extends BaseTest {
         createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, PlatformType.IOS_WEB_VIEW.getName());
     }
 
-    @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'Android' platform type")
     private void createMediaAndroidPlatformType() {
         var mediaName = captionWithSuffix("autoMediaAndroid");
@@ -77,7 +75,6 @@ public class MediaCreateTests extends BaseTest {
         createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, PlatformType.ANDROID.getName());
     }
 
-    @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'Android Web View' platform type")
     private void createMediaAndroidWebViewPlatformType() {
         var mediaName = captionWithSuffix("autoMediaAndroidWebView");
@@ -86,7 +83,6 @@ public class MediaCreateTests extends BaseTest {
         createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, PlatformType.ANDROID_WEB_VIEW.getName());
     }
 
-    @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'PC Web' platform type")
     private void createMediaPCWebViewPlatformType() {
         var mediaName = captionWithSuffix("autoMediaPCWeb");
@@ -94,7 +90,6 @@ public class MediaCreateTests extends BaseTest {
         createAndCheckCreatedMedia(mediaName, appStoreURL, "", PlatformType.PC_WEB.getName());
     }
 
-    @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'Mobile Web' platform type")
     private void createMediaMobileWebViewPlatformType() {
         var mediaName = captionWithSuffix("autoMediaMobileWeb");

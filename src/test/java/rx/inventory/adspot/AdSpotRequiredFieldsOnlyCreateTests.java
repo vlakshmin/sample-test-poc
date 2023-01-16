@@ -3,6 +3,7 @@ package rx.inventory.adspot;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -126,6 +127,7 @@ public class AdSpotRequiredFieldsOnlyCreateTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(description = "Check columns data in the Ad Spots table for created Ad Spot",
             dependsOnMethods = "createAdSpotWithAllFields")
     private void checkTableColumns() {

@@ -164,12 +164,14 @@ public class OpenPricingSortingTableTests extends BaseTest {
         validateSorting(ColumnNames.ID, ASC, sortIdsByAsc);
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Sorting 'Active/Inactive' column by descending")
     public void OpenPricingSortingByActiveInactiveDesc() {
         sortByDescColumnByName(ColumnNames.STATUS);
         validateSorting(ColumnNames.STATUS, DESC, sortActiveInactiveByDesc);
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Sorting 'Active/Inactive' column by ascending")
     public void OpenPricingSortingByActiveInactiveAsc() {
         sortByAscColumnByName(ColumnNames.STATUS);

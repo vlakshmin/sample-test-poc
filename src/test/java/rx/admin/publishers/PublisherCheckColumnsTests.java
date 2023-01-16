@@ -1,5 +1,6 @@
 package rx.admin.publishers;
 
+import io.qameta.allure.Epic;
 import pages.Path;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
@@ -37,6 +38,7 @@ public class PublisherCheckColumnsTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test
     public void checkColumns() {
         var tableOptions = publisherPage.getTable().getShowHideColumns();

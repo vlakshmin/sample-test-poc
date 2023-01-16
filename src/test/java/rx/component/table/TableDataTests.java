@@ -3,6 +3,7 @@ package rx.component.table;
 import api.dto.rx.admin.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
@@ -41,6 +42,7 @@ public class TableDataTests extends BaseTest {
                 .getPublisherResponse();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test
     public void checkColumns() {
         var tableData = publishersPage.getTable().getTableData();
@@ -103,6 +105,7 @@ public class TableDataTests extends BaseTest {
 
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test
     public void checkPagination() {
         var tableData = publishersPage.getTable().getTableData();

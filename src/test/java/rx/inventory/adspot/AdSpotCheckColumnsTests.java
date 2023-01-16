@@ -1,6 +1,7 @@
 package rx.inventory.adspot;
 
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -18,6 +19,7 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Epic("v1.28.0/GS-3298")
 public class AdSpotCheckColumnsTests extends BaseTest {
     private AdSpotsPage adSpotsPage;
 
@@ -37,7 +39,7 @@ public class AdSpotCheckColumnsTests extends BaseTest {
                 .testEnd();
     }
 
-
+    @Epic("v1.28.0/GS-3298")
     @Test
     public void checkColumns() {
         var tableOptions = adSpotsPage.getAdSpotsTable().getShowHideColumns();

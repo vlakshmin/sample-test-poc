@@ -1,6 +1,7 @@
 package rx.inventory.media;
 
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -17,6 +18,7 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Epic("v1.28.0/GS-3298")
 public class MediaCheckColumnsTests extends BaseTest {
 
     private MediaPage mediaPage;

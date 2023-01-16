@@ -1,6 +1,7 @@
 package rx.yield.openpricing.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
 import lombok.extern.slf4j.Slf4j;
@@ -87,6 +88,7 @@ public class OpenPricingColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(description = "Check Back button", dependsOnMethods = "testNextMonthColumnsFilterComponent")
     public void testBackButtonColumnsFilterComponent() {
         var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();

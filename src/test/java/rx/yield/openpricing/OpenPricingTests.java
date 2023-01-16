@@ -3,6 +3,7 @@ package rx.yield.openpricing;
 import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.OpenPricingPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Ignore;
@@ -95,6 +96,7 @@ public class OpenPricingTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(enabled = true)
     @Ignore
     public void verifyColumnOrder() {
@@ -144,6 +146,7 @@ public class OpenPricingTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(enabled = true)
     @Ignore
     public void checkColumns() {
@@ -218,6 +221,7 @@ public class OpenPricingTests extends BaseTest {
                 .and();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(enabled = true)
     @Ignore
     public void verifySingleDeactivatePublisherActive() {
@@ -259,6 +263,7 @@ public class OpenPricingTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(enabled = true)
     @Ignore
     public void verifyBulkDeactivatePublisherActive() {

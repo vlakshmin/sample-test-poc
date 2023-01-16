@@ -205,6 +205,7 @@ public class AdSpotSearchTableTests extends BaseTest {
     }
 
     @Epic("GS-2943")
+    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Search with filter by status", enabled = false)
     public void adSpotsSearchWithFilterByStatus() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();

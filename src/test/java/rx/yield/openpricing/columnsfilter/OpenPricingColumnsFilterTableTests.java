@@ -1,6 +1,7 @@
 package rx.yield.openpricing.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
@@ -41,6 +42,7 @@ public class OpenPricingColumnsFilterTableTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(description = "Check columns filter options by default")
     public void defaultColumnsFilter(){
         var tableColumns = openPricingPage.getOpenPricingTable();
@@ -58,6 +60,7 @@ public class OpenPricingColumnsFilterTableTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(description = "Select show all columns and check columns filter options")
     public void showAllColumns(){
         var tableColumns = openPricingPage.getOpenPricingTable();
@@ -89,6 +92,7 @@ public class OpenPricingColumnsFilterTableTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(description = "Hide all columns and check columns filter options")
     public void hideAllColumns(){
         var tableColumns = openPricingPage.getOpenPricingTable();
@@ -118,6 +122,7 @@ public class OpenPricingColumnsFilterTableTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(description = "Show all columns and refresh page. Check columns filter options")
     public void showAllAndRefreshPage(){
         var tableColumns = openPricingPage.getOpenPricingTable();
@@ -144,6 +149,7 @@ public class OpenPricingColumnsFilterTableTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(description = "Show all columns and reload page. Check columns filter options")
     public void showAllAndReloadPage(){
         var tableColumns = openPricingPage.getOpenPricingTable();

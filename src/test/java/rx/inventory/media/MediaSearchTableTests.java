@@ -205,6 +205,7 @@ public class MediaSearchTableTests extends BaseTest {
     }
 
     @Epic("GS-2946")
+    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Search with filter by status", enabled = false)
     public void mediaSearchWithFilterByStatus() {
         var tableData = mediaPage.getMediaTable().getTableData();
