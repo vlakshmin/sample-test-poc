@@ -77,13 +77,13 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .map(Object::toString)
                 .collect(Collectors.toList());
 
-        sortPublisherNameByAsc = getAllItemsByParams("publisher_name-asc").stream()
-                .map(OpenPricing::getPublisherName)
-                .collect(Collectors.toList());
-
-        sortPublisherNameByDesc = getAllItemsByParams("publisher_name-desc").stream()
-                .map(OpenPricing::getPublisherName)
-                .collect(Collectors.toList());
+//        sortPublisherNameByAsc = getAllItemsByParams("publisher_name-asc").stream()
+//                .map(OpenPricing::getPublisherName)
+//                .collect(Collectors.toList());
+//
+//        sortPublisherNameByDesc = getAllItemsByParams("publisher_name-desc").stream()
+//                .map(OpenPricing::getPublisherName)
+//                .collect(Collectors.toList());
 
         sortActiveInactiveByAsc = getAllItemsByParams("active-asc").stream()
                 .map(OpenPricing::getActive)

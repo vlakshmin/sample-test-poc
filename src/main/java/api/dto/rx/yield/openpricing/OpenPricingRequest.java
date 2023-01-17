@@ -15,14 +15,14 @@ import zutils.ObjectMapperUtils;
 public class OpenPricingRequest {
 
     private Rule rule;
-    private Integer id;
+ //   private Integer id;
     private String name;
     private String notes;
     private Boolean active;
     private Boolean priority;
     private Double floorPrice;
     private Integer publisherId;
-    private String publisherName;
+  //  private String publisherName;
 
     public String toJson() {
         return ObjectMapperUtils.toJson(this);

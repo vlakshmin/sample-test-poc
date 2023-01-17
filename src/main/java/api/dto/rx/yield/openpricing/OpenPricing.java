@@ -26,7 +26,7 @@ public class OpenPricing {
     private String updatedBy;
     private Double floorPrice;
     private Integer publisherId;
-    private String  publisherName;
+//    private String  publisherName;
 
     public String toJson() {
 
