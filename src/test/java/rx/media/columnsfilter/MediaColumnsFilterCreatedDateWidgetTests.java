@@ -1,6 +1,5 @@
 package rx.media.columnsfilter;
 
-import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +24,7 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Feature(value = "Open Pricing Columns Filter")
+@Feature(value = "Media Columns Filter")
 public class MediaColumnsFilterCreatedDateWidgetTests extends BaseTest {
 
     private MediaPage mediaPage;
@@ -54,7 +53,6 @@ public class MediaColumnsFilterCreatedDateWidgetTests extends BaseTest {
                         mediaPage.getMediaTable().getTablePagination().getRowNumbersList(), "10")
                 .testEnd();
     }
-
 
     @Test(description = "Check Default State")
     public void testDefaultStateColumnsFilterComponent() {

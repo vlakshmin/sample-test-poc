@@ -25,7 +25,7 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Feature(value = "OpenPricing Columns Filter")
+@Feature(value = "Media Columns Filter")
 public class MediaColumnsFilterUpdatedDateWidgetTests extends BaseTest {
 
     private MediaPage mediaPage;

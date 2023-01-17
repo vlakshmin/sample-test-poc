@@ -21,7 +21,7 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Feature(value = "OpenPricing Columns Filter")
+@Feature(value = "Media Columns Filter")
 public class MediaColumnsFilterTableTests extends BaseTest {
 
     private MediaPage mediaPage;
@@ -150,9 +150,7 @@ public class MediaColumnsFilterTableTests extends BaseTest {
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
-                .and("Navigate to Open Pricing page")
-                .openDirectPath(Path.MEDIA)
-                .and("Navigate to Protection page again")
+                .and("Navigate to Media page")
                 .openDirectPath(Path.MEDIA)
                 .scrollIntoView(mediaPage.getMediaTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(mediaPage.getMediaTable().getTablePagination().getPageMenu(),

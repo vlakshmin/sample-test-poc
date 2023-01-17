@@ -30,8 +30,6 @@ public class MediaColumnsFilterWidgetTests extends BaseTest {
 
     private MediaPage mediaPage;
 
-    private List<String> selectedPublishersNameList;
-
     public MediaColumnsFilterWidgetTests() {
         mediaPage = new MediaPage();
     }
