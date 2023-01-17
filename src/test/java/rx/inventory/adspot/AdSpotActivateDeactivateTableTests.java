@@ -93,8 +93,8 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
         deactivatePublisher(adSpotActiveWithInactivePublisher.getPublisherId());
         AdSpotInActiveWithInactivePublisher = createAdSpot(PREFIX_AD_SPOT_INACTIVE_PUBLISHER, false);
         deactivatePublisher(AdSpotInActiveWithInactivePublisher.getPublisherId());
-        adSpotActiveWithInactiveMedia = createAdSpot(PREFIX_AD_SPOT_INACTIVE_MEDIA, false);
-        deactivatePublisher(adSpotActiveWithInactiveMedia.getPublisherId());
+        adSpotActiveWithInactiveMedia = createAdSpot(PREFIX_AD_SPOT_INACTIVE_MEDIA, true);
+        deactivateMedia(adSpotActiveWithInactiveMedia.getMediaId());
     }
 
     @BeforeMethod
@@ -110,6 +110,7 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
     @Epic("v1.28.0/GS-3298")
     @Test(testName = "Deactivate single ad spot")
     public void deactivateSingleAdSpot() {
+        var toasterPanel = adSpotsPage.getToasterMessage();
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
 
@@ -126,12 +127,14 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
                                 ColumnNames.AD_SPOT_NAME, adSpotActive1.getName()),
                         Statuses.INACTIVE.getStatus())
+                .validate(not(exist), toasterPanel.getPanelError())
                 .testEnd();
     }
 
     @Epic("v1.28.0/GS-3298")
     @Test(testName = "Deactivate single ad spot with inactive media")
     public void deactivateSingleAdSpotWithInactiveMedia() {
+        var toasterPanel = adSpotsPage.getToasterMessage();
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
 
@@ -148,12 +151,15 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
                                 ColumnNames.AD_SPOT_NAME, adSpotActiveWithInactiveMedia.getName()),
                         Statuses.INACTIVE.getStatus())
+                .then("Error message is not appear")
+                .validate(not(exist), toasterPanel.getPanelError())
                 .testEnd();
     }
 
     @Epic("v1.28.0/GS-3298")
     @Test(testName = "Activate single ad spot with inactive media")
     public void activateSingleAdSpotWithInactiveMedia() {
+        var toasterPanel = adSpotsPage.getToasterMessage();
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
 
@@ -170,6 +176,8 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
                                 ColumnNames.AD_SPOT_NAME, adSpotInActiveWithInactiveMedia.getName()),
                         Statuses.ACTIVE.getStatus())
+                .then("Error message is not appear")
+                .validate(not(exist), toasterPanel.getPanelError())
                 .testEnd();
     }
 
@@ -243,6 +251,7 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
     @Epic("v1.28.0/GS-3298")
     @Test(testName = "Activate single ad spot")
     public void activateSingleAdSpot() {
+        var toasterPanel = adSpotsPage.getToasterMessage();
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
         var tablePagination = adSpotsPage.getAdSpotsTable().getTablePagination();
 
@@ -263,6 +272,8 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .validateContainsText(tableData.getCellByRowValue(ColumnNames.STATUS,
                                 ColumnNames.AD_SPOT_NAME, adSpotInActive1.getName()),
                         Statuses.ACTIVE.getStatus())
+                .then("Error message is not appear")
+                .validate(not(exist), toasterPanel.getPanelError())
                 .testEnd();
     }
 
@@ -395,6 +406,10 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
 
     private void deactivatePublisher(Integer id) {
         publisher().changePublisherStatus(id, false);
+    }
+
+    private void deactivateMedia(Integer id) {
+        media().changeMediaStatus(id, false);
     }
 
     private void deletePublisher(Integer id) {

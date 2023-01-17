@@ -20,8 +20,11 @@ import widgets.common.table.ColumnNames;
 import widgets.common.table.Statuses;
 import widgets.common.table.TableData;
 import widgets.inventory.adSpots.sidebar.EditAdSpotSidebar;
+import zutils.StringUtils;
 
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -68,9 +71,6 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     final private static CategoriesList CATEGORY_AUTO_REPAIR = CategoriesList.AUTO_REPAIR;
 
     final private static String AD_SPOT_NAME = captionWithSuffix("4autoAdSpot");
-
-    final private static String currentDate = new SimpleDateFormat("MMM d yyyy").format( new Date());
-
 
     public AdSpotAllFieldsCreateTests() {
         adSpotPage = new AdSpotsPage();
@@ -143,6 +143,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     public void checkTableColumns() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
         var tableOptions = adSpotPage.getAdSpotsTable().getShowHideColumns();
+        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
         testStart()
                 .and("'Show' all columns")
@@ -153,6 +154,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.AD_SPOT_NAME))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PUBLISHER))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.RELATED_MEDIA))
+                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PAGE_CATEGORY))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.STATUS))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.TEST_MODE))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_SIZES))
@@ -170,9 +172,8 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
                 .validate(tableData.getCellByRowValue(ColumnNames.TEST_MODE, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), "Enabled")
                 .validate(tableData.getCellByRowValue(ColumnNames.PAGE_CATEGORY, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME),
                         String.format("%s, %s", CATEGORY_AUTO_REPAIR.getName(), CATEGORY_EDUCATION.getName()))
-                .validate(tableData.getCellByRowValue(ColumnNames.CREATED_DATE, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), currentDate)
-                .validate(tableData.getCellByRowValue(ColumnNames.UPDATED_DATE, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), currentDate)
-
+                .validate(tableData.getCellByRowValue(ColumnNames.CREATED_DATE, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), StringUtils.getDateAsString(currentDate))
+                .validate(tableData.getCellByRowValue(ColumnNames.UPDATED_DATE, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), StringUtils.getDateAsString(currentDate))
                 .testEnd();
     }
 

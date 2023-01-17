@@ -26,6 +26,7 @@ import static managers.TestManager.testStart;
 @Slf4j
 @Listeners({ScreenShooter.class})
 @Feature(value = "Open Pricing Columns Filter")
+@Epic("v?/GS-3324")
 public class OpenPricingColumnsFilterCreatedDateWidgetTests extends BaseTest {
 
     private OpenPricingPage openPricingPage;

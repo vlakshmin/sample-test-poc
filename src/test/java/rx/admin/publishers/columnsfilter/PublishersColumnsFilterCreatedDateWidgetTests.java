@@ -1,6 +1,7 @@
 package rx.admin.publishers.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
@@ -25,6 +26,7 @@ import static managers.TestManager.testStart;
 @Slf4j
 @Listeners({ScreenShooter.class})
 @Feature(value = "Publishers Columns Filter")
+@Epic("v?/GS-3324")
 public class PublishersColumnsFilterCreatedDateWidgetTests extends BaseTest {
 
     private PublishersPage publishersPage;
