@@ -158,7 +158,7 @@
         </classes>
     </test>
 
-    <test name="0Precondition. Delete records with 'auto' substring">
+    <test name="Post-condition. Delete records with 'auto' substring">
         <classes>
             <class name="rx.pipelines.DeleteGeneratedDataTest"/>
         </classes>
