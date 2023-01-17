@@ -2,6 +2,7 @@ package rx.protections.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Issue;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
 import pages.Path;
@@ -55,6 +56,7 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .testEnd();
     }
 
+    @Issue("GS-3447")
     @Test(description = "Check Search Publisher")
     public void testSearchPublisherColumnsFilterComponent() {
 
@@ -92,6 +94,7 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .testEnd();
     }
 
+    @Issue("GS-3447")
     @Test(description = "Check Chip Widget Component", dependsOnMethods = "testSearchPublisherColumnsFilterComponent")
     public void testPublisherChipWidgetComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();

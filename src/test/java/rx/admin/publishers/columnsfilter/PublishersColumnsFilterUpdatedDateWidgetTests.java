@@ -123,7 +123,7 @@ public class PublishersColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .waitAndValidate(visible, calendar.getMonthOrYearHeaderButton())
                 .then("Should be displayed previous month")
                 .validateContainsText(calendar.getMonthOrYearHeaderButton(),StringUtils.getStringMonthYear(currentDate.minusMonths(1).getMonth(),
-                        currentDate.getMonth().getValue() == 12 ? currentDate.getYear() - 1 : currentDate.getYear()))
+                        currentDate.getMonth().getValue() == 1 ? currentDate.getYear() - 1 : currentDate.getYear()))
                 .testEnd();
     }
 

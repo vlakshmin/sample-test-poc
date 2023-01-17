@@ -85,7 +85,7 @@ public class PublishersColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .clickOnWebElement(calendar.getPreviousMonthButton())
                 .then("Should be displayed previous month")
                 .validateContainsText(calendar.getMonthOrYearHeaderButton(),StringUtils.getStringMonthYear(currentDate.minusMonths(1).getMonth(),
-                        currentDate.getMonth().getValue() == 12 ? currentDate.getYear() - 1 : currentDate.getYear()))
+                        currentDate.getMonth().getValue() == 1 ? currentDate.getYear() - 1 : currentDate.getYear()))
                 .testEnd();
     }
 

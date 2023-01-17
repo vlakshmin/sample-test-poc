@@ -72,7 +72,7 @@ public class TableDataTests extends BaseTest {
                 .validateListSize(tableData.getColumns(),
                         ColumnNames.NAME.getName(),
                         ColumnNames.CATEGORY.getName(),
-                        ColumnNames.ACTIVE.getName(),
+                        ColumnNames.STATUS.getName(),
                         ColumnNames.ID.getName(),
                         ColumnNames.DOMAIN.getName(),
                         ColumnNames.CURRENCY.getName(),
@@ -92,7 +92,7 @@ public class TableDataTests extends BaseTest {
                 .then()
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.CATEGORY.getName()))
-                .validate(not(visible), tableData.getColumnHeader(ColumnNames.ACTIVE.getName()))
+                .validate(visible, tableData.getColumnHeader(ColumnNames.STATUS.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.DOMAIN.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.CURRENCY.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.AD_OPS_PERSON.getName()))

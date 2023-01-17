@@ -3,6 +3,7 @@ package rx.protections;
 import api.dto.rx.protection.Protection;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ import static managers.TestManager.testStart;
 @Listeners({ScreenShooter.class})
 @Epic("Waiting for separate QA env")
 @Link("https://rakutenadvertising.atlassian.net/browse/GS-3280")
+@Feature(value = "Protections")
 public class ProtectionsSortingTableTests extends BaseTest {
 
     private int totalProtections;

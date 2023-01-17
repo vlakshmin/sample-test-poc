@@ -5,6 +5,7 @@ import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Feature(value = "Protections")
 public class ProtectionChangePublisherTests extends BaseTest {
 
     private ProtectionsPage protectionPage;
