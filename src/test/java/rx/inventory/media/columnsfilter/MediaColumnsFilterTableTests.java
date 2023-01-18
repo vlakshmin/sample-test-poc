@@ -1,4 +1,4 @@
-package rx.media.columnsfilter;
+package rx.inventory.media.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Feature;
@@ -55,7 +55,8 @@ public class MediaColumnsFilterTableTests extends BaseTest {
                 .then("Validate options list")
                 .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
                         ColumnNames.PLATFORM.getName(),
-                        ColumnNames.STATUS.getName()))
+                        ColumnNames.STATUS.getName(),
+                        ColumnNames.UPDATED_DATE.getName()))
                 .testEnd();
     }
 
@@ -134,7 +135,8 @@ public class MediaColumnsFilterTableTests extends BaseTest {
                 .then("Validate options list")
                 .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
                         ColumnNames.PLATFORM.getName(),
-                        ColumnNames.STATUS.getName()))
+                        ColumnNames.STATUS.getName(),
+                        ColumnNames.UPDATED_DATE.getName()))
                 .testEnd();
     }
 
@@ -160,7 +162,8 @@ public class MediaColumnsFilterTableTests extends BaseTest {
                 .then("Validate options list")
                 .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
                         ColumnNames.PLATFORM.getName(),
-                        ColumnNames.STATUS.getName()))
+                        ColumnNames.STATUS.getName(),
+                        ColumnNames.UPDATED_DATE.getName()))
                 .testEnd();
     }
 

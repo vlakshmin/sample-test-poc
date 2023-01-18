@@ -1,4 +1,4 @@
-package rx.media.columnsfilter;
+package rx.inventory.media.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Feature;
