@@ -1,6 +1,7 @@
 package rx.inventory.media.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +54,7 @@ public class MediaColumnsFilterUpdatedDateWidgetTests extends BaseTest {
     }
 
 
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Check Default State")
     public void testDefaultStateColumnsFilterComponent() {
         var filter = mediaPage.getMediaTable().getColumnFiltersBlock();
@@ -72,6 +74,7 @@ public class MediaColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Check Next Month", dependsOnMethods = "testDefaultStateColumnsFilterComponent")
     public void testNextMonthColumnsFilterComponent() {
         var calendar = mediaPage.getMediaTable().getColumnFiltersBlock().getCalendarFilter().getCalendar();
@@ -87,6 +90,7 @@ public class MediaColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Check Back button", dependsOnMethods = "testNextMonthColumnsFilterComponent")
     public void testBackButtonColumnsFilterComponent() {
         var filter = mediaPage.getMediaTable().getColumnFiltersBlock();
@@ -109,6 +113,7 @@ public class MediaColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Check Previous Month", dependsOnMethods = "testBackButtonColumnsFilterComponent")
     public void testPreviousMonthColumnsFilterComponent() {
         var filter = mediaPage.getMediaTable().getColumnFiltersBlock();
@@ -125,6 +130,7 @@ public class MediaColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Select First Day of the current month and click Cancel", dependsOnMethods = "testPreviousMonthColumnsFilterComponent")
     public void testCancelButtonColumnsFilterComponent() {
         var filter = mediaPage.getMediaTable().getColumnFiltersBlock();
@@ -142,6 +148,7 @@ public class MediaColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Select Last Day of the current month and click Submit", dependsOnMethods = "testCancelButtonColumnsFilterComponent")
     public void testSubmitButtonColumnsFilterComponent() {
         var filter = mediaPage.getMediaTable().getColumnFiltersBlock();
@@ -171,7 +178,7 @@ public class MediaColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Issue("https://rakutenadvertising.atlassian.net/browse/GS-3325")
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Select Period of the current month and click Submit", dependsOnMethods = "testSubmitButtonColumnsFilterComponent")
     public void testPeriodAndSubmitButtonColumnsFilterComponent() {
         var filter = mediaPage.getMediaTable().getColumnFiltersBlock();
@@ -198,16 +205,18 @@ public class MediaColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .validateContainsText(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getHeaderLabel(),
                         format("%s:", ColumnNames.UPDATED_DATE.getName()))
                 .validate(table.countFilterChipsItems(), 1)
-                .then("Validate list of selected date")
+                .then("Validate selected date period")
                 .validate(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).countFilterOptionsChipItems(), 1)
-                // :TODO "https://rakutenadvertising.atlassian.net/browse/GS-3325"
-                .validate(visible, table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getChipFilterOptionItemByName(
-                        StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 21)))
-                .validate(visible, table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getChipFilterOptionItemByName(
-                        StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 11)))
+                .then("Validate selected period")
+                .validate(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).countFilterOptionsChipItems(), 1)
+                .validateContainsText(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getChipFilterOptionItemByPosition(0),
+                        format("%s – %s",
+                                StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 11),
+                                StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 21)))
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Delete Update By Chip", dependsOnMethods = "testPeriodAndSubmitButtonColumnsFilterComponent", alwaysRun = true)
     public void testDeleteColumnsFilterComponent() {
         var table = mediaPage.getMediaTable().getTableData();
