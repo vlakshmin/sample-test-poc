@@ -171,7 +171,8 @@ public class OpenPricingUploadTests extends BaseTest {
         List<String[]> fileData = FileUtils.getAllDataFromCSVWithoutHeader(RESOURCES_DIRECTORY, fileName);
 
         fileData.stream().forEach(
-                row -> { log.info(row[0]);
+                row -> {
+                    log.info(row[0]);
                     if (!row[0].isEmpty()) fileDataMap.put(row[0], convertFloorPrice(row[1]));
                 });
     }
@@ -187,7 +188,7 @@ public class OpenPricingUploadTests extends BaseTest {
     private void findRuleAndDelete(String ruleName) {
 
         List<OpenPricing> rules = OpenPricingPrecondition.openPricing()
-                .getOpenPricingWithFilter(Map.of("name",ruleName))
+                .getOpenPricingWithFilter(Map.of("name", ruleName))
                 .build()
                 .getOpenPricingGetAllResponse()
                 .getItems();
@@ -214,6 +215,6 @@ public class OpenPricingUploadTests extends BaseTest {
     @Step("Convert floor price value")
     private String convertFloorPrice(String floorPrice) {
 
-        return new DecimalFormat("0.##").format(Double.parseDouble(floorPrice));
+        return new DecimalFormat("####.00").format(Double.parseDouble(floorPrice));
     }
 }
