@@ -145,6 +145,7 @@ public class OpenPricingColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3325")
     @Test(description = "Select Period of the current month and click Submit", dependsOnMethods = "testCancelButtonColumnsFilterComponent" )
     public void testPeriodAndSubmitButtonColumnsFilterComponent() {
         var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
@@ -167,12 +168,12 @@ public class OpenPricingColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .validateContainsText(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getHeaderLabel(),
                         format("%s:",ColumnNames.CREATED_DATE.getName()))
                 .validate(table.countFilterChipsItems(), 1)
-                .then("Validate list of selected date")
-                .validate(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).countFilterOptionsChipItems(), 2)
-                .validate(visible, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getChipFilterOptionItemByName(
-                        StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 15)))
-                .validate(visible, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getChipFilterOptionItemByName(
-                        StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 25)))
+                .then("Validate selected period")
+                .validate(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).countFilterOptionsChipItems(), 1)
+                .validateContainsText(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getChipFilterOptionItemByPosition(0),
+                        format("%s – %s",
+                                StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 15),
+                                StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 25)))
                 .testEnd();
     }
 

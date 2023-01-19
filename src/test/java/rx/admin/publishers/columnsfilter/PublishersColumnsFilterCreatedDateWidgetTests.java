@@ -101,12 +101,13 @@ public class PublishersColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .then("Columns Menu should appear")
                 .validateList(filter.getFilterOptionItems(), List.of(ColumnNames.STATUS.getName(),
                         ColumnNames.CURRENCY.getName(),
-                        ColumnNames.CREATED_DATE.getName()))
+                        ColumnNames.CREATED_DATE.getName(),
+                        ColumnNames.UPDATED_DATE.getName()))
                 .and("Select Column Filter 'Created Date'")
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_DATE))
                 .then("Current date should be selected by default")
-                .validate(calendar.getMonthOrYearHeaderButton().getText(), StringUtils.getStringMonthYear(currentDate.getMonth(),currentDate.getYear()))
-                //.validate(calendar.getSelectedDayButton(), String.valueOf(currentDate.getDayOfMonth()))
+                .validate(calendar.getMonthOrYearHeaderButton().getText(),
+                        StringUtils.getStringMonthYear(currentDate.getMonth(),currentDate.getYear()))
                 .testEnd();
     }
 
@@ -121,7 +122,7 @@ public class PublishersColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .clickOnWebElement(calendar.getNextMonthButton())
                 .then("Should be displayed next month")
                 .validateContainsText(calendar.getMonthOrYearHeaderButton(),StringUtils.getStringMonthYear(currentDate.plusMonths(1).getMonth(),
-                        currentDate.getMonth().getValue() == 12 ? currentDate.getYear() + 1 : currentDate.getYear()))
+                        currentDate.plusMonths(1).getYear()))
                 .testEnd();
     }
 
@@ -142,6 +143,7 @@ public class PublishersColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3325")
     @Test(description = "Select Period of the current month and click Submit", dependsOnMethods = "testCancelButtonColumnsFilterComponent" )
     public void testPeriodAndSubmitButtonColumnsFilterComponent() {
         var filter = publishersPage.getTable().getColumnFiltersBlock();
@@ -164,11 +166,11 @@ public class PublishersColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .validateContainsText(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getHeaderLabel(),
                         format("%s:",ColumnNames.CREATED_DATE.getName()))
                 .validate(table.countFilterChipsItems(), 1)
-                .then("Validate list of selected date")
-                .validate(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).countFilterOptionsChipItems(), 2)
-                .validate(visible, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getChipFilterOptionItemByName(
-                        StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 15)))
-                .validate(visible, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getChipFilterOptionItemByName(
+                .then("Validate selected period")
+                .validate(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).countFilterOptionsChipItems(), 1)
+                .validateContainsText(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getChipFilterOptionItemByPosition(0),
+                        format("%s – %s",
+                        StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 15),
                         StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 25)))
                 .testEnd();
     }

@@ -77,7 +77,8 @@ public class TableDataTests extends BaseTest {
                         ColumnNames.DOMAIN.getName(),
                         ColumnNames.CURRENCY.getName(),
                         ColumnNames.AD_OPS_PERSON.getName(),
-                        ColumnNames.MAIL.getName())
+                        ColumnNames.MAIL.getName(),
+                        ColumnNames.UPDATED_DATE.getName())
                 .clickOnWebElement(table.getShowHideColumnsBtn())
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.NAME))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.CATEGORY))
@@ -85,6 +86,7 @@ public class TableDataTests extends BaseTest {
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.CURRENCY))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.AD_OPS_PERSON))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.MAIL))
+                .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .clickOnWebElement(filterOptions.getColumnsFilterButton())
                 .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.STATUS))
                 .selectRadioButton(filterOptions.getActiveBooleanFilter().getInactiveRadioButton())
@@ -97,6 +99,7 @@ public class TableDataTests extends BaseTest {
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.CURRENCY.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.AD_OPS_PERSON.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.MAIL.getName()))
+                .validate(not(visible), tableData.getColumnHeader(ColumnNames.UPDATED_DATE.getName()))
                 .validate(visible, tableData.getColumnHeader(ColumnNames.ID.getName()))
                 .and()
                 .clickOnWebElement(table.getShowHideColumnsBtn())
