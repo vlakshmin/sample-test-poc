@@ -52,7 +52,8 @@ public class UsersColumnsFilterTableTests extends BaseTest {
                 .then("Validate options list")
                 .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.ROLE.getName(),
                                 ColumnNames.STATUS.getName(),
-                                ColumnNames.PUBLISHER.getName()))
+                                ColumnNames.PUBLISHER.getName(),
+                                ColumnNames.UPDATED_DATE.getName()))
                 .testEnd();
     }
 
@@ -64,7 +65,6 @@ public class UsersColumnsFilterTableTests extends BaseTest {
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_DATE))
-                .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .and("Select 10 rows per page")
                 .scrollIntoView(usersPage.getUsersTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(usersPage.getUsersTable().getTablePagination().getPageMenu(),
@@ -117,7 +117,6 @@ public class UsersColumnsFilterTableTests extends BaseTest {
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_DATE))
-                .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .and("Refresh page")
                 .clickBrowserRefreshButton()
                 .scrollIntoView(usersPage.getPageTitle())
@@ -126,7 +125,8 @@ public class UsersColumnsFilterTableTests extends BaseTest {
                 .then("Validate options list")
                 .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.ROLE.getName(),
                         ColumnNames.STATUS.getName(),
-                        ColumnNames.PUBLISHER.getName()))
+                        ColumnNames.PUBLISHER.getName(),
+                        ColumnNames.UPDATED_DATE.getName()))
                 .testEnd();
     }
 
@@ -138,7 +138,6 @@ public class UsersColumnsFilterTableTests extends BaseTest {
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_DATE))
-                .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .and("Navigate to Open Pricing page")
                 .openDirectPath(Path.USER)
                 .and("Navigate to Protection page again")
@@ -149,7 +148,8 @@ public class UsersColumnsFilterTableTests extends BaseTest {
                 .then("Validate options list")
                 .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.ROLE.getName(),
                         ColumnNames.STATUS.getName(),
-                        ColumnNames.PUBLISHER.getName()))
+                        ColumnNames.PUBLISHER.getName(),
+                        ColumnNames.UPDATED_DATE.getName()))
                 .testEnd();
     }
 

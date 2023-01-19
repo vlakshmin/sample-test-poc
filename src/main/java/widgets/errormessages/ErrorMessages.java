@@ -18,6 +18,7 @@ public enum ErrorMessages {
     APP_STORE_URL_REQUIRED_ERROR_ALERT("'App Store URL' Error Alert Text", "The App Store URL field is required"),
 
     //Ad Spot
+    AT_LEAST_ONE_FORMAT_MUST_BE_ENABLED("","At least one format must be enabled"),
     POSITION_ERROR_ALERT("'Position' Error Alert Text", "The Position field is required"),
     DURATION_ERROR_ALERT("'Duration' Error Alert Text", "Duration should be between 0 and 10000"),
     AD_SPOT_NAME_ERROR_ALERT("'Ad Spot Name' Error Alert Text", "The Ad Spot Name field is required"),

@@ -56,7 +56,6 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Issue("GS-3447")
     @Test(description = "Check Search Publisher")
     public void testSearchPublisherColumnsFilterComponent() {
 
@@ -135,8 +134,8 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Active/Inactive Chip Widget Component", dependsOnMethods = "testCreatedByChipWidgetComponent")
-    public void testActiveInactiveChipWidgetComponent() {
+    @Test(description = "Check Status Chip Widget Component", dependsOnMethods = "testCreatedByChipWidgetComponent")
+    public void testStatusChipWidgetComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var table = protectionPage.getProtectionsTable().getTableData();
 
@@ -145,7 +144,7 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .scrollIntoView(protectionPage.getProtectionPageTitle())
                 .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
-                .and("Select Column Filter 'Active/Inactive'")
+                .and("Select Column Filter 'Status'")
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.STATUS))
                 .then("Title should be displayed")
                 .validate(filter.getActiveBooleanFilter().getFilterHeaderLabel(), StringUtils.getFilterHeader(ColumnNames.STATUS.getName()))
@@ -167,6 +166,7 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                         ColumnNames.STATUS.getName(),
                         ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName(),
                         ColumnNames.CREATED_BY.getName(),
+                        ColumnNames.UPDATED_DATE.getName(),
                         ColumnNames.UPDATED_BY.getName()))
                 .and("Select Column Filter 'Active/Inactive'")
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.STATUS))
@@ -188,7 +188,7 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check 'Managed By System Admin' Chip Widget Component", dependsOnMethods = "testActiveInactiveChipWidgetComponent")
+    @Test(description = "Check 'Managed By System Admin' Chip Widget Component", dependsOnMethods = "testStatusChipWidgetComponent")
     public void testManageBySystemAdminChipWidgetComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
         var table = protectionPage.getProtectionsTable().getTableData();
@@ -220,6 +220,7 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                         ColumnNames.STATUS.getName(),
                         ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName(),
                         ColumnNames.CREATED_BY.getName(),
+                        ColumnNames.UPDATED_DATE.getName(),
                         ColumnNames.UPDATED_BY.getName()))
                 .and("Select Column Filter 'Managed By System Admin'")
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.MANAGED_BY_SYSTEM_ADMIN))

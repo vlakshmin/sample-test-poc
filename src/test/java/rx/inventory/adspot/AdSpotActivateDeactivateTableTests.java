@@ -13,7 +13,6 @@ import widgets.common.table.ColumnNames;
 import widgets.common.table.Statuses;
 import widgets.errormessages.ErrorMessages;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

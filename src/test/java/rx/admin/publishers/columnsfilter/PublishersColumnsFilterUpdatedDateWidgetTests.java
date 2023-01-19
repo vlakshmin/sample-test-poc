@@ -86,7 +86,7 @@ public class PublishersColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .waitAndValidate(visible, calendar.getMonthOrYearHeaderButton())
                 .then("Should be displayed next month")
                 .validateContainsText(calendar.getMonthOrYearHeaderButton(), StringUtils.getStringMonthYear(currentDate.plusMonths(1).getMonth(),
-                        currentDate.getMonth().getValue() == 12 ? currentDate.getYear() + 1 : currentDate.getYear()))
+                        currentDate.plusMonths(1).getYear()))
                 .testEnd();
     }
 
@@ -123,7 +123,7 @@ public class PublishersColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .waitAndValidate(visible, calendar.getMonthOrYearHeaderButton())
                 .then("Should be displayed previous month")
                 .validateContainsText(calendar.getMonthOrYearHeaderButton(),StringUtils.getStringMonthYear(currentDate.minusMonths(1).getMonth(),
-                        currentDate.getMonth().getValue() == 1 ? currentDate.getYear() - 1 : currentDate.getYear()))
+                        currentDate.minusMonths(1).getYear()))
                 .testEnd();
     }
 

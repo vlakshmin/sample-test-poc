@@ -45,12 +45,6 @@ public class OpenPricingColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
-                .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
-                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "10")
-                .scrollIntoView(openPricingPage.getPageTitle())
-                .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
-                .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .testEnd();
     }
 
@@ -85,7 +79,7 @@ public class OpenPricingColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .waitAndValidate(visible, calendar.getMonthOrYearHeaderButton())
                 .then("Should be displayed next month")
                 .validateContainsText(calendar.getMonthOrYearHeaderButton(), StringUtils.getStringMonthYear(currentDate.plusMonths(1).getMonth(),
-                        currentDate.getMonth().getValue() == 12 ? currentDate.getYear() + 1 : currentDate.getYear()))
+                        currentDate.plusMonths(1).getYear()))
                 .testEnd();
     }
 
@@ -123,7 +117,7 @@ public class OpenPricingColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .waitAndValidate(visible, calendar.getMonthOrYearHeaderButton())
                 .then("Should be displayed previous month")
                 .validateContainsText(calendar.getMonthOrYearHeaderButton(),StringUtils.getStringMonthYear(currentDate.minusMonths(1).getMonth(),
-                        currentDate.getMonth().getValue() == 1 ? currentDate.getYear() - 1 : currentDate.getYear()))
+                        currentDate.minusMonths(1).getYear()))
                 .testEnd();
     }
 

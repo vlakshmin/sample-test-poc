@@ -45,13 +45,6 @@ public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .openDirectPath(Path.PROTECTIONS)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, protectionPage.getNuxtProgress())
-                .scrollIntoView(protectionPage.getProtectionPageTitle())
-                .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
-                .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
-                .and("Select 10 rows per page")
-                .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
-                .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
-                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "10")
                 .testEnd();
     }
 
@@ -124,7 +117,7 @@ public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .waitAndValidate(visible, calendar.getMonthOrYearHeaderButton())
                 .then("Should be displayed previous month")
                 .validateContainsText(calendar.getMonthOrYearHeaderButton(),StringUtils.getStringMonthYear(currentDate.minusMonths(1).getMonth(),
-                        currentDate.getMonth().getValue() == 1 ? currentDate.getYear() - 1 : currentDate.getYear()))
+                        currentDate.minusMonths(1).getYear()))
                 .testEnd();
     }
 
@@ -190,8 +183,8 @@ public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.UPDATED_DATE))
                 .and("Select Period Date of the month")
-                .clickOnWebElement(calendar.getDayButtonByValue("7"))
-                .clickOnWebElement(calendar.getDayButtonByValue("7"))
+                .clickOnWebElement(calendar.getDayButtonByValue("10"))
+                .clickOnWebElement(calendar.getDayButtonByValue("10"))
                 .clickOnWebElement(calendar.getDayButtonByValue("14"))
                 .and("Click on Submit")
                 .clickOnWebElement(filter.getCalendarFilter().getSubmitButton())
@@ -208,8 +201,8 @@ public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .validate(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).countFilterOptionsChipItems(), 1)
                 .validateContainsText(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getChipFilterOptionItemByPosition(0),
                         format("%s – %s",
-                                StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 11),
-                                StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 21)))
+                                StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 10),
+                                StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 14)))
                 .testEnd();
     }
 
