@@ -17,6 +17,7 @@ public enum Path {
     PROTECTIONS("/protections"),
     PUBLISHER("/admin/publishers"),
     OPEN_PRICING("/yield/open-pricing"),
+    PRIVATE_AUCTIONS("/sales/private-auctions"),
     CREATE_PROTECTION("/protections/create"),
     CREATE_OPEN_PRICING("/yield/open-pricing/create"),
     CREATE_USER("/admin/users/create");
