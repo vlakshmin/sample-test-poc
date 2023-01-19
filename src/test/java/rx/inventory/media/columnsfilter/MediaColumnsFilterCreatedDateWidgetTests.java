@@ -127,8 +127,8 @@ public class MediaColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .and("Click on the Next Month button")
                 .clickOnWebElement(calendar.getNextMonthButton())
                 .then("Should be displayed next month")
-                .validateContainsText(calendar.getMonthOrYearHeaderButton(),StringUtils.getStringMonthYear(currentDate.plusMonths(1).getMonth(),
-                        currentDate.getMonth().getValue() == 12 ? currentDate.getYear() + 1 : currentDate.getYear()))
+                .validateContainsText(calendar.getMonthOrYearHeaderButton(), StringUtils.getStringMonthYear(currentDate.plusMonths(1).getMonth(),
+                        currentDate.plusMonths(1).getYear()))
                 .testEnd();
     }
 

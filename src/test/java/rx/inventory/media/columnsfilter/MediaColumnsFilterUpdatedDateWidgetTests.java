@@ -86,7 +86,7 @@ public class MediaColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .waitAndValidate(visible, calendar.getMonthOrYearHeaderButton())
                 .then("Should be displayed next month")
                 .validateContainsText(calendar.getMonthOrYearHeaderButton(), StringUtils.getStringMonthYear(currentDate.plusMonths(1).getMonth(),
-                        currentDate.getMonth().getValue() == 12 ? currentDate.getYear() + 1 : currentDate.getYear()))
+                        currentDate.plusMonths(1).getYear()))
                 .testEnd();
     }
 
