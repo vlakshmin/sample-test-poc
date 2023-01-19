@@ -42,13 +42,11 @@ public class PublishersColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .openDirectPath(Path.PUBLISHER)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, publishersPage.getNuxtProgress())
+                .selectFromDropdown(publishersPage.getTable().getTablePagination().getPageMenu(),
+                        publishersPage.getTable().getTablePagination().getRowNumbersList(), "10")
                 .scrollIntoView(publishersPage.getPageTitle())
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
-                .and("Select 10 rows per page")
-                .scrollIntoView(publishersPage.getTable().getTablePagination().getPageMenu())
-                .selectFromDropdown(publishersPage.getTable().getTablePagination().getPageMenu(),
-                        publishersPage.getTable().getTablePagination().getRowNumbersList(), "10")
                 .testEnd();
     }
 

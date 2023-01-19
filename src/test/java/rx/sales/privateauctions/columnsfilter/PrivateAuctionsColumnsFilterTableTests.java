@@ -136,7 +136,6 @@ public class PrivateAuctionsColumnsFilterTableTests extends BaseTest {
 
         testStart()
                 .clickBrowserRefreshButton()
-                .scrollIntoView(privateAuctionsPage.getTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(privateAuctionsPage.getTable().getTablePagination().getPageMenu(),
                         privateAuctionsPage.getTable().getTablePagination().getRowNumbersList(), "10")
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
@@ -146,6 +145,8 @@ public class PrivateAuctionsColumnsFilterTableTests extends BaseTest {
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .and("Refresh page")
                 .clickBrowserRefreshButton()
+                .selectFromDropdown(privateAuctionsPage.getTable().getTablePagination().getPageMenu(),
+                        privateAuctionsPage.getTable().getTablePagination().getRowNumbersList(), "10")
                 .scrollIntoView(privateAuctionsPage.getPageTitle())
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
