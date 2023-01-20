@@ -143,6 +143,8 @@ public class PublishersColumnsFilterTableTests extends BaseTest {
         var tableColumns = publishersPage.getTable();
 
         testStart()
+                .selectFromDropdown(publishersPage.getTable().getTablePagination().getPageMenu(),
+                        publishersPage.getTable().getTablePagination().getRowNumbersList(), "10")
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_BY))
