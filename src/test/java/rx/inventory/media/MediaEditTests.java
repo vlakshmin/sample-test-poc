@@ -97,6 +97,18 @@ public class MediaEditTests extends BaseTest {
                 mediaName + "Updated5", URL + "Updated5", "com.app.updated");
     }
 
+    @Epic("v1.28.0/GS-3309")
+    @Test(description = "Edit Media with 'CTV' media type")
+    public void editMediaCTVMediaType() {
+        var mediaName = captionWithSuffix("autoMediaCTV");
+
+        media = createMedia(mediaName, PlatformType.CTV.getName(), URL, BUNDLE);
+
+        editMedia(media, PlatformType.CTV.getName(), PlatformType.MOBILE_WEB.getName(),
+                mediaName + "Updated5", URL + "Updated5", "");
+    }
+
+
     @Test(description = "Edit Media with 'Mobile Web' media type")
     public void editMediaMobileWebViewMediaType() {
         var mediaName = captionWithSuffix("autoMediaMobileWeb");

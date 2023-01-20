@@ -132,15 +132,6 @@ public class UsersSortingTableTests extends BaseTest {
                 .given()
                 .and(String.format("Sort column '%s'", columnName))
                 .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                .testEnd();
-
-        if (columnName.getName().equals("ID")) {
-            testStart()
-                    .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                    .testEnd();
-        }
-
-        testStart()
                 .then("Ensure that sort by descending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(columnName.getName()),
                         "aria-sort", ASC)
@@ -159,15 +150,6 @@ public class UsersSortingTableTests extends BaseTest {
                 .given()
                 .and(String.format("Sort column '%s'", columnName))
                 .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                .testEnd();
-
-        if (columnName.getName().equals("ID")) {
-            testStart()
-                    .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                    .testEnd();
-        }
-
-        testStart()
                 .then("Ensure that sort by ascending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(columnName.getName()),
                         "aria-sort", ASC)

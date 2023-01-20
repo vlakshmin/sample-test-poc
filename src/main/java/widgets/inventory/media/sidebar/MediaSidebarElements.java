@@ -15,7 +15,7 @@ public enum MediaSidebarElements {
             "//label[text()='%s']/../../..//child::div[@class='v-messages__message']"),
     PLATFORM_INPUT("'Platform' Input", "//label[text()='Platform']/../div/input"),
     PLATFORM_DROPDOWN("'Platform' Dropdown", "//label[text()='Platform']/../div"),
-    CATEGORIES_INPUT("'Categories' Input", "//label[text()='Categories']/../div[1]"),
+    CATEGORIES_INPUT("'Categories' Input", "//label[text()='Categories']/../div[1]/input"),
     TOOLTIP_ICON_BY_FIELD_NAME("Tooltip '%s' Icon",
             "//label[text()='%s']/../div/span[@class='v-tooltip v-tooltip--bottom']/../i"),
     PUBLISHER_NAME( "'Publisher Name'", "//label[contains(text(),'Publisher')]/../div"),

@@ -100,6 +100,15 @@ public class MediaCreateTests extends BaseTest {
         createAndCheckCreatedMedia(mediaName, appStoreURL, "", PlatformType.MOBILE_WEB.getName());
     }
 
+    @Epic("v1.28.0/GS-3309")
+    @Test(description = "Create Media with CTV' platform type")
+    private void createMediaCTVPlatformType() {
+        var mediaName = captionWithSuffix("autoMediaCTV");
+        var appStoreURL = "https://checkmedia.com";
+        var bundle = "com.viber.voip";
+        createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, PlatformType.CTV.getName());
+    }
+
 
     @Step("Create Media {0} with platform type {1}")
     private void createAndCheckCreatedMedia(String mediaName, String url, String bundle, String platformType) {
@@ -117,7 +126,7 @@ public class MediaCreateTests extends BaseTest {
                 .setValueWithClean(createMediaSidebar.getNameInput(), mediaName)
                 .selectFromDropdown(createMediaSidebar.getPlatformDropdown(),
                         createMediaSidebar.getPlatformDropdownItems(), platformType)
-                .clickOnWebElement(createMediaSidebar.getCategoriesInput())
+                .clickOnWebElement(createMediaSidebar.getCategories())
                 .clickOnWebElement(categories.getCategoryCheckbox(CategoriesList.ART_ENTERTAIMENTS))
                 .clickOnWebElement(categories.getCategoryCheckbox(CategoriesList.AUTOMOTIVE))
                 .testEnd();

@@ -266,6 +266,7 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .and(format("Search by Name '%s'", searchName))
                 .setValueWithClean(filter.getSinglepane().getSearchInput(), searchName)
                 .clickEnterButton(filter.getSinglepane().getSearchInput())
+                .waitAndValidate(visible, filter.getSinglepane().getItemsTotalQuantityLabel())
                 .validate(filter.getSinglepane().countIncludedItems(), expectedUserNameList.size())
                 .testEnd();
 

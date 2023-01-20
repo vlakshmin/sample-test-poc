@@ -137,6 +137,7 @@ public class OpenPricingColumnsFilterWidgetTests extends BaseTest {
                 .setValueWithClean(filter.getSinglepane().getSearchInput(), searchName)
                 .clickEnterButton(filter.getSinglepane().getSearchInput())
                 .and("Verify Search Count")
+                .waitAndValidate(visible, filter.getSinglepane().getItemsTotalQuantityLabel())
                 .validate(filter.getSinglepane().countIncludedItems(), expectedUserNameList.size())
                 .testEnd();
 
@@ -219,6 +220,7 @@ public class OpenPricingColumnsFilterWidgetTests extends BaseTest {
                 .setValueWithClean(filter.getSinglepane().getSearchInput(), searchName)
                 .clickEnterButton(filter.getSinglepane().getSearchInput())
                 .and("Verify Search Count")
+                .waitAndValidate(visible, filter.getSinglepane().getItemsTotalQuantityLabel())
                 .validate(filter.getSinglepane().countIncludedItems(), expectedUserNameList.size())
                 .testEnd();
 

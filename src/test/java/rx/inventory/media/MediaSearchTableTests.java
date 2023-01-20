@@ -24,25 +24,21 @@ import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
 import static configurations.User.USER_FOR_DELETION;
 import static managers.TestManager.testStart;
+import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
 public class MediaSearchTableTests extends BaseTest {
 
     private MediaPage mediaPage;
-    private List<String> searchByA;
-    private List<String> searchBoth;
-    private List<String> searchActive;
-    private List<String> searchInactive;
     private List<String> mediaNamesByAsc;
     private List<String> publishersByAsc;
 
     private List<Integer> mediaIds;
     private List<Integer> publishersIds;
 
-    private static final String PUB_NAME = "SSS2";
-    private static final String MEDIA_NAME = "SS1";
-    private static final String FILTER_SEARCH = "RpT5";
+    private static final String PUB_NAME = "SSS23";
+    private static final String MEDIA_NAME = "SS11";
 
     public MediaSearchTableTests() {
         mediaPage = new MediaPage();
@@ -53,27 +49,11 @@ public class MediaSearchTableTests extends BaseTest {
         mediaIds = new ArrayList<>();
         publishersIds = new ArrayList<>();
 
-        Media media = createCustomMedia("media", true, "pub");
+        Media media = createCustomMedia(captionWithSuffix("media"), true, captionWithSuffix("autopub"));
         mediaIds.add(media.getId());
         publishersIds.add(media.getPublisherId());
 
         media = createCustomMedia(MEDIA_NAME, true, PUB_NAME);
-        mediaIds.add(media.getId());
-        publishersIds.add(media.getPublisherId());
-
-        media = createCustomMedia(FILTER_SEARCH + "2", true, FILTER_SEARCH + "2");
-        mediaIds.add(media.getId());
-        publishersIds.add(media.getPublisherId());
-
-        media = createCustomMedia(FILTER_SEARCH + "3", true, FILTER_SEARCH + "3");
-        mediaIds.add(media.getId());
-        publishersIds.add(media.getPublisherId());
-
-        media = createCustomMedia(FILTER_SEARCH + "4", false, FILTER_SEARCH + "5");
-        mediaIds.add(media.getId());
-        publishersIds.add(media.getPublisherId());
-
-        media = createCustomMedia(FILTER_SEARCH + "5", false, FILTER_SEARCH + "5");
         mediaIds.add(media.getId());
         publishersIds.add(media.getPublisherId());
 
@@ -85,23 +65,6 @@ public class MediaSearchTableTests extends BaseTest {
         publishersByAsc = getAllItemsByParams(PUB_NAME, null).stream()
                 .map(Media::getPublisherName)
                 .collect(Collectors.toList());
-
-        searchByA = getAllItemsByParams("A", null).stream()
-                .map(Media::getName)
-                .collect(Collectors.toList());
-
-        searchActive = getAllItemsByParams(FILTER_SEARCH, true).stream()
-                .map(Media::getName)
-                .collect(Collectors.toList());
-
-        searchInactive = getAllItemsByParams(FILTER_SEARCH, false).stream()
-                .map(Media::getName)
-                .collect(Collectors.toList());
-
-        searchBoth = getAllItemsByParams(FILTER_SEARCH, null).stream()
-                .map(Media::getName)
-                .collect(Collectors.toList());
-
     }
 
     @BeforeMethod
@@ -142,111 +105,7 @@ public class MediaSearchTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("GS-2946")
-    @Test(testName = "Search by 'Publisher'", enabled = false)
-    public void mediaSearchByPublisher() {
-        var tableData = mediaPage.getMediaTable().getTableData();
-
-        testStart()
-                .given()
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-                .setValueWithClean(tableData.getSearch(), PUB_NAME)
-                .clickEnterButton(tableData.getSearch())
-                .waitAndValidate(disappear, mediaPage.getTableProgressBar())
-                .and("Sort column 'Media Name'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
-                .then(String.format("Validate data in column 'Media Name' should contain '%s'", MEDIA_NAME))
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()),
-                        "aria-sort", "ascending")
-                .waitAndValidate(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate data in column 'Publisher' should contain '%s'", PUB_NAME))
-                .validateList(tableData.getCustomCells(ColumnNames.PUBLISHER), publishersByAsc)
-                .and("End Test")
-                .testEnd();
-    }
-
-    @Epic("GS-2946")
-    @Test(testName = "Search by 'A'", enabled = false)
-    public void mediaSearchWithPaginatinaton() {
-        var tableData = mediaPage.getMediaTable().getTableData();
-        var tablePagination = mediaPage.getMediaTable().getTablePagination();
-
-        testStart()
-                .given()
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-                .and("Set value 'A' in search field")
-                .setValueWithClean(tableData.getSearch(), "A")
-                .clickEnterButton(tableData.getSearch())
-                .and("Select 10 row per page")
-                .scrollIntoView(tablePagination.getPageMenu())
-                .selectFromDropdown(tablePagination.getPageMenu(),
-                        tablePagination.getRowNumbersList(), "10")
-                .waitLoading(visible, mediaPage.getTableProgressBar())
-                .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '1-10 of %s'", searchByA.size()))
-                .and("Sort column 'Media Name'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
-                .then("Validate data in column 'Media Name' should contain 'A'")
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()),
-                        "aria-sort", "ascending")
-                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME), searchByA.subList(0, 10))
-                .and("Check next page")
-                .clickOnWebElement(tablePagination.getNext())
-                .waitLoading(visible, mediaPage.getTableProgressBar())
-                .waitLoading(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate that text in table footer '11-20 of %s'", searchByA.size()))
-                .validateContainsText(tablePagination.getPaginationPanel(),
-                        String.format("11-20 of %s", searchByA.size()))
-                .then("Validate data in column 'Media Name' should contain 'A'")
-                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME),
-                        searchByA.subList(10, 20))
-                .and("End Test")
-                .testEnd();
-    }
-
-    @Epic("GS-2946")
-    @Epic("v1.28.0/GS-3298")
-    @Test(testName = "Search with filter by status", enabled = false)
-    public void mediaSearchWithFilterByStatus() {
-        var tableData = mediaPage.getMediaTable().getTableData();
-        var tableOptions = mediaPage.getMediaTable().getShowHideColumns();
-        var filterOptions = mediaPage.getMediaTable().getColumnFiltersBlock();
-
-        testStart()
-                .given()
-                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
-                .setValueWithClean(tableData.getSearch(), FILTER_SEARCH)
-                .clickEnterButton(tableData.getSearch())
-                .waitAndValidate(disappear, mediaPage.getTableProgressBar())
-                .and("Sort column 'Media Name'")
-                .clickOnWebElement(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()))
-                .then(String.format("Validate data in column 'Media Name' should contain '%s'", FILTER_SEARCH))
-                .validateAttribute(tableData.getColumnHeader(ColumnNames.MEDIA_NAME.getName()),
-                        "aria-sort", "ascending")
-                .waitAndValidate(disappear, mediaPage.getTableProgressBar())
-                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME), searchBoth)
-                .and("Set filter 'Active'")
-                .clickOnWebElement(filterOptions.getColumnsFilterButton())
-                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.STATUS))
-                .selectRadioButton(filterOptions.getActiveBooleanFilter().getActiveRadioButton())
-                .clickOnWebElement(filterOptions.getActiveBooleanFilter().getSubmitButton())
-                .scrollIntoView(tableData.getSearch())
-                .waitAndValidate(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate data in column 'Media Name' should contain '%s'", FILTER_SEARCH))
-                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME), searchActive)
-                .and("Set filter 'Inactive'")
-                .clickOnWebElement(filterOptions.getColumnsFilterButton())
-                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.STATUS))
-                .selectRadioButton(filterOptions.getActiveBooleanFilter().getInactiveRadioButton())
-                .clickOnWebElement(filterOptions.getActiveBooleanFilter().getSubmitButton())
-                .scrollIntoView(tableData.getSearch())
-                .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
-                .waitAndValidate(disappear, mediaPage.getTableProgressBar())
-                .then(String.format("Validate data in column 'Media Name' should contain '%s'", FILTER_SEARCH))
-                .validateList(tableData.getCustomCells(ColumnNames.MEDIA_NAME), searchInactive)
-                .and("End Test")
-                .testEnd();
-    }
+    //TODO: need to add tests search+filter applying GS-3465
 
     @AfterTest
     private void deleteEntities() {

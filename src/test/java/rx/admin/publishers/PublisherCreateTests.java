@@ -20,6 +20,7 @@ import org.testng.annotations.BeforeClass;
 import static configurations.User.TEST_USER;
 import static managers.TestManager.testStart;
 import static com.codeborne.selenide.Condition.*;
+import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
@@ -55,25 +56,25 @@ public class PublisherCreateTests extends BaseTest {
     @Test(description = "Create Active Publisher without category Test", priority = 1)
     private void createActivePublisherWithoutCategory() {
 
-        createAndValidatedCreatedPublisher(pubName, true, false);
+        createAndValidatedCreatedPublisher(captionWithSuffix(pubName), true, false);
     }
 
     @Test(description = "Create Inactive Publisher with category Test", priority = 2)
     private void createInactivePublisherWithCategory() {
 
-        createAndValidatedCreatedPublisher(pubName, false, true);
+        createAndValidatedCreatedPublisher(captionWithSuffix(pubName), false, true);
     }
 
     @Test(description = "Create inactive Publisher without category Test", priority = 3)
     private void createInactivePublisherWithoutCategory() {
 
-        createAndValidatedCreatedPublisher(pubName, false, false);
+        createAndValidatedCreatedPublisher(captionWithSuffix(pubName), false, false);
     }
 
     @Test(description = "Create active Publisher with category Test", priority = 4)
     private void createActivePublisherWithCategory() {
 
-        createAndValidatedCreatedPublisher(pubName, true, true);
+        createAndValidatedCreatedPublisher(captionWithSuffix(pubName), true, true);
     }
 
     @Step("Create Media {0} with platform type {1}")
