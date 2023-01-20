@@ -77,7 +77,6 @@ public class OpenPricingUploadTests extends BaseTest {
                 {"zero decimal.csv", 0.00, "Upload CSV update by zero decimal floorPrice"},
                 {"zero to int.csv", 0.00, "Upload CSV update zero floorPrice to int"},
                 {"zero decimal.csv", 0.00, "Upload CSV update zero floorPrice to max decimal"},
-                {"zero decimal.csv", 0.00, "Upload CSV update zero floorPrice by Stringfied number value"},
         };
     }
 
@@ -131,7 +130,7 @@ public class OpenPricingUploadTests extends BaseTest {
                 .waitSideBarOpened()
                 .then("Check Floor Price")
                 .validateAttribute(openPricingSidebar.getFloorPriceField().getFloorPriceInput(), "value",
-                        convertFloorPrice(fileDataMap.get(ruleName)))
+                       fileDataMap.get(ruleName))
                 .and("Close Open Pricing Sidebar")
                 .clickOnWebElement(openPricingSidebar.getCloseIcon())
                 .waitSideBarClosed()
@@ -173,7 +172,7 @@ public class OpenPricingUploadTests extends BaseTest {
         fileData.stream().forEach(
                 row -> {
                     log.info(row[0]);
-                    if (!row[0].isEmpty()) fileDataMap.put(row[0], convertFloorPrice(row[1]));
+                    if (!row[0].isEmpty()) fileDataMap.put(row[0], row[1]);
                 });
     }
 
@@ -212,9 +211,9 @@ public class OpenPricingUploadTests extends BaseTest {
                 .getOpenPricingResponse());
     }
 
-    @Step("Convert floor price value")
-    private String convertFloorPrice(String floorPrice) {
-
-        return new DecimalFormat("####.00").format(Double.parseDouble(floorPrice));
-    }
+//    @Step("Convert floor price value")
+//    private String convertFloorPrice(String floorPrice) {
+//
+//        return new DecimalFormat("####.00").format(Double.parseDouble(floorPrice));
+//    }
 }

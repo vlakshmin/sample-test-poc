@@ -131,7 +131,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
     @Test(testName = "Sorting 'Name' column by descending")
     public void OpenPricingSortingByNameDesc() {
         sortByDescColumnByName(ColumnNames.NAME);
-        validateSorting(ColumnNames.NAME, DESC,sortNamesByDesc);
+        validateSorting(ColumnNames.NAME, DESC, sortNamesByDesc);
     }
 
     @Test(testName = "Sorting 'Name' column by ascending")
@@ -145,6 +145,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
         sortByDescColumnByName(ColumnNames.PUBLISHER);
         validateSorting(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
     }
+
 
     @Test(testName = "Sorting 'Publisher' column by ascending")
     public void OpenPricingSortingByPublisherNameAsc() {
@@ -190,7 +191,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
         validateSorting(ColumnNames.FLOOR_PRICE, ASC, sortFloorPriceAsc);
     }
 
-    private void validateSorting(ColumnNames columnName, String sortType,List<String> expectedSortedList){
+    private void validateSorting(ColumnNames columnName, String sortType, List<String> expectedSortedList) {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
         //Todo Add checking of total qauntity in pagination test when
@@ -252,7 +253,6 @@ public class OpenPricingSortingTableTests extends BaseTest {
                         "aria-sort", ASC)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
                 .testEnd();
-
     }
 
     private List<OpenPricing> getAllItemsByParams(String strParams) {

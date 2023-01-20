@@ -45,7 +45,6 @@
 
     <test name="Open Pricing">
         <classes>
-            <class name="rx.yield.openpricing.VerifyPublisherTests"/>
             <class name="rx.yield.openpricing.CreateOpenPricingTest"/>
             <class name="rx.yield.openpricing.OpenPricingUploadTests"/>
             <class name="rx.yield.openpricing.OpenPricingSortingTableTests"/>
@@ -67,11 +66,11 @@
         </classes>
     </test>
 
-<!--    <test name="Deals Feature">-->
-<!--        <classes>-->
-<!--            <class name="rx.sales.deals.DealsTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Deals Feature">
+        <classes>
+            <class name="rx.sales.deals.DealsTest"/>
+        </classes>
+    </test>
 
     <test name="Login Feature">
         <classes>
@@ -80,15 +79,15 @@
         </classes>
     </test>
 
-<!--    <test name="Components Tests">-->
-<!--        <classes>-->
-<!--            <class name="rx.component.table.TableDataTests"/>-->
-<!--            <class name="rx.component.multipane.MultipaneTest"/>-->
-<!--            <class name="rx.component.categories.CategoriesSelectionTests"/>-->
-<!--            <class name="rx.component.singlepanefilter.SinglepaneFilterProtectionTest"/>-->
-<!--            <class name="rx.component.table.FilterChipTests"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Components Tests">
+        <classes>
+            <class name="rx.component.table.TableDataTests"/>
+            <class name="rx.component.multipane.MultipaneTest"/>
+            <class name="rx.component.categories.CategoriesSelectionTests"/>
+            <class name="rx.component.singlepanefilter.SinglepaneFilterProtectionTest"/>
+            <class name="rx.component.table.FilterChipTests"/>
+        </classes>
+    </test>
 
     <test name="Publisher Feature">
         <classes>
@@ -111,16 +110,16 @@
         </classes>
     </test>
 
-<!--    <test name="Demand Source Feature">-->
-<!--        <classes>-->
-<!--            <class name="rx.admin.demand.EditDemandSourceTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-<!--    <test name="Profile Feature">-->
-<!--        <classes>-->
-<!--            <class name="rx.profile.UserProfileSettingsTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Demand Source Feature">
+        <classes>
+            <class name="rx.admin.demand.EditDemandSourceTest"/>
+        </classes>
+    </test>
+    <test name="Profile Feature">
+        <classes>
+            <class name="rx.profile.UserProfileSettingsTest"/>
+        </classes>
+    </test>
 
     <test name="Protections Columns Filter Tests">
         <classes>

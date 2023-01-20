@@ -37,8 +37,8 @@ public class MediaSearchTableTests extends BaseTest {
     private List<Integer> mediaIds;
     private List<Integer> publishersIds;
 
-    private static final String PUB_NAME = "SSS23";
-    private static final String MEDIA_NAME = "SS11";
+    private static final String PUB_NAME = captionWithSuffix("SSS23");
+    private static final String MEDIA_NAME = captionWithSuffix("SS11");
 
     public MediaSearchTableTests() {
         mediaPage = new MediaPage();
