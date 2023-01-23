@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="Regression" parallel="false">
 
-    <test name="0Precondition. Delete records with 'auto' substring">
+    <test name="Precondition. Delete records with 'auto' substring">
         <classes>
             <class name="rx.pipelines.DeleteGeneratedDataTest"/>
         </classes>
@@ -155,6 +155,16 @@
         </classes>
     </test>
 
+    <test name="Media Column Filter">
+        <classes>
+            <class name="rx.inventory.media.columnsfilter.MediaColumnsFilterCreatedDateWidgetTests"/>
+            <class name="rx.inventory.media.columnsfilter.MediaColumnsFilterTableTests"/>
+            <class name="rx.inventory.media.columnsfilter.MediaColumnsFilterUpdatedDateWidgetTests"/>
+            <class name="rx.inventory.media.columnsfilter.MediaColumnsFilterWidgetTests"/>
+        </classes>
+    </test>
+
+    <test name="Users Column Filter">
     <test name="XPost-conditions. Delete records with 'auto' substring">
         <classes>
             <class name="rx.pipelines.DeleteGeneratedDataTest"/>
