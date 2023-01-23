@@ -4,7 +4,7 @@ import api.dto.rx.admin.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Epic;
-import io.qameta.allure.Link;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
@@ -26,8 +26,8 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Feature("Publishers")
 @Epic("Waiting for separate QA env")
-@Link("https://rakutenadvertising.atlassian.net/browse/GS-3280")
 public class PublisherSortingTableTests extends BaseTest {
 
     private int totalPublishers;
@@ -129,15 +129,6 @@ public class PublisherSortingTableTests extends BaseTest {
                 .given()
                 .and(String.format("Sort column '%s'", columnName))
                 .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                .testEnd();
-
-        if (columnName.getName().equals("ID")) {
-            testStart()
-                    .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                    .testEnd();
-        }
-
-        testStart()
                 .then("Ensure that sort by descending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(columnName.getName()),
                         "aria-sort", ASC)
@@ -156,15 +147,6 @@ public class PublisherSortingTableTests extends BaseTest {
                 .given()
                 .and(String.format("Sort column '%s'", columnName))
                 .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                .testEnd();
-
-        if (columnName.getName().equals("ID")) {
-            testStart()
-                    .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                    .testEnd();
-        }
-
-        testStart()
                 .then("Ensure that sort by ascending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(columnName.getName()),
                         "aria-sort", ASC)
@@ -177,7 +159,7 @@ public class PublisherSortingTableTests extends BaseTest {
     private void validateSortData(ColumnNames columnName, String sortType, List<String> expectedResultList) {
         var tableData = publishersPage.getTable().getTableData();
         var tablePagination = publishersPage.getTable().getTablePagination();
-        //Todo Add checking of total qauntity in pagination test when
+        //Todo Add checking of total quantity in pagination test when
         // https://rakutenadvertising.atlassian.net/browse/GS-3280 will be ready
         testStart()
                 .given()

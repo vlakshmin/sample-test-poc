@@ -61,7 +61,6 @@ public class MediaCheckTooltipsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.26.0/GS-3017")
     @Test(description = "'Categories' Tooltip Text",alwaysRun = true)
     private void categoriesTooltip() {
         verifyTooltip(mediaTooltipSidebar.getTooltipCategories(), PlatformType.ANDROID.getName(),
@@ -75,6 +74,8 @@ public class MediaCheckTooltipsTests extends BaseTest {
         verifyTooltip(mediaTooltipSidebar.getTooltipCategories(), PlatformType.IOS_WEB_VIEW.getName(),
                 MediaTooltipText.CATEGORIES.getText());
         verifyTooltip(mediaTooltipSidebar.getTooltipCategories(), PlatformType.ANDROID_WEB_VIEW.getName(),
+                MediaTooltipText.CATEGORIES.getText());
+        verifyTooltip(mediaTooltipSidebar.getTooltipCategories(), PlatformType.CTV.getName(),
                 MediaTooltipText.CATEGORIES.getText());
     }
 
@@ -97,6 +98,8 @@ public class MediaCheckTooltipsTests extends BaseTest {
         verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), PlatformType.IOS_WEB_VIEW.getName(),
                 MediaTooltipText.BUNDLE.getText());
         verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), PlatformType.ANDROID_WEB_VIEW.getName(),
+                MediaTooltipText.BUNDLE.getText());
+        verifyTooltip(mediaTooltipSidebar.getTooltipBundle(), PlatformType.CTV.getName(),
                 MediaTooltipText.BUNDLE.getText());
     }
     @Epic("v1.26.0/GS-3017")

@@ -1,4 +1,4 @@
-package rx.protections.columnsfilter;
+package rx.yield.openpricing.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Epic;
@@ -9,7 +9,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
-import pages.protections.ProtectionsPage;
+import pages.yield.openpricing.OpenPricingPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import zutils.StringUtils;
@@ -25,45 +25,47 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Feature(value = "Protections Columns Filter")
+@Feature(value = "Open Pricing Columns Filter")
 @Epic("v1.28.0/GS-3324")
-public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
+public class OpenPricingColumnsFilterCreatedDateWidgetTests extends BaseTest {
 
-    private ProtectionsPage protectionPage;
+    private OpenPricingPage openPricingPage;
 
-    public ProtectionsColumnsFilterCreatedDateWidgetTests() {
-        protectionPage = new ProtectionsPage();
+    public OpenPricingColumnsFilterCreatedDateWidgetTests() {
+        openPricingPage = new OpenPricingPage();
     }
 
     @BeforeClass
     private void login() {
-        var tableColumns = protectionPage.getProtectionsTable().getShowHideColumns();
+        var tableColumns = openPricingPage.getOpenPricingTable().getShowHideColumns();
 
         testStart()
                 .given()
-                .openDirectPath(Path.PROTECTIONS)
+                .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
-                .waitAndValidate(disappear, protectionPage.getNuxtProgress())
-                .scrollIntoView(protectionPage.getProtectionPageTitle())
+                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
+                .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
+                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "10")
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .and("Select 10 rows per page")
-                .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
-                .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
-                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "10")
+                .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
+                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "10")
                 .testEnd();
     }
 
 
     @Test(description = "Check Default State")
     public void testDefaultStateColumnsFilterComponent() {
-        var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
+        var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
         var calendar = filter.getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
         testStart()
                 .and("Select Column Filter 'Created Date'")
-                .scrollIntoView(protectionPage.getProtectionPageTitle())
+                .scrollIntoView(openPricingPage.getPageTitle())
                 .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_DATE))
@@ -76,7 +78,7 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
 
     @Test(description = "Check Previous Month", dependsOnMethods = "testDefaultStateColumnsFilterComponent")
     public void testPreviousMonthColumnsFilterComponent() {
-        var calendar = protectionPage.getProtectionsTable().getColumnFiltersBlock().getCalendarFilter().getCalendar();
+        var calendar = openPricingPage.getOpenPricingTable().getColumnFiltersBlock().getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
         testStart()
@@ -85,13 +87,14 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .clickOnWebElement(calendar.getPreviousMonthButton())
                 .then("Should be displayed previous month")
                 .validateContainsText(calendar.getMonthOrYearHeaderButton(),StringUtils.getStringMonthYear(currentDate.minusMonths(1).getMonth(),
-                        currentDate.minusMonths(1).getYear()))
+                                currentDate.minusMonths(1).getYear()))
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(description = "Check Back button", dependsOnMethods = "testPreviousMonthColumnsFilterComponent")
     public void testBackButtonColumnsFilterComponent() {
-        var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
+        var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
         var calendar = filter.getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
@@ -101,7 +104,6 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .then("Columns Menu should appear")
                 .validateList(filter.getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
                         ColumnNames.STATUS.getName(),
-                        ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName(),
                         ColumnNames.CREATED_DATE.getName(),
                         ColumnNames.UPDATED_DATE.getName()))
                 .and("Select Column Filter 'Created Date'")
@@ -114,7 +116,7 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
 
     @Test(description = "Check Next Month", dependsOnMethods = "testBackButtonColumnsFilterComponent")
     public void testNextMonthColumnsFilterComponent() {
-        var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
+        var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
         var calendar = filter.getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
@@ -123,14 +125,14 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .clickOnWebElement(calendar.getNextMonthButton())
                 .then("Should be displayed next month")
                 .validateContainsText(calendar.getMonthOrYearHeaderButton(),StringUtils.getStringMonthYear(currentDate.plusMonths(1).getMonth(),
-                        currentDate.getMonth().getValue() == 12 ? currentDate.getYear() + 1 : currentDate.getYear()))
+                                currentDate.plusMonths(1).getYear()))
                 .testEnd();
     }
 
     @Test(description = "Select First Day of the current month and click Cancel", dependsOnMethods = "testNextMonthColumnsFilterComponent")
     public void testCancelButtonColumnsFilterComponent() {
-        var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
-        var table = protectionPage.getProtectionsTable().getTableData();
+        var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
+        var table = openPricingPage.getOpenPricingTable().getTableData();
         var calendar = filter.getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
@@ -147,8 +149,8 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
     @Epic("v1.28.0/GS-3325")
     @Test(description = "Select Period of the current month and click Submit", dependsOnMethods = "testCancelButtonColumnsFilterComponent" )
     public void testPeriodAndSubmitButtonColumnsFilterComponent() {
-        var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
-        var table = protectionPage.getProtectionsTable().getTableData();
+        var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
+        var table = openPricingPage.getOpenPricingTable().getTableData();
         var calendar = filter.getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
@@ -178,14 +180,14 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
 
     @Test(description = "Select Last Day of the current month and click Submit", dependsOnMethods = "testPeriodAndSubmitButtonColumnsFilterComponent")
     public void testSubmitButtonColumnsFilterComponent() {
-        var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
-        var table = protectionPage.getProtectionsTable().getTableData();
+        var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
+        var table = openPricingPage.getOpenPricingTable().getTableData();
         var calendar = filter.getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
         testStart()
                 .and("Select Column Filter 'Created Date'")
-                .scrollIntoView(protectionPage.getProtectionPageTitle())
+                .scrollIntoView(openPricingPage.getPageTitle())
                 .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_DATE))
@@ -209,7 +211,7 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
 
     @Test(description = "Delete Update By Chip", dependsOnMethods = "testPeriodAndSubmitButtonColumnsFilterComponent")
     public void testDeleteColumnsFilterComponent() {
-        var table = protectionPage.getProtectionsTable().getTableData();
+        var table = openPricingPage.getOpenPricingTable().getTableData();
 
         testStart()
                 .and("Click 'X' icon on the Created Date chip")

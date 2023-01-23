@@ -3,6 +3,7 @@ package rx.component.table;
 import api.dto.rx.admin.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
@@ -41,6 +42,7 @@ public class TableDataTests extends BaseTest {
                 .getPublisherResponse();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test
     public void checkColumns() {
         var tableData = publishersPage.getTable().getTableData();
@@ -63,19 +65,20 @@ public class TableDataTests extends BaseTest {
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.MAIL))
                 .clickOnWebElement(table.getShowHideColumnsBtn())
                 .clickOnWebElement(filterOptions.getColumnsFilterButton())
-                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
+                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.STATUS))
                 .selectRadioButton(filterOptions.getActiveBooleanFilter().getActiveRadioButton())
                 .clickOnWebElement(filterOptions.getActiveBooleanFilter().getSubmitButton())
                 .then()
                 .validateListSize(tableData.getColumns(),
                         ColumnNames.NAME.getName(),
                         ColumnNames.CATEGORY.getName(),
-                        ColumnNames.ACTIVE.getName(),
+                        ColumnNames.STATUS.getName(),
                         ColumnNames.ID.getName(),
                         ColumnNames.DOMAIN.getName(),
                         ColumnNames.CURRENCY.getName(),
                         ColumnNames.AD_OPS_PERSON.getName(),
-                        ColumnNames.MAIL.getName())
+                        ColumnNames.MAIL.getName(),
+                        ColumnNames.UPDATED_DATE.getName())
                 .clickOnWebElement(table.getShowHideColumnsBtn())
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.NAME))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.CATEGORY))
@@ -83,18 +86,20 @@ public class TableDataTests extends BaseTest {
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.CURRENCY))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.AD_OPS_PERSON))
                 .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.MAIL))
+                .unSelectCheckBox(table.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .clickOnWebElement(filterOptions.getColumnsFilterButton())
-                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
+                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.STATUS))
                 .selectRadioButton(filterOptions.getActiveBooleanFilter().getInactiveRadioButton())
                 .clickOnWebElement(filterOptions.getActiveBooleanFilter().getSubmitButton())
                 .then()
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.CATEGORY.getName()))
-                .validate(not(visible), tableData.getColumnHeader(ColumnNames.ACTIVE.getName()))
+                .validate(visible, tableData.getColumnHeader(ColumnNames.STATUS.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.DOMAIN.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.CURRENCY.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.AD_OPS_PERSON.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.MAIL.getName()))
+                .validate(not(visible), tableData.getColumnHeader(ColumnNames.UPDATED_DATE.getName()))
                 .validate(visible, tableData.getColumnHeader(ColumnNames.ID.getName()))
                 .and()
                 .clickOnWebElement(table.getShowHideColumnsBtn())
@@ -103,6 +108,7 @@ public class TableDataTests extends BaseTest {
 
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test
     public void checkPagination() {
         var tableData = publishersPage.getTable().getTableData();
@@ -115,19 +121,19 @@ public class TableDataTests extends BaseTest {
                 .waitAndValidate(disappear, publishersPage.getNuxtProgress())
                 .and()
                 .clickOnWebElement(filterOptions.getColumnsFilterButton())
-                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.ACTIVE_INACTIVE))
+                .clickOnWebElement(filterOptions.getFilterOptionByName(ColumnNames.STATUS))
                 .selectRadioButton(filterOptions.getActiveBooleanFilter().getActiveRadioButton())
                 .clickOnWebElement(filterOptions.getActiveBooleanFilter().getSubmitButton())
                 .selectFromDropdown(tablePagenation.getPageMenu(), tablePagenation.getRowNumbersList(), "10")
                 .waitLoading(visible, publishersPage.getTableProgressBar())
                 .waitLoading(disappear, publishersPage.getTableProgressBar())
                 .validateListSize(tableData.getRows(), 10)
-                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE),
+                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.STATUS),
                         Statuses.ACTIVE.getStatus())
                 .clickOnWebElement(tablePagenation.getNext())
                 .waitLoading(visible, publishersPage.getTableProgressBar())
                 .waitLoading(disappear, publishersPage.getTableProgressBar())
-                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE),
+                .validateListContainsTextOnly(tableData.getCustomCells(ColumnNames.STATUS),
                         Statuses.ACTIVE.getStatus())
                 .logOut()
                 .testEnd();

@@ -1,30 +1,29 @@
 package rx.sales.deals;
 
-import org.jsoup.internal.StringUtil;
-import pages.Path;
-import rx.BaseTest;
-import org.testng.annotations.*;
 import api.dto.rx.sales.deals.Deal;
-import pages.sales.deals.DealsPage;
-import widgets.common.table.ColumnNames;
 import api.preconditionbuilders.DealPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
+import org.testng.annotations.*;
+import pages.Path;
+import pages.sales.deals.DealsPage;
+import rx.BaseTest;
+import widgets.common.table.ColumnNames;
 import zutils.StringUtils;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.codeborne.selenide.Condition.disappear;
+import static com.codeborne.selenide.Condition.visible;
 import static configurations.User.TEST_USER;
 import static managers.TestManager.testStart;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Condition.disappear;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
@@ -176,16 +175,18 @@ public class DealsSortingTableTests extends BaseTest {
         validateSortData(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Sorting 'Active/Inactive' column by ascending")
     public void adSpotSortingByStatusAsc() {
-        sortByAscColumnByName(ColumnNames.ACTIVE_INACTIVE);
-        validateSortData(ColumnNames.ACTIVE_INACTIVE, ASC, sortStatusByAsc);
+        sortByAscColumnByName(ColumnNames.STATUS);
+        validateSortData(ColumnNames.STATUS, ASC, sortStatusByAsc);
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Sorting 'Active/Inactive' column by descending")
     public void adSpotSortingByStatusDesc() {
-        sortByDescColumnByName(ColumnNames.ACTIVE_INACTIVE);
-        validateSortData(ColumnNames.ACTIVE_INACTIVE, DESC, sortStatusByDesc);
+        sortByDescColumnByName(ColumnNames.STATUS);
+        validateSortData(ColumnNames.STATUS, DESC, sortStatusByDesc);
     }
 
     @Test(testName = "Sorting 'PrivateAuction' column by ascending")
@@ -212,12 +213,16 @@ public class DealsSortingTableTests extends BaseTest {
         validateSortData(ColumnNames.DSP, DESC, sortDSPByDesc);
     }
 
+    @Issue("GS-3288")
+    @Epic("v1.28.0/GS-3288")
     @Test(testName = "Sorting 'Price/Value' column by ascending")
     public void adSpotSortingByPriceValueAsc() {
         sortByAscColumnByName(ColumnNames.PRICE_VALUE);
         validateSortData(ColumnNames.PRICE_VALUE, ASC, sortPriceValueByAsc);
     }
 
+    @Issue("GS-3288")
+    @Epic("v1.28.0/GS-3288")
     @Test(testName = "Sorting 'Price/Value' column by descending")
     public void adSpotSortingByPriceValueDesc() {
         sortByDescColumnByName(ColumnNames.PRICE_VALUE);

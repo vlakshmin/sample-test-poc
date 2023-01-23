@@ -31,6 +31,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Epic("v1.28.0/GS-3219")
 public class OpenPricingUploadNegtiveWrongDataTests extends BaseTest {
 
     private Publisher publisher;
@@ -95,7 +96,6 @@ public class OpenPricingUploadNegtiveWrongDataTests extends BaseTest {
         };
     }
 
-    @Epic("v1.26.0/GS-3083")
     @Test(description = "Negative: Update existing open pricing rules", dataProvider = "Negative Upload")
     public void updateExistingOpenPricingRulesNegative(String filename, String descr, String errorMsg) {
 

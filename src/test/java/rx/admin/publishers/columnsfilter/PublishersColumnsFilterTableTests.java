@@ -1,7 +1,6 @@
-package rx.protections.columnsfilter;
+package rx.admin.publishers.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
-import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
@@ -9,7 +8,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
-import pages.protections.ProtectionsPage;
+import pages.admin.publisher.PublishersPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 
@@ -21,14 +20,13 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Feature(value = "Protections Columns Filter")
-@Epic("v1.28.0/GS-3363")
-public class ProtectionsColumnsFilterTableTests extends BaseTest {
+@Feature(value = "Publishers Columns Filter")
+public class PublishersColumnsFilterTableTests extends BaseTest {
 
-    private ProtectionsPage protectionPage;
+    private PublishersPage publishersPage;
 
-    public ProtectionsColumnsFilterTableTests() {
-        protectionPage = new ProtectionsPage();
+    public PublishersColumnsFilterTableTests() {
+        publishersPage = new PublishersPage();
     }
 
     @BeforeClass
@@ -36,31 +34,31 @@ public class ProtectionsColumnsFilterTableTests extends BaseTest {
 
          testStart()
                 .given()
-                .openDirectPath(Path.PROTECTIONS)
+                .openDirectPath(Path.PUBLISHER)
                 .logIn(TEST_USER)
-                .waitAndValidate(disappear, protectionPage.getNuxtProgress())
+                .waitAndValidate(disappear, publishersPage.getNuxtProgress())
                 .testEnd();
     }
 
     @Test(description = "Check columns filter options by default")
     public void defaultColumnsFilter(){
-        var tableColumns = protectionPage.getProtectionsTable();
+        var tableColumns = publishersPage.getTable();
 
         testStart()
-                .scrollIntoView(protectionPage.getProtectionPageTitle())
+                .scrollIntoView(publishersPage.getPageTitle())
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
                 .then("Validate options list")
-                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
+                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(
                         ColumnNames.STATUS.getName(),
-                        ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName(),
+                        ColumnNames.CURRENCY.getName(),
                         ColumnNames.UPDATED_DATE.getName()))
                 .testEnd();
     }
 
     @Test(description = "Select show all columns and check columns filter options")
     public void showAllColumns(){
-        var tableColumns = protectionPage.getProtectionsTable();
+        var tableColumns = publishersPage.getTable();
 
         testStart()
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
@@ -68,17 +66,17 @@ public class ProtectionsColumnsFilterTableTests extends BaseTest {
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_BY))
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_BY))
+                .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .and("Select 10 rows per page")
-                .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
-                .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
-                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "10")
-                .scrollIntoView(protectionPage.getProtectionPageTitle())
+                .scrollIntoView(publishersPage.getTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(publishersPage.getTable().getTablePagination().getPageMenu(),
+                        publishersPage.getTable().getTablePagination().getRowNumbersList(), "10")
+                .scrollIntoView(publishersPage.getPageTitle())
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
                 .then("Validate options list")
-                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
-                        ColumnNames.STATUS.getName(),
-                        ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName(),
+                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.STATUS.getName(),
+                        ColumnNames.CURRENCY.getName(),
                         ColumnNames.CREATED_DATE.getName(),
                         ColumnNames.CREATED_BY.getName(),
                         ColumnNames.UPDATED_DATE.getName(),
@@ -88,26 +86,28 @@ public class ProtectionsColumnsFilterTableTests extends BaseTest {
 
     @Test(description = "Hide all columns and check columns filter options")
     public void hideAllColumns(){
-        var tableColumns = protectionPage.getProtectionsTable();
+        var tableColumns = publishersPage.getTable();
 
         testStart()
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
-                .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.PUBLISHER))
                 .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.ID))
-                .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.DETAILS))
                 .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.NAME))
+                .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CATEGORY))
                 .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.STATUS))
-                .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.MANAGED_BY_SYSTEM_ADMIN))
+                .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.DOMAIN))
+                .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CURRENCY))
+                .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.AD_OPS_PERSON))
+                .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.MAIL))
                 .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_BY))
                 .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_BY))
                 .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .and("Select 10 rows per page")
-                .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
-                .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
-                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "10")
-                .scrollIntoView(protectionPage.getProtectionPageTitle())
+                .scrollIntoView(publishersPage.getTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(publishersPage.getTable().getTablePagination().getPageMenu(),
+                        publishersPage.getTable().getTablePagination().getRowNumbersList(), "10")
+                .scrollIntoView(publishersPage.getPageTitle())
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
                 .then("Validate options list")
@@ -117,9 +117,10 @@ public class ProtectionsColumnsFilterTableTests extends BaseTest {
 
     @Test(description = "Show all columns and refresh page. Check columns filter options")
     public void showAllAndRefreshPage(){
-        var tableColumns = protectionPage.getProtectionsTable();
+        var tableColumns = publishersPage.getTable();
 
         testStart()
+                .clickBrowserRefreshButton()
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_BY))
@@ -127,20 +128,20 @@ public class ProtectionsColumnsFilterTableTests extends BaseTest {
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_BY))
                 .and("Refresh page")
                 .clickBrowserRefreshButton()
-                .scrollIntoView(protectionPage.getProtectionPageTitle())
+                .scrollIntoView(publishersPage.getPageTitle())
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
                 .then("Validate options list")
-                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
+                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(
                         ColumnNames.STATUS.getName(),
-                        ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName(),
+                        ColumnNames.CURRENCY.getName(),
                         ColumnNames.UPDATED_DATE.getName()))
                 .testEnd();
     }
 
     @Test(description = "Show all columns and reload page. Check columns filter options")
     public void showAllAndReloadPage(){
-        var tableColumns = protectionPage.getProtectionsTable();
+        var tableColumns = publishersPage.getTable();
 
         testStart()
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
@@ -151,14 +152,14 @@ public class ProtectionsColumnsFilterTableTests extends BaseTest {
                 .and("Navigate to Open Pricing page")
                 .openDirectPath(Path.OPEN_PRICING)
                 .and("Navigate to Protection page again")
-                .openDirectPath(Path.PROTECTIONS)
-                .scrollIntoView(protectionPage.getProtectionPageTitle())
+                .openDirectPath(Path.PUBLISHER)
+                .scrollIntoView(publishersPage.getPageTitle())
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
                 .then("Validate options list")
-                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
+                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(
                         ColumnNames.STATUS.getName(),
-                        ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName(),
+                        ColumnNames.CURRENCY.getName(),
                         ColumnNames.UPDATED_DATE.getName()))
                 .testEnd();
     }

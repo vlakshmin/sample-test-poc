@@ -147,7 +147,7 @@ public class PublisherPrecondition {
             this.publisherResponse = this.response.as(Publisher.class);
             this.publisherRequest = this.response.as(PublisherRequest.class);
 
-            this.publisherResponse.setIsEnabled(isEnabled);
+            this.publisherRequest.setIsEnabled(isEnabled);
 
             this.response = publisherService.updatePublisher(this.publisherRequest, id);
             this.responseCode = response.getStatusCode();

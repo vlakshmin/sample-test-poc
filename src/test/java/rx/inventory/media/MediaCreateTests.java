@@ -9,10 +9,13 @@ import org.testng.annotations.*;
 import pages.Path;
 import pages.inventory.media.*;
 import rx.BaseTest;
+import widgets.common.categories.CategoriesList;
 import widgets.common.table.ColumnNames;
 import widgets.common.table.Statuses;
 import widgets.inventory.media.sidebar.CreateMediaSidebar;
 import widgets.inventory.media.sidebar.PlatformType;
+
+import java.util.List;
 
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static com.codeborne.selenide.Condition.*;
@@ -22,6 +25,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Epic("v1.28.0/GS-3298")
 public class MediaCreateTests extends BaseTest {
     
     private MediaPage mediaPage;
@@ -50,7 +54,6 @@ public class MediaCreateTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'IOS' platform type")
     public void createMediaIOSPlatformType() {
         var mediaName = captionWithSuffix("autoMediaIOS");
@@ -59,7 +62,6 @@ public class MediaCreateTests extends BaseTest {
         createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, PlatformType.IOS.getName());
     }
 
-    @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'IOS Web View' platform type")
     private void createMediaIOSWebViewPlatformType() {
         var mediaName = captionWithSuffix("autoMediaIOSWebView");
@@ -68,7 +70,6 @@ public class MediaCreateTests extends BaseTest {
         createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, PlatformType.IOS_WEB_VIEW.getName());
     }
 
-    @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'Android' platform type")
     private void createMediaAndroidPlatformType() {
         var mediaName = captionWithSuffix("autoMediaAndroid");
@@ -77,7 +78,6 @@ public class MediaCreateTests extends BaseTest {
         createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, PlatformType.ANDROID.getName());
     }
 
-    @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'Android Web View' platform type")
     private void createMediaAndroidWebViewPlatformType() {
         var mediaName = captionWithSuffix("autoMediaAndroidWebView");
@@ -86,7 +86,6 @@ public class MediaCreateTests extends BaseTest {
         createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, PlatformType.ANDROID_WEB_VIEW.getName());
     }
 
-    @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'PC Web' platform type")
     private void createMediaPCWebViewPlatformType() {
         var mediaName = captionWithSuffix("autoMediaPCWeb");
@@ -94,12 +93,20 @@ public class MediaCreateTests extends BaseTest {
         createAndCheckCreatedMedia(mediaName, appStoreURL, "", PlatformType.PC_WEB.getName());
     }
 
-    @Epic("v1.26.0/GS-3017")
     @Test(description = "Create Media with 'Mobile Web' platform type")
     private void createMediaMobileWebViewPlatformType() {
         var mediaName = captionWithSuffix("autoMediaMobileWeb");
         var appStoreURL = "https://checkmedia.com";
         createAndCheckCreatedMedia(mediaName, appStoreURL, "", PlatformType.MOBILE_WEB.getName());
+    }
+
+    @Epic("v1.28.0/GS-3309")
+    @Test(description = "Create Media with CTV' platform type")
+    private void createMediaCTVPlatformType() {
+        var mediaName = captionWithSuffix("autoMediaCTV");
+        var appStoreURL = "https://checkmedia.com";
+        var bundle = "com.viber.voip";
+        createAndCheckCreatedMedia(mediaName, appStoreURL, bundle, PlatformType.CTV.getName());
     }
 
 
@@ -108,6 +115,7 @@ public class MediaCreateTests extends BaseTest {
         var tableData = mediaPage.getMediaTable().getTableData();
         var tableOptions = mediaPage.getMediaTable().getShowHideColumns();
         var tablePagination = mediaPage.getMediaTable().getTablePagination();
+        var categories = createMediaSidebar.getCategoriesPanel();
 
         testStart()
                 .clickOnWebElement(mediaPage.getCreateMediaButton())
@@ -118,7 +126,9 @@ public class MediaCreateTests extends BaseTest {
                 .setValueWithClean(createMediaSidebar.getNameInput(), mediaName)
                 .selectFromDropdown(createMediaSidebar.getPlatformDropdown(),
                         createMediaSidebar.getPlatformDropdownItems(), platformType)
-
+                .clickOnWebElement(createMediaSidebar.getCategories())
+                .clickOnWebElement(categories.getCategoryCheckbox(CategoriesList.ART_ENTERTAIMENTS))
+                .clickOnWebElement(categories.getCategoryCheckbox(CategoriesList.AUTOMOTIVE))
                 .testEnd();
 
         if (!platformType.equals("PC Web") && (!platformType.equals("Mobile Web"))) {
@@ -152,6 +162,8 @@ public class MediaCreateTests extends BaseTest {
                 .validate(createMediaSidebar.getPublisherInput(), publisher.getName())
                 .validateAttribute(createMediaSidebar.getNameInput(), "value", mediaName)
                 .validate(createMediaSidebar.getPlatformDropdown(), platformType)
+                .validateList(categories.getCategoriesSelectedItems(),
+                        List.of(CategoriesList.ART_ENTERTAIMENTS.getName(), CategoriesList.AUTOMOTIVE.getName()))
                 .testEnd();
 
         if (!platformType.equals("PC Web") && (!platformType.equals("Mobile Web"))) {
@@ -168,16 +180,17 @@ public class MediaCreateTests extends BaseTest {
 
                 .and("Click Save")
                 .clickOnWebElement(createMediaSidebar.getSaveButton())
-                .waitAndValidate(not(visible), createMediaSidebar.getErrorAlert().getErrorPanel())
-                .waitAndValidate(not(visible), mediaPage.getToasterMessage().getPanelError())
+                .waitAndValidate(not(exist), createMediaSidebar.getErrorAlert().getErrorPanel())
+                .waitAndValidate(not(exist), mediaPage.getToasterMessage().getPanelError())
                 .waitSideBarClosed()
                 .and("Toaster Error message is absent")
-                .waitAndValidate(not(visible), mediaPage.getToasterMessage().getPanelError())
+                .waitAndValidate(not(exist), mediaPage.getToasterMessage().getPanelError())
                 .and("Show column 'Site/App Store URL'")
                 .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))
                 .then("Validate data in table")
-                .validate(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE, ColumnNames.MEDIA_NAME, mediaName), Statuses.ACTIVE.getStatus())
+                //:TODO need to add all columns
+                .validate(tableData.getCellByRowValue(ColumnNames.STATUS, ColumnNames.MEDIA_NAME, mediaName), Statuses.ACTIVE.getStatus())
                 .validate(tableData.getCellByRowValue(ColumnNames.PUBLISHER, ColumnNames.MEDIA_NAME, mediaName), publisher.getName())
                 .validate(tableData.getCellByRowValue(ColumnNames.PLATFORM, ColumnNames.MEDIA_NAME, mediaName), platformType)
                 .validate(tableData.getCellByRowValue(ColumnNames.SITE_APP_STORE_URL, ColumnNames.MEDIA_NAME, mediaName), url)

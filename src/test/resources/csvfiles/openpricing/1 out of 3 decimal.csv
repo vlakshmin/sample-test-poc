@@ -1,4 +1,4 @@
 Rule Name,Floor Price
-uploadPositive auto one,1.5
-uploadPositive auto two,25.25
-uploadPositive auto three,1.5
+uploadPositive 1auto one,1.50
+uploadPositive 2auto two,25.25
+uploadPositive 3auto three,1.50

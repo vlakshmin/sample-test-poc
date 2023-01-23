@@ -3,7 +3,8 @@ package rx.admin.publishers;
 import pages.Path;
 import rx.BaseTest;
 import io.qameta.allure.Epic;
-import io.qameta.allure.Link;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 import org.testng.annotations.Listeners;
@@ -24,7 +25,7 @@ import static com.codeborne.selenide.Condition.*;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Link("https://rakutenadvertising.atlassian.net/browse/GS-3155")
+@Feature("Publishers")
 public class PublisherCheckFieldsTests extends BaseTest {
 
     private PublishersPage publisherPage;
@@ -49,7 +50,8 @@ public class PublisherCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v?/GS-3100")
+    @Issue("GS-3186")
+    @Epic("v1.28.0/GS-3186")
     @Test(description = "Check fields by default")
     public void checkDefaultFields() {
 
@@ -65,11 +67,12 @@ public class PublisherCheckFieldsTests extends BaseTest {
                 .validate(editPublisherSidebar.getAdOpsPerson(), "")
                 .validate(enabled, editPublisherSidebar.getDomainInput())
                 .validate(editPublisherSidebar.getDomainInput(), "")
-                .validate(enabled, editPublisherSidebar.getCategoriesInput())
+                .validate(enabled, editPublisherSidebar.getCategories())
                 .testEnd();
     }
 
-    @Epic("v?/GS-3100")
+    @Issue("GS-3186")
+    @Epic("v1.28.0/GS-3186")
     @Test(description = "Check required fields")
     public void checkRequiredFields() {
         var errorsList = editPublisherSidebar.getErrorAlert().getErrorsList();
@@ -155,7 +158,8 @@ public class PublisherCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v?/GS-3100")
+    @Issue("GS-3186")
+    @Epic("v1.28.0/GS-3186")
     @Test(description = "Check required fields")
     public void checkRequiredFieldsWithInvalidInputs() throws InterruptedException {
         var errorsList = editPublisherSidebar.getErrorAlert().getErrorsList();

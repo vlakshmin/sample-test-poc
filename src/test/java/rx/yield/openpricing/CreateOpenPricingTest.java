@@ -9,6 +9,7 @@ import api.preconditionbuilders.DevicePrecondition;
 import api.preconditionbuilders.OpenPricingPrecondition;
 import api.preconditionbuilders.OperatingSystemPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
@@ -157,6 +158,7 @@ public class CreateOpenPricingTest extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(priority = 8, dependsOnMethods = "saveOpenPricingTest")
     @Step("Verify new Pricing in table")
     public void checkOpenPricingTableTest() {
@@ -167,7 +169,7 @@ public class CreateOpenPricingTest extends BaseTest {
                 .validate(tableData.getCustomCells(ColumnNames.NAME).get(0), PRICING_NAME)
                 .validate(tableData.getCustomCells(ColumnNames.PUBLISHER).get(0), publisher.getName())
                 .validate(tableData.getCustomCells(ColumnNames.FLOOR_PRICE).get(0), String.format("%s %s", FLOOR_PRICE, publisher.getCurrency()))
-                .validate(tableData.getCustomCells(ColumnNames.ACTIVE_INACTIVE).get(0), "Active")
+                .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Active")
                 .testEnd();
     }
 

@@ -3,6 +3,7 @@ package rx.protections;
 import api.dto.rx.protection.Protection;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Link;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ import static managers.TestManager.testStart;
 @Listeners({ScreenShooter.class})
 @Epic("Waiting for separate QA env")
 @Link("https://rakutenadvertising.atlassian.net/browse/GS-3280")
+@Feature(value = "Protections")
 public class ProtectionsSortingTableTests extends BaseTest {
 
     private int totalProtections;
@@ -115,15 +117,6 @@ public class ProtectionsSortingTableTests extends BaseTest {
 
         testStart().given().and(String.format("Sort column '%s'", columnName))
                 .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                .testEnd();
-
-        if (columnName.getName().equals("ID")) {
-            testStart()
-                    .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                    .testEnd();
-        }
-
-        testStart()
                 .then("Ensure that sort by descending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(columnName.getName()),
                         "aria-sort", ASC)
@@ -142,15 +135,7 @@ public class ProtectionsSortingTableTests extends BaseTest {
                 .given()
                 .and(String.format("Sort column '%s'", columnName))
                 .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                .testEnd();
-
-        if (columnName.getName().equals("ID")) {
-            testStart()
-                    .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                    .testEnd();
-        }
-
-        testStart().then("Ensure that sort by ascending: validate column attribute value")
+                .then("Ensure that sort by ascending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(columnName.getName()),
                         "aria-sort", ASC)
                 .waitAndValidate(disappear, protectionsPage.getNuxtProgress())

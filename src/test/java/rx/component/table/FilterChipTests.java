@@ -1,6 +1,7 @@
 package rx.component.table;
 
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
@@ -88,6 +89,7 @@ public class FilterChipTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(description = "Check Chip Widget Component", dependsOnMethods = "testSearchColumnsFilterComponent")
     public void testChipWidgetComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
@@ -139,15 +141,16 @@ public class FilterChipTests extends BaseTest {
         });
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(description = "Check Reset Chip Widget Component", dependsOnMethods = "testChipWidgetComponent")
     public void testResetChipWidgetComponent() {
         var table = protectionPage.getProtectionsTable().getTableData();
 
         testStart()
-                .and(format("Reset filter %s", ColumnNames.ACTIVE_INACTIVE.getName()))
-                .scrollIntoView(table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getCloseIcon())
-                .clickOnWebElement(table.getChipItemByName(ColumnNames.ACTIVE_INACTIVE.getName()).getCloseIcon())
-                .then(format("Chip '%s' should be disabled", ColumnNames.ACTIVE_INACTIVE.getName()))
+                .and(format("Reset filter %s", ColumnNames.STATUS.getName()))
+                .scrollIntoView(table.getChipItemByName(ColumnNames.STATUS.getName()).getCloseIcon())
+                .clickOnWebElement(table.getChipItemByName(ColumnNames.STATUS.getName()).getCloseIcon())
+                .then(format("Chip '%s' should be disabled", ColumnNames.STATUS.getName()))
                 .validate(table.getFilterChips().size(), 1)
                 .validate(visible, table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getHeaderLabel())
                 .testEnd();

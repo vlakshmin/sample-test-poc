@@ -6,6 +6,7 @@ import api.dto.rx.inventory.media.Media;
 import api.preconditionbuilders.AdSpotPrecondition;
 import api.preconditionbuilders.MediaPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.*;
@@ -35,6 +36,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Feature(value = "Protections")
 public class ProtectionsInventoryMultipaneTests extends BaseTest {
     private Publisher publisherEmpty;
     private Publisher publisherActive;

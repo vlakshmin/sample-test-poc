@@ -1,16 +1,21 @@
-package rx.publishers.columnsfilter;
+package rx.yield.openpricing.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
 import pages.Path;
-import pages.admin.publisher.PublishersPage;
+import pages.yield.openpricing.OpenPricingPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import zutils.StringUtils;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static api.preconditionbuilders.ProtectionsPrecondition.protection;
@@ -23,48 +28,48 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Feature(value = "Publishers Columns Filter")
-public class PublishersColumnsFilterWidgetTests extends BaseTest {
+@Feature(value = "OpenPricing Columns Filter")
+public class OpenPricingColumnsFilterWidgetTests extends BaseTest {
 
-    private PublishersPage publishersPage;
+    private OpenPricingPage openPricingPage;
 
     private List<String> selectedPublishersNameList;
 
-    public PublishersColumnsFilterWidgetTests() {
-        publishersPage = new PublishersPage();
+    public OpenPricingColumnsFilterWidgetTests() {
+        openPricingPage = new OpenPricingPage();
     }
 
     @BeforeClass
     private void login() {
-        var tableColumns = publishersPage.getTable().getShowHideColumns();
+        var tableColumns = openPricingPage.getOpenPricingTable().getShowHideColumns();
 
         testStart()
                 .given()
-                .openDirectPath(Path.PUBLISHER)
+                .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
-                .waitAndValidate(disappear, publishersPage.getNuxtProgress())
+                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
+                .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
+                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "10")
                 .scrollIntoView(tableColumns.getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_BY))
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.UPDATED_BY))
-                .and("Select 10 rows per page")
-                .scrollIntoView(publishersPage.getTable().getTablePagination().getPageMenu())
-                .selectFromDropdown(publishersPage.getTable().getTablePagination().getPageMenu(),
-                        publishersPage.getTable().getTablePagination().getRowNumbersList(), "10")
-                .scrollIntoView(publishersPage.getPageTitle())
                 .testEnd();
     }
+
+    @Epic("v1.28.0/GS-3298")
     @Test(description = "Check Active/Inactive Chip Widget Component", dependsOnMethods = "testCreatedByChipWidgetComponent")
     public void testActiveInactiveChipWidgetComponent() {
-        var filter = publishersPage.getTable().getColumnFiltersBlock();
-        var table = publishersPage.getTable().getTableData();
+        var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
+        var table = openPricingPage.getOpenPricingTable().getTableData();
 
         testStart()
                 .and("Click on 'Column Filters'")
-                .scrollIntoView(publishersPage.getPageTitle())
+                .scrollIntoView(openPricingPage.getPageTitle())
                 .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
-                .and("Select Column Filter 'Active/Inactive'")
+                .and("Select Column Filter 'Status'")
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.STATUS))
                 .then("Title should be displayed")
                 .validate(filter.getActiveBooleanFilter().getFilterHeaderLabel(), StringUtils.getFilterHeader(ColumnNames.STATUS.getName()))
@@ -82,9 +87,10 @@ public class PublishersColumnsFilterWidgetTests extends BaseTest {
                 .and("Click on Back")
                 .clickOnWebElement(filter.getActiveBooleanFilter().getBackButton())
                 .then("Columns Menu should appear")
-                .validateList(filter.getFilterOptionItems(), List.of(ColumnNames.STATUS.getName(),
-                        ColumnNames.CURRENCY.getName(),
+                .validateList(filter.getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
+                        ColumnNames.STATUS.getName(),
                         ColumnNames.CREATED_BY.getName(),
+                        ColumnNames.UPDATED_DATE.getName(),
                         ColumnNames.UPDATED_BY.getName()))
                 .and("Select Column Filter 'Active/Inactive'")
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.STATUS))
@@ -108,7 +114,7 @@ public class PublishersColumnsFilterWidgetTests extends BaseTest {
 
     @Test(description = "Check Search Updated By")
     public void testSearchUpdatedByColumnsFilterComponent() {
-        var filter = publishersPage.getTable().getColumnFiltersBlock();
+        var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
         var userNameList = getUpdatedByListFromBE();
         var searchName = userNameList.get(1).substring(5);
         var expectedUserNameList = getUsersListFromBE(searchName);
@@ -116,58 +122,59 @@ public class PublishersColumnsFilterWidgetTests extends BaseTest {
 
         testStart()
                 .and("Select Column Filter 'Updated By'")
-                .scrollIntoView(publishersPage.getLogo())
+                .scrollIntoView(openPricingPage.getLogo())
                 .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.UPDATED_BY))
                 .and("Clean Search field")
-                .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(), "abc")
-                .clickOnWebElement(filter.getSinglepaneFilter().getBackButton())
+                .setValueWithClean(filter.getSinglepane().getSearchInput(), "abc")
+                .clickOnWebElement(filter.getSinglepane().getBackButton())
                 .waitAndValidate(appear, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.UPDATED_BY))
-                .validate(filter.getSinglepaneFilter().getSearchInput(),"")
-                .validate(filter.getSinglepaneFilter().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
+                .validate(filter.getSinglepane().getSearchInput(),"")
+                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
                 .and(format("Search by Name '%s'", searchName))
-                .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(), searchName)
-                .clickEnterButton(filter.getSinglepaneFilter().getSearchInput())
+                .setValueWithClean(filter.getSinglepane().getSearchInput(), searchName)
+                .clickEnterButton(filter.getSinglepane().getSearchInput())
                 .and("Verify Search Count")
-                .validate(filter.getSinglepaneFilter().countIncludedItems(), expectedUserNameList.size())
+                .waitAndValidate(visible, filter.getSinglepane().getItemsTotalQuantityLabel())
+                .validate(filter.getSinglepane().countIncludedItems(), expectedUserNameList.size())
                 .testEnd();
 
         expectedUserNameList.forEach(e -> {
             testStart()
-                    .validate(visible, filter.getSinglepaneFilter().getFilterItemByName(e).getName())
+                    .validate(visible, filter.getSinglepane().getFilterItemByName(e).getName())
                     .testEnd();
         });
 
         testStart()
                 .and("Clear Search")
-                .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(),"")
+                .setValueWithClean(filter.getSinglepane().getSearchInput(),"")
                 .then("Check total users count, search result should be reset")
-                .validate(not(visible), publishersPage.getTableProgressBar())
-                .validate(filter.getSinglepaneFilter().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
+                .validate(not(visible), openPricingPage.getTableProgressBar())
+                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
                 .testEnd();
     }
 
     @Test(description = "Check 'Updated By' Chip Widget Component", dependsOnMethods = "testSearchUpdatedByColumnsFilterComponent")
     public void testUpdatedByChipWidgetComponent() {
-        var filter = publishersPage.getTable().getColumnFiltersBlock();
-        var table = publishersPage.getTable().getTableData();
+        var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
+        var table = openPricingPage.getOpenPricingTable().getTableData();
 
         testStart()
                 .and("Select Users")
-                .clickOnWebElement(filter.getSinglepaneFilter().getFilterItemByPositionInList(1).getName())
-                .clickOnWebElement(filter.getSinglepaneFilter().getFilterItemByPositionInList(2).getName())
-                .clickOnWebElement(filter.getSinglepaneFilter().getFilterItemByPositionInList(3).getName())
+                .clickOnWebElement(filter.getSinglepane().getFilterItemByPositionInList(1).getName())
+                .clickOnWebElement(filter.getSinglepane().getFilterItemByPositionInList(2).getName())
+                .clickOnWebElement(filter.getSinglepane().getFilterItemByPositionInList(3).getName())
                 .testEnd();
 
-        selectedPublishersNameList = List.of(filter.getSinglepaneFilter().getFilterItemByPositionInList(1).getName().text(),
-                filter.getSinglepaneFilter().getFilterItemByPositionInList(2).getName().text(),
-                filter.getSinglepaneFilter().getFilterItemByPositionInList(3).getName().text());
+        selectedPublishersNameList = List.of(filter.getSinglepane().getFilterItemByPositionInList(1).getName().text(),
+                filter.getSinglepane().getFilterItemByPositionInList(2).getName().text(),
+                filter.getSinglepane().getFilterItemByPositionInList(3).getName().text());
 
         testStart()
                 .and("Click on Submit")
-                .clickOnWebElement(filter.getSinglepaneFilter().getSubmitButton())
+                .clickOnWebElement(filter.getSinglepane().getSubmitButton())
                 .then("ColumnsFilter widget is closed")
                 .validate(not(visible), filter.getFilterOptionsMenu())
                 .validate(visible, table.getChipItemByName(ColumnNames.UPDATED_BY.getName()).getHeaderLabel())
@@ -189,7 +196,7 @@ public class PublishersColumnsFilterWidgetTests extends BaseTest {
 
     @Test(description = "Check Search Created By", dependsOnMethods = "testUpdatedByChipWidgetComponent")
     public void testSearchCreatedByColumnsFilterComponent() {
-        var filter = publishersPage.getTable().getColumnFiltersBlock();
+        var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
         var userNameList = getCreatedByListFromBE();
         var searchName = userNameList.get(1).substring(5);
         var expectedUserNameList = getUsersListFromBE(searchName);
@@ -197,45 +204,46 @@ public class PublishersColumnsFilterWidgetTests extends BaseTest {
 
         testStart()
                 .and("Select Column Filter 'Created By'")
-                .scrollIntoView(publishersPage.getPageTitle())
+                .scrollIntoView(openPricingPage.getPageTitle())
                 .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_BY))
                 .and()
-                .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(), "abc")
-                .clickOnWebElement(filter.getSinglepaneFilter().getBackButton())
+                .setValueWithClean(filter.getSinglepane().getSearchInput(), "abc")
+                .clickOnWebElement(filter.getSinglepane().getBackButton())
                 .waitAndValidate(appear, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_BY))
                 .then("Search params should be reset")
-                .validate(filter.getSinglepaneFilter().getSearchInput(),"")
-                .validate(filter.getSinglepaneFilter().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
+                .validate(filter.getSinglepane().getSearchInput(),"")
+                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
                 .and(format("Search by Name '%s'", searchName))
-                .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(), searchName)
-                .clickEnterButton(filter.getSinglepaneFilter().getSearchInput())
+                .setValueWithClean(filter.getSinglepane().getSearchInput(), searchName)
+                .clickEnterButton(filter.getSinglepane().getSearchInput())
                 .and("Verify Search Count")
-                .validate(filter.getSinglepaneFilter().countIncludedItems(), expectedUserNameList.size())
+                .waitAndValidate(visible, filter.getSinglepane().getItemsTotalQuantityLabel())
+                .validate(filter.getSinglepane().countIncludedItems(), expectedUserNameList.size())
                 .testEnd();
 
         expectedUserNameList.forEach(e -> {
             testStart()
-                    .validate(visible, filter.getSinglepaneFilter().getFilterItemByName(e).getName())
+                    .validate(visible, filter.getSinglepane().getFilterItemByName(e).getName())
                     .testEnd();
         });
 
         testStart()
                 .and("Clear Search")
-                .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(),"")
+                .setValueWithClean(filter.getSinglepane().getSearchInput(),"")
                 .then("Check total users count, search result should be reset")
-                .validate(not(visible), publishersPage.getTableProgressBar())
-                .validate(filter.getSinglepaneFilter().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
+                .validate(not(visible), openPricingPage.getTableProgressBar())
+                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
                 .and()
-                .clickOnWebElement(filter.getSinglepaneFilter().getCancelButton())
+                .clickOnWebElement(filter.getSinglepane().getCancelButton())
                 .testEnd();
     }
 
     @Test(description = "Check Back Created By filter", dependsOnMethods = "testSearchCreatedByColumnsFilterComponent")
     public void testBackCreatedByColumnsFilterComponent() {
-        var filter = publishersPage.getTable().getColumnFiltersBlock();
+        var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
         var userNameList = getCreatedByListFromBE();
         var searchName = userNameList.get(1).substring(5);
         var expectedUserNameList = getUsersListFromBE(searchName);
@@ -243,57 +251,57 @@ public class PublishersColumnsFilterWidgetTests extends BaseTest {
 
         testStart()
                 .and("Select Column Filter 'Created By'")
-                .scrollIntoView(publishersPage.getPageTitle())
+                .scrollIntoView(openPricingPage.getPageTitle())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_BY))
                 .and()
-                .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(), "abc")
+                .setValueWithClean(filter.getSinglepane().getSearchInput(), "abc")
                 .and("Click on Back")
-                .clickOnWebElement(filter.getSinglepaneFilter().getBackButton())
+                .clickOnWebElement(filter.getSinglepane().getBackButton())
                 .waitAndValidate(appear, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_BY))
                 .then("Search params should be reset")
-                .validate(filter.getSinglepaneFilter().getSearchInput(),"")
-                .validate(filter.getSinglepaneFilter().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
+                .validate(filter.getSinglepane().getSearchInput(),"")
+                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
                 .and(format("Search by Name '%s'", searchName))
-                .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(), searchName)
-                .clickEnterButton(filter.getSinglepaneFilter().getSearchInput())
-                .validate(filter.getSinglepaneFilter().countIncludedItems(), expectedUserNameList.size())
+                .setValueWithClean(filter.getSinglepane().getSearchInput(), searchName)
+                .clickEnterButton(filter.getSinglepane().getSearchInput())
+                .validate(filter.getSinglepane().countIncludedItems(), expectedUserNameList.size())
                 .testEnd();
 
         expectedUserNameList.forEach(e -> {
             testStart()
-                    .validate(visible, filter.getSinglepaneFilter().getFilterItemByName(e).getName())
+                    .validate(visible, filter.getSinglepane().getFilterItemByName(e).getName())
                     .testEnd();
         });
 
         testStart()
                 .and("Clear Search")
-                .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(),"")
+                .setValueWithClean(filter.getSinglepane().getSearchInput(),"")
                 .then("Check total users count, search result should be reset")
-                .validate(not(visible), publishersPage.getTableProgressBar())
-                .validate(filter.getSinglepaneFilter().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
+                .validate(not(visible), openPricingPage.getTableProgressBar())
+                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
                 .testEnd();
     }
 
     @Test(description = "Check 'Created By' Chip Widget Component", dependsOnMethods = "testSearchCreatedByColumnsFilterComponent")
     public void testCreatedByChipWidgetComponent() {
-        var filter = publishersPage.getTable().getColumnFiltersBlock();
-        var table = publishersPage.getTable().getTableData();
+        var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
+        var table = openPricingPage.getOpenPricingTable().getTableData();
 
         testStart()
                 .and("Select Users")
-                .clickOnWebElement(filter.getSinglepaneFilter().getFilterItemByPositionInList(1).getName())
-                .clickOnWebElement(filter.getSinglepaneFilter().getFilterItemByPositionInList(2).getName())
-                .clickOnWebElement(filter.getSinglepaneFilter().getFilterItemByPositionInList(3).getName())
+                .clickOnWebElement(filter.getSinglepane().getFilterItemByPositionInList(1).getName())
+                .clickOnWebElement(filter.getSinglepane().getFilterItemByPositionInList(2).getName())
+                .clickOnWebElement(filter.getSinglepane().getFilterItemByPositionInList(3).getName())
                 .testEnd();
 
-        selectedPublishersNameList = List.of(filter.getSinglepaneFilter().getFilterItemByPositionInList(1).getName().text(),
-                filter.getSinglepaneFilter().getFilterItemByPositionInList(2).getName().text(),
-                filter.getSinglepaneFilter().getFilterItemByPositionInList(3).getName().text());
+        selectedPublishersNameList = List.of(filter.getSinglepane().getFilterItemByPositionInList(1).getName().text(),
+                filter.getSinglepane().getFilterItemByPositionInList(2).getName().text(),
+                filter.getSinglepane().getFilterItemByPositionInList(3).getName().text());
 
         testStart()
                 .and("Click on Submit")
-                .clickOnWebElement(filter.getSinglepaneFilter().getSubmitButton())
+                .clickOnWebElement(filter.getSinglepane().getSubmitButton())
                 .then("ColumnsFilter widget is closed")
                 .validate(not(visible), filter.getFilterOptionsMenu())
                 .validate(visible, table.getChipItemByName(ColumnNames.CREATED_BY.getName()).getHeaderLabel())
@@ -311,24 +319,6 @@ public class PublishersColumnsFilterWidgetTests extends BaseTest {
         testStart()
                 .clickOnWebElement(table.getChipItemByName(ColumnNames.CREATED_BY.getName()).getCloseIcon())
                 .testEnd();
-    }
-
-    private List<String> getFilterPublishersListFromBE(String name) {
-
-        return publisher()
-                .getPublisherWithFilter(Map.of("name", name))
-                .build()
-                .getPublisherGetAllResponse()
-                .getItems().stream().map(pub -> pub.getName()).collect(Collectors.toList());
-    }
-
-    private Integer getTotalPublishersFromBE() {
-
-        return publisher()
-                .getPublishersList()
-                .build()
-                .getPublisherGetAllResponse()
-                .getTotal();
     }
 
     private Integer getTotalUsersFromBE() {

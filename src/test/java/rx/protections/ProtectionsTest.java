@@ -2,6 +2,7 @@ package rx.protections;
 
 import api.dto.rx.protection.Protection;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.AfterClass;
@@ -21,6 +22,7 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Feature(value = "Protections")
 public class ProtectionsTest extends BaseTest {
 
     private DashboardPage dashboardPage;
