@@ -160,4 +160,5 @@
             <class name="rx.pipelines.DeleteGeneratedDataTest"/>
         </classes>
     </test>
+    </test>
 </suite>
