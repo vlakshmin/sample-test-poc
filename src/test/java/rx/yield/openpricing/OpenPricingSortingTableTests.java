@@ -77,13 +77,13 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .map(Object::toString)
                 .collect(Collectors.toList());
 
-        sortPublisherNameByAsc = getAllItemsByParams("publisher_name-asc").stream()
-                .map(OpenPricing::getPublisherName)
-                .collect(Collectors.toList());
-
-        sortPublisherNameByDesc = getAllItemsByParams("publisher_name-desc").stream()
-                .map(OpenPricing::getPublisherName)
-                .collect(Collectors.toList());
+//        sortPublisherNameByAsc = getAllItemsByParams("publisher_name-asc").stream()
+//                .map(OpenPricing::getPublisherName)
+//                .collect(Collectors.toList());
+//
+//        sortPublisherNameByDesc = getAllItemsByParams("publisher_name-desc").stream()
+//                .map(OpenPricing::getPublisherName)
+//                .collect(Collectors.toList());
 
         sortActiveInactiveByAsc = getAllItemsByParams("active-asc").stream()
                 .map(OpenPricing::getActive)
@@ -131,7 +131,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
     @Test(testName = "Sorting 'Name' column by descending")
     public void OpenPricingSortingByNameDesc() {
         sortByDescColumnByName(ColumnNames.NAME);
-        validateSorting(ColumnNames.NAME, DESC,sortNamesByDesc);
+        validateSorting(ColumnNames.NAME, DESC, sortNamesByDesc);
     }
 
     @Test(testName = "Sorting 'Name' column by ascending")
@@ -145,6 +145,7 @@ public class OpenPricingSortingTableTests extends BaseTest {
         sortByDescColumnByName(ColumnNames.PUBLISHER);
         validateSorting(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
     }
+
 
     @Test(testName = "Sorting 'Publisher' column by ascending")
     public void OpenPricingSortingByPublisherNameAsc() {
@@ -164,16 +165,18 @@ public class OpenPricingSortingTableTests extends BaseTest {
         validateSorting(ColumnNames.ID, ASC, sortIdsByAsc);
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Sorting 'Active/Inactive' column by descending")
     public void OpenPricingSortingByActiveInactiveDesc() {
-        sortByDescColumnByName(ColumnNames.ACTIVE_INACTIVE);
-        validateSorting(ColumnNames.ACTIVE_INACTIVE, DESC, sortActiveInactiveByDesc);
+        sortByDescColumnByName(ColumnNames.STATUS);
+        validateSorting(ColumnNames.STATUS, DESC, sortActiveInactiveByDesc);
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Sorting 'Active/Inactive' column by ascending")
     public void OpenPricingSortingByActiveInactiveAsc() {
-        sortByAscColumnByName(ColumnNames.ACTIVE_INACTIVE);
-        validateSorting(ColumnNames.ACTIVE_INACTIVE, ASC, sortActiveInactiveByAsc);
+        sortByAscColumnByName(ColumnNames.STATUS);
+        validateSorting(ColumnNames.STATUS, ASC, sortActiveInactiveByAsc);
     }
 
     @Test(testName = "Sorting 'Floor Price' column by descending")
@@ -187,7 +190,8 @@ public class OpenPricingSortingTableTests extends BaseTest {
         sortByAscColumnByName(ColumnNames.FLOOR_PRICE);
         validateSorting(ColumnNames.FLOOR_PRICE, ASC, sortFloorPriceAsc);
     }
-    private void validateSorting(ColumnNames columnName, String sortType,List<String> expectedSortedList){
+
+    private void validateSorting(ColumnNames columnName, String sortType, List<String> expectedSortedList) {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
         var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
         //Todo Add checking of total qauntity in pagination test when
@@ -227,15 +231,6 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .given()
                 .and(String.format("Sort column '%s'", columnName))
                 .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                .testEnd();
-
-        if (columnName.getName().equals("ID")) {
-            testStart()
-                    .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                    .testEnd();
-        }
-
-        testStart()
                 .then("Ensure that sort by descending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(columnName.getName()),
                         "aria-sort", ASC)
@@ -253,21 +248,11 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .given()
                 .and(String.format("Sort column '%s'", columnName))
                 .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                .testEnd();
-
-        if (columnName.getName().equals("ID")) {
-            testStart()
-                    .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                    .testEnd();
-        }
-
-        testStart()
                 .then("Ensure that sort by ascending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(columnName.getName()),
                         "aria-sort", ASC)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
                 .testEnd();
-
     }
 
     private List<OpenPricing> getAllItemsByParams(String strParams) {

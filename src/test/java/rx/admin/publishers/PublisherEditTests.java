@@ -15,6 +15,7 @@ import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 
 import static configurations.User.TEST_USER;
+import static java.lang.String.format;
 import static managers.TestManager.testStart;
 import static com.codeborne.selenide.Condition.*;
 import static zutils.FakerUtils.captionWithSuffix;
@@ -52,7 +53,7 @@ public class PublisherEditTests extends BaseTest {
         String publisherName = captionWithSuffix("autoPub");
         publisher = createPublisher(publisherName);
 
-        editAndValidateEditedPublisher(publisherName, true, false);
+        editAndValidateEditedPublisher(publisherName, Statuses.ACTIVE, false);
     }
 
     @Test(description = "Create Inactive Publisher with category", priority = 2)
@@ -61,7 +62,7 @@ public class PublisherEditTests extends BaseTest {
         String publisherName = captionWithSuffix("autoPublisher");
         publisher = createPublisher(publisherName);
 
-        editAndValidateEditedPublisher(publisherName, false, true);
+        editAndValidateEditedPublisher(publisherName, Statuses.INACTIVE, true);
     }
 
     @Test(description = "Create inactive Publisher without category", priority = 3)
@@ -70,7 +71,7 @@ public class PublisherEditTests extends BaseTest {
         String publisherName = captionWithSuffix("autoPublisher");
         publisher = createPublisher(publisherName);
 
-        editAndValidateEditedPublisher(publisherName, false, false);
+        editAndValidateEditedPublisher(publisherName, Statuses.INACTIVE, false);
     }
 
     @Test(description = "Create active Publisher with category", priority = 4)
@@ -79,7 +80,7 @@ public class PublisherEditTests extends BaseTest {
         String publisherName = captionWithSuffix("autoPublisher");
         publisher = createPublisher(publisherName);
 
-        editAndValidateEditedPublisher(publisherName, true, true);
+        editAndValidateEditedPublisher(publisherName, Statuses.ACTIVE, true);
     }
 
     @Step("Create Publisher via Api")
@@ -92,7 +93,7 @@ public class PublisherEditTests extends BaseTest {
     }
 
     @Step("Edit Publisher")
-    private void editAndValidateEditedPublisher(String pubName, boolean isActive, boolean categorySelected) {
+    private void editAndValidateEditedPublisher(String pubName, Statuses status, boolean categorySelected) {
 
         var tableData = publishersPage.getTable().getTableData();
         var categories = editPublisherSideBar.getCategoriesPanel();
@@ -104,7 +105,7 @@ public class PublisherEditTests extends BaseTest {
         String AdOpsEmail = "randomAutoPub@gmail.com";
 
         testStart()
-                .and(String.format("Search publisher %s", pubName))
+                .and(format("Search publisher %s", pubName))
                 .setValueWithClean(tableData.getSearch(), pubName)
                 .clickEnterButton(tableData.getSearch())
                 .then("Validate that text in table footer '1-1 of 1")
@@ -114,9 +115,13 @@ public class PublisherEditTests extends BaseTest {
                 .clickOnTableCellLink(tableData, ColumnNames.NAME, pubName)
                 .waitSideBarOpened()
                 .then("Check all fields");
-        if (!isActive)
+
+        if (status.getStatus().equals(Statuses.INACTIVE.getStatus())) {
             testStart()
-                    .turnToggleOff(editPublisherSideBar.getActiveToggle());
+                    .turnToggleOff(editPublisherSideBar.getActiveToggle())
+                    .testEnd();
+        }
+
         testStart()
                 .and("enter publisher name")
                 .setValueWithClean(editPublisherSideBar.getNameInput(), pubName)
@@ -126,11 +131,16 @@ public class PublisherEditTests extends BaseTest {
                 .setValueWithClean(editPublisherSideBar.getAdOpsEmail(), AdOpsEmail)
                 .and("enter domain url")
                 .setValueWithClean(editPublisherSideBar.getDomainInput(), domainUrl)
-                .and("select category");
-        if (categorySelected)
+                .and("select category")
+                .testEnd();
+
+        if (categorySelected) {
             testStart()
-                    .clickOnWebElement(editPublisherSideBar.getCategoriesInput())
-                    .clickOnWebElement(categories.getCategoryCheckbox(CategoriesList.EDUCATION));
+                    .clickOnWebElement(editPublisherSideBar.getCategoriesLabel())
+                    .clickOnWebElement(categories.getCategoryCheckbox(CategoriesList.EDUCATION))
+                    .testEnd();
+        }
+
         testStart()
                 .and("click save button")
                 .clickOnWebElement(editPublisherSideBar.getSaveButton())
@@ -144,20 +154,20 @@ public class PublisherEditTests extends BaseTest {
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_BY))
                 .and("close show/hide columns tab")
                 .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
-                .and("validate category is correct");
-        if (categorySelected)
+                .and("validate category is correct")
+                .testEnd();
+
+        if (categorySelected) {
             testStart()
-                    .validate(tableData.getCellByRowValue(ColumnNames.CATEGORY, ColumnNames.NAME, pubName), CategoriesList.ART_ENTERTAIMENTS.getName() + ", "
-                            + CategoriesList.AUTOMOTIVE.getName() + ", " + CategoriesList.EDUCATION.getName());
+                    .validate(tableData.getCellByRowValue(ColumnNames.CATEGORY, ColumnNames.NAME, pubName),
+                            format("%s, %s, %s", CategoriesList.ART_ENTERTAIMENTS.getName(),
+                                    CategoriesList.AUTOMOTIVE.getName(), CategoriesList.EDUCATION.getName()))
+                    .testEnd();
+        }
+
         testStart()
-                .and("validate status is correct");
-        if (isActive)
-            testStart()
-                    .validate(tableData.getCellByRowValue(ColumnNames.STATUS, ColumnNames.NAME, pubName), Statuses.ACTIVE.getStatus());
-        if (!isActive)
-            testStart()
-                    .validate(tableData.getCellByRowValue(ColumnNames.STATUS, ColumnNames.NAME, pubName), Statuses.INACTIVE.getStatus());
-        testStart()
+                .and("validate status is correct")
+                .validate(tableData.getCellByRowValue(ColumnNames.STATUS, ColumnNames.NAME, pubName), status.getStatus())
                 .and("validate domain is correct")
                 .validate(tableData.getCellByRowValue(ColumnNames.DOMAIN, ColumnNames.NAME, pubName), domainUrl)
                 .then("End Test")

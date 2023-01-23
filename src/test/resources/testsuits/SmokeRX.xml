@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="Regression" parallel="false">
 
-    <test name="0Precondition. Delete records with 'auto' substring">
+    <test name="Precondition. Delete records with 'auto' substring">
         <classes>
             <class name="rx.pipelines.DeleteGeneratedDataTest"/>
         </classes>
@@ -45,7 +45,6 @@
 
     <test name="Open Pricing">
         <classes>
-            <!--            <class name="rx.yield.openpricing.VerifyPublisherTests"/>-->
             <class name="rx.yield.openpricing.CreateOpenPricingTest"/>
             <class name="rx.yield.openpricing.OpenPricingUploadTests"/>
             <class name="rx.yield.openpricing.OpenPricingSortingTableTests"/>
@@ -120,7 +119,7 @@
         </classes>
     </test>
 
-    <test name="Columns Filter Tests">
+    <test name="Protection Columns Filter Tests">
         <classes>
             <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterWidgetTests"/>
             <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterTableTests"/>
@@ -129,27 +128,39 @@
         </classes>
     </test>
 
-    <test name="XPost-conditions. Delete records with 'auto' substring">
-        <classes>
-            <class name="rx.pipelines.DeleteGeneratedDataTest"/>
-        </classes>
-    </test>
-
     <test name="Publishers Column Filter">
         <classes>
-            <class name="rx.publishers.columnsfilter.PublishersColumnsFilterCreatedDateWidgetTests"/>
-            <class name="rx.publishers.columnsfilter.PublishersColumnsFilterTableTests"/>
-            <class name="rx.publishers.columnsfilter.PublishersColumnsFilterUpdatedDateWidgetTests"/>
-            <class name="rx.publishers.columnsfilter.PublishersColumnsFilterWidgetTests"/>
+            <class name="rx.admin.publishers.columnsfilter.PublishersColumnsFilterCreatedDateWidgetTests"/>
+            <class name="rx.admin.publishers.columnsfilter.PublishersColumnsFilterTableTests"/>
+            <class name="rx.admin.publishers.columnsfilter.PublishersColumnsFilterUpdatedDateWidgetTests"/>
+            <class name="rx.admin.publishers.columnsfilter.PublishersColumnsFilterWidgetTests"/>
         </classes>
     </test>
 
-    <test name="Openpricing Column Filter">
+    <test name="Open Pricing Columns Filter">
         <classes>
-            <class name="rx.openpricing.columnsfilter.OpenPricingColumnsFilterCreatedDateWidgetTests"/>
-            <class name="rx.openpricing.columnsfilter.OpenPricingColumnsFilterTableTests"/>
-            <class name="rx.openpricing.columnsfilter.OpenPricingColumnsFilterUpdatedDateWidgetTests"/>
-            <class name="rx.openpricing.columnsfilter.OpenPricingColumnsFilterWidgetTests"/>
+            <class name="rx.yield.openpricing.columnsfilter.OpenPricingColumnsFilterCreatedDateWidgetTests"/>
+            <class name="rx.yield.openpricing.columnsfilter.OpenPricingColumnsFilterTableTests"/>
+            <class name="rx.yield.openpricing.columnsfilter.OpenPricingColumnsFilterUpdatedDateWidgetTests"/>
+            <class name="rx.yield.openpricing.columnsfilter.OpenPricingColumnsFilterWidgetTests"/>
+        </classes>
+    </test>
+
+    <test name="Users Columns Filter">
+        <classes>
+            <class name="rx.admin.users.columnsfilter.UsersColumnsFilterCreatedDateWidgetTests"/>
+            <class name="rx.admin.users.columnsfilter.UsersColumnsFilterTableTests"/>
+            <class name="rx.admin.users.columnsfilter.UsersColumnsFilterUpdatedDateWidgetTests"/>
+            <class name="rx.admin.users.columnsfilter.UsersColumnsFilterWidgetTests"/>
+        </classes>
+    </test>
+
+    <test name="Media Column Filter">
+        <classes>
+            <class name="rx.inventory.media.columnsfilter.MediaColumnsFilterCreatedDateWidgetTests"/>
+            <class name="rx.inventory.media.columnsfilter.MediaColumnsFilterTableTests"/>
+            <class name="rx.inventory.media.columnsfilter.MediaColumnsFilterUpdatedDateWidgetTests"/>
+            <class name="rx.inventory.media.columnsfilter.MediaColumnsFilterWidgetTests"/>
         </classes>
     </test>
 
@@ -163,11 +174,9 @@
     </test>
 
     <test name="Users Column Filter">
+    <test name="XPost-conditions. Delete records with 'auto' substring">
         <classes>
-            <class name="rx.users.columnsfilter.UsersColumnsFilterCreatedDateWidgetTests"/>
-            <class name="rx.users.columnsfilter.UsersColumnsFilterTableTests"/>
-            <class name="rx.users.columnsfilter.UsersColumnsFilterUpdatedDateWidgetTests"/>
-            <class name="rx.users.columnsfilter.UsersColumnsFilterWidgetTests"/>
+            <class name="rx.pipelines.DeleteGeneratedDataTest"/>
         </classes>
     </test>
 </suite>

@@ -1,6 +1,7 @@
-package rx.users.columnsfilter;
+package rx.inventory.media.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
@@ -8,7 +9,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
-import pages.admin.users.UsersPage;
+import pages.inventory.media.MediaPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 
@@ -21,13 +22,13 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Feature(value = "Users Columns Filter")
-public class UsersColumnsFilterTableTests extends BaseTest {
+@Feature(value = "Media Columns Filter")
+public class MediaColumnsFilterTableTests extends BaseTest {
 
-    private UsersPage usersPage;
+    private MediaPage mediaPage;
 
-    public UsersColumnsFilterTableTests() {
-        usersPage = new UsersPage();
+    public MediaColumnsFilterTableTests() {
+        mediaPage = new MediaPage();
     }
 
     @BeforeClass
@@ -35,72 +36,82 @@ public class UsersColumnsFilterTableTests extends BaseTest {
 
          testStart()
                 .given()
-                .openDirectPath(Path.USER)
+                .openDirectPath(Path.MEDIA)
                 .logIn(TEST_USER)
-                .waitAndValidate(disappear, usersPage.getNuxtProgress())
+                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Check columns filter options by default")
     public void defaultColumnsFilter(){
-        var tableColumns = usersPage.getUsersTable();
+        var tableColumns = mediaPage.getMediaTable();
 
         testStart()
-                .scrollIntoView(usersPage.getPageTitle())
+                .scrollIntoView(mediaPage.getMediaTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(mediaPage.getMediaTable().getTablePagination().getPageMenu(),
+                        mediaPage.getMediaTable().getTablePagination().getRowNumbersList(), "10")
+                .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
                 .then("Validate options list")
-                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.ROLE.getName(),
-                                ColumnNames.STATUS.getName(),
-                                ColumnNames.PUBLISHER.getName()))
+                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
+                        ColumnNames.PLATFORM.getName(),
+                        ColumnNames.STATUS.getName(),
+                        ColumnNames.UPDATED_DATE.getName()))
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Select show all columns and check columns filter options")
     public void showAllColumns(){
-        var tableColumns = usersPage.getUsersTable();
+        var tableColumns = mediaPage.getMediaTable();
 
         testStart()
+                .scrollIntoView(mediaPage.getMediaTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(mediaPage.getMediaTable().getTablePagination().getPageMenu(),
+                        mediaPage.getMediaTable().getTablePagination().getRowNumbersList(), "10")
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .and("Select 10 rows per page")
-                .scrollIntoView(usersPage.getUsersTable().getTablePagination().getPageMenu())
-                .selectFromDropdown(usersPage.getUsersTable().getTablePagination().getPageMenu(),
-                        usersPage.getUsersTable().getTablePagination().getRowNumbersList(), "10")
-                .scrollIntoView(usersPage.getPageTitle())
+                .scrollIntoView(mediaPage.getMediaTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(mediaPage.getMediaTable().getTablePagination().getPageMenu(),
+                        mediaPage.getMediaTable().getTablePagination().getRowNumbersList(), "10")
+                .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
                 .then("Validate options list")
-                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.ROLE.getName(),
+                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
+                        ColumnNames.PLATFORM.getName(),
                         ColumnNames.STATUS.getName(),
-                        ColumnNames.PUBLISHER.getName(),
                         ColumnNames.CREATED_DATE.getName(),
                         ColumnNames.UPDATED_DATE.getName()))
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Hide all columns and check columns filter options")
     public void hideAllColumns(){
-        var tableColumns = usersPage.getUsersTable();
+        var tableColumns = mediaPage.getMediaTable();
 
         testStart()
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.ID))
                 .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.NAME))
-                .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.EMAIL))
-                .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.ROLE))
-                .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.STATUS))
                 .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.PUBLISHER))
+                .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.PLATFORM))
+                .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))
+                .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.STATUS))
                 .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .and("Select 10 rows per page")
-                .scrollIntoView(usersPage.getUsersTable().getTablePagination().getPageMenu())
-                .selectFromDropdown(usersPage.getUsersTable().getTablePagination().getPageMenu(),
-                        usersPage.getUsersTable().getTablePagination().getRowNumbersList(), "10")
-                .scrollIntoView(usersPage.getPageTitle())
+                .scrollIntoView(mediaPage.getMediaTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(mediaPage.getMediaTable().getTablePagination().getPageMenu(),
+                        mediaPage.getMediaTable().getTablePagination().getRowNumbersList(), "10")
+                .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
                 .then("Validate options list")
@@ -108,48 +119,57 @@ public class UsersColumnsFilterTableTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Show all columns and refresh page. Check columns filter options")
     public void showAllAndRefreshPage(){
-        var tableColumns = usersPage.getUsersTable();
+        var tableColumns = mediaPage.getMediaTable();
 
         testStart()
-                .clickBrowserRefreshButton()
+                .scrollIntoView(mediaPage.getMediaTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(mediaPage.getMediaTable().getTablePagination().getPageMenu(),
+                        mediaPage.getMediaTable().getTablePagination().getRowNumbersList(), "10")
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .and("Refresh page")
                 .clickBrowserRefreshButton()
-                .scrollIntoView(usersPage.getPageTitle())
+                .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
                 .then("Validate options list")
-                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.ROLE.getName(),
+                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
+                        ColumnNames.PLATFORM.getName(),
                         ColumnNames.STATUS.getName(),
-                        ColumnNames.PUBLISHER.getName()))
+                        ColumnNames.UPDATED_DATE.getName()))
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Show all columns and reload page. Check columns filter options")
     public void showAllAndReloadPage(){
-        var tableColumns = usersPage.getUsersTable();
+        var tableColumns = mediaPage.getMediaTable();
 
         testStart()
+                .scrollIntoView(mediaPage.getMediaTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(mediaPage.getMediaTable().getTablePagination().getPageMenu(),
+                        mediaPage.getMediaTable().getTablePagination().getRowNumbersList(), "10")
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
-                .and("Navigate to Open Pricing page")
-                .openDirectPath(Path.USER)
-                .and("Navigate to Protection page again")
-                .openDirectPath(Path.USER)
-                .scrollIntoView(usersPage.getPageTitle())
+                .and("Navigate to Media page")
+                .openDirectPath(Path.MEDIA)
+                .scrollIntoView(mediaPage.getMediaTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(mediaPage.getMediaTable().getTablePagination().getPageMenu(),
+                        mediaPage.getMediaTable().getTablePagination().getRowNumbersList(), "10")
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
                 .then("Validate options list")
-                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.ROLE.getName(),
+                .validateList(tableColumns.getColumnFiltersBlock().getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
+                        ColumnNames.PLATFORM.getName(),
                         ColumnNames.STATUS.getName(),
-                        ColumnNames.PUBLISHER.getName()))
+                        ColumnNames.UPDATED_DATE.getName()))
                 .testEnd();
     }
 

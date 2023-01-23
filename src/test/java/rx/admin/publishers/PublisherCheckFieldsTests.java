@@ -67,7 +67,7 @@ public class PublisherCheckFieldsTests extends BaseTest {
                 .validate(editPublisherSidebar.getAdOpsPerson(), "")
                 .validate(enabled, editPublisherSidebar.getDomainInput())
                 .validate(editPublisherSidebar.getDomainInput(), "")
-                .validate(enabled, editPublisherSidebar.getCategoriesInput())
+                .validate(enabled, editPublisherSidebar.getCategories())
                 .testEnd();
     }
 

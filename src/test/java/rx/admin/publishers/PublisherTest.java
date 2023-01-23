@@ -1,5 +1,6 @@
 package rx.admin.publishers;
 
+import widgets.common.table.ColumnNames;
 import zutils.FakerUtils;
 import api.dto.rx.admin.publisher.Publisher;
 import api.preconditionbuilders.PublisherPrecondition;
@@ -58,6 +59,8 @@ public class PublisherTest extends BaseTest {
 
     @Test
     public void editPublisherTest() {
+        var tableData = publishersPage.getTable().getTableData();
+        var tablePagination = publishersPage.getTable().getTablePagination();
 
         //Opening Browser and Edit the protection created from Precondition
         testStart()
@@ -69,7 +72,13 @@ public class PublisherTest extends BaseTest {
                 .waitAndValidate(disappear, dashboardsPage.getNuxtProgress())
                 .and()
                 .waitAndValidate(disappear, dashboardsPage.getTableProgressBar())
-                .clickOnWebElement(publishersPage.getPublisherItemByName(publisher.getName()).getPublisherName())
+                .and(String.format("Search publisher %s", publisher.getName()))
+                .setValueWithClean(tableData.getSearch(), publisher.getName())
+                .clickEnterButton(tableData.getSearch())
+                .then("Validate that text in table footer '1-1 of 1")
+                .validateContainsText(tablePagination.getPaginationPanel(), "1-1 of 1")
+                .and("Open Sidebar and check data")
+                .clickOnTableCellLink(tableData, ColumnNames.NAME, publisher.getName())
                 .waitSideBarOpened()
                 .then()
                 .validate(publisher.getName()
@@ -82,11 +91,12 @@ public class PublisherTest extends BaseTest {
                 .clickOnWebElement(createPublisherSidebar.getSaveButton())
                 .waitSideBarClosed()
                 .then()
+                .clearField(tableData.getSearch())
                 .validate(publishersPage.getPublisherItemByPositionInList(0).getPublisherName(), PUBLISHER_NAME_EDITED)
                 .validate(publishersPage.getPublisherItemByPositionInList(0).getPublisherAdOps(), PUBLISHER_AD_OPS_EDITED)
                 .validate(publishersPage.getPublisherItemByPositionInList(0).getPublisherId(), valueOf(publisher.getId()))
-                .and()
-                .clickOnWebElement(publishersPage.getPublisherItemByPositionInList(0).getPublisherName())
+                .and("Open Sidebar and check data")
+                .clickOnTableCellLink(tableData, ColumnNames.NAME, PUBLISHER_NAME_EDITED)
                 .waitSideBarOpened()
                 .then()
                 .validateAttribute(editPublisherSidebar.getNameInput(), "value", PUBLISHER_NAME_EDITED)

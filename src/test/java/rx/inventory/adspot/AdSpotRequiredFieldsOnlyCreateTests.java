@@ -3,6 +3,7 @@ package rx.inventory.adspot;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -126,6 +127,7 @@ public class AdSpotRequiredFieldsOnlyCreateTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(description = "Check columns data in the Ad Spots table for created Ad Spot",
             dependsOnMethods = "createAdSpotWithAllFields")
     private void checkTableColumns() {
@@ -141,7 +143,7 @@ public class AdSpotRequiredFieldsOnlyCreateTests extends BaseTest {
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.AD_SPOT_NAME))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PUBLISHER))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.RELATED_MEDIA))
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE_INACTIVE))
+                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.STATUS))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PAGE_CATEGORY))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.TEST_MODE))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_SIZES))
@@ -150,7 +152,7 @@ public class AdSpotRequiredFieldsOnlyCreateTests extends BaseTest {
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .clickOnWebElement(adSpotPage.getPageTitle())
                 .then("Validate data in table")
-                .validate(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), Statuses.ACTIVE.getStatus())
+                .validate(tableData.getCellByRowValue(ColumnNames.STATUS, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), Statuses.ACTIVE.getStatus())
                 .validate(tableData.getCellByRowValue(ColumnNames.PUBLISHER, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), publisher.getName())
                 .validate(tableData.getCellByRowValue(ColumnNames.RELATED_MEDIA, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), media.getName())
                 .validate(tableData.getCellByRowValue(ColumnNames.DEFAULT_FLOOR_PRICE, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME),

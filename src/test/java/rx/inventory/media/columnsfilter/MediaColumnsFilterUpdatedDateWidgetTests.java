@@ -1,6 +1,7 @@
-package rx.openpricing.columnsfilter;
+package rx.inventory.media.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +10,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Path;
-import pages.yield.openpricing.OpenPricingPage;
+import pages.inventory.media.MediaPage;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import zutils.StringUtils;
@@ -25,43 +26,44 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Feature(value = "OpenPricing Columns Filter")
-public class OpenPricingColumnsFilterUpdatedDateWidgetTests extends BaseTest {
+@Feature(value = "Media Columns Filter")
+public class MediaColumnsFilterUpdatedDateWidgetTests extends BaseTest {
 
-    private OpenPricingPage openPricingPage;
+    private MediaPage mediaPage;
 
-    public OpenPricingColumnsFilterUpdatedDateWidgetTests() {
-        openPricingPage = new OpenPricingPage();
+    public MediaColumnsFilterUpdatedDateWidgetTests() {
+        mediaPage = new MediaPage();
     }
 
     @BeforeClass
     private void login() {
-        var tableColumns = openPricingPage.getOpenPricingTable().getShowHideColumns();
+        var tableColumns = mediaPage.getMediaTable().getShowHideColumns();
 
         testStart()
                 .given()
-                .openDirectPath(Path.OPEN_PRICING)
+                .openDirectPath(Path.MEDIA)
                 .logIn(TEST_USER)
-                .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
-                .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
-                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "10")
-                .scrollIntoView(openPricingPage.getPageTitle())
+                .waitAndValidate(disappear, mediaPage.getNuxtProgress())
+                .scrollIntoView(mediaPage.getMediaTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(mediaPage.getMediaTable().getTablePagination().getPageMenu(),
+                        mediaPage.getMediaTable().getTablePagination().getRowNumbersList(), "10")
+                .scrollIntoView(mediaPage.getPageTitle())
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .testEnd();
     }
 
 
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Check Default State")
     public void testDefaultStateColumnsFilterComponent() {
-        var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
+        var filter = mediaPage.getMediaTable().getColumnFiltersBlock();
         var calendar = filter.getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
         testStart()
                 .and("Select Column Filter 'Updated Date'")
-                .scrollIntoView(openPricingPage.getPageTitle())
+                .scrollIntoView(mediaPage.getPageTitle())
                 .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.UPDATED_DATE))
@@ -72,9 +74,10 @@ public class OpenPricingColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Check Next Month", dependsOnMethods = "testDefaultStateColumnsFilterComponent")
     public void testNextMonthColumnsFilterComponent() {
-        var calendar = openPricingPage.getOpenPricingTable().getColumnFiltersBlock().getCalendarFilter().getCalendar();
+        var calendar = mediaPage.getMediaTable().getColumnFiltersBlock().getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
         testStart()
@@ -83,13 +86,14 @@ public class OpenPricingColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .waitAndValidate(visible, calendar.getMonthOrYearHeaderButton())
                 .then("Should be displayed next month")
                 .validateContainsText(calendar.getMonthOrYearHeaderButton(), StringUtils.getStringMonthYear(currentDate.plusMonths(1).getMonth(),
-                        currentDate.getMonth().getValue() == 12 ? currentDate.getYear() + 1 : currentDate.getYear()))
+                        currentDate.plusMonths(1).getYear()))
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Check Back button", dependsOnMethods = "testNextMonthColumnsFilterComponent")
     public void testBackButtonColumnsFilterComponent() {
-        var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
+        var filter = mediaPage.getMediaTable().getColumnFiltersBlock();
         var calendar = filter.getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
@@ -98,6 +102,7 @@ public class OpenPricingColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .clickOnWebElement(filter.getCalendarFilter().getBackButton())
                 .then("Columns Menu should appear")
                 .validateList(filter.getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
+                        ColumnNames.PLATFORM.getName(),
                         ColumnNames.STATUS.getName(),
                         ColumnNames.UPDATED_DATE.getName()))
                 .and("Select Column Filter 'Updated Date'")
@@ -108,9 +113,10 @@ public class OpenPricingColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Check Previous Month", dependsOnMethods = "testBackButtonColumnsFilterComponent")
     public void testPreviousMonthColumnsFilterComponent() {
-        var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
+        var filter = mediaPage.getMediaTable().getColumnFiltersBlock();
         var calendar = filter.getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
@@ -124,10 +130,11 @@ public class OpenPricingColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Select First Day of the current month and click Cancel", dependsOnMethods = "testPreviousMonthColumnsFilterComponent")
     public void testCancelButtonColumnsFilterComponent() {
-        var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
-        var table = openPricingPage.getOpenPricingTable().getTableData();
+        var filter = mediaPage.getMediaTable().getColumnFiltersBlock();
+        var table = mediaPage.getMediaTable().getTableData();
         var calendar = filter.getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
@@ -141,10 +148,11 @@ public class OpenPricingColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Select Last Day of the current month and click Submit", dependsOnMethods = "testCancelButtonColumnsFilterComponent")
     public void testSubmitButtonColumnsFilterComponent() {
-        var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
-        var table = openPricingPage.getOpenPricingTable().getTableData();
+        var filter = mediaPage.getMediaTable().getColumnFiltersBlock();
+        var table = mediaPage.getMediaTable().getTableData();
         var calendar = filter.getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
@@ -170,17 +178,17 @@ public class OpenPricingColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Issue("https://rakutenadvertising.atlassian.net/browse/GS-3325")
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Select Period of the current month and click Submit", dependsOnMethods = "testSubmitButtonColumnsFilterComponent")
     public void testPeriodAndSubmitButtonColumnsFilterComponent() {
-        var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
-        var table = openPricingPage.getOpenPricingTable().getTableData();
+        var filter = mediaPage.getMediaTable().getColumnFiltersBlock();
+        var table = mediaPage.getMediaTable().getTableData();
         var calendar = filter.getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
         testStart()
                 .and("Select Column Filter 'Updated Date'")
-                .scrollIntoView(openPricingPage.getPageTitle())
+                .scrollIntoView(mediaPage.getPageTitle())
                 .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.UPDATED_DATE))
@@ -197,19 +205,21 @@ public class OpenPricingColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .validateContainsText(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getHeaderLabel(),
                         format("%s:", ColumnNames.UPDATED_DATE.getName()))
                 .validate(table.countFilterChipsItems(), 1)
-                .then("Validate list of selected date")
-                .validate(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).countFilterOptionsChipItems(), 2)
-                // :TODO "https://rakutenadvertising.atlassian.net/browse/GS-3325"
-                .validate(visible, table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getChipFilterOptionItemByName(
-                        StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 21)))
-                .validate(visible, table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getChipFilterOptionItemByName(
-                        StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 11)))
+                .then("Validate selected date period")
+                .validate(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).countFilterOptionsChipItems(), 1)
+                .then("Validate selected period")
+                .validate(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).countFilterOptionsChipItems(), 1)
+                .validateContainsText(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getChipFilterOptionItemByPosition(0),
+                        format("%s – %s",
+                                StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 11),
+                                StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 21)))
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3348")
     @Test(description = "Delete Update By Chip", dependsOnMethods = "testPeriodAndSubmitButtonColumnsFilterComponent", alwaysRun = true)
     public void testDeleteColumnsFilterComponent() {
-        var table = openPricingPage.getOpenPricingTable().getTableData();
+        var table = mediaPage.getMediaTable().getTableData();
 
         testStart()
                 .and("Click 'X' icon on the Update Date chip")

@@ -4,6 +4,7 @@ import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -19,8 +20,11 @@ import widgets.common.table.ColumnNames;
 import widgets.common.table.Statuses;
 import widgets.common.table.TableData;
 import widgets.inventory.adSpots.sidebar.EditAdSpotSidebar;
+import zutils.StringUtils;
 
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -67,9 +71,6 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     final private static CategoriesList CATEGORY_AUTO_REPAIR = CategoriesList.AUTO_REPAIR;
 
     final private static String AD_SPOT_NAME = captionWithSuffix("4autoAdSpot");
-
-    final private static String currentDate = new SimpleDateFormat("MMM d yyyy").format( new Date());
-
 
     public AdSpotAllFieldsCreateTests() {
         adSpotPage = new AdSpotsPage();
@@ -136,11 +137,13 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test(description = "Check columns data in the Ad Spots table for created Ad Spot",
             dependsOnMethods = "createAdSpotWithAllFields")
     public void checkTableColumns() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
         var tableOptions = adSpotPage.getAdSpotsTable().getShowHideColumns();
+        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
         testStart()
                 .and("'Show' all columns")
@@ -151,8 +154,8 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.AD_SPOT_NAME))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PUBLISHER))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.RELATED_MEDIA))
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE_INACTIVE))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PAGE_CATEGORY))
+                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.STATUS))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.TEST_MODE))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_SIZES))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_FLOOR_PRICE))
@@ -160,7 +163,7 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .clickOnWebElement(adSpotPage.getPageTitle())
                 .then("Validate data in table")
-                .validate(tableData.getCellByRowValue(ColumnNames.ACTIVE_INACTIVE, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), Statuses.ACTIVE.getStatus())
+                .validate(tableData.getCellByRowValue(ColumnNames.STATUS, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), Statuses.ACTIVE.getStatus())
                 .validate(tableData.getCellByRowValue(ColumnNames.PUBLISHER, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), publisher.getName())
                 .validate(tableData.getCellByRowValue(ColumnNames.RELATED_MEDIA, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), media.getName())
                 .validate(tableData.getCellByRowValue(ColumnNames.DEFAULT_FLOOR_PRICE, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME),
@@ -169,9 +172,8 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
                 .validate(tableData.getCellByRowValue(ColumnNames.TEST_MODE, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), "Enabled")
                 .validate(tableData.getCellByRowValue(ColumnNames.PAGE_CATEGORY, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME),
                         String.format("%s, %s", CATEGORY_AUTO_REPAIR.getName(), CATEGORY_EDUCATION.getName()))
-                .validate(tableData.getCellByRowValue(ColumnNames.CREATED_DATE, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), currentDate)
-                .validate(tableData.getCellByRowValue(ColumnNames.UPDATED_DATE, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), currentDate)
-
+                .validate(tableData.getCellByRowValue(ColumnNames.CREATED_DATE, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), StringUtils.getDateAsString(currentDate))
+                .validate(tableData.getCellByRowValue(ColumnNames.UPDATED_DATE, ColumnNames.AD_SPOT_NAME, AD_SPOT_NAME), StringUtils.getDateAsString(currentDate))
                 .testEnd();
     }
 

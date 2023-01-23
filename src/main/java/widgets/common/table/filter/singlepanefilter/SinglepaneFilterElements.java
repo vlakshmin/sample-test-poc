@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum SinglepaneElements {
+public enum SinglepaneFilterElements {
 
     SEARCH_INPUT("'Search' Input in Singlepane", "//input[@placeholder='Search']"),
     CLEAR_ALL_BUTTON( "'Clear All' button in Multipane", "//span/div[contains(text(),'Clear All')]"),

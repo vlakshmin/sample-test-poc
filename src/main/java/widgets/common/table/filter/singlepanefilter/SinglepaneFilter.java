@@ -7,7 +7,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import org.openqa.selenium.WebElement;
 import widgets.common.table.ColumnNames;
-import widgets.common.table.filter.abstractt.SinglePaneFilter;
+import widgets.common.table.filter.abstractt.BaseFilter;
 import widgets.common.table.filter.singlepanefilter.item.SinglepaneItem;
 
 import java.util.ArrayList;
@@ -20,15 +20,15 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 import static java.lang.String.format;
-import static widgets.common.table.filter.singlepanefilter.SinglepaneElements.*;
+import static widgets.common.table.filter.singlepanefilter.SinglepaneFilterElements.*;
 
 
 /**
- * Keep Selectors of UI elements in {@link SinglepaneElements}
+ * Keep Selectors of UI elements in {@link SinglepaneFilterElements}
  */
 
 @Getter
-public class Singlepane extends SinglePaneFilter {
+public class SinglepaneFilter extends BaseFilter {
 
     protected String singlepaneName;
 
@@ -46,7 +46,7 @@ public class Singlepane extends SinglePaneFilter {
     @Getter(AccessLevel.NONE)
     private List<SinglepaneItem> filterItemsList = new ArrayList<>();
 
-    public Singlepane() {
+    public SinglepaneFilter() {
         this.singlepaneName = ColumnNames.NAME.getName();
     }
 

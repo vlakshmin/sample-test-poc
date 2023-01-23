@@ -1,8 +1,8 @@
-package rx.users.columnsfilter;
+package rx.admin.users.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
-import io.qameta.allure.Issue;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -26,11 +26,12 @@ import static managers.TestManager.testStart;
 @Slf4j
 @Listeners({ScreenShooter.class})
 @Feature(value = "Users Columns Filter")
-public class UsersColumnsFilterUpdatedDateWidgetTests extends BaseTest {
+@Epic("v1.28.0/GS-3324")
+public class UsersColumnsFilterCreatedDateWidgetTests extends BaseTest {
 
     private UsersPage usersPage;
 
-    public UsersColumnsFilterUpdatedDateWidgetTests() {
+    public UsersColumnsFilterCreatedDateWidgetTests() {
         usersPage = new UsersPage();
     }
 
@@ -45,7 +46,7 @@ public class UsersColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .waitAndValidate(disappear, usersPage.getNuxtProgress())
                 .scrollIntoView(usersPage.getPageTitle())
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
-                .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
+                .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .and("Select 10 rows per page")
                 .scrollIntoView(usersPage.getUsersTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(usersPage.getUsersTable().getTablePagination().getPageMenu(),
@@ -61,34 +62,34 @@ public class UsersColumnsFilterUpdatedDateWidgetTests extends BaseTest {
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
         testStart()
-                .and("Select Column Filter 'Updated Date'")
+                .and("Select Column Filter 'Created Date'")
                 .scrollIntoView(usersPage.getPageTitle())
                 .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
-                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.UPDATED_DATE))
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_DATE))
                 .then("Current date should be selected by default")
                 .validate(calendar.getMonthOrYearHeaderButton().getText(), StringUtils.getStringMonthYear(currentDate.getMonth(),
                         currentDate.getYear()))
-                .validate(calendar.getDayButtonByValue(String.valueOf(currentDate.getDayOfMonth())))
+                .validate(calendar.getSelectedDayButton(), String.valueOf(currentDate.getDayOfMonth()))
                 .testEnd();
     }
 
-    @Test(description = "Check Next Month", dependsOnMethods = "testDefaultStateColumnsFilterComponent")
-    public void testNextMonthColumnsFilterComponent() {
+    @Test(description = "Check Previous Month", dependsOnMethods = "testDefaultStateColumnsFilterComponent")
+    public void testPreviousMonthColumnsFilterComponent() {
         var calendar = usersPage.getUsersTable().getColumnFiltersBlock().getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
         testStart()
-                .and("Click on the Next Month button >")
-                .clickOnWebElement(calendar.getNextMonthButton())
-                .waitAndValidate(visible, calendar.getMonthOrYearHeaderButton())
-                .then("Should be displayed next month")
-                .validateContainsText(calendar.getMonthOrYearHeaderButton(), StringUtils.getStringMonthYear(currentDate.plusMonths(1).getMonth(),
-                        currentDate.getMonth().getValue() == 12 ? currentDate.getYear() + 1 : currentDate.getYear()))
+                .and("Click on the Previous Month button")
+                .waitAndValidate(visible, calendar.getPreviousMonthButton())
+                .clickOnWebElement(calendar.getPreviousMonthButton())
+                .then("Should be displayed previous month")
+                .validateContainsText(calendar.getMonthOrYearHeaderButton(),StringUtils.getStringMonthYear(currentDate.minusMonths(1).getMonth(),
+                        currentDate.getMonth().getValue() == 1 ? currentDate.getYear() - 1 : currentDate.getYear()))
                 .testEnd();
     }
 
-    @Test(description = "Check Back button", dependsOnMethods = "testNextMonthColumnsFilterComponent")
+    @Test(description = "Check Back button", dependsOnMethods = "testPreviousMonthColumnsFilterComponent")
     public void testBackButtonColumnsFilterComponent() {
         var filter = usersPage.getUsersTable().getColumnFiltersBlock();
         var calendar = filter.getCalendarFilter().getCalendar();
@@ -101,32 +102,32 @@ public class UsersColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .validateList(filter.getFilterOptionItems(), List.of(ColumnNames.ROLE.getName(),
                         ColumnNames.STATUS.getName(),
                         ColumnNames.PUBLISHER.getName(),
+                        ColumnNames.CREATED_DATE.getName(),
                         ColumnNames.UPDATED_DATE.getName()))
-                .and("Select Column Filter 'Updated Date'")
-                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.UPDATED_DATE))
+                .and("Select Column Filter 'Created Date'")
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_DATE))
                 .then("Current date should be selected by default")
-                .validate(calendar.getMonthOrYearHeaderButton().getText(), StringUtils.getStringMonthYear(currentDate.getMonth(), currentDate.getYear()))
-                .validate(calendar.getDayButtonByValue(String.valueOf(currentDate.getDayOfMonth())))
+                .validate(calendar.getMonthOrYearHeaderButton().getText(), StringUtils.getStringMonthYear(currentDate.getMonth(),currentDate.getYear()))
+                .validate(calendar.getSelectedDayButton(), String.valueOf(currentDate.getDayOfMonth()))
                 .testEnd();
     }
 
-    @Test(description = "Check Previous Month", dependsOnMethods = "testBackButtonColumnsFilterComponent")
-    public void testPreviousMonthColumnsFilterComponent() {
+    @Test(description = "Check Next Month", dependsOnMethods = "testBackButtonColumnsFilterComponent")
+    public void testNextMonthColumnsFilterComponent() {
         var filter = usersPage.getUsersTable().getColumnFiltersBlock();
         var calendar = filter.getCalendarFilter().getCalendar();
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
         testStart()
-                .and("Click on the Previous Month button")
-                .clickOnWebElement(calendar.getPreviousMonthButton())
-                .waitAndValidate(visible, calendar.getMonthOrYearHeaderButton())
-                .then("Should be displayed previous month")
-                .validateContainsText(calendar.getMonthOrYearHeaderButton(), StringUtils.getStringMonthYear(currentDate.minusMonths(1).getMonth(),
-                        currentDate.minusMonths(1).getYear()))
+                .and("Click on the Next Month button")
+                .clickOnWebElement(calendar.getNextMonthButton())
+                .then("Should be displayed next month")
+                .validateContainsText(calendar.getMonthOrYearHeaderButton(),StringUtils.getStringMonthYear(currentDate.plusMonths(1).getMonth(),
+                        currentDate.getMonth().getValue() == 12 ? currentDate.getYear() + 1 : currentDate.getYear()))
                 .testEnd();
     }
 
-    @Test(description = "Select First Day of the current month and click Cancel", dependsOnMethods = "testPreviousMonthColumnsFilterComponent")
+    @Test(description = "Select First Day of the current month and click Cancel", dependsOnMethods = "testNextMonthColumnsFilterComponent")
     public void testCancelButtonColumnsFilterComponent() {
         var filter = usersPage.getUsersTable().getColumnFiltersBlock();
         var table = usersPage.getUsersTable().getTableData();
@@ -143,37 +144,8 @@ public class UsersColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Select Last Day of the current month and click Submit", dependsOnMethods = "testCancelButtonColumnsFilterComponent")
-    public void testSubmitButtonColumnsFilterComponent() {
-        var filter = usersPage.getUsersTable().getColumnFiltersBlock();
-        var table = usersPage.getUsersTable().getTableData();
-        var calendar = filter.getCalendarFilter().getCalendar();
-        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
-
-        testStart()
-                .and("Select Column Filter 'Updated Date'")
-                .waitAndValidate(visible, filter.getFilterOptionsMenu())
-                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.UPDATED_DATE))
-                .and("Select Last Date of the month")
-                .clickOnWebElement(calendar.getDayButtonByValue(StringUtils.getLastDayOfMonth(currentDate.getYear(),currentDate.getMonth())))
-                .and("Click on Submit")
-                .clickOnWebElement(filter.getCalendarFilter().getSubmitButton())
-                .then("ColumnsFilter widget is closed")
-                .validate(not(visible), filter.getFilterOptionsMenu())
-                .validate(visible, table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getHeaderLabel())
-                .validate(visible, table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getCloseIcon())
-                .validateContainsText(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getHeaderLabel(),
-                        format("%s:", ColumnNames.UPDATED_DATE.getName()))
-                .validate(table.countFilterChipsItems(), 1)
-                .then("Validate list of selected date")
-                .validate(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).countFilterOptionsChipItems(), 1)
-                .validate(exist, table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getChipFilterOptionItemByName(
-                        StringUtils.getLastDayOfTheMonthDateAsString(currentDate.getYear(), currentDate.getMonth())))
-                .testEnd();
-    }
-
-    @Issue("https://rakutenadvertising.atlassian.net/browse/GS-3325")
-    @Test(description = "Select Period of the current month and click Submit", dependsOnMethods = "testSubmitButtonColumnsFilterComponent")
+    @Epic("v1.28.0/GS-3325")
+    @Test(description = "Select Period of the current month and click Submit", dependsOnMethods = "testCancelButtonColumnsFilterComponent" )
     public void testPeriodAndSubmitButtonColumnsFilterComponent() {
         var filter = usersPage.getUsersTable().getColumnFiltersBlock();
         var table = usersPage.getUsersTable().getTableData();
@@ -181,46 +153,71 @@ public class UsersColumnsFilterUpdatedDateWidgetTests extends BaseTest {
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
         testStart()
-                .and("Select Column Filter 'Updated Date'")
-                .scrollIntoView(usersPage.getPageTitle())
-                .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
-                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.UPDATED_DATE))
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_DATE))
                 .and("Select Period Date of the month")
-                .clickOnWebElement(calendar.getDayButtonByValue("11"))
-                .clickOnWebElement(calendar.getDayButtonByValue("11"))
-                .clickOnWebElement(calendar.getDayButtonByValue("21"))
+                .clickOnWebElement(calendar.getDayButtonByValue("15"))
+                .clickOnWebElement(calendar.getDayButtonByValue("25"))
                 .and("Click on Submit")
                 .clickOnWebElement(filter.getCalendarFilter().getSubmitButton())
                 .then("ColumnsFilter widget is closed")
                 .validate(not(visible), filter.getFilterOptionsMenu())
-                .validate(visible, table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getHeaderLabel())
-                .validate(visible, table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getCloseIcon())
-                .validateContainsText(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getHeaderLabel(),
-                        format("%s:", ColumnNames.UPDATED_DATE.getName()))
+                .validate(visible, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getHeaderLabel())
+                .validate(visible, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getCloseIcon())
+                .validateContainsText(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getHeaderLabel(),
+                        format("%s:",ColumnNames.CREATED_DATE.getName()))
                 .validate(table.countFilterChipsItems(), 1)
-                .then("Validate list of selected date")
-                .validate(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).countFilterOptionsChipItems(), 2)
-                // :TODO "https://rakutenadvertising.atlassian.net/browse/GS-3325"
-                .validate(visible, table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getChipFilterOptionItemByName(
-                        StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 21)))
-                .validate(visible, table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getChipFilterOptionItemByName(
-                        StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 11)))
+                .then("Validate selected period")
+                .validate(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).countFilterOptionsChipItems(), 1)
+                .validateContainsText(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getChipFilterOptionItemByPosition(0),
+                        format("%s – %s",
+                                StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 15),
+                                StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 25)))
                 .testEnd();
     }
 
-    @Test(description = "Delete Update By Chip", dependsOnMethods = "testPeriodAndSubmitButtonColumnsFilterComponent", alwaysRun = true)
+    @Test(description = "Select Last Day of the current month and click Submit", dependsOnMethods = "testPeriodAndSubmitButtonColumnsFilterComponent")
+    public void testSubmitButtonColumnsFilterComponent() {
+        var filter = usersPage.getUsersTable().getColumnFiltersBlock();
+        var table = usersPage.getUsersTable().getTableData();
+        var calendar = filter.getCalendarFilter().getCalendar();
+        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
+
+        testStart()
+                .and("Select Column Filter 'Created Date'")
+                .scrollIntoView(usersPage.getPageTitle())
+                .clickOnWebElement(filter.getColumnsFilterButton())
+                .waitAndValidate(visible, filter.getFilterOptionsMenu())
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_DATE))
+                .and("Select Last Date of the month")
+                .clickOnWebElement(calendar.getDayButtonByValue(StringUtils.getLastDayOfMonth(currentDate.getYear(),currentDate.getMonth())))
+                .and("Click on Submit")
+                .clickOnWebElement(filter.getCalendarFilter().getSubmitButton())
+                .then("ColumnsFilter widget is closed")
+                .validate(not(visible), filter.getFilterOptionsMenu())
+                .validate(visible, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getHeaderLabel())
+                .validate(visible, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getCloseIcon())
+                .validateContainsText(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getHeaderLabel(),
+                        format("%s:",ColumnNames.CREATED_DATE.getName()))
+                .validate(table.countFilterChipsItems(), 1)
+                .then("Validate list of selected date")
+                .validate(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).countFilterOptionsChipItems(), 1)
+                .validate(visible, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getChipFilterOptionItemByName(
+                        StringUtils.getLastDayOfTheMonthDateAsString(currentDate.getYear(),currentDate.getMonth())))
+                .testEnd();
+    }
+
+    @Test(description = "Delete Update By Chip", dependsOnMethods = "testPeriodAndSubmitButtonColumnsFilterComponent")
     public void testDeleteColumnsFilterComponent() {
         var table = usersPage.getUsersTable().getTableData();
 
         testStart()
-                .and("Click 'X' icon on the Update Date chip")
-                .clickOnWebElement(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getCloseIcon())
-                .then("Chip 'Updated Date' should be disappear")
+                .and("Click 'X' icon on the Created Date chip")
+                .clickOnWebElement(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getCloseIcon())
+                .then("Chip 'Created Date' should be disappear")
                 .validate(table.countFilterChipsItems(), 0)
                 .testEnd();
     }
-
 
     @AfterClass
     private void logout() {
