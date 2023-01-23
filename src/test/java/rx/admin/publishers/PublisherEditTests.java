@@ -115,11 +115,13 @@ public class PublisherEditTests extends BaseTest {
                 .clickOnTableCellLink(tableData, ColumnNames.NAME, pubName)
                 .waitSideBarOpened()
                 .then("Check all fields");
+
         if (status.getStatus().equals(Statuses.INACTIVE.getStatus())) {
             testStart()
                     .turnToggleOff(editPublisherSideBar.getActiveToggle())
                     .testEnd();
         }
+
         testStart()
                 .and("enter publisher name")
                 .setValueWithClean(editPublisherSideBar.getNameInput(), pubName)
@@ -131,12 +133,14 @@ public class PublisherEditTests extends BaseTest {
                 .setValueWithClean(editPublisherSideBar.getDomainInput(), domainUrl)
                 .and("select category")
                 .testEnd();
+
         if (categorySelected) {
             testStart()
                     .clickOnWebElement(editPublisherSideBar.getCategoriesLabel())
                     .clickOnWebElement(categories.getCategoryCheckbox(CategoriesList.EDUCATION))
                     .testEnd();
         }
+
         testStart()
                 .and("click save button")
                 .clickOnWebElement(editPublisherSideBar.getSaveButton())
@@ -152,6 +156,7 @@ public class PublisherEditTests extends BaseTest {
                 .clickOnWebElement(tableOptions.getShowHideColumnsBtn())
                 .and("validate category is correct")
                 .testEnd();
+
         if (categorySelected) {
             testStart()
                     .validate(tableData.getCellByRowValue(ColumnNames.CATEGORY, ColumnNames.NAME, pubName),
@@ -159,6 +164,7 @@ public class PublisherEditTests extends BaseTest {
                                     CategoriesList.AUTOMOTIVE.getName(), CategoriesList.EDUCATION.getName()))
                     .testEnd();
         }
+
         testStart()
                 .and("validate status is correct")
                 .validate(tableData.getCellByRowValue(ColumnNames.STATUS, ColumnNames.NAME, pubName), status.getStatus())

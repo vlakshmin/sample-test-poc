@@ -39,6 +39,7 @@ public class OpenPricingTest extends BaseTest {
                 .getOpenPricingResponse();
     }
 
+    //TODO: need to update
     @Test
     public void editOpenPricingTest() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();

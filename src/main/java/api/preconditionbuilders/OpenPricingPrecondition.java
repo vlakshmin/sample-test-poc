@@ -235,7 +235,6 @@ public class OpenPricingPrecondition {
                     .floorPrice(floorPrice)
                     .notes("autotest")
                     .priority(true)
-                 //   .publisherName(media.getPublisherName())
                     .publisherId(media.getPublisherId())
                     .rule(Rule.builder()
                             .adspot(AdSpotRule.builder()
