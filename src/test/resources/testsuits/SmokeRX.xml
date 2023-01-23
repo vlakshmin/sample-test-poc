@@ -119,7 +119,7 @@
         </classes>
     </test>
 
-    <test name="Columns Filter Tests">
+    <test name="Protection Columns Filter Tests">
         <classes>
             <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterWidgetTests"/>
             <class name="rx.protections.columnsfilter.ProtectionsColumnsFilterTableTests"/>
