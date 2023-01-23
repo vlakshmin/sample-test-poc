@@ -1,6 +1,7 @@
 package rx.protections.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
@@ -13,7 +14,6 @@ import rx.BaseTest;
 import widgets.common.table.ColumnNames;
 import zutils.StringUtils;
 
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -21,12 +21,12 @@ import java.util.List;
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
 import static java.lang.String.format;
-import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
 @Feature(value = "Protections Columns Filter")
+@Epic("v1.28.0/GS-3324")
 public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
 
     private ProtectionsPage protectionPage;
@@ -84,8 +84,8 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .waitAndValidate(visible, calendar.getPreviousMonthButton())
                 .clickOnWebElement(calendar.getPreviousMonthButton())
                 .then("Should be displayed previous month")
-                .validateContainsText(calendar.getMonthOrYearHeaderButton(), StringUtils.getStringMonthYear(currentDate.minusMonths(1).getMonth(),
-                        currentDate.getYear()))
+                .validateContainsText(calendar.getMonthOrYearHeaderButton(),StringUtils.getStringMonthYear(currentDate.minusMonths(1).getMonth(),
+                        currentDate.minusMonths(1).getYear()))
                 .testEnd();
     }
 
@@ -102,7 +102,8 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .validateList(filter.getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
                         ColumnNames.STATUS.getName(),
                         ColumnNames.MANAGED_BY_SYSTEM_ADMIN.getName(),
-                        ColumnNames.CREATED_DATE.getName()))
+                        ColumnNames.CREATED_DATE.getName(),
+                        ColumnNames.UPDATED_DATE.getName()))
                 .and("Select Column Filter 'Created Date'")
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_DATE))
                 .then("Current date should be selected by default")
@@ -143,6 +144,7 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3325")
     @Test(description = "Select Period of the current month and click Submit", dependsOnMethods = "testCancelButtonColumnsFilterComponent" )
     public void testPeriodAndSubmitButtonColumnsFilterComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
@@ -165,12 +167,12 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .validateContainsText(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getHeaderLabel(),
                         format("%s:",ColumnNames.CREATED_DATE.getName()))
                 .validate(table.countFilterChipsItems(), 1)
-                .then("Validate list of selected date")
-                .validate(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).countFilterOptionsChipItems(), 2)
-                .validate(visible, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getChipFilterOptionItemByName(
-                        StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 15)))
-                .validate(visible, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getChipFilterOptionItemByName(
-                        StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 25)))
+                .then("Validate selected period")
+                .validate(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).countFilterOptionsChipItems(), 1)
+                .validateContainsText(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getChipFilterOptionItemByPosition(0),
+                        format("%s – %s",
+                                StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 15),
+                                StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 25)))
                 .testEnd();
     }
 

@@ -15,4 +15,4 @@ downloadsDir: build/downloads/csv/
 enableProxy: false
 
 # Selenide Explicit wait
-timeout: 30000
+timeout: 10000

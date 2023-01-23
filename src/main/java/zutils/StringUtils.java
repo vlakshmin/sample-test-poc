@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
@@ -32,6 +33,11 @@ public final class StringUtils {
 
             throw new RuntimeException(e);
         }
+    }
+
+    public static String getDateAsString(ZonedDateTime date) {
+
+        return  LocalDate.of(date.getYear(), date.getMonth(), date.getDayOfYear()).format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
     }
 
     public static String getStringMonthYear(Month month, int year){

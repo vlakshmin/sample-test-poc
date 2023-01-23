@@ -1,6 +1,7 @@
 package rx.inventory.adspot;
 
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -18,6 +19,7 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Epic("v1.28.0/GS-3298")
 public class AdSpotCheckColumnsTests extends BaseTest {
     private AdSpotsPage adSpotsPage;
 
@@ -37,7 +39,7 @@ public class AdSpotCheckColumnsTests extends BaseTest {
                 .testEnd();
     }
 
-
+    @Epic("v1.28.0/GS-3298")
     @Test
     public void checkColumns() {
         var tableOptions = adSpotsPage.getAdSpotsTable().getShowHideColumns();
@@ -56,7 +58,7 @@ public class AdSpotCheckColumnsTests extends BaseTest {
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.AD_SPOT_NAME))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PUBLISHER))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.RELATED_MEDIA))
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE_INACTIVE))
+                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.STATUS))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PAGE_CATEGORY))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.TEST_MODE))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_SIZES))
@@ -70,7 +72,7 @@ public class AdSpotCheckColumnsTests extends BaseTest {
                         ColumnNames.AD_SPOT_NAME.getName(),
                         ColumnNames.PUBLISHER.getName(),
                         ColumnNames.RELATED_MEDIA.getName(),
-                        ColumnNames.ACTIVE_INACTIVE.getName(),
+                        ColumnNames.STATUS.getName(),
                         ColumnNames.PAGE_CATEGORY.getName(),
                         ColumnNames.TEST_MODE.getName(),
                         ColumnNames.DEFAULT_SIZES.getName(),
@@ -83,7 +85,7 @@ public class AdSpotCheckColumnsTests extends BaseTest {
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.AD_SPOT_NAME))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PUBLISHER))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.RELATED_MEDIA))
-                .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE_INACTIVE))
+                .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.STATUS))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.PAGE_CATEGORY))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.TEST_MODE))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DEFAULT_SIZES))
@@ -96,7 +98,7 @@ public class AdSpotCheckColumnsTests extends BaseTest {
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.AD_SPOT_NAME.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.PUBLISHER.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.RELATED_MEDIA.getName()))
-                .validate(not(visible), tableData.getColumnHeader(ColumnNames.ACTIVE_INACTIVE.getName()))
+                .validate(not(visible), tableData.getColumnHeader(ColumnNames.STATUS.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.PAGE_CATEGORY.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.TEST_MODE.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.DEFAULT_SIZES.getName()))

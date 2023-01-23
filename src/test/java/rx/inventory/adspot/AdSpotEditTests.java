@@ -5,6 +5,7 @@ import api.dto.rx.inventory.adspot.*;
 import api.dto.rx.inventory.media.Media;
 import api.preconditionbuilders.MediaPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -38,8 +39,8 @@ public class AdSpotEditTests extends BaseTest {
     final private static String POSITION = "Sidebar";
     final private static String VIDEO_FLOOR_PRICE = "44.77";
     final private static String NATIVE_FLOOR_PRICE = "23.65";
-    final private static String BANNER_FLOOR_PRICE = "9.4";
-    final private static String DEFAULT_FLOOR_PRICE = "5.6";
+    final private static String BANNER_FLOOR_PRICE = "9.40";
+    final private static String DEFAULT_FLOOR_PRICE = "5.60";
 
     final private static String VIDEO_PLACEMENT_TYPE = "In-Banner";
     final private static String VIDEO_PLAYBACK_METHOD = "Autoplay Sound On";
@@ -110,6 +111,7 @@ public class AdSpotEditTests extends BaseTest {
 
      }
 
+    @Epic("v1.28.0/GS-3288")
     @Test(description = "Change all enabled fields and save", priority = 3)
     private void changeAllFieldsAndSave() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();

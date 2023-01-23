@@ -1,6 +1,7 @@
-package rx.users.columnsfilter;
+package rx.admin.users.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ import static managers.TestManager.testStart;
 @Slf4j
 @Listeners({ScreenShooter.class})
 @Feature(value = "Users Columns Filter")
+@Epic("v1.28.0/GS-3324")
 public class UsersColumnsFilterUpdatedDateWidgetTests extends BaseTest {
 
     private UsersPage usersPage;
@@ -121,7 +123,7 @@ public class UsersColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .clickOnWebElement(calendar.getPreviousMonthButton())
                 .waitAndValidate(visible, calendar.getMonthOrYearHeaderButton())
                 .then("Should be displayed previous month")
-                .validateContainsText(calendar.getMonthOrYearHeaderButton(), StringUtils.getStringMonthYear(currentDate.minusMonths(1).getMonth(),
+                .validateContainsText(calendar.getMonthOrYearHeaderButton(),StringUtils.getStringMonthYear(currentDate.minusMonths(1).getMonth(),
                         currentDate.minusMonths(1).getYear()))
                 .testEnd();
     }
@@ -172,6 +174,7 @@ public class UsersColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3325")
     @Issue("https://rakutenadvertising.atlassian.net/browse/GS-3325")
     @Test(description = "Select Period of the current month and click Submit", dependsOnMethods = "testSubmitButtonColumnsFilterComponent")
     public void testPeriodAndSubmitButtonColumnsFilterComponent() {
@@ -199,13 +202,14 @@ public class UsersColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .validateContainsText(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getHeaderLabel(),
                         format("%s:", ColumnNames.UPDATED_DATE.getName()))
                 .validate(table.countFilterChipsItems(), 1)
-                .then("Validate list of selected date")
-                .validate(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).countFilterOptionsChipItems(), 2)
-                // :TODO "https://rakutenadvertising.atlassian.net/browse/GS-3325"
-                .validate(visible, table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getChipFilterOptionItemByName(
-                        StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 21)))
-                .validate(visible, table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getChipFilterOptionItemByName(
-                        StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 11)))
+                .then("Validate selected date period")
+                .validate(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).countFilterOptionsChipItems(), 1)
+                .then("Validate selected period")
+                .validate(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).countFilterOptionsChipItems(), 1)
+                .validateContainsText(table.getChipItemByName(ColumnNames.UPDATED_DATE.getName()).getChipFilterOptionItemByPosition(0),
+                        format("%s – %s",
+                                StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 11),
+                                StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 21)))
                 .testEnd();
     }
 
