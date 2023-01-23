@@ -1,5 +1,6 @@
 package rx.admin.publishers;
 
+import io.qameta.allure.Epic;
 import pages.Path;
 import rx.BaseTest;
 import widgets.common.table.ColumnNames;
@@ -37,6 +38,7 @@ public class PublisherCheckColumnsTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("v1.28.0/GS-3298")
     @Test
     public void checkColumns() {
         var tableOptions = publisherPage.getTable().getShowHideColumns();
@@ -53,7 +55,7 @@ public class PublisherCheckColumnsTests extends BaseTest {
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ID))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.NAME))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CATEGORY))
-                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE_INACTIVE))
+                .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.STATUS))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DOMAIN))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CURRENCY))
                 .selectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.AD_OPS_PERSON))
@@ -67,7 +69,7 @@ public class PublisherCheckColumnsTests extends BaseTest {
                         ColumnNames.ID.getName(),
                         ColumnNames.NAME.getName(),
                         ColumnNames.CATEGORY.getName(),
-                        ColumnNames.ACTIVE_INACTIVE.getName(),
+                        ColumnNames.STATUS.getName(),
                         ColumnNames.DOMAIN.getName(),
                         ColumnNames.CURRENCY.getName(),
                         ColumnNames.AD_OPS_PERSON.getName(),
@@ -80,7 +82,7 @@ public class PublisherCheckColumnsTests extends BaseTest {
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ID))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.NAME))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CATEGORY))
-                .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.ACTIVE_INACTIVE))
+                .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.STATUS))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.DOMAIN))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.CURRENCY))
                 .unSelectCheckBox(tableOptions.getMenuItemCheckbox(ColumnNames.AD_OPS_PERSON))
@@ -93,7 +95,7 @@ public class PublisherCheckColumnsTests extends BaseTest {
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.ID.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.NAME.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.CATEGORY.getName()))
-                .validate(not(visible), tableData.getColumnHeader(ColumnNames.ACTIVE_INACTIVE.getName()))
+                .validate(not(visible), tableData.getColumnHeader(ColumnNames.STATUS.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.DOMAIN.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.CURRENCY.getName()))
                 .validate(not(visible), tableData.getColumnHeader(ColumnNames.AD_OPS_PERSON.getName()))

@@ -1,7 +1,6 @@
-package rx.users.columnsfilter;
+package rx.admin.users.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
-import com.sun.xml.bind.v2.TODO;
 import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
@@ -23,8 +22,6 @@ public class UsersColumnsFilterWidgetTests extends BaseTest {
 
     private UsersPage usersPage;
 
-    private List<String> selectedPublishersNameList;
-
     public UsersColumnsFilterWidgetTests() {
         usersPage = new UsersPage();
     }
@@ -41,7 +38,6 @@ public class UsersColumnsFilterWidgetTests extends BaseTest {
                 .scrollIntoView(tableColumns.getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
-                .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .and("Select 10 rows per page")
                 .scrollIntoView(usersPage.getUsersTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(usersPage.getUsersTable().getTablePagination().getPageMenu(),

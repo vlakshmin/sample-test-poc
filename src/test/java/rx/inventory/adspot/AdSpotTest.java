@@ -4,8 +4,6 @@ import api.dto.rx.inventory.adspot.AdSpot;
 import api.dto.rx.inventory.adspot.AdSpotRequest;
 import api.dto.rx.inventory.adspot.Banner;
 import api.dto.rx.inventory.media.Media;
-import api.preconditionbuilders.AdSpotPrecondition;
-import api.preconditionbuilders.MediaPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;

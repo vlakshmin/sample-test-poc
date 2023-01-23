@@ -10,7 +10,7 @@ import static com.codeborne.selenide.Selenide.$x;
  * Keep Selectors of UI elements in {@link BaseFilterElements}
  */
 @Getter
-public abstract class SinglePaneFilter {
+public abstract class BaseFilter {
 
     private SelenideElement backButton = $x(BaseFilterElements.BACK_BUTTON.getSelector()).as(BaseFilterElements.BACK_BUTTON.getAlias());
     private SelenideElement cancelButton = $x(BaseFilterElements.CANCEL_BUTTON.getSelector()).as(BaseFilterElements.CANCEL_BUTTON.getAlias());

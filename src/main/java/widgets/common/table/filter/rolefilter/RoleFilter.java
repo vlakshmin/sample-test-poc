@@ -2,7 +2,7 @@ package widgets.common.table.filter.rolefilter;
 
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
-import widgets.common.table.filter.abstractt.SinglePaneFilter;
+import widgets.common.table.filter.abstractt.BaseFilter;
 
 import static com.codeborne.selenide.Selenide.$x;
 
@@ -11,7 +11,7 @@ import static com.codeborne.selenide.Selenide.$x;
  * Keep Selectors of UI elements in {@link RoleFilterElements}
  */
 @Getter
-public class RoleFilter extends SinglePaneFilter {
+public class RoleFilter extends BaseFilter {
 
     private SelenideElement adminPublisherCheckBox = $x(RoleFilterElements.ADMIN_ROLE_CHECkBOX.getSelector())
             .as(RoleFilterElements.ADMIN_ROLE_CHECkBOX.getAlias());

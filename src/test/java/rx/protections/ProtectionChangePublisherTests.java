@@ -3,9 +3,9 @@ package rx.protections;
 import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.media.Media;
-import api.dto.rx.protection.Protection;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
@@ -13,13 +13,9 @@ import org.apache.http.HttpStatus;
 import org.testng.annotations.*;
 import pages.Path;
 import pages.protections.ProtectionsPage;
-import pages.yield.openpricing.OpenPricingPage;
 import rx.BaseTest;
-import rx.enums.MultipaneConstants;
 import widgets.common.multipane.Multipane;
-import widgets.common.multipane.MultipaneNameImpl;
 import widgets.protections.sidebar.CreateProtectionSidebar;
-import widgets.yield.openPricing.sidebar.CreateOpenPricingSidebar;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -34,6 +30,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Feature(value = "Protections")
 public class ProtectionChangePublisherTests extends BaseTest {
 
     private ProtectionsPage protectionPage;

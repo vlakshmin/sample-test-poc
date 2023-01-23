@@ -136,6 +136,7 @@ public class MediaSortingTableTests extends BaseTest {
                 .waitAndValidate(disappear, mediaPage.getNuxtProgress())
                 .clickOnWebElement(table.getShowHideColumnsBtn())
                 .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.SITE_APP_STORE_URL))
+                .selectCheckBox(table.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .validate(visible, tableData.getColumnHeader(ColumnNames.SITE_APP_STORE_URL.getName()))
                 .clickOnWebElement(table.getShowHideColumnsBtn())
                 .testEnd();
@@ -157,15 +158,6 @@ public class MediaSortingTableTests extends BaseTest {
                 .given()
                 .and(String.format("Sort column '%s'", columnName))
                 .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                .testEnd();
-
-        if (columnName.getName().equals("ID")) {
-            testStart()
-                    .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                    .testEnd();
-        }
-
-        testStart()
                 .then("Ensure that sort by descending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(columnName.getName()),
                         "aria-sort", ASC)
@@ -184,15 +176,6 @@ public class MediaSortingTableTests extends BaseTest {
                 .given()
                 .and(String.format("Sort column '%s'", columnName))
                 .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                .testEnd();
-
-        if (columnName.getName().equals("ID")) {
-            testStart()
-                    .clickOnWebElement(tableData.getColumnHeader(columnName.getName()))
-                    .testEnd();
-        }
-
-        testStart()
                 .then("Ensure that sort by ascending: validate column attribute value")
                 .validateAttribute(tableData.getColumnHeader(columnName.getName()),
                         "aria-sort", ASC)

@@ -8,6 +8,7 @@ import lombok.Getter;
 public enum PlatformType {
 
     IOS("IOS"),
+    CTV("CTV"),
     ANDROID("Android"),
     PC_WEB("PC Web"),
     MOBILE_WEB("Mobile Web"),
