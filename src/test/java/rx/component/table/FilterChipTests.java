@@ -66,25 +66,25 @@ public class FilterChipTests extends BaseTest {
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.PUBLISHER))
                 .and(format("Search by Name '%s'", PUBLISHER_NAME))
-                .setValueWithClean(filter.getSinglepane().getSearchInput(), PUBLISHER_NAME)
-                .clickEnterButton(filter.getSinglepane().getSearchInput())
-                .validate(filter.getSinglepane().countIncludedItems(), expectedSearchPublisherNamesList.size())
+                .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(), PUBLISHER_NAME)
+                .clickEnterButton(filter.getSinglepaneFilter().getSearchInput())
+                .validate(filter.getSinglepaneFilter().countIncludedItems(), expectedSearchPublisherNamesList.size())
                 .testEnd();
 
         expectedSearchPublisherNamesList.forEach(e -> {
             testStart()
-                    .validate(exist, filter.getSinglepane().getFilterItemByName(e).getName())
+                    .validate(exist, filter.getSinglepaneFilter().getFilterItemByName(e).getName())
                     .testEnd();
         });
 
         testStart()
                 .and("Clear Search")
-                .clearField(filter.getSinglepane().getSearchInput())
+                .clearField(filter.getSinglepaneFilter().getSearchInput())
                 .then("Check total publishers count, search result should be reset")
                 .validate(not(visible), protectionPage.getTableProgressBar())
-                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalPublishers))
+                .validate(filter.getSinglepaneFilter().getItemsTotalQuantityLabel(), format("(%s)",totalPublishers))
                 .scrollIntoView(protectionPage.getProtectionPageTitle())
-                .clickOnWebElement(filter.getSinglepane().getBackButton())
+                .clickOnWebElement(filter.getSinglepaneFilter().getBackButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .testEnd();
     }
@@ -99,18 +99,18 @@ public class FilterChipTests extends BaseTest {
                 .and("Select Column Filter 'PUBLISHER'")
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.PUBLISHER))
                 .and("Select Publishers")
-                .clickOnWebElement(filter.getSinglepane().getFilterItemByPositionInList(1).getName())
-                .clickOnWebElement(filter.getSinglepane().getFilterItemByPositionInList(2).getName())
-                .clickOnWebElement(filter.getSinglepane().getFilterItemByPositionInList(3).getName())
+                .clickOnWebElement(filter.getSinglepaneFilter().getFilterItemByPositionInList(1).getName())
+                .clickOnWebElement(filter.getSinglepaneFilter().getFilterItemByPositionInList(2).getName())
+                .clickOnWebElement(filter.getSinglepaneFilter().getFilterItemByPositionInList(3).getName())
                 .testEnd();
 
-        selectedPublishersNameList = List.of(filter.getSinglepane().getFilterItemByPositionInList(1).getName().text(),
-                filter.getSinglepane().getFilterItemByPositionInList(2).getName().text(),
-                filter.getSinglepane().getFilterItemByPositionInList(3).getName().text());
+        selectedPublishersNameList = List.of(filter.getSinglepaneFilter().getFilterItemByPositionInList(1).getName().text(),
+                filter.getSinglepaneFilter().getFilterItemByPositionInList(2).getName().text(),
+                filter.getSinglepaneFilter().getFilterItemByPositionInList(3).getName().text());
 
         testStart()
                 .and("Click on Submit")
-                .clickOnWebElement(filter.getSinglepane().getSubmitButton())
+                .clickOnWebElement(filter.getSinglepaneFilter().getSubmitButton())
                 .then("ColumnsFilter widget is closed")
                 .validate(not(visible), filter.getFilterOptionsMenu())
                 .validate(visible, table.getChipItemByName(ColumnNames.PUBLISHER.getName()).getHeaderLabel())
