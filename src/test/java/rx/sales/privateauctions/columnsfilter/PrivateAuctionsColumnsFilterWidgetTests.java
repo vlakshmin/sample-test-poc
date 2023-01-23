@@ -27,12 +27,12 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Feature(value = "Publishers Columns Filter")
+@Feature(value = "PrivateAuctions Columns Filter")
 public class PrivateAuctionsColumnsFilterWidgetTests extends BaseTest {
 
     private PrivateAuctionsPage privateAuctionsPage;
 
-    private List<String> selectedPublishersNameList;
+    private List<String> selectedPrivateAuctionssNameList;
 
     public PrivateAuctionsColumnsFilterWidgetTests() {
         privateAuctionsPage = new PrivateAuctionsPage();
@@ -128,31 +128,31 @@ public class PrivateAuctionsColumnsFilterWidgetTests extends BaseTest {
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.UPDATED_BY))
                 .and("Clean Search field")
-                .setValueWithClean(filter.getSinglepane().getSearchInput(), "abc")
-                .clickOnWebElement(filter.getSinglepane().getBackButton())
+                .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(), "abc")
+                .clickOnWebElement(filter.getSinglepaneFilter().getBackButton())
                 .waitAndValidate(appear, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.UPDATED_BY))
-                .validate(filter.getSinglepane().getSearchInput(),"")
-                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
+                .validate(filter.getSinglepaneFilter().getSearchInput(),"")
+                .validate(filter.getSinglepaneFilter().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
                 .and(format("Search by Name '%s'", searchName))
-                .setValueWithClean(filter.getSinglepane().getSearchInput(), searchName)
-                .clickEnterButton(filter.getSinglepane().getSearchInput())
+                .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(), searchName)
+                .clickEnterButton(filter.getSinglepaneFilter().getSearchInput())
                 .and("Verify Search Count")
-                .validate(filter.getSinglepane().countIncludedItems(), expectedUserNameList.size())
+                .validate(filter.getSinglepaneFilter().countIncludedItems(), expectedUserNameList.size())
                 .testEnd();
 
         expectedUserNameList.forEach(e -> {
             testStart()
-                    .validate(visible, filter.getSinglepane().getFilterItemByName(e).getName())
+                    .validate(visible, filter.getSinglepaneFilter().getFilterItemByName(e).getName())
                     .testEnd();
         });
 
         testStart()
                 .and("Clear Search")
-                .setValueWithClean(filter.getSinglepane().getSearchInput(),"")
+                .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(),"")
                 .then("Check total users count, search result should be reset")
                 .validate(not(visible), privateAuctionsPage.getTableProgressBar())
-                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
+                .validate(filter.getSinglepaneFilter().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
                 .testEnd();
     }
 
@@ -163,18 +163,18 @@ public class PrivateAuctionsColumnsFilterWidgetTests extends BaseTest {
 
         testStart()
                 .and("Select Users")
-                .clickOnWebElement(filter.getSinglepane().getFilterItemByPositionInList(1).getName())
-                .clickOnWebElement(filter.getSinglepane().getFilterItemByPositionInList(2).getName())
-                .clickOnWebElement(filter.getSinglepane().getFilterItemByPositionInList(3).getName())
+                .clickOnWebElement(filter.getSinglepaneFilter().getFilterItemByPositionInList(1).getName())
+                .clickOnWebElement(filter.getSinglepaneFilter().getFilterItemByPositionInList(2).getName())
+                .clickOnWebElement(filter.getSinglepaneFilter().getFilterItemByPositionInList(3).getName())
                 .testEnd();
 
-        selectedPublishersNameList = List.of(filter.getSinglepane().getFilterItemByPositionInList(1).getName().text(),
-                filter.getSinglepane().getFilterItemByPositionInList(2).getName().text(),
-                filter.getSinglepane().getFilterItemByPositionInList(3).getName().text());
+        selectedPrivateAuctionssNameList = List.of(filter.getSinglepaneFilter().getFilterItemByPositionInList(1).getName().text(),
+                filter.getSinglepaneFilter().getFilterItemByPositionInList(2).getName().text(),
+                filter.getSinglepaneFilter().getFilterItemByPositionInList(3).getName().text());
 
         testStart()
                 .and("Click on Submit")
-                .clickOnWebElement(filter.getSinglepane().getSubmitButton())
+                .clickOnWebElement(filter.getSinglepaneFilter().getSubmitButton())
                 .then("ColumnsFilter widget is closed")
                 .validate(not(visible), filter.getFilterOptionsMenu())
                 .validate(visible, table.getChipItemByName(ColumnNames.UPDATED_BY.getName()).getHeaderLabel())
@@ -183,7 +183,7 @@ public class PrivateAuctionsColumnsFilterWidgetTests extends BaseTest {
                 .validate(table.getChipItemByName(ColumnNames.UPDATED_BY.getName()).countFilterOptionsChipItems(), 3)
                 .testEnd();
 
-        selectedPublishersNameList.forEach(e -> {
+        selectedPrivateAuctionssNameList.forEach(e -> {
             testStart()
                     .validate(visible, table.getChipItemByName(ColumnNames.UPDATED_BY.getName()).getChipFilterOptionItemByName(e))
                     .testEnd();
@@ -209,34 +209,34 @@ public class PrivateAuctionsColumnsFilterWidgetTests extends BaseTest {
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_BY))
                 .and()
-                .setValueWithClean(filter.getSinglepane().getSearchInput(), "abc")
-                .clickOnWebElement(filter.getSinglepane().getBackButton())
+                .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(), "abc")
+                .clickOnWebElement(filter.getSinglepaneFilter().getBackButton())
                 .waitAndValidate(appear, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_BY))
                 .then("Search params should be reset")
-                .validate(filter.getSinglepane().getSearchInput(),"")
-                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
+                .validate(filter.getSinglepaneFilter().getSearchInput(),"")
+                .validate(filter.getSinglepaneFilter().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
                 .and(format("Search by Name '%s'", searchName))
-                .setValueWithClean(filter.getSinglepane().getSearchInput(), searchName)
-                .clickEnterButton(filter.getSinglepane().getSearchInput())
+                .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(), searchName)
+                .clickEnterButton(filter.getSinglepaneFilter().getSearchInput())
                 .and("Verify Search Count")
-                .validate(filter.getSinglepane().countIncludedItems(), expectedUserNameList.size())
+                .validate(filter.getSinglepaneFilter().countIncludedItems(), expectedUserNameList.size())
                 .testEnd();
 
         expectedUserNameList.forEach(e -> {
             testStart()
-                    .validate(visible, filter.getSinglepane().getFilterItemByName(e).getName())
+                    .validate(visible, filter.getSinglepaneFilter().getFilterItemByName(e).getName())
                     .testEnd();
         });
 
         testStart()
                 .and("Clear Search")
-                .setValueWithClean(filter.getSinglepane().getSearchInput(),"")
+                .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(),"")
                 .then("Check total users count, search result should be reset")
                 .validate(not(visible), privateAuctionsPage.getTableProgressBar())
-                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
+                .validate(filter.getSinglepaneFilter().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
                 .and()
-                .clickOnWebElement(filter.getSinglepane().getCancelButton())
+                .clickOnWebElement(filter.getSinglepaneFilter().getCancelButton())
                 .testEnd();
     }
 
@@ -253,32 +253,32 @@ public class PrivateAuctionsColumnsFilterWidgetTests extends BaseTest {
                 .scrollIntoView(privateAuctionsPage.getPageTitle())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_BY))
                 .and()
-                .setValueWithClean(filter.getSinglepane().getSearchInput(), "abc")
+                .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(), "abc")
                 .and("Click on Back")
-                .clickOnWebElement(filter.getSinglepane().getBackButton())
+                .clickOnWebElement(filter.getSinglepaneFilter().getBackButton())
                 .waitAndValidate(appear, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_BY))
                 .then("Search params should be reset")
-                .validate(filter.getSinglepane().getSearchInput(),"")
-                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
+                .validate(filter.getSinglepaneFilter().getSearchInput(),"")
+                .validate(filter.getSinglepaneFilter().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
                 .and(format("Search by Name '%s'", searchName))
-                .setValueWithClean(filter.getSinglepane().getSearchInput(), searchName)
-                .clickEnterButton(filter.getSinglepane().getSearchInput())
-                .validate(filter.getSinglepane().countIncludedItems(), expectedUserNameList.size())
+                .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(), searchName)
+                .clickEnterButton(filter.getSinglepaneFilter().getSearchInput())
+                .validate(filter.getSinglepaneFilter().countIncludedItems(), expectedUserNameList.size())
                 .testEnd();
 
         expectedUserNameList.forEach(e -> {
             testStart()
-                    .validate(visible, filter.getSinglepane().getFilterItemByName(e).getName())
+                    .validate(visible, filter.getSinglepaneFilter().getFilterItemByName(e).getName())
                     .testEnd();
         });
 
         testStart()
                 .and("Clear Search")
-                .setValueWithClean(filter.getSinglepane().getSearchInput(),"")
+                .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(),"")
                 .then("Check total users count, search result should be reset")
                 .validate(not(visible), privateAuctionsPage.getTableProgressBar())
-                .validate(filter.getSinglepane().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
+                .validate(filter.getSinglepaneFilter().getItemsTotalQuantityLabel(), format("(%s)",totalUsers))
                 .testEnd();
     }
 
@@ -289,18 +289,18 @@ public class PrivateAuctionsColumnsFilterWidgetTests extends BaseTest {
 
         testStart()
                 .and("Select Users")
-                .clickOnWebElement(filter.getSinglepane().getFilterItemByPositionInList(1).getName())
-                .clickOnWebElement(filter.getSinglepane().getFilterItemByPositionInList(2).getName())
-                .clickOnWebElement(filter.getSinglepane().getFilterItemByPositionInList(3).getName())
+                .clickOnWebElement(filter.getSinglepaneFilter().getFilterItemByPositionInList(1).getName())
+                .clickOnWebElement(filter.getSinglepaneFilter().getFilterItemByPositionInList(2).getName())
+                .clickOnWebElement(filter.getSinglepaneFilter().getFilterItemByPositionInList(3).getName())
                 .testEnd();
 
-        selectedPublishersNameList = List.of(filter.getSinglepane().getFilterItemByPositionInList(1).getName().text(),
-                filter.getSinglepane().getFilterItemByPositionInList(2).getName().text(),
-                filter.getSinglepane().getFilterItemByPositionInList(3).getName().text());
+        selectedPrivateAuctionssNameList = List.of(filter.getSinglepaneFilter().getFilterItemByPositionInList(1).getName().text(),
+                filter.getSinglepaneFilter().getFilterItemByPositionInList(2).getName().text(),
+                filter.getSinglepaneFilter().getFilterItemByPositionInList(3).getName().text());
 
         testStart()
                 .and("Click on Submit")
-                .clickOnWebElement(filter.getSinglepane().getSubmitButton())
+                .clickOnWebElement(filter.getSinglepaneFilter().getSubmitButton())
                 .then("ColumnsFilter widget is closed")
                 .validate(not(visible), filter.getFilterOptionsMenu())
                 .validate(visible, table.getChipItemByName(ColumnNames.CREATED_BY.getName()).getHeaderLabel())
@@ -309,7 +309,7 @@ public class PrivateAuctionsColumnsFilterWidgetTests extends BaseTest {
                 .validate(table.getChipItemByName(ColumnNames.CREATED_BY.getName()).countFilterOptionsChipItems(), 3)
                 .testEnd();
 
-        selectedPublishersNameList.forEach(e -> {
+        selectedPrivateAuctionssNameList.forEach(e -> {
             testStart()
                     .validate(visible, table.getChipItemByName(ColumnNames.CREATED_BY.getName()).getChipFilterOptionItemByName(e))
                     .testEnd();
@@ -318,24 +318,6 @@ public class PrivateAuctionsColumnsFilterWidgetTests extends BaseTest {
         testStart()
                 .clickOnWebElement(table.getChipItemByName(ColumnNames.CREATED_BY.getName()).getCloseIcon())
                 .testEnd();
-    }
-
-    private List<String> getFilterPublishersListFromBE(String name) {
-
-        return publisher()
-                .getPublisherWithFilter(Map.of("name", name))
-                .build()
-                .getPublisherGetAllResponse()
-                .getItems().stream().map(pub -> pub.getName()).collect(Collectors.toList());
-    }
-
-    private Integer getTotalPublishersFromBE() {
-
-        return publisher()
-                .getPublishersList()
-                .build()
-                .getPublisherGetAllResponse()
-                .getTotal();
     }
 
     private Integer getTotalUsersFromBE() {
