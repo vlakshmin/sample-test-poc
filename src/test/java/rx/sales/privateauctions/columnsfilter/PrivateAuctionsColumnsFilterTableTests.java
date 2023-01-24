@@ -21,7 +21,7 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Feature(value = "Publishers Columns Filter")
+@Feature(value = "PrivateAuctions Columns Filter")
 public class PrivateAuctionsColumnsFilterTableTests extends BaseTest {
 
     private PrivateAuctionsPage privateAuctionsPage;
