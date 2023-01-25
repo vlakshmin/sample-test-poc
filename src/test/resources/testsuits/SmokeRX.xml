@@ -155,7 +155,7 @@
         </classes>
     </test>
 
-    <test name="Media Column Filter">
+    <test name="Media Column Filter tests">
         <classes>
             <class name="rx.inventory.media.columnsfilter.MediaColumnsFilterCreatedDateWidgetTests"/>
             <class name="rx.inventory.media.columnsfilter.MediaColumnsFilterTableTests"/>
