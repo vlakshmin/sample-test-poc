@@ -341,8 +341,14 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     @Step("Fill Banner card fields")
     private void fillBannerCardFields() {
         var bannerCard = adSpotSidebar.getBannerCard();
+
+        if (bannerCard.getBannerPanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(bannerCard.getBannerCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .clickOnWebElement(bannerCard.getBannerCardHeader())
                 .turnToggleOn(bannerCard.getEnabledToggle())
                 .clickOnWebElement(bannerCard.getAdSizes())
                 .clickOnWebElement(bannerCard.getAdSizesPanel().getAdSizeCheckbox(BANNER_AD_SIZE))
@@ -353,8 +359,14 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     @Step("Fill Native card fields")
     private void fillNativeCardFields() {
         var nativeCard = adSpotSidebar.getNativeCard();
+
+        if (nativeCard.getNativePanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(nativeCard.getNativeCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .clickOnWebElement(nativeCard.getNativeCardHeader())
                 .turnToggleOn(nativeCard.getEnabledToggle())
                 .setValueWithClean(nativeCard.getFloorPriceField().getFloorPriceInput(), NATIVE_FLOOR_PRICE)
                 .testEnd();
@@ -363,9 +375,15 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     @Step("Fill Video card fields")
     private void fillVideoCardFields() {
         var videoCard = adSpotSidebar.getVideoCard();
+
+        if (videoCard.getVideoPanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .scrollIntoView(videoCard.getVideoCardHeader())
+                    .clickOnWebElement(videoCard.getVideoCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .scrollIntoView(videoCard.getVideoCardHeader())
-                .clickOnWebElement(videoCard.getVideoCardHeader())
                 .turnToggleOn(videoCard.getEnabledToggle())
                 .clickOnWebElement(videoCard.getVideoAdSizes())
                 .clickOnWebElement(videoCard.getAdSizesPanel().getAdSizeCheckbox(VIDEO_AD_SIZE))
@@ -407,8 +425,13 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     private void validateBannerFieldsValues() {
         var bannerCard = adSpotSidebar.getBannerCard();
 
+        if (bannerCard.getBannerPanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(bannerCard.getBannerCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .clickOnWebElement(bannerCard.getBannerCardHeader())
                 .validateAttribute(bannerCard.getEnabledToggle(), "aria-checked", "true")
                 .validate(bannerCard.getAdSizes().getText(), BANNER_AD_SIZE.getSize())
                 .validateAttribute(bannerCard.getFloorPriceField().getFloorPriceInput(), "value", BANNER_FLOOR_PRICE)
@@ -420,8 +443,13 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     private void validateNativeFieldsValues() {
         var nativeCard = adSpotSidebar.getNativeCard();
 
+        if (nativeCard.getNativePanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(nativeCard.getNativeCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .clickOnWebElement(nativeCard.getNativeCardHeader())
                 .validateAttribute(nativeCard.getEnabledToggle(), "aria-checked", "true")
                 .validateAttribute(nativeCard.getFloorPriceField().getFloorPriceInput(), "value", NATIVE_FLOOR_PRICE)
                 .validate(nativeCard.getFloorPriceField().getFloorPricePrefix().getText(), publisher.getCurrency())
@@ -432,9 +460,14 @@ public class AdSpotAllFieldsCreateTests extends BaseTest {
     private void validateVideoFieldsValues() {
         var videoCard = adSpotSidebar.getVideoCard();
 
+        if (videoCard.getVideoPanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .scrollIntoView(videoCard.getVideoCardHeader())
+                    .clickOnWebElement(videoCard.getVideoCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .scrollIntoView(videoCard.getVideoCardHeader())
-                .clickOnWebElement(videoCard.getVideoCardHeader())
                 .validateAttribute(videoCard.getEnabledToggle(), "aria-checked", "true")
                 .validate(videoCard.getVideoAdSizes().getText(), VIDEO_AD_SIZE.getSize())
                 .validateAttribute(videoCard.getFloorPriceField().getFloorPriceInput(), "value", VIDEO_FLOOR_PRICE)

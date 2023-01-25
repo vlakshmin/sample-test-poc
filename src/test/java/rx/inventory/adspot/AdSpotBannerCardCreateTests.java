@@ -249,8 +249,13 @@ public class AdSpotBannerCardCreateTests extends BaseTest {
     private void validateBannerFieldsValues() {
         var bannerCard = adSpotSidebar.getBannerCard();
 
+        if (bannerCard.getBannerPanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(bannerCard.getBannerCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .clickOnWebElement(bannerCard.getBannerCardHeader())
                 .validateAttribute(bannerCard.getEnabledToggle(), "aria-checked", "true")
                 .validate(bannerCard.getAdSizes().getText(), "")
                 .validateAttribute(bannerCard.getFloorPriceField().getFloorPriceInput(), "value", "")
@@ -262,8 +267,13 @@ public class AdSpotBannerCardCreateTests extends BaseTest {
     private void validateNativeFieldsValues() {
         var nativeCard = adSpotSidebar.getNativeCard();
 
+        if (nativeCard.getNativePanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(nativeCard.getNativeCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .clickOnWebElement(nativeCard.getNativeCardHeader())
                 .validateAttribute(nativeCard.getEnabledToggle(), "aria-checked", "false")
                 .validate(nativeCard.getFloorPriceField().getFloorPricePrefix().getText(), publisher.getCurrency())
                 .testEnd();
@@ -273,9 +283,13 @@ public class AdSpotBannerCardCreateTests extends BaseTest {
     private void validateVideoFieldsValues() {
         var videoCard = adSpotSidebar.getVideoCard();
 
+        if (videoCard.getVideoPanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(videoCard.getVideoCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .scrollIntoView(videoCard.getVideoCardHeader())
-                .clickOnWebElement(videoCard.getVideoCardHeader())
                 .validateAttribute(videoCard.getEnabledToggle(), "aria-checked", "false")
                 .validate(videoCard.getVideoAdSizes().getText(), "")
                 .validateAttribute(videoCard.getFloorPriceField().getFloorPriceInput(), "value", "")
