@@ -138,7 +138,8 @@ public class PrivateAuctionsColumnsFilterWidgetTests extends BaseTest {
                 .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(), searchName)
                 .clickEnterButton(filter.getSinglepaneFilter().getSearchInput())
                 .and("Verify Search Count")
-                //.validate(filter.getSinglepaneFilter().countIncludedItems(), expectedUserNameList.size())
+                //TODO: below condition fails sometimes, we need to work on fix.
+                .validate(filter.getSinglepaneFilter().countIncludedItems(), expectedUserNameList.size())
                 .testEnd();
 
         expectedUserNameList.forEach(e -> {
