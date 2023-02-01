@@ -47,8 +47,6 @@ public class PrivateAuctionsColumnsFilterUpdatedDateWidgetTests extends BaseTest
                 .selectFromDropdown(privateAuctionsPage.getTable().getTablePagination().getPageMenu(),
                         privateAuctionsPage.getTable().getTablePagination().getRowNumbersList(), "10")
                 .scrollIntoView(privateAuctionsPage.getPageTitle())
-                .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
-                .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .and("Select 10 rows per page")
                 .scrollIntoView(privateAuctionsPage.getTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(privateAuctionsPage.getTable().getTablePagination().getPageMenu(),
@@ -227,7 +225,6 @@ public class PrivateAuctionsColumnsFilterUpdatedDateWidgetTests extends BaseTest
                 .validate(table.countFilterChipsItems(), 0)
                 .testEnd();
     }
-
 
     @AfterClass
     private void logout() {

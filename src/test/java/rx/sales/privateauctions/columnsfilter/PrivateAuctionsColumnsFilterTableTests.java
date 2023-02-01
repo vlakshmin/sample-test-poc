@@ -76,11 +76,6 @@ public class PrivateAuctionsColumnsFilterTableTests extends BaseTest {
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_BY))
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_BY))
-                .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
-                .and("Select 10 rows per page")
-                .scrollIntoView(privateAuctionsPage.getTable().getTablePagination().getPageMenu())
-                .selectFromDropdown(privateAuctionsPage.getTable().getTablePagination().getPageMenu(),
-                        privateAuctionsPage.getTable().getTablePagination().getRowNumbersList(), "10")
                 .scrollIntoView(privateAuctionsPage.getPageTitle())
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
@@ -142,7 +137,6 @@ public class PrivateAuctionsColumnsFilterTableTests extends BaseTest {
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_BY))
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_BY))
-                .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .and("Refresh page")
                 .clickBrowserRefreshButton()
                 .selectFromDropdown(privateAuctionsPage.getTable().getTablePagination().getPageMenu(),
@@ -173,7 +167,6 @@ public class PrivateAuctionsColumnsFilterTableTests extends BaseTest {
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_BY))
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_BY))
-                .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
                 .and("Navigate to Open Pricing page")
                 .openDirectPath(Path.PRIVATE_AUCTIONS)
                 .and("Navigate to Protection page again")

@@ -5,7 +5,6 @@ import com.codeborne.selenide.SelenideElement;
 import lombok.AccessLevel;
 import lombok.Getter;
 import pages.BasePage;
-import pages.admin.publisher.PublishersPageElements;
 import widgets.admin.publisher.tableitem.PublisherTableItem;
 import widgets.common.table.Table;
 
@@ -23,7 +22,7 @@ public class PrivateAuctionsPage extends BasePage {
 
     private ElementsCollection privateauctionsItems = $$x(PrivateAuctionsPageElements.PRIVATE_AUCTIONS_ITEMS.getSelector()).as(PrivateAuctionsPageElements.PRIVATE_AUCTIONS_ITEMS.getAlias());
     private SelenideElement pageTitle = $x(PrivateAuctionsPageElements.PRIVATE_AUCTIONS_PAGE_TITLE.getSelector()).as(PrivateAuctionsPageElements.PRIVATE_AUCTIONS_PAGE_TITLE.getAlias());
-    private SelenideElement createPublisherButton = $x(PrivateAuctionsPageElements.CREATE_PRIVATE_AUCTIONS_BUTTON.getSelector()).as(PrivateAuctionsPageElements.CREATE_PRIVATE_AUCTIONS_BUTTON.getAlias());
+    private SelenideElement createPrivateAuctionsButton = $x(PrivateAuctionsPageElements.CREATE_PRIVATE_AUCTIONS_BUTTON.getSelector()).as(PrivateAuctionsPageElements.CREATE_PRIVATE_AUCTIONS_BUTTON.getAlias());
 
     private List<PublisherTableItem> publisherList = new ArrayList<>();
     private Table table = new Table();

@@ -25,11 +25,11 @@ import static managers.TestManager.testStart;
 @Slf4j
 @Listeners({ScreenShooter.class})
 @Feature(value = "PrivateAuctions Columns Filter")
-public class PrivateAuctionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
+public class PrivateAuctionsColumnsFilterEndDateWidgetTests extends BaseTest {
 
     private PrivateAuctionsPage privateAuctionsPage;
 
-    public PrivateAuctionsColumnsFilterCreatedDateWidgetTests() {
+    public PrivateAuctionsColumnsFilterEndDateWidgetTests() {
         privateAuctionsPage = new PrivateAuctionsPage();
     }
 
@@ -47,7 +47,7 @@ public class PrivateAuctionsColumnsFilterCreatedDateWidgetTests extends BaseTest
                 .selectFromDropdown(privateAuctionsPage.getTable().getTablePagination().getPageMenu(),
                         privateAuctionsPage.getTable().getTablePagination().getRowNumbersList(), "10")
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
-                .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
+                .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.END_DATE))
                 .and("Select 10 rows per page")
                 .scrollIntoView(privateAuctionsPage.getTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(privateAuctionsPage.getTable().getTablePagination().getPageMenu(),
@@ -66,7 +66,7 @@ public class PrivateAuctionsColumnsFilterCreatedDateWidgetTests extends BaseTest
                 .scrollIntoView(privateAuctionsPage.getPageTitle())
                 .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
-                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_DATE))
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.END_DATE))
                 .then("Current date should be selected by default")
                 .validate(calendar.getMonthOrYearHeaderButton().getText(), StringUtils.getStringMonthYear(currentDate.getMonth(),
                         currentDate.getYear()))
@@ -105,10 +105,9 @@ public class PrivateAuctionsColumnsFilterCreatedDateWidgetTests extends BaseTest
                         ColumnNames.ALWAYS_ON.getName(),
                         ColumnNames.START_DATE.getName(),
                         ColumnNames.END_DATE.getName(),
-                        ColumnNames.CREATED_DATE.getName(),
                         ColumnNames.UPDATED_DATE.getName()))
-                .and("Select Column Filter 'Created Date'")
-                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_DATE))
+                .and("Select Column Filter 'Start Date'")
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.END_DATE))
                 .then("Current date should be selected by default")
                 .validate(calendar.getMonthOrYearHeaderButton().getText(), StringUtils.getStringMonthYear(currentDate.getMonth(),currentDate.getYear()))
                 .validate(calendar.getSelectedDayButton(), String.valueOf(currentDate.getDayOfMonth()))
@@ -156,7 +155,7 @@ public class PrivateAuctionsColumnsFilterCreatedDateWidgetTests extends BaseTest
 
         testStart()
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
-                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_DATE))
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.END_DATE))
                 .and("Select Period Date of the month")
                 .clickOnWebElement(calendar.getDayButtonByValue("15"))
                 .clickOnWebElement(calendar.getDayButtonByValue("25"))
@@ -164,16 +163,16 @@ public class PrivateAuctionsColumnsFilterCreatedDateWidgetTests extends BaseTest
                 .clickOnWebElement(filter.getCalendarFilter().getSubmitButton())
                 .then("ColumnsFilter widget is closed")
                 .validate(not(visible), filter.getFilterOptionsMenu())
-                .validate(visible, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getHeaderLabel())
-                .validate(visible, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getCloseIcon())
-                .validateContainsText(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getHeaderLabel(),
-                        format("%s:",ColumnNames.CREATED_DATE.getName()))
+                .validate(visible, table.getChipItemByName(ColumnNames.END_DATE.getName()).getHeaderLabel())
+                .validate(visible, table.getChipItemByName(ColumnNames.END_DATE.getName()).getCloseIcon())
+                .validateContainsText(table.getChipItemByName(ColumnNames.END_DATE.getName()).getHeaderLabel(),
+                        format("%s:",ColumnNames.END_DATE.getName()))
                 .validate(table.countFilterChipsItems(), 1)
                 .then("Validate selected date period")
-                .validate(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).countFilterOptionsChipItems(), 1)
+                .validate(table.getChipItemByName(ColumnNames.END_DATE.getName()).countFilterOptionsChipItems(), 1)
                 .then("Validate selected period")
-                .validate(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).countFilterOptionsChipItems(), 1)
-                .validateContainsText(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getChipFilterOptionItemByPosition(0),
+                .validate(table.getChipItemByName(ColumnNames.END_DATE.getName()).countFilterOptionsChipItems(), 1)
+                .validateContainsText(table.getChipItemByName(ColumnNames.END_DATE.getName()).getChipFilterOptionItemByPosition(0),
                         format("%s – %s",
                                 StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 15),
                                 StringUtils.getDateAsString(currentDate.getYear(), currentDate.getMonth(), 25)))
@@ -188,25 +187,25 @@ public class PrivateAuctionsColumnsFilterCreatedDateWidgetTests extends BaseTest
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
 
         testStart()
-                .and("Select Column Filter 'Created Date'")
+                .and("Select Column Filter 'Start Date'")
                 .scrollIntoView(privateAuctionsPage.getPageTitle())
                 .clickOnWebElement(filter.getColumnsFilterButton())
                 .waitAndValidate(visible, filter.getFilterOptionsMenu())
-                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_DATE))
+                .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.END_DATE))
                 .and("Select Last Date of the month")
                 .clickOnWebElement(calendar.getDayButtonByValue(StringUtils.getLastDayOfMonth(currentDate.getYear(),currentDate.getMonth())))
                 .and("Click on Submit")
                 .clickOnWebElement(filter.getCalendarFilter().getSubmitButton())
                 .then("ColumnsFilter widget is closed")
                 .validate(not(visible), filter.getFilterOptionsMenu())
-                .validate(visible, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getHeaderLabel())
-                .validate(visible, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getCloseIcon())
-                .validateContainsText(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getHeaderLabel(),
-                        format("%s:",ColumnNames.CREATED_DATE.getName()))
+                .validate(visible, table.getChipItemByName(ColumnNames.END_DATE.getName()).getHeaderLabel())
+                .validate(visible, table.getChipItemByName(ColumnNames.END_DATE.getName()).getCloseIcon())
+                .validateContainsText(table.getChipItemByName(ColumnNames.END_DATE.getName()).getHeaderLabel(),
+                        format("%s:",ColumnNames.END_DATE.getName()))
                 .validate(table.countFilterChipsItems(), 1)
                 .then("Validate list of selected date")
-                .validate(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).countFilterOptionsChipItems(), 1)
-                .validate(visible, table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getChipFilterOptionItemByName(
+                .validate(table.getChipItemByName(ColumnNames.END_DATE.getName()).countFilterOptionsChipItems(), 1)
+                .validate(visible, table.getChipItemByName(ColumnNames.END_DATE.getName()).getChipFilterOptionItemByName(
                         StringUtils.getLastDayOfTheMonthDateAsString(currentDate.getYear(),currentDate.getMonth())))
                 .testEnd();
     }
@@ -217,7 +216,7 @@ public class PrivateAuctionsColumnsFilterCreatedDateWidgetTests extends BaseTest
 
         testStart()
                 .and("Click 'X' icon on the Created Date chip")
-                .clickOnWebElement(table.getChipItemByName(ColumnNames.CREATED_DATE.getName()).getCloseIcon())
+                .clickOnWebElement(table.getChipItemByName(ColumnNames.END_DATE.getName()).getCloseIcon())
                 .then("Chip 'Created Date' should be disappear")
                 .validate(table.countFilterChipsItems(), 0)
                 .testEnd();
