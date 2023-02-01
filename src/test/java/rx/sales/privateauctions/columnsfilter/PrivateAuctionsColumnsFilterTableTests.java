@@ -171,6 +171,9 @@ public class PrivateAuctionsColumnsFilterTableTests extends BaseTest {
                 .openDirectPath(Path.PRIVATE_AUCTIONS)
                 .and("Navigate to Protection page again")
                 .openDirectPath(Path.PRIVATE_AUCTIONS)
+                .scrollIntoView(privateAuctionsPage.getTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(privateAuctionsPage.getTable().getTablePagination().getPageMenu(),
+                        privateAuctionsPage.getTable().getTablePagination().getRowNumbersList(), "10")
                 .scrollIntoView(privateAuctionsPage.getPageTitle())
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
