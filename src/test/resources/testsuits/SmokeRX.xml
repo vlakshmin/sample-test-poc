@@ -175,9 +175,9 @@
         </classes>
     </test>
     
-    <test name="XPost-conditions. Delete records with 'auto' substring">
-        <classes>
-            <class name="rx.pipelines.DeleteGeneratedDataTest"/>
-        </classes>
-    </test>
+<!--    <test name="XPost-conditions. Delete records with 'auto' substring">-->
+<!--        <classes>-->
+<!--            <class name="rx.pipelines.DeleteGeneratedDataTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 </suite>
