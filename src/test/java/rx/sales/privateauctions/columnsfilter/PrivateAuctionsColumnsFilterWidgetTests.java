@@ -137,14 +137,14 @@ public class PrivateAuctionsColumnsFilterWidgetTests extends BaseTest {
                 .clickEnterButton(filter.getSinglepaneFilter().getSearchInput())
                 .and("Verify Search Count")
                 //TODO: below condition fails sometimes, we need to work on fix.
-                //.validate(filter.getSinglepaneFilter().countIncludedItems(), expectedUserNameList.size())
+                .validate(filter.getSinglepaneFilter().countIncludedItems(), expectedUserNameList.size())
                 .testEnd();
 
-//        expectedUserNameList.forEach(e -> {
-//            testStart()
-//                    .validate(visible, filter.getSinglepaneFilter().getFilterItemByName(e).getName())
-//                    .testEnd();
-//        });
+        expectedUserNameList.forEach(e -> {
+            testStart()
+                    .validate(visible, filter.getSinglepaneFilter().getFilterItemByName(e).getName())
+                    .testEnd();
+        });
 
         testStart()
                 .and("Clear Search")
@@ -219,14 +219,14 @@ public class PrivateAuctionsColumnsFilterWidgetTests extends BaseTest {
                 .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(), searchName)
                 .clickEnterButton(filter.getSinglepaneFilter().getSearchInput())
                 .and("Verify Search Count")
-                //.validate(filter.getSinglepaneFilter().countIncludedItems(), expectedUserNameList.size())
+                .validate(filter.getSinglepaneFilter().countIncludedItems(), expectedUserNameList.size())
                 .testEnd();
 
-//        expectedUserNameList.forEach(e -> {
-//            testStart()
-//                    .validate(visible, filter.getSinglepaneFilter().getFilterItemByName(e).getName())
-//                    .testEnd();
-//        });
+        expectedUserNameList.forEach(e -> {
+            testStart()
+                    .validate(visible, filter.getSinglepaneFilter().getFilterItemByName(e).getName())
+                    .testEnd();
+        });
 
         testStart()
                 .and("Clear Search")
@@ -263,14 +263,14 @@ public class PrivateAuctionsColumnsFilterWidgetTests extends BaseTest {
                 .and(format("Search by Name '%s'", searchName))
                 .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(), searchName)
                 .clickEnterButton(filter.getSinglepaneFilter().getSearchInput())
-                //.validate(filter.getSinglepaneFilter().countIncludedItems(), expectedUserNameList.size())
+                .validate(filter.getSinglepaneFilter().countIncludedItems(), expectedUserNameList.size())
                 .testEnd();
 
-//        expectedUserNameList.forEach(e -> {
-//            testStart()
-//                    .validate(visible, filter.getSinglepaneFilter().getFilterItemByName(e).getName())
-//                    .testEnd();
-//        });
+        expectedUserNameList.forEach(e -> {
+            testStart()
+                    .validate(visible, filter.getSinglepaneFilter().getFilterItemByName(e).getName())
+                    .testEnd();
+        });
 
         testStart()
                 .and("Clear Search")
