@@ -164,6 +164,17 @@
         </classes>
     </test>
 
+    <test name="PrivateAuctions Column Filter">
+        <classes>
+            <class name="rx.sales.privateauctions.columnsfilter.PrivateAuctionsColumnsFilterCreatedDateWidgetTests"/>
+            <class name="rx.sales.privateauctions.columnsfilter.PrivateAuctionsColumnsFilterTableTests"/>
+            <class name="rx.sales.privateauctions.columnsfilter.PrivateAuctionsColumnsFilterUpdatedDateWidgetTests"/>
+            <class name="rx.sales.privateauctions.columnsfilter.PrivateAuctionsColumnsFilterWidgetTests"/>
+            <class name="rx.sales.privateauctions.columnsfilter.PrivateAuctionsColumnsFilterStartDateWidgetTests"/>
+            <class name="rx.sales.privateauctions.columnsfilter.PrivateAuctionsColumnsFilterEndDateWidgetTests"/>
+        </classes>
+    </test>
+    
     <test name="XPost-conditions. Delete records with 'auto' substring">
         <classes>
             <class name="rx.pipelines.DeleteGeneratedDataTest"/>
