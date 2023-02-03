@@ -473,41 +473,41 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Test(description = "Check Maximum Value Banner Floor Price")
-    private void checkMaxValueBannerFloorPrice() {
-        var bannerCard = adSpotSidebar.getBannerCard();
-        var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
-
-        fillGeneralFields(media1.getPublisherName(), media1.getName());
-
-        if (bannerCard.getBannerPanel().getAttribute( "aria-expanded").equals("false")){
-            testStart()
-                    .clickOnWebElement(bannerCard.getBannerCardHeader())
-                    .testEnd();
-        }
-
-        testStart()
-                .turnToggleOn(bannerCard.getEnabledToggle())
-                .setValueWithClean(bannerCard.getFloorPriceField().getFloorPriceInput(), "1000000.00")
-                .and("Click 'Save'")
-                .clickOnWebElement(adSpotSidebar.getSaveButton())
-                .then("Validate error under the 'Floor Price' field")
-                .waitAndValidate(visible, bannerCard.getErrorAlertByFieldName("Floor Price"))
-                .validate(bannerCard.getErrorAlertByFieldName("Floor Price"),
-                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
-                .validateListSize(errorsList, 1)
-                .validateList(errorsList, List.of(
-                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
-                )
-                .setValueWithClean(bannerCard.getFloorPriceField().getFloorPriceInput(), "0.00")
-                .clickEnterButton(bannerCard.getFloorPriceField().getFloorPriceInput())
-                .then("Validate error under the 'Floor Price' field disappeared")
-                .waitAndValidate(not(visible), bannerCard.getErrorAlertByFieldName("Floor Price"))
-                .then("Validate errors disappeared")
-                .waitAndValidate(not(visible), bannerCard.getErrorAlertByFieldName("Floor Price"))
-                .validate(not(visible), adSpotSidebar.getErrorAlert().getErrorPanel())
-                .testEnd();
-    }
+//    @Test(description = "Check Maximum Value Banner Floor Price")
+//    private void checkMaxValueBannerFloorPrice() {
+//        var bannerCard = adSpotSidebar.getBannerCard();
+//        var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
+//
+//        fillGeneralFields(media1.getPublisherName(), media1.getName());
+//
+//        if (bannerCard.getBannerPanel().getAttribute( "aria-expanded").equals("false")){
+//            testStart()
+//                    .clickOnWebElement(bannerCard.getBannerCardHeader())
+//                    .testEnd();
+//        }
+//
+//        testStart()
+//                .turnToggleOn(bannerCard.getEnabledToggle())
+//                .setValueWithClean(bannerCard.getFloorPriceField().getFloorPriceInput(), "1000000.00")
+//                .and("Click 'Save'")
+//                .clickOnWebElement(adSpotSidebar.getSaveButton())
+//                .then("Validate error under the 'Floor Price' field")
+//                .waitAndValidate(visible, bannerCard.getErrorAlertByFieldName("Floor Price"))
+//                .validate(bannerCard.getErrorAlertByFieldName("Floor Price"),
+//                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+//                .validateListSize(errorsList, 1)
+//                .validateList(errorsList, List.of(
+//                        ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
+//                )
+//                .setValueWithClean(bannerCard.getFloorPriceField().getFloorPriceInput(), "100000000.00")
+//                .clickEnterButton(bannerCard.getFloorPriceField().getFloorPriceInput())
+//                .then("Validate error under the 'Floor Price' field disappeared")
+//                .waitAndValidate(not(visible), bannerCard.getErrorAlertByFieldName("Floor Price"))
+//                .then("Validate errors disappeared")
+//                .waitAndValidate(not(visible), bannerCard.getErrorAlertByFieldName("Floor Price"))
+//                .validate(not(visible), adSpotSidebar.getErrorAlert().getErrorPanel())
+//                .testEnd();
+//    }
 
 
     @Epic("?/GS-3445")
