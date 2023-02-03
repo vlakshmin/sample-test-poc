@@ -38,10 +38,10 @@ public class UsersColumnsFilterWidgetTests extends BaseTest {
                 .scrollIntoView(tableColumns.getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
-                .and("Select 10 rows per page")
+                .and("Select 15 rows per page")
                 .scrollIntoView(usersPage.getUsersTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(usersPage.getUsersTable().getTablePagination().getPageMenu(),
-                        usersPage.getUsersTable().getTablePagination().getRowNumbersList(), "10")
+                        usersPage.getUsersTable().getTablePagination().getRowNumbersList(), "15")
                 .scrollIntoView(usersPage.getPageTitle())
                 .testEnd();
     }

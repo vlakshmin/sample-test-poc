@@ -50,7 +50,7 @@ public class OpenPricingColumnsFilterWidgetTests extends BaseTest {
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
                 .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
-                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "10")
+                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "15")
                 .scrollIntoView(tableColumns.getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_BY))
@@ -58,7 +58,7 @@ public class OpenPricingColumnsFilterWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
+
     @Test(description = "Check Active/Inactive Chip Widget Component", dependsOnMethods = "testCreatedByChipWidgetComponent")
     public void testActiveInactiveChipWidgetComponent() {
         var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();

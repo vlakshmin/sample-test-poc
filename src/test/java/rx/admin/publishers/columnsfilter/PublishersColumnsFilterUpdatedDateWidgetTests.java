@@ -27,7 +27,6 @@ import static managers.TestManager.testStart;
 @Slf4j
 @Listeners({ScreenShooter.class})
 @Feature(value = "Publishers Columns Filter")
-@Epic("v1.28.0/GS-3324")
 public class PublishersColumnsFilterUpdatedDateWidgetTests extends BaseTest {
 
     private PublishersPage publishersPage;
@@ -48,10 +47,10 @@ public class PublishersColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .scrollIntoView(publishersPage.getPageTitle())
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
-                .and("Select 10 rows per page")
+                .and("Select 15 rows per page")
                 .scrollIntoView(publishersPage.getTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(publishersPage.getTable().getTablePagination().getPageMenu(),
-                        publishersPage.getTable().getTablePagination().getRowNumbersList(), "10")
+                        publishersPage.getTable().getTablePagination().getRowNumbersList(), "15")
                 .testEnd();
     }
 
@@ -173,7 +172,6 @@ public class PublishersColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3325")
     @Issue("https://rakutenadvertising.atlassian.net/browse/GS-3325")
     @Test(description = "Select Period of the current month and click Submit", dependsOnMethods = "testSubmitButtonColumnsFilterComponent")
     public void testPeriodAndSubmitButtonColumnsFilterComponent() {

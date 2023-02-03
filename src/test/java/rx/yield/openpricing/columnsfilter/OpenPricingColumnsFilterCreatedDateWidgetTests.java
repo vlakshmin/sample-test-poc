@@ -26,7 +26,6 @@ import static managers.TestManager.testStart;
 @Slf4j
 @Listeners({ScreenShooter.class})
 @Feature(value = "Open Pricing Columns Filter")
-@Epic("v1.28.0/GS-3324")
 public class OpenPricingColumnsFilterCreatedDateWidgetTests extends BaseTest {
 
     private OpenPricingPage openPricingPage;
@@ -46,13 +45,8 @@ public class OpenPricingColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
                 .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
-                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "10")
+                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "15")
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
-                .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
-                .and("Select 10 rows per page")
-                .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
-                .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
-                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "10")
                 .testEnd();
     }
 
@@ -91,7 +85,6 @@ public class OpenPricingColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(description = "Check Back button", dependsOnMethods = "testPreviousMonthColumnsFilterComponent")
     public void testBackButtonColumnsFilterComponent() {
         var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
@@ -146,7 +139,6 @@ public class OpenPricingColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3325")
     @Test(description = "Select Period of the current month and click Submit", dependsOnMethods = "testCancelButtonColumnsFilterComponent" )
     public void testPeriodAndSubmitButtonColumnsFilterComponent() {
         var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();

@@ -26,7 +26,6 @@ import static managers.TestManager.testStart;
 @Slf4j
 @Listeners({ScreenShooter.class})
 @Feature(value = "Publishers Columns Filter")
-@Epic("v1.28.0/GS-3324")
 public class PublishersColumnsFilterCreatedDateWidgetTests extends BaseTest {
 
     private PublishersPage publishersPage;
@@ -143,7 +142,6 @@ public class PublishersColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3325")
     @Test(description = "Select Period of the current month and click Submit", dependsOnMethods = "testCancelButtonColumnsFilterComponent" )
     public void testPeriodAndSubmitButtonColumnsFilterComponent() {
         var filter = publishersPage.getTable().getColumnFiltersBlock();

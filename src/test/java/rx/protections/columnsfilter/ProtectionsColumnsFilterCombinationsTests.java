@@ -56,7 +56,7 @@ public class ProtectionsColumnsFilterCombinationsTests extends BaseTest {
                 .and("Select 10 rows per page")
                 .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
-                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "10")
+                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "15")
 
                 .testEnd();
     }

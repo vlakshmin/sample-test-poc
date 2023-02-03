@@ -27,7 +27,6 @@ import static managers.TestManager.testStart;
 @Slf4j
 @Listeners({ScreenShooter.class})
 @Feature(value = "OpenPricing Columns Filter")
-@Epic("v1.28.0/GS-3324")
 public class OpenPricingColumnsFilterUpdatedDateWidgetTests extends BaseTest {
 
     private OpenPricingPage openPricingPage;
@@ -45,6 +44,10 @@ public class OpenPricingColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
+                .and("Select 15 rows per page")
+                .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
+                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "15")
                 .testEnd();
     }
 
@@ -83,7 +86,6 @@ public class OpenPricingColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(description = "Check Back button", dependsOnMethods = "testNextMonthColumnsFilterComponent")
     public void testBackButtonColumnsFilterComponent() {
         var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
@@ -167,7 +169,6 @@ public class OpenPricingColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3325")
     @Issue("https://rakutenadvertising.atlassian.net/browse/GS-3325")
     @Test(description = "Select Period of the current month and click Submit", dependsOnMethods = "testSubmitButtonColumnsFilterComponent")
     public void testPeriodAndSubmitButtonColumnsFilterComponent() {

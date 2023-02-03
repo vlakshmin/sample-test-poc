@@ -48,10 +48,10 @@ public class PublishersColumnsFilterWidgetTests extends BaseTest {
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_BY))
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.UPDATED_BY))
-                .and("Select 10 rows per page")
+                .and("Select 15 rows per page")
                 .scrollIntoView(publishersPage.getTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(publishersPage.getTable().getTablePagination().getPageMenu(),
-                        publishersPage.getTable().getTablePagination().getRowNumbersList(), "10")
+                        publishersPage.getTable().getTablePagination().getRowNumbersList(), "15")
                 .scrollIntoView(publishersPage.getPageTitle())
                 .testEnd();
     }
