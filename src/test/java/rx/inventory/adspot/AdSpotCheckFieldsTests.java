@@ -70,7 +70,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
     }
 
 
-    @Test(description = "Check fields by default")
+    @Test(description = "Check fields by default", priority = 1)
     private void checkDefaultFields() {
         testStart()
                 .then("Validate fields by default")
@@ -86,9 +86,9 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .validate(disabled, adSpotSidebar.getDefaultFloorPrice())
                 .validate(disabled, adSpotSidebar.getTestModeToggle())
                 .validate(disabled, adSpotSidebar.getContentForChildrenToggle())
-                .validateAttribute(adSpotSidebar.getBannerCard().getBannerPanel(), "style", "display: none;")
-                .validateAttribute(adSpotSidebar.getVideoCard().getVideoPanel(), "style", "display: none;")
-                .validateAttribute(adSpotSidebar.getNativeCard().getNativePanel(), "style", "display: none;")
+                .validateAttribute(adSpotSidebar.getBannerCard().getBannerPanel(), "aria-expanded", "false")
+                .validateAttribute(adSpotSidebar.getVideoCard().getVideoPanel(), "aria-expanded", "false")
+                .validateAttribute(adSpotSidebar.getNativeCard().getNativePanel(), "aria-expanded", "false")
                 .testEnd();
     }
 
@@ -444,6 +444,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("?/GS-3445")
     @Test(description = "Check Maximum Value Default Floor Price")
     private void checkMaxValueDefaultFloorPrice() {
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
