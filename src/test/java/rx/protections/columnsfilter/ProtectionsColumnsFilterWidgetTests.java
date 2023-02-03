@@ -251,6 +251,10 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
         var totalUsers = getTotalUsersFromBE();
 
         testStart()
+                .and("Select 15 rows per page")
+                .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
+                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "15")
                 .and("Select Column Filter 'Updated By'")
                 .scrollIntoView(protectionPage.getLogo())
                 .clickOnWebElement(filter.getColumnsFilterButton())
@@ -332,6 +336,10 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
         var totalUsers = getTotalUsersFromBE();
 
         testStart()
+                .and("Select 15 rows per page")
+                .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
+                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "15")
                 .and("Select Column Filter 'Created By'")
                 .scrollIntoView(protectionPage.getProtectionPageTitle())
                 .clickOnWebElement(filter.getColumnsFilterButton())
@@ -377,6 +385,10 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
         var totalUsers = getTotalUsersFromBE();
 
         testStart()
+                .and("Select 15 rows per page")
+                .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
+                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "15")
                 .and("Select Column Filter 'Created By'")
                 .scrollIntoView(protectionPage.getProtectionPageTitle())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_BY))

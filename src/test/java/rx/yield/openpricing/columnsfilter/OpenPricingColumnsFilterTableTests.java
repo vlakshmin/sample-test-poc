@@ -104,10 +104,10 @@ public class OpenPricingColumnsFilterTableTests extends BaseTest {
                 .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_BY))
                 .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
-                .and("Select 10 rows per page")
+                .and("Select 15 rows per page")
                 .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
-                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "10")
+                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "15")
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
@@ -131,6 +131,10 @@ public class OpenPricingColumnsFilterTableTests extends BaseTest {
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .and("Refresh page")
                 .clickBrowserRefreshButton()
+                .and("Select 15 rows per page")
+                .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
+                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "15")
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())

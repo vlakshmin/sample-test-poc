@@ -1,7 +1,6 @@
 package rx.protections.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
-import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
@@ -65,6 +64,10 @@ public class ProtectionsColumnsFilterTableTests extends BaseTest {
         var tableColumns = protectionPage.getProtectionsTable();
 
         testStart()
+                .and("Select 15 rows per page")
+                .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
+                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "15")
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_BY))
@@ -89,6 +92,10 @@ public class ProtectionsColumnsFilterTableTests extends BaseTest {
         var tableColumns = protectionPage.getProtectionsTable();
 
         testStart()
+                .and("Select 15 rows per page")
+                .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
+                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "15")
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.PUBLISHER))
@@ -118,6 +125,10 @@ public class ProtectionsColumnsFilterTableTests extends BaseTest {
         var tableColumns = protectionPage.getProtectionsTable();
 
         testStart()
+                .and("Select 15 rows per page")
+                .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
+                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "15")
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_BY))
@@ -141,6 +152,10 @@ public class ProtectionsColumnsFilterTableTests extends BaseTest {
         var tableColumns = protectionPage.getProtectionsTable();
 
         testStart()
+                .and("Select 15 rows per page")
+                .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
+                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "15")
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_BY))

@@ -46,7 +46,7 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .scrollIntoView(protectionPage.getProtectionPageTitle())
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
-                .and("Select 10 rows per page")
+                .and("Select 15 rows per page")
                 .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
                         protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "15")

@@ -1,7 +1,6 @@
 package rx.protections.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
-import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
 import lombok.extern.slf4j.Slf4j;
