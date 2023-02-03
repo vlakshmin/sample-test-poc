@@ -4,6 +4,7 @@ import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -37,6 +38,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Epic("v1.29.0/GS-3172")
 public class AdSpotNativeCardCreateTests extends BaseTest {
     private Media media;
     private Publisher publisher;

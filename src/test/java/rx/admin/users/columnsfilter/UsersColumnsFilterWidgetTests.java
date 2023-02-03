@@ -45,6 +45,7 @@ public class UsersColumnsFilterWidgetTests extends BaseTest {
                 .scrollIntoView(usersPage.getPageTitle())
                 .testEnd();
     }
+
     @Test(description = "Check Active/Inactive Chip Widget Component")
     public void testActiveInactiveChipWidgetComponent() {
         var filter = usersPage.getUsersTable().getColumnFiltersBlock();

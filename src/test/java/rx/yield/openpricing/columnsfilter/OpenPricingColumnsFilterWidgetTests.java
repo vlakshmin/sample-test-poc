@@ -1,5 +1,6 @@
 package rx.yield.openpricing.columnsfilter;
 
+import api.preconditionbuilders.OpenPricingPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static api.preconditionbuilders.OpenPricingPrecondition.openPricing;
 import static api.preconditionbuilders.ProtectionsPrecondition.protection;
 import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static api.preconditionbuilders.UsersPrecondition.user;
@@ -54,6 +56,7 @@ public class OpenPricingColumnsFilterWidgetTests extends BaseTest {
                 .scrollIntoView(tableColumns.getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_BY))
+                .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.UPDATED_BY))
                 .testEnd();
     }
@@ -89,6 +92,7 @@ public class OpenPricingColumnsFilterWidgetTests extends BaseTest {
                 .then("Columns Menu should appear")
                 .validateList(filter.getFilterOptionItems(), List.of(ColumnNames.PUBLISHER.getName(),
                         ColumnNames.STATUS.getName(),
+                        ColumnNames.CREATED_DATE.getName(),
                         ColumnNames.CREATED_BY.getName(),
                         ColumnNames.UPDATED_DATE.getName(),
                         ColumnNames.UPDATED_BY.getName()))
@@ -116,7 +120,7 @@ public class OpenPricingColumnsFilterWidgetTests extends BaseTest {
     public void testSearchUpdatedByColumnsFilterComponent() {
         var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
         var userNameList = getUpdatedByListFromBE();
-        var searchName = userNameList.get(1).substring(5);
+        var searchName = userNameList.get(0).substring(5);
         var expectedUserNameList = getUsersListFromBE(searchName);
         var totalUsers = getTotalUsersFromBE();
 
@@ -198,7 +202,7 @@ public class OpenPricingColumnsFilterWidgetTests extends BaseTest {
     public void testSearchCreatedByColumnsFilterComponent() {
         var filter = openPricingPage.getOpenPricingTable().getColumnFiltersBlock();
         var userNameList = getCreatedByListFromBE();
-        var searchName = userNameList.get(1).substring(5);
+        var searchName = userNameList.get(2).substring(5);
         var expectedUserNameList = getUsersListFromBE(searchName);
         var totalUsers = getTotalUsersFromBE();
 
@@ -332,20 +336,20 @@ public class OpenPricingColumnsFilterWidgetTests extends BaseTest {
 
     private List<String> getUpdatedByListFromBE() {
 
-        return protection()
-                .getAllProtectionsList()
+        return openPricing()
+                .getOpenPricingList()
                 .build()
-                .getProtectionsGetAllResponse()
+                .getOpenPricingGetAllResponse()
                 .getItems()
                 .stream().map(e -> e.getUpdatedBy()).distinct().collect(Collectors.toList());
     }
 
     private List<String> getCreatedByListFromBE() {
 
-        return protection()
-                .getAllProtectionsList()
+        return openPricing()
+                .getOpenPricingList()
                 .build()
-                .getProtectionsGetAllResponse()
+                .getOpenPricingGetAllResponse()
                 .getItems()
                 .stream().map(e -> e.getCreatedBy()).distinct().collect(Collectors.toList());
     }

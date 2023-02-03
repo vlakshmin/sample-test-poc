@@ -1,7 +1,6 @@
 package rx.inventory.media.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
-import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
@@ -42,7 +41,6 @@ public class MediaColumnsFilterTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3348")
     @Test(description = "Check columns filter options by default")
     public void defaultColumnsFilter(){
         var tableColumns = mediaPage.getMediaTable();
@@ -62,7 +60,6 @@ public class MediaColumnsFilterTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3348")
     @Test(description = "Select show all columns and check columns filter options")
     public void showAllColumns(){
         var tableColumns = mediaPage.getMediaTable();
@@ -91,7 +88,6 @@ public class MediaColumnsFilterTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3348")
     @Test(description = "Hide all columns and check columns filter options")
     public void hideAllColumns(){
         var tableColumns = mediaPage.getMediaTable();
@@ -119,7 +115,6 @@ public class MediaColumnsFilterTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3348")
     @Test(description = "Show all columns and refresh page. Check columns filter options")
     public void showAllAndRefreshPage(){
         var tableColumns = mediaPage.getMediaTable();
@@ -145,7 +140,6 @@ public class MediaColumnsFilterTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3348")
     @Test(description = "Show all columns and reload page. Check columns filter options")
     public void showAllAndReloadPage(){
         var tableColumns = mediaPage.getMediaTable();

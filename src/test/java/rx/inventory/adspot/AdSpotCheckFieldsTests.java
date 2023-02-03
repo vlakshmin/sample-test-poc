@@ -28,6 +28,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Epic("v1.29.0/GS-3172")
 public class AdSpotCheckFieldsTests extends BaseTest {
 
     private Media media1;
@@ -91,7 +92,6 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v?/GS-3271")
     @Test(description = "Check required fields")
     public void checkRequiredFields() {
         var videoCard = adSpotSidebar.getVideoCard();
@@ -326,7 +326,6 @@ public class AdSpotCheckFieldsTests extends BaseTest {
     }
 
     @Epic("?/GS-3445")
-    @Epic("?/GS-3271")
     @Test(description = "Check Minimum Value Banner Floor Price")
     private void checkMinValueBannerFloorPrice() {
         var bannerCard = adSpotSidebar.getBannerCard();
@@ -365,7 +364,6 @@ public class AdSpotCheckFieldsTests extends BaseTest {
 
 
     @Epic("?/GS-3445")
-    @Epic("?/GS-3271")
     @Test(description = "Check Minimum Value Native Floor Price")
     private void checkMinValueNativeFloorPrice() {
         var nativeCard = adSpotSidebar.getNativeCard();
@@ -403,7 +401,6 @@ public class AdSpotCheckFieldsTests extends BaseTest {
     }
 
     @Epic("?/GS-3445")
-    @Epic("?/GS-3271")
     @Test(description = "Check Minimum Value Video Floor Price")
     private void checkMinValueVideoFloorPrice() {
         var videoCard = adSpotSidebar.getVideoCard();
@@ -475,7 +472,6 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v?/GS-3271")
     @Test(description = "Check Maximum Value Banner Floor Price")
     private void checkMaxValueBannerFloorPrice() {
         var bannerCard = adSpotSidebar.getBannerCard();
@@ -514,7 +510,6 @@ public class AdSpotCheckFieldsTests extends BaseTest {
 
 
     @Epic("?/GS-3445")
-    @Epic("?/GS-3271")
     @Test(description = "Check Maximum Value Native Floor Price")
     private void checkMaxValueNativeFloorPrice() {
         var nativeCard = adSpotSidebar.getNativeCard();
@@ -551,7 +546,6 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v?/GS-3271")
     @Test(description = "Check Maximum Value Video Floor Price")
     private void checkMaxValueVideoFloorPrice() {
         var videoCard = adSpotSidebar.getVideoCard();

@@ -47,6 +47,7 @@ public class OpenPricingColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
                         openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "15")
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
+                .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .testEnd();
     }
 

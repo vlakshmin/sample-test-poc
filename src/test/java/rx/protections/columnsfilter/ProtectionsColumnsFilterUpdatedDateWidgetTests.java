@@ -169,7 +169,6 @@ public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3325")
     @Issue("https://rakutenadvertising.atlassian.net/browse/GS-3325")
     @Test(description = "Select Period of the current month and click Submit", dependsOnMethods = "testSubmitButtonColumnsFilterComponent")
     public void testPeriodAndSubmitButtonColumnsFilterComponent() {

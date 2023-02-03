@@ -39,6 +39,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Epic("v1.29.0/GS-3172")
 public class AdSpotRequiredFieldsOnlyCreateTests extends BaseTest {
 
     private Media media;
@@ -127,7 +128,6 @@ public class AdSpotRequiredFieldsOnlyCreateTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(description = "Check columns data in the Ad Spots table for created Ad Spot",
             dependsOnMethods = "createAdSpotWithAllFields")
     private void checkTableColumns() {

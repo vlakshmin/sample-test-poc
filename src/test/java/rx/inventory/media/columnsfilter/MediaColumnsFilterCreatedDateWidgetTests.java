@@ -1,7 +1,6 @@
 package rx.inventory.media.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
-import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
@@ -56,7 +55,6 @@ public class MediaColumnsFilterCreatedDateWidgetTests extends BaseTest {
     }
 
 
-    @Epic("v1.28.0/GS-3348")
     @Test(description = "Check Default State")
     public void testDefaultStateColumnsFilterComponent() {
         var filter = mediaPage.getMediaTable().getColumnFiltersBlock();
@@ -76,7 +74,6 @@ public class MediaColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3348")
     @Test(description = "Check Previous Month", dependsOnMethods = "testDefaultStateColumnsFilterComponent")
     public void testPreviousMonthColumnsFilterComponent() {
         var calendar = mediaPage.getMediaTable().getColumnFiltersBlock().getCalendarFilter().getCalendar();
@@ -92,7 +89,6 @@ public class MediaColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3348")
     @Test(description = "Check Back button", dependsOnMethods = "testPreviousMonthColumnsFilterComponent")
     public void testBackButtonColumnsFilterComponent() {
         var filter = mediaPage.getMediaTable().getColumnFiltersBlock();
@@ -116,7 +112,6 @@ public class MediaColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3348")
     @Test(description = "Check Next Month", dependsOnMethods = "testBackButtonColumnsFilterComponent")
     public void testNextMonthColumnsFilterComponent() {
         var filter = mediaPage.getMediaTable().getColumnFiltersBlock();
@@ -132,7 +127,6 @@ public class MediaColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3348")
     @Test(description = "Select First Day of the current month and click Cancel", dependsOnMethods = "testNextMonthColumnsFilterComponent")
     public void testCancelButtonColumnsFilterComponent() {
         var filter = mediaPage.getMediaTable().getColumnFiltersBlock();
@@ -150,7 +144,6 @@ public class MediaColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3348")
     @Test(description = "Select Period of the current month and click Submit", dependsOnMethods = "testCancelButtonColumnsFilterComponent" )
     public void testPeriodAndSubmitButtonColumnsFilterComponent() {
         var filter = mediaPage.getMediaTable().getColumnFiltersBlock();
@@ -184,7 +177,6 @@ public class MediaColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3348")
     @Test(description = "Select Last Day of the current month and click Submit", dependsOnMethods = "testPeriodAndSubmitButtonColumnsFilterComponent")
     public void testSubmitButtonColumnsFilterComponent() {
         var filter = mediaPage.getMediaTable().getColumnFiltersBlock();
@@ -216,7 +208,6 @@ public class MediaColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3348")
     @Test(description = "Delete Update By Chip", dependsOnMethods = "testPeriodAndSubmitButtonColumnsFilterComponent")
     public void testDeleteColumnsFilterComponent() {
         var table = mediaPage.getMediaTable().getTableData();

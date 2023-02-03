@@ -30,6 +30,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Epic("v1.29.0/GS-3172")
 public class AdSpotEditTests extends BaseTest {
     private Media media;
     private AdSpot adSpot;
@@ -111,7 +112,6 @@ public class AdSpotEditTests extends BaseTest {
 
      }
 
-    @Epic("v1.28.0/GS-3288")
     @Test(description = "Change all enabled fields and save", priority = 3)
     private void changeAllFieldsAndSave() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
