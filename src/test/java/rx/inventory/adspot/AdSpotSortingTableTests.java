@@ -139,7 +139,6 @@ public class AdSpotSortingTableTests extends BaseTest {
     }
 
     //Todo make tests enabled  after fix of attached Bug
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Sorting 'Active/Inactive' column by ascending", enabled = false)
     @Issue("https://rakutenadvertising.atlassian.net/browse/GS-3273")
     public void adSpotSortingByStatusAsc() {

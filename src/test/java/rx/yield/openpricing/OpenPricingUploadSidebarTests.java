@@ -31,7 +31,6 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Epic("v1.28.0/GS-3219")
 public class OpenPricingUploadSidebarTests extends BaseTest {
 
     private OpenPricingPage openPricingPage;

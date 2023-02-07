@@ -25,7 +25,6 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Epic("v1.28.0/GS-3298")
 public class MediaEditTests extends BaseTest {
 
     private Media media;
@@ -97,7 +96,6 @@ public class MediaEditTests extends BaseTest {
                 mediaName + "Updated5", URL + "Updated5", "com.app.updated");
     }
 
-    @Epic("v1.28.0/GS-3309")
     @Test(description = "Edit Media with 'CTV' media type")
     public void editMediaCTVMediaType() {
         var mediaName = captionWithSuffix("autoMediaCTV");

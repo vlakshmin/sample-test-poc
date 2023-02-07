@@ -42,7 +42,6 @@ public class TableDataTests extends BaseTest {
                 .getPublisherResponse();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test
     public void checkColumns() {
         var tableData = publishersPage.getTable().getTableData();
@@ -108,7 +107,6 @@ public class TableDataTests extends BaseTest {
 
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test
     public void checkPagination() {
         var tableData = publishersPage.getTable().getTableData();

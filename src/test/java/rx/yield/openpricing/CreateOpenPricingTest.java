@@ -158,7 +158,6 @@ public class CreateOpenPricingTest extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(priority = 8, dependsOnMethods = "saveOpenPricingTest")
     @Step("Verify new Pricing in table")
     public void checkOpenPricingTableTest() {

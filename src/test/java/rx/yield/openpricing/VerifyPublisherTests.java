@@ -38,7 +38,6 @@ public class VerifyPublisherTests extends BaseTest {
                 .getOpenPricingResponse();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(enabled = true)
     public void verifySingleDeactivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
@@ -60,7 +59,6 @@ public class VerifyPublisherTests extends BaseTest {
 
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(enabled = true)
     public void verifySingleActivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
@@ -80,7 +78,6 @@ public class VerifyPublisherTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(enabled = true)
     public void verifyBulkDeactivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
@@ -102,7 +99,6 @@ public class VerifyPublisherTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(enabled = true)
     public void verifyBulkActivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();

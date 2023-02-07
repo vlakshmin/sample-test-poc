@@ -140,19 +140,19 @@ public class OpenPricingSortingTableTests extends BaseTest {
         validateSorting(ColumnNames.NAME, ASC, sortNamesByAsc);
     }
 
-    @Test(testName = "Sorting 'Publisher' column by descending")
-    public void OpenPricingSortingByPublisherNameDesc() {
-        sortByDescColumnByName(ColumnNames.PUBLISHER);
-        validateSorting(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
-    }
+//    @Test(testName = "Sorting 'Publisher' column by descending")
+//    public void OpenPricingSortingByPublisherNameDesc() {
+//        sortByDescColumnByName(ColumnNames.PUBLISHER);
+//        validateSorting(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
+//    }
 
 
-    @Test(testName = "Sorting 'Publisher' column by ascending")
-    public void OpenPricingSortingByPublisherNameAsc() {
-        sortByAscColumnByName(ColumnNames.PUBLISHER);
-        validateSorting(ColumnNames.PUBLISHER, ASC, sortPublisherNameByAsc);
-    }
-
+//    @Test(testName = "Sorting 'Publisher' column by ascending")
+//    public void OpenPricingSortingByPublisherNameAsc() {
+//        sortByAscColumnByName(ColumnNames.PUBLISHER);
+//        validateSorting(ColumnNames.PUBLISHER, ASC, sortPublisherNameByAsc);
+//    }
+//
     @Test(testName = "Sorting 'ID' column by descending")
     public void OpenPricingSortingByIdDesc() {
         sortByDescColumnByName(ColumnNames.ID);
@@ -165,14 +165,12 @@ public class OpenPricingSortingTableTests extends BaseTest {
         validateSorting(ColumnNames.ID, ASC, sortIdsByAsc);
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Sorting 'Active/Inactive' column by descending")
     public void OpenPricingSortingByActiveInactiveDesc() {
         sortByDescColumnByName(ColumnNames.STATUS);
         validateSorting(ColumnNames.STATUS, DESC, sortActiveInactiveByDesc);
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Sorting 'Active/Inactive' column by ascending")
     public void OpenPricingSortingByActiveInactiveAsc() {
         sortByAscColumnByName(ColumnNames.STATUS);

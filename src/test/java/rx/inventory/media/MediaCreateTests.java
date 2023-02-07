@@ -25,7 +25,6 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Epic("v1.28.0/GS-3298")
 public class MediaCreateTests extends BaseTest {
     
     private MediaPage mediaPage;
@@ -100,7 +99,6 @@ public class MediaCreateTests extends BaseTest {
         createAndCheckCreatedMedia(mediaName, appStoreURL, "", PlatformType.MOBILE_WEB.getName());
     }
 
-    @Epic("v1.28.0/GS-3309")
     @Test(description = "Create Media with CTV' platform type")
     private void createMediaCTVPlatformType() {
         var mediaName = captionWithSuffix("autoMediaCTV");

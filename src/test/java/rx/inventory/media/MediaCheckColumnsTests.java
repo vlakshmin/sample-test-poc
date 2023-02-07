@@ -18,7 +18,6 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Epic("v1.28.0/GS-3298")
 public class MediaCheckColumnsTests extends BaseTest {
 
     private MediaPage mediaPage;

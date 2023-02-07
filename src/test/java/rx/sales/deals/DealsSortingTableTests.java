@@ -175,14 +175,12 @@ public class DealsSortingTableTests extends BaseTest {
         validateSortData(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Sorting 'Active/Inactive' column by ascending")
     public void adSpotSortingByStatusAsc() {
         sortByAscColumnByName(ColumnNames.STATUS);
         validateSortData(ColumnNames.STATUS, ASC, sortStatusByAsc);
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Sorting 'Active/Inactive' column by descending")
     public void adSpotSortingByStatusDesc() {
         sortByDescColumnByName(ColumnNames.STATUS);
@@ -214,7 +212,6 @@ public class DealsSortingTableTests extends BaseTest {
     }
 
     @Issue("GS-3288")
-    @Epic("v1.28.0/GS-3288")
     @Test(testName = "Sorting 'Price/Value' column by ascending")
     public void adSpotSortingByPriceValueAsc() {
         sortByAscColumnByName(ColumnNames.PRICE_VALUE);
@@ -222,7 +219,6 @@ public class DealsSortingTableTests extends BaseTest {
     }
 
     @Issue("GS-3288")
-    @Epic("v1.28.0/GS-3288")
     @Test(testName = "Sorting 'Price/Value' column by descending")
     public void adSpotSortingByPriceValueDesc() {
         sortByDescColumnByName(ColumnNames.PRICE_VALUE);

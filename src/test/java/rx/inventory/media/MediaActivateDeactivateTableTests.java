@@ -97,7 +97,6 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Deactivate single media")
     public void deactivateSingleMedia() {
         var tableData = mediaPage.getMediaTable().getTableData();
@@ -119,7 +118,6 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Deactivate single media with inactive publisher")
     public void deactivateSingleMediaWithInactivePublisher() {
         var tableData = mediaPage.getMediaTable().getTableData();
@@ -153,7 +151,6 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Activate single media with inactive publisher")
     public void activateSingleMediaWithInactivePublisher() {
         var tableData = mediaPage.getMediaTable().getTableData();
@@ -186,7 +183,6 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Activate single media")
     public void activateSingleMedia() {
         var tableData = mediaPage.getMediaTable().getTableData();
@@ -212,7 +208,6 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Activate bulk media")
     public void activateBulkMedia() {
         var tableData = mediaPage.getMediaTable().getTableData();
@@ -255,7 +250,6 @@ public class MediaActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Deactivate bulk media")
     public void deactivateBulkMedia() {
         var tableData = mediaPage.getMediaTable().getTableData();
