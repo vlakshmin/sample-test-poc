@@ -5,6 +5,7 @@ import api.dto.rx.inventory.adspot.AdSpotRequest;
 import api.dto.rx.inventory.adspot.Banner;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -30,6 +31,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Epic("v1.29.0/GS-3172")
 public class AdSpotTest extends BaseTest {
 
     private AdSpot adSpot;

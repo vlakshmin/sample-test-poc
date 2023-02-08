@@ -48,10 +48,10 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_BY))
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.UPDATED_BY))
-                .and("Select 10 rows per page")
+                .and("Select 15 rows per page")
                 .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
-                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "10")
+                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "15")
                 .scrollIntoView(protectionPage.getProtectionPageTitle())
                 .testEnd();
     }
@@ -251,6 +251,10 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
         var totalUsers = getTotalUsersFromBE();
 
         testStart()
+                .and("Select 15 rows per page")
+                .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
+                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "15")
                 .and("Select Column Filter 'Updated By'")
                 .scrollIntoView(protectionPage.getLogo())
                 .clickOnWebElement(filter.getColumnsFilterButton())
@@ -332,6 +336,10 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
         var totalUsers = getTotalUsersFromBE();
 
         testStart()
+                .and("Select 15 rows per page")
+                .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
+                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "15")
                 .and("Select Column Filter 'Created By'")
                 .scrollIntoView(protectionPage.getProtectionPageTitle())
                 .clickOnWebElement(filter.getColumnsFilterButton())
@@ -377,8 +385,15 @@ public class ProtectionsColumnsFilterWidgetTests extends BaseTest {
         var totalUsers = getTotalUsersFromBE();
 
         testStart()
+                .and("Select 15 rows per page")
+                .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
+                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "15")
                 .and("Select Column Filter 'Created By'")
                 .scrollIntoView(protectionPage.getProtectionPageTitle())
+                .clickOnWebElement(filter.getColumnsFilterButton())
+                .waitAndValidate(visible, filter.getFilterOptionsMenu())
+                .waitAndValidate(appear, filter.getFilterOptionsMenu())
                 .clickOnWebElement(filter.getFilterOptionByName(ColumnNames.CREATED_BY))
                 .and()
                 .setValueWithClean(filter.getSinglepaneFilter().getSearchInput(), "abc")

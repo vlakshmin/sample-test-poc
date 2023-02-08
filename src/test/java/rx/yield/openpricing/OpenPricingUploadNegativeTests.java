@@ -31,7 +31,6 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Epic("v1.28.0/GS-3219")
 public class OpenPricingUploadNegativeTests extends BaseTest {
 
     private Publisher publisher;
@@ -77,7 +76,6 @@ public class OpenPricingUploadNegativeTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.26.0/GS-3083")
     @Test(description = "Negative: The uploaded file is not a CSV file")
     public void uploadIsNotCSVNegative() {
 
@@ -93,7 +91,6 @@ public class OpenPricingUploadNegativeTests extends BaseTest {
         closeSideBar();
     }
 
-    @Epic("v1.26.0/GS-3083")
     @Test(description = "Negative: check errors if required fields are not selected")
     public void checkRequiredFields() {
         var errorsList = openPricingUploadSidebar.getErrorAlert().getErrorsList();
@@ -133,7 +130,6 @@ public class OpenPricingUploadNegativeTests extends BaseTest {
         closeSideBar();
     }
 
-    @Epic("v1.26.0/GS-3083")
     @Test(description = "Negative: check errors if reselect file")
     public void checkErrorsDisappearAfterSelectedFile() {
         var errorsList = openPricingUploadSidebar.getErrorAlert().getErrorsList();

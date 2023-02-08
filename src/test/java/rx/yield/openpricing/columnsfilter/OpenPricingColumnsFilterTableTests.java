@@ -39,18 +39,17 @@ public class OpenPricingColumnsFilterTableTests extends BaseTest {
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
-                .testEnd();
+                 .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
+                 .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
+                         openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "15")
+                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(description = "Check columns filter options by default")
     public void defaultColumnsFilter(){
         var tableColumns = openPricingPage.getOpenPricingTable();
 
         testStart()
-                .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
-                .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
-                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "10")
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
@@ -61,24 +60,20 @@ public class OpenPricingColumnsFilterTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(description = "Select show all columns and check columns filter options")
     public void showAllColumns(){
         var tableColumns = openPricingPage.getOpenPricingTable();
 
         testStart()
-                .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
-                .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
-                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "10")
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_BY))
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_BY))
-                .and("Select 10 rows per page")
+                .and("Select 15 rows per page")
                 .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
-                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "10")
+                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "15")
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
@@ -92,7 +87,6 @@ public class OpenPricingColumnsFilterTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(description = "Hide all columns and check columns filter options")
     public void hideAllColumns(){
         var tableColumns = openPricingPage.getOpenPricingTable();
@@ -110,10 +104,10 @@ public class OpenPricingColumnsFilterTableTests extends BaseTest {
                 .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_BY))
                 .unSelectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.UPDATED_DATE))
-                .and("Select 10 rows per page")
+                .and("Select 15 rows per page")
                 .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
-                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "10")
+                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "15")
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
@@ -122,7 +116,6 @@ public class OpenPricingColumnsFilterTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(description = "Show all columns and refresh page. Check columns filter options")
     public void showAllAndRefreshPage(){
         var tableColumns = openPricingPage.getOpenPricingTable();
@@ -131,13 +124,17 @@ public class OpenPricingColumnsFilterTableTests extends BaseTest {
                 .clickBrowserRefreshButton()
                 .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
-                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "10")
+                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "15")
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_BY))
                 .selectCheckBox(tableColumns.getShowHideColumns().getMenuItemCheckbox(ColumnNames.CREATED_DATE))
                 .and("Refresh page")
                 .clickBrowserRefreshButton()
+                .and("Select 15 rows per page")
+                .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
+                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "15")
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getColumnFiltersBlock().getColumnsFilterButton())
                 .waitAndValidate(visible, tableColumns.getColumnFiltersBlock().getFilterOptionsMenu())
@@ -149,7 +146,6 @@ public class OpenPricingColumnsFilterTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(description = "Show all columns and reload page. Check columns filter options")
     public void showAllAndReloadPage(){
         var tableColumns = openPricingPage.getOpenPricingTable();
@@ -157,7 +153,7 @@ public class OpenPricingColumnsFilterTableTests extends BaseTest {
         testStart()
                 .scrollIntoView(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(openPricingPage.getOpenPricingTable().getTablePagination().getPageMenu(),
-                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "10")
+                        openPricingPage.getOpenPricingTable().getTablePagination().getRowNumbersList(), "15")
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .scrollIntoView(tableColumns.getShowHideColumns().getShowHideColumnsBtn())
                 .clickOnWebElement(tableColumns.getShowHideColumns().getShowHideColumnsBtn())

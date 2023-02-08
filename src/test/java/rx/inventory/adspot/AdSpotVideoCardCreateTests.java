@@ -4,6 +4,7 @@ import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.common.Currency;
 import api.dto.rx.inventory.media.Media;
 import com.codeborne.selenide.testng.ScreenShooter;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -37,6 +38,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Epic("v1.29.0/GS-3172")
 public class AdSpotVideoCardCreateTests extends BaseTest {
     private Media media;
     private Publisher publisher;
@@ -271,9 +273,14 @@ public class AdSpotVideoCardCreateTests extends BaseTest {
     @Step("Fill Video card fields")
     private void fillVideoCardFields() {
         var videoCard = adSpotSidebar.getVideoCard();
+
+        if (videoCard.getVideoPanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(videoCard.getVideoCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .scrollIntoView(videoCard.getVideoCardHeader())
-                .clickOnWebElement(videoCard.getVideoCardHeader())
                 .turnToggleOn(videoCard.getEnabledToggle())
                 .and("Fill Video Placement Type")
                 .selectFromDropdown(videoCard.getVideoPlacementType(),
@@ -310,8 +317,13 @@ public class AdSpotVideoCardCreateTests extends BaseTest {
     private void validateBannerFieldsValues() {
         var bannerCard = adSpotSidebar.getBannerCard();
 
+        if (bannerCard.getBannerPanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(bannerCard.getBannerCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .clickOnWebElement(bannerCard.getBannerCardHeader())
                 .validateAttribute(bannerCard.getEnabledToggle(), "aria-checked", "false")
                 .validate(bannerCard.getAdSizes().getText(), "")
                 .validateAttribute(bannerCard.getFloorPriceField().getFloorPriceInput(), "value", "")
@@ -323,8 +335,13 @@ public class AdSpotVideoCardCreateTests extends BaseTest {
     private void validateNativeFieldsValues() {
         var nativeCard = adSpotSidebar.getNativeCard();
 
+        if (nativeCard.getNativePanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(nativeCard.getNativeCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .clickOnWebElement(nativeCard.getNativeCardHeader())
                 .validateAttribute(nativeCard.getEnabledToggle(), "aria-checked", "false")
                 .validateAttribute(nativeCard.getFloorPriceField().getFloorPriceInput(), "value", "")
                 .validate(nativeCard.getFloorPriceField().getFloorPricePrefix().getText(), publisher.getCurrency())
@@ -335,9 +352,13 @@ public class AdSpotVideoCardCreateTests extends BaseTest {
     private void validateVideoFieldsValues() {
         var videoCard = adSpotSidebar.getVideoCard();
 
+        if (videoCard.getVideoPanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(videoCard.getVideoCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .scrollIntoView(videoCard.getVideoCardHeader())
-                .clickOnWebElement(videoCard.getVideoCardHeader())
                 .validateAttribute(videoCard.getEnabledToggle(), "aria-checked", "true")
                 .validate(videoCard.getVideoAdSizes().getText(), "")
                 .validate(videoCard.getVideoPlacementType().getText(), VIDEO_PLACEMENT_TYPE)

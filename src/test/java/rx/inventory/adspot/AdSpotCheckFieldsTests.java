@@ -28,6 +28,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Epic("v1.29.0/GS-3172")
 public class AdSpotCheckFieldsTests extends BaseTest {
 
     private Media media1;
@@ -69,7 +70,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
     }
 
 
-    @Test(description = "Check fields by default")
+    @Test(description = "Check fields by default", priority = 1)
     private void checkDefaultFields() {
         testStart()
                 .then("Validate fields by default")
@@ -85,13 +86,12 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .validate(disabled, adSpotSidebar.getDefaultFloorPrice())
                 .validate(disabled, adSpotSidebar.getTestModeToggle())
                 .validate(disabled, adSpotSidebar.getContentForChildrenToggle())
-                .validateAttribute(adSpotSidebar.getBannerCard().getBannerPanel(), "style", "display: none;")
-                .validateAttribute(adSpotSidebar.getVideoCard().getVideoPanel(), "style", "display: none;")
-                .validateAttribute(adSpotSidebar.getNativeCard().getNativePanel(), "style", "display: none;")
+                .validateAttribute(adSpotSidebar.getBannerCard().getBannerPanel(), "aria-expanded", "false")
+                .validateAttribute(adSpotSidebar.getVideoCard().getVideoPanel(), "aria-expanded", "false")
+                .validateAttribute(adSpotSidebar.getNativeCard().getNativePanel(), "aria-expanded", "false")
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3288")
     @Test(description = "Check required fields")
     public void checkRequiredFields() {
         var videoCard = adSpotSidebar.getVideoCard();
@@ -297,7 +297,6 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3288")
     @Epic("?/GS-3445")
     @Test(description = "Check Minimum Value Default Floor Price")
     private void checkMinValueDefaultFloorPrice() {
@@ -326,7 +325,6 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3288")
     @Epic("?/GS-3445")
     @Test(description = "Check Minimum Value Banner Floor Price")
     private void checkMinValueBannerFloorPrice() {
@@ -334,8 +332,14 @@ public class AdSpotCheckFieldsTests extends BaseTest {
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
 
         fillGeneralFields(media1.getPublisherName(), media1.getName());
+
+        if (bannerCard.getBannerPanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(bannerCard.getBannerCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .clickOnWebElement(bannerCard.getBannerCardHeader())
                 .turnToggleOn(bannerCard.getEnabledToggle())
                 .setValueWithClean(bannerCard.getFloorPriceField().getFloorPriceInput(), "-1.00")
                 .and("Click 'Save'")
@@ -366,8 +370,14 @@ public class AdSpotCheckFieldsTests extends BaseTest {
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
 
         fillGeneralFields(media1.getPublisherName(), media1.getName());
+
+        if (nativeCard.getNativePanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(nativeCard.getNativeCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .clickOnWebElement(nativeCard.getNativeCardHeader())
                 .turnToggleOn(nativeCard.getEnabledToggle())
                 .setValueWithClean(nativeCard.getFloorPriceField().getFloorPriceInput(), "-1.00")
                 .and("Click 'Save'")
@@ -397,8 +407,14 @@ public class AdSpotCheckFieldsTests extends BaseTest {
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
 
         fillGeneralFields(media1.getPublisherName(), media1.getName());
+
+        if (videoCard.getVideoPanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(videoCard.getVideoCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .clickOnWebElement(videoCard.getVideoCardHeader())
                 .turnToggleOn(videoCard.getEnabledToggle())
                 .and("Fill Video Placement Type")
                 .selectFromDropdown(videoCard.getVideoPlacementType(),
@@ -428,6 +444,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
+    @Epic("?/GS-3445")
     @Test(description = "Check Maximum Value Default Floor Price")
     private void checkMaxValueDefaultFloorPrice() {
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
@@ -456,15 +473,20 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3288")
     @Test(description = "Check Maximum Value Banner Floor Price")
     private void checkMaxValueBannerFloorPrice() {
         var bannerCard = adSpotSidebar.getBannerCard();
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
 
         fillGeneralFields(media1.getPublisherName(), media1.getName());
+
+        if (bannerCard.getBannerPanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(bannerCard.getBannerCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .clickOnWebElement(bannerCard.getBannerCardHeader())
                 .turnToggleOn(bannerCard.getEnabledToggle())
                 .setValueWithClean(bannerCard.getFloorPriceField().getFloorPriceInput(), "1000000.00")
                 .and("Click 'Save'")
@@ -477,7 +499,7 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .validateList(errorsList, List.of(
                         ErrorMessages.MIN_MAX_VALUE_AD_SPOT_FLOOR_PRICE.getText())
                 )
-                .setValueWithClean(bannerCard.getFloorPriceField().getFloorPriceInput(), "0.00")
+                .setValueWithClean(bannerCard.getFloorPriceField().getFloorPriceInput(), "100000000.00")
                 .clickEnterButton(bannerCard.getFloorPriceField().getFloorPriceInput())
                 .then("Validate error under the 'Floor Price' field disappeared")
                 .waitAndValidate(not(visible), bannerCard.getErrorAlertByFieldName("Floor Price"))
@@ -487,7 +509,6 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3288")
     @Epic("?/GS-3445")
     @Test(description = "Check Maximum Value Native Floor Price")
     private void checkMaxValueNativeFloorPrice() {
@@ -495,8 +516,14 @@ public class AdSpotCheckFieldsTests extends BaseTest {
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
 
         fillGeneralFields(media1.getPublisherName(), media1.getName());
+
+        if (nativeCard.getNativePanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(nativeCard.getNativeCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .clickOnWebElement(nativeCard.getNativeCardHeader())
                 .turnToggleOn(nativeCard.getEnabledToggle())
                 .setValueWithClean(nativeCard.getFloorPriceField().getFloorPriceInput(), "1000000.00")
                 .and("Click 'Save'")
@@ -519,15 +546,20 @@ public class AdSpotCheckFieldsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3288")
     @Test(description = "Check Maximum Value Video Floor Price")
     private void checkMaxValueVideoFloorPrice() {
         var videoCard = adSpotSidebar.getVideoCard();
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
 
         fillGeneralFields(media1.getPublisherName(), media1.getName());
+
+        if (videoCard.getVideoPanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(videoCard.getVideoCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .clickOnWebElement(videoCard.getVideoCardHeader())
                 .turnToggleOn(videoCard.getEnabledToggle())
                 .and("Fill Video Placement Type")
                 .selectFromDropdown(videoCard.getVideoPlacementType(),
@@ -563,8 +595,14 @@ public class AdSpotCheckFieldsTests extends BaseTest {
         var errorsList = adSpotSidebar.getErrorAlert().getErrorsList();
 
         fillGeneralFields(media1.getPublisherName(), media1.getName());
+
+        if (videoCard.getVideoPanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(videoCard.getVideoCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .clickOnWebElement(videoCard.getVideoCardHeader())
                 .turnToggleOn(videoCard.getEnabledToggle())
                 .and("Fill Video Placement Type")
                 .selectFromDropdown(videoCard.getVideoPlacementType(),

@@ -1,7 +1,6 @@
 package rx.inventory.media.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
-import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
@@ -49,7 +48,6 @@ public class MediaColumnsFilterWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3348")
     @Test(description = "Check Active/Inactive Chip Widget Component")
     public void testActiveInactiveChipWidgetComponent() {
         var filter = mediaPage.getMediaTable().getColumnFiltersBlock();

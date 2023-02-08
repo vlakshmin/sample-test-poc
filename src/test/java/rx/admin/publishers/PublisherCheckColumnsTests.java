@@ -38,7 +38,6 @@ public class PublisherCheckColumnsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test
     public void checkColumns() {
         var tableOptions = publisherPage.getTable().getShowHideColumns();

@@ -19,7 +19,6 @@ import static managers.TestManager.testStart;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Epic("v1.28.0/GS-3298")
 public class AdSpotCheckColumnsTests extends BaseTest {
     private AdSpotsPage adSpotsPage;
 
@@ -39,7 +38,6 @@ public class AdSpotCheckColumnsTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test
     public void checkColumns() {
         var tableOptions = adSpotsPage.getAdSpotsTable().getShowHideColumns();

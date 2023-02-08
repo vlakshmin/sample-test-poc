@@ -38,7 +38,11 @@ public class UsersColumnsFilterTableTests extends BaseTest {
                 .openDirectPath(Path.USER)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, usersPage.getNuxtProgress())
-                .testEnd();
+                 .and("Select 15 rows per page")
+                 .scrollIntoView(usersPage.getUsersTable().getTablePagination().getPageMenu())
+                 .selectFromDropdown(usersPage.getUsersTable().getTablePagination().getPageMenu(),
+                         usersPage.getUsersTable().getTablePagination().getRowNumbersList(), "15")
+                 .testEnd();
     }
 
     @Test(description = "Check columns filter options by default")

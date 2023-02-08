@@ -89,7 +89,6 @@ public class FilterChipTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(description = "Check Chip Widget Component", dependsOnMethods = "testSearchColumnsFilterComponent")
     public void testChipWidgetComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();
@@ -141,7 +140,6 @@ public class FilterChipTests extends BaseTest {
         });
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(description = "Check Reset Chip Widget Component", dependsOnMethods = "testChipWidgetComponent")
     public void testResetChipWidgetComponent() {
         var table = protectionPage.getProtectionsTable().getTableData();

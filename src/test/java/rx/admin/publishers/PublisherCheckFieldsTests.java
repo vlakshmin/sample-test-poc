@@ -51,7 +51,6 @@ public class PublisherCheckFieldsTests extends BaseTest {
     }
 
     @Issue("GS-3186")
-    @Epic("v1.28.0/GS-3186")
     @Test(description = "Check fields by default")
     public void checkDefaultFields() {
 
@@ -72,7 +71,6 @@ public class PublisherCheckFieldsTests extends BaseTest {
     }
 
     @Issue("GS-3186")
-    @Epic("v1.28.0/GS-3186")
     @Test(description = "Check required fields")
     public void checkRequiredFields() {
         var errorsList = editPublisherSidebar.getErrorAlert().getErrorsList();
@@ -159,7 +157,6 @@ public class PublisherCheckFieldsTests extends BaseTest {
     }
 
     @Issue("GS-3186")
-    @Epic("v1.28.0/GS-3186")
     @Test(description = "Check required fields")
     public void checkRequiredFieldsWithInvalidInputs() throws InterruptedException {
         var errorsList = editPublisherSidebar.getErrorAlert().getErrorsList();

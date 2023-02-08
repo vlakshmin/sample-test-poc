@@ -26,7 +26,6 @@ import static managers.TestManager.testStart;
 @Slf4j
 @Listeners({ScreenShooter.class})
 @Feature(value = "Publishers Columns Filter")
-@Epic("v1.28.0/GS-3324")
 public class PublishersColumnsFilterCreatedDateWidgetTests extends BaseTest {
 
     private PublishersPage publishersPage;
@@ -83,7 +82,7 @@ public class PublishersColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .clickOnWebElement(calendar.getPreviousMonthButton())
                 .then("Should be displayed previous month")
                 .validateContainsText(calendar.getMonthOrYearHeaderButton(),StringUtils.getStringMonthYear(currentDate.minusMonths(1).getMonth(),
-                        currentDate.getMonth().getValue() == 1 ? currentDate.getYear() - 1 : currentDate.getYear()))
+                        currentDate.minusMonths(1).getYear()))
                 .testEnd();
     }
 
@@ -141,7 +140,6 @@ public class PublishersColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3325")
     @Test(description = "Select Period of the current month and click Submit", dependsOnMethods = "testCancelButtonColumnsFilterComponent" )
     public void testPeriodAndSubmitButtonColumnsFilterComponent() {
         var filter = publishersPage.getTable().getColumnFiltersBlock();

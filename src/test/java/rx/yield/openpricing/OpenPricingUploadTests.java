@@ -4,7 +4,6 @@ import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.OpenPricingPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
-import io.qameta.allure.Epic;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -17,7 +16,6 @@ import widgets.yield.openPricing.sidebar.EditOpenPricingSidebar;
 import widgets.yield.openPricing.sidebar.UpdateExistingOpenPricingRulesSidebar;
 import zutils.FileUtils;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +31,6 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Epic("v1.28.0/GS-3219")
 public class OpenPricingUploadTests extends BaseTest {
 
     private OpenPricingPage openPricingPage;
@@ -210,10 +207,4 @@ public class OpenPricingUploadTests extends BaseTest {
                 .build()
                 .getOpenPricingResponse());
     }
-
-//    @Step("Convert floor price value")
-//    private String convertFloorPrice(String floorPrice) {
-//
-//        return new DecimalFormat("####.00").format(Double.parseDouble(floorPrice));
-//    }
 }

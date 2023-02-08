@@ -26,7 +26,6 @@ import static managers.TestManager.testStart;
 @Slf4j
 @Listeners({ScreenShooter.class})
 @Feature(value = "Protections Columns Filter")
-@Epic("v1.28.0/GS-3324")
 public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
 
     private ProtectionsPage protectionPage;
@@ -47,10 +46,10 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .scrollIntoView(protectionPage.getProtectionPageTitle())
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
-                .and("Select 10 rows per page")
+                .and("Select 15 rows per page")
                 .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
-                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "10")
+                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "15")
                 .testEnd();
     }
 
@@ -144,7 +143,6 @@ public class ProtectionsColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3325")
     @Test(description = "Select Period of the current month and click Submit", dependsOnMethods = "testCancelButtonColumnsFilterComponent" )
     public void testPeriodAndSubmitButtonColumnsFilterComponent() {
         var filter = protectionPage.getProtectionsTable().getColumnFiltersBlock();

@@ -77,14 +77,6 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .map(Object::toString)
                 .collect(Collectors.toList());
 
-//        sortPublisherNameByAsc = getAllItemsByParams("publisher_name-asc").stream()
-//                .map(OpenPricing::getPublisherName)
-//                .collect(Collectors.toList());
-//
-//        sortPublisherNameByDesc = getAllItemsByParams("publisher_name-desc").stream()
-//                .map(OpenPricing::getPublisherName)
-//                .collect(Collectors.toList());
-
         sortActiveInactiveByAsc = getAllItemsByParams("active-asc").stream()
                 .map(OpenPricing::getActive)
                 .map(Object::toString)
@@ -165,14 +157,12 @@ public class OpenPricingSortingTableTests extends BaseTest {
         validateSorting(ColumnNames.ID, ASC, sortIdsByAsc);
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Sorting 'Active/Inactive' column by descending")
     public void OpenPricingSortingByActiveInactiveDesc() {
         sortByDescColumnByName(ColumnNames.STATUS);
         validateSorting(ColumnNames.STATUS, DESC, sortActiveInactiveByDesc);
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Sorting 'Active/Inactive' column by ascending")
     public void OpenPricingSortingByActiveInactiveAsc() {
         sortByAscColumnByName(ColumnNames.STATUS);

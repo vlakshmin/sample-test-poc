@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum UpdateExistingOpenPricingRulesSidebarElements {
 
     ERROR_ALERT_BY_FIELD_NAME("Error Alert under Field '%s'",
-            "//label[text()='%s']/../../..//child::div[@class='v-messages__message']"),
+            "//label[text()='%s']/../../../div[2]//div[contains(@class,'v-messages__message')]"),
     PUBLISHER_NAME_INPUT( "'Publisher Name' Input", "//label[text()='Publisher Name']/../div[1]"),
     PUBLISHER_NAME_DROPDOWN("'Publisher Name' Input", "//label[text()='Publisher Name']/../div[2]"),
     DROPDOWN_ITEMS("Dropdown Items", "//div[contains(@class,'menuable__content__activ')]//div[@class='v-list-item__title']"),

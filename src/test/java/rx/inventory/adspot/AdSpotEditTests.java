@@ -30,6 +30,7 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
+@Epic("v1.29.0/GS-3172")
 public class AdSpotEditTests extends BaseTest {
     private Media media;
     private AdSpot adSpot;
@@ -111,7 +112,6 @@ public class AdSpotEditTests extends BaseTest {
 
      }
 
-    @Epic("v1.28.0/GS-3288")
     @Test(description = "Change all enabled fields and save", priority = 3)
     private void changeAllFieldsAndSave() {
         var tableData = adSpotPage.getAdSpotsTable().getTableData();
@@ -183,8 +183,14 @@ public class AdSpotEditTests extends BaseTest {
     @Step("Change Banner card fields")
     private void changeBannerCardFields() {
         var bannerCard = adSpotSidebar.getBannerCard();
+
+        if (bannerCard.getBannerPanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(bannerCard.getBannerCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .clickOnWebElement(bannerCard.getBannerCardHeader())
                 .clickOnWebElement(bannerCard.getAdSizes())
                 .clickOnWebElement(bannerCard.getAdSizesPanel().getAdSizeCheckbox(AD_SIZE_CREATED))
                 .clickOnWebElement(bannerCard.getAdSizesPanel().getAdSizeCheckbox(BANNER_AD_SIZE))
@@ -197,8 +203,14 @@ public class AdSpotEditTests extends BaseTest {
     @Step("Change Native card fields")
     private void changeNativeCardFields() {
         var nativeCard = adSpotSidebar.getNativeCard();
+
+        if (nativeCard.getNativePanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(nativeCard.getNativeCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .clickOnWebElement(nativeCard.getNativeCardHeader())
                 .turnToggleOn(nativeCard.getEnabledToggle())
                 .setValueWithClean(nativeCard.getFloorPriceField().getFloorPriceInput(), NATIVE_FLOOR_PRICE)
                 .testEnd();
@@ -207,9 +219,14 @@ public class AdSpotEditTests extends BaseTest {
     @Step("Change Video card fields")
     private void changeVideoCardFields() {
         var videoCard = adSpotSidebar.getVideoCard();
+
+        if (videoCard.getVideoPanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(videoCard.getVideoCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .scrollIntoView(videoCard.getVideoCardHeader())
-                .clickOnWebElement(videoCard.getVideoCardHeader())
                 .setValueWithClean(videoCard.getMinVideoDuration(), VIDEO_MIN_DURATION)
                 .clickOnText("Banner")
                 .setValueWithClean(videoCard.getMaxVideoDuration(), VIDEO_MAX_DURATION)
@@ -254,8 +271,13 @@ public class AdSpotEditTests extends BaseTest {
     private void validateBannerFieldsValues() {
         var bannerCard = adSpotSidebar.getBannerCard();
 
+        if (bannerCard.getBannerPanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(bannerCard.getBannerCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .clickOnWebElement(bannerCard.getBannerCardHeader())
                 .validateAttribute(bannerCard.getEnabledToggle(), "aria-checked", "false")
                 .validate(bannerCard.getAdSizes().getText(), BANNER_AD_SIZE.getSize())
                 .validateAttribute(bannerCard.getFloorPriceField().getFloorPriceInput(), "value", BANNER_FLOOR_PRICE)
@@ -266,8 +288,13 @@ public class AdSpotEditTests extends BaseTest {
     private void validateNativeFieldsValues() {
         var nativeCard = adSpotSidebar.getNativeCard();
 
+        if (nativeCard.getNativePanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(nativeCard.getNativeCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .clickOnWebElement(nativeCard.getNativeCardHeader())
                 .validateAttribute(nativeCard.getEnabledToggle(), "aria-checked", "true")
                 .validateAttribute(nativeCard.getFloorPriceField().getFloorPriceInput(), "value", NATIVE_FLOOR_PRICE)
                 .testEnd();
@@ -277,9 +304,13 @@ public class AdSpotEditTests extends BaseTest {
     private void validateVideoFieldsValues() {
         var videoCard = adSpotSidebar.getVideoCard();
 
+        if (videoCard.getVideoPanel().getAttribute( "aria-expanded").equals("false")){
+            testStart()
+                    .clickOnWebElement(videoCard.getVideoCardHeader())
+                    .testEnd();
+        }
+
         testStart()
-                .scrollIntoView(videoCard.getVideoCardHeader())
-                .clickOnWebElement(videoCard.getVideoCardHeader())
                 .validateAttribute(videoCard.getEnabledToggle(), "aria-checked", "false")
                 .validate(videoCard.getVideoAdSizes().getText(), VIDEO_AD_SIZE.getSize())
                 .validateAttribute(videoCard.getFloorPriceField().getFloorPriceInput(), "value", VIDEO_FLOOR_PRICE)

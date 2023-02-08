@@ -31,7 +31,6 @@ import static zutils.FakerUtils.captionWithSuffix;
 
 @Slf4j
 @Listeners({ScreenShooter.class})
-@Epic("v1.28.0/GS-3219")
 public class OpenPricingUploadSidebarTests extends BaseTest {
 
     private OpenPricingPage openPricingPage;
@@ -82,7 +81,6 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
                 .waitSideBarOpened()
                 .testEnd();
     }
-
 
     @Test(description = "Check Upload slide elements by default (Admin)")
     public void checkUploadSlideElementsByDefaultAdmin() {
@@ -147,7 +145,6 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
                 .logOut()
                 .testEnd();
     }
-
 
     @Step("Validate File Data")
     private void validateFileData(String filename) {

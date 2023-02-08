@@ -1,7 +1,6 @@
 package rx.protections.columnsfilter;
 
 import com.codeborne.selenide.testng.ScreenShooter;
-import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +26,6 @@ import static managers.TestManager.testStart;
 @Slf4j
 @Listeners({ScreenShooter.class})
 @Feature(value = "Protections Columns Filter")
-@Epic("v1.28.0/GS-3324")
 public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
 
     private ProtectionsPage protectionPage;
@@ -45,6 +43,9 @@ public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .openDirectPath(Path.PROTECTIONS)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, protectionPage.getNuxtProgress())
+                .scrollIntoView(protectionPage.getProtectionsTable().getTablePagination().getPageMenu())
+                .selectFromDropdown(protectionPage.getProtectionsTable().getTablePagination().getPageMenu(),
+                        protectionPage.getProtectionsTable().getTablePagination().getRowNumbersList(), "15")
                 .testEnd();
     }
 
@@ -167,7 +168,6 @@ public class ProtectionsColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3325")
     @Issue("https://rakutenadvertising.atlassian.net/browse/GS-3325")
     @Test(description = "Select Period of the current month and click Submit", dependsOnMethods = "testSubmitButtonColumnsFilterComponent")
     public void testPeriodAndSubmitButtonColumnsFilterComponent() {

@@ -26,7 +26,6 @@ import static managers.TestManager.testStart;
 @Slf4j
 @Listeners({ScreenShooter.class})
 @Feature(value = "Users Columns Filter")
-@Epic("v1.28.0/GS-3324")
 public class UsersColumnsFilterCreatedDateWidgetTests extends BaseTest {
 
     private UsersPage usersPage;
@@ -47,10 +46,10 @@ public class UsersColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .scrollIntoView(usersPage.getPageTitle())
                 .clickOnWebElement(tableColumns.getShowHideColumnsBtn())
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.CREATED_DATE))
-                .and("Select 10 rows per page")
+                .and("Select 15 rows per page")
                 .scrollIntoView(usersPage.getUsersTable().getTablePagination().getPageMenu())
                 .selectFromDropdown(usersPage.getUsersTable().getTablePagination().getPageMenu(),
-                        usersPage.getUsersTable().getTablePagination().getRowNumbersList(), "10")
+                        usersPage.getUsersTable().getTablePagination().getRowNumbersList(), "15")
                 .testEnd();
     }
 
@@ -144,7 +143,6 @@ public class UsersColumnsFilterCreatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3325")
     @Test(description = "Select Period of the current month and click Submit", dependsOnMethods = "testCancelButtonColumnsFilterComponent" )
     public void testPeriodAndSubmitButtonColumnsFilterComponent() {
         var filter = usersPage.getUsersTable().getColumnFiltersBlock();

@@ -1,9 +1,7 @@
 package rx.inventory.adspot;
 
-import api.dto.rx.admin.publisher.Publisher;
 import api.dto.rx.inventory.adspot.AdSpot;
 import com.codeborne.selenide.testng.ScreenShooter;
-import io.qameta.allure.Epic;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
 import pages.Path;
@@ -106,7 +104,6 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Deactivate single ad spot")
     public void deactivateSingleAdSpot() {
         var toasterPanel = adSpotsPage.getToasterMessage();
@@ -130,7 +127,6 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Deactivate single ad spot with inactive media")
     public void deactivateSingleAdSpotWithInactiveMedia() {
         var toasterPanel = adSpotsPage.getToasterMessage();
@@ -155,7 +151,6 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Activate single ad spot with inactive media")
     public void activateSingleAdSpotWithInactiveMedia() {
         var toasterPanel = adSpotsPage.getToasterMessage();
@@ -180,7 +175,6 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Deactivate single ad spot with inactive publisher")
     public void deactivateSingleAdSpotWithInactivePublisher() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
@@ -214,7 +208,6 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Activate single ad spot with inactive publisher")
     public void activateSingleAdSpotWithInactivePublisher() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
@@ -247,7 +240,6 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Activate single ad spot")
     public void activateSingleAdSpot() {
         var toasterPanel = adSpotsPage.getToasterMessage();
@@ -276,7 +268,6 @@ public class AdSpotActivateDeactivateTableTests extends BaseTest {
                 .testEnd();
     }
 
-    @Epic("v1.28.0/GS-3298")
     @Test(testName = "Activate bulk ad spot")
     public void activateBulkAdSpot() {
         var tableData = adSpotsPage.getAdSpotsTable().getTableData();
