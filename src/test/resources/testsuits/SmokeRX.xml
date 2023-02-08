@@ -155,12 +155,23 @@
         </classes>
     </test>
 
-    <test name="Media Column Filter">
+    <test name="Media Column Filter tests">
         <classes>
             <class name="rx.inventory.media.columnsfilter.MediaColumnsFilterCreatedDateWidgetTests"/>
             <class name="rx.inventory.media.columnsfilter.MediaColumnsFilterTableTests"/>
             <class name="rx.inventory.media.columnsfilter.MediaColumnsFilterUpdatedDateWidgetTests"/>
             <class name="rx.inventory.media.columnsfilter.MediaColumnsFilterWidgetTests"/>
+        </classes>
+    </test>
+
+    <test name="PrivateAuctions Column Filter">
+        <classes>
+            <class name="rx.sales.privateauctions.columnsfilter.PrivateAuctionsColumnsFilterCreatedDateWidgetTests"/>
+            <class name="rx.sales.privateauctions.columnsfilter.PrivateAuctionsColumnsFilterTableTests"/>
+            <class name="rx.sales.privateauctions.columnsfilter.PrivateAuctionsColumnsFilterUpdatedDateWidgetTests"/>
+            <class name="rx.sales.privateauctions.columnsfilter.PrivateAuctionsColumnsFilterWidgetTests"/>
+            <class name="rx.sales.privateauctions.columnsfilter.PrivateAuctionsColumnsFilterStartDateWidgetTests"/>
+            <class name="rx.sales.privateauctions.columnsfilter.PrivateAuctionsColumnsFilterEndDateWidgetTests"/>
         </classes>
     </test>
 
