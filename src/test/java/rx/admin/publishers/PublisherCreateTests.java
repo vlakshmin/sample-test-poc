@@ -113,19 +113,11 @@ public class PublisherCreateTests extends BaseTest {
                 .and("select currency")
                 .selectFromDropdown(createPublisherSidebar.getCurrencyDropdown(),
                         createPublisherSidebar.getCurrencyDropdownItems(), CurrencyType.USD.getType())
-                .and("Select Demand Source")
-//                .selectFromDropdown(createPublisherSidebar.getDropdown(),
-//                        createPublisherSidebar.getCurrencyDropdownItems(), CurrencyType.USD.getType())
-                .and("select category")
-                .testEnd();
-
-        if (categorySelected) {
+                .and("select category");
+        if (categorySelected)
             testStart()
                     .clickOnWebElement(createPublisherSidebar.getCategories())
-                    .clickOnWebElement(categories.getCategoryCheckbox(CategoriesList.ART_ENTERTAIMENTS))
-                    .testEnd();
-        }
-
+                    .clickOnWebElement(categories.getCategoryCheckbox(CategoriesList.ART_ENTERTAIMENTS));
         testStart()
                 .and("click save button")
                 .clickOnWebElement(createPublisherSidebar.getSaveButton())

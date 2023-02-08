@@ -2,7 +2,6 @@ package rx.inventory.adspot;
 
 import api.dto.rx.inventory.adspot.AdSpot;
 import com.codeborne.selenide.testng.ScreenShooter;
-import io.qameta.allure.Epic;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.*;
 import pages.Path;

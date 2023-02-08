@@ -1,8 +1,6 @@
 package rx.yield.openpricing.columnsfilter;
 
-import api.preconditionbuilders.OpenPricingPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
-import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;
@@ -20,8 +18,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static api.preconditionbuilders.OpenPricingPrecondition.openPricing;
-import static api.preconditionbuilders.ProtectionsPrecondition.protection;
-import static api.preconditionbuilders.PublisherPrecondition.publisher;
 import static api.preconditionbuilders.UsersPrecondition.user;
 import static com.codeborne.selenide.Condition.*;
 import static configurations.User.TEST_USER;
@@ -60,7 +56,6 @@ public class OpenPricingColumnsFilterWidgetTests extends BaseTest {
                 .selectCheckBox(tableColumns.getMenuItemCheckbox(ColumnNames.UPDATED_BY))
                 .testEnd();
     }
-
 
     @Test(description = "Check Active/Inactive Chip Widget Component", dependsOnMethods = "testCreatedByChipWidgetComponent")
     public void testActiveInactiveChipWidgetComponent() {

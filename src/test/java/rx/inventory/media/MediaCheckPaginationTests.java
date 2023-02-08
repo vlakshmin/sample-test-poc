@@ -132,7 +132,7 @@ public class MediaCheckPaginationTests extends BaseTest {
             for (Media media : listMedia) {
                 deleteMedia(media.getId());
             }
-            //deletePublisher(publisher.getId());
+            deletePublisher(publisher.getId());
         }
     }
 
@@ -142,11 +142,11 @@ public class MediaCheckPaginationTests extends BaseTest {
                 .deleteMedia(id);
     }
 
-//    private void deletePublisher(Integer id) {
-//        publisher()
-//                .setCredentials(USER_FOR_DELETION)
-//                .deletePublisher(id);
-//    }
+    private void deletePublisher(Integer id) {
+        publisher()
+                .setCredentials(USER_FOR_DELETION)
+                .deletePublisher(id);
+    }
 
     private int getTotalMedia() {
 

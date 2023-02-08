@@ -9,7 +9,6 @@ import api.preconditionbuilders.DevicePrecondition;
 import api.preconditionbuilders.OpenPricingPrecondition;
 import api.preconditionbuilders.OperatingSystemPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
-import io.qameta.allure.Epic;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterClass;

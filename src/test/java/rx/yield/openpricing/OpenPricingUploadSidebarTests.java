@@ -82,7 +82,6 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
                 .testEnd();
     }
 
-
     @Test(description = "Check Upload slide elements by default (Admin)")
     public void checkUploadSlideElementsByDefaultAdmin() {
 
@@ -146,7 +145,6 @@ public class OpenPricingUploadSidebarTests extends BaseTest {
                 .logOut()
                 .testEnd();
     }
-
 
     @Step("Validate File Data")
     private void validateFileData(String filename) {

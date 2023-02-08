@@ -77,14 +77,6 @@ public class OpenPricingSortingTableTests extends BaseTest {
                 .map(Object::toString)
                 .collect(Collectors.toList());
 
-//        sortPublisherNameByAsc = getAllItemsByParams("publisher_name-asc").stream()
-//                .map(OpenPricing::getPublisherName)
-//                .collect(Collectors.toList());
-//
-//        sortPublisherNameByDesc = getAllItemsByParams("publisher_name-desc").stream()
-//                .map(OpenPricing::getPublisherName)
-//                .collect(Collectors.toList());
-
         sortActiveInactiveByAsc = getAllItemsByParams("active-asc").stream()
                 .map(OpenPricing::getActive)
                 .map(Object::toString)
@@ -140,19 +132,19 @@ public class OpenPricingSortingTableTests extends BaseTest {
         validateSorting(ColumnNames.NAME, ASC, sortNamesByAsc);
     }
 
-//    @Test(testName = "Sorting 'Publisher' column by descending")
-//    public void OpenPricingSortingByPublisherNameDesc() {
-//        sortByDescColumnByName(ColumnNames.PUBLISHER);
-//        validateSorting(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
-//    }
+    @Test(testName = "Sorting 'Publisher' column by descending")
+    public void OpenPricingSortingByPublisherNameDesc() {
+        sortByDescColumnByName(ColumnNames.PUBLISHER);
+        validateSorting(ColumnNames.PUBLISHER, DESC, sortPublisherNameByDesc);
+    }
 
 
-//    @Test(testName = "Sorting 'Publisher' column by ascending")
-//    public void OpenPricingSortingByPublisherNameAsc() {
-//        sortByAscColumnByName(ColumnNames.PUBLISHER);
-//        validateSorting(ColumnNames.PUBLISHER, ASC, sortPublisherNameByAsc);
-//    }
-//
+    @Test(testName = "Sorting 'Publisher' column by ascending")
+    public void OpenPricingSortingByPublisherNameAsc() {
+        sortByAscColumnByName(ColumnNames.PUBLISHER);
+        validateSorting(ColumnNames.PUBLISHER, ASC, sortPublisherNameByAsc);
+    }
+
     @Test(testName = "Sorting 'ID' column by descending")
     public void OpenPricingSortingByIdDesc() {
         sortByDescColumnByName(ColumnNames.ID);

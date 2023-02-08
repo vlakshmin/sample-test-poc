@@ -51,7 +51,6 @@ public class MediaColumnsFilterUpdatedDateWidgetTests extends BaseTest {
                 .testEnd();
     }
 
-
     @Test(description = "Check Default State")
     public void testDefaultStateColumnsFilterComponent() {
         var filter = mediaPage.getMediaTable().getColumnFiltersBlock();

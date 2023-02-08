@@ -3,7 +3,6 @@ package rx.yield.openpricing;
 import api.dto.rx.yield.openpricing.OpenPricing;
 import api.preconditionbuilders.OpenPricingPrecondition;
 import com.codeborne.selenide.testng.ScreenShooter;
-import io.qameta.allure.Epic;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
@@ -41,8 +40,6 @@ public class VerifyPublisherTests extends BaseTest {
     @Test(enabled = true)
     public void verifySingleDeactivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
@@ -55,15 +52,12 @@ public class VerifyPublisherTests extends BaseTest {
                 .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Inactive")
                 .then()
                 .testEnd();
-
-
     }
 
     @Test(enabled = true)
     public void verifySingleActivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+
         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
@@ -81,6 +75,7 @@ public class VerifyPublisherTests extends BaseTest {
     @Test(enabled = true)
     public void verifyBulkDeactivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
+
         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
@@ -102,8 +97,7 @@ public class VerifyPublisherTests extends BaseTest {
     @Test(enabled = true)
     public void verifyBulkActivatePublisherActive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+
         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
@@ -127,30 +121,25 @@ public class VerifyPublisherTests extends BaseTest {
     @Test(enabled = true)
     public void verifySingleDeactivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+
         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
                 .logIn(TEST_USER)
                 .waitAndValidate(disappear, openPricingPage.getNuxtProgress())
                 .and()
-//                .scrollIntoView(tableData.getCheckbox(1))tableData.getCheckbox(1)
                 .waitAndValidate(appear, tableData.getCheckbox(1))
                 .clickOnWebElement(tableData.getCheckbox(1))
-//                .scrollIntoView(openPricingPage.getDeactivateButton())
                 .clickOnWebElement(openPricingPage.getDeactivateButton())
                 .validate(tableData.getCustomCells(ColumnNames.STATUS).get(0), "Inactive")
                 .then()
                 .testEnd();
-
     }
 
     @Test(enabled = true)
     public void verifySingleActivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+
         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
@@ -168,8 +157,7 @@ public class VerifyPublisherTests extends BaseTest {
     @Test(enabled = true)
     public void verifyBulkDeactivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+
         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
@@ -202,8 +190,7 @@ public class VerifyPublisherTests extends BaseTest {
     @Test(enabled = true)
     public void verifyBulkActivatePublisherInactive() {
         var tableData = openPricingPage.getOpenPricingTable().getTableData();
-        var tableOptions = openPricingPage.getOpenPricingTable().getShowHideColumns();
-        var tablePagination = openPricingPage.getOpenPricingTable().getTablePagination();
+
         testStart()
                 .given()
                 .openDirectPath(Path.OPEN_PRICING)
@@ -231,6 +218,4 @@ public class VerifyPublisherTests extends BaseTest {
                 .then()
                 .testEnd();
     }
-
-
 }
