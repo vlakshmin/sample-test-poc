@@ -1,2 +1,2 @@
 # sample-test-poc
-has 2 branches
+has 1 branches
