@@ -5,8 +5,8 @@
 </listeners>
 <test name="Regression Test">
 <classes>
-<class name="test.SearchTest" />
 <class name="test.LoginTest" />
+<class name="test.SearchTest" />
 
 </classes>
 </test>
