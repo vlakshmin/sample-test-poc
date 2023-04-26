@@ -5,7 +5,7 @@
 
 <test name="Regression Test" >
 <classes>
-<class name="rx.protections.ProtectionsTest" />
+<class name="rx.inventory.adspot.AdSpotEditTests" />
 
 </classes>
 </test>
